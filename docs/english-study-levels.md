@@ -1,5 +1,7 @@
 # English study groups
 
+> The counts below describe the original 3.0.0 grouping. The [4.0.0 correction edition](english-meaning-corrections.md) retains these four groups with 11,977 active entries after retiring 39 invalid or duplicate entries.
+
 Choose IELTS 1.0–3.5, IELTS 4.0–6.5, IELTS 7.0–8.0, IELTS 8.5–9.0 or All on Study or in an activity's filters. Each group selects only its own entries. Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble, Dictation and Review share the selection. English keeps British English speech and ordinary topic filters. There are no separate Academic/General Training exam filters or badges.
 
 ## Editorial assignments

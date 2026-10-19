@@ -1,5 +1,7 @@
 # English linguistic review
 
+> Historical review of English 3.0.0. Its findings are now resolved in the [4.0.0 correction edition](english-meaning-corrections.md); the original review records remain unchanged.
+
 This review covers the 12,016 entries in the English study core 3.0.0 and the matching English and Korean explanation packages. The fields are the headword, part of speech, English meaning, Korean meaning and consistency with any existing primary example. It is separate from a completeness, licence or package-integrity audit.
 
 ## Results — 19 October 2026
