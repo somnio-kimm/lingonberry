@@ -31,6 +31,13 @@ try{
  await screen(page,'settings');assert.deepEqual(await page.locator('#target option').evaluateAll(nodes=>nodes.map(node=>node.value)),['','de']);assert.deepEqual(await page.locator('#explanation option').evaluateAll(nodes=>nodes.map(node=>node.value)),['','ko']);assert.equal(await page.locator('#display-language').inputValue(),'en');await wordList(page);await germanMeaning(page,'저녁');
  checks.push('Selectors live inside the Settings package card and list installed pairs only; the full-page library hides core dependencies and downloads the first complete pair.');
  await packages(page,'de');await download(page,'de-en');assert.equal(downloads.length,3);await choose(page,'de','en');await wordList(page);await germanMeaning(page,'evening');
+ await screen(page,'home');await page.locator('[data-level=C1]').click();await wordList(page);
+ await page.locator('#search-input').fill('Arabisch');await page.waitForFunction(()=>document.querySelector('#wordlist-results').dataset.query==='Arabisch');
+ const arabic=page.locator('[data-id="de-ref-0559304c77c8cdf8898e"]');assert.equal(await arabic.locator('.wl-headword').innerText(),'das Arabisch');
+ await arabic.locator('.wl-main').click();assert.equal(await page.locator('#study-word-title').innerText(),'das Arabisch');
+ assert.equal(await page.locator('.study-examples .example-sentence').innerText(),'In diesem Text geht es um das Arabisch.');
+ await page.locator('.detail-sheet-close').click();await screen(page,'home');await page.locator('[data-level=A1]').click();await wordList(page);
+ checks.push('Cached German article notation is removed from word-list headings and detail examples.');
  await displayLanguage(page,'ko');assert.equal(await page.locator('#set-bug-send').innerText(),'버그 신고 보내기');assert.equal(await page.locator('#set-hide-resolved-label').innerText(),interfaceText('ko').autoRemove);await displayLanguage(page,'en');assert.equal(await page.locator('#set-bug-send').innerText(),'Send Bug Report');await page.locator('[data-theme-choice=dark]').click();assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');await page.locator('[data-theme-choice=system]').click();
  if(process.env.SCREENSHOT_DIR){await mkdir(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:join(process.env.SCREENSHOT_DIR,'settings.png'),fullPage:true});await packages(page);await page.screenshot({path:join(process.env.SCREENSHOT_DIR,'library.png'),fullPage:true});await page.locator('[data-language=de]').click();await page.screenshot({path:join(process.env.SCREENSHOT_DIR,'german-packages.png'),fullPage:true});}
  checks.push('Additional explanations reuse shared content, while display language remains independent and existing Settings controls still work.');

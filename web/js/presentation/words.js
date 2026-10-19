@@ -25,14 +25,30 @@ export function wordSyllables(word,pronunciation) {
  const parsed=split(marked,chars.length);
  return parsed?parsed.map((value,i)=>({hanzi:chars[i],...value})):[];
 }
+const stripArticleNotes=value=>typeof value==='string'?value.replace(/\((?:der|die|das|den|dem|des)\)[ \t]*/giu,''):value;
+function cleanGermanArticleNotation(entry){
+ // Old downloaded packages retain dictionary notation alongside a separate article.
+ if(entry.partOfSpeech!=='noun'||!/^\((?:der|die|das)\)\s+/iu.test(entry.word))return entry;
+ const cleanExample=example=>{
+  if(!example)return example;
+  const focus=example.focus?{...example.focus,text:stripArticleNotes(example.focus.text)}:null;
+  if(focus&&Number.isInteger(focus.start))focus.start=stripArticleNotes(example.text.slice(0,focus.start)).length;
+  return {...example,text:stripArticleNotes(example.text),...(focus?{focus}:{})};
+ };
+ const grammar={...entry.grammar};
+ if(grammar.declension)grammar.declension=Object.fromEntries(Object.entries(grammar.declension).map(([key,forms])=>[key,Array.isArray(forms)?forms.map(stripArticleNotes):stripArticleNotes(forms)]));
+ if(grammar.related_forms)grammar.related_forms=grammar.related_forms.map(stripArticleNotes);
+ return {...entry,word:stripArticleNotes(entry.word),grammar,example:cleanExample(entry.example),
+  ...(entry.additionalExamples?{additionalExamples:entry.additionalExamples.map(cleanExample)}:{})};
+}
 export function germanWords(study) {
- return study.entries.map(entry=>({
+ return study.entries.map(source=>{const entry=cleanGermanArticleNotation(source);return {
   ...entry.grammar,id:entry.id,lemma:entry.word,sense_id:entry.grammar?.sense_id||entry.id,cefr:entry.level||'A1',pos:entry.partOfSpeech,
   article:entry.article,gender:entry.grammar?.gender||({der:'masculine',die:'feminine',das:'neuter'}[entry.article]),
   meaning_en:study.explanationLanguage==='en'?(entry.meanings||[entry.meaning]):[],meaning_ko:study.explanationLanguage==='ko'?(entry.meanings||[entry.meaning]):[],
   studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,
   examples:[...(entry.example?[entry.example]:[]),...(entry.additionalExamples||[])].map(example=>({...example,de:example.text,studyTranslation:example.translation,[study.explanationLanguage]:example.translation})),
- }));
+ };});
 }
 export function chineseWords(study) {
  return study.entries.map(entry=>({
