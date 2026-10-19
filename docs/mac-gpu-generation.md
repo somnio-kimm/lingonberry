@@ -10,6 +10,12 @@ The live database is `~/Library/Application Support/LearnLanguageContent/content
 
 ## Run and resume
 
+Run the [Wiktionary source pass](wiktionary-source-reuse.md) before resuming
+generation. It reuses suitable definitions, examples and exact sentence
+translations as separately reviewed drafts, without starting a model. Preserve
+the user pause until generation is explicitly resumed; source imports do not
+change that setting.
+
 Run from the persistent content worktree, with the cached Python runtime:
 
 ```sh

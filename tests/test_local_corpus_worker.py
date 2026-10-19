@@ -6,6 +6,26 @@ ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('local_corpus_worker',ROOT/'scripts/content/run-local-corpus.py');m=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)
 
 class LocalWorkerTests(unittest.TestCase):
+ def test_bound_source_draft_never_loads_a_model_and_keeps_review_pending(self):
+  with tempfile.TemporaryDirectory() as folder:
+   db=Path(folder)/'queue.sqlite';conn=m.queue.open_queue(db)
+   entry={'id':'book','word':'book','partOfSpeech':'noun'}
+   evidence={'meanings':{},'examples':[],'generation_revision':'test'}
+   digest=m.queue.digest({'entry':entry,'evidence':evidence})
+   conn.execute('INSERT INTO entries VALUES(?,?,?,?,?,?)',('en','book',digest,m.queue.encoded(entry),m.queue.encoded(evidence),m.queue.now()))
+   candidate={'text':'a written work for reading','provenance':{'creator':'Wiktionary contributors','license':'CC-BY-SA-4.0','url':'https://en.wiktionary.org/wiki/book'},'source_snapshot_sha256':'a'*64,'source_digest':'b'*64}
+   body={'entry':entry,'word':'book','part_of_speech':'noun','source_digest':digest,'licensed_source_candidate':candidate,'licensed_source_candidate_digest':m.queue.digest(candidate),'source_import_of_job_id':99}
+   job_id=m.queue.enqueue_job(conn,'en','book','meaning','en',body);conn.close()
+   args=SimpleNamespace(db=str(db),recover_running=False,worker_id='test',run_dir=folder,draft_only=True,battery_floor=20,batch_size=1,translation_model='',model='unused',memory_gb=9,max_tokens=10,limit=1,final_drive_backup=None)
+   with patch.object(m,'read_power',return_value={'percent':100,'ac':True}),patch.object(m.runtime,'MetalModel') as model,patch.object(m,'TranslationModel') as translator:
+    m.run_queue(args)
+   model.assert_not_called();translator.assert_not_called()
+   conn=m.queue.open_queue(db)
+   self.assertEqual(m.queue.get_job(conn,job_id).status,'draft')
+   self.assertEqual(conn.execute("SELECT count(*) FROM jobs WHERE task='review' AND status='pending'").fetchone()[0],1)
+   result=json.loads(conn.execute('SELECT output_json FROM results WHERE job_id=?',(job_id,)).fetchone()[0])
+   self.assertEqual(result['provenance']['license'],'CC-BY-SA-4.0');conn.close()
+
  def test_all_language_examples_precede_priority_explanations_and_other_languages(self):
   schedule=m.JobSchedule(['native_example','meaning','example_translation'],('en','ko','ja'),('en','ko'),examples_first=True)
   pending={('native_example','en',None):[['english-example']],('native_example','ko',None):[['korean-example']],('native_example','ja',None):[['japanese-example-1'],['japanese-example-2']],('meaning','en','en'):[['english-meaning']],('example_translation','ja','ko'):[['korean-translation']],('meaning','ja',None):[['other-meaning']]}

@@ -1,0 +1,19 @@
+Lingonberry Wiktionary source reuse — draft content pipeline
+
+Text contributors: English, German, Spanish, French, Japanese, Korean and Chinese Wiktionary contributors. Each reused field retains its exact source article and contributor-history URL, source edition, snapshot hash, raw source row identity and sense identity. The article/history links provide the contributor attribution trail. Preserve any additional source attribution recorded with an individual field.
+
+Applicable Wiktionary text is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+Licence: https://creativecommons.org/licenses/by-sa/4.0/
+Full text: CC-BY-SA-4.0.txt in this directory.
+Wikimedia reuse terms: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use#7._Licensing_of_Content
+
+Structured extraction: Kaikki.org and Wiktextract, Tatu Ylonen and contributors.
+https://kaikki.org/dictionary/rawdata.html
+https://github.com/tatuylonen/wiktextract
+Archive identities and available acquisition metadata are recorded in sources/wiktionary-source-manifest.json. An archive hash identifies the reused bytes; an unknown dump date is not replaced by a guessed date.
+
+Changes by Lingonberry contributors: selected source senses and usage examples are extracted and organised as separately downloadable study/explanation fields; parent/child gloss context is joined and focus offsets are converted to UTF-16. Example and translation text is retained verbatim by the automatic import. These changes are recorded with each field. Later translations or editorial adaptations must identify the changes and retain CC BY-SA 4.0 attribution and share-alike terms. Model-assisted adaptation metadata is retained with the field. Imported draft text is not presented as native-speaker approved.
+
+Quoted, referenced or externally credited examples are excluded from automatic reuse unless their individual rights have been separately established. Images, audio and other media are not included by this pipeline. Native-edition examples without sufficient authorship classification remain held for verification. The general Wiktionary licence is not a licence for every third-party quotation appearing on its pages.
+
+Commercial use is permitted subject to the applicable licence. Preserve attribution, licence links, modification notices and downstream reuse rights. Do not impose incompatible contractual or technical restrictions on covered content. App code is separately MIT-licensed. Previously imported sources retain their own licences. This notice does not change a source's original terms and does not certify a future store distribution.

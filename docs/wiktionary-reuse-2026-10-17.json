@@ -1,0 +1,182 @@
+{
+  "verifiedAt": "2026-10-17T10:50:06.687846+00:00",
+  "sourceManifest": "language-packages/sources/wiktionary-source-manifest.json",
+  "sourceCatalog": {
+    "sources": [
+      {
+        "edition": "ko",
+        "lines": 356341,
+        "rows": 40024,
+        "senses": 49879,
+        "examples": 25429
+      },
+      {
+        "edition": "de",
+        "lines": 1329116,
+        "rows": 23573,
+        "senses": 41968,
+        "examples": 56518
+      },
+      {
+        "edition": "en",
+        "lines": 10913997,
+        "rows": 99045,
+        "senses": 218661,
+        "examples": 162063
+      },
+      {
+        "edition": "ja",
+        "lines": 671439,
+        "rows": 55193,
+        "senses": 101322,
+        "examples": 14747
+      },
+      {
+        "edition": "es",
+        "lines": 1016609,
+        "rows": 26030,
+        "senses": 56784,
+        "examples": 7762
+      },
+      {
+        "edition": "zh",
+        "lines": 2965486,
+        "rows": 59874,
+        "senses": 94184,
+        "examples": 32156
+      },
+      {
+        "edition": "fr",
+        "lines": 7497189,
+        "rows": 56501,
+        "senses": 119503,
+        "examples": 132100
+      }
+    ],
+    "sourceRecords": 360240,
+    "exampleCandidates": 430775
+  },
+  "entriesAudited": 76385,
+  "languages": {
+    "de": {
+      "entriesAudited": 11288,
+      "entriesWithSourceRows": 11116,
+      "reusable_meaning": 10109,
+      "alignment_unique-source-sense-candidate": 10109,
+      "imported_meaning": 10109
+    },
+    "en": {
+      "entriesAudited": 12016,
+      "entriesWithSourceRows": 12015,
+      "existingSourceCandidatePreserved": 12410,
+      "reusable_native_example": 502,
+      "alignment_unique-source-sense-candidate": 2638,
+      "imported_native_example": 502,
+      "reusable_meaning": 2139,
+      "imported_meaning": 2139,
+      "editorialRepairPreserved": 15,
+      "alignment_exact-selected-gloss": 3
+    },
+    "es": {
+      "entriesAudited": 9092,
+      "entriesWithSourceRows": 9092,
+      "existingSourceCandidatePreserved": 7266,
+      "reusable_meaning": 325,
+      "alignment_unique-source-sense-candidate": 357,
+      "imported_meaning": 325,
+      "editorialRepairPreserved": 4,
+      "reusable_native_example": 32,
+      "imported_example_translation": 32,
+      "imported_native_example": 32
+    },
+    "fr": {
+      "entriesAudited": 8936,
+      "entriesWithSourceRows": 8935,
+      "existingSourceCandidatePreserved": 3903,
+      "reusable_meaning": 1728,
+      "alignment_unique-source-sense-candidate": 1771,
+      "imported_meaning": 1728,
+      "reusable_native_example": 43,
+      "imported_example_translation": 40,
+      "imported_native_example": 43,
+      "editorialRepairPreserved": 17
+    },
+    "ja": {
+      "entriesAudited": 12027,
+      "entriesWithSourceRows": 12023,
+      "existingSourceCandidatePreserved": 4444,
+      "reusable_native_example": 180,
+      "alignment_unique-source-sense-candidate": 218,
+      "imported_example_translation": 178,
+      "imported_native_example": 180,
+      "reusable_meaning": 38,
+      "imported_meaning": 38,
+      "editorialRepairPreserved": 9
+    },
+    "ko": {
+      "entriesAudited": 12026,
+      "entriesWithSourceRows": 11598,
+      "existingSourceCandidatePreserved": 4397,
+      "reusable_native_example": 433,
+      "alignment_unique-source-sense-candidate": 592,
+      "imported_example_translation": 426,
+      "imported_native_example": 433,
+      "reusable_meaning": 159,
+      "imported_meaning": 159,
+      "editorialRepairPreserved": 21
+    },
+    "zh": {
+      "entriesAudited": 11000,
+      "entriesWithSourceRows": 10976,
+      "reusable_meaning": 5661,
+      "alignment_unique-source-sense-candidate": 5661,
+      "imported_meaning": 5661
+    }
+  },
+  "preservation": {
+    "entriesUnchanged": 76385,
+    "previousResultsUnchanged": 10018,
+    "sourceDrafts": {
+      "meaning": 20159,
+      "native_example": 1190,
+      "example_translation": 676
+    },
+    "sourceDraftsByLanguage": {
+      "de": 10109,
+      "en": 2641,
+      "es": 389,
+      "fr": 1811,
+      "ja": 396,
+      "ko": 1018,
+      "zh": 5661
+    },
+    "modelGenerationPaused": true,
+    "newSourceFieldsIndependentlyApproved": 0,
+    "queueIntegrity": "ok"
+  },
+  "newSourceDrafts": 22025,
+  "pendingFields": {
+    "example_translation": 111288,
+    "meaning": 278374,
+    "native_example": 41923
+  },
+  "deferredTranslationsForMissingNativeExamples": 251538,
+  "totalFieldsStillMissing": 683123,
+  "holdReasons": {
+    "excluded-sense": 43675,
+    "ambiguous-source-sense-candidates": 88975,
+    "selected-sense-equivalence-unverified": 127378,
+    "quotation-or-unverified-example-rights": 31295,
+    "native-edition-rights-verification-required": 24730,
+    "unverified-focus": 1140,
+    "fragment-or-language-or-usage-unverified": 3926,
+    "part-of-speech-mismatch": 131008,
+    "ambiguous-selected-sense": 28,
+    "no-exact-selected-sense": 15361,
+    "invalid-gloss-language": 11033,
+    "reviewed-source-sense-mismatch": 1,
+    "reading-conflict": 3750
+  },
+  "sourceReviewExclusionsDigest": "a128f9c384b6f4fd13772647b2cd1d69fe6e8e86ce6433638b054f4fde8ef3a4",
+  "status": "Draft source reuse complete; independent linguistic review and remaining generation are incomplete. Models remain paused. No packages published."
+}

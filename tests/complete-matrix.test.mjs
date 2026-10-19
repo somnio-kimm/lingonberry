@@ -51,3 +51,53 @@ test('the release writer stages 50 complete files and refuses changed bytes unde
 });
 
 test('placeholder text cannot be counted as a completed translation',()=>{const data=fixture();data.records.ja[0].meanings.de.text='TODO';data.records.ja[0].review.sourceDigest=contentDigest(data.records.ja[0]);assert.throws(()=>compileCompleteMatrix(data),/placeholder/);});
+
+const wikiCredit=()=>({kind:'licensed-source',creator:'English Wiktionary contributors',license:'CC-BY-SA-4.0',licenseUrl:'https://creativecommons.org/licenses/by-sa/4.0/',url:'https://en.wiktionary.org/wiki/book',history:'https://en.wiktionary.org/w/index.php?title=book&action=history',sourceIdentity:{edition:'en',snapshotSha256:'a'.repeat(64),rowDigest:'b'.repeat(64),senseIndex:0},sourceSnapshot:{sha256:'a'.repeat(64),dumpDate:'unknown'}});
+function refreshReview(record){record.review.sourceDigest=contentDigest(record);}
+
+test('compiled Wiktionary sources and adaptations retain field credits and embed the shipped notice',async()=>{
+ const data=fixture(),row=data.records.en[0],source=wikiCredit();
+ const adapted={kind:'licensed-adaptation',creator:'Lingonberry contributors; '+source.creator,license:'CC-BY-SA-4.0',url:source.url,method:'AI-assisted-adaptation',sources:[structuredClone(source)]};
+ row.examples[0].provenance=structuredClone(source);
+ row.examples[0].translations.en.provenance=structuredClone(source);
+ row.examples[0].translations.ko.provenance=structuredClone(adapted);
+ row.meanings.ko.provenance=structuredClone(adapted);refreshReview(row);
+ const before=structuredClone(data),packages=compileCompleteMatrix(data);
+ const core=packages.find(p=>p.id==='en-core'),pair=packages.find(p=>p.id==='en-ko'),self=packages.find(p=>p.id==='en-en');
+ assert.deepEqual(core.entries[0].example.provenance,source);
+ assert.deepEqual(pair.entries[0].provenance,adapted);
+ assert.deepEqual(pair.entries[0].exampleTranslationProvenance,adapted);
+ assert.deepEqual(self.entries[0].exampleTranslationProvenance,source);
+ const notice=(await readFile(new URL('../language-packages/credits/WIKTIONARY-SOURCE-REUSE.txt',import.meta.url),'utf8')).trim();
+ for(const packageValue of [core,pair,self]){assert.ok(packageValue.license.notice.includes(notice));assert.ok(packageValue.license.identifier.includes('CC-BY-SA-4.0'));}
+ assert.ok(!packages.find(p=>p.id==='ja-core').license.notice.includes(notice));
+ assert.deepEqual(data,before);
+});
+
+test('legacy Wiktionary history and licence aliases remain valid without new snapshot identity fields',()=>{
+ const data=fixture(),row=data.records.ja[0],source=wikiCredit();
+ source.history_url=source.history;delete source.history;source.license_url=source.licenseUrl;delete source.licenseUrl;delete source.sourceIdentity;delete source.sourceSnapshot;
+ row.meanings.en.provenance=source;refreshReview(row);
+ const result=compileCompleteMatrix(data).find(p=>p.id==='ja-en');
+ assert.deepEqual(result.entries[0].provenance,source);assert.ok(result.license.notice.includes('Wiktionary source reuse'));
+});
+
+test('incomplete Wiktionary credits and share-alike downgrades block final packaging',()=>{
+ for(const change of [p=>delete p.history,p=>delete p.licenseUrl,p=>p.history='https://unrelated.example/history',p=>p.licenseUrl='https://example.org/license',p=>p.license='CC-BY-4.0',p=>p.license='CC-BY-SA-2.0-KR',p=>p.licenseUrl='https://creativecommons.org/licenses/by-sa/2.0/kr/',p=>p.history='https://en.wiktionary.org/w/index.php?title=unrelated&action=history',p=>p.history='https://en.wiktionary.org/wiki/book']){
+  const data=fixture(),row=data.records.ja[0],source=wikiCredit();change(source);row.meanings.en.provenance=source;refreshReview(row);
+  assert.throws(()=>compileCompleteMatrix(data),/Wiktionary/);
+ }
+ const data=fixture(),row=data.records.ja[0],source=wikiCredit();delete source.history;
+ row.meanings.en.provenance={kind:'licensed-adaptation',creator:'App contributors',license:'CC-BY-SA-4.0',url:'https://example.org/translation',sources:[source]};refreshReview(row);
+ assert.throws(()=>compileCompleteMatrix(data),/Wiktionary/);
+});
+
+test('unrelated starter packages do not receive the Wiktionary notice',()=>{
+ assert.ok(compileCompleteMatrix(fixture()).every(p=>!p.license.notice.includes('Wiktionary source reuse')));
+});
+
+test('Wiktionary adaptations cannot downgrade a 4.0 source to an older share-alike licence',()=>{
+ const data=fixture(),row=data.records.ja[0],source=wikiCredit();
+ row.meanings.en.provenance={kind:'licensed-adaptation',creator:'App contributors',license:'CC-BY-SA-2.0-KR',url:source.url,sources:[source]};refreshReview(row);
+ assert.throws(()=>compileCompleteMatrix(data),/Wiktionary share-alike licence/);
+});

@@ -216,3 +216,50 @@ test('control tokens cannot survive materialisation even with passing field meta
  const e=fixture();e.evidence.meanings.de.text='Ein Buch.<end_of_turn>';
  assert.ok(codes(assembleGpuEntry(e)).includes('model_token_leakage'));
 });
+
+function bindSource(item,candidate){
+ item.job.payload.licensed_source_candidate=clone(candidate);
+ item.job.payload.licensed_source_candidate_digest=digest(candidate);
+ item.job.payload.source_import_of_job_id=99;
+ item.job.input_hash=digest(item.job.payload);
+ item.output={text:candidate.text,provenance:{...candidate.provenance,kind:candidate.provenance.kind??'licensed-source'},...(candidate.focus?{focus:candidate.focus}:{}),...(candidate.pinyin?{pinyin:candidate.pinyin}:{})};
+ item.output_digest=digest(item.output);item.review.contentDigest=item.output_digest;
+ item.producer={role:'local-draft',method:'licensed-source-import',model:null,revision:candidate.source_snapshot_sha256,source_digest:candidate.source_digest,candidate_digest:digest(candidate)};
+ item.review.method='source-candidate-AI-review';
+}
+const sourceCandidate=(text,extra={})=>({text,provenance:{...external,license:'CC-BY-SA-4.0'},source_digest:'b'.repeat(64),source_snapshot_sha256:'a'.repeat(64),...extra});
+
+test('bound source meaning imports preserve entry evidence and reject forged attribution and stale bindings',()=>{
+ const e=fixture();delete e.evidence.meanings.de;const before=digest(e.evidence);
+ const item=makeJob(e);bindSource(item,sourceCandidate(meanings.de));e.checkedResults=[item];
+ const result=assembleGpuEntry(e);assert.deepEqual(result.blocked,[]);assert.equal(digest(e.evidence),before);
+ assert.equal(result.record.meanings.de.provenance.creator,external.creator);
+ for(const mutate of [j=>{j.output.provenance.creator='Forged';j.output_digest=digest(j.output);j.review.contentDigest=j.output_digest;},j=>{j.producer.source_digest='c'.repeat(64);},j=>{j.job.payload.licensed_source_candidate.text='Changed';j.job.input_hash=digest(j.job.payload);},j=>{j.job.status='draft';}]){
+  const bad=clone(e);mutate(bad.checkedResults[0]);assert.equal(assembleGpuEntry(bad).record,undefined);
+ }
+});
+
+test('source native imports pass their share-alike source through every generated translation',()=>{
+ const e=nativeDraftFixture('en'),native=e.checkedResults[0];
+ bindSource(native,sourceCandidate('book.',{focus:{text:'book'}}));
+ for(const child of e.checkedResults.slice(1)){
+  child.job.payload.source_example=clone(native.output);child.job.payload.text=native.output.text;child.job.payload.source_digest=digest(native.output);child.job.input_hash=digest(child.job.payload);
+ }
+ const result=assembleGpuEntry(e);assert.deepEqual(result.blocked,[]);
+ assert.equal(result.record.examples[0].provenance.license,'CC-BY-SA-4.0');
+ for(const [locale,value] of Object.entries(result.record.examples[0].translations)){
+  assert.equal(value.provenance.license,'CC-BY-SA-4.0');
+  if(locale==='en')assert.equal(value.text,'book.');else assert.equal(value.provenance.sources[0].creator,external.creator);
+ }
+});
+
+test('source translation imports require exact native binding and preserve both source credits when adapting',()=>{
+ const e=fixture();missingTranslation(e);e.evidence.examples[0].provenance={...external,license:'CC-BY-SA-4.0'};
+ const source=e.evidence.examples[0],item=makeJob(e,{task:'example_translation',locale:'de',index:0,sourceExample:source});
+ bindSource(item,sourceCandidate('Buch.',{source_text:source.text,source_example_digest:digest(source),provenance:{...external,creator:'Translation contributors',license:'CC-BY-4.0'}}));e.checkedResults=[item];
+ const result=assembleGpuEntry(e);assert.deepEqual(result.blocked,[]);
+ assert.equal(result.record.examples[0].translations.de.provenance.license,'CC-BY-SA-4.0');
+ assert.deepEqual(result.record.examples[0].translations.de.provenance.sources.map(p=>p.creator),[external.creator,'Translation contributors']);
+ const bad=clone(e),j=bad.checkedResults[0];j.job.payload.licensed_source_candidate.source_text='Different sentence';j.job.payload.licensed_source_candidate_digest=digest(j.job.payload.licensed_source_candidate);j.producer.candidate_digest=j.job.payload.licensed_source_candidate_digest;j.job.input_hash=digest(j.job.payload);
+ assert.ok(codes(assembleGpuEntry(bad)).includes('unverified_source_import'));
+});

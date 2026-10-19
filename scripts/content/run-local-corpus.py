@@ -93,7 +93,8 @@ def atomic_json(path,value):
 def trusted_provenance(job,output,source_import=False):
     p=job.payload
     if source_import:
-        src=dict(p['candidate']['provenance']);src['kind']='licensed-source';return src
+        candidate=p.get('licensed_source_candidate') or p['candidate']
+        src=dict(candidate['provenance']);src.setdefault('kind','licensed-source');return src
     if job.task=='native_example':return {'kind':'app-authored','license':'CC-BY-4.0','creator':'Learn Language contributors','method':'local-model-original-example'}
     if job.task=='example_translation':
         src=dict(p.get('source_example',{}).get('provenance',{}))
@@ -235,6 +236,15 @@ def run_queue(args):
             generated=[];prompts=[];bindings={}
             for job in jobs:
                 p=job.payload
+                if job.task!='review' and p.get('licensed_source_candidate') and not p.get('revision_request') and p.get('source_import_allowed',True):
+                    candidate=queue.source_candidate_output(job)
+                    check=quality.check_content(p,candidate)
+                    if not check['structuralValid']:
+                        queue.fail_job(conn,job.id,{'detail':'Bound source candidate failed structural validation','checks':check},worker_id=args.worker_id,claim_token=job.claim_token)
+                        processed+=1;continue
+                    source=p['licensed_source_candidate']
+                    queue.finish_job(conn,job.id,candidate,worker_id=args.worker_id,claim_token=job.claim_token,producer={'role':'local-draft','method':'licensed-source-import','model':None,'revision':source['source_snapshot_sha256'],'prompt_digest':None,'source_digest':source['source_digest'],'candidate_digest':p['licensed_source_candidate_digest']})
+                    processed+=1;continue
                 if job.task=='meaning' and p.get('candidate') and not p.get('revision_request') and p.get('source_import_allowed',True):
                     candidate={'text':p['candidate']['text']};candidate['provenance']=trusted_provenance(job,candidate,True)
                     check=quality.check_content(p,candidate)

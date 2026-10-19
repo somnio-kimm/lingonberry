@@ -15,11 +15,15 @@ The database must live outside the Git workspace. The initial build is complete 
 
 ## Worker API
 
+The [Wiktionary source pass](wiktionary-source-reuse.md) can supplement an existing
+queue without rebuilding entry evidence or invalidating unrelated saved drafts.
+
 Load `scripts/content/prepare-gpu-jobs.py` using `importlib.util`; register the module in `sys.modules` before `exec_module` because it contains a dataclass. Each process opens its own connection with `open_queue(path)`.
 
 - `prepare_queue(conn, repo, generation_revision=..., source_senses_path=None)` builds the full queue and returns counts.
 - `claim_jobs(conn, worker_id, limit=1, kind=None, locale=None, study_language=None)` atomically claims 1–128 jobs. It returns `Job` objects with `id`, `task`, `locale`, `entry_id`, `study_language`, `example_index`, `input_hash`, `payload`, `claim_token` and `attempts`.
 - `finish_job(conn, job_id, output, worker_id=..., claim_token=..., producer=...)` records a draft and returns newly required review/translation job IDs. Generated native examples immediately produce translation jobs, even before review, but every child depends on the exact source job and sentence digest.
+- `import_source_candidate(conn, job_id, candidate)` replaces a pending missing field with an immutable licensed-source draft. It preserves existing results, binds the source and snapshot digests, requires exact native-text binding for translations, and queues separate review. Native imports also create dependent translation jobs. Use a surrounding transaction when importing a native sentence and its known source translations together.
 - `record_review(conn, review_job_id, review, worker_id=..., claim_token=..., producer=...)` records a fresh review and marks the original draft `checked` or `rejected`.
 - `enqueue_repair(conn, target_job_id, review_job_id, feedback, max_rounds=3)` creates a distinct pending attempt with `repair_round`, the previous draft, review issues and any proposed repair as untrusted context. It returns a job ID, or `None` when it flags the target in `agent_queue`. Three failed rounds including the original, or repeated identical meaningful draft content, require agent review. Repairs clear the source candidate so it cannot be imported again. `enqueue_repair_job(conn, review_job_id)` is a convenience form. Neither function approves or overwrites rejected results.
 - `enqueue_example_translation_jobs(conn, language, entry_id, example, source_job_id=None, example_index=0, known_translations=None)` is also available for explicit downstream insertion.

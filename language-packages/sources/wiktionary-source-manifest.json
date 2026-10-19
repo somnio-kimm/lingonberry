@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "source": "https://kaikki.org/dictionary/rawdata.html",
+  "terms": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use#7._Licensing_of_Content",
+  "sources": [
+    {
+      "edition": "ko",
+      "path": "local-data/sources/legacy-german-dictionary-downloads/ko-extract.jsonl.gz",
+      "sha256": "c2d53d790a7a3457861efb8155214c8aecd4518d9b76771cac4cf3266fb34d13",
+      "bytes": 26869647,
+      "url": "https://kaikki.org/dictionary/downloads/ko/ko-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "Korean Wiktionary contributors",
+      "policyUrl": "https://ko.wiktionary.org/wiki/위키낱말사전:저작권",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:22:09.488286+00:00",
+      "snapshotNote": "Existing cached snapshot; precise dump date and extraction revision not recorded.",
+      "http": {}
+    },
+    {
+      "edition": "de",
+      "path": "local-data/sources/legacy-german-dictionary-downloads/de-extract.jsonl.gz",
+      "sha256": "2e66f18a093e94b29b04733d0222625695a3d5ed199e700059193895490dfb19",
+      "bytes": 308579949,
+      "url": "https://kaikki.org/dictionary/downloads/de/de-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "German Wiktionary contributors",
+      "policyUrl": "https://de.wiktionary.org/wiki/Wiktionary:Lizenzbestimmungen",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:22:09.708458+00:00",
+      "snapshotNote": "Existing cached snapshot; precise dump date and extraction revision not recorded.",
+      "http": {}
+    },
+    {
+      "edition": "en",
+      "path": "local-data/sources/legacy-german-dictionary-downloads/en-extract.jsonl.gz",
+      "sha256": "3dac8a09e57827bef493e2e6b552fe917bf3b1fc55dee05c4e4a3702aff5dbdb",
+      "bytes": 2981058381,
+      "url": "https://kaikki.org/dictionary/downloads/en/en-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "English Wiktionary contributors",
+      "policyUrl": "https://en.wiktionary.org/wiki/Wiktionary:Copyrights",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:22:11.564391+00:00",
+      "snapshotNote": "Existing cached snapshot; precise dump date and extraction revision not recorded.",
+      "http": {}
+    },
+    {
+      "edition": "ja",
+      "path": "local-data/sources/wiktionary/ja-extract.jsonl.gz",
+      "sha256": "92b85a0c09e2013e9bad4258de9e0226d23e0a20011cb66c3ba7fed33d39ee90",
+      "bytes": 64974760,
+      "url": "https://kaikki.org/dictionary/downloads/ja/ja-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "Japanese Wiktionary contributors",
+      "policyUrl": "https://ja.wiktionary.org/wiki/Wiktionary:%E8%91%97%E4%BD%9C%E6%A8%A9",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:22:25.724735+00:00",
+      "snapshotNote": "Downloaded raw edition; source page does not specify edition-specific dump date or extraction revision.",
+      "http": {
+        "ETag": "\"6ac0bbd4-3df6fa8\"",
+        "Last-Modified": "Sat, 03 Oct 2026 08:24:52 GMT",
+        "Content-Length": "64974760"
+      }
+    },
+    {
+      "edition": "es",
+      "path": "local-data/sources/wiktionary/es-extract.jsonl.gz",
+      "sha256": "fb5b5b8520912d1d1a398f2b8bf2569c11911b4c26bad6b8c066a84f5e3d34ed",
+      "bytes": 103226106,
+      "url": "https://kaikki.org/dictionary/downloads/es/es-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "Spanish Wiktionary contributors",
+      "policyUrl": "https://es.wiktionary.org/wiki/Wikcionario:Copyrights",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:22:34.988675+00:00",
+      "snapshotNote": "Downloaded raw edition; source page does not specify edition-specific dump date or extraction revision.",
+      "http": {
+        "ETag": "\"6ac0bbe0-6271afa\"",
+        "Last-Modified": "Sat, 03 Oct 2026 08:25:04 GMT",
+        "Content-Length": "103226106"
+      }
+    },
+    {
+      "edition": "zh",
+      "path": "local-data/sources/wiktionary/zh-extract.jsonl.gz",
+      "sha256": "41f0024d80b0195c15348a168a3d4e0fe0f50124f26abb8bf9339ec0814c9d12",
+      "bytes": 234452181,
+      "url": "https://kaikki.org/dictionary/downloads/zh/zh-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "Chinese Wiktionary contributors",
+      "policyUrl": "https://zh.wiktionary.org/wiki/Wiktionary:%E7%89%88%E6%9D%83%E4%BF%A1%E6%81%AF",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:22:57.259234+00:00",
+      "snapshotNote": "Downloaded raw edition; source page does not specify edition-specific dump date or extraction revision.",
+      "http": {
+        "ETag": "\"6ac0bc04-df974d5\"",
+        "Last-Modified": "Sat, 03 Oct 2026 08:25:40 GMT",
+        "Content-Length": "234452181"
+      }
+    },
+    {
+      "edition": "fr",
+      "path": "local-data/sources/wiktionary/fr-extract.jsonl.gz",
+      "sha256": "f3fc5417d1759188ecfd74df90cbf231b28306b150970ea89614cb8cb4668f32",
+      "bytes": 736590407,
+      "url": "https://kaikki.org/dictionary/downloads/fr/fr-extract.jsonl.gz",
+      "license": "CC-BY-SA-4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "creator": "French Wiktionary contributors",
+      "policyUrl": "https://fr.wiktionary.org/wiki/Convention:Droit_d%E2%80%99auteur",
+      "dumpDate": null,
+      "extractorRevision": null,
+      "verifiedAt": "2026-10-17T10:23:56.426063+00:00",
+      "snapshotNote": "Downloaded raw edition; source page does not specify edition-specific dump date or extraction revision.",
+      "http": {
+        "ETag": "\"6ac0bc5b-2be77a47\"",
+        "Last-Modified": "Sat, 03 Oct 2026 08:27:07 GMT",
+        "Content-Length": "736590407"
+      }
+    }
+  ]
+}

@@ -186,9 +186,12 @@ export function assembleGpuEntry({entry,evidence,checkedResults=[],studyLanguage
   if(item.review?.nativeSpeakerReview!=='pending'||!expectedMethods.includes(item.review?.method))block('invalid_review_claim',field,'Field review must honestly identify source/model review and pending native review.');
   if(item.producer?.role!=='local-draft'||item.reviewer?.role!=='local-review'||(!sourceImport&&!nonempty(item.producer?.model))||!nonempty(item.producer?.revision)||!nonempty(item.reviewer?.model)||!nonempty(item.reviewer?.revision))block('invalid_producer_binding',field,'Host-owned draft and reviewer identities are required.');
   if(sourceImport){
-   const candidate=evidence.meaningCandidates?.[job.locale];
-   const expectedProvenance=candidate?.provenance?{...candidate.provenance,kind:'licensed-source'}:null;
-   if(job.task!=='meaning'||item.producer.model!==null||payload.source_import_allowed===false||payload.revision_request||!candidate||!sourceProvenance(expectedProvenance)||!(/^[a-f0-9]{64}$/i.test(candidate.source_snapshot_sha256||''))||item.producer.revision!==candidate.source_snapshot_sha256||payload.source_digest!==candidate.source_digest||item.producer.source_digest!==candidate.source_digest||outputText(item.output)!==candidate.text||queueContentDigest(item.output.provenance??null)!==queueContentDigest(expectedProvenance))block('unverified_source_import',field,'Non-model imports require exact licensed candidate text/attribution and bound source/snapshot digests.');
+   const bound=payload.licensed_source_candidate,candidate=bound??evidence.meaningCandidates?.[job.locale];
+   const expectedProvenance=candidate?.provenance?{...candidate.provenance,kind:bound?(candidate.provenance.kind??'licensed-source'):'licensed-source'}:null;
+   const bindingValid=bound?payload.licensed_source_candidate_digest===queueContentDigest(bound)&&item.producer.candidate_digest===queueContentDigest(bound)&&Number.isInteger(payload.source_import_of_job_id):job.task==='meaning'&&payload.source_digest===candidate?.source_digest;
+   const nativeValid=job.task!=='native_example'||(object(bound?.focus)&&queueContentDigest(item.output.focus??null)===queueContentDigest(bound.focus)&&item.output.pinyin===bound.pinyin);
+   const translationValid=job.task!=='example_translation'||(object(payload.source_example)&&bound?.source_text===payload.text&&bound?.source_example_digest===queueContentDigest(payload.source_example)&&bound.source_example_digest===payload.source_digest);
+   if(!bindingValid||!nativeValid||!translationValid||item.producer.model!==null||payload.source_import_allowed===false||payload.revision_request||!candidate||!sourceProvenance(expectedProvenance)||!(/^[a-f0-9]{64}$/i.test(candidate.source_snapshot_sha256||''))||(bound&&!(/^[a-f0-9]{64}$/.test(candidate.source_digest||'')))||item.producer.revision!==candidate.source_snapshot_sha256||item.producer.source_digest!==candidate.source_digest||outputText(item.output)!==candidate.text||queueContentDigest(item.output.provenance??null)!==queueContentDigest(expectedProvenance))block('unverified_source_import',field,'Non-model imports require exact licensed candidate text/attribution and bound source/snapshot digests.');
   }
   if(item.output.id!==undefined&&item.output.id!==entry.id)block('output_id_mismatch',field,'Generated output changed the stable entry ID.');
   if(item.output.entryId!==undefined&&item.output.entryId!==entry.id)block('output_id_mismatch',field,'Generated output changed the stable entry ID.');
@@ -231,7 +234,8 @@ export function assembleGpuEntry({entry,evidence,checkedResults=[],studyLanguage
  const usedJobs=new Set();
  function provenance(raw,field){const p=sourceProvenance(raw);if(!p)block('missing_valid_attribution',field,'A supported licence, creator and applicable source URL must come from trusted evidence.');return p;}
  function generatedMeaning(item,locale){
-  const value=outputText(item.output),candidate=evidence.meaningCandidates?.[locale];
+  if(item.producer.method==='licensed-source-import'&&item.job.payload.licensed_source_candidate)return {text:outputText(item.output),provenance:sourceProvenance(item.job.payload.licensed_source_candidate.provenance)};
+  const value=outputText(item.output),candidate=item.job.payload.licensed_source_candidate??evidence.meaningCandidates?.[locale];
   let base=candidate?sourceProvenance(candidate.provenance):null;
   if(candidate&&!base){block('missing_valid_attribution','meanings.'+locale,'Licensed candidate attribution cannot be replaced by unrelated entry credits.');return null;}
   if(candidate?.text===value&&base)return {text:value,provenance:base};
@@ -274,7 +278,8 @@ export function assembleGpuEntry({entry,evidence,checkedResults=[],studyLanguage
   }
   else{
    const matched=(evidence.original?.referenceExamples||[]).find(x=>x.text===original.text);
-   nativeProvenance=matched?sourceProvenance(matched.provenance??matched.source):{kind:'app-authored',creator:'Learn Language contributors',license:'CC-BY-4.0',method:'AI-assisted-original-example',model:item.producer.model,modelRevision:item.producer.revision};
+   const imported=item.producer.method==='licensed-source-import'&&item.job.payload.licensed_source_candidate;
+   nativeProvenance=imported?sourceProvenance(imported.provenance):item.job.payload.licensed_source_candidate?adaptation(sourceProvenance(item.job.payload.licensed_source_candidate.provenance),item.producer):matched?sourceProvenance(matched.provenance??matched.source):{kind:'app-authored',creator:'Learn Language contributors',license:'CC-BY-4.0',method:'AI-assisted-original-example',model:item.producer.model,modelRevision:item.producer.revision};
    usedJobs.add(item.job.id);
   }
   if(!nativeProvenance)block('missing_valid_attribution',field+'.provenance','Native example attribution is incomplete.');
@@ -282,6 +287,7 @@ export function assembleGpuEntry({entry,evidence,checkedResults=[],studyLanguage
   try{focus=findSentenceFocus({lemma:entry.word},original,studyLanguage);}catch{}
   if(!focus)block('unresolved_focus',field+'.focus','No unambiguous exact target surface; preserve the source and request focus repair.');
   const example={text:original.text,focus,provenance:nativeProvenance,translations:{}};
+  if(original.pinyin)example.pinyin=original.pinyin;
   if(existing?.pronunciation)example.pronunciation=existing.pronunciation;
   fieldOrigins.push({field,origin:existing?'existing-evidence':'checked-native-draft',...(item?{jobId:item.job.id,outputDigest:item.output_digest}:{})});
   for(const locale of locales){
@@ -295,7 +301,9 @@ export function assembleGpuEntry({entry,evidence,checkedResults=[],studyLanguage
     const p=translationProvenance(evidence,existing,index,locale,known,nativeProvenance);
     if(p)example.translations[locale]={text:known,provenance:p};else block('missing_valid_attribution',path,'Existing translation lacks matching trusted attribution.');
    }else if(translation){
-    const p=adaptation(nativeProvenance,translation.producer);
+    const imported=translation.producer.method==='licensed-source-import'&&translation.job.payload.licensed_source_candidate;
+    let p=imported?sourceProvenance(imported.provenance):adaptation(nativeProvenance,translation.producer);
+    if(imported&&p&&nativeProvenance?.license?.startsWith('CC-BY-SA-')&&!p.license.startsWith('CC-BY-SA-'))p={...p,kind:'licensed-adaptation',license:'CC-BY-SA-4.0',method:'licensed-source-translation',sources:[clone(nativeProvenance),clone(p)]};
     if(p)example.translations[locale]={text:outputText(translation.output),provenance:p};else block('unbound_generated_translation',path,'Translation lacks native-source attribution.');
     usedJobs.add(translation.job.id);fieldOrigins.push({field:path,origin:'checked-field-draft',jobId:translation.job.id,outputDigest:translation.output_digest});
    }else block('missing_translation',path,'No existing translation or checked current draft.');

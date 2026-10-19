@@ -60,6 +60,60 @@ class QueueTests(unittest.TestCase):
     @staticmethod
     def write_lines(path,rows):path.write_text(''.join(json.dumps(r,ensure_ascii=False)+'\n' for r in rows),encoding='utf-8')
 
+    def source_candidate(self, **extra):
+        return {'text':'A licensed sentence.', 'provenance':SOURCE,
+                'source_digest':'b'*64, 'source_snapshot_sha256':'a'*64, **extra}
+
+    def pending(self, task='meaning', language='fr', locale='de'):
+        return self.conn.execute("SELECT id FROM jobs WHERE status='pending' AND task=? AND study_language=? AND locale=? ORDER BY id LIMIT 1", (task,language,locale)).fetchone()[0]
+
+    def test_source_import_preserves_evidence_is_idempotent_and_requires_review(self):
+        old=self.pending();before=tuple(self.conn.execute("SELECT * FROM entries WHERE entry_id='fr1'").fetchone())
+        candidate=self.source_candidate(text='eine Bedeutung')
+        new=q.import_source_candidate(self.conn,old,candidate)
+        self.assertNotEqual(new,old);self.assertEqual(q.get_job(self.conn,old).status,'superseded')
+        self.assertEqual(q.get_job(self.conn,new).status,'draft');self.assertEqual(q.checked_results(self.conn,'fr','fr1'),[])
+        self.assertEqual(tuple(self.conn.execute("SELECT * FROM entries WHERE entry_id='fr1'").fetchone()),before)
+        self.assertEqual(q.import_source_candidate(self.conn,old,candidate),new)
+        q.prepare_queue(self.conn,self.repo,source_senses_path=self.senses)
+        self.assertEqual(q.get_job(self.conn,new).status,'draft')
+        with self.assertRaises(ValueError):q.import_source_candidate(self.conn,new,candidate)
+        with self.assertRaises(ValueError):q.import_source_candidate(self.conn,old,self.source_candidate(text='Another'))
+
+    def test_source_import_rejects_invalid_missing_stale_or_running_work(self):
+        with self.assertRaises(ValueError):q.import_source_candidate(self.conn,999999,self.source_candidate())
+        old=self.pending()
+        for change in [{'source_digest':'bad'},{'source_snapshot_sha256':''},{'text':''},{'provenance':{**SOURCE,'license':'MIT'}},{'provenance':{**SOURCE,'creator':''}}]:
+            with self.subTest(change=change),self.assertRaises(ValueError):q.import_source_candidate(self.conn,old,self.source_candidate(**change))
+        self.assertEqual(q.get_job(self.conn,old).status,'pending')
+        q.claim_jobs(self.conn,'generator',limit=128,kind='meaning')
+        with self.assertRaises(ValueError):q.import_source_candidate(self.conn,old,self.source_candidate())
+        q.recover_running_jobs(self.conn,worker_id='generator')
+        self.conn.execute("UPDATE entries SET entry_digest='changed' WHERE entry_id='fr1'")
+        with self.assertRaisesRegex(ValueError,'Stale'):q.import_source_candidate(self.conn,old,self.source_candidate())
+
+    def test_native_source_import_binds_translation_children_and_exact_source_translation(self):
+        old=self.pending('native_example','fr','fr')
+        candidate=self.source_candidate(text='Le livre est ici.',focus={'text':'livre','start':3})
+        new=q.import_source_candidate(self.conn,old,candidate)
+        child=self.conn.execute("SELECT id FROM jobs WHERE task='example_translation' AND locale='en' AND status='pending' AND entry_id='fr1'").fetchone()[0]
+        job=q.get_job(self.conn,child);source=job.payload['source_example']
+        self.assertEqual(source['provenance']['license'],'CC-BY-SA-2.0-KR')
+        translation=self.source_candidate(text='The book is here.',source_text=source['text'],source_example_digest=q.digest(source))
+        with self.assertRaises(ValueError):q.import_source_candidate(self.conn,child,{**translation,'source_text':'Stale.'})
+        translated=q.import_source_candidate(self.conn,child,translation)
+        self.assertEqual(q.get_job(self.conn,translated).payload['dependency_job_ids'],[new])
+        self.assertEqual(q.source_candidate_output(q.get_job(self.conn,translated))['text'],'The book is here.')
+        forged=q.get_job(self.conn,translated)
+        forged.payload['licensed_source_candidate']['provenance']['creator']='Forged'
+        with self.assertRaisesRegex(ValueError,'binding'):q.source_candidate_output(forged)
+
+    def test_source_import_cannot_replace_existing_meaning_or_native_example(self):
+        for task,locale,index,payload in [('meaning','en',-1,{}),('native_example','en',0,{})]:
+            job=q.enqueue_job(self.conn,'en','en1',task,locale,payload,example_index=index)
+            candidate=self.source_candidate(focus={'text':'licensed'})
+            with self.assertRaisesRegex(ValueError,'already exists'):q.import_source_candidate(self.conn,job,candidate)
+
     def test_complete_matrix_counts_do_not_accept_reference_candidates(self):
         coverage=self.report['coverage']
         self.assertEqual(coverage['entries'],8)

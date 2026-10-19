@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "exclusions": [
+    {
+      "studyLanguage": "en",
+      "entryId": "en-lex-00abd042438483453c14",
+      "entryDigest": "7232c8de6e75dd8e1a1292c1c63cc96f6d17732cf48a309c99436a5006994c0d",
+      "sourceIdentity": {
+        "edition": "en",
+        "snapshotSha256": "3dac8a09e57827bef493e2e6b552fe917bf3b1fc55dee05c4e4a3702aff5dbdb",
+        "rowDigest": "c288f85b546bec9b86de4fe226cf4ecefb42c069a79f7ed19707dbc16783a667",
+        "senseIndex": 0
+      },
+      "reason": "The selected adverb means in an uncooked state; this source sense describes sex without a condom. A unique source sense is not sufficient semantic evidence.",
+      "reviewer": "Codex editorial source audit",
+      "reviewedAt": "2026-10-17"
+    }
+  ]
+}

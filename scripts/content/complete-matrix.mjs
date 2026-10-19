@@ -1,4 +1,5 @@
 import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
 import {STUDY_LANGUAGES,allowsExplanation} from '../../web/js/shared/language-pairs.js';
 import {validatePackage,validateExplanation} from '../../web/js/packages/schema.js';
 import {findSentenceFocus} from '../../web/js/shared/lexicon-sentences.js';
@@ -10,10 +11,37 @@ const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof v
 export function contentDigest(record){const {review,...content}=record;return createHash('sha256').update(JSON.stringify(canonical(content))).digest('hex');}
 function requireValue(value,message){if(!value)throw new Error('Incomplete reviewed content: '+message);}
 function text(value,locale,label){requireValue(typeof value==='string'&&value.trim()&&value.length<=4000,label);requireValue(!placeholder.test(value.trim()),label+' placeholder');if(scripts[locale])requireValue(scripts[locale].test(value),label+' script');}
+function wiktionaryUrl(value){
+ try{const url=new URL(value);return url.hostname==='wiktionary.org'||url.hostname.endsWith('.wiktionary.org')?url:null;}catch{return null;}
+}
+function wiktionarySources(value){
+ if(!value||typeof value!=='object')return [];
+ const own=wiktionaryUrl(value.url)?[value]:[];
+ return own.concat(Object.values(value).flatMap(wiktionarySources));
+}
+function wiktionaryTitle(url){
+ const title=url.searchParams.get('title')??(url.pathname.startsWith('/wiki/')?decodeURIComponent(url.pathname.slice(6)):null);
+ return title?.replaceAll('_',' ').normalize('NFC');
+}
+function requireWiktionaryAttribution(provenance){
+ const sources=wiktionarySources(provenance);if(!sources.length)return;
+ requireValue(provenance.license==='CC-BY-SA-4.0','Wiktionary share-alike licence');
+ for(const source of sources){
+  // Adaptation wrappers may carry the article URL while the complete original
+  // credit remains nested under sources or derivedFrom. Keep those credits intact.
+  const credits=wiktionarySources(source).filter(item=>item.url===source.url);
+  requireValue(credits.some(item=>{
+   const article=wiktionaryUrl(item.url),history=wiktionaryUrl(item.history??item.history_url);
+   let licenseUrl;try{licenseUrl=new URL(item.licenseUrl??item.license_url);}catch{return false;}
+   return typeof item.creator==='string'&&item.creator.trim()&&item.license==='CC-BY-SA-4.0'&&article?.protocol==='https:'&&!article.username&&!article.password&&history?.protocol==='https:'&&!history.username&&!history.password&&history.hostname===article.hostname&&history.searchParams.get('action')==='history'&&wiktionaryTitle(article)&&wiktionaryTitle(history)===wiktionaryTitle(article)&&licenseUrl.protocol==='https:'&&licenseUrl.hostname==='creativecommons.org'&&!licenseUrl.username&&!licenseUrl.password&&/^\/licenses\/by-sa\/4\.0\/?$/.test(licenseUrl.pathname);
+  }),'Wiktionary contributor history and licence URL');
+ }
+}
 function attribution(item){
  const p=item?.provenance;requireValue(p&&licences.has(p.license),'commercially reusable licence');requireValue(typeof p.creator==='string'&&p.creator.trim(),'creator attribution');
  requireValue(['app-authored','licensed-source','licensed-adaptation'].includes(p.kind),'provenance kind');
  if(p.kind!=='app-authored'){const url=new URL(p.url);requireValue(url.protocol==='https:'&&!url.username&&!url.password,'source URL');}
+ requireWiktionaryAttribution(p);
 }
 /** This gate records explicit editorial decisions; structural validation is not a language-quality review. */
 export function validateReviewedEntry(record,base,language){
@@ -53,7 +81,9 @@ export function compileCompleteMatrix({cores,records,version}){
    return {...rest,example:examples[0],...(examples.length>1?{additionalExamples:examples.slice(1)}:{}),exampleStatus:'AI-editorial-checked; native-speaker-review-pending',qualityReview:record.review};
   });
   const identifiers=new Set(base.license.identifier.split(/\s+AND\s+/));for(const record of byId.values()){for(const value of Object.values(record.meanings))identifiers.add(value.provenance.license);for(const example of record.examples){identifiers.add(example.provenance.license);for(const value of Object.values(example.translations))identifiers.add(value.provenance.license);}}
-  const license={...base.license,identifier:[...identifiers].sort().join(' AND '),notice:`Complete explanation edition ${version}. New original text is CC BY 4.0; source-derived text retains its per-item licence and attribution. AI editorial checks are recorded; native-speaker review remains pending.\n\n${base.license.notice}`};
+  const usesWiktionary=[...byId.values(),...entries].some(record=>wiktionarySources(record).length>0);
+  const sourceNotice=usesWiktionary?'\n\n'+readFileSync(new URL('../../language-packages/credits/WIKTIONARY-SOURCE-REUSE.txt',import.meta.url),'utf8').trim():'';
+  const license={...base.license,identifier:[...identifiers].sort().join(' AND '),notice:`Complete explanation edition ${version}. New original text is CC BY 4.0; source-derived text retains its per-item licence and attribution. AI editorial checks are recorded; native-speaker review remains pending.\n\n${base.license.notice}${sourceNotice}`};
   const study={...base,version,license,contentReview:{status:'AI-editorial-checked',nativeSpeakerReview:'pending',entries:entries.length,bilingualExamples:entries.length,examplesPending:0,explanationLanguages:STUDY_LANGUAGES.filter(locale=>allowsExplanation(language,locale))},entries};validatePackage(study);packages.push(study);
   for(const locale of study.contentReview.explanationLanguages){
    const pair={schemaVersion:2,kind:'explanation',id:language+'-'+locale,targetLanguage:language,explanationLanguage:locale,version,studyVersion:version,license,entries:entries.map(entry=>{

@@ -11,9 +11,11 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 import hashlib
 import json
+import re
 from pathlib import Path
 import sqlite3
 from typing import Any
+from urllib.parse import urlsplit
 import uuid
 
 LANGUAGES = ('de', 'en', 'es', 'fr', 'ja', 'ko', 'zh')
@@ -328,6 +330,117 @@ def finish_job(conn, job_id, output: dict, *, worker_id, claim_token, producer: 
                                                          source_job_id=job_id,example_index=row['example_index'])
         event(conn,job_id,'draft-produced',{'output_digest':digest(output),'producer':producer})
         return children
+
+
+def source_candidate_output(job: Job) -> dict | None:
+    """Validate host-bound source evidence; never take attribution from model output."""
+    p = job.payload
+    candidate = p.get('licensed_source_candidate')
+    if candidate is None:
+        return None
+    if (job.task not in ('meaning', 'native_example', 'example_translation')
+        or p.get('source_import_allowed') is False or p.get('revision_request')
+        or not isinstance(candidate, dict) or p.get('licensed_source_candidate_digest') != digest(candidate)):
+        raise ValueError('Invalid licensed source candidate binding')
+    if not has_text(candidate.get('text')):
+        raise ValueError('Source candidate text required')
+    for key in ('source_digest', 'source_snapshot_sha256'):
+        if not isinstance(candidate.get(key), str) or not re.fullmatch('[a-f0-9]{64}', candidate[key]):
+            raise ValueError('Source candidate requires source and snapshot SHA-256 digests')
+    provenance = candidate.get('provenance')
+    if not isinstance(provenance, dict):
+        raise ValueError('Source candidate provenance required')
+    if not has_text(provenance.get('url')):raise ValueError('Licensed source URL required')
+    url = urlsplit(provenance.get('url', ''))
+    if (provenance.get('license') not in ('CC-BY-4.0', 'CC-BY-SA-4.0', 'CC-BY-SA-2.0-KR')
+        or not has_text(provenance.get('creator')) or url.scheme != 'https' or not url.netloc
+        or url.username or url.password):
+        raise ValueError('Licensed source attribution required')
+    output = {'text': candidate['text'], 'provenance': {**provenance, 'kind': provenance.get('kind', 'licensed-source')}}
+    if output['provenance']['kind'] not in ('licensed-source', 'licensed-adaptation'):
+        raise ValueError('Licensed source attribution kind required')
+    if job.task == 'native_example':
+        focus = candidate.get('focus')
+        if not isinstance(focus, dict) or not has_text(focus.get('text')) or focus['text'] not in candidate['text']:
+            raise ValueError('Native source candidate focus required')
+        start = focus.get('start')
+        if start is not None:
+            if type(start) is not int or start < 0 or candidate['text'].encode('utf-16-le')[start*2:(start+len(focus['text'].encode('utf-16-le'))//2)*2] != focus['text'].encode('utf-16-le'):
+                raise ValueError('Native source focus offset does not match text')
+        elif candidate['text'].count(focus['text']) != 1:
+            raise ValueError('Ambiguous native source focus requires an exact offset')
+        output['focus'] = focus
+        if 'pinyin' in candidate:
+            if not has_text(candidate['pinyin']):raise ValueError('Invalid source pinyin')
+            output['pinyin'] = candidate['pinyin']
+    if job.task == 'example_translation':
+        if (candidate.get('source_text') != p.get('text') or not has_text(p.get('text'))
+            or candidate.get('source_example_digest') != digest(p.get('source_example'))
+            or p.get('source_digest') != candidate['source_example_digest']):
+            raise ValueError('Translation candidate must bind the exact native source')
+    return output
+
+
+def import_source_candidate(conn, job_id: int, candidate: dict) -> int:
+    """Replace only pending missing work with an immutable, separately reviewed draft."""
+    with transaction(conn):
+        if not _build_ready(conn):raise ValueError('Queue preparation is incomplete')
+        row = conn.execute('SELECT * FROM jobs WHERE id=?', (job_id,)).fetchone()
+        if not row:raise ValueError('Unknown job')
+        original = _job(row)
+        if digest(original.payload) != original.input_hash:
+            raise ValueError('Stale job payload digest')
+        entry = conn.execute('SELECT * FROM entries WHERE study_language=? AND entry_id=?',
+                             (original.study_language, original.entry_id)).fetchone()
+        if not entry or entry['entry_digest'] != row['entry_digest']:
+            raise ValueError('Stale source candidate entry')
+        body = dict(original.payload, licensed_source_candidate=json.loads(encoded(candidate)),
+                    licensed_source_candidate_digest=digest(candidate), source_import_of_job_id=job_id)
+        bound = Job(original.id, original.study_language, original.entry_id, original.task, original.locale,
+                    original.example_index, original.input_hash, body, original.status, None, original.attempts)
+        output = source_candidate_output(bound)
+        if output is None:raise ValueError('Source candidate required')
+        # A repeated call may recover exactly the draft it created, but cannot revive stale work.
+        for previous in conn.execute('SELECT * FROM jobs WHERE study_language=? AND entry_id=? AND logical_key=?',
+                                     (original.study_language, original.entry_id, row['logical_key'])):
+            p = json.loads(previous['payload_json'])
+            if (p.get('source_import_of_job_id') == job_id and p.get('licensed_source_candidate_digest') == digest(candidate)
+                and previous['status'] in ('draft', 'checked') and previous['entry_digest'] == entry['entry_digest']):
+                return previous['id']
+        if row['status'] != 'pending' or original.task not in ('meaning', 'native_example', 'example_translation'):
+            raise ValueError('Source imports require pending missing fields; existing work is preserved')
+        evidence = json.loads(entry['evidence_json'])
+        if original.task == 'meaning' and has_text(evidence.get('meanings', {}).get(original.locale, {}).get('text')):
+            raise ValueError('Meaning already exists')
+        examples = evidence.get('examples', [])
+        example = examples[original.example_index] if 0 <= original.example_index < len(examples) else None
+        if original.task == 'native_example' and example:
+            raise ValueError('Native example already exists')
+        if original.task == 'example_translation':
+            if original.locale == original.study_language:raise ValueError('Self-pair must reuse native text')
+            known = (example or {}).get('translations', {}).get(original.locale)
+            if has_text(known) or isinstance(known, dict) and has_text(known.get('text')):
+                raise ValueError('Translation already exists')
+            source_job = original.payload.get('source_job_id')
+            if source_job is None:
+                if digest(example) != digest(original.payload.get('source_example')):
+                    raise ValueError('Stale native source example')
+            else:
+                source_result = conn.execute('SELECT output_json FROM results WHERE job_id=?', (source_job,)).fetchone()
+                if not source_result or digest(json.loads(source_result[0])) != digest(original.payload.get('source_example')):
+                    raise ValueError('Stale native source draft')
+        parents = [r[0] for r in conn.execute('SELECT depends_on FROM dependencies WHERE job_id=?', (job_id,))]
+        if any(conn.execute('SELECT status FROM jobs WHERE id=?', (parent,)).fetchone()[0] not in ('draft','checked') for parent in parents):
+            raise ValueError('Source import dependencies are not ready')
+        replacement = enqueue_job(conn, original.study_language, original.entry_id, original.task, original.locale,
+                                  body, example_index=original.example_index, dependencies=parents, logical_key=row['logical_key'])
+        token = uuid.uuid4().hex
+        conn.execute("UPDATE jobs SET status='running',claimed_by='source-import',claim_token=? WHERE id=?", (token, replacement))
+        finish_job(conn, replacement, output, worker_id='source-import', claim_token=token,
+                   producer={'role':'local-draft','method':'licensed-source-import','model':None,
+                             'revision':candidate['source_snapshot_sha256'],'source_digest':candidate['source_digest'],
+                             'candidate_digest':digest(candidate),'prompt_digest':None})
+        return replacement
 
 
 def record_review(conn, review_job_id, review: dict, *, worker_id, claim_token, producer: dict):
