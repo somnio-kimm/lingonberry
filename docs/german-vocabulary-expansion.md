@@ -2,6 +2,14 @@
 
 Version 3 expands the archived 2,000-entry German study corpus to 11,288 entries (11,283 distinct headwords), with 11,291 translated examples. A1: 780; A2: 672; B1: 1,568; B2: 662; C1: 2,007; C2: 5,599. Chinese 2.0.0 and the immutable German 2.0.0 files remain unchanged. Existing German IDs and examples are preserved; newly assigned levels do not change progress keys.
 
+The app displays four groups: **GZ A1**, **GZ A2**, **GZ B1**, and **GZ B2-C2**.
+The combined upper group contains all 8,268 former B2/C1/C2 entries, ordered
+alphabetically by headword. It is additional study vocabulary, not an official
+Goethe upper-level word list. The original package levels and saved attempt
+records remain intact; older B2/C1/C2 selections open the combined group, and
+Review filters group those records together. No “Estimated” text is shown in
+the labels.
+
 ## Study bands
 
 A1, A2 and B1 use the earliest matching **official adult Goethe word list**. `language-packages/sources/goethe-headword-evidence.json` records PDF URLs, SHA-256 hashes, page numbers and normalised printed headwords. Only factual headword evidence is redistributed. The PDFs and their example sentences are not included.

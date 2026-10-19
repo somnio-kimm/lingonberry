@@ -1,4 +1,4 @@
-import { STUDY_LEVELS } from '../app-definition.js';
+import { STUDY_LEVELS, studyLevelGroup } from '../app-definition.js';
 import { QUIZ_MODES, SNAPSHOT_MODES, LISTENING_MODES, emptyQuizAnswers } from './quiz-modes.js';
 import { snapshotQuestion } from '../../../../js/shared/question-snapshot.js';
 import { wrongAnswerCount } from './wrong-count.js';
@@ -17,7 +17,7 @@ export function createStore(storage) {
   for (const mode of QUIZ_MODES) state.quizAnswers[mode] ||= {};
   state.preferences = {
     theme: ['light','dark','system'].includes(state.preferences?.theme) ? state.preferences.theme : 'system',
-    studyLevel: STUDY_LEVEL_IDS.includes(state.preferences?.studyLevel) ? state.preferences.studyLevel : STUDY_LEVEL_IDS[0],
+    studyLevel: STUDY_LEVEL_IDS.includes(studyLevelGroup(state.preferences?.studyLevel)) ? studyLevelGroup(state.preferences.studyLevel) : STUDY_LEVEL_IDS[0],
     uiLang: ['en','ko'].includes(state.preferences?.uiLang) ? state.preferences.uiLang : 'en',
     hapticEnabled: state.preferences?.hapticEnabled !== false,
     autoRemoveResolvedWrongs: state.preferences?.autoRemoveResolvedWrongs === true,
