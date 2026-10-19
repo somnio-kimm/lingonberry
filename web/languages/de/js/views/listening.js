@@ -1,3 +1,4 @@
+import { studyLevelLabel } from '../app-definition.js';
 import { showQuizBurst } from '../../../../js/shared/ui.js';
 import { renderListeningView } from '../../../../js/shared/listening-view.js';
 import { listeningAnswerCorrect, listeningQuestions } from '../core/listening-tests.js';
@@ -12,7 +13,7 @@ export function renderListeningTest(el,ctx,session={}){
   answerCorrect:listeningAnswerCorrect,
   labels:labels(),locale:getLocale,
   questions:(mode,{status,pos})=>listeningQuestions(mode,filterStudyStatus(studyWords(pool,level,{pos}),ctx.store,status),getLocale(),ctx.words),
-  filters:({status,pos,open})=>studyFilterMarkup(pool,ctx.store,status,pos,open),level:q=>q.word.cefr,
+  filters:({status,pos,open})=>studyFilterMarkup(pool,ctx.store,status,pos,open),level:q=>studyLevelLabel(q.word.cefr),
   translation:q=>q.kind==='word'?wordMeaning(q.word):sentenceMeaning(q.example),
   hint:q=>q.kind==='word'?vocabularyMeaning(q.word,q.locale):q.example[q.locale],
   haptic:correct=>{ctx.haptic();showQuizBurst(correct);},update:()=>ctx.updateStatus(),

@@ -1,3 +1,4 @@
+import { studyLevelLabel } from '../app-definition.js';
 import { escapeHtml as e } from '../../../../js/shared/ui.js';
 import { t, getLocale, wordMeaning } from '../core/i18n.js';
 import { studyWords, wordHeading, filterStudyStatus } from '../core/words.js';
@@ -8,7 +9,7 @@ export function renderWordList(el,ctx) {
  const state=ctx.wordListState?.level===level?ctx.wordListState:{level,pos:'all',query:'',status:'all'};state.status||='all';ctx.wordListState=state;
  let filterOpen=false,pager=null,frame=0,alive=true;
  const controls=createStudyControls(el,ctx);
- const row=w=>`<div class="wl-row" data-id="${e(w.id)}"><div class="wl-main" role="button" tabindex="0" aria-label="${e(w.lemma)} · ${t('Word details')}"><div class="wl-headword" lang="de">${wordHeading(w)}</div><div class="wl-meaning" lang="${getLocale()}">${e(wordMeaning(w))}</div></div><div class="wl-trail"><span class="wl-tag wl-hsk">${e(w.cefr)}</span><span class="wl-tag wl-pos">${e(typeLabel(w))}</span>${statusTag(w,ctx.store)}<button class="wl-speak" aria-label="${t('Speak word')}">🔊</button></div></div>`;
+ const row=w=>`<div class="wl-row" data-id="${e(w.id)}"><div class="wl-main" role="button" tabindex="0" aria-label="${e(w.lemma)} · ${t('Word details')}"><div class="wl-headword" lang="de">${wordHeading(w)}</div><div class="wl-meaning" lang="${getLocale()}">${e(wordMeaning(w))}</div></div><div class="wl-trail"><span class="wl-tag wl-hsk">${e(studyLevelLabel(w.cefr))}</span><span class="wl-tag wl-pos">${e(typeLabel(w))}</span>${statusTag(w,ctx.store)}<button class="wl-speak" aria-label="${t('Speak word')}">🔊</button></div></div>`;
  function results(initialCount=80){
   if(!alive)return;
   const filtered=filterStudyStatus(studyWords(pool,level,state),ctx.store,state.status);
