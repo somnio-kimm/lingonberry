@@ -85,7 +85,13 @@ def verify(directory, catalog, report_path, records_path=None, language="en", re
                     senses = raw.get('senses', [])
                     assert type(ordinal) is int and 1 <= ordinal <= len(senses), 'Invalid 1-based sense ordinal'
                     sense = senses[ordinal - 1]
-                    assert proof.get('glosses') and proof['glosses'] == sense.get('glosses'), 'Selected glosses differ from source'
+                    if proof.get('readingCategory'):
+                        category = proof['readingCategory']
+                        assert language == 'ja' and raw.get('pos') == 'character', 'Reading metadata requires a Japanese character row'
+                        assert category.startswith('Japanese kanji with ') and ' reading ' in category and category in raw.get('categories', []), 'Reading category differs from source'
+                        assert proof.get('glosses') == sense.get('glosses', []), 'Reading-row glosses differ from source'
+                    else:
+                        assert proof.get('glosses') and proof['glosses'] == sense.get('glosses'), 'Selected glosses differ from source'
                     if 'tags' in proof:
                         assert proof['tags'] == sense.get('tags', []), 'Selected usage tags differ'
                 else:
