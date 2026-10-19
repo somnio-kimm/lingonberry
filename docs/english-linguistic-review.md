@@ -2,6 +2,37 @@
 
 This review covers the 12,016 entries in the English study core 3.0.0 and the matching English and Korean explanation packages. The fields are the headword, part of speech, English meaning, Korean meaning and consistency with any existing primary example. It is separate from a completeness, licence or package-integrity audit.
 
+## Results — 19 October 2026
+
+All **12,016 entries** received an entry-by-entry AI linguistic review of their English and Korean meanings. All **139 existing primary examples** were checked for consistency. There are no additional examples in this package.
+
+| Disposition | Entries |
+|---|---:|
+| No issue flagged in this pass | 7,669 |
+| Correction proposed | 1,993 |
+| Unresolved source, sense or usage concern | 2,354 |
+| Not reviewed | 0 |
+
+**4,347 entries need follow-up. The current English package is not linguistically approved for release.** The review contains 224 quarantine recommendations and one explicit duplicate-reconciliation action. These are not automatic deletions. Some unresolved records also contain partial wording proposals; none are approved for publication by the validator.
+
+Representative findings:
+
+| Entry | Finding | Next step |
+|---|---|---|
+| spin — noun | English describes hairspray; Korean selects particle spin | Proposed bilingual physics definition, corroborated against Wiktionary |
+| he — pronoun | Definition explains Korean pronoun morphology | Replace the transferred grammatical explanation |
+| blacksmith — noun | Both definitions describe a workshop, not a person | Reconcile the selected source concept |
+| petal — noun | Definition describes a counting unit for leaves | Review proposed flower-part definition and source binding |
+| arc — noun | Definition describes a parabola | Reconcile the mathematical sense |
+| legislature — noun | Definition describes legislation as an activity | Reconcile institution versus activity |
+| when / many | Duplicate concepts under separate IDs | Reconcile quiz selection while preserving history |
+
+Source checks also prevented inappropriate removals: the common-noun sense of **excellency** and the narrower **polygyny** sense of **polygamy** are attested in the licensed Wiktionary snapshot. Rarity alone is not an error.
+
+The complete [per-entry ledger](../language-packages/sources/meaning-reviews/en-3.0.0/entries.jsonl), [manifest and source hashes](../language-packages/sources/meaning-reviews/en-3.0.0/manifest.json), and [14 independent source checks](../language-packages/sources/meaning-reviews/en-3.0.0/independent-source-checks.jsonl) are retained in the repository. Every finding includes its original meanings, proposed changes where available, rationale and original source provenance.
+
+This pass covers English study meanings, not the other study languages, IELTS level calibration, audio pronunciation or the 2,606 separately displayed source-reference examples. Those examples do not have complete bilingual translations and retain their existing review status. No claim of full-app linguistic certification is made.
+
 ## Method
 
 Three AI reviewers inspect disjoint entry ranges. Every disposition is bound to a canonical SHA-256 digest of the exact source entry and meanings. The lead reviewer checks selected accepted entries and proposed findings against the licensed Wiktionary snapshot and returns disagreements for reconsideration. This is an AI-assisted linguistic review, not a fluent-speaker certification or a claim that every error has been eliminated.
