@@ -1,11 +1,10 @@
 import { wrongAnswerCount } from './wrong-count.js';
-import { studyLevelGroup } from '../app-definition.js';
 import { LISTENING_MODES } from './quiz-modes.js';
 // Keep review-list dismissal separate from assessment and attempt history.
 import { wordType } from './dictionary.js';
 export const wrongMode=row=>row.quizMode||row.stage;
 export { wrongAnswerCount } from './wrong-count.js';
-export const filterWrongEntries=(rows,{level='all',pos='all',mode='all'}={})=>rows.filter(row=>(level==='all'||studyLevelGroup(row.unit.level)===studyLevelGroup(level))&&(pos==='all'||row.type===pos)&&(mode==='all'||wrongMode(row)===mode));
+export const filterWrongEntries=(rows,{level='all',pos='all',mode='all'}={})=>rows.filter(row=>(level==='all'||row.unit.level===level)&&(pos==='all'||row.type===pos)&&(mode==='all'||wrongMode(row)===mode));
 export function wrongEntries(units, state, words=[]) {
   const byId=new Map(words.map(w=>[w.id,w]));
   const rows = [];
