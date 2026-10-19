@@ -32,3 +32,11 @@ test('Japanese full review binds all 12,027 current entries to exact readings, m
  assert.equal(entries.length,12027);assert.equal(entries.filter(row=>row.examples.length).length,2027);assert.ok(entries.every(row=>row.en&&row.ko&&row.digest.length===64));
  assert.throws(()=>validateJapaneseDecisions(entries,[]),/Incomplete/);
 });
+
+test('a Japanese part-of-speech correction preserves the existing reading unless explicitly changed',()=>{
+ const data=fixture();delete data.decisions[1].pronunciation;delete data.decisions[1].aliases;refresh(data);
+ const entry=compileMeaningCorrections(data).packages[0].entries[1];assert.equal(entry.pronunciation,data.core.entries[1].pronunciation);assert.deepEqual(entry.aliases,data.core.entries[1].aliases);
+});
+test('a Japanese replacement or changed headword requires an explicitly checked reading',()=>{
+ for(const field of ['decision','word']){const data=fixture();data.decisions[1][field]=field==='decision'?'replace':'別語';delete data.decisions[1].pronunciation;refresh(data);assert.throws(()=>compileMeaningCorrections(data),/explicit replacement reading/);}
+});

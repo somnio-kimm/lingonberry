@@ -14,7 +14,7 @@ export async function buildMeaningCorrectionEdition({language='en',directory,out
  const core=await json(resolve(root,`language-packages/${language}-core-3.0.0.json`));
  const pairs=await Promise.all(['en','ko'].map(locale=>json(resolve(root,`language-packages/${language}-${locale}-3.0.0.json`))));
  const review=language==='en'?await rows(resolve(root,'language-packages/sources/meaning-reviews/en-3.0.0/entries.jsonl')):undefined;
- const decisions=(await Promise.all(['a','b','c'].map(part=>rows(join(directory,part+'-decisions.jsonl'))))).flat();
+ const decisions=(await Promise.all((language==='ja'?['a','b','c','d']:['a','b','c']).map(part=>rows(join(directory,part+'-decisions.jsonl'))))).flat();
  const sourceValidation=await json(join(directory,'source-validation.json'));
  const {packages,report}=compileMeaningCorrections({core,pairs,review,decisions,sourceValidation,version:'4.0.0'});
  const payloads=packages.map(data=>{

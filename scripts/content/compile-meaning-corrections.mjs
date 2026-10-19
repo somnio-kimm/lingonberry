@@ -22,7 +22,7 @@ export function compileMeaningCorrections({core,pairs,review,decisions,sourceVal
  const levelFor=entry=>isEnglish?assignEnglishLevel(entry):entry.level;
  requireValue(compareContentVersions(version,core.version)>0,'new immutable version');
  const byLocale=new Map(pairs.map(pair=>[pair.explanationLanguage,pair]));
- requireValue(byLocale.size===2&&byLocale.has('en')&&byLocale.has('ko'),'both English and Korean pairs');
+ requireValue(pairs.length===2&&byLocale.size===2&&byLocale.has('en')&&byLocale.has('ko'),'both English and Korean pairs');
  pairs.forEach(pair=>validateExplanation(core,pair));
  const originals=(isEnglish?prepareEnglishReview:prepareJapaneseReview)(core,byLocale.get('en'),byLocale.get('ko'));
  if(isEnglish)summariseEnglishReview(originals,review,{requireComplete:true});else validateJapaneseDecisions(originals,decisions);
@@ -40,6 +40,7 @@ export function compileMeaningCorrections({core,pairs,review,decisions,sourceVal
    if(row.word!==undefined)requireValue(text(row.word,'word').length<=200,'word length');
    if(row.pos!==undefined)requireValue(partsOfSpeech.has(row.pos),'part of speech '+row.id);
   }
+  if(!isEnglish&&(row.decision==='replace'||(row.word&&row.word!==original.word)))text(row.pronunciation,'explicit replacement reading '+row.id);
   if(row.pronunciation!==undefined)text(row.pronunciation,'pronunciation '+row.id);
   if(row.example!==undefined){for(const field of ['text','en','ko'])text(row.example[field],'bilingual example '+field+' '+row.id);requireValue(/[가-힣]/u.test(row.example.ko),'Korean example '+row.id);validateExampleRecord({id:row.id,...row.example,provenance:{kind:'app-authored',license:'CC-BY-4.0'}},originalsById.get(row.id),language);}
   if(row.aliases!==undefined)requireValue(Array.isArray(row.aliases)&&row.aliases.length<=100&&row.aliases.every(value=>typeof value==='string'&&value.trim()&&value.length<=200),'aliases');
@@ -62,7 +63,7 @@ export function compileMeaningCorrections({core,pairs,review,decisions,sourceVal
   const lexical=edit.evidence.find(item=>item.license==='CC-BY-SA-4.0'&&item.sourceRowDigest);
   entry.grammar={...original.grammar};delete entry.grammar.senseAlignment;
   if(lexical)entry.grammar.lexicalSource={creator:lexical.creator,license:lexical.license,url:lexical.url,history:lexical.historyUrl,sourceRowDigest:lexical.sourceRowDigest,senseOrdinal:lexical.senseOrdinal};
-  if(edit.decision==='replace'||entry.word!==original.word||entry.partOfSpeech!==original.partOfSpeech){delete entry.referenceExamples;delete entry.pronunciation;delete entry.grammar.usageTags;delete entry.grammar.acceptedArticles;}
+  if(edit.decision==='replace'||entry.word!==original.word||entry.partOfSpeech!==original.partOfSpeech||(!isEnglish&&edit.pronunciation&&edit.pronunciation!==original.pronunciation)){delete entry.referenceExamples;if(isEnglish||edit.decision==='replace'||entry.word!==original.word)delete entry.pronunciation;delete entry.grammar.usageTags;delete entry.grammar.acceptedArticles;}
   if(edit.decision==='replace'||entry.word!==original.word)delete entry.aliases;
   if(edit.aliases)entry.aliases=[...edit.aliases];
   if(edit.retainOldSpellingAlias&&entry.word!==original.word)entry.aliases=[...new Set([...(entry.aliases||[]),original.word])];
