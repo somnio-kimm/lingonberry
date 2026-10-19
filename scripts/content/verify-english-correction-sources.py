@@ -15,8 +15,8 @@ def read_rows(path):
     return [json.loads(line) for line in Path(path).read_text().splitlines() if line.strip()]
 
 
-def verify(directory, catalog, report_path, records_path=None):
-    review = {row['id']: row for row in read_rows('language-packages/sources/meaning-reviews/en-3.0.0/entries.jsonl')}
+def verify(directory, catalog, report_path, records_path=None, language="en", review_path=None):
+    review = {row['id']: row for row in read_rows(review_path or 'language-packages/sources/meaning-reviews/en-3.0.0/entries.jsonl')}
     records = read_rows(records_path) if records_path else [row for file in sorted(directory.glob('*-decisions.jsonl')) for row in read_rows(file)]
     conn = sqlite3.connect(catalog.resolve().as_uri() + '?mode=ro', uri=True)
     conn.row_factory = sqlite3.Row
@@ -36,11 +36,11 @@ def verify(directory, catalog, report_path, records_path=None):
     for decision in records:
         try:
             original = review.get(decision['id'])
-            assert original and original['status'] != 'accepted', 'Unknown finding'
+            assert original and (language != 'en' or original['status'] != 'accepted'), 'Unknown finding'
             assert decision['id'] not in seen, 'Duplicate decision'
             seen.add(decision['id'])
             assert decision['index'] == original['index'] and decision['digest'] == original['digest'], 'Stale finding'
-            assert decision.get('evidence'), 'No source evidence'
+            assert isinstance(decision.get('evidence'), list) and (decision['evidence'] or (language != 'en' and decision['decision'] == 'retain')), 'No source evidence'
             for proof in decision['evidence']:
                 if proof.get('kind') == 'nikl':
                     if nikl_records is None:
@@ -65,16 +65,22 @@ def verify(directory, catalog, report_path, records_path=None):
                     wrapper = supplemental.get(proof['sourceRowDigest'])
                     if wrapper:
                         raw, provenance = wrapper['raw'], wrapper['provenance']
+                        assert raw.get('lang_code') == language, 'Supplemental source language differs'
                     else:
                         source_id = sources.get(proof.get('snapshotSha256'))
                         assert source_id is not None, 'Unknown source snapshot'
                         row = conn.execute('SELECT * FROM source_rows WHERE source_id=? AND source_line=?', (source_id, proof.get('sourceLine'))).fetchone()
-                        assert row and row['language'] == 'en', 'Missing English lexical source row'
+                        assert row and row['language'] == language, 'Missing target-language lexical source row'
                         assert row['row_digest'] == proof['sourceRowDigest'], 'Source row digest differs'
                         raw, provenance = json.loads(row['raw_json']), json.loads(row['provenance_json'])
                     for key in ['creator', 'license', 'licenseUrl', 'url', 'historyUrl', 'snapshotSha256', 'sourceLine', 'sourceRowDigest']:
                         assert proof.get(key) == provenance.get(key), 'Source provenance differs: ' + key
                     assert proof['license'] == 'CC-BY-SA-4.0', 'Unexpected Wiktionary licence'
+                    if 'sourceWord' in proof:
+                        assert proof['sourceWord'] == raw.get('word'), 'Source headword differs'
+                    if 'sourcePos' in proof:
+                        aliases = {'adj': 'adjective', 'adv': 'adverb', 'intj': 'interjection', 'pron': 'pronoun', 'det': 'determiner', 'prep': 'preposition', 'conj': 'conjunction'}
+                        assert aliases.get(proof['sourcePos'], proof['sourcePos']) == aliases.get(raw.get('pos'), raw.get('pos')), 'Source part of speech differs'
                     ordinal = proof.get('senseOrdinal')
                     senses = raw.get('senses', [])
                     assert type(ordinal) is int and 1 <= ordinal <= len(senses), 'Invalid 1-based sense ordinal'
@@ -106,5 +112,9 @@ if __name__ == '__main__':
     parser.add_argument('--catalog', type=Path, default=Path('local-data/sources/wiktionary/sources.sqlite'))
     parser.add_argument('--records', type=Path)
     parser.add_argument('--report', type=Path, default=Path('local-data/corrections/english-4.0.0/source-validation.json'))
+    parser.add_argument('--language', choices=['en', 'ja'], default='en')
+    parser.add_argument('--review', type=Path)
     args = parser.parse_args()
-    raise SystemExit(verify(args.directory, args.catalog, args.report, args.records))
+    if args.language != 'en' and args.review is None:
+        parser.error('--review is required for Japanese')
+    raise SystemExit(verify(args.directory, args.catalog, args.report, args.records, args.language, args.review))
