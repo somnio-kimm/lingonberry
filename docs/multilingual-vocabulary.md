@@ -1,3 +1,5 @@
+> Historical first-edition package specification. The current English app uses [four grouped IELTS ranges without separate exam filters](english-study-levels.md); numeric bands below describe immutable source data only.
+
 # Original starter edition (1.0.0)
 
 The current catalogue now points to [the broad 2.0.0 dictionary preview](multilingual-broad-dictionaries.md). This page records the preserved starter edition.
