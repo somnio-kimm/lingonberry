@@ -35,4 +35,6 @@ The 3.0.0 editorial preview contains 54,097 entries across Japanese JLPT N5–N1
 
 [English 4.0.0](docs/english-meaning-corrections.md) resolves all 4,347 findings from the earlier linguistic review and provides 11,977 active entries with English/Korean meanings. Source evidence, retired/replacement identities and original versions are preserved. This is AI-assisted source adjudication; native-speaker certification remains pending.
 
+[Japanese 4.0.0](docs/japanese-meaning-corrections.md) reviews all 12,027 entries and their English/Korean meanings, applies 2,891 corrections and 66 explicit concept replacements, and repairs seven of the 2,027 existing bilingual examples. JLPT levels and learner history are preserved; native-speaker certification remains pending.
+
 The requested [explanation matrix](docs/explanation-matrix.md) has 43 pairs: every other supported language, plus English → English. Thirteen pairs currently have complete downloadable packages; the other 30 require further translation work. Partial extra-language texts are retained in authoring records without being offered as complete downloads. See [example authoring and coverage](docs/example-authoring.md).
