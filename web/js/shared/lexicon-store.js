@@ -5,6 +5,7 @@ export function createLexiconStore(storage,profile){
  const fresh=()=>({version:1,wordStatus:{},wrongs:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:true,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true}});
  const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
  let state=saved?.version===1&&object(saved.wordStatus)&&object(saved.wrongs)&&object(saved.preferences)?{...fresh(),...saved,preferences:{...fresh().preferences,...saved.preferences}}:fresh();
+ if(profile.normaliseLevel)state.preferences.studyLevel=profile.normaliseLevel(state.preferences.studyLevel);
  if(!profile.levels.includes(state.preferences.studyLevel)&&state.preferences.studyLevel!=='all')state.preferences.studyLevel=profile.levels[0];
  let warning=false;
  const save=()=>{try{storage.setItem(key,JSON.stringify(state));warning=false;return true;}catch{warning=true;return false;}};
