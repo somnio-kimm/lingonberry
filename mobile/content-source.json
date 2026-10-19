@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/f905c6c3e1ea36a4bb7993bcaabf8a0b83b5a252/",
-  "description": "Immutable imported content snapshot from the consolidated app. Study content and explanations remain separate downloads; draft authoring and native-speaker review status are preserved."
+  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/2843b4153d8193a0efaf708ee9770572d8f4783e/",
+  "description": "Immutable content snapshot including source-adjudicated English 4.0.0 and English/Korean explanations. Study content and explanations remain separate downloads; source licences and review status are preserved."
 }
