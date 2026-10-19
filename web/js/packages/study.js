@@ -32,6 +32,7 @@ export function assembleStudy(study,explanation){
   return {
     targetLanguage, explanationLanguage, studyVersion: study.version, explanationVersion: explanation.version,
     licenses: [study.license, explanation.license],
+    retiredEntries:study.retiredEntries||[],reviewInvalidations:study.reviewInvalidations||[],
     entries: study.entries.map(entry => ({...entry, meaning: meanings.get(entry.id).meaning,meanings:meanings.get(entry.id).meanings,
       ...(entry.additionalExamples?.length?{additionalExamples:entry.additionalExamples.map((example,i)=>({...example,translation:meanings.get(entry.id).additionalExampleTranslations[i]}))}:{}),
       ...(entry.example ? {example: {...entry.example, translation: meanings.get(entry.id).exampleTranslation}} : {})})),
