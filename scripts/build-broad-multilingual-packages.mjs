@@ -23,7 +23,7 @@ export async function buildBroadPackages(cache){
   {title:'CC BY 4.0 — Original Starter Content',url:'https://creativecommons.org/licenses/by/4.0/'},
   {title:'English Wiktionary Contributors',url:'https://en.wiktionary.org/'},
   {title:'NIKL Curriculum — KOGL Type 1',url:'https://www.korean.go.kr/front/reportData/reportDataView.do?mn_id=207&report_seq=932'},
-  {title:'Unrestricted Content Downloads and Source Information',url:'https://github.com/somnio-kimm/avocavocado/tree/main/language-packages'},
+  {title:'Unrestricted Content Downloads and Source Information',url:'https://github.com/somnio-kimm/lingonberry/tree/main/language-packages'},
  ]};
  for(const language of languages){
   const text=await readFile(resolve(cache,language+'-broad-prepared.jsonl'),'utf8'),imported=text.trim().split('\n').map(line=>JSON.parse(line));

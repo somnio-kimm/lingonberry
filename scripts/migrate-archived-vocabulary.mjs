@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {validatePackage,validateDescriptor,validateExplanation} from '../web/js/packages/schema.js';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const version='2.0.0';
-const sourceLink='https://github.com/somnio-kimm/avocavocado/tree/main/language-packages';
+const sourceLink='https://github.com/somnio-kimm/lingonberry/tree/main/language-packages';
 const without=(row,keys)=>Object.fromEntries(Object.entries(row).filter(([key])=>!keys.includes(key)));
 export function convertEntries(rows,language){
  const core=[],translations={en:[],ko:[]};

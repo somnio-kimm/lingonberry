@@ -1,6 +1,6 @@
 import {orderStudyModes} from '../../../js/shared/study-modes.js';
 /** Language-specific composition root. Core services never select exercises by language name. */
-export const LANGUAGE = Object.freeze({"id": "zh", "name": "Chinese", "speechLocale": "zh-CN", "levelScheme": "HSK", "repository": "https://github.com/somnio-kimm/avocavocado"});
+export const LANGUAGE = Object.freeze({"id": "zh", "name": "Chinese", "speechLocale": "zh-CN", "levelScheme": "HSK", "repository": "https://github.com/somnio-kimm/lingonberry"});
 export const STUDY_LEVELS = Object.freeze([{"id": 1, "label": "HSK 1"}, {"id": 2, "label": "HSK 2"}, {"id": 3, "label": "HSK 3"}, {"id": 4, "label": "HSK 4"}, {"id": 5, "label": "HSK 5"}, {"id": 6, "label": "HSK 6"}, {"id": 7, "label": "HSK 7–9"}].map(Object.freeze));
 export const SCREENS = Object.freeze({
   home: {
