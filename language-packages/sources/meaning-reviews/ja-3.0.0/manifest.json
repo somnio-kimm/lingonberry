@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "targetLanguage": "ja",
+  "sourceVersion": "3.0.0",
+  "reviewDate": "2026-10-19",
+  "total": 12027,
+  "status": "complete-source-adjudication",
+  "sourcePackages": [
+    {
+      "path": "language-packages/ja-core-3.0.0.json",
+      "sha256": "3e667f6f07dd896314a19b3e2e3f931c30a1b110a0cc983e086f59827084cb29"
+    },
+    {
+      "path": "language-packages/ja-en-3.0.0.json",
+      "sha256": "e4c48c7df2e43047b11bca302df34598f28966ed548d19034dc64a8725586361"
+    },
+    {
+      "path": "language-packages/ja-ko-3.0.0.json",
+      "sha256": "a0862c1d43f5c7764988aa44e3f829511f1422203d1ec14c4c13e56a03ac0f2b"
+    }
+  ],
+  "reviewedFields": [
+    "word",
+    "partOfSpeech",
+    "pronunciation",
+    "English meaning",
+    "Korean meaning",
+    "existing primary example and both translations"
+  ],
+  "method": "AI-assisted entry-by-entry linguistic review and source adjudication. Native-speaker certification remains pending.",
+  "license": "CC-BY-SA-4.0",
+  "attribution": "Lingonberry contributors; original source package notices and per-correction lexical source credits remain authoritative.",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "reviewed": 12027,
+  "remaining": 0,
+  "decisions": {
+    "retain": 9070,
+    "correct": 2891,
+    "replace": 66
+  },
+  "bilingualExamplesReviewed": 2027,
+  "examplesCorrected": 7,
+  "nativeSpeakerReview": "pending",
+  "correctionVersion": "4.0.0"
+}

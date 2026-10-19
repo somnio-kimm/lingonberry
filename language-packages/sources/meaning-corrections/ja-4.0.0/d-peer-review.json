@@ -1,0 +1,262 @@
+{
+  "reviewer": "english_review_part3",
+  "scope": {
+    "start": 11027,
+    "end": 12026,
+    "entriesRead": 1000,
+    "allOriginalWordPosReadingEnKoRead": true,
+    "existingPrimaryExamples": 0,
+    "initialChangedEntriesReviewed": 362,
+    "truncationReread": [
+      11803,
+      11804
+    ]
+  },
+  "proofValidation": {
+    "references": 365,
+    "errors": []
+  },
+  "findings": [
+    {
+      "index": 11610,
+      "severity": "medium",
+      "status": "resolved-by-parent",
+      "issue": "Valid noun reading はすは was unnecessarily replaced with はちすば.",
+      "suggested": "Retain original reading and definitions.",
+      "proofs": [
+        {
+          "sourceRowId": 214322,
+          "senseOrdinal": 1
+        },
+        {
+          "sourceRowId": 156235,
+          "senseOrdinal": 1,
+          "note": "Alternative lotus-leaf reading is valid but does not invalidate はすは."
+        }
+      ],
+      "factChecks": [
+        {
+          "url": "https://kotobank.jp/word/%E8%93%AE%E8%91%89-601460",
+          "note": "Shogakukan Daijisen and Nihon Kokugo explicitly attest lotus-leaf noun under はすは. No publisher definition text copied."
+        }
+      ]
+    },
+    {
+      "index": 11916,
+      "severity": "medium",
+      "status": "resolved-by-parent",
+      "issue": "Middle-part definition corrected but reading ちゅうほど remains incorrect.",
+      "suggested": {
+        "pronunciation": "なかほど",
+        "aliases": [
+          "なかほど"
+        ],
+        "en": "The middle part or a point roughly halfway along.",
+        "ko": "가운데 부분이나 대략 중간쯤 되는 지점."
+      },
+      "proofs": [
+        {
+          "sourceRowId": 161238,
+          "senseOrdinal": 1,
+          "glosses": [
+            "midway, middle"
+          ],
+          "reading": "なかほど"
+        }
+      ]
+    },
+    {
+      "index": 11311,
+      "severity": "low",
+      "status": "resolved-by-parent",
+      "issue": "Retained American spelling symbolize.",
+      "suggested": {
+        "en": "An object made by printing or painting characters, shapes, colours, etc., on cloth or paper, usually to symbolise a nation or organisation.",
+        "ko": "헝겊이나 종이에 글자, 그림, 색깔 등을 넣어 어떤 뜻이나 단체를 나타내는 데 쓰는 물건."
+      },
+      "proofs": [
+        {
+          "kind": "licensed-equivalent-adaptation",
+          "source": {
+            "creator": "National Institute of Korean Language",
+            "dictionary": "Korean Learners’ Dictionary",
+            "entryId": "32481",
+            "senseId": "1",
+            "sourceWord": "기",
+            "license": "CC-BY-SA-2.0-KR",
+            "url": "https://krdict.korean.go.kr/kor/dicSearch/SearchView?ParaWordNo=32481",
+            "snapshot": "2026-06-19"
+          },
+          "adaptationLicense": "CC-BY-SA-4.0",
+          "review": "automated-sense-alignment; native-speaker-review-pending"
+        }
+      ],
+      "note": "Pure orthographic copyedit; selected concept unchanged."
+    },
+    {
+      "index": 11663,
+      "severity": "low",
+      "status": "resolved-by-parent",
+      "issue": "Retained American spelling realizing.",
+      "suggested": {
+        "en": "An exclamation uttered when the speaker feels regret after realising that things have gone wrong or that he/she has failed to think of something.",
+        "ko": "일이 잘못되었거나 미처 생각하지 못했던 것을 깨닫고 뉘우칠 때 나오는 소리."
+      },
+      "proofs": [
+        {
+          "kind": "licensed-equivalent-adaptation",
+          "source": {
+            "creator": "National Institute of Korean Language",
+            "dictionary": "Korean Learners’ Dictionary",
+            "entryId": "66843",
+            "senseId": "1",
+            "sourceWord": "아뿔싸",
+            "license": "CC-BY-SA-2.0-KR",
+            "url": "https://krdict.korean.go.kr/kor/dicSearch/SearchView?ParaWordNo=66843",
+            "snapshot": "2026-06-19"
+          },
+          "adaptationLicense": "CC-BY-SA-4.0",
+          "review": "automated-sense-alignment; native-speaker-review-pending"
+        }
+      ],
+      "note": "Pure orthographic copyedit; selected concept unchanged."
+    },
+    {
+      "index": 11286,
+      "severity": "low",
+      "status": "resolved-by-parent",
+      "issue": "Sense correctly retained, but vast-scaled orchestra is unnatural English.",
+      "suggested": {
+        "en": "Music composed for performance by a large orchestra.",
+        "ko": "큰 규모의 관현악을 위해 만든 음악."
+      },
+      "proofs": [
+        {
+          "kind": "licensed-equivalent-adaptation",
+          "source": {
+            "creator": "National Institute of Korean Language",
+            "dictionary": "Korean Learners’ Dictionary",
+            "entryId": "37613",
+            "senseId": "1",
+            "sourceWord": "교향악",
+            "license": "CC-BY-SA-2.0-KR",
+            "url": "https://krdict.korean.go.kr/kor/dicSearch/SearchView?ParaWordNo=37613",
+            "snapshot": "2026-06-19"
+          },
+          "adaptationLicense": "CC-BY-SA-4.0",
+          "review": "automated-sense-alignment; native-speaker-review-pending"
+        }
+      ],
+      "factChecks": [
+        {
+          "url": "https://kotobank.jp/word/%E4%BA%A4%E9%9F%BF%E6%A5%BD-494705",
+          "note": "Shogakukan dictionary confirms music rather than the orchestra itself. Factual attestation only; no publisher text copied."
+        }
+      ]
+    }
+  ],
+  "priorityChecks": [
+    {
+      "index": 11065,
+      "result": "retain-confirmed",
+      "proofs": [
+        {
+          "sourceRowId": 185156,
+          "senseOrdinal": 1
+        }
+      ],
+      "factChecks": [
+        "https://www.moj.go.jp/content/001393628.pdf"
+      ],
+      "note": "科料 is penal, unlike 過料. English Wiktionary non-penal gloss is erroneous; do not apply it."
+    },
+    {
+      "index": 11286,
+      "result": "selected-concept-confirmed",
+      "note": "Symphonic music is correct; orchestra-object substitution would be wrong. See optional copyedit above."
+    },
+    {
+      "index": 11475,
+      "result": "retain-confirmed",
+      "note": "Japanese source explicitly permits しばらく, so do not force しゅゆ.",
+      "proofs": [
+        {
+          "sourceRowId": 189146,
+          "senseOrdinal": 1
+        }
+      ]
+    },
+    {
+      "index": 11586,
+      "result": "replacement-confirmed",
+      "note": "Chilblains differs from frostbite; original tissue-freezing/necrosis description was wrong. Existing NHS factual checks and selected lexical proof support correction.",
+      "proofs": [
+        {
+          "sourceRowId": 136260,
+          "senseOrdinal": 1
+        }
+      ]
+    },
+    {
+      "index": 11884,
+      "result": "retain-confirmed",
+      "proofs": [
+        {
+          "sourceRowId": 213671,
+          "senseOrdinal": 1
+        }
+      ],
+      "note": "Traditional みそか reading and lunar month-end concept valid; do not force thirty-day duration."
+    },
+    {
+      "index": 11988,
+      "result": "correction-confirmed",
+      "proofs": [
+        {
+          "sourceRowId": 127466,
+          "senseOrdinal": 1
+        }
+      ],
+      "factChecks": [
+        "https://www.nli-research.co.jp/files/topics/74329_ext_18_0.pdf"
+      ],
+      "note": "Absolute-value criterion works for negative improper fractions; standard positive-fraction definition is a narrower school convention."
+    },
+    {
+      "index": 12000,
+      "result": "correction-confirmed",
+      "factChecks": [
+        "https://www.kanjipedia.jp/kotoba/0003194700"
+      ],
+      "note": "Parent’s older sister or parent’s older brother’s wife. Affinal relation follows family branch, not spouse’s own age. No publisher text copied."
+    },
+    {
+      "index": 12001,
+      "result": "correction-confirmed",
+      "factChecks": [
+        "https://www.kanjipedia.jp/kotoba/0005622300"
+      ],
+      "note": "Parent’s older brother or parent’s older sister’s husband. No publisher text copied."
+    }
+  ],
+  "falseAlarmsResolved": [
+    {
+      "index": 11251,
+      "note": "苧からむし textile sense explicitly supported by cached row73907 sense3; retain."
+    },
+    {
+      "index": 11918,
+      "note": "中毒性 toxicity is explicit row142295 sense1, not necessarily addictiveness; retain."
+    },
+    {
+      "index": 12009,
+      "note": "体中たいちゅう inside-body sense explicit row135954/1 and JA210524/1; retain."
+    },
+    {
+      "index": 11889,
+      "note": "三色菫さんしきすみれ attested; do not force さんしょくすみれ."
+    }
+  ],
+  "limitations": "This is an independent linguistic cross-check of the staged definitions/readings. No new examples were generated; no corpus or application files changed.",
+  "remainingUncertainty": "None. All five identified findings, including the optional English copyedit, were resolved by the parent."
+}

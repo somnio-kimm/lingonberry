@@ -1,0 +1,99 @@
+{
+  "reviewer": "english_review_part3",
+  "scope": {
+    "indices": [
+      524,
+      1130,
+      1246,
+      1900,
+      2400,
+      2522,
+      2717
+    ],
+    "count": 7,
+    "originalAndRevisedExamplesRead": true,
+    "japaneseEnglishKoreanCompared": true
+  },
+  "results": [
+    {
+      "index": 524,
+      "id": "ja-lex-71bfeb4b64631ed53587",
+      "status": "accepted",
+      "newExample": {
+        "text": "この魚は身が柔らかいです。",
+        "en": "This fish has tender flesh.",
+        "ko": "이 생선은 살이 부드러워요."
+      },
+      "reason": "The new fish sentence is natural Japanese and uses the attested animal-flesh sense of 身. Tender flesh and 살이 부드러워요 agree. The changed concept is correctly marked replace."
+    },
+    {
+      "index": 1130,
+      "id": "ja-lex-7d5bf8b9860adc78c157",
+      "status": "accepted",
+      "newExample": {
+        "text": "祖父は将棋の鬼と呼ばれるほど強いです。",
+        "en": "My grandfather is so good at shogi that people call him a demon at it.",
+        "ko": "할아버지는 쇼기의 귀재라고 불릴 만큼 쇼기를 잘 두세요."
+      },
+      "reason": "Japanese shogi ability idiom is natural; Korean now consistently says 쇼기 and preserves the exceptional-skill sense."
+    },
+    {
+      "index": 1246,
+      "id": "ja-lex-7f3da0a497c47e8f8308",
+      "status": "accepted",
+      "newExample": {
+        "text": "夕食にワインを少し飲みました。",
+        "en": "I had a little wine with dinner.",
+        "ko": "저녁 식사 때 포도주를 조금 마셨어요."
+      },
+      "reason": "Final sentence is natural Japanese. English and Korean both accurately express a small amount of wine with dinner. Standalone ワイン preserves the target token; no red-wine specificity remains in any language."
+    },
+    {
+      "index": 1900,
+      "id": "ja-lex-deff65aeb4f15b55df96",
+      "status": "accepted",
+      "newExample": {
+        "text": "試合終了の直前に、私たちのチームが逆転しました。",
+        "en": "Our team took the lead just before the match ended.",
+        "ko": "우리 팀은 경기 종료 직전에 역전했어요."
+      },
+      "reason": "Team-as-subject 逆転しました is idiomatic. Took the lead and 역전했어요 faithfully convey the change from trailing to leading."
+    },
+    {
+      "index": 2400,
+      "id": "ja-lex-8d1448619cc3e11fbdf7",
+      "status": "accepted",
+      "newExample": {
+        "text": "正月に一族が祖父の家に集まりました。",
+        "en": "The extended family gathered at my grandfather’s house for New Year.",
+        "ko": "새해에 온 집안 식구가 할아버지 댁에 모였어요."
+      },
+      "reason": "一族 as extended family is appropriate. 새해 avoids implying specifically Korean lunar New Year; the location and event agree in all languages."
+    },
+    {
+      "index": 2522,
+      "id": "ja-lex-38cde22527f41cdebb5a",
+      "status": "accepted",
+      "newExample": {
+        "text": "このスープは味が濃いので、少し水を足しました。",
+        "en": "The soup had a strong flavour, so I added a little water.",
+        "ko": "이 수프는 맛이 진해서 물을 조금 더했어요."
+      },
+      "reason": "味が濃い naturally refers to strong flavour; the revised English removes the misleading purely technical concentration phrasing. Adding water is consistent."
+    },
+    {
+      "index": 2717,
+      "id": "ja-lex-a6e91fdbad5e79a67239",
+      "status": "accepted",
+      "newExample": {
+        "text": "画面が開かない原因はプログラムのバグでした。",
+        "en": "A bug in the program was the reason the screen would not open.",
+        "ko": "화면이 열리지 않는 원인은 프로그램 버그였어요."
+      },
+      "reason": "The software context correctly uses British program rather than programme. All three versions describe the bug as the reason the screen would not open."
+    }
+  ],
+  "findings": [],
+  "licensingNote": "The reviewed replacement sentences are editorially authored text, not purported quotations from the dictionary proofs. Lexical citations substantiate word senses, not verbatim sentence provenance.",
+  "limitations": "This verifies the seven staged changed primary examples, not complete example coverage for all dictionary entries."
+}

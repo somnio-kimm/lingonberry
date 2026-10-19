@@ -1,0 +1,69 @@
+{
+  "sourceVersion": "3.0.0",
+  "version": "4.0.0",
+  "reviewed": 12027,
+  "findings": 2957,
+  "decisions": {
+    "retain": 9070,
+    "correct": 2891,
+    "replace": 66,
+    "retire": 0
+  },
+  "entriesBefore": 12027,
+  "entriesAfter": 12027,
+  "aliasMerges": [],
+  "retired": 66,
+  "bilingualExamples": 2027,
+  "sourceValidationDigest": "f492d4a81f49f14493bfa300feb0affd36fc63b184f707fe00c75e8b19bf8ee1",
+  "decisionDigest": "b4309425e841ade5da84dae81bf10e3d617ca2ffb30a4ac7f9ed7b0cf266d7d9",
+  "nativeSpeakerReview": "pending",
+  "duplicateHeadwordGroups": [
+    {
+      "key": "丸|noun",
+      "ids": [
+        "ja-lex-ef16272c5e520d74fb39",
+        "ja-lex-770f23408556f2402a1b"
+      ]
+    },
+    {
+      "key": "粗い|adjective",
+      "ids": [
+        "ja-lex-d6eb334a2ee7e04ffed6",
+        "ja-lex-5f41fab2e6bc5e5169d6"
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "id": "ja-core",
+      "kind": "study",
+      "targetLanguage": "ja",
+      "version": "4.0.0",
+      "url": "/language-packages/ja-core-4.0.0.json",
+      "bytes": 17788163,
+      "sha256": "fc1e6335647c852a499fe3c229e73c5baeaca1d4cf6aa4f6d9131b10f670549d"
+    },
+    {
+      "id": "ja-en",
+      "kind": "explanation",
+      "targetLanguage": "ja",
+      "version": "4.0.0",
+      "explanationLanguage": "en",
+      "studyVersion": "4.0.0",
+      "url": "/language-packages/ja-en-4.0.0.json",
+      "bytes": 8327313,
+      "sha256": "b21661afdb4fdea3cf385faef974371d3462504bef2bf10ba585ce626125af62"
+    },
+    {
+      "id": "ja-ko",
+      "kind": "explanation",
+      "targetLanguage": "ja",
+      "version": "4.0.0",
+      "explanationLanguage": "ko",
+      "studyVersion": "4.0.0",
+      "url": "/language-packages/ja-ko-4.0.0.json",
+      "bytes": 8311311,
+      "sha256": "a5450789991e76d1771471c45e8931a8af109b7bef5ea0845f2400a32b9cef5d"
+    }
+  ]
+}

@@ -13,20 +13,25 @@ for(const language of STUDY_LANGUAGES)test(`${language}: mutable authoring recor
  const descriptor=catalogue.find(row=>row.id===language+'-core');
  const core=await json(descriptor.url.slice(1)),entries=new Map(core.entries.map(row=>[row.id,row])),ids=new Set();
  const folder='language-packages/sources/examples/';
+ async function resolveAuthoringEntry(row,kind){
+  if(entries.has(row.id))return entries.get(row.id);
+  const declared=await json(folder+language+'-retirements.json'),migration=declared.records.find(item=>item.id===row.id&&(item.kind||'authored')===kind),retirement=core.retiredEntries.find(item=>item.id===row.id);
+  assert.ok(migration,'unmapped archived '+kind+': '+row.id);assert.ok(['deferred-additional-example','superseded-concept'].includes(migration.disposition));
+  if(migration.disposition==='deferred-additional-example')assert.equal(retirement?.sameConcept,true);else assert.notEqual(retirement?.sameConcept,true);
+  assert.equal(retirement.replacementId,migration.replacementId);assert.ok(entries.has(migration.replacementId));assert.equal(reviewDigest(row),migration.recordDigest);
+  const sourcePath=`language-packages/${language}-core-${migration.sourceVersion}.json`,bytes=await readFile(new URL(sourcePath,root));assert.equal(createHash('sha256').update(bytes).digest('hex'),declared.sourceCoreSha256);
+  const entry=JSON.parse(bytes).entries.find(item=>item.id===row.id);assert.ok(entry);return entry;
+ }
+
  for(const row of await records(folder+language+'-authored.jsonl')){
   assert.ok(!ids.has(row.id),'duplicate authored ID: '+row.id);ids.add(row.id);
-  let entry=entries.get(row.id);
-  if(!entry&&language==='en'){
-   const declared=await json(folder+'en-retirements.json'),migration=declared.records.find(item=>item.id===row.id),retirement=core.retiredEntries.find(item=>item.id===row.id);
-   assert.equal(migration?.disposition,'deferred-additional-example');assert.equal(retirement?.sameConcept,true);assert.equal(retirement.replacementId,migration.replacementId);assert.ok(entries.has(migration.replacementId));assert.equal(reviewDigest(row),migration.recordDigest);
-   const sourcePath=`language-packages/en-core-${migration.sourceVersion}.json`,bytes=await readFile(new URL(sourcePath,root));assert.equal(createHash('sha256').update(bytes).digest('hex'),declared.sourceCoreSha256);entry=JSON.parse(bytes).entries.find(item=>item.id===row.id);
-  }
+  const entry=await resolveAuthoringEntry(row,'authored');
   validateExampleRecord(row,entry,language);
  }
  const corrections=new Set();
  for(const row of await records(folder+language+'-corrections.jsonl')){
   assert.ok(!corrections.has(row.id),'duplicate correction ID: '+row.id);corrections.add(row.id);
-  validateCorrection(row,entries.get(row.id));
+  validateCorrection(row,await resolveAuthoringEntry(row,'correction'));
   assert.ok(ids.has(row.id),'corrected sense needs its matched authored example: '+row.id);
  }
 });
