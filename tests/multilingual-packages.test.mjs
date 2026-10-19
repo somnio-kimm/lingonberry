@@ -1,3 +1,4 @@
+import {studyProfiles} from '../web/js/presentation/study-profiles.js';
 import {allowsExplanation} from '../web/js/shared/language-pairs.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -21,14 +22,14 @@ for(const language of Object.keys(packageProfiles)){
    assert.ok(data.license.identifier.includes('CC-BY-SA-4.0'));
   }
   assert.ok(new Set(core.entries.map(row=>row.word)).size>=7500);
-  for(const level of packageProfiles[language].levels)assert.ok(core.entries.some(row=>language==='en'?Number(row.level)<=Number(level):row.level===level));
+  for(const level of (language==='en'?studyProfiles.en.levels:packageProfiles[language].levels))assert.ok(core.entries.some(row=>row.level===level));
   for(const entry of pair.entries){assert.ok(entry.meaning.trim());if(core.entries.find(word=>word.id===entry.id).example)assert.ok(entry.exampleTranslation.trim());else assert.equal(entry.exampleTranslation,undefined);if(language===locale)assert.notEqual(entry.meaning,core.entries.find(word=>word.id===entry.id).word);}
  });
 }
-test('IELTS half bands are cumulative targets, not word proficiency certificates',()=>{
+test('English uses four editorial groups while original starter-band metadata stays archived',()=>{
  const profile=packageProfiles.en;
  assert.equal(profile.levels.length,17);assert.equal(profile.levels.at(-1),'9.0');
- assert.equal(contents.en.exam.levelKind,'target-score');
+ assert.equal(contents.en.exam.levelKind,'editorial-study-group');assert.deepEqual(contents.en.exam.levels,studyProfiles.en.levels);
  assert.deepEqual(contents.fr.exam.exams,[{id:'delf',levels:['A1','A2','B1','B2']},{id:'dalf',levels:['C1','C2']}]);
 });
 test('malformed imported metadata and missing editorial fields fail before installation',()=>{

@@ -1,0 +1,147 @@
+{
+  "sourceVersion": "3.0.0",
+  "version": "4.0.0",
+  "reviewed": 12016,
+  "findings": 4347,
+  "decisions": {
+    "retain": 96,
+    "correct": 3762,
+    "replace": 450,
+    "retire": 39
+  },
+  "entriesBefore": 12016,
+  "entriesAfter": 11977,
+  "aliasMerges": [
+    {
+      "from": "en-lex-17c07083148d9e3a678c",
+      "to": "en-lex-016be22c6c1d49e60db4",
+      "aliases": [
+        "traveling"
+      ]
+    }
+  ],
+  "retired": 489,
+  "bilingualExamples": 139,
+  "sourceValidationDigest": "43dae208781e0f60619f54d93a9d0a63644f9616451b1ebf8024ae7b1b91da31",
+  "decisionDigest": "94c11e68b2adc71695f5465aff39f239eee27d837c774f14272a33b733b2b016",
+  "nativeSpeakerReview": "pending",
+  "duplicateHeadwordGroups": [
+    {
+      "key": "so|adverb",
+      "ids": [
+        "en-lex-680b9defa346fefa017d",
+        "en-lex-1a06d351d8f0a4f213cf"
+      ]
+    },
+    {
+      "key": "just|adverb",
+      "ids": [
+        "en-lex-ffc5ef26aa852c986972",
+        "en-lex-1560fd9affb8ee44bbf2"
+      ]
+    },
+    {
+      "key": "there|adverb",
+      "ids": [
+        "en-lex-2c0c2b0b1913fba49050",
+        "en-lex-f47ca84c64403f15f445"
+      ]
+    },
+    {
+      "key": "something|pronoun",
+      "ids": [
+        "en-lex-4def937a26043e4e1541",
+        "en-lex-00ad3f8df2958c4cac46"
+      ]
+    },
+    {
+      "key": "free|adjective",
+      "ids": [
+        "en-lex-7d68d14e0305e3eee715",
+        "en-lex-f9b3ee401cb8c16d5d9d"
+      ]
+    },
+    {
+      "key": "safe|adjective",
+      "ids": [
+        "en-lex-c35fcc41fa2b6aa82b02",
+        "en-lex-a09ffaa33fcef2e161c0"
+      ]
+    },
+    {
+      "key": "count|verb",
+      "ids": [
+        "en-lex-5f36093551f4aca849a5",
+        "en-lex-fb52983f6f777d74ed30"
+      ]
+    },
+    {
+      "key": "quit|verb",
+      "ids": [
+        "en-lex-87acc486a625b252c438",
+        "en-lex-04f0ceab4ecb09965bc2"
+      ]
+    },
+    {
+      "key": "silly|adjective",
+      "ids": [
+        "en-lex-0ef3977b0b539c4b871d",
+        "en-lex-1792403e76b5c153f7b8"
+      ]
+    },
+    {
+      "key": "disc|noun",
+      "ids": [
+        "en-lex-3c9a1f1f99966b4103a0",
+        "en-lex-6fb869ef7d44ff400076"
+      ]
+    },
+    {
+      "key": "abandon|verb",
+      "ids": [
+        "en-lex-875ce603505f0898fb2b",
+        "en-lex-0a674f95d840f8766783"
+      ]
+    },
+    {
+      "key": "unprofessional|adjective",
+      "ids": [
+        "en-lex-6ec1a57b66af2ac56f87",
+        "en-lex-0b0ee652634039bb2898"
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "id": "en-core",
+      "kind": "study",
+      "targetLanguage": "en",
+      "version": "4.0.0",
+      "url": "/language-packages/en-core-4.0.0.json",
+      "bytes": 18200718,
+      "sha256": "206f6c17af57d1224b472ad33edfa83d4789f7c8a59bef9e71e315891a3e99c3"
+    },
+    {
+      "id": "en-en",
+      "kind": "explanation",
+      "targetLanguage": "en",
+      "version": "4.0.0",
+      "explanationLanguage": "en",
+      "studyVersion": "4.0.0",
+      "url": "/language-packages/en-en-4.0.0.json",
+      "bytes": 8932813,
+      "sha256": "f786e1c75dbeca84bfb0871de361215c3e75b2bde9172d8912180ba7516d7b85"
+    },
+    {
+      "id": "en-ko",
+      "kind": "explanation",
+      "targetLanguage": "en",
+      "version": "4.0.0",
+      "explanationLanguage": "ko",
+      "studyVersion": "4.0.0",
+      "url": "/language-packages/en-ko-4.0.0.json",
+      "bytes": 8937677,
+      "sha256": "901251f98fc46cf375880b6d83b96d99b3be012521a8807a8b3cbaa9c33ff3b8"
+    }
+  ]
+}

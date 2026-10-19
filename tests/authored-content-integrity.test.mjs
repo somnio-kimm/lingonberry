@@ -1,3 +1,5 @@
+import {createHash} from 'node:crypto';
+import {reviewDigest} from '../scripts/content/english-meaning-review.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -13,7 +15,13 @@ for(const language of STUDY_LANGUAGES)test(`${language}: mutable authoring recor
  const folder='language-packages/sources/examples/';
  for(const row of await records(folder+language+'-authored.jsonl')){
   assert.ok(!ids.has(row.id),'duplicate authored ID: '+row.id);ids.add(row.id);
-  validateExampleRecord(row,entries.get(row.id),language);
+  let entry=entries.get(row.id);
+  if(!entry&&language==='en'){
+   const declared=await json(folder+'en-retirements.json'),migration=declared.records.find(item=>item.id===row.id),retirement=core.retiredEntries.find(item=>item.id===row.id);
+   assert.equal(migration?.disposition,'deferred-additional-example');assert.equal(retirement?.sameConcept,true);assert.equal(retirement.replacementId,migration.replacementId);assert.ok(entries.has(migration.replacementId));assert.equal(reviewDigest(row),migration.recordDigest);
+   const sourcePath=`language-packages/en-core-${migration.sourceVersion}.json`,bytes=await readFile(new URL(sourcePath,root));assert.equal(createHash('sha256').update(bytes).digest('hex'),declared.sourceCoreSha256);entry=JSON.parse(bytes).entries.find(item=>item.id===row.id);
+  }
+  validateExampleRecord(row,entry,language);
  }
  const corrections=new Set();
  for(const row of await records(folder+language+'-corrections.jsonl')){
