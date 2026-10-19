@@ -25,8 +25,9 @@ export function summariseEnglishReview(entries,records,{requireComplete=false}={
   if(!Array.isArray(row.issues)||row.issues.some(issue=>typeof issue!=='string'||!issue.trim()))throw new Error('Invalid issues: '+row.id);
   if(!row.proposed||typeof row.proposed!=='object'||Array.isArray(row.proposed))throw new Error('Invalid proposed changes: '+row.id);
   for(const [field,value] of Object.entries(row.proposed)){
+   if(field==='relatedIndex'){if(!Number.isInteger(value)||!entries[value]||value===row.index||row.proposed.action!=='reconcile-duplicate')throw new Error('Invalid related entry: '+row.id);continue;}
    if(!['en','ko','pos','word','action'].includes(field)||typeof value!=='string'||!value.trim())throw new Error('Invalid proposed field: '+row.id);
-   if(field==='action'&&value!=='quarantine')throw new Error('Invalid proposed action: '+row.id);
+   if(field==='action'&&!['quarantine','reconcile-duplicate'].includes(value))throw new Error('Invalid proposed action: '+row.id);
   }
   if(row.status==='accepted'&&(row.issues.length||Object.keys(row.proposed||{}).length))throw new Error('Accepted entry has changes: '+row.id);
   if(row.status!=='accepted'&&(!row.reason?.trim()||!row.issues.length))throw new Error('Finding lacks rationale: '+row.id);
@@ -41,13 +42,13 @@ async function run(folder,requireComplete,exportFolder){
  const json=async name=>JSON.parse(await readFile(name,'utf8'));
  const entries=prepareEnglishReview(await json('language-packages/en-core-3.0.0.json'),await json('language-packages/en-en-3.0.0.json'),await json('language-packages/en-ko-3.0.0.json'));
  const records=[];
- for(const part of [1,2,3]){try{records.push(...(await readFile(resolve(folder,`part${part}-review.jsonl`),'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse));}catch(error){if(error.code!=='ENOENT')throw error;}}
+ for(const part of [1,2,3,4,5]){try{records.push(...(await readFile(resolve(folder,`part${part}-review.jsonl`),'utf8')).trim().split('\n').filter(Boolean).map(text=>({...JSON.parse(text),reviewer:`english_review_part${part<=2?part:3}`})));}catch(error){if(error.code!=='ENOENT')throw error;}}
  const report=summariseEnglishReview(entries,records,{requireComplete:requireComplete||!!exportFolder});
  await mkdir(folder,{recursive:true});await writeFile(resolve(folder,'summary.json'),JSON.stringify(report,null,2)+'\n');
  if(exportFolder){
   const packages=[];
   for(const id of ['en-core','en-en','en-ko']){const path=`language-packages/${id}-3.0.0.json`,bytes=await readFile(path);packages.push({path,sha256:createHash('sha256').update(bytes).digest('hex')});}
-  const manifest={schemaVersion:1,...report,missing:undefined,sourcePackages:packages,licence:'CC-BY-SA-4.0',attribution:'National Institute of Korean Language; English Wiktionary contributors; Lingonberry contributors. Original package credits and source identities remain authoritative.',licenceUrl:'https://creativecommons.org/licenses/by-sa/4.0/',sourceCredits:'language-packages/credits/MULTILINGUAL-2.0.0.txt',modifications:'AI-assisted English/Korean linguistic review and proposed editorial adaptations. No downloaded package was changed.',reviewedFields:['word','partOfSpeech','English meaning','Korean meaning','existing primary example consistency']};
+  const manifest={schemaVersion:1,reviewDate:new Date().toISOString().slice(0,10),...report,missing:undefined,sourcePackages:packages,licence:'CC-BY-SA-4.0',attribution:'National Institute of Korean Language; English Wiktionary contributors; Lingonberry contributors. Original package credits and source identities remain authoritative.',licenceUrl:'https://creativecommons.org/licenses/by-sa/4.0/',sourceCredits:'language-packages/credits/MULTILINGUAL-2.0.0.txt',modifications:'AI-assisted English/Korean linguistic review and proposed editorial adaptations. No downloaded package was changed.',reviewedFields:['word','partOfSpeech','English meaning','Korean meaning','existing primary example consistency']};
   const rows=records.sort((a,b)=>a.index-b.index).map(row=>{const entry=entries[row.index];return {...row,word:entry.word,pos:entry.pos,...(row.status!=='accepted'?{original:{en:entry.en,ko:entry.ko},source:entry.source}:{} )};});
   await mkdir(exportFolder,{recursive:true});
   await writeFile(resolve(exportFolder,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');

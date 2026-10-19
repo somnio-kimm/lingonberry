@@ -21,6 +21,8 @@ test('reviews reject changed content, repeated IDs and unsupported approvals',()
  assert.throws(()=>summariseEnglishReview(entries,[{...correction,proposed:{en:42}}]),/proposed field/);
  assert.throws(()=>summariseEnglishReview(entries,[{...correction,index:'0'}]),/review index/);
  assert.throws(()=>summariseEnglishReview(entries,[{...correction,proposed:{action:'publish'}}]),/proposed action/);
+ assert.throws(()=>summariseEnglishReview(entries,[{...correction,proposed:{action:'reconcile-duplicate',relatedIndex:99}}]),/related entry/);
+ assert.equal(summariseEnglishReview(entries,[{...correction,status:'unresolved',proposed:{action:'reconcile-duplicate',relatedIndex:1}}]).counts.unresolved,1);
  const changed=prepareEnglishReview(core,{entries:[en.entries[0],{...en.entries[1],meaning:'To depart.'}]},ko);assert.notEqual(changed[1].digest,entries[1].digest);
 });
 test('published corpus review binds all 12016 bilingual meanings to their stable IDs',()=>{
