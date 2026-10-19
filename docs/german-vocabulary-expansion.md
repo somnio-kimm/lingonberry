@@ -2,13 +2,16 @@
 
 Version 3 expands the archived 2,000-entry German study corpus to 11,288 entries (11,283 distinct headwords), with 11,291 translated examples. A1: 780; A2: 672; B1: 1,568; B2: 662; C1: 2,007; C2: 5,599. Chinese 2.0.0 and the immutable German 2.0.0 files remain unchanged. Existing German IDs and examples are preserved; newly assigned levels do not change progress keys.
 
-The app displays four groups: **GZ A1**, **GZ A2**, **GZ B1**, and **GZ B2-C2**.
-The combined upper group contains all 8,268 former B2/C1/C2 entries, ordered
-alphabetically by headword. It is additional study vocabulary, not an official
-Goethe upper-level word list. The original package levels and saved attempt
-records remain intact; older B2/C1/C2 selections open the combined group, and
-Review filters group those records together. No “Estimated” text is shown in
-the labels.
+The app displays six groups: **GZ A1**, **GZ A2**, **GZ B1**, **GZ B2**,
+**GZ C1**, and **GZ C2**, with alphabetical headword ordering inside each group.
+The upper groups retain their frequency-based split: B2 contains 662 entries,
+C1 contains 2,007, and C2 contains 5,599. Rare specialist terms such as
+*epistemisch*, *teleologisch*, *heuristisch* and *inkommensurabel* remain in C2.
+These are editorial study bands, not an official Goethe word list or a validated
+exam classification; frequency alone does not measure contextual difficulty.
+A saved selection of the former combined B2-C2 group opens B2. Individual level
+selections, original package levels and saved attempt records remain intact.
+No “Estimated” text is shown in the labels.
 
 ## Study bands
 
