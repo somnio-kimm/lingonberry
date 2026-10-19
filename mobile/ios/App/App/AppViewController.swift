@@ -48,7 +48,7 @@ class AppViewController: CAPBridgeViewController {
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
                 const pairs = [];
-                for (const [target, explanation, word, meaning] of [['de','ko','der Abend','저녁'],['de','en','der Abend','evening'],['zh','en','爱','to love; to like deeply'],['zh','ko','爱','사랑하다; 좋아하다']]) {
+                for (const [target, explanation, entryId, meaning] of [['de','ko','de-noun-abend-editorial-main','저녁'],['de','en','de-noun-abend-editorial-main','evening'],['zh','en','hsk1_1','to love; to like deeply'],['zh','ko','hsk1_1','사랑하다; 좋아하다']]) {
                   document.querySelector('[data-tab=settings]').click();
                   await wait(() => document.querySelector('#manage-packages'));
                   if (!offline) {
@@ -68,12 +68,16 @@ class AppViewController: CAPBridgeViewController {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=wordlist],[data-quiz=wordlist]'));
                   document.querySelector('[data-route=wordlist],[data-quiz=wordlist]').click();
-                  await wait(() => document.querySelector('.wl-row') && document.querySelector('.wl-meaning')?.textContent === meaning);
+                  await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.textContent === meaning);
                   pairs.push(target + '-' + explanation);
                 }
                 const result = {passed:true,pairs,origin:location.origin,wordCount:document.querySelectorAll('.wl-row').length,locale:document.documentElement.lang};
                 document.querySelector('[data-tab=settings]').click();
-                select('target','');select('explanation','');
+                await wait(() => document.querySelector('#target'));
+                select('target','');
+                await wait(() => document.querySelector('#explanation'));
+                select('explanation','');
+                await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
                 """, arguments: ["offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages")], in: nil, in: .page) { result in
