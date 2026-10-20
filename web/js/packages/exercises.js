@@ -1,3 +1,4 @@
+import {validatePracticeData} from './practice-data.js';
 import {EXERCISE_ROUTES,JAPANESE_FORM_KINDS} from '../shared/language-exercises.js';
 const fail=message=>{throw new Error(`Invalid language package: ${message}`);};
 const check=(condition,message)=>{if(!condition)fail(message);};
@@ -5,6 +6,7 @@ const text=(value,name)=>check(typeof value==='string'&&value.trim().length>0&&v
 const id=value=>typeof value==='string'&&/^[a-z0-9][a-z0-9._-]{0,99}$/.test(value);
 const list=(value,name)=>check(Array.isArray(value)&&value.length<=10000,name);
 export function validateExercises(pack){
+ validatePracticeData(pack);
  const entries=new Set(pack.entries.map(row=>row.id)),ids=new Set();
  if(pack.readingPractice!==undefined){const p=pack.readingPractice;check(pack.kind==='study'&&pack.targetLanguage==='ja'&&p?.version===1,'reading practice policy');list(p.excludedSpellings,'reading exclusions');p.excludedSpellings.forEach(value=>text(value,'reading exclusion'));list(p.variants,'reading variants');const seen=new Set();for(const row of p.variants){check(entries.has(row.entryId)&&!seen.has(row.entryId),'reading variant entry');seen.add(row.entryId);check(Array.isArray(row.readings)&&row.readings.length>0&&row.readings.length<=20,'reading variants');row.readings.forEach(value=>check(typeof value==='string'&&/^[ぁ-ゖァ-ヶー]+$/u.test(value),'kana reading variant'));const entry=pack.entries.find(entry=>entry.id===row.entryId);check(row.readings.includes(entry.pronunciation),'primary reading variant');}}
  if(pack.exercises!==undefined){list(pack.exercises,'exercises');for(const row of pack.exercises){
