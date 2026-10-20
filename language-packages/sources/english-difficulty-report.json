@@ -1,0 +1,19 @@
+{
+  "counts": {
+    "IELTS 1.0–3.5": 3693,
+    "IELTS 4.0–6.5": 4146,
+    "IELTS 7.0–8.0": 3150,
+    "IELTS 8.5–9.0": 1367
+  },
+  "distinctWords": {
+    "IELTS 1.0–3.5": 3284,
+    "IELTS 4.0–6.5": 3896,
+    "IELTS 7.0–8.0": 3001,
+    "IELTS 8.5–9.0": 1334
+  },
+  "moved": 7910,
+  "reviewed": 12356,
+  "reviewId": "english-difficulty-2026-10-20",
+  "senseSha256": "614357cdddc391dfb8d367d1d117a04b2d3baf909fc0b3d467965ef000ed1ff9",
+  "added": 379
+}

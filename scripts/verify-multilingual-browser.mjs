@@ -81,7 +81,7 @@ try{
    await page.locator('[data-sentence-submit]').click();assert.equal(await page.locator('.lexicon-question.correct').count(),1);await page.locator('[data-sentence-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.wrong-card-actions').innerText()).includes('0'));
   }
   await tab(page,'wrong');await page.selectOption('[data-mode]','all');
-  await tab(page,'home');assert.deepEqual(await page.locator('[data-route]').evaluateAll(nodes=>nodes.map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']);
+  await tab(page,'home');assert.deepEqual(await page.locator('[data-route]').evaluateAll(nodes=>nodes.map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening',...Object.keys(exerciseModes(language)).filter(route=>core.exercises?.some(row=>row.route===route)),...(core.families?.length?['roots']:[])]);
   await tab(page,'home');for(const level of studyProfiles[language].levels){await page.locator(`[data-level="${level}"]`).click();await page.locator('[data-route=wordlist]').click();await page.locator('.wl-row').first().waitFor();if(language==='en'){const expected=new Set(studyWords(core).filter(word=>word.level===level).map(word=>word.id));const visible=await page.locator('[data-word]').evaluateAll(nodes=>nodes.map(node=>node.dataset.word));assert.ok(visible.every(id=>expected.has(id)),level);assert.ok((await page.locator('.wl-hsk').allTextContents()).every(text=>text===level));}await tab(page,'home');}
   if(language==='en'){
    for(const [locale,label] of [['ko','학습 레벨'],['en','Study Level']]){

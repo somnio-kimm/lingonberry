@@ -4,7 +4,7 @@ Vocabulary choices share Meaning Quiz; vocabulary writing shares Word Input. Ope
 
 Japanese categories include contextual reading, on’yomi, kun’yomi, kanji/okurigana boundaries, confusable kanji and transitive/intransitive pairs. Form Input, Particles and Counters have separate Study buttons. For 食べる, the kanji 食 carries た and the written kana are べる; the exercise does not confuse this orthographic boundary with the verb stem たべ. Verified segment alignment appears only after submission.
 
-English vocabulary categories include collocations, phrasal verbs, confusable words and root-family vocabulary. Verb Patterns and Articles and Countability have separate buttons. Root Families is an explorer, with linked dictionary entries filtered by the selected study level. No politeness, word formation or word stress exercises are included.
+English vocabulary categories include collocations, phrasal verbs, confusable words and root-family vocabulary. Verb Patterns and Articles and Countability have separate buttons. Root Families is an explorer, showing families with at least one word matching the selected filters. The full family remains visible for context, with each linked word’s level shown; quiz pools remain level-specific. No politeness, word formation or word stress exercises are included.
 
 Exercises are curated starter content, not exhaustive drills for every dictionary entry or every level. Empty filtered sets say no questions match; no cross-level fallback silently changes the chosen level. Their level comes from the linked vocabulary entry. Root relationships describe historical derivation, not rules for inventing new English words.
 

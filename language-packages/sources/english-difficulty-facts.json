@@ -1,0 +1,3386 @@
+{
+  "purpose": "Factual references considered for independently authored text; rows are reference candidates, not claims that the first POS row was copied or selected. No definitions or quotations are reproduced here.",
+  "snapshot": {
+    "bytes": 2981058381,
+    "creator": "English Wiktionary contributors",
+    "dumpDate": null,
+    "edition": "en",
+    "extractorRevision": null,
+    "http": {},
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "policyUrl": "https://en.wiktionary.org/wiki/Wiktionary:Copyrights",
+    "sha256": "3dac8a09e57827bef493e2e6b552fe917bf3b1fc55dee05c4e4a3702aff5dbdb",
+    "snapshotNote": "Existing cached snapshot; precise dump date and extraction revision not recorded.",
+    "url": "https://kaikki.org/dictionary/downloads/en/en-extract.jsonl.gz",
+    "verifiedAt": "2026-10-17T10:22:11.564391+00:00"
+  },
+  "semanticDisambiguation": {
+    "venal": 149934,
+    "belie": 271829,
+    "apprise": 315843,
+    "specious": 220481
+  },
+  "supplementalReferences": [
+    {
+      "word": "byzantine",
+      "url": "https://en.wiktionary.org/wiki/Byzantine#Adjective"
+    },
+    {
+      "word": "adulterate",
+      "url": "https://en.wiktionary.org/wiki/adulterate"
+    },
+    {
+      "word": "denouement",
+      "url": "https://en.wiktionary.org/wiki/d%C3%A9nouement"
+    },
+    {
+      "word": "aggrandise",
+      "url": "https://en.wiktionary.org/wiki/aggrandize"
+    }
+  ],
+  "rows": [
+    {
+      "word": "abjure",
+      "pos": "verb",
+      "sourceLine": 1728,
+      "rowSha256": "e0e18c6116a2cc33226abee4297f659c1a9e88e0510871d87d01d7ee7f696b96",
+      "url": "https://en.wiktionary.org/wiki/abjure"
+    },
+    {
+      "word": "abnegation",
+      "pos": "noun",
+      "sourceLine": 1807,
+      "rowSha256": "2ec81fc2f212124e8627be3e02397a55a8efdff38b969805accf1731c62110d9",
+      "url": "https://en.wiktionary.org/wiki/abnegation"
+    },
+    {
+      "word": "abrogate",
+      "pos": "verb",
+      "sourceLine": 2028,
+      "rowSha256": "ba34530ba8417850b2816f3e7e2658cf93bba58018f24cfd15c6cb5e4ef791ac",
+      "url": "https://en.wiktionary.org/wiki/abrogate"
+    },
+    {
+      "word": "abrogate",
+      "pos": "adj",
+      "sourceLine": 2029,
+      "rowSha256": "744ac0082d8e535015aa39200619db3630bef3757b14e3fd45624f57facc3092",
+      "url": "https://en.wiktionary.org/wiki/abrogate"
+    },
+    {
+      "word": "abscond",
+      "pos": "verb",
+      "sourceLine": 2290,
+      "rowSha256": "16f56f4f36901082af5d07ece08f4b75803ee5f77f936cf8ca0c709adad87a38",
+      "url": "https://en.wiktionary.org/wiki/abscond"
+    },
+    {
+      "word": "quotidian",
+      "pos": "adj",
+      "sourceLine": 5796,
+      "rowSha256": "b0e8596038f8b7ed3b9f7829404baeb36e09b1c676f3c415d32dae2acf1770f9",
+      "url": "https://en.wiktionary.org/wiki/quotidian"
+    },
+    {
+      "word": "quotidian",
+      "pos": "noun",
+      "sourceLine": 5797,
+      "rowSha256": "3597a720ae029f93d3ae719b3629ce35e84fe1d5afc92daed36d67941b1ba2ef",
+      "url": "https://en.wiktionary.org/wiki/quotidian"
+    },
+    {
+      "word": "laconic",
+      "pos": "adj",
+      "sourceLine": 7126,
+      "rowSha256": "de14423eb0fa500a3b2fbd7a9fc2a864d2e777eeb67c86f263a40390486c039e",
+      "url": "https://en.wiktionary.org/wiki/laconic"
+    },
+    {
+      "word": "gratuitous",
+      "pos": "adj",
+      "sourceLine": 7521,
+      "rowSha256": "141222cf8a0ba2d9924ba38462f7ff0266b44ab59d70e937f43d024a76eaead3",
+      "url": "https://en.wiktionary.org/wiki/gratuitous"
+    },
+    {
+      "word": "accretion",
+      "pos": "noun",
+      "sourceLine": 11242,
+      "rowSha256": "72e6e6a96b170f4d0e9e01214cc481b72ad85dd8d297ff82545ce77161c007b2",
+      "url": "https://en.wiktionary.org/wiki/accretion"
+    },
+    {
+      "word": "acerbity",
+      "pos": "noun",
+      "sourceLine": 11559,
+      "rowSha256": "56de36e779d77ac1c257e82e956a668e465f86e56f6b0804357a037ac857a657",
+      "url": "https://en.wiktionary.org/wiki/acerbity"
+    },
+    {
+      "word": "epigram",
+      "pos": "noun",
+      "sourceLine": 20165,
+      "rowSha256": "d6a776dae54eb41494f7270e430f0fdc3f8b42a738a0a492629db1b47afc5853",
+      "url": "https://en.wiktionary.org/wiki/epigram"
+    },
+    {
+      "word": "upbraid",
+      "pos": "verb",
+      "sourceLine": 21936,
+      "rowSha256": "5ce510142ffe4902b726d84135de21c3fb61199c319d5f82588267140253f692",
+      "url": "https://en.wiktionary.org/wiki/upbraid"
+    },
+    {
+      "word": "upbraid",
+      "pos": "noun",
+      "sourceLine": 21937,
+      "rowSha256": "4c6162f36882852cc7933349320cb0d400923366b4b5f95a629513ac1a14fcbf",
+      "url": "https://en.wiktionary.org/wiki/upbraid"
+    },
+    {
+      "word": "pedantic",
+      "pos": "adj",
+      "sourceLine": 24057,
+      "rowSha256": "0d63df90c67a42c16af0d35560e156796ec6ce8bf1749ff75ca07d1acf5cc9ee",
+      "url": "https://en.wiktionary.org/wiki/pedantic"
+    },
+    {
+      "word": "trite",
+      "pos": "adj",
+      "sourceLine": 32177,
+      "rowSha256": "874546a185af03946329e412208c11686fae6e8b0732a52f6ca871fc01fba24d",
+      "url": "https://en.wiktionary.org/wiki/trite"
+    },
+    {
+      "word": "trite",
+      "pos": "noun",
+      "sourceLine": 32178,
+      "rowSha256": "db1870fab22a696620817a4871b3f8a63fd017974eda47fa33e2d180e7328e05",
+      "url": "https://en.wiktionary.org/wiki/trite"
+    },
+    {
+      "word": "trite",
+      "pos": "noun",
+      "sourceLine": 32179,
+      "rowSha256": "0d10f2f0753e7f2f4d153aeea4dfaa41fa9aeba839bbc2a7e17feb0a6f6e3163",
+      "url": "https://en.wiktionary.org/wiki/trite"
+    },
+    {
+      "word": "aesthetic",
+      "pos": "adj",
+      "sourceLine": 34247,
+      "rowSha256": "afaa60135aa39d6f3e4cf03b7e61be3a6f2721b64b2e16613e13f0ff86e63eaf",
+      "url": "https://en.wiktionary.org/wiki/aesthetic"
+    },
+    {
+      "word": "aesthetic",
+      "pos": "noun",
+      "sourceLine": 34248,
+      "rowSha256": "e48179918b1fe4bf78f680496fcab8b610bb9da6da4a3dde5e68e560a2c012da",
+      "url": "https://en.wiktionary.org/wiki/aesthetic"
+    },
+    {
+      "word": "assiduous",
+      "pos": "adj",
+      "sourceLine": 34266,
+      "rowSha256": "0022bb7ea2b0d7f5fe3106b543701e411ea7a578d342aaa6a2a53183bc164497",
+      "url": "https://en.wiktionary.org/wiki/assiduous"
+    },
+    {
+      "word": "fortuitous",
+      "pos": "adj",
+      "sourceLine": 34334,
+      "rowSha256": "31187efc1ef26cb10f4ca5b3fbc673516d778ae37f5ff2f4d4c6c76eb7701909",
+      "url": "https://en.wiktionary.org/wiki/fortuitous"
+    },
+    {
+      "word": "gregarious",
+      "pos": "adj",
+      "sourceLine": 34339,
+      "rowSha256": "f4389296dd104ae37acaa241dacf762faa4ae06c9e4e9b96016edb7656bf94c7",
+      "url": "https://en.wiktionary.org/wiki/gregarious"
+    },
+    {
+      "word": "iconoclast",
+      "pos": "noun",
+      "sourceLine": 34340,
+      "rowSha256": "bc74250d78b5d308c80554086caa4731b3790e5cb012f37f7191dd415329eff0",
+      "url": "https://en.wiktionary.org/wiki/iconoclast"
+    },
+    {
+      "word": "impetuous",
+      "pos": "adj",
+      "sourceLine": 34342,
+      "rowSha256": "9948a6b79ac72f2c26eb83fe783ddbf5c3b06e72491c59d18431799858c68e89",
+      "url": "https://en.wiktionary.org/wiki/impetuous"
+    },
+    {
+      "word": "mollify",
+      "pos": "verb",
+      "sourceLine": 34357,
+      "rowSha256": "64bb91d29d77828a7a9285e717a336a91043164350f21caeb356c477fa2167b7",
+      "url": "https://en.wiktionary.org/wiki/mollify"
+    },
+    {
+      "word": "spurious",
+      "pos": "adj",
+      "sourceLine": 34388,
+      "rowSha256": "1f9d50e8410807d9a41b781a89617698b4945d1138c4616473bc3534a9269d8f",
+      "url": "https://en.wiktionary.org/wiki/spurious"
+    },
+    {
+      "word": "anachronistic",
+      "pos": "adj",
+      "sourceLine": 34409,
+      "rowSha256": "b5c040ed35cd7b0ebce7617079d639508d99977ef2d804fd1a78eebf588aefc7",
+      "url": "https://en.wiktionary.org/wiki/anachronistic"
+    },
+    {
+      "word": "denigrate",
+      "pos": "verb",
+      "sourceLine": 34425,
+      "rowSha256": "39764ceaf30814d65000d70cd76b37101e72c82970a8658b9072706814960da1",
+      "url": "https://en.wiktionary.org/wiki/denigrate"
+    },
+    {
+      "word": "denigrate",
+      "pos": "adj",
+      "sourceLine": 34426,
+      "rowSha256": "070011e33ff3e00f44243baa7064bff318d7ced73e6208b046ad557292728fa6",
+      "url": "https://en.wiktionary.org/wiki/denigrate"
+    },
+    {
+      "word": "dogmatic",
+      "pos": "adj",
+      "sourceLine": 34438,
+      "rowSha256": "c3c0dfb8e63213569f7611fc54d9a031b362fb65f9811af076e8835f86fc3833",
+      "url": "https://en.wiktionary.org/wiki/dogmatic"
+    },
+    {
+      "word": "dogmatic",
+      "pos": "noun",
+      "sourceLine": 34439,
+      "rowSha256": "b30f711414b345b64392ccc04ad5af94c7bd5055634318eab7cb7f03b0e8466a",
+      "url": "https://en.wiktionary.org/wiki/dogmatic"
+    },
+    {
+      "word": "arcane",
+      "pos": "adj",
+      "sourceLine": 35647,
+      "rowSha256": "cc232b285c3ea6aa23bdb86e2e128fb105ae438aff79f4efd450401e69de5956",
+      "url": "https://en.wiktionary.org/wiki/arcane"
+    },
+    {
+      "word": "malleable",
+      "pos": "adj",
+      "sourceLine": 39750,
+      "rowSha256": "2aecff504fa9ae98ecf35ee0da26b6abb683953bdcd6ed03279ea796bba05ec8",
+      "url": "https://en.wiktionary.org/wiki/malleable"
+    },
+    {
+      "word": "coalesce",
+      "pos": "verb",
+      "sourceLine": 43280,
+      "rowSha256": "d1393668056e6e202a72ae79d6e794a82045b4357f4739753b4f1ad1cfde4a0a",
+      "url": "https://en.wiktionary.org/wiki/coalesce"
+    },
+    {
+      "word": "convoluted",
+      "pos": "adj",
+      "sourceLine": 43308,
+      "rowSha256": "f77c24f23d0db0e86d2e64fab05c18eba2ebfa10103f58811d4a7b5f2de26229",
+      "url": "https://en.wiktionary.org/wiki/convoluted"
+    },
+    {
+      "word": "convoluted",
+      "pos": "verb",
+      "sourceLine": 43309,
+      "rowSha256": "d60136f3acf7a9748debe2ffd64a29b2fe63691e35bc627e52d13c9ef180eea6",
+      "url": "https://en.wiktionary.org/wiki/convoluted"
+    },
+    {
+      "word": "connoisseur",
+      "pos": "noun",
+      "sourceLine": 43380,
+      "rowSha256": "40b2d2759813dab5d193653b54e01be296653cb2e3c7c556e96e00c81c860f45",
+      "url": "https://en.wiktionary.org/wiki/connoisseur"
+    },
+    {
+      "word": "demur",
+      "pos": "verb",
+      "sourceLine": 44630,
+      "rowSha256": "1c168966b507a3d1dd84f7e5b1cf782d5b5679ce849d4b2d742dc65a5641c6bf",
+      "url": "https://en.wiktionary.org/wiki/demur"
+    },
+    {
+      "word": "demur",
+      "pos": "noun",
+      "sourceLine": 44631,
+      "rowSha256": "36a6395048083f0aac360300ae9beacb943708301c0b72569d49706e6da81f19",
+      "url": "https://en.wiktionary.org/wiki/demur"
+    },
+    {
+      "word": "nadir",
+      "pos": "noun",
+      "sourceLine": 49031,
+      "rowSha256": "63ff10f95273f41d3938e115780a2b6a4cf191f27672cef9436b65bb69b1717f",
+      "url": "https://en.wiktionary.org/wiki/nadir"
+    },
+    {
+      "word": "nadir",
+      "pos": "verb",
+      "sourceLine": 49032,
+      "rowSha256": "d520091a2c45b1c6ae68e2389d11475bac59f91bea1764cca9ce8cfd3f8fe3b7",
+      "url": "https://en.wiktionary.org/wiki/nadir"
+    },
+    {
+      "word": "indolent",
+      "pos": "adj",
+      "sourceLine": 52243,
+      "rowSha256": "60275b2be325af56030b3170360ea418f41ecca473186120263d959123f7e628",
+      "url": "https://en.wiktionary.org/wiki/indolent"
+    },
+    {
+      "word": "eclectic",
+      "pos": "adj",
+      "sourceLine": 88379,
+      "rowSha256": "9c5e3d86e61372b8a2960f799694902a56e960f891403d0c18f59107b6006f5b",
+      "url": "https://en.wiktionary.org/wiki/eclectic"
+    },
+    {
+      "word": "eclectic",
+      "pos": "noun",
+      "sourceLine": 88380,
+      "rowSha256": "04e4c1da7b1020d3ae0aafbdf2a8fa4c4c2eca02b8b3d74c2e543988e0c2699c",
+      "url": "https://en.wiktionary.org/wiki/eclectic"
+    },
+    {
+      "word": "grandiloquent",
+      "pos": "adj",
+      "sourceLine": 104403,
+      "rowSha256": "f66d2abf55cf5ebe56f607fbc70a39e60a66ab716cda61c84869983a0c9cd2d4",
+      "url": "https://en.wiktionary.org/wiki/grandiloquent"
+    },
+    {
+      "word": "laudatory",
+      "pos": "adj",
+      "sourceLine": 147058,
+      "rowSha256": "e74426712fbaf02a1fc8387a41ecdeaa593055e42e07a9a1c5b86018f12cd905",
+      "url": "https://en.wiktionary.org/wiki/laudatory"
+    },
+    {
+      "word": "desiccate",
+      "pos": "verb",
+      "sourceLine": 149021,
+      "rowSha256": "8e4923c06dbb7e949298f763e4427f2eaac760dacac09e85dc42c27ea5dc86a5",
+      "url": "https://en.wiktionary.org/wiki/desiccate"
+    },
+    {
+      "word": "desiccate",
+      "pos": "adj",
+      "sourceLine": 149022,
+      "rowSha256": "b114623be3dd8a48f42b0761298d88b81d73f16dd7ff684b53af627dabffd4ed",
+      "url": "https://en.wiktionary.org/wiki/desiccate"
+    },
+    {
+      "word": "desiccate",
+      "pos": "noun",
+      "sourceLine": 149023,
+      "rowSha256": "c0bbf761b90c39b6a65e087fce37c90d7c53da4d44549f4e42f980e111e421d2",
+      "url": "https://en.wiktionary.org/wiki/desiccate"
+    },
+    {
+      "word": "mercurial",
+      "pos": "noun",
+      "sourceLine": 149032,
+      "rowSha256": "7d2546b1e202c729adc6a2eff3a769db9017bd11c1801a8cf41946a09cfd0df3",
+      "url": "https://en.wiktionary.org/wiki/mercurial"
+    },
+    {
+      "word": "mercurial",
+      "pos": "adj",
+      "sourceLine": 149033,
+      "rowSha256": "0169aef635b67bb838fba680ebb06b1f6658f69bbd1838b4d6b21429b3a3d79d",
+      "url": "https://en.wiktionary.org/wiki/mercurial"
+    },
+    {
+      "word": "banal",
+      "pos": "adj",
+      "sourceLine": 149422,
+      "rowSha256": "6c983c324891a937197b5c672d128fca0ed6f5a4c7202bd15fa22631e5241cc9",
+      "url": "https://en.wiktionary.org/wiki/banal"
+    },
+    {
+      "word": "extemporaneous",
+      "pos": "adj",
+      "sourceLine": 149456,
+      "rowSha256": "a0ae027a513449a9206dd57f001c5c409b6d71db4adca5cfa204163564850631",
+      "url": "https://en.wiktionary.org/wiki/extemporaneous"
+    },
+    {
+      "word": "alacrity",
+      "pos": "noun",
+      "sourceLine": 149503,
+      "rowSha256": "2c6b8991fdf6cbc4c23f5aaca4d1ffee1891c6a247613be3095475e4796da607",
+      "url": "https://en.wiktionary.org/wiki/alacrity"
+    },
+    {
+      "word": "nefarious",
+      "pos": "adj",
+      "sourceLine": 149565,
+      "rowSha256": "eed90928ef1c097b7b2a31d63efb4c31ab060a9894a824099132437d73f6ebf9",
+      "url": "https://en.wiktionary.org/wiki/nefarious"
+    },
+    {
+      "word": "surreptitious",
+      "pos": "adj",
+      "sourceLine": 149574,
+      "rowSha256": "93edcec1a789b185c41d50c514c8d3bbd5a19facba02f4519936bb1529334915",
+      "url": "https://en.wiktionary.org/wiki/surreptitious"
+    },
+    {
+      "word": "venal",
+      "pos": "adj",
+      "sourceLine": 149933,
+      "rowSha256": "640973dbd13352ed21794a4e3b16f6aa1cc2085003cbf916a54cc9fb4f8ba5d5",
+      "url": "https://en.wiktionary.org/wiki/venal"
+    },
+    {
+      "word": "venal",
+      "pos": "adj",
+      "sourceLine": 149934,
+      "rowSha256": "402dc0bbac23710a908b426e91a61996a2d47425cfb4f0fedb7f9f508d1f6528",
+      "url": "https://en.wiktionary.org/wiki/venal"
+    },
+    {
+      "word": "sinecure",
+      "pos": "noun",
+      "sourceLine": 149946,
+      "rowSha256": "c3e063c1b4a2a2aa3286abc1089d95b52d41369a7488b8836e9a9f5f3b158f80",
+      "url": "https://en.wiktionary.org/wiki/sinecure"
+    },
+    {
+      "word": "sinecure",
+      "pos": "adj",
+      "sourceLine": 149947,
+      "rowSha256": "af3338f7a19607a6cfffc6949f33f4053a195ffa36a01c8c8d4e0852ac7e0e79",
+      "url": "https://en.wiktionary.org/wiki/sinecure"
+    },
+    {
+      "word": "sinecure",
+      "pos": "verb",
+      "sourceLine": 149948,
+      "rowSha256": "ba34bf867608291085dc4c14e269b85c79ef94e056aab8e23e2308ab2d1b309b",
+      "url": "https://en.wiktionary.org/wiki/sinecure"
+    },
+    {
+      "word": "epiphany",
+      "pos": "noun",
+      "sourceLine": 149962,
+      "rowSha256": "f37c7e8bdac416006f71deccc56f4c37e8e13ab7d945188774181c3e33218dd1",
+      "url": "https://en.wiktionary.org/wiki/epiphany"
+    },
+    {
+      "word": "obtuse",
+      "pos": "adj",
+      "sourceLine": 150378,
+      "rowSha256": "b8744dd3f2a25170ea17b6ecb0d635c77ccb8b06ca28ae05f98cf49e2ea846ae",
+      "url": "https://en.wiktionary.org/wiki/obtuse"
+    },
+    {
+      "word": "obtuse",
+      "pos": "verb",
+      "sourceLine": 150379,
+      "rowSha256": "f46dafb454bfc6844616fc6a897504d5fc992210cc0b1137131ebd78f87dd601",
+      "url": "https://en.wiktionary.org/wiki/obtuse"
+    },
+    {
+      "word": "morose",
+      "pos": "adj",
+      "sourceLine": 150553,
+      "rowSha256": "7734e9ad11d2c58e14b157c2715e775c0d1d3611cfa7e6f7eca0720910db1324",
+      "url": "https://en.wiktionary.org/wiki/morose"
+    },
+    {
+      "word": "querulous",
+      "pos": "adj",
+      "sourceLine": 150654,
+      "rowSha256": "fcd4a1bd66988bf4ed665c1df45ddd8fe9e9dc401ceee56685551c8efb0fd7b7",
+      "url": "https://en.wiktionary.org/wiki/querulous"
+    },
+    {
+      "word": "equanimity",
+      "pos": "noun",
+      "sourceLine": 150655,
+      "rowSha256": "14ddafcc2848f4b6f1699f135c18f95f876fe312ffe4fb481ac0a72fbb00b6a6",
+      "url": "https://en.wiktionary.org/wiki/equanimity"
+    },
+    {
+      "word": "execrable",
+      "pos": "adj",
+      "sourceLine": 150660,
+      "rowSha256": "c9311102ae86a1955f42009d697fd2b5fa7c48c28afe4cfc7b51b017d3449572",
+      "url": "https://en.wiktionary.org/wiki/execrable"
+    },
+    {
+      "word": "prosaic",
+      "pos": "adj",
+      "sourceLine": 150669,
+      "rowSha256": "f663ac7264e66713361d943311ff52fe9a9d4390cbf6da640b2dcf5d4b799714",
+      "url": "https://en.wiktionary.org/wiki/prosaic"
+    },
+    {
+      "word": "fulminate",
+      "pos": "verb",
+      "sourceLine": 151361,
+      "rowSha256": "58ac63a90287c9a0551a79d3b596f5f3f76c1e86e35421b3c6a6c0734689c52a",
+      "url": "https://en.wiktionary.org/wiki/fulminate"
+    },
+    {
+      "word": "fulminate",
+      "pos": "noun",
+      "sourceLine": 151362,
+      "rowSha256": "276cd272aec0d10de5c2a20ef67aa44bd8e24ad5e1533733e5c8ef9ceebc91e6",
+      "url": "https://en.wiktionary.org/wiki/fulminate"
+    },
+    {
+      "word": "probity",
+      "pos": "noun",
+      "sourceLine": 153493,
+      "rowSha256": "f1254c7d4197a51d8b07b422837c5922c839a97d2ae7d3bb52b258592b781931",
+      "url": "https://en.wiktionary.org/wiki/probity"
+    },
+    {
+      "word": "complaisant",
+      "pos": "adj",
+      "sourceLine": 153770,
+      "rowSha256": "3db18495b208fdc12c72a9464249b50e486ccd1d2b4e578fd2d811e19b3e8e73",
+      "url": "https://en.wiktionary.org/wiki/complaisant"
+    },
+    {
+      "word": "loquacious",
+      "pos": "adj",
+      "sourceLine": 154123,
+      "rowSha256": "b153be21f5e547f010a5b90bbf650ba17c9cfbab219c0415dfec3164e865c1f6",
+      "url": "https://en.wiktionary.org/wiki/loquacious"
+    },
+    {
+      "word": "hackneyed",
+      "pos": "adj",
+      "sourceLine": 154300,
+      "rowSha256": "a096cbd83f12472f937f8b194d2d4403069009ad8934f42407da72fefb2365b4",
+      "url": "https://en.wiktionary.org/wiki/hackneyed"
+    },
+    {
+      "word": "hackneyed",
+      "pos": "verb",
+      "sourceLine": 154301,
+      "rowSha256": "71758e06f5caaa30cf66ddd1223cfd451b2739dda177348b1093afe5e32461d2",
+      "url": "https://en.wiktionary.org/wiki/hackneyed"
+    },
+    {
+      "word": "insipid",
+      "pos": "adj",
+      "sourceLine": 154535,
+      "rowSha256": "fb09cac0fd1473ec6208938ac3ea31ae3affc51bf70f37887dc5417e0451d97f",
+      "url": "https://en.wiktionary.org/wiki/insipid"
+    },
+    {
+      "word": "soporific",
+      "pos": "noun",
+      "sourceLine": 154746,
+      "rowSha256": "5915aeb685b1a6316afcbdb2c9c0221826e4b759bfe5165bbb879ef2f583e928",
+      "url": "https://en.wiktionary.org/wiki/soporific"
+    },
+    {
+      "word": "soporific",
+      "pos": "adj",
+      "sourceLine": 154747,
+      "rowSha256": "58173f2fa68d3e3801253925be25c3bc3569142aa218186622a33f849c743633",
+      "url": "https://en.wiktionary.org/wiki/soporific"
+    },
+    {
+      "word": "asperity",
+      "pos": "noun",
+      "sourceLine": 154950,
+      "rowSha256": "a5612e44bcbf0be31a67ea7f079fc351cf6d09851a35214630afc14278eabd55",
+      "url": "https://en.wiktionary.org/wiki/asperity"
+    },
+    {
+      "word": "foible",
+      "pos": "noun",
+      "sourceLine": 155764,
+      "rowSha256": "efe99007366f252c2e5b8144965bc84d96df9d6a10321c3a505ea6f066c574c4",
+      "url": "https://en.wiktionary.org/wiki/foible"
+    },
+    {
+      "word": "foible",
+      "pos": "adj",
+      "sourceLine": 155765,
+      "rowSha256": "11264f8f7d8f96c49002a25ec14a728ddb45eb94d74f5becf235a2c1e81b8621",
+      "url": "https://en.wiktionary.org/wiki/foible"
+    },
+    {
+      "word": "diaphanous",
+      "pos": "adj",
+      "sourceLine": 155789,
+      "rowSha256": "79c37247e537dc9e8c308ced8125881b9094006acf332838c8cf67ba9da59ba2",
+      "url": "https://en.wiktionary.org/wiki/diaphanous"
+    },
+    {
+      "word": "salubrious",
+      "pos": "adj",
+      "sourceLine": 156352,
+      "rowSha256": "65023e9cfe01962901791456007a8fd145f2cc53c2b056dfbba2912981e2b2ec",
+      "url": "https://en.wiktionary.org/wiki/salubrious"
+    },
+    {
+      "word": "nonplussed",
+      "pos": "adj",
+      "sourceLine": 156780,
+      "rowSha256": "3defb247aeb2ef60035f41f558e8ca7f439bbe0f8de0ccd8ddb892d472dd5a4a",
+      "url": "https://en.wiktionary.org/wiki/nonplussed"
+    },
+    {
+      "word": "nonplussed",
+      "pos": "verb",
+      "sourceLine": 156781,
+      "rowSha256": "37aae5fa94556a6b7eeac2183354341aa368c3c42ff58b957cb86e8e05d01015",
+      "url": "https://en.wiktionary.org/wiki/nonplussed"
+    },
+    {
+      "word": "egregious",
+      "pos": "adj",
+      "sourceLine": 157767,
+      "rowSha256": "c441b44eedae35af1c594c50ca3219b15e36722e17a0e9591df1d4ec0d27bdf1",
+      "url": "https://en.wiktionary.org/wiki/egregious"
+    },
+    {
+      "word": "ignominious",
+      "pos": "adj",
+      "sourceLine": 160107,
+      "rowSha256": "7cdc572322d7d6144b38ccd7bb8eb5398262cf60d6a009ac1cc3b1a3bf4f1fd1",
+      "url": "https://en.wiktionary.org/wiki/ignominious"
+    },
+    {
+      "word": "ersatz",
+      "pos": "adj",
+      "sourceLine": 160706,
+      "rowSha256": "010ed22ef66221a5a510316a8ed8d3d810ac2cacd73c106e7a91833514f92a20",
+      "url": "https://en.wiktionary.org/wiki/ersatz"
+    },
+    {
+      "word": "ersatz",
+      "pos": "noun",
+      "sourceLine": 160707,
+      "rowSha256": "ab0ea7164fa84564cf08aa3888d6ed4bd4393744e1d6f0bf483af33872740c08",
+      "url": "https://en.wiktionary.org/wiki/ersatz"
+    },
+    {
+      "word": "penchant",
+      "pos": "noun",
+      "sourceLine": 167627,
+      "rowSha256": "55992b029096a26d9c9e7db269d4e504fa192561070534dc9a916bf9f5b473a6",
+      "url": "https://en.wiktionary.org/wiki/penchant"
+    },
+    {
+      "word": "portent",
+      "pos": "noun",
+      "sourceLine": 168181,
+      "rowSha256": "d09571abaf47356ab843ac08dfb290d1a7626f30cac04c0d548da460737a51e0",
+      "url": "https://en.wiktionary.org/wiki/portent"
+    },
+    {
+      "word": "pejorative",
+      "pos": "adj",
+      "sourceLine": 168807,
+      "rowSha256": "7efe789f057e1667dced8a74b727c8b30d44063ceaa99bb02c2df69fd60855cb",
+      "url": "https://en.wiktionary.org/wiki/pejorative"
+    },
+    {
+      "word": "pejorative",
+      "pos": "noun",
+      "sourceLine": 168808,
+      "rowSha256": "90e321ed620af87d874b83cacf77062be1ef47b268a314456b2932876f1523ba",
+      "url": "https://en.wiktionary.org/wiki/pejorative"
+    },
+    {
+      "word": "acquiesce",
+      "pos": "verb",
+      "sourceLine": 171383,
+      "rowSha256": "93cb9d293e7994856b8751c85b4aef0ab69f1658f1e591dec12e7100ec35f43e",
+      "url": "https://en.wiktionary.org/wiki/acquiesce"
+    },
+    {
+      "word": "acrid",
+      "pos": "adj",
+      "sourceLine": 171396,
+      "rowSha256": "522b09e500e0d5cab0da4f9663234fd19525ab0d51bb0ea6f0156620efc09ead",
+      "url": "https://en.wiktionary.org/wiki/acrid"
+    },
+    {
+      "word": "admonish",
+      "pos": "verb",
+      "sourceLine": 172095,
+      "rowSha256": "8f24e363c92df5cf141684f772aa0cb001b0dec1bbeed81f25dfd8fddd670352",
+      "url": "https://en.wiktionary.org/wiki/admonish"
+    },
+    {
+      "word": "affable",
+      "pos": "adj",
+      "sourceLine": 172534,
+      "rowSha256": "1f2d1dda8db093481147eeecbcedfcecdf058f16ca038e745a706938ac92f7a9",
+      "url": "https://en.wiktionary.org/wiki/affable"
+    },
+    {
+      "word": "apocryphal",
+      "pos": "adj",
+      "sourceLine": 173051,
+      "rowSha256": "7813d42479a37e585311e649db5fbd923f426f07d3bb0ddf3e63fe2660e1a1bb",
+      "url": "https://en.wiktionary.org/wiki/apocryphal"
+    },
+    {
+      "word": "cacophony",
+      "pos": "noun",
+      "sourceLine": 174130,
+      "rowSha256": "a433ee2b4577747e8bbd4631bb75c995240aa10290eb89cac99d1949e8ccdfbd",
+      "url": "https://en.wiktionary.org/wiki/cacophony"
+    },
+    {
+      "word": "discordant",
+      "pos": "adj",
+      "sourceLine": 174816,
+      "rowSha256": "12cb692d6c99e5bfb22da1222bd44ddf91465a8e731dc2e4c53f8abc592d153e",
+      "url": "https://en.wiktionary.org/wiki/discordant"
+    },
+    {
+      "word": "discordant",
+      "pos": "noun",
+      "sourceLine": 174817,
+      "rowSha256": "78ce788923d06f72cf9183751f92faef7ebaa2818c34d90c9754b60a43bc7364",
+      "url": "https://en.wiktionary.org/wiki/discordant"
+    },
+    {
+      "word": "vacillate",
+      "pos": "verb",
+      "sourceLine": 176691,
+      "rowSha256": "6c49dd6323b657a70a0239d9dfdc2f85416cc15e18b2f846ae55527f1a9c0591",
+      "url": "https://en.wiktionary.org/wiki/vacillate"
+    },
+    {
+      "word": "antipathy",
+      "pos": "noun",
+      "sourceLine": 176777,
+      "rowSha256": "5db755bc4cc047a383612171b5c1bafb64315f2045edfaec918202c51e61c28e",
+      "url": "https://en.wiktionary.org/wiki/antipathy"
+    },
+    {
+      "word": "plethora",
+      "pos": "noun",
+      "sourceLine": 179475,
+      "rowSha256": "0ea714059d8aea68b58302327a6b0d1e1c59c6b482cfe3b35038df4cfd41f143",
+      "url": "https://en.wiktionary.org/wiki/plethora"
+    },
+    {
+      "word": "approbation",
+      "pos": "noun",
+      "sourceLine": 185151,
+      "rowSha256": "8d12d97bceb733ba709c5b760dc381d07f73b25b6c4eae8884548d4cd79efb9e",
+      "url": "https://en.wiktionary.org/wiki/approbation"
+    },
+    {
+      "word": "stoic",
+      "pos": "noun",
+      "sourceLine": 185962,
+      "rowSha256": "cf762c52ff01663488dc1766081073e74a4cf0d2f6c4a10d9a59def301d53640",
+      "url": "https://en.wiktionary.org/wiki/stoic"
+    },
+    {
+      "word": "stoic",
+      "pos": "adj",
+      "sourceLine": 185963,
+      "rowSha256": "7ba2d174f5060e4a312c9b878bab7a8e2af58f0c445d2b89f7b8262749a89e7e",
+      "url": "https://en.wiktionary.org/wiki/stoic"
+    },
+    {
+      "word": "felicitous",
+      "pos": "adj",
+      "sourceLine": 186297,
+      "rowSha256": "6fbc18d747b9f5c81a150bcc61e13c25ab34a3a316a74c745673b5b8e4b2d69d",
+      "url": "https://en.wiktionary.org/wiki/felicitous"
+    },
+    {
+      "word": "wanton",
+      "pos": "adj",
+      "sourceLine": 187050,
+      "rowSha256": "f76fb89bf20785aa40e2cbccc6a0c410366345b7000c7074b84fa05bb32c4921",
+      "url": "https://en.wiktionary.org/wiki/wanton"
+    },
+    {
+      "word": "wanton",
+      "pos": "noun",
+      "sourceLine": 187051,
+      "rowSha256": "2b466b0ee5e1e6eda2e651a29806b4ccea35e436793c91b3132229ff0e64e3b9",
+      "url": "https://en.wiktionary.org/wiki/wanton"
+    },
+    {
+      "word": "wanton",
+      "pos": "verb",
+      "sourceLine": 187052,
+      "rowSha256": "3cd90a44210258f1aa8867dab4eca09d57ceaaac28ae8242c2c297e8e56ff152",
+      "url": "https://en.wiktionary.org/wiki/wanton"
+    },
+    {
+      "word": "wanton",
+      "pos": "noun",
+      "sourceLine": 187053,
+      "rowSha256": "a4719da12a23ae43e8748b09ffcca1e94b26379e8a10d0ff0c59908a53f67462",
+      "url": "https://en.wiktionary.org/wiki/wanton"
+    },
+    {
+      "word": "ineffable",
+      "pos": "adj",
+      "sourceLine": 188454,
+      "rowSha256": "54abb54ffbf9915332ab5a7e3e0c36e6c7abd12d932d4294768d3c55f63b62cf",
+      "url": "https://en.wiktionary.org/wiki/ineffable"
+    },
+    {
+      "word": "ineffable",
+      "pos": "noun",
+      "sourceLine": 188455,
+      "rowSha256": "ffb483b3628d1229fc655652ff322d8d1bb488d136188159d35edffaff29d8ca",
+      "url": "https://en.wiktionary.org/wiki/ineffable"
+    },
+    {
+      "word": "vicarious",
+      "pos": "adj",
+      "sourceLine": 188574,
+      "rowSha256": "422e7784a603e49a75f0bf16afee6cfa16af7e698946525ae75de951a4d27f64",
+      "url": "https://en.wiktionary.org/wiki/vicarious"
+    },
+    {
+      "word": "felicity",
+      "pos": "noun",
+      "sourceLine": 189163,
+      "rowSha256": "1c273d757046e473063003640c2ef985c10a8ddaa6eddae4bc65a91013ea4695",
+      "url": "https://en.wiktionary.org/wiki/felicity"
+    },
+    {
+      "word": "lachrymose",
+      "pos": "adj",
+      "sourceLine": 189947,
+      "rowSha256": "bcdab031610e13760a03977f5ba1e6879afafa7953fdac8c006d5b52ea16e47e",
+      "url": "https://en.wiktionary.org/wiki/lachrymose"
+    },
+    {
+      "word": "vicissitude",
+      "pos": "noun",
+      "sourceLine": 190287,
+      "rowSha256": "d840c01d7762f92e799de9171f6826c60baf28c9a8373cdc51c09ed6cebdcdca",
+      "url": "https://en.wiktionary.org/wiki/vicissitude"
+    },
+    {
+      "word": "assuage",
+      "pos": "verb",
+      "sourceLine": 190921,
+      "rowSha256": "98356cf697fe2a677459de494293ebb638b6370e8575087e540a799bbcde7929",
+      "url": "https://en.wiktionary.org/wiki/assuage"
+    },
+    {
+      "word": "ubiquitous",
+      "pos": "adj",
+      "sourceLine": 191162,
+      "rowSha256": "5c66832853c32ddd658bfb51ff0ac6e49d4a4c831010d7ddf42f5a64848427c1",
+      "url": "https://en.wiktionary.org/wiki/ubiquitous"
+    },
+    {
+      "word": "beatific",
+      "pos": "adj",
+      "sourceLine": 191397,
+      "rowSha256": "78bf33329431c3cdf37466d310a48dc71f6a616bbbd3b5cb1c9c799e7305b75d",
+      "url": "https://en.wiktionary.org/wiki/beatific"
+    },
+    {
+      "word": "timorous",
+      "pos": "adj",
+      "sourceLine": 191431,
+      "rowSha256": "46914d796a27e1a4d1a54a61eae0704b9168ed0add162da3fb4ee95b18f6a825",
+      "url": "https://en.wiktionary.org/wiki/timorous"
+    },
+    {
+      "word": "mendacious",
+      "pos": "adj",
+      "sourceLine": 191446,
+      "rowSha256": "eb9210e09d5285ac3ce5fab4d56b4e1626c7a35bf273aad51e838e30f7f36506",
+      "url": "https://en.wiktionary.org/wiki/mendacious"
+    },
+    {
+      "word": "harangue",
+      "pos": "noun",
+      "sourceLine": 192262,
+      "rowSha256": "7ba8c5d0a2fd191aaaa7726b2603dff4670aea386f44bc078ee8282f48d64fea",
+      "url": "https://en.wiktionary.org/wiki/harangue"
+    },
+    {
+      "word": "harangue",
+      "pos": "verb",
+      "sourceLine": 192263,
+      "rowSha256": "ac697eca4686652b6cd7b7db4f6190315f76cfcd319d13951a99d5f2adfaad84",
+      "url": "https://en.wiktionary.org/wiki/harangue"
+    },
+    {
+      "word": "efficacious",
+      "pos": "adj",
+      "sourceLine": 194669,
+      "rowSha256": "6dd5b5caaafe287039e2a3d976e8216c0283e0ec8ddba68913966e80342318fe",
+      "url": "https://en.wiktionary.org/wiki/efficacious"
+    },
+    {
+      "word": "tenuous",
+      "pos": "adj",
+      "sourceLine": 194883,
+      "rowSha256": "d9e06fac75e10e73766c56a815823e5deb566c88ed3f9aed64f3838561054f5a",
+      "url": "https://en.wiktionary.org/wiki/tenuous"
+    },
+    {
+      "word": "pernicious",
+      "pos": "adj",
+      "sourceLine": 194978,
+      "rowSha256": "98b2699a456bf36560342adf985d501db01d5ec23faedca03c858b665faae9c8",
+      "url": "https://en.wiktionary.org/wiki/pernicious"
+    },
+    {
+      "word": "pernicious",
+      "pos": "adj",
+      "sourceLine": 194979,
+      "rowSha256": "33c148724d6b8b2e9ad617bd8ac652f5946e045f8a11ebf03534d9a80ca9069e",
+      "url": "https://en.wiktionary.org/wiki/pernicious"
+    },
+    {
+      "word": "vociferous",
+      "pos": "adj",
+      "sourceLine": 196503,
+      "rowSha256": "a60d0918d3dcd530218fda02cb18de2a4431e355b9b10c78bd9af1e9c8f38592",
+      "url": "https://en.wiktionary.org/wiki/vociferous"
+    },
+    {
+      "word": "replete",
+      "pos": "adj",
+      "sourceLine": 200320,
+      "rowSha256": "dbe42b38aff5b4241d71802773c86f5ee6d7c1bd533da28e2d2cda598d5affa3",
+      "url": "https://en.wiktionary.org/wiki/replete"
+    },
+    {
+      "word": "replete",
+      "pos": "noun",
+      "sourceLine": 200321,
+      "rowSha256": "fc2d66dc60821b74fa421f9919652c6995327571a9dbf0b6d63d538a4331e63d",
+      "url": "https://en.wiktionary.org/wiki/replete"
+    },
+    {
+      "word": "replete",
+      "pos": "verb",
+      "sourceLine": 200322,
+      "rowSha256": "b042a6f1bc2d2b8c1e923d2403e0b63a0803e75727ac94d3249883dd08f4162f",
+      "url": "https://en.wiktionary.org/wiki/replete"
+    },
+    {
+      "word": "perfidy",
+      "pos": "noun",
+      "sourceLine": 201871,
+      "rowSha256": "6946f5568755448b7c31e93ae1a05b8dabb46c02c53cff826ce1a25a1c864bc9",
+      "url": "https://en.wiktionary.org/wiki/perfidy"
+    },
+    {
+      "word": "perspicacious",
+      "pos": "adj",
+      "sourceLine": 201922,
+      "rowSha256": "f1949dd71ed50de7aab039bdcfbdfc3deba4820391d03523d21ad39ab5f73efe",
+      "url": "https://en.wiktionary.org/wiki/perspicacious"
+    },
+    {
+      "word": "aggrandize",
+      "pos": "verb",
+      "sourceLine": 202650,
+      "rowSha256": "2587a99dd43d9b8608bae78b2a8eb57bf021373586b2b92f693d0ff0561d1759",
+      "url": "https://en.wiktionary.org/wiki/aggrandize"
+    },
+    {
+      "word": "avarice",
+      "pos": "noun",
+      "sourceLine": 203315,
+      "rowSha256": "397ffe0298e428e2d6282afac700101499911ab6d21f1130ddf44d0420e08939",
+      "url": "https://en.wiktionary.org/wiki/avarice"
+    },
+    {
+      "word": "avaricious",
+      "pos": "adj",
+      "sourceLine": 203318,
+      "rowSha256": "ee369aa721f952294f2b2639fea4cc6c3ca18f09c7a7eaccd2c2777764c3d4c9",
+      "url": "https://en.wiktionary.org/wiki/avaricious"
+    },
+    {
+      "word": "apostate",
+      "pos": "adj",
+      "sourceLine": 204809,
+      "rowSha256": "b6be4fa5c1098a2a9081629f3a96e184f3d9131cdf05126d6c43978083f4ffdb",
+      "url": "https://en.wiktionary.org/wiki/apostate"
+    },
+    {
+      "word": "apostate",
+      "pos": "noun",
+      "sourceLine": 204810,
+      "rowSha256": "36c3311375ca765439eb59ba843416d138b0606bb13ceb0c7a493386108ffd46",
+      "url": "https://en.wiktionary.org/wiki/apostate"
+    },
+    {
+      "word": "exacerbate",
+      "pos": "verb",
+      "sourceLine": 206734,
+      "rowSha256": "fafa562abcaa0a7384589e5e668bdb8eda780837f536de2aeaec08e0e0f5f005",
+      "url": "https://en.wiktionary.org/wiki/exacerbate"
+    },
+    {
+      "word": "halcyon",
+      "pos": "noun",
+      "sourceLine": 208847,
+      "rowSha256": "e440b4df9d1f8e04eb6d69d76d16fb206dd64e8d6cafa7c6470c3a7b501d62b8",
+      "url": "https://en.wiktionary.org/wiki/halcyon"
+    },
+    {
+      "word": "halcyon",
+      "pos": "adj",
+      "sourceLine": 208848,
+      "rowSha256": "fe88f92078aad9fb65765bb27c43fcee819a7ad295f1f4bb14019e4503c82ac9",
+      "url": "https://en.wiktionary.org/wiki/halcyon"
+    },
+    {
+      "word": "usurp",
+      "pos": "verb",
+      "sourceLine": 210986,
+      "rowSha256": "10096afd2d7502eb7ce772d53e5d712f8696949b35c977ffd781875f9e26165a",
+      "url": "https://en.wiktionary.org/wiki/usurp"
+    },
+    {
+      "word": "lugubrious",
+      "pos": "adj",
+      "sourceLine": 211144,
+      "rowSha256": "d33a81d77ac09643346a98caeb5b1d63fcdb0b2f65cdc1d23e4cdbacb4e698ba",
+      "url": "https://en.wiktionary.org/wiki/lugubrious"
+    },
+    {
+      "word": "ineluctable",
+      "pos": "adj",
+      "sourceLine": 211205,
+      "rowSha256": "2c495b2f454e2eecbfa78305d852562264ec4a9132958c5802aaad4a84f5d5ad",
+      "url": "https://en.wiktionary.org/wiki/ineluctable"
+    },
+    {
+      "word": "misanthrope",
+      "pos": "noun",
+      "sourceLine": 211428,
+      "rowSha256": "27e421b29ee389dd77da5f6867934838b3aa1181ce8ee6d426df111ee243cf46",
+      "url": "https://en.wiktionary.org/wiki/misanthrope"
+    },
+    {
+      "word": "obsequious",
+      "pos": "adj",
+      "sourceLine": 212957,
+      "rowSha256": "dccf3a3ca1516fb234a50be9551ff632da94f2aef62cd624ad844bc536ca0783",
+      "url": "https://en.wiktionary.org/wiki/obsequious"
+    },
+    {
+      "word": "sobriquet",
+      "pos": "noun",
+      "sourceLine": 212968,
+      "rowSha256": "72a81e355b817b9155f0f7f61dd90cba453acfd7ff8fc5d7c614f0cc3fd6c05b",
+      "url": "https://en.wiktionary.org/wiki/sobriquet"
+    },
+    {
+      "word": "taciturn",
+      "pos": "adj",
+      "sourceLine": 212976,
+      "rowSha256": "c9b64b003c900bab5e4c6faaeebd41c496cde5cbc45c5db8da2024a952406aa7",
+      "url": "https://en.wiktionary.org/wiki/taciturn"
+    },
+    {
+      "word": "concomitant",
+      "pos": "adj",
+      "sourceLine": 212982,
+      "rowSha256": "e5210e2c49d0c3fe418446f1e4ed1d4dfe20fb286089ef23566fb953f207df1d",
+      "url": "https://en.wiktionary.org/wiki/concomitant"
+    },
+    {
+      "word": "concomitant",
+      "pos": "noun",
+      "sourceLine": 212983,
+      "rowSha256": "dcbab3940cd2126054f64584a3e6c3fe4479b88a2ed53fffe5fd9f0f48d4702a",
+      "url": "https://en.wiktionary.org/wiki/concomitant"
+    },
+    {
+      "word": "immutable",
+      "pos": "adj",
+      "sourceLine": 212988,
+      "rowSha256": "781296cedf4f95e6beb3d05f68587f1074025fd2106213f6d99bd6f63fc31c62",
+      "url": "https://en.wiktionary.org/wiki/immutable"
+    },
+    {
+      "word": "immutable",
+      "pos": "noun",
+      "sourceLine": 212989,
+      "rowSha256": "db0ddeee7ed236c4d3b2d543942db26e722d0d052c25f4ce810f2e0b543aaad0",
+      "url": "https://en.wiktionary.org/wiki/immutable"
+    },
+    {
+      "word": "garrulous",
+      "pos": "adj",
+      "sourceLine": 212992,
+      "rowSha256": "c622dcd8ae7adce61dbace38086a24b2db17cf4842e54b077ada46419a11f27e",
+      "url": "https://en.wiktionary.org/wiki/garrulous"
+    },
+    {
+      "word": "quiescent",
+      "pos": "adj",
+      "sourceLine": 212994,
+      "rowSha256": "f85c1ec78c1e4f24b5428a6c97657f247a9f7b6de46441e5104a9873616f34f6",
+      "url": "https://en.wiktionary.org/wiki/quiescent"
+    },
+    {
+      "word": "verbose",
+      "pos": "adj",
+      "sourceLine": 214900,
+      "rowSha256": "f17e1ff33ab2d93e941f01fc197d336c3ca0e8b316a2b7d73fa17808433713ac",
+      "url": "https://en.wiktionary.org/wiki/verbose"
+    },
+    {
+      "word": "mordant",
+      "pos": "adj",
+      "sourceLine": 215977,
+      "rowSha256": "80a90fc7a48e9944bfb03474d9bfa430a408c95f86d749fb73c53cd909cdedb5",
+      "url": "https://en.wiktionary.org/wiki/mordant"
+    },
+    {
+      "word": "mordant",
+      "pos": "noun",
+      "sourceLine": 215978,
+      "rowSha256": "4fdc8cb052c4f236a043c2d8429f3666d5b54575b14a419d8c7b133f6f78bd28",
+      "url": "https://en.wiktionary.org/wiki/mordant"
+    },
+    {
+      "word": "mordant",
+      "pos": "verb",
+      "sourceLine": 215979,
+      "rowSha256": "0ac972074988dbbfa73dffad12c7b42b359dea758852b2a0a05557c80f738cb9",
+      "url": "https://en.wiktionary.org/wiki/mordant"
+    },
+    {
+      "word": "impecunious",
+      "pos": "adj",
+      "sourceLine": 218020,
+      "rowSha256": "63111d0284a79e4b1893b2778b2d928f34cff427cb559bf28611f21193296715",
+      "url": "https://en.wiktionary.org/wiki/impecunious"
+    },
+    {
+      "word": "pusillanimous",
+      "pos": "adj",
+      "sourceLine": 218084,
+      "rowSha256": "ccef3f33bb82bbd42492ee3bc11f8d04d432d119e37a3ac3d6cad97cc0169bf3",
+      "url": "https://en.wiktionary.org/wiki/pusillanimous"
+    },
+    {
+      "word": "serendipity",
+      "pos": "noun",
+      "sourceLine": 218611,
+      "rowSha256": "972389298f9e40c6e395b8ab3c6494ab1bc504359f873d84377e7ce95fff13ae",
+      "url": "https://en.wiktionary.org/wiki/serendipity"
+    },
+    {
+      "word": "specious",
+      "pos": "adj",
+      "sourceLine": 220481,
+      "rowSha256": "e42a53032cd60d059ece65ec53bc4027526256749b5c0e6ab4b54c88a000f876",
+      "url": "https://en.wiktionary.org/wiki/specious"
+    },
+    {
+      "word": "specious",
+      "pos": "adj",
+      "sourceLine": 220482,
+      "rowSha256": "203317e639055b1cdfca85294e2d4fc05669b4441626fe960bcc8c9c81cabc93",
+      "url": "https://en.wiktionary.org/wiki/specious"
+    },
+    {
+      "word": "dilatory",
+      "pos": "adj",
+      "sourceLine": 220698,
+      "rowSha256": "f379876c3422366f368481ffd57ede6e0c3ab9d7152f676b858678a0b4f5a897",
+      "url": "https://en.wiktionary.org/wiki/dilatory"
+    },
+    {
+      "word": "dilatory",
+      "pos": "adj",
+      "sourceLine": 220699,
+      "rowSha256": "ce86bbc3c664ca9770cbbfbb1fc44c2175ba8fa83cd4b6c8a6c8a0713cf88ce1",
+      "url": "https://en.wiktionary.org/wiki/dilatory"
+    },
+    {
+      "word": "disabuse",
+      "pos": "verb",
+      "sourceLine": 221868,
+      "rowSha256": "a29986a017f25fb4014f2a363e313d6b19047e6ad0db3bb480800a689cea7352",
+      "url": "https://en.wiktionary.org/wiki/disabuse"
+    },
+    {
+      "word": "adumbrate",
+      "pos": "verb",
+      "sourceLine": 223965,
+      "rowSha256": "bbc6b7875db359144f9fc9fbc0da72879517294b59392aeb910ea2a6f43e3b74",
+      "url": "https://en.wiktionary.org/wiki/adumbrate"
+    },
+    {
+      "word": "adulterate",
+      "pos": "adj",
+      "sourceLine": 225088,
+      "rowSha256": "e097f6689f4a9221e228e60e2047b744ef27640da525cd94f5ae094c141856f9",
+      "url": "https://en.wiktionary.org/wiki/adulterate"
+    },
+    {
+      "word": "adulterate",
+      "pos": "verb",
+      "sourceLine": 225089,
+      "rowSha256": "ebca577e8e6d70b0bbaadc21b387c5252790e8e0e26403918972f41f9d7396db",
+      "url": "https://en.wiktionary.org/wiki/adulterate"
+    },
+    {
+      "word": "boorish",
+      "pos": "adj",
+      "sourceLine": 225196,
+      "rowSha256": "c5aa76abdc574893ff40668584a3685a97aa8d998dc71957a4258f4c7a14a3b6",
+      "url": "https://en.wiktionary.org/wiki/boorish"
+    },
+    {
+      "word": "decry",
+      "pos": "verb",
+      "sourceLine": 226457,
+      "rowSha256": "a070ee1196a1e6642b2a481caf531232d245bb38eb4156c381bcf51bbbe1e9e5",
+      "url": "https://en.wiktionary.org/wiki/decry"
+    },
+    {
+      "word": "zealot",
+      "pos": "noun",
+      "sourceLine": 226499,
+      "rowSha256": "57a6ced5c3d4c33138ae4d6dd2d306747a2a92f1f0e362400c520f05b82804c5",
+      "url": "https://en.wiktionary.org/wiki/zealot"
+    },
+    {
+      "word": "zealous",
+      "pos": "adj",
+      "sourceLine": 226500,
+      "rowSha256": "37dfb809c77040544a790ff5f7b71b13510cf7f4efb1afdb83dd24eb8f23606e",
+      "url": "https://en.wiktionary.org/wiki/zealous"
+    },
+    {
+      "word": "hubris",
+      "pos": "noun",
+      "sourceLine": 229578,
+      "rowSha256": "0aa6f1f8d0465b16c9570526d68965b2ae12f801b428349bc5f1ef8e23d62326",
+      "url": "https://en.wiktionary.org/wiki/hubris"
+    },
+    {
+      "word": "jejune",
+      "pos": "adj",
+      "sourceLine": 229762,
+      "rowSha256": "c1651c6c47c3924e3cecd0d0c6b75d937c96d632395ca1bdeab64ad9e4634fd7",
+      "url": "https://en.wiktionary.org/wiki/jejune"
+    },
+    {
+      "word": "ossify",
+      "pos": "verb",
+      "sourceLine": 231251,
+      "rowSha256": "1785d306df4bd16c1984016df98b190bc89147c72829e5667ab150b476bca2c2",
+      "url": "https://en.wiktionary.org/wiki/ossify"
+    },
+    {
+      "word": "temerity",
+      "pos": "noun",
+      "sourceLine": 233814,
+      "rowSha256": "15b9962cb928d7a3b2e89504a542549e32f148c8b86a6918019bc33a6cc6d4c9",
+      "url": "https://en.wiktionary.org/wiki/temerity"
+    },
+    {
+      "word": "blithe",
+      "pos": "adj",
+      "sourceLine": 234302,
+      "rowSha256": "b4f8d0903a02eb87c48f71107ed96ed7f84f00893b301e5d3f2581352199a346",
+      "url": "https://en.wiktionary.org/wiki/blithe"
+    },
+    {
+      "word": "conflagration",
+      "pos": "noun",
+      "sourceLine": 234692,
+      "rowSha256": "3f2717c8549d8d79de5d3c2d9b7121535b728c0391be8493b1f24fea8cc6d1a2",
+      "url": "https://en.wiktionary.org/wiki/conflagration"
+    },
+    {
+      "word": "conflation",
+      "pos": "noun",
+      "sourceLine": 234694,
+      "rowSha256": "9249e38f86222276fe494c3416bf46bf8cf2bbad7c79e987d0ef2e18d9e50619",
+      "url": "https://en.wiktionary.org/wiki/conflation"
+    },
+    {
+      "word": "debacle",
+      "pos": "noun",
+      "sourceLine": 234844,
+      "rowSha256": "ad691b37c836ed0bcb77d1d758c011d02ef8536aa89d5779854df77ebd1113b4",
+      "url": "https://en.wiktionary.org/wiki/debacle"
+    },
+    {
+      "word": "desultory",
+      "pos": "adj",
+      "sourceLine": 234958,
+      "rowSha256": "5f505e720ce0a8b2bc86933a7ae9e39ca59af178c6a6b6901732b6220b753a8f",
+      "url": "https://en.wiktionary.org/wiki/desultory"
+    },
+    {
+      "word": "diffident",
+      "pos": "adj",
+      "sourceLine": 235000,
+      "rowSha256": "cf171fa6cbf4f646973fe90d1be53deb4d698476a53156f01bb61e7be6a9f4c9",
+      "url": "https://en.wiktionary.org/wiki/diffident"
+    },
+    {
+      "word": "disparage",
+      "pos": "noun",
+      "sourceLine": 235112,
+      "rowSha256": "ce5f41222069b380b1eac77102fe72a1f9cd97e74a3b386adfe98e9532cbed0e",
+      "url": "https://en.wiktionary.org/wiki/disparage"
+    },
+    {
+      "word": "disparage",
+      "pos": "verb",
+      "sourceLine": 235113,
+      "rowSha256": "83439fdfdc21467ddb3101d8e0ce9b3b03a0bbb62d736709e06a80cd98cbfd0b",
+      "url": "https://en.wiktionary.org/wiki/disparage"
+    },
+    {
+      "word": "entreat",
+      "pos": "verb",
+      "sourceLine": 235352,
+      "rowSha256": "71b4aab558b3919fe8a59cb632a1bcbed1c97797866934031f60d50a1f6b2d66",
+      "url": "https://en.wiktionary.org/wiki/entreat"
+    },
+    {
+      "word": "entreat",
+      "pos": "noun",
+      "sourceLine": 235353,
+      "rowSha256": "830b744056664448cdc51a2c245fd4e2c896c39fcef1e3f0b965574868740355",
+      "url": "https://en.wiktionary.org/wiki/entreat"
+    },
+    {
+      "word": "expatiate",
+      "pos": "verb",
+      "sourceLine": 235446,
+      "rowSha256": "ecd3c658a5a0639def3debb3323ad82d9973b02bb02a00e90933519cb533d60a",
+      "url": "https://en.wiktionary.org/wiki/expatiate"
+    },
+    {
+      "word": "foment",
+      "pos": "verb",
+      "sourceLine": 235753,
+      "rowSha256": "cc171d3ab3dd3300420a2c630555f2ff9cafe451785a8b6a49962eca0eb4c05d",
+      "url": "https://en.wiktionary.org/wiki/foment"
+    },
+    {
+      "word": "foment",
+      "pos": "noun",
+      "sourceLine": 235754,
+      "rowSha256": "3acefc5356fb6f99a6327a3257c7c8a5998454d3079e319b7b921cf62ff9dc3c",
+      "url": "https://en.wiktionary.org/wiki/foment"
+    },
+    {
+      "word": "gainsay",
+      "pos": "verb",
+      "sourceLine": 235874,
+      "rowSha256": "3a5eb4f647d6afccd39cc9e3a8c9c69f589be1a45b512328ea10b2dae0a5e6e1",
+      "url": "https://en.wiktionary.org/wiki/gainsay"
+    },
+    {
+      "word": "contumacious",
+      "pos": "adj",
+      "sourceLine": 236010,
+      "rowSha256": "53a5f231b2517087d85add77f840b28cf674d5d7a6e5a67daf7246236ebefc61",
+      "url": "https://en.wiktionary.org/wiki/contumacious"
+    },
+    {
+      "word": "hermetic",
+      "pos": "adj",
+      "sourceLine": 236358,
+      "rowSha256": "cbcb1a9ed98e2d87fda8c30c59149fb65e030c5a2a0e38ea3ef5b45cdb9d4b9b",
+      "url": "https://en.wiktionary.org/wiki/hermetic"
+    },
+    {
+      "word": "imprecation",
+      "pos": "noun",
+      "sourceLine": 236514,
+      "rowSha256": "a3f708bf34192ae86e572386682e3406528042a989a156bca32acd177145bf22",
+      "url": "https://en.wiktionary.org/wiki/imprecation"
+    },
+    {
+      "word": "indefatigable",
+      "pos": "adj",
+      "sourceLine": 236572,
+      "rowSha256": "3dd9e85991e01d6f7b878cc8fd4b0804ca9298f4b3c831548f2534cfb31af326",
+      "url": "https://en.wiktionary.org/wiki/indefatigable"
+    },
+    {
+      "word": "infelicitous",
+      "pos": "adj",
+      "sourceLine": 236602,
+      "rowSha256": "02003af0855264988ef51b8bbdd468b8d729fa6ba50ed17271f116f767c608d9",
+      "url": "https://en.wiktionary.org/wiki/infelicitous"
+    },
+    {
+      "word": "insouciant",
+      "pos": "adj",
+      "sourceLine": 236652,
+      "rowSha256": "142227c21e29dd860057db66c0ec2935d8ef58bc0101cff4ae1552d90d408221",
+      "url": "https://en.wiktionary.org/wiki/insouciant"
+    },
+    {
+      "word": "irascible",
+      "pos": "adj",
+      "sourceLine": 236770,
+      "rowSha256": "2cd981651c8ab19b9d1ecc9d4032b351c5331cb3bb7024eda4f25753525d5f1e",
+      "url": "https://en.wiktionary.org/wiki/irascible"
+    },
+    {
+      "word": "inveterate",
+      "pos": "adj",
+      "sourceLine": 236847,
+      "rowSha256": "d19039887992a13ecb92e7eb9a12e8bf2d25af801f23cde56bf58008976d5693",
+      "url": "https://en.wiktionary.org/wiki/inveterate"
+    },
+    {
+      "word": "inveterate",
+      "pos": "verb",
+      "sourceLine": 236848,
+      "rowSha256": "696c8374952c74acdf72c7424a2d7f5d9ec76865a491a40a5b5b220b22898dfa",
+      "url": "https://en.wiktionary.org/wiki/inveterate"
+    },
+    {
+      "word": "multifarious",
+      "pos": "adj",
+      "sourceLine": 237337,
+      "rowSha256": "aae068d3b79c60f2209234fd9bdd8e4b5293bcb55dcf72371ca59a12609ec021",
+      "url": "https://en.wiktionary.org/wiki/multifarious"
+    },
+    {
+      "word": "munificent",
+      "pos": "adj",
+      "sourceLine": 237338,
+      "rowSha256": "78dcccc0e56e8cc8f298199ae02de7426d3020f8083fb3aabe0a3127ef25a124",
+      "url": "https://en.wiktionary.org/wiki/munificent"
+    },
+    {
+      "word": "obstreperous",
+      "pos": "adj",
+      "sourceLine": 237460,
+      "rowSha256": "e0c4e15be7829909662fba6dd06fdbd34763b6744d8063a6bfb665a31c3ba341",
+      "url": "https://en.wiktionary.org/wiki/obstreperous"
+    },
+    {
+      "word": "phlegmatic",
+      "pos": "adj",
+      "sourceLine": 237621,
+      "rowSha256": "6af53f65a9d43a9b8e876ec81e4a21125f3796177d29b3a982e4003a2b4e68f6",
+      "url": "https://en.wiktionary.org/wiki/phlegmatic"
+    },
+    {
+      "word": "phlegmatic",
+      "pos": "noun",
+      "sourceLine": 237622,
+      "rowSha256": "fa5a4f2ec58604116e0519358869c8b105783925e8a1a33aa0fe5d6b4f46aab3",
+      "url": "https://en.wiktionary.org/wiki/phlegmatic"
+    },
+    {
+      "word": "profligate",
+      "pos": "adj",
+      "sourceLine": 237767,
+      "rowSha256": "cc6efe293fa30b1084e919e128833871ef359af150da70dc56eb709c7055e535",
+      "url": "https://en.wiktionary.org/wiki/profligate"
+    },
+    {
+      "word": "profligate",
+      "pos": "noun",
+      "sourceLine": 237768,
+      "rowSha256": "d2b938e433fc63119a2e3616901da3240f178b835201ca6406ba6b5ed79f74d8",
+      "url": "https://en.wiktionary.org/wiki/profligate"
+    },
+    {
+      "word": "profligate",
+      "pos": "verb",
+      "sourceLine": 237769,
+      "rowSha256": "eb63b38380559cdda61d326ad05a15c3d6adb92459194b75856cc86a771fbc93",
+      "url": "https://en.wiktionary.org/wiki/profligate"
+    },
+    {
+      "word": "profligate",
+      "pos": "verb",
+      "sourceLine": 237770,
+      "rowSha256": "91a24f49131a68122399fd74e5f7dcfa82cc888f0874a25c78707d83ac71ce47",
+      "url": "https://en.wiktionary.org/wiki/profligate"
+    },
+    {
+      "word": "protean",
+      "pos": "adj",
+      "sourceLine": 237788,
+      "rowSha256": "60b39dbb8f6f9100e95d983a541de3d050d11cb0b2569ca4fdf785d416458518",
+      "url": "https://en.wiktionary.org/wiki/protean"
+    },
+    {
+      "word": "protean",
+      "pos": "noun",
+      "sourceLine": 237789,
+      "rowSha256": "a35510b4666fc0ad30a4625acf73b6ccc3641ccf996492e5d61609fc05d1d7c4",
+      "url": "https://en.wiktionary.org/wiki/protean"
+    },
+    {
+      "word": "recant",
+      "pos": "verb",
+      "sourceLine": 237980,
+      "rowSha256": "4cb0c2eb4fdf664f6d4fe528c3e6963c9564528551a37c33d8753c9b9c6d3286",
+      "url": "https://en.wiktionary.org/wiki/recant"
+    },
+    {
+      "word": "recant",
+      "pos": "verb",
+      "sourceLine": 237981,
+      "rowSha256": "99fc67fee45283d9a8b63611f4d8ab618e9da0ccbba8f3d033b336345099c691",
+      "url": "https://en.wiktionary.org/wiki/recant"
+    },
+    {
+      "word": "sanguine",
+      "pos": "adj",
+      "sourceLine": 238344,
+      "rowSha256": "a55c9365a0282dc79ed8a762fa7343b0a9271f296310dc99bfa6278e9fd9d9f3",
+      "url": "https://en.wiktionary.org/wiki/sanguine"
+    },
+    {
+      "word": "sanguine",
+      "pos": "noun",
+      "sourceLine": 238345,
+      "rowSha256": "34e1cd98b44c04367a397608e728347d6a3868944f2a95c09ee58fd07be4362f",
+      "url": "https://en.wiktionary.org/wiki/sanguine"
+    },
+    {
+      "word": "sanguine",
+      "pos": "verb",
+      "sourceLine": 238346,
+      "rowSha256": "b4cffa21f1a29e3740ad152cf8dc28e1c9ba017d5cf42e4a7ef084b707bc4014",
+      "url": "https://en.wiktionary.org/wiki/sanguine"
+    },
+    {
+      "word": "sedulous",
+      "pos": "adj",
+      "sourceLine": 238453,
+      "rowSha256": "5105463c92a90f4ed1aee8ded8ee0494b9893f0ee0373f8bf34c017e09d75d3a",
+      "url": "https://en.wiktionary.org/wiki/sedulous"
+    },
+    {
+      "word": "recondite",
+      "pos": "adj",
+      "sourceLine": 239266,
+      "rowSha256": "494927ec1d0ecbd66b88fa57f53d5799e9139ee40abed87eb9af6312dd1b63da",
+      "url": "https://en.wiktionary.org/wiki/recondite"
+    },
+    {
+      "word": "recondite",
+      "pos": "noun",
+      "sourceLine": 239267,
+      "rowSha256": "cacbfe70e7de64d541ec40a7ca451d8d0553a19143b7f6ceff17c03465f78661",
+      "url": "https://en.wiktionary.org/wiki/recondite"
+    },
+    {
+      "word": "recondite",
+      "pos": "verb",
+      "sourceLine": 239268,
+      "rowSha256": "6e3dd42feb4893d4ff770d725591ee34c079227655ec9d2a6f85dd0c257ca07c",
+      "url": "https://en.wiktionary.org/wiki/recondite"
+    },
+    {
+      "word": "tacit",
+      "pos": "adj",
+      "sourceLine": 239297,
+      "rowSha256": "cf5de0cf745747ae266b37e796e6e1502551021fa08f85d45b023a1a90a0f45b",
+      "url": "https://en.wiktionary.org/wiki/tacit"
+    },
+    {
+      "word": "tractable",
+      "pos": "adj",
+      "sourceLine": 239483,
+      "rowSha256": "8b5709eadb07287f60484135b483fbbfe8544618c8990fc7418ab4705bfd6dc7",
+      "url": "https://en.wiktionary.org/wiki/tractable"
+    },
+    {
+      "word": "trenchant",
+      "pos": "adj",
+      "sourceLine": 239512,
+      "rowSha256": "ae0b6e14ef0f1df193091d2fa44c24ccaf2f34e2a3f765da674ca964556c3d13",
+      "url": "https://en.wiktionary.org/wiki/trenchant"
+    },
+    {
+      "word": "truculent",
+      "pos": "adj",
+      "sourceLine": 239583,
+      "rowSha256": "8df4cde80532c397988eab654382c9359931fde3f8b5c1c01803056846b40f45",
+      "url": "https://en.wiktionary.org/wiki/truculent"
+    },
+    {
+      "word": "vindicate",
+      "pos": "verb",
+      "sourceLine": 239730,
+      "rowSha256": "5691fa039d8cf4448c1686e9a88ab3b6102e9498743b9d6874b038fca0ac8dbd",
+      "url": "https://en.wiktionary.org/wiki/vindicate"
+    },
+    {
+      "word": "supercilious",
+      "pos": "adj",
+      "sourceLine": 240098,
+      "rowSha256": "16d270d7cb2a8ffa9577e2b53f2c4f7d4b937dddb0daf49dd85838a73ce4a665",
+      "url": "https://en.wiktionary.org/wiki/supercilious"
+    },
+    {
+      "word": "venerate",
+      "pos": "verb",
+      "sourceLine": 240350,
+      "rowSha256": "ee9aff606a9c67ccb5835ec77b73aa91b6eee5fe334435d81983f5842910236f",
+      "url": "https://en.wiktionary.org/wiki/venerate"
+    },
+    {
+      "word": "compunction",
+      "pos": "noun",
+      "sourceLine": 240679,
+      "rowSha256": "d340389c45c468b77ffb22ab6cf9f2758db48f0a8d8d3a650cde17430bdefd4f",
+      "url": "https://en.wiktionary.org/wiki/compunction"
+    },
+    {
+      "word": "heterodox",
+      "pos": "adj",
+      "sourceLine": 240737,
+      "rowSha256": "d4200617d77b751a36d2239d46ea404baafba905879100f7bca8ce892d4cd2c4",
+      "url": "https://en.wiktionary.org/wiki/heterodox"
+    },
+    {
+      "word": "diatribe",
+      "pos": "noun",
+      "sourceLine": 240807,
+      "rowSha256": "74a6da06f6dd68861e22ecf72765a24533ea98283bfd38412bf20045dbdac992",
+      "url": "https://en.wiktionary.org/wiki/diatribe"
+    },
+    {
+      "word": "evanescent",
+      "pos": "adj",
+      "sourceLine": 242376,
+      "rowSha256": "5ab5d9b480e60b88942d232ab081eccba1ed295e6d91108a3449ae0d6f42d455",
+      "url": "https://en.wiktionary.org/wiki/evanescent"
+    },
+    {
+      "word": "augury",
+      "pos": "noun",
+      "sourceLine": 242397,
+      "rowSha256": "28d091f1fb43ca6eae39c48463fbbe1911bb9e10d9829f47b0b01c2fa8831015",
+      "url": "https://en.wiktionary.org/wiki/augury"
+    },
+    {
+      "word": "onerous",
+      "pos": "adj",
+      "sourceLine": 242408,
+      "rowSha256": "a8f7517f0d9ac1108694d235353d7e62c9206a6394f2df3ea067b0de29b63d71",
+      "url": "https://en.wiktionary.org/wiki/onerous"
+    },
+    {
+      "word": "petulant",
+      "pos": "adj",
+      "sourceLine": 242627,
+      "rowSha256": "ed23f2ebaa58cfe7f83075245fdc65352186ebb0d875c2440d487c9b262c8692",
+      "url": "https://en.wiktionary.org/wiki/petulant"
+    },
+    {
+      "word": "unctuous",
+      "pos": "adj",
+      "sourceLine": 243688,
+      "rowSha256": "076c401422385e2cac505d224c8e1147f9ae1fd61bab17e6332117e391f894f5",
+      "url": "https://en.wiktionary.org/wiki/unctuous"
+    },
+    {
+      "word": "ennui",
+      "pos": "noun",
+      "sourceLine": 245622,
+      "rowSha256": "d178293d1ebf50bc648d285fc4522155489f96139fcdc58afe77e532fa83bc95",
+      "url": "https://en.wiktionary.org/wiki/ennui"
+    },
+    {
+      "word": "ennui",
+      "pos": "verb",
+      "sourceLine": 245623,
+      "rowSha256": "93ea04619b4aee68b92572b3f6a1c21f49da25c4556a316ccd704840c85dc21f",
+      "url": "https://en.wiktionary.org/wiki/ennui"
+    },
+    {
+      "word": "attenuation",
+      "pos": "noun",
+      "sourceLine": 245672,
+      "rowSha256": "84cb9c2345d7f4e38385a8223e776d0a79506c20b340d2bbe3ae5906633020b1",
+      "url": "https://en.wiktionary.org/wiki/attenuation"
+    },
+    {
+      "word": "sycophant",
+      "pos": "noun",
+      "sourceLine": 247796,
+      "rowSha256": "1a8e2b39bc713696bcfe184d823213dc773458b525fd6ec9d15a5d1da7edaf34",
+      "url": "https://en.wiktionary.org/wiki/sycophant"
+    },
+    {
+      "word": "sycophant",
+      "pos": "verb",
+      "sourceLine": 247797,
+      "rowSha256": "88af3670d7435b0fc6ad953b84f0519a915e2edc231f4b7f7d7467f59ec444b1",
+      "url": "https://en.wiktionary.org/wiki/sycophant"
+    },
+    {
+      "word": "misnomer",
+      "pos": "noun",
+      "sourceLine": 248259,
+      "rowSha256": "fe9ccd923a8b07036c56d8ccd2bb7456d7aaa1b8f9d0041fa58e15e998d97c8e",
+      "url": "https://en.wiktionary.org/wiki/misnomer"
+    },
+    {
+      "word": "misnomer",
+      "pos": "verb",
+      "sourceLine": 248260,
+      "rowSha256": "1dee05d98f541926474f4cad51d5570a13dbd512e7d5bb5e0ab9749544738c82",
+      "url": "https://en.wiktionary.org/wiki/misnomer"
+    },
+    {
+      "word": "commensurate",
+      "pos": "adj",
+      "sourceLine": 249741,
+      "rowSha256": "0537a40b724d49616d749f94d804b6c1d232678c8070d2be2b41c5b67860a1f2",
+      "url": "https://en.wiktionary.org/wiki/commensurate"
+    },
+    {
+      "word": "commensurate",
+      "pos": "verb",
+      "sourceLine": 249742,
+      "rowSha256": "8904cc6592c9fc7ae444811ee6b70a45aaa8a3aaba695441593738f0fb9705b0",
+      "url": "https://en.wiktionary.org/wiki/commensurate"
+    },
+    {
+      "word": "nascent",
+      "pos": "adj",
+      "sourceLine": 250048,
+      "rowSha256": "a3f580f395a07af38f508ffd5742aabe2c944893039ce2cfd2a4d7785f672d14",
+      "url": "https://en.wiktionary.org/wiki/nascent"
+    },
+    {
+      "word": "debilitate",
+      "pos": "verb",
+      "sourceLine": 250377,
+      "rowSha256": "04434bb302f0f5ce117e88cafcd0a89fb1dbe8da95641dfeb1f5f525c00d162b",
+      "url": "https://en.wiktionary.org/wiki/debilitate"
+    },
+    {
+      "word": "debilitate",
+      "pos": "adj",
+      "sourceLine": 250378,
+      "rowSha256": "70f6e6a881a359ef0b730ca747898414f4b1ccc80a63189bd99c89328231298d",
+      "url": "https://en.wiktionary.org/wiki/debilitate"
+    },
+    {
+      "word": "inexorable",
+      "pos": "adj",
+      "sourceLine": 250496,
+      "rowSha256": "1b8e39454c8bfaeec27e2e8e450df334edc514b48605b3054c556c8b6a463966",
+      "url": "https://en.wiktionary.org/wiki/inexorable"
+    },
+    {
+      "word": "castigate",
+      "pos": "verb",
+      "sourceLine": 250513,
+      "rowSha256": "7c33e5a4f6b4f4b53382789fc275217e645b07c259b6b51e6452ffa2f1fb3231",
+      "url": "https://en.wiktionary.org/wiki/castigate"
+    },
+    {
+      "word": "castigate",
+      "pos": "adj",
+      "sourceLine": 250514,
+      "rowSha256": "1e674c46bb9768ab07bafd8d2ed1b3b5779dd3f268443b134731768e1d59b55c",
+      "url": "https://en.wiktionary.org/wiki/castigate"
+    },
+    {
+      "word": "placate",
+      "pos": "verb",
+      "sourceLine": 250882,
+      "rowSha256": "f5f2ba310ba8e6cec3ce4c80cb193c13d4471d7101e5ffc201e1c29ced024896",
+      "url": "https://en.wiktionary.org/wiki/placate"
+    },
+    {
+      "word": "placate",
+      "pos": "adj",
+      "sourceLine": 250883,
+      "rowSha256": "20b7816bd747c1324e24232a7e407af205cdbca427e558c91da0a3e42f508619",
+      "url": "https://en.wiktionary.org/wiki/placate"
+    },
+    {
+      "word": "fatuous",
+      "pos": "adj",
+      "sourceLine": 250979,
+      "rowSha256": "2a1ca4070900f88b6c55138980511a2d6f0814a9ecb4f33587c5917ac65397c2",
+      "url": "https://en.wiktionary.org/wiki/fatuous"
+    },
+    {
+      "word": "curmudgeon",
+      "pos": "noun",
+      "sourceLine": 251439,
+      "rowSha256": "6b2605a62edd4ad9c5ae86ed9ad6139a5c998e67ef2bdcde1d250bb2a3da0d8b",
+      "url": "https://en.wiktionary.org/wiki/curmudgeon"
+    },
+    {
+      "word": "magnanimous",
+      "pos": "adj",
+      "sourceLine": 252864,
+      "rowSha256": "9b8859d19484e2a8476c2a2a7469e58df80f0f6b3312bcec7a3b8b57372eb927",
+      "url": "https://en.wiktionary.org/wiki/magnanimous"
+    },
+    {
+      "word": "stultify",
+      "pos": "verb",
+      "sourceLine": 253800,
+      "rowSha256": "696f9b636deb8eb45e5de3e62e97cf2739e935d7069b1b8b01139f5565f5ba26",
+      "url": "https://en.wiktionary.org/wiki/stultify"
+    },
+    {
+      "word": "chicanery",
+      "pos": "noun",
+      "sourceLine": 254013,
+      "rowSha256": "f42616a3c0053f7d0a2e01199b0133739c4f7179bc7d2f4338b8fda6753d6e55",
+      "url": "https://en.wiktionary.org/wiki/chicanery"
+    },
+    {
+      "word": "sagacious",
+      "pos": "adj",
+      "sourceLine": 254255,
+      "rowSha256": "1d8cdfe012bce740345802194057e5d5ac4369aa1ebc6e02a7396ee63d42e9ea",
+      "url": "https://en.wiktionary.org/wiki/sagacious"
+    },
+    {
+      "word": "vapid",
+      "pos": "adj",
+      "sourceLine": 254537,
+      "rowSha256": "b760035d841d8486abb35b49f02fbbf2acdfdf90232436ee3000f3c589a59342",
+      "url": "https://en.wiktionary.org/wiki/vapid"
+    },
+    {
+      "word": "credulous",
+      "pos": "adj",
+      "sourceLine": 255524,
+      "rowSha256": "7c5182994d199df2f0d7ac9bc53f08671d205c06ddfb675e65e78afc18a6e73c",
+      "url": "https://en.wiktionary.org/wiki/credulous"
+    },
+    {
+      "word": "malapropism",
+      "pos": "noun",
+      "sourceLine": 255878,
+      "rowSha256": "e01c0ff27ddb82fa3b92402cbe9932d6aaa8950ea0f13081b5ac89fab4b6a838",
+      "url": "https://en.wiktionary.org/wiki/malapropism"
+    },
+    {
+      "word": "opprobrium",
+      "pos": "noun",
+      "sourceLine": 256608,
+      "rowSha256": "c6eb59732d612682e6f63152a0b1329a964cc1fdb9ac8338c9a0fe77a1d17a73",
+      "url": "https://en.wiktionary.org/wiki/opprobrium"
+    },
+    {
+      "word": "itinerant",
+      "pos": "adj",
+      "sourceLine": 256615,
+      "rowSha256": "4a10c3a25a83fa4d5aee5f5efb9756e0d7d52f7d9cb466dc1d2e1ffef2e01d57",
+      "url": "https://en.wiktionary.org/wiki/itinerant"
+    },
+    {
+      "word": "itinerant",
+      "pos": "noun",
+      "sourceLine": 256616,
+      "rowSha256": "0ffc5ac4e7aca3473e16efe91ec70e07a6fd9d37f8c2e6009e1fd4ed5eb0c76d",
+      "url": "https://en.wiktionary.org/wiki/itinerant"
+    },
+    {
+      "word": "obdurate",
+      "pos": "adj",
+      "sourceLine": 257653,
+      "rowSha256": "d89f5faa290dcd5678eaefdbc892229372d072a0e6c546713ecdd88023d3b193",
+      "url": "https://en.wiktionary.org/wiki/obdurate"
+    },
+    {
+      "word": "obdurate",
+      "pos": "verb",
+      "sourceLine": 257654,
+      "rowSha256": "9c69aeedf3122201014cca0d0a1eb355aeb32d79ba450cc1cc94678e707b081a",
+      "url": "https://en.wiktionary.org/wiki/obdurate"
+    },
+    {
+      "word": "preternatural",
+      "pos": "adj",
+      "sourceLine": 257923,
+      "rowSha256": "21be173c615d2cf685097b7e37686068132c528a2a02af7d87f872278d9a7594",
+      "url": "https://en.wiktionary.org/wiki/preternatural"
+    },
+    {
+      "word": "impugn",
+      "pos": "verb",
+      "sourceLine": 257959,
+      "rowSha256": "b459e63316b6fdf0f8f478f2286746a3fda65cd821c8217c39df3ea7506c10e4",
+      "url": "https://en.wiktionary.org/wiki/impugn"
+    },
+    {
+      "word": "puerile",
+      "pos": "adj",
+      "sourceLine": 259033,
+      "rowSha256": "8b93944a062611a142e01628770f9bf93f4ad525b8eeb54162a3eb8881a420cb",
+      "url": "https://en.wiktionary.org/wiki/puerile"
+    },
+    {
+      "word": "umbrage",
+      "pos": "noun",
+      "sourceLine": 259228,
+      "rowSha256": "b1ebf4189071c4fae39dd3206436c524fd066905b142340e831835ad70d2b17d",
+      "url": "https://en.wiktionary.org/wiki/umbrage"
+    },
+    {
+      "word": "umbrage",
+      "pos": "verb",
+      "sourceLine": 259229,
+      "rowSha256": "c7b67b1e16c2b1ed2385387fe7d877f2d746967302ca2069d87fcc3e3f4d7b9f",
+      "url": "https://en.wiktionary.org/wiki/umbrage"
+    },
+    {
+      "word": "obloquy",
+      "pos": "noun",
+      "sourceLine": 259758,
+      "rowSha256": "b142f3074b1001eb8774010c28c5bda99f7463886ecd3a76f905401405eb1d1e",
+      "url": "https://en.wiktionary.org/wiki/obloquy"
+    },
+    {
+      "word": "vitriolic",
+      "pos": "adj",
+      "sourceLine": 260360,
+      "rowSha256": "f9ca10f0f6d050dff59ffaf7692468c066346a19972f1a34457d6dbb9f0a7967",
+      "url": "https://en.wiktionary.org/wiki/vitriolic"
+    },
+    {
+      "word": "imperious",
+      "pos": "adj",
+      "sourceLine": 261739,
+      "rowSha256": "20c9352e95b38e7d79e99670f929abcd59c316e1d694b95c7ef666aa22469123",
+      "url": "https://en.wiktionary.org/wiki/imperious"
+    },
+    {
+      "word": "irrefutable",
+      "pos": "adj",
+      "sourceLine": 265345,
+      "rowSha256": "dcb2399aa7d854cc65bf415c515d5e0a41f75fca8ac500803393a0d44481ce08",
+      "url": "https://en.wiktionary.org/wiki/irrefutable"
+    },
+    {
+      "word": "pallid",
+      "pos": "adj",
+      "sourceLine": 265460,
+      "rowSha256": "882ef427459c05294bd0eaa3fd0c88be65ea88f58cb743b298afcecf0ce8c563",
+      "url": "https://en.wiktionary.org/wiki/pallid"
+    },
+    {
+      "word": "neophyte",
+      "pos": "noun",
+      "sourceLine": 265466,
+      "rowSha256": "a0f6dbd71a54b9ed48b45f86055af5b5d2c004cf75ec23956fbfa8c74f03737c",
+      "url": "https://en.wiktionary.org/wiki/neophyte"
+    },
+    {
+      "word": "tendentious",
+      "pos": "adj",
+      "sourceLine": 265835,
+      "rowSha256": "750c185421364b0895881b6c55d9fcbd9f0a881877cf72d69ee82842f6082d96",
+      "url": "https://en.wiktionary.org/wiki/tendentious"
+    },
+    {
+      "word": "polemic",
+      "pos": "noun",
+      "sourceLine": 266041,
+      "rowSha256": "d633d45a8d753c2ba025960aee085b622eb2b8c3636047e7a33433d95c248632",
+      "url": "https://en.wiktionary.org/wiki/polemic"
+    },
+    {
+      "word": "polemic",
+      "pos": "adj",
+      "sourceLine": 266042,
+      "rowSha256": "1af46531c331dbdcc36c88a86ecf1fb05131074e9c7e1f246b1ae6b0caf17977",
+      "url": "https://en.wiktionary.org/wiki/polemic"
+    },
+    {
+      "word": "histrionic",
+      "pos": "adj",
+      "sourceLine": 267008,
+      "rowSha256": "17f569d86fd0454894c7742df66c632d50da60dee8d3a0ca0ebbc34140496b95",
+      "url": "https://en.wiktionary.org/wiki/histrionic"
+    },
+    {
+      "word": "impudent",
+      "pos": "adj",
+      "sourceLine": 269793,
+      "rowSha256": "07ff467639c092b63db2fbe6300d6046cfe85535bfa10e14e29df985c32198e7",
+      "url": "https://en.wiktionary.org/wiki/impudent"
+    },
+    {
+      "word": "virulent",
+      "pos": "adj",
+      "sourceLine": 269865,
+      "rowSha256": "592d7942c9a48c938c32a34d4d5db7961f7078e2f14245750e6a25093d4c1e2e",
+      "url": "https://en.wiktionary.org/wiki/virulent"
+    },
+    {
+      "word": "demure",
+      "pos": "adj",
+      "sourceLine": 271398,
+      "rowSha256": "e4e8ca91e853db8f8bb84336b696c5eef502a283e1e29af3ac3464f98793ed5d",
+      "url": "https://en.wiktionary.org/wiki/demure"
+    },
+    {
+      "word": "demure",
+      "pos": "verb",
+      "sourceLine": 271399,
+      "rowSha256": "6043b98f5a0b5705a23d5512aa92fccaa84d3e7a62582e168813ecf3373fcef1",
+      "url": "https://en.wiktionary.org/wiki/demure"
+    },
+    {
+      "word": "juxtapose",
+      "pos": "verb",
+      "sourceLine": 271460,
+      "rowSha256": "1feb0a7023adb42f7361560a698d9c884d55bafbceb3c807ac0e0cf8b73eb6b5",
+      "url": "https://en.wiktionary.org/wiki/juxtapose"
+    },
+    {
+      "word": "belie",
+      "pos": "verb",
+      "sourceLine": 271828,
+      "rowSha256": "5a13ee913f97427383339e00ad6ef8771fe9a5f506ccc24359f659c71f618406",
+      "url": "https://en.wiktionary.org/wiki/belie"
+    },
+    {
+      "word": "belie",
+      "pos": "verb",
+      "sourceLine": 271829,
+      "rowSha256": "46276d98b942a7b4fcb7d28aa437eb6994b1b84646a820bf275d2a3f00be8e25",
+      "url": "https://en.wiktionary.org/wiki/belie"
+    },
+    {
+      "word": "anodyne",
+      "pos": "adj",
+      "sourceLine": 272220,
+      "rowSha256": "8e71dfe29771d7bc3ac1f2b274ded79bc6f27be536a4f36485854d3a595ba89e",
+      "url": "https://en.wiktionary.org/wiki/anodyne"
+    },
+    {
+      "word": "anodyne",
+      "pos": "noun",
+      "sourceLine": 272221,
+      "rowSha256": "4af49037d537623263d19d2e87bfcf8639469d227be68a32cf3fa3a7303e8343",
+      "url": "https://en.wiktionary.org/wiki/anodyne"
+    },
+    {
+      "word": "propriety",
+      "pos": "noun",
+      "sourceLine": 272461,
+      "rowSha256": "0cb854bd946e0d12ebb3c606559e2b09c99a82545e128f7090d99cd501938644",
+      "url": "https://en.wiktionary.org/wiki/propriety"
+    },
+    {
+      "word": "corroborate",
+      "pos": "verb",
+      "sourceLine": 272550,
+      "rowSha256": "fa6608fa7893247a3b7585405c62d4a73e96870c6e7bf0eb1c22766793429da1",
+      "url": "https://en.wiktionary.org/wiki/corroborate"
+    },
+    {
+      "word": "corroborate",
+      "pos": "adj",
+      "sourceLine": 272551,
+      "rowSha256": "c5080206e20fec400ada6c6c8946b720e94bd3f902ecd0367c726e2070c8a969",
+      "url": "https://en.wiktionary.org/wiki/corroborate"
+    },
+    {
+      "word": "animus",
+      "pos": "noun",
+      "sourceLine": 273175,
+      "rowSha256": "58956a21f83b1fed1b75fd3b4d9b03dfe2b4f5915cd55671cd75993fd2eb7272",
+      "url": "https://en.wiktionary.org/wiki/animus"
+    },
+    {
+      "word": "deference",
+      "pos": "noun",
+      "sourceLine": 274541,
+      "rowSha256": "42c5ec2eff6b221219ea821d2bb9d26cc6df58a8f868d1fc908879da080d522a",
+      "url": "https://en.wiktionary.org/wiki/deference"
+    },
+    {
+      "word": "fecund",
+      "pos": "adj",
+      "sourceLine": 274662,
+      "rowSha256": "b7846cc12331fa0ee26c0acd9934324ec063e2c1318c3dbcdb69bb289920ca80",
+      "url": "https://en.wiktionary.org/wiki/fecund"
+    },
+    {
+      "word": "facetious",
+      "pos": "adj",
+      "sourceLine": 275663,
+      "rowSha256": "a731ed66349f3f13d8572595aaa5ab270c170f14d1d661d19dfbc75c1a1c8dc0",
+      "url": "https://en.wiktionary.org/wiki/facetious"
+    },
+    {
+      "word": "fallacious",
+      "pos": "adj",
+      "sourceLine": 275677,
+      "rowSha256": "6900be76aaad8ab1f3d44f64f23994e232749a129bbc01f11dc86a189ac59e6f",
+      "url": "https://en.wiktionary.org/wiki/fallacious"
+    },
+    {
+      "word": "torpor",
+      "pos": "noun",
+      "sourceLine": 276359,
+      "rowSha256": "4ac733562221a1dcfb98fdaaa368b7dc619926bf68845e92bd9c53609728053f",
+      "url": "https://en.wiktionary.org/wiki/torpor"
+    },
+    {
+      "word": "paucity",
+      "pos": "noun",
+      "sourceLine": 276655,
+      "rowSha256": "50827d5f4acaa2e725505346bc1a4eef3d01a59979a082adb063322a4bab0068",
+      "url": "https://en.wiktionary.org/wiki/paucity"
+    },
+    {
+      "word": "amelioration",
+      "pos": "noun",
+      "sourceLine": 277646,
+      "rowSha256": "5c12ec0d8dabaed8a1999db3da99c24a974c71d9627b5fff9fdf61a3ce91d343",
+      "url": "https://en.wiktionary.org/wiki/amelioration"
+    },
+    {
+      "word": "odious",
+      "pos": "adj",
+      "sourceLine": 277969,
+      "rowSha256": "3f2f4fa5f6238820b0ba1089a6378b0d4600d7e8ce1f17a9a4778bb719e1f6e6",
+      "url": "https://en.wiktionary.org/wiki/odious"
+    },
+    {
+      "word": "bombastic",
+      "pos": "adj",
+      "sourceLine": 278075,
+      "rowSha256": "0727bf975b8085aba20d5b679eca725e1dfd04264c3b6afa53e783c79e9454b0",
+      "url": "https://en.wiktionary.org/wiki/bombastic"
+    },
+    {
+      "word": "subterfuge",
+      "pos": "noun",
+      "sourceLine": 278262,
+      "rowSha256": "28f835458fcf507f512e29b4ec71fa95dab1352f675458f480f4cac6d59d7257",
+      "url": "https://en.wiktionary.org/wiki/subterfuge"
+    },
+    {
+      "word": "beget",
+      "pos": "verb",
+      "sourceLine": 278273,
+      "rowSha256": "bd5f9419bd6ba7151028fa6158b7a8b728545dfd699d9bb162a7b4c2e6de2b5a",
+      "url": "https://en.wiktionary.org/wiki/beget"
+    },
+    {
+      "word": "stolid",
+      "pos": "adj",
+      "sourceLine": 278326,
+      "rowSha256": "3c55b739e6f0604946e8fd85349b75d9f12ccc0a9be7d3aa2630a0d32f7e0230",
+      "url": "https://en.wiktionary.org/wiki/stolid"
+    },
+    {
+      "word": "veracity",
+      "pos": "noun",
+      "sourceLine": 279096,
+      "rowSha256": "906bcd3b80df4022f5b7918f2b17722bd365d5c4a631a86bc78c41b76ee20b27",
+      "url": "https://en.wiktionary.org/wiki/veracity"
+    },
+    {
+      "word": "officious",
+      "pos": "adj",
+      "sourceLine": 280277,
+      "rowSha256": "74b1be41147b2fa14701c1342cc63ef5a7baf47551f1212a7c259fbfbb593fb1",
+      "url": "https://en.wiktionary.org/wiki/officious"
+    },
+    {
+      "word": "expurgate",
+      "pos": "verb",
+      "sourceLine": 280284,
+      "rowSha256": "f8e9873547416c2bae89f579d41e8797ea939aa0589a914a915c9e57b7d8b15b",
+      "url": "https://en.wiktionary.org/wiki/expurgate"
+    },
+    {
+      "word": "omniscient",
+      "pos": "adj",
+      "sourceLine": 280423,
+      "rowSha256": "78f89913ecbdd4362d10f8bc2b412ea40ded31e250b0ec15c32872308734aa03",
+      "url": "https://en.wiktionary.org/wiki/omniscient"
+    },
+    {
+      "word": "omniscient",
+      "pos": "noun",
+      "sourceLine": 280424,
+      "rowSha256": "04d2031e1c207bd1e89cc927a038949d7ce1f5f2db009e45ecd9a8bc32c566e0",
+      "url": "https://en.wiktionary.org/wiki/omniscient"
+    },
+    {
+      "word": "exonerate",
+      "pos": "verb",
+      "sourceLine": 280794,
+      "rowSha256": "f415fb1aeb4fc9ac67bfaee9d07fb7e28610acb5e088d24e488ba323ad2dbebb",
+      "url": "https://en.wiktionary.org/wiki/exonerate"
+    },
+    {
+      "word": "exonerate",
+      "pos": "adj",
+      "sourceLine": 280795,
+      "rowSha256": "8b6085bbad293781726589b49c7e4db6cbdff74a2cabfe295687f7dc0f147532",
+      "url": "https://en.wiktionary.org/wiki/exonerate"
+    },
+    {
+      "word": "acrimony",
+      "pos": "noun",
+      "sourceLine": 281286,
+      "rowSha256": "869c33a78b1c8792c563018256e79d2a436012bd5cd0a856eac7492ed9c40880",
+      "url": "https://en.wiktionary.org/wiki/acrimony"
+    },
+    {
+      "word": "ostentatious",
+      "pos": "adj",
+      "sourceLine": 281944,
+      "rowSha256": "b959b6a2691f68cc4c93b8150b0158a326d09be92365b7ebf1e0a95e929a9dba",
+      "url": "https://en.wiktionary.org/wiki/ostentatious"
+    },
+    {
+      "word": "erratic",
+      "pos": "adj",
+      "sourceLine": 283149,
+      "rowSha256": "e9c64fa0aae36c0ad4d7f756f56fcd6cfe43b3f4ba7486c2965233b5d9fd0fe3",
+      "url": "https://en.wiktionary.org/wiki/erratic"
+    },
+    {
+      "word": "erratic",
+      "pos": "noun",
+      "sourceLine": 283150,
+      "rowSha256": "49e5e33f237ae94a8ff1b4fc321f0d199cd704647ba13af48e95aa37bedbc41a",
+      "url": "https://en.wiktionary.org/wiki/erratic"
+    },
+    {
+      "word": "flippant",
+      "pos": "adj",
+      "sourceLine": 286817,
+      "rowSha256": "faf321b28c7f516fd3d4a33db88413f00c5f8fd54793416adbbbb0791be8b63e",
+      "url": "https://en.wiktionary.org/wiki/flippant"
+    },
+    {
+      "word": "levity",
+      "pos": "noun",
+      "sourceLine": 286839,
+      "rowSha256": "cf9dd78a8cd54c6c578d059cd021cd696bb0034f9f5d88fd09127ed7a7d8f0a0",
+      "url": "https://en.wiktionary.org/wiki/levity"
+    },
+    {
+      "word": "sanctimonious",
+      "pos": "adj",
+      "sourceLine": 286897,
+      "rowSha256": "914249d1309612da844e4f06ec3582f01ea240be283d4c49dd104141dfae4529",
+      "url": "https://en.wiktionary.org/wiki/sanctimonious"
+    },
+    {
+      "word": "propitiate",
+      "pos": "verb",
+      "sourceLine": 286898,
+      "rowSha256": "1a5b712f7a3becc76abf83b5840fc96ad97407a5494558fbca5e0a167a2e3c57",
+      "url": "https://en.wiktionary.org/wiki/propitiate"
+    },
+    {
+      "word": "calumny",
+      "pos": "noun",
+      "sourceLine": 290315,
+      "rowSha256": "65568a6ee1a4214688de4c7374b36d16c28e76d1f1613a7c3cdecd359720376f",
+      "url": "https://en.wiktionary.org/wiki/calumny"
+    },
+    {
+      "word": "calumny",
+      "pos": "verb",
+      "sourceLine": 290316,
+      "rowSha256": "f760152ce8a7313f19f0647be06ccf5eb7f0d8563dc83af578fa15b6cb79866e",
+      "url": "https://en.wiktionary.org/wiki/calumny"
+    },
+    {
+      "word": "circumlocution",
+      "pos": "noun",
+      "sourceLine": 290323,
+      "rowSha256": "1bf5a8b2eb2a1c9fca02e914a5cc57ef75f2f0cc329f06acc488db67211369dc",
+      "url": "https://en.wiktionary.org/wiki/circumlocution"
+    },
+    {
+      "word": "demagogue",
+      "pos": "noun",
+      "sourceLine": 290639,
+      "rowSha256": "c23fc570b357ba1215c9d7365cae4dc01a0e3c9eacfa07aa7ff44834001d584d",
+      "url": "https://en.wiktionary.org/wiki/demagogue"
+    },
+    {
+      "word": "demagogue",
+      "pos": "verb",
+      "sourceLine": 290640,
+      "rowSha256": "cb92e486a3ea0200fe13bdad2a011169cd93a58684984452fd9e63c5b1706b30",
+      "url": "https://en.wiktionary.org/wiki/demagogue"
+    },
+    {
+      "word": "deride",
+      "pos": "verb",
+      "sourceLine": 290672,
+      "rowSha256": "02cf85f6b6f8b56ac470dc1ec3405e2dc45f3a18276aa6c2215f92af8bc87c26",
+      "url": "https://en.wiktionary.org/wiki/deride"
+    },
+    {
+      "word": "malevolent",
+      "pos": "adj",
+      "sourceLine": 290912,
+      "rowSha256": "c8884a1943985367883cd151c11584c917030a87657ce2ff8c5d7e0971dfb683",
+      "url": "https://en.wiktionary.org/wiki/malevolent"
+    },
+    {
+      "word": "insular",
+      "pos": "adj",
+      "sourceLine": 291257,
+      "rowSha256": "c04101b9efb776b20341eee2c7ebda229ce3ffaaafecbcf7901393bc2b857acb",
+      "url": "https://en.wiktionary.org/wiki/insular"
+    },
+    {
+      "word": "insular",
+      "pos": "noun",
+      "sourceLine": 291258,
+      "rowSha256": "487860e331768de8f18204c426849242e36a864d6b4a528d257bc117690bbf3e",
+      "url": "https://en.wiktionary.org/wiki/insular"
+    },
+    {
+      "word": "disparate",
+      "pos": "adj",
+      "sourceLine": 291382,
+      "rowSha256": "2f451002db1057afe3e871aefbe26557e2d013ace0198a3620694a7d085dbea2",
+      "url": "https://en.wiktionary.org/wiki/disparate"
+    },
+    {
+      "word": "disparate",
+      "pos": "noun",
+      "sourceLine": 291383,
+      "rowSha256": "4f5440149de86038d126f94f3e872f0d3d04ba6029a1f2ed709076c0724686f1",
+      "url": "https://en.wiktionary.org/wiki/disparate"
+    },
+    {
+      "word": "congenial",
+      "pos": "adj",
+      "sourceLine": 291421,
+      "rowSha256": "cd8eab418457af75d957fa72266439118e93c11a6640092880d81b2a1b910dee",
+      "url": "https://en.wiktionary.org/wiki/congenial"
+    },
+    {
+      "word": "fastidious",
+      "pos": "adj",
+      "sourceLine": 291658,
+      "rowSha256": "c09b9b5c037170930605abad61d96d6c465014ea5df7605390492d9c0154f359",
+      "url": "https://en.wiktionary.org/wiki/fastidious"
+    },
+    {
+      "word": "excoriate",
+      "pos": "verb",
+      "sourceLine": 291771,
+      "rowSha256": "7552054b1d10522c3b717484395831d48073213f5df47a3ac8dabdd03112199b",
+      "url": "https://en.wiktionary.org/wiki/excoriate"
+    },
+    {
+      "word": "excoriate",
+      "pos": "adj",
+      "sourceLine": 291772,
+      "rowSha256": "c3aae54a90d27cacffed8b819b3bbc0476fbfba5c8857edadf5790b2ce8d3124",
+      "url": "https://en.wiktionary.org/wiki/excoriate"
+    },
+    {
+      "word": "exigency",
+      "pos": "noun",
+      "sourceLine": 291777,
+      "rowSha256": "d5cb6ef633ff338521c04061b2780af6584ffbd331077a881ac36fbca1df545c",
+      "url": "https://en.wiktionary.org/wiki/exigency"
+    },
+    {
+      "word": "scrupulous",
+      "pos": "adj",
+      "sourceLine": 291854,
+      "rowSha256": "80dc7e573d2a8734337d3af65aa54b725a99edc32e20a272dacfdce6e45c3e20",
+      "url": "https://en.wiktionary.org/wiki/scrupulous"
+    },
+    {
+      "word": "restive",
+      "pos": "adj",
+      "sourceLine": 291956,
+      "rowSha256": "d10c76cb5c4f2ba64488bd5b9c4fb10a8aa96b58721ba6add6bd5494acc692f8",
+      "url": "https://en.wiktionary.org/wiki/restive"
+    },
+    {
+      "word": "extirpate",
+      "pos": "verb",
+      "sourceLine": 292468,
+      "rowSha256": "9c3117271e46f0395d24a9f5422befea0026caeff00e823fc0f93913019f59f8",
+      "url": "https://en.wiktionary.org/wiki/extirpate"
+    },
+    {
+      "word": "extirpate",
+      "pos": "adj",
+      "sourceLine": 292469,
+      "rowSha256": "038d99a54d54e0ef205d93a0fdaee165ae71832473601b17e5aad1384687a927",
+      "url": "https://en.wiktionary.org/wiki/extirpate"
+    },
+    {
+      "word": "fractious",
+      "pos": "adj",
+      "sourceLine": 292767,
+      "rowSha256": "7156d5dca7b1cdac265812172cd6974997627df2555e54bf6eb396705ad31eb7",
+      "url": "https://en.wiktionary.org/wiki/fractious"
+    },
+    {
+      "word": "dour",
+      "pos": "adj",
+      "sourceLine": 293245,
+      "rowSha256": "683d1f65d7e17a91c62fc721f3805fd7a608f47732cfca527e7c40e7f79d762e",
+      "url": "https://en.wiktionary.org/wiki/dour"
+    },
+    {
+      "word": "dour",
+      "pos": "noun",
+      "sourceLine": 293246,
+      "rowSha256": "f5eac8503e54cb6bb183a5296145df00e24e1a8dc707b1c141b91d674ef0be57",
+      "url": "https://en.wiktionary.org/wiki/dour"
+    },
+    {
+      "word": "maudlin",
+      "pos": "noun",
+      "sourceLine": 293793,
+      "rowSha256": "3688775e9eb32f59b09377686d1b2b66ebcbbd2efc5b658236543972a6036da4",
+      "url": "https://en.wiktionary.org/wiki/maudlin"
+    },
+    {
+      "word": "maudlin",
+      "pos": "adj",
+      "sourceLine": 293794,
+      "rowSha256": "7bac9050e33034a4e8565b81dcab4bc14f1d521d934231b1a7d092ef1ee4de11",
+      "url": "https://en.wiktionary.org/wiki/maudlin"
+    },
+    {
+      "word": "ebullient",
+      "pos": "adj",
+      "sourceLine": 294791,
+      "rowSha256": "41b8c5ad4c397264b6f9e90fc52635add7406473dce455da0e860c748cbe7ea5",
+      "url": "https://en.wiktionary.org/wiki/ebullient"
+    },
+    {
+      "word": "dissemble",
+      "pos": "verb",
+      "sourceLine": 297247,
+      "rowSha256": "8ecf8cb2b0fc34ec652204d0bce5d7d9821d6430e9613775b074011e5d92769e",
+      "url": "https://en.wiktionary.org/wiki/dissemble"
+    },
+    {
+      "word": "redolent",
+      "pos": "adj",
+      "sourceLine": 298675,
+      "rowSha256": "f569cb61ae7813401f259f4232519caf3642f8495c3931a5aa8594bed3c81130",
+      "url": "https://en.wiktionary.org/wiki/redolent"
+    },
+    {
+      "word": "audacious",
+      "pos": "adj",
+      "sourceLine": 298830,
+      "rowSha256": "6791969c67098dc9349176e5599a7cfefa5bc22b54157c00d5146fd75c9f4015",
+      "url": "https://en.wiktionary.org/wiki/audacious"
+    },
+    {
+      "word": "penurious",
+      "pos": "adj",
+      "sourceLine": 299134,
+      "rowSha256": "eaa4cf36288bacc3a6873be8d49c3e882f7a4d0312a156740f029950ff423b44",
+      "url": "https://en.wiktionary.org/wiki/penurious"
+    },
+    {
+      "word": "turpitude",
+      "pos": "noun",
+      "sourceLine": 299317,
+      "rowSha256": "a76413756e51cbc08d06349884b25527ca066ec16bbe404e03c7f276f58d27c7",
+      "url": "https://en.wiktionary.org/wiki/turpitude"
+    },
+    {
+      "word": "edify",
+      "pos": "verb",
+      "sourceLine": 299964,
+      "rowSha256": "a61b3a1d6cb274712780767888f957c0c03fc640bc9543342fa4ceba08a242ab",
+      "url": "https://en.wiktionary.org/wiki/edify"
+    },
+    {
+      "word": "pellucid",
+      "pos": "adj",
+      "sourceLine": 300438,
+      "rowSha256": "04f880e4f196793959a9172aa8fc041d7d4ab12edbb088aacc7d8c22b1e3097a",
+      "url": "https://en.wiktionary.org/wiki/pellucid"
+    },
+    {
+      "word": "pellucid",
+      "pos": "noun",
+      "sourceLine": 300439,
+      "rowSha256": "531c2fc5c66b1885ff7aa420a805b0944398e271f9d718d5f0ae543231892798",
+      "url": "https://en.wiktionary.org/wiki/pellucid"
+    },
+    {
+      "word": "craven",
+      "pos": "adj",
+      "sourceLine": 300800,
+      "rowSha256": "a1ac88ee881cd5bc68d861602b4ade9fa0f316d6f8c71b755843ae09adc5a225",
+      "url": "https://en.wiktionary.org/wiki/craven"
+    },
+    {
+      "word": "craven",
+      "pos": "noun",
+      "sourceLine": 300801,
+      "rowSha256": "8943f146acf60764e0f04cdb1a741a3e407d28a4c9ebb25cb1e299839776d8f3",
+      "url": "https://en.wiktionary.org/wiki/craven"
+    },
+    {
+      "word": "craven",
+      "pos": "verb",
+      "sourceLine": 300802,
+      "rowSha256": "1306843a3b53c5c444cae2269053c241e5e789601926c7ea3a27aa36b4d92630",
+      "url": "https://en.wiktionary.org/wiki/craven"
+    },
+    {
+      "word": "prevaricate",
+      "pos": "verb",
+      "sourceLine": 301634,
+      "rowSha256": "bf302f8891d2a7ec934f5ddfdefa8188a4b1f73919029420f52099b5ea35436f",
+      "url": "https://en.wiktionary.org/wiki/prevaricate"
+    },
+    {
+      "word": "denouement",
+      "pos": "noun",
+      "sourceLine": 301642,
+      "rowSha256": "4e34ad88df73db02f18892295098c16cbcf608db65262f2176b2e48267d0ca0f",
+      "url": "https://en.wiktionary.org/wiki/denouement"
+    },
+    {
+      "word": "doggerel",
+      "pos": "adj",
+      "sourceLine": 304994,
+      "rowSha256": "67130840eaad836a7d67a9475df8cceff351f969130cce60db8ed5274602fe24",
+      "url": "https://en.wiktionary.org/wiki/doggerel"
+    },
+    {
+      "word": "doggerel",
+      "pos": "noun",
+      "sourceLine": 304995,
+      "rowSha256": "3ec6f772691c17db73efb5a4f90bb054fc378ec983615612d3c40e04e568e2b2",
+      "url": "https://en.wiktionary.org/wiki/doggerel"
+    },
+    {
+      "word": "refulgent",
+      "pos": "adj",
+      "sourceLine": 305005,
+      "rowSha256": "18515ca4c4d248d6d51f12b24a63ece1f5a3f220898cec0d6b2494cac8a12d78",
+      "url": "https://en.wiktionary.org/wiki/refulgent"
+    },
+    {
+      "word": "proclivity",
+      "pos": "noun",
+      "sourceLine": 305893,
+      "rowSha256": "fdd30eb6a723cef39223bff020aac7b870e3063133f097e7ad574b45889b001e",
+      "url": "https://en.wiktionary.org/wiki/proclivity"
+    },
+    {
+      "word": "transitory",
+      "pos": "adj",
+      "sourceLine": 306329,
+      "rowSha256": "787088024e7ca8fe0c209468cc19f6cc1c0c92152b7219fb20ab9a8c380dd2e3",
+      "url": "https://en.wiktionary.org/wiki/transitory"
+    },
+    {
+      "word": "rapacious",
+      "pos": "adj",
+      "sourceLine": 306518,
+      "rowSha256": "c4166545781202fe12021ac80263e9ba84996ae98dae8f5b07a04aaf5749bd4d",
+      "url": "https://en.wiktionary.org/wiki/rapacious"
+    },
+    {
+      "word": "inimical",
+      "pos": "adj",
+      "sourceLine": 306530,
+      "rowSha256": "1b9a40b8c6bfa25966175737bfd494c0d910338b896090b7e788085ccab9e260",
+      "url": "https://en.wiktionary.org/wiki/inimical"
+    },
+    {
+      "word": "palliate",
+      "pos": "verb",
+      "sourceLine": 306534,
+      "rowSha256": "2f1023115518f09021d7ee1dd2e220c22cc74fd84869dca49d6e7b23049bda4f",
+      "url": "https://en.wiktionary.org/wiki/palliate"
+    },
+    {
+      "word": "palliate",
+      "pos": "adj",
+      "sourceLine": 306535,
+      "rowSha256": "e46629cc2629d08bc755fb9cbeca417d67aabab7d36679c4bb5ef93808f7155d",
+      "url": "https://en.wiktionary.org/wiki/palliate"
+    },
+    {
+      "word": "pertinacious",
+      "pos": "adj",
+      "sourceLine": 306829,
+      "rowSha256": "146cbee2301c724ea690e7c2a464aef9080765c5cd55c30f5d56e02abf7b0f1b",
+      "url": "https://en.wiktionary.org/wiki/pertinacious"
+    },
+    {
+      "word": "platitude",
+      "pos": "noun",
+      "sourceLine": 306832,
+      "rowSha256": "2add31efc9cd4fa4a9a9730f6c75c99a196850c8f1666d0daa4fef41cd4002fb",
+      "url": "https://en.wiktionary.org/wiki/platitude"
+    },
+    {
+      "word": "pithy",
+      "pos": "adj",
+      "sourceLine": 311227,
+      "rowSha256": "f61decb8d481f4327845688bbec9e52892b3256e0c58731b78768b80cc5a3bca",
+      "url": "https://en.wiktionary.org/wiki/pithy"
+    },
+    {
+      "word": "cupidity",
+      "pos": "noun",
+      "sourceLine": 311789,
+      "rowSha256": "7870ce15c5a28eccf6c88b8da4e48c50f33a46756ee40b612a48d36ada447687",
+      "url": "https://en.wiktionary.org/wiki/cupidity"
+    },
+    {
+      "word": "remonstrate",
+      "pos": "verb",
+      "sourceLine": 315385,
+      "rowSha256": "6a55d4e93141d7fa0fb3ae03243b254282f26e88bcaed3221f5f1ec903e494fd",
+      "url": "https://en.wiktionary.org/wiki/remonstrate"
+    },
+    {
+      "word": "fissure",
+      "pos": "noun",
+      "sourceLine": 315817,
+      "rowSha256": "cfade7a642090964470aa6bd23ed8cacdf9c18ed8d8460ea678f54cfdf0319b3",
+      "url": "https://en.wiktionary.org/wiki/fissure"
+    },
+    {
+      "word": "fissure",
+      "pos": "verb",
+      "sourceLine": 315818,
+      "rowSha256": "14362807bc5cc0f729aa65b32e3041b9dd6c96c8e37fbbf0373db85da1ddb08e",
+      "url": "https://en.wiktionary.org/wiki/fissure"
+    },
+    {
+      "word": "apprise",
+      "pos": "verb",
+      "sourceLine": 315843,
+      "rowSha256": "26425fd6edfece9fd340c3484efae91248b6ce07887965d13e6c8cf4767fa0a4",
+      "url": "https://en.wiktionary.org/wiki/apprise"
+    },
+    {
+      "word": "apprise",
+      "pos": "verb",
+      "sourceLine": 315844,
+      "rowSha256": "9ef818b7d6ab10520dd5ad50992c902c04ef54db790dbfb7aa9eaece26c543ac",
+      "url": "https://en.wiktionary.org/wiki/apprise"
+    },
+    {
+      "word": "inundate",
+      "pos": "verb",
+      "sourceLine": 334940,
+      "rowSha256": "487218dace650c2e9d281c1a478a9bd59b3cb294a3a3d0ec6ba6e370cdb82500",
+      "url": "https://en.wiktionary.org/wiki/inundate"
+    },
+    {
+      "word": "inimitable",
+      "pos": "adj",
+      "sourceLine": 339384,
+      "rowSha256": "279350d2d56e9aeac571c72a90e45fd91320a980ae7e8648d4d8cd7f0b7ecb55",
+      "url": "https://en.wiktionary.org/wiki/inimitable"
+    },
+    {
+      "word": "exigent",
+      "pos": "adj",
+      "sourceLine": 340326,
+      "rowSha256": "df46bcc9eb26d7efa8a717832af1d08656d8c6ecc91711d0baa1406f485a39a3",
+      "url": "https://en.wiktionary.org/wiki/exigent"
+    },
+    {
+      "word": "exigent",
+      "pos": "noun",
+      "sourceLine": 340327,
+      "rowSha256": "5a32abad149bbb78f6c56ff31fcf5ec8b9aca393372db629a79aaf3be35d8d3c",
+      "url": "https://en.wiktionary.org/wiki/exigent"
+    },
+    {
+      "word": "refractory",
+      "pos": "adj",
+      "sourceLine": 340334,
+      "rowSha256": "89f68b18349ed8d311aaff6a612615851a6a3d83a183c0782909100ab5e6b0f0",
+      "url": "https://en.wiktionary.org/wiki/refractory"
+    },
+    {
+      "word": "refractory",
+      "pos": "noun",
+      "sourceLine": 340335,
+      "rowSha256": "3d9008031c88e76171405a7067acf60ec56d8db0838c4dd0cc833fe906c74667",
+      "url": "https://en.wiktionary.org/wiki/refractory"
+    },
+    {
+      "word": "effrontery",
+      "pos": "noun",
+      "sourceLine": 343006,
+      "rowSha256": "5e391e4bdc7062a66aa5ff76b7e805b0ae81c9520db8a37b2944ef7ce3e33a5b",
+      "url": "https://en.wiktionary.org/wiki/effrontery"
+    },
+    {
+      "word": "burgeon",
+      "pos": "noun",
+      "sourceLine": 345311,
+      "rowSha256": "0c1369489fc9e1da068c58ca6d586539b20c7bd8e45dcaf52742b030531ce648",
+      "url": "https://en.wiktionary.org/wiki/burgeon"
+    },
+    {
+      "word": "burgeon",
+      "pos": "verb",
+      "sourceLine": 345312,
+      "rowSha256": "6ff9598d836d851de10597968361af491b86661abb27ee2ac2a7c3887270d22c",
+      "url": "https://en.wiktionary.org/wiki/burgeon"
+    },
+    {
+      "word": "duplicity",
+      "pos": "noun",
+      "sourceLine": 349698,
+      "rowSha256": "a2d537be559b7cd585fb0aa0706e54f2564f2b880da0233987a775179fcbf313",
+      "url": "https://en.wiktionary.org/wiki/duplicity"
+    },
+    {
+      "word": "bellicose",
+      "pos": "adj",
+      "sourceLine": 351970,
+      "rowSha256": "a15cff0e4d78ae2d627b2a7b641b6176e9458a901c31f4d54fe6a627746d0b2f",
+      "url": "https://en.wiktionary.org/wiki/bellicose"
+    },
+    {
+      "word": "equivocate",
+      "pos": "verb",
+      "sourceLine": 355109,
+      "rowSha256": "b2a3b82bf88166b79ffb31f2820a6a01bc31d5b3d807b3bedee309876c8ae481",
+      "url": "https://en.wiktionary.org/wiki/equivocate"
+    },
+    {
+      "word": "iniquity",
+      "pos": "noun",
+      "sourceLine": 361482,
+      "rowSha256": "a5bc787b03bb4d14a4f08a385f2123b0f00d0ffc584800701a18bcc1c8810d33",
+      "url": "https://en.wiktionary.org/wiki/iniquity"
+    },
+    {
+      "word": "noisome",
+      "pos": "adj",
+      "sourceLine": 362662,
+      "rowSha256": "38af6f751ec70e449f4575974e0f94949600206436dfd227132db4e806e18e73",
+      "url": "https://en.wiktionary.org/wiki/noisome"
+    },
+    {
+      "word": "aspersion",
+      "pos": "noun",
+      "sourceLine": 363246,
+      "rowSha256": "894001141e8fe6ab6bf76bd5bc2f855ac43c7138cf6afd1389cf26cf80163163",
+      "url": "https://en.wiktionary.org/wiki/aspersion"
+    },
+    {
+      "word": "winsome",
+      "pos": "adj",
+      "sourceLine": 365415,
+      "rowSha256": "4e896306d1244a6648f08a18773b7d237915a87b1af421825175682ad34be318",
+      "url": "https://en.wiktionary.org/wiki/winsome"
+    },
+    {
+      "word": "strident",
+      "pos": "adj",
+      "sourceLine": 365582,
+      "rowSha256": "66b1b424f74d84de8351f2e0d98cc9704e9f75600f7f3c3ec7e2c44d26d8044d",
+      "url": "https://en.wiktionary.org/wiki/strident"
+    },
+    {
+      "word": "strident",
+      "pos": "noun",
+      "sourceLine": 365583,
+      "rowSha256": "8d1814281a74ba8a18f792da8aa27f0f7dbb03bbdfec99fc4513efc4c96a97c1",
+      "url": "https://en.wiktionary.org/wiki/strident"
+    },
+    {
+      "word": "incongruous",
+      "pos": "adj",
+      "sourceLine": 365606,
+      "rowSha256": "30d39bcea48636078160051466aee3328fcd213c45d0e7e0070518e4ec6bbe0c",
+      "url": "https://en.wiktionary.org/wiki/incongruous"
+    },
+    {
+      "word": "exasperate",
+      "pos": "verb",
+      "sourceLine": 365632,
+      "rowSha256": "5489b2436f2252daf4f299eb52dc566661210b27648276e9290424de0a0110db",
+      "url": "https://en.wiktionary.org/wiki/exasperate"
+    },
+    {
+      "word": "exasperate",
+      "pos": "adj",
+      "sourceLine": 365633,
+      "rowSha256": "2670f0c448b9ae4e551f9ede31ba78cb0b35db536154c8d4d65f9d075d597c93",
+      "url": "https://en.wiktionary.org/wiki/exasperate"
+    },
+    {
+      "word": "exasperate",
+      "pos": "verb",
+      "sourceLine": 365634,
+      "rowSha256": "50901ba566654ff688677a48f85ae99f5bbfd77fca109b9d611a8b02054fe0ea",
+      "url": "https://en.wiktionary.org/wiki/exasperate"
+    },
+    {
+      "word": "reprobate",
+      "pos": "adj",
+      "sourceLine": 365814,
+      "rowSha256": "46da7bdc6f3e423ce98da4f30aa6f5528a1f04e6d03aafb117186a60acf15a33",
+      "url": "https://en.wiktionary.org/wiki/reprobate"
+    },
+    {
+      "word": "reprobate",
+      "pos": "noun",
+      "sourceLine": 365815,
+      "rowSha256": "e69bffb7f7b61198af14994ccb776fce5e1d10610992f58cb43ddeb75074848a",
+      "url": "https://en.wiktionary.org/wiki/reprobate"
+    },
+    {
+      "word": "reprobate",
+      "pos": "verb",
+      "sourceLine": 365816,
+      "rowSha256": "eeff4e90880e623f4d32e8e2fe073450553360acd74a2e819927424b8a365d2a",
+      "url": "https://en.wiktionary.org/wiki/reprobate"
+    },
+    {
+      "word": "tirade",
+      "pos": "noun",
+      "sourceLine": 366794,
+      "rowSha256": "bdb3c00cdb659a413419393beb4cf66bf1dae4c29b54079fbc593e9d188506fa",
+      "url": "https://en.wiktionary.org/wiki/tirade"
+    },
+    {
+      "word": "tirade",
+      "pos": "verb",
+      "sourceLine": 366795,
+      "rowSha256": "f8c00d79c764f4e3116994bc02c0983d8221fa4a37b044462fd1807636b8d2e3",
+      "url": "https://en.wiktionary.org/wiki/tirade"
+    },
+    {
+      "word": "implacable",
+      "pos": "adj",
+      "sourceLine": 367280,
+      "rowSha256": "5feebba87cb467470651cdbfd47ba8c5c506279eb41a013f6603f90dbe708a18",
+      "url": "https://en.wiktionary.org/wiki/implacable"
+    },
+    {
+      "word": "imperturbable",
+      "pos": "adj",
+      "sourceLine": 367284,
+      "rowSha256": "6ff6f1203159ceff7b36c3eab96e84132c8e98e2d2bb4729023006a4347f7f8f",
+      "url": "https://en.wiktionary.org/wiki/imperturbable"
+    },
+    {
+      "word": "germane",
+      "pos": "adj",
+      "sourceLine": 367541,
+      "rowSha256": "209ea6a8fd1d7933aaab02d3bc7b374db8f161cabb25dc8f9cfecdaab151d2e2",
+      "url": "https://en.wiktionary.org/wiki/germane"
+    },
+    {
+      "word": "germane",
+      "pos": "noun",
+      "sourceLine": 367542,
+      "rowSha256": "e735fda81b715aa8affb30a34b438b38714e5b96d1b1defc2df12acb0aaadea9",
+      "url": "https://en.wiktionary.org/wiki/germane"
+    },
+    {
+      "word": "condone",
+      "pos": "verb",
+      "sourceLine": 373195,
+      "rowSha256": "47c606b6080a7d2ba22fc0d87f379bf8acb7e7be7ab322581a43816a3a572c70",
+      "url": "https://en.wiktionary.org/wiki/condone"
+    },
+    {
+      "word": "didactic",
+      "pos": "adj",
+      "sourceLine": 378832,
+      "rowSha256": "aecde8f277070ee242a6514a95d6668fd3bb3b53fd77c2b6041296d94a3cf107",
+      "url": "https://en.wiktionary.org/wiki/didactic"
+    },
+    {
+      "word": "didactic",
+      "pos": "noun",
+      "sourceLine": 378833,
+      "rowSha256": "f6e57b5764f6a7d5276f2030bccf8c5b25ea951b39644e541373cb4949f9bb50",
+      "url": "https://en.wiktionary.org/wiki/didactic"
+    },
+    {
+      "word": "demarcate",
+      "pos": "verb",
+      "sourceLine": 378912,
+      "rowSha256": "dc0c1b22834251d46f85e847c004e0006744cabe0799f67a0b314fc11c553c36",
+      "url": "https://en.wiktionary.org/wiki/demarcate"
+    },
+    {
+      "word": "reticent",
+      "pos": "adj",
+      "sourceLine": 380046,
+      "rowSha256": "ea0b50e34868c205613d4886cd8a18a8dd68bac3c3fcd804bdf187e92bcb3ada",
+      "url": "https://en.wiktionary.org/wiki/reticent"
+    },
+    {
+      "word": "satiate",
+      "pos": "verb",
+      "sourceLine": 380522,
+      "rowSha256": "d7da8fccdafa72fce4345af8560acc920c3d3f36ff95ae2ddc32682477a8ccd8",
+      "url": "https://en.wiktionary.org/wiki/satiate"
+    },
+    {
+      "word": "satiate",
+      "pos": "adj",
+      "sourceLine": 380523,
+      "rowSha256": "c96a190aeb565e7cb3e52267a38170778bbce89de1fcec6692eaaaf00468284a",
+      "url": "https://en.wiktionary.org/wiki/satiate"
+    },
+    {
+      "word": "cajole",
+      "pos": "verb",
+      "sourceLine": 382232,
+      "rowSha256": "867b8d09a5602a3383baeedb716e840779444993e851333d2be043a2d8fb7c89",
+      "url": "https://en.wiktionary.org/wiki/cajole"
+    },
+    {
+      "word": "cajole",
+      "pos": "noun",
+      "sourceLine": 382233,
+      "rowSha256": "7c0d544d79d37fe465f973dda5fa0b242673cca6412555898cdff57c181146ed",
+      "url": "https://en.wiktionary.org/wiki/cajole"
+    },
+    {
+      "word": "scintillating",
+      "pos": "verb",
+      "sourceLine": 384128,
+      "rowSha256": "d8462f9316f301abb466398db9d2e60abff8f22b30b2f663a74987b40a675b8e",
+      "url": "https://en.wiktionary.org/wiki/scintillating"
+    },
+    {
+      "word": "scintillating",
+      "pos": "adj",
+      "sourceLine": 384129,
+      "rowSha256": "88ecb4e83117f97690d69cda83a5dcb65f7fce47974fa38d17b85e73f241b185",
+      "url": "https://en.wiktionary.org/wiki/scintillating"
+    },
+    {
+      "word": "languid",
+      "pos": "adj",
+      "sourceLine": 385833,
+      "rowSha256": "e3e4ee2ff2973c56350acae4968e41ef9b61ba4048eedb73523277a2edc7fa21",
+      "url": "https://en.wiktionary.org/wiki/languid"
+    },
+    {
+      "word": "languid",
+      "pos": "noun",
+      "sourceLine": 385834,
+      "rowSha256": "6d3ae6cc06d908137e08fc2a1c15e0d54f9730d99852a7903432c7c754c8cd3b",
+      "url": "https://en.wiktionary.org/wiki/languid"
+    },
+    {
+      "word": "elegiac",
+      "pos": "adj",
+      "sourceLine": 388462,
+      "rowSha256": "338d52c62a3b1327ea9af924491c7cd229ce728399b77a86f8ccc4e525df10ba",
+      "url": "https://en.wiktionary.org/wiki/elegiac"
+    },
+    {
+      "word": "elegiac",
+      "pos": "noun",
+      "sourceLine": 388463,
+      "rowSha256": "929dcdae2ab21eacf0a99c3612b3166ff31d897071b3b052d00f6fc3129579d4",
+      "url": "https://en.wiktionary.org/wiki/elegiac"
+    },
+    {
+      "word": "pervasive",
+      "pos": "adj",
+      "sourceLine": 388843,
+      "rowSha256": "a499acdacce62e10b80cb9584514e2ca9cbca0769b779728108c209af3c89c6c",
+      "url": "https://en.wiktionary.org/wiki/pervasive"
+    },
+    {
+      "word": "discursive",
+      "pos": "adj",
+      "sourceLine": 394758,
+      "rowSha256": "3f2dbc7cf4d79a3801593ac630b7d3884b64f5a87e21777efce758e074f1c8b6",
+      "url": "https://en.wiktionary.org/wiki/discursive"
+    },
+    {
+      "word": "disenfranchise",
+      "pos": "verb",
+      "sourceLine": 394761,
+      "rowSha256": "374bb632f2932b3796595f4d379e1bcc9f969e7f26481689f7fb5c3f5c6a9016",
+      "url": "https://en.wiktionary.org/wiki/disenfranchise"
+    },
+    {
+      "word": "artless",
+      "pos": "adj",
+      "sourceLine": 405180,
+      "rowSha256": "803db2b20c3546080ba32c104ddf2e18e343edea5ea34c4b0c524352d685bde9",
+      "url": "https://en.wiktionary.org/wiki/artless"
+    },
+    {
+      "word": "lassitude",
+      "pos": "noun",
+      "sourceLine": 405410,
+      "rowSha256": "7048fe4d5a0cc70a608e4dc210653128caf70b6c0ef200fa272ac49fcbd196da",
+      "url": "https://en.wiktionary.org/wiki/lassitude"
+    },
+    {
+      "word": "discomfit",
+      "pos": "verb",
+      "sourceLine": 426823,
+      "rowSha256": "7ac8d3a2161e731a32716d6041e125b0181e2a2a05fc67b4ebd969d0eed16c33",
+      "url": "https://en.wiktionary.org/wiki/discomfit"
+    },
+    {
+      "word": "litigious",
+      "pos": "adj",
+      "sourceLine": 428931,
+      "rowSha256": "067b0be2abfc244f926b39850c50855eeddd7f462272d8ef91ffcab06db849f6",
+      "url": "https://en.wiktionary.org/wiki/litigious"
+    },
+    {
+      "word": "punctilious",
+      "pos": "adj",
+      "sourceLine": 430259,
+      "rowSha256": "bf678aaa9e817ecfa2c1478521f25f7149b769156d2798745d8cc796e8e747ca",
+      "url": "https://en.wiktionary.org/wiki/punctilious"
+    },
+    {
+      "word": "respite",
+      "pos": "noun",
+      "sourceLine": 440144,
+      "rowSha256": "77a4362ce978c001d1b9317e02297b4ebe9313f98b5a75ea4e37573391c62a21",
+      "url": "https://en.wiktionary.org/wiki/respite"
+    },
+    {
+      "word": "respite",
+      "pos": "verb",
+      "sourceLine": 440145,
+      "rowSha256": "a293b02740b22d2501e25c35da584fd7305d75c5ede1db4a2a7f38039be60310",
+      "url": "https://en.wiktionary.org/wiki/respite"
+    },
+    {
+      "word": "succour",
+      "pos": "noun",
+      "sourceLine": 445577,
+      "rowSha256": "24f49c4ed615c6d3508ca2f92f891ab93bcca50c88cf1c3f7a80eb9b560e2779",
+      "url": "https://en.wiktionary.org/wiki/succour"
+    },
+    {
+      "word": "succour",
+      "pos": "verb",
+      "sourceLine": 445578,
+      "rowSha256": "e4e34108eea582cf4e3688cc2b33b86ddb6ffdcceb6e6f5fd03338ca4a2e285f",
+      "url": "https://en.wiktionary.org/wiki/succour"
+    },
+    {
+      "word": "solicitous",
+      "pos": "adj",
+      "sourceLine": 446261,
+      "rowSha256": "662d0e69024d6a81e802168aac472faf1117191e0db279a71255a6603dec12a7",
+      "url": "https://en.wiktionary.org/wiki/solicitous"
+    },
+    {
+      "word": "supplant",
+      "pos": "verb",
+      "sourceLine": 446305,
+      "rowSha256": "84efd4cb7bdff64dd9f9e3c56f1abfe1e9b77cd40587e7b77f3694237d527849",
+      "url": "https://en.wiktionary.org/wiki/supplant"
+    },
+    {
+      "word": "stentorian",
+      "pos": "adj",
+      "sourceLine": 448478,
+      "rowSha256": "ed39ad07320d017a494a8fac2639b089e6d0f03e249350c59bed5319db833076",
+      "url": "https://en.wiktionary.org/wiki/stentorian"
+    },
+    {
+      "word": "byzantine",
+      "pos": "adj",
+      "sourceLine": 454656,
+      "rowSha256": "c922db465a3dc780027688b8536b5595e24531c2ce887c59e335b964eb2a70d6",
+      "url": "https://en.wiktionary.org/wiki/byzantine"
+    },
+    {
+      "word": "byzantine",
+      "pos": "noun",
+      "sourceLine": 454657,
+      "rowSha256": "51b862fe8ccb438f6c0e6ab08f70c76e97de6fc528ad653e3cf522d3535c0256",
+      "url": "https://en.wiktionary.org/wiki/byzantine"
+    },
+    {
+      "word": "forbearance",
+      "pos": "noun",
+      "sourceLine": 456420,
+      "rowSha256": "2736e8526be8aa359b3bfc961bf9d59969f6c5308ab0899ec408269ff36b13e5",
+      "url": "https://en.wiktionary.org/wiki/forbearance"
+    },
+    {
+      "word": "florid",
+      "pos": "adj",
+      "sourceLine": 457958,
+      "rowSha256": "a62ab21369bb4047d5f93a3aa752f65f300a83c8b06fce2ac397197941c434e4",
+      "url": "https://en.wiktionary.org/wiki/florid"
+    },
+    {
+      "word": "fervid",
+      "pos": "adj",
+      "sourceLine": 458077,
+      "rowSha256": "7a53093ba9fab09ebfecd4ad146dfa9cf95a5233380b2c2cc0cd6b0baf3ce782",
+      "url": "https://en.wiktionary.org/wiki/fervid"
+    },
+    {
+      "word": "conciliatory",
+      "pos": "adj",
+      "sourceLine": 465042,
+      "rowSha256": "d08e3706d3c6fb3aacbd80159617ac438cba012ed57fdd84e502c00080745415",
+      "url": "https://en.wiktionary.org/wiki/conciliatory"
+    },
+    {
+      "word": "limpid",
+      "pos": "adj",
+      "sourceLine": 468779,
+      "rowSha256": "1ed38d837b6f68745eaeab2c2f27a4d2a4f04a1db04cc832833684f90eed6f03",
+      "url": "https://en.wiktionary.org/wiki/limpid"
+    },
+    {
+      "word": "prescient",
+      "pos": "adj",
+      "sourceLine": 480141,
+      "rowSha256": "5d406857f6960a68c6310e66da8097292a1b55652bc64378e05219efbb220f1c",
+      "url": "https://en.wiktionary.org/wiki/prescient"
+    },
+    {
+      "word": "vituperate",
+      "pos": "verb",
+      "sourceLine": 482685,
+      "rowSha256": "62fe70a02038d039fe162f28453b56f8e3dac036e4911c560ef687c166f071c3",
+      "url": "https://en.wiktionary.org/wiki/vituperate"
+    },
+    {
+      "word": "vituperate",
+      "pos": "adj",
+      "sourceLine": 482686,
+      "rowSha256": "d4983c1a2eec6c355614311c5570c8cbcad66c2bdb1614d3c250d37066c309c4",
+      "url": "https://en.wiktionary.org/wiki/vituperate"
+    },
+    {
+      "word": "beneficent",
+      "pos": "adj",
+      "sourceLine": 490154,
+      "rowSha256": "9d95564333421114a84969a5b0c3c1b28d093bff43c9d2940f5d78bc155248b4",
+      "url": "https://en.wiktionary.org/wiki/beneficent"
+    },
+    {
+      "word": "supplicate",
+      "pos": "verb",
+      "sourceLine": 497578,
+      "rowSha256": "6281a34d57fdfff695011472200547bbc33563fa3dedaa35ccfe642378cc6665",
+      "url": "https://en.wiktionary.org/wiki/supplicate"
+    },
+    {
+      "word": "ingenuous",
+      "pos": "adj",
+      "sourceLine": 513280,
+      "rowSha256": "16bae1da6e74cb1d01ba6e73a6ad182fb1ed95bbaeb06436917149fc034a4db2",
+      "url": "https://en.wiktionary.org/wiki/ingenuous"
+    },
+    {
+      "word": "dispassionate",
+      "pos": "adj",
+      "sourceLine": 525213,
+      "rowSha256": "4fe4f176338f5e39fc79a4a5f740d58d54698254fd79def5372fc2d7ea0519e8",
+      "url": "https://en.wiktionary.org/wiki/dispassionate"
+    },
+    {
+      "word": "dispassionate",
+      "pos": "verb",
+      "sourceLine": 525214,
+      "rowSha256": "08028de99afd2f3602271ec5cc551ee008d9d1501a28aa140578efd21fdbbd96",
+      "url": "https://en.wiktionary.org/wiki/dispassionate"
+    },
+    {
+      "word": "buttress",
+      "pos": "noun",
+      "sourceLine": 528080,
+      "rowSha256": "f20c210f7e98526993b30100d182bbeaf4f704bab042f1a3218b5021e9558f0d",
+      "url": "https://en.wiktionary.org/wiki/buttress"
+    },
+    {
+      "word": "buttress",
+      "pos": "verb",
+      "sourceLine": 528081,
+      "rowSha256": "c95f1b144aa4799d07c5a6f3e593de83c827a857a7d6c2682cd208cc38036ce5",
+      "url": "https://en.wiktionary.org/wiki/buttress"
+    },
+    {
+      "word": "unassailable",
+      "pos": "adj",
+      "sourceLine": 554912,
+      "rowSha256": "991d6bd84e101621d4e193763bd7fdd13dd42f9f8ec4ed1e8d6df9f3b5835e8f",
+      "url": "https://en.wiktionary.org/wiki/unassailable"
+    },
+    {
+      "word": "unassailable",
+      "pos": "noun",
+      "sourceLine": 554913,
+      "rowSha256": "c252cb36c87b5b08032fe426d11ebcbc17d9e57b9b965294a02573993050343c",
+      "url": "https://en.wiktionary.org/wiki/unassailable"
+    },
+    {
+      "word": "valedictory",
+      "pos": "adj",
+      "sourceLine": 570402,
+      "rowSha256": "5fc155f5e01d41002e4ed7380c339f16fa0c4427298982f2f5ff226a7541194c",
+      "url": "https://en.wiktionary.org/wiki/valedictory"
+    },
+    {
+      "word": "valedictory",
+      "pos": "noun",
+      "sourceLine": 570403,
+      "rowSha256": "e2be9bdcefd91754257c65033d1ddbddec64fb3bbd4bd57a540a65524902ee76",
+      "url": "https://en.wiktionary.org/wiki/valedictory"
+    },
+    {
+      "word": "poignancy",
+      "pos": "noun",
+      "sourceLine": 767127,
+      "rowSha256": "01b61120253c2adb0aba430f5216999997bfd1bf96b5735c925b8c7fff0a72e8",
+      "url": "https://en.wiktionary.org/wiki/poignancy"
+    },
+    {
+      "word": "equable",
+      "pos": "adj",
+      "sourceLine": 769733,
+      "rowSha256": "fddefe82e59a57a66f14f3c8aeeafbf8565e5d9fcc555f575b8ba1b71bc645eb",
+      "url": "https://en.wiktionary.org/wiki/equable"
+    },
+    {
+      "word": "guileless",
+      "pos": "adj",
+      "sourceLine": 799834,
+      "rowSha256": "0a0f93069cb98777f21635d83989c43c437319440d668dcc01c61d6511a0f8a4",
+      "url": "https://en.wiktionary.org/wiki/guileless"
+    },
+    {
+      "word": "encomium",
+      "pos": "noun",
+      "sourceLine": 827335,
+      "rowSha256": "13ab8e2fabf6e0df3f2d034e9b5bbe32ad29c09f0c54205e51417f8533f3a3f8",
+      "url": "https://en.wiktionary.org/wiki/encomium"
+    },
+    {
+      "word": "unprepossessing",
+      "pos": "adj",
+      "sourceLine": 828568,
+      "rowSha256": "b7e1a9247f213c17c576515abe406bfb7bf6546e26c61e3bf54baeb813a771a3",
+      "url": "https://en.wiktionary.org/wiki/unprepossessing"
+    },
+    {
+      "word": "blandishment",
+      "pos": "noun",
+      "sourceLine": 840281,
+      "rowSha256": "32b1835799440c6ec52bce1bb501696f4a0fec55a4f296bb3651762726e1c0ca",
+      "url": "https://en.wiktionary.org/wiki/blandishment"
+    },
+    {
+      "word": "cogency",
+      "pos": "noun",
+      "sourceLine": 844473,
+      "rowSha256": "574307f044dc01dba6302da6c7a1f62d906385d152bfcb433593a6a6b029490d",
+      "url": "https://en.wiktionary.org/wiki/cogency"
+    },
+    {
+      "word": "tangential",
+      "pos": "adj",
+      "sourceLine": 851576,
+      "rowSha256": "3afa61aededaba3a24abb9410a191973afeb801b44ac32d0d527987c27e4e962",
+      "url": "https://en.wiktionary.org/wiki/tangential"
+    },
+    {
+      "word": "philistine",
+      "pos": "noun",
+      "sourceLine": 1884273,
+      "rowSha256": "1ba22658aa9307df01c454485af72913759ac925ea9517071e0bfd88ff23edc8",
+      "url": "https://en.wiktionary.org/wiki/philistine"
+    },
+    {
+      "word": "philistine",
+      "pos": "adj",
+      "sourceLine": 1884274,
+      "rowSha256": "0f643f0a20ec061bab997c8348dc94f83bcf6f88aa8bada02fab37252c366168",
+      "url": "https://en.wiktionary.org/wiki/philistine"
+    }
+  ],
+  "rootFamilyReferences": [
+    {
+      "word": "preclude",
+      "references": [
+        {
+          "title": "Merriam-Webster: preclude, definition and word history",
+          "url": "https://www.merriam-webster.com/dictionary/preclude"
+        }
+      ]
+    },
+    {
+      "word": "occlude",
+      "references": [
+        {
+          "title": "Merriam-Webster: occlude, definition and word history",
+          "url": "https://www.merriam-webster.com/dictionary/occlude"
+        },
+        {
+          "title": "Wiktionary: Latin occludo, obclūdo variant and etymology",
+          "url": "https://en.wiktionary.org/wiki/occludo#Latin"
+        }
+      ]
+    }
+  ]
+}
