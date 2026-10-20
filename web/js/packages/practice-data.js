@@ -9,7 +9,7 @@ export function validatePracticeData(pack){
  const entries=new Map(pack.entries.map(row=>[row.id,row]));
  const refs=value=>rows(value,30)&&value.length>0&&unique(value)&&value.every(url=>{try{return typeof url==='string'&&url.length<=2000&&new URL(url).protocol==='https:';}catch{return false;}});
  check(pack.kind==='study'&&data?.version===1&&['ja','en'].includes(pack.targetLanguage),'practice metadata');
- check(Object.keys(data).every(key=>['version','kanji','forms','countability'].includes(key)),'practice metadata fields');
+ check(Object.keys(data).every(key=>['version','kanji','forms','countability','rootFamilies'].includes(key)),'practice metadata fields');
  if(data.kanji!==undefined){
   check(pack.targetLanguage==='ja'&&rows(data.kanji,15000),'kanji metadata');const seen=new Set();
   for(const row of data.kanji){check(row&&typeof row.literal==='string'&&/^\p{Script=Han}$/u.test(row.literal)&&!seen.has(row.literal),'kanji literal');seen.add(row.literal);
@@ -23,6 +23,12 @@ export function validatePracticeData(pack){
     check(group.formKind==='adjective'?['negative','past','past-negative','te','conditional','adverbial'].includes(group.subKind):group.subKind===undefined,'form subtype');
     check(rows(group.answers,30)&&group.answers.length>0&&unique(group.answers)&&group.answers.every(text),'form answers');check(refs(group.references),'form references');
    }
+  }
+ }
+ if(data.rootFamilies!==undefined){
+  check(pack.targetLanguage==='en'&&rows(data.rootFamilies,5000),'root reference metadata');const seen=new Set();
+  for(const row of data.rootFamilies){check(typeof row.id==='string'&&/^[a-z0-9][a-z0-9._-]{0,99}$/.test(row.id)&&!seen.has(row.id),'root reference id');seen.add(row.id);check(text(row.term)&&text(row.language),'root reference source');check(rows(row.members,100)&&row.members.length>=2,'root reference members');const members=new Set();
+   for(const member of row.members){check(entries.has(member.entryId)&&!members.has(member.entryId),'root reference entry');members.add(member.entryId);check(refs(member.references),'root reference links');}
   }
  }
  if(data.countability!==undefined){
