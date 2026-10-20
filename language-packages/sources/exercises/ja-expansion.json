@@ -1,0 +1,2843 @@
+{
+  "language": "ja",
+  "license": "MIT",
+  "notice": "Original Lingonberry exercises and bilingual guidance, authored and reviewed in 2026. References were checked for linguistic facts; source exercises, definitions and quotations are not reproduced. Vocabulary levels are inherited unchanged from linked dictionary entries and do not certify the difficulty or official JLPT level of a grammatical pattern. This curated expansion covers the listed plain forms; it is not an exhaustive grammar syllabus. No politeness exercises are included. Reading segments and explanations are answer-side material only. Typed kanji-spelling tasks require the requested kanji; other typed tasks accept the listed kana variants.",
+  "references": [
+    {
+      "title": "TUFS — Verb groups and basic plain forms",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/card/039.html"
+    },
+    {
+      "title": "TUFS — Plain adjective forms",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/card/040.html"
+    },
+    {
+      "title": "TUFS — Volitional forms",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/card/065.html"
+    },
+    {
+      "title": "TUFS — Potential forms",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/card/074.html"
+    },
+    {
+      "title": "TUFS — Conditions",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/card/083.html"
+    },
+    {
+      "title": "The Japan Foundation — Causative-passive forms",
+      "url": "https://www.kyozai.jpf.go.jp/kyozai/material/BMA00076/ja/render.do"
+    },
+    {
+      "title": "TUFS — Counters and sound changes",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/courses/c01/lesson05/step3/explanation/017.html"
+    },
+    {
+      "title": "TUFS — Case particles",
+      "url": "https://www.coelang.tufs.ac.jp/mt/ja/gmod/courses/c01/lesson14/step2/card/053.html"
+    },
+    {
+      "title": "Wiktionary — Japanese 一頭 and the livestock counter",
+      "url": "https://en.wiktionary.org/wiki/%E4%B8%80%E9%A0%AD#Japanese"
+    },
+    {
+      "title": "Wiktionary — 電話: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%9B%BB%E8%A9%B1#Japanese"
+    },
+    {
+      "title": "Wiktionary — 学校: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%AD%A6%E6%A0%A1#Japanese"
+    },
+    {
+      "title": "Wiktionary — 新聞: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%96%B0%E8%81%9E#Japanese"
+    },
+    {
+      "title": "Wiktionary — 電気: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%9B%BB%E6%B0%97#Japanese"
+    },
+    {
+      "title": "Wiktionary — 図書館: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%9B%B3%E6%9B%B8%E9%A4%A8#Japanese"
+    },
+    {
+      "title": "Wiktionary — 影響: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%BD%B1%E9%9F%BF#Japanese"
+    },
+    {
+      "title": "Wiktionary — 根拠: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%A0%B9%E6%8B%A0#Japanese"
+    },
+    {
+      "title": "Wiktionary — 矛盾: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%9F%9B%E7%9B%BE#Japanese"
+    },
+    {
+      "title": "Wiktionary — 誇張: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%AA%87%E5%BC%B5#Japanese"
+    },
+    {
+      "title": "Wiktionary — 錯誤: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%8C%AF%E8%AA%A4#Japanese"
+    },
+    {
+      "title": "Wiktionary — 山: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%B1%B1#Japanese"
+    },
+    {
+      "title": "Wiktionary — 森: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%A3%AE#Japanese"
+    },
+    {
+      "title": "Wiktionary — 川: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%B7%9D#Japanese"
+    },
+    {
+      "title": "Wiktionary — 耳: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%80%B3#Japanese"
+    },
+    {
+      "title": "Wiktionary — 松: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%9D%BE#Japanese"
+    },
+    {
+      "title": "Wiktionary — 刀: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%88%80#Japanese"
+    },
+    {
+      "title": "Wiktionary — 筆: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%AD%86#Japanese"
+    },
+    {
+      "title": "Wiktionary — 穂: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%A9%82#Japanese"
+    },
+    {
+      "title": "Wiktionary — 桶: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%A1%B6#Japanese"
+    },
+    {
+      "title": "Wiktionary — 兆し: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%85%86%E3%81%97#Japanese"
+    },
+    {
+      "title": "Wiktionary — 飲む: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%A3%B2%E3%82%80#Japanese"
+    },
+    {
+      "title": "Wiktionary — 見る: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%A6%8B%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 読む: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%AA%AD%E3%82%80#Japanese"
+    },
+    {
+      "title": "Wiktionary — する: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E3%81%99%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 食べる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%A3%9F%E3%81%B9%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 来る: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%9D%A5%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 行く: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%A1%8C%E3%81%8F#Japanese"
+    },
+    {
+      "title": "Wiktionary — 高い: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%AB%98%E3%81%84#Japanese"
+    },
+    {
+      "title": "Wiktionary — 調べる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%AA%BF%E3%81%B9%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 書く: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%9B%B8%E3%81%8F#Japanese"
+    },
+    {
+      "title": "Wiktionary — 働く: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%83%8D%E3%81%8F#Japanese"
+    },
+    {
+      "title": "Wiktionary — 話す: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%A9%B1%E3%81%99#Japanese"
+    },
+    {
+      "title": "Wiktionary — 起きる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%B5%B7%E3%81%8D%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 安い: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%AE%89%E3%81%84#Japanese"
+    },
+    {
+      "title": "Wiktionary — 走る: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%B5%B0%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 集める: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%9B%86%E3%82%81%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 忘れる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%BF%98%E3%82%8C%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 待つ: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%BE%85%E3%81%A4#Japanese"
+    },
+    {
+      "title": "Wiktionary — 教える: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%95%99%E3%81%88%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 遊ぶ: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%81%8A%E3%81%B6#Japanese"
+    },
+    {
+      "title": "Wiktionary — 消える: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%B6%88%E3%81%88%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 穏やか: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%A9%8F%E3%82%84%E3%81%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 補う: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%A3%9C%E3%81%86#Japanese"
+    },
+    {
+      "title": "Wiktionary — 認める: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%AA%8D%E3%82%81%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 助ける: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%8A%A9%E3%81%91%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 泳ぐ: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%B3%B3%E3%81%90#Japanese"
+    },
+    {
+      "title": "Wiktionary — 壊す: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%A3%8A%E3%81%99#Japanese"
+    },
+    {
+      "title": "Wiktionary — 妥当: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%A6%A5%E5%BD%93#Japanese"
+    },
+    {
+      "title": "Wiktionary — 覆す: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%A6%86%E3%81%99#Japanese"
+    },
+    {
+      "title": "Wiktionary — 踏まえる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%B8%8F%E3%81%BE%E3%81%88%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 損なう: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%90%8D%E3%81%AA%E3%81%86#Japanese"
+    },
+    {
+      "title": "Wiktionary — 繋げる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%B9%8B%E3%81%92%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 乾く: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E4%B9%BE%E3%81%8F#Japanese"
+    },
+    {
+      "title": "Wiktionary — 引き受ける: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%BC%95%E3%81%8D%E5%8F%97%E3%81%91%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 緻密: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%B7%BB%E5%AF%86#Japanese"
+    },
+    {
+      "title": "Wiktionary — 確かめる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%A2%BA%E3%81%8B%E3%82%81%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 本: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%9C%AC#Japanese"
+    },
+    {
+      "title": "Wiktionary — 車: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%BB%8A#Japanese"
+    },
+    {
+      "title": "Wiktionary — 紙: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%B4%99#Japanese"
+    },
+    {
+      "title": "Wiktionary — ノート: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E3%83%8E%E3%83%BC%E3%83%88#Japanese"
+    },
+    {
+      "title": "Wiktionary — ペン: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E3%83%9A%E3%83%B3#Japanese"
+    },
+    {
+      "title": "Wiktionary — 鉛筆: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%89%9B%E7%AD%86#Japanese"
+    },
+    {
+      "title": "Wiktionary — コップ: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E3%82%B3%E3%83%83%E3%83%97#Japanese"
+    },
+    {
+      "title": "Wiktionary — 花瓶: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E8%8A%B1%E7%93%B6#Japanese"
+    },
+    {
+      "title": "Wiktionary — 山羊: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%B1%B1%E7%BE%8A#Japanese"
+    },
+    {
+      "title": "Wiktionary — 水: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%B0%B4#Japanese"
+    },
+    {
+      "title": "Wiktionary — 髪: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%AB%AA#Japanese"
+    },
+    {
+      "title": "Wiktionary — 暑い: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E6%9A%91%E3%81%84#Japanese"
+    },
+    {
+      "title": "Wiktionary — 熱い: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%86%B1%E3%81%84#Japanese"
+    },
+    {
+      "title": "Wiktionary — 箸: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E7%AE%B8#Japanese"
+    },
+    {
+      "title": "Wiktionary — 入る: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%85%A5%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 入れる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%85%A5%E3%82%8C%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 変わる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%A4%89%E3%82%8F%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 変える: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%A4%89%E3%81%88%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 集まる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E9%9B%86%E3%81%BE%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 壊れる: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E5%A3%8A%E3%82%8C%E3%82%8B#Japanese"
+    },
+    {
+      "title": "Wiktionary — 乾かす: Japanese reading and grammatical class",
+      "url": "https://en.wiktionary.org/wiki/%E4%B9%BE%E3%81%8B%E3%81%99#Japanese"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "ja-ex-plus-on-telephone",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "隣の部屋で電［話］が鳴った。",
+      "answer": "わ",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "電話 is でんわ; 話 contributes the on-reading わ.",
+        "ko": "電話는 でんわ이며, 話의 음독은 わ입니다."
+      },
+      "entryId": "ja-lex-7a9504f9a3619c8f7ce1"
+    },
+    {
+      "id": "ja-ex-plus-on-school",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "あの学［校］には広い庭がある。",
+      "answer": "こう",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "学校 is がっこう. The requested character 校 is こう; the っ belongs to the preceding part.",
+        "ko": "学校는 がっこう입니다. 묻는 글자 校는 こう이며, っ은 앞부분에 속합니다."
+      },
+      "entryId": "ja-lex-c4a1725d7c5075c044f7"
+    },
+    {
+      "id": "ja-ex-plus-on-news",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "朝の［新］聞を机に置いた。",
+      "answer": "しん",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "新聞 is しんぶん; 新 has the on-reading しん here.",
+        "ko": "新聞은 しんぶん이며, 여기서 新의 음독은 しん입니다."
+      },
+      "entryId": "ja-lex-65889bb0b450e7e52595"
+    },
+    {
+      "id": "ja-ex-plus-on-electricity",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "この装置は電［気］で動く。",
+      "answer": "き",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "In 電気, 気 is read き.",
+        "ko": "電気에서 気는 き로 읽습니다."
+      },
+      "entryId": "ja-lex-bfacb7e41b779efe0431"
+    },
+    {
+      "id": "ja-ex-plus-on-library",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "図書［館］で資料を探す。",
+      "answer": "かん",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "図書館 is としょかん, with 館 read かん.",
+        "ko": "図書館은 としょかん이며, 館은 かん으로 읽습니다."
+      },
+      "entryId": "ja-lex-6d2b6adba424a1df2397"
+    },
+    {
+      "id": "ja-ex-plus-on-influence",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "雨の影［響］で試合が延びた。",
+      "answer": "きょう",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "影響 is えいきょう. 響 contributes きょう, including the long vowel.",
+        "ko": "影響은 えいきょう입니다. 響의 읽기는 긴 모음을 포함한 きょう입니다."
+      },
+      "entryId": "ja-lex-60e5b5f30c174c16cb3b"
+    },
+    {
+      "id": "ja-ex-plus-on-evidence",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "その判断の根［拠］を示す。",
+      "answer": "きょ",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "根拠 is こんきょ; 拠 is きょ, without a following う.",
+        "ko": "根拠는 こんきょ입니다. 拠는 きょ이며 뒤에 う를 붙이지 않습니다."
+      },
+      "entryId": "ja-lex-933466f59178a9715d46"
+    },
+    {
+      "id": "ja-ex-plus-on-contradiction",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "二つの説明には矛［盾］がある。",
+      "answer": "じゅん",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "矛盾 is むじゅん. The on-reading of 盾 in this compound is じゅん.",
+        "ko": "矛盾은 むじゅん입니다. 이 합성어에서 盾의 음독은 じゅん입니다."
+      },
+      "entryId": "ja-lex-d9f1b6ced30be45fb263"
+    },
+    {
+      "id": "ja-ex-plus-on-exaggeration",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "その記事には誇［張］が多い。",
+      "answer": "ちょう",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "誇張 is こちょう. 張 is ちょう, with a long vowel.",
+        "ko": "誇張은 こちょう입니다. 張은 긴 모음이 있는 ちょう입니다."
+      },
+      "entryId": "ja-lex-9fda4030d693dc20b691"
+    },
+    {
+      "id": "ja-ex-plus-on-error",
+      "category": "onyomi",
+      "route": "vocabinput",
+      "prompt": "記録の［錯］誤を訂正した。",
+      "answer": "さく",
+      "instruction": {
+        "en": "Type only the on-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 음독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "錯誤 is さくご; 錯 is read さく.",
+        "ko": "錯誤는 さくご이며, 錯는 さく로 읽습니다."
+      },
+      "entryId": "ja-lex-2826817b4d280e366acf"
+    },
+    {
+      "id": "ja-ex-plus-kun-mountain",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "雪の積もった［山］を眺める。",
+      "answer": "やま",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "The ordinary noun 山 is やま here, not its compound reading さん.",
+        "ko": "여기서 일반 명사 山은 합성어의 さん이 아니라 やま입니다."
+      },
+      "entryId": "ja-lex-9c96db61330678a75105"
+    },
+    {
+      "id": "ja-ex-plus-kun-forest",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "小道は深い［森］へ続く。",
+      "answer": "もり",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "森 is the standalone noun もり in this context.",
+        "ko": "이 문맥에서 森는 단독 명사 もり입니다."
+      },
+      "entryId": "ja-lex-92b56b5d7724955ffaac"
+    },
+    {
+      "id": "ja-ex-plus-kun-river",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "橋の下を［川］が流れている。",
+      "answer": "かわ",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "川 is かわ in this sentence; せん occurs in other words.",
+        "ko": "이 문장에서 川는 かわ입니다. 다른 단어에서는 せん을 쓰기도 합니다."
+      },
+      "entryId": "ja-lex-27555462630ccff568d4"
+    },
+    {
+      "id": "ja-ex-plus-kun-ear",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "小さな声に［耳］を澄ます。",
+      "answer": "みみ",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "The body-part noun 耳 is read みみ.",
+        "ko": "신체 부위를 뜻하는 명사 耳는 みみ로 읽습니다."
+      },
+      "entryId": "ja-lex-a25bbe5128bddc9a8aed"
+    },
+    {
+      "id": "ja-ex-plus-kun-pine",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "庭には大きな［松］が一本ある。",
+      "answer": "まつ",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "The tree name 松 is まつ here.",
+        "ko": "여기서 나무 이름 松은 まつ입니다."
+      },
+      "entryId": "ja-lex-3914969c4a5bacb27ca8"
+    },
+    {
+      "id": "ja-ex-plus-kun-sword",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "武士は［刀］を鞘に戻した。",
+      "answer": "かたな",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "The standalone sword noun 刀 uses かたな here; とう is an on-reading in other contexts.",
+        "ko": "여기서 칼을 뜻하는 단독 명사 刀는 かたな입니다. とう는 다른 문맥의 음독입니다."
+      },
+      "entryId": "ja-lex-d5fe99048b0238aaec5d"
+    },
+    {
+      "id": "ja-ex-plus-kun-brush",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "墨をつけた［筆］で字を書く。",
+      "answer": "ふで",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "For the writing brush in this sentence, 筆 is ふで.",
+        "ko": "이 문장에서 글씨를 쓰는 붓 筆은 ふで입니다."
+      },
+      "entryId": "ja-lex-5bcee1723459a1126fd6"
+    },
+    {
+      "id": "ja-ex-plus-kun-ear-of-grain",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "稲の［穂］が風に揺れる。",
+      "answer": "ほ",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "The grain-bearing part of the plant is the noun 穂, read ほ.",
+        "ko": "곡식의 이삭을 뜻하는 명사 穂는 ほ로 읽습니다."
+      },
+      "entryId": "ja-lex-8fe52dbe7d4bb4ce00d5"
+    },
+    {
+      "id": "ja-ex-plus-kun-bucket",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "木の［桶］に水をくむ。",
+      "answer": "おけ",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "Use the ordinary modern reading おけ for this wooden container.",
+        "ko": "이 나무 용기의 일반적인 현대어 읽기는 おけ입니다."
+      },
+      "entryId": "ja-lex-ace5c1c121ba6a1e3515"
+    },
+    {
+      "id": "ja-ex-plus-kun-sign",
+      "category": "kunyomi",
+      "route": "vocabinput",
+      "prompt": "春の［兆］しが見え始めた。",
+      "answer": "きざ",
+      "instruction": {
+        "en": "Type only the kun-reading of the bracketed kanji in hiragana. Use the ordinary modern reading in this context.",
+        "ko": "대괄호 안 한자의 훈독만 히라가나로 입력하세요. 이 문맥의 일반적인 현대어 읽기를 씁니다."
+      },
+      "explanation": {
+        "en": "兆し divides into the kun-reading 兆＝きざ and the printed kana し. Type only きざ.",
+        "ko": "兆し는 훈독 兆＝きざ와 이미 적힌 가나 し로 나뉩니다. きざ만 입력합니다."
+      },
+      "entryId": "ja-lex-69ff4b9fba6d0193e9fd"
+    },
+    {
+      "id": "ja-ex-plus-form-drink-te",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "te",
+      "prompt": "飲む（のむ） → て形",
+      "answer": "飲んで",
+      "acceptedAnswers": [
+        "のんで"
+      ],
+      "instruction": {
+        "en": "Write the て-form of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 て형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Godan verbs ending in む use んで in the て-form.",
+        "ko": "む로 끝나는 5단 동사의 て형은 んで로 바뀝니다."
+      },
+      "entryId": "ja-lex-df42c4ace0b1d86cb3f8"
+    },
+    {
+      "id": "ja-ex-plus-form-see-past",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "past",
+      "prompt": "見る（みる） → 過去・肯定",
+      "answer": "見た",
+      "acceptedAnswers": [
+        "みた"
+      ],
+      "instruction": {
+        "en": "Write the affirmative plain past of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 긍정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "見る is ichidan: remove る and add た.",
+        "ko": "見る는 1단 동사이므로 る를 빼고 た를 붙입니다."
+      },
+      "entryId": "ja-lex-4d2f9d2f7a1424881274"
+    },
+    {
+      "id": "ja-ex-plus-form-read-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "negative",
+      "prompt": "読む（よむ） → 非過去・否定",
+      "answer": "読まない",
+      "acceptedAnswers": [
+        "よまない"
+      ],
+      "instruction": {
+        "en": "Write the plain non-past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 비과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For this godan verb, む changes to ま before ない.",
+        "ko": "이 5단 동사는 む를 ま로 바꾸고 ない를 붙입니다."
+      },
+      "entryId": "ja-lex-727269095b2ea15a73dc"
+    },
+    {
+      "id": "ja-ex-plus-form-do-potential",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "potential",
+      "prompt": "する → 可能形・非過去・肯定（標準形）",
+      "answer": "できる",
+      "acceptedAnswers": [
+        "出来る"
+      ],
+      "instruction": {
+        "en": "Write the standard affirmative non-past potential of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 표준 비과거 긍정 가능형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The potential of する is the irregular form できる.",
+        "ko": "する의 가능형은 불규칙형 できる입니다."
+      },
+      "entryId": "ja-lex-38b4f9faec0248633717"
+    },
+    {
+      "id": "ja-ex-plus-form-eat-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "passive",
+      "prompt": "食べる（たべる） → 受身形・非過去・肯定",
+      "answer": "食べられる",
+      "acceptedAnswers": [
+        "たべられる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For the passive of an ichidan verb, replace る with られる. The same shape can express ability in a different task.",
+        "ko": "1단 동사의 수동형은 る를 られる로 바꿉니다. 다른 문맥에서는 같은 형태가 가능의 뜻도 나타냅니다."
+      },
+      "entryId": "ja-lex-7dc37c0b702e36c858b1"
+    },
+    {
+      "id": "ja-ex-plus-form-come-causative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative",
+      "prompt": "来る（くる） → 使役形・非過去・肯定（長い標準形）",
+      "answer": "来させる",
+      "acceptedAnswers": [
+        "こさせる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative using the full standard せる／させる pattern, not a shorter causative. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "짧은 사역형이 아니라 せる／させる가 붙는 긴 표준형으로 비과거 긍정 사역형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The causative of 来る is 来させる; 来 is read こ in this form.",
+        "ko": "来る의 사역형은 来させる이며, 이 형태의 来는 こ로 읽습니다."
+      },
+      "entryId": "ja-lex-24d4ee50d9f46eded445"
+    },
+    {
+      "id": "ja-ex-plus-form-read-causative-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative-passive",
+      "prompt": "読む（よむ） → 使役受身形・非過去・肯定",
+      "answer": "読ませられる",
+      "acceptedAnswers": [
+        "よませられる",
+        "読まされる",
+        "よまされる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative-passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 사역 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Both the full 読ませられる and the contracted 読まされる are standard causative-passive forms.",
+        "ko": "긴 형태 読ませられる와 줄인 형태 読まされる는 모두 표준적인 사역 수동형입니다."
+      },
+      "entryId": "ja-lex-727269095b2ea15a73dc"
+    },
+    {
+      "id": "ja-ex-plus-form-go-conditional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "conditional",
+      "prompt": "行く（いく） → 条件形（ば）・肯定",
+      "answer": "行けば",
+      "acceptedAnswers": [
+        "いけば",
+        "ゆけば"
+      ],
+      "instruction": {
+        "en": "Write the affirmative ば-conditional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 긍정 ば 조건형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Use the ば-conditional: 行く becomes 行けば.",
+        "ko": "ば 조건형에서는 行く가 行けば가 됩니다."
+      },
+      "entryId": "ja-lex-e6dc63b5488f74fa46ac"
+    },
+    {
+      "id": "ja-ex-plus-form-do-volitional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "volitional",
+      "prompt": "する → 意志形・普通形",
+      "answer": "しよう",
+      "acceptedAnswers": [],
+      "instruction": {
+        "en": "Write the plain volitional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 의지형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The plain volitional of する is the irregular form しよう.",
+        "ko": "する의 보통체 의지형은 불규칙형 しよう입니다."
+      },
+      "entryId": "ja-lex-38b4f9faec0248633717"
+    },
+    {
+      "id": "ja-ex-plus-form-high-past-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "adjective",
+      "prompt": "高い（たかい） → 過去・否定",
+      "answer": "高くなかった",
+      "acceptedAnswers": [
+        "たかくなかった"
+      ],
+      "instruction": {
+        "en": "Write the plain past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For an い-adjective, the plain past negative replaces final い with くなかった.",
+        "ko": "い형용사의 보통체 과거 부정형은 마지막 い를 くなかった로 바꿉니다."
+      },
+      "entryId": "ja-lex-9a609487c042d951a74d"
+    },
+    {
+      "id": "ja-ex-plus-form-investigate-te",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "te",
+      "prompt": "調べる（しらべる） → て形",
+      "answer": "調べて",
+      "acceptedAnswers": [
+        "しらべて"
+      ],
+      "instruction": {
+        "en": "Write the て-form of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 て형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "調べる is ichidan: replace る with て.",
+        "ko": "調べる는 1단 동사이므로 る를 て로 바꿉니다."
+      },
+      "entryId": "ja-lex-8b955ef9f706f73eaa17"
+    },
+    {
+      "id": "ja-ex-plus-form-write-past",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "past",
+      "prompt": "書く（かく） → 過去・肯定",
+      "answer": "書いた",
+      "acceptedAnswers": [
+        "かいた"
+      ],
+      "instruction": {
+        "en": "Write the affirmative plain past of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 긍정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Godan く normally changes to いた in the past form.",
+        "ko": "く로 끝나는 5단 동사의 과거형은 일반적으로 いた로 바뀝니다."
+      },
+      "entryId": "ja-lex-bb2f2d29c5eb5cba5609"
+    },
+    {
+      "id": "ja-ex-plus-form-work-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "negative",
+      "prompt": "働く（はたらく） → 非過去・否定",
+      "answer": "働かない",
+      "acceptedAnswers": [
+        "はたらかない"
+      ],
+      "instruction": {
+        "en": "Write the plain non-past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 비과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Change く to か and add ない.",
+        "ko": "く를 か로 바꾸고 ない를 붙입니다."
+      },
+      "entryId": "ja-lex-0d3ced629aee823748ef"
+    },
+    {
+      "id": "ja-ex-plus-form-speak-potential",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "potential",
+      "prompt": "話す（はなす） → 可能形・非過去・肯定（標準形）",
+      "answer": "話せる",
+      "acceptedAnswers": [
+        "はなせる"
+      ],
+      "instruction": {
+        "en": "Write the standard affirmative non-past potential of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 표준 비과거 긍정 가능형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For a godan potential, す changes to せ and る is added.",
+        "ko": "5단 동사의 가능형은 す를 せ로 바꾸고 る를 붙입니다."
+      },
+      "entryId": "ja-lex-89553e3b9060e68b0f54"
+    },
+    {
+      "id": "ja-ex-plus-form-investigate-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "passive",
+      "prompt": "調べる（しらべる） → 受身形・非過去・肯定",
+      "answer": "調べられる",
+      "acceptedAnswers": [
+        "しらべられる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Remove the final る from this ichidan verb and add られる.",
+        "ko": "이 1단 동사는 마지막 る를 빼고 られる를 붙입니다."
+      },
+      "entryId": "ja-lex-8b955ef9f706f73eaa17"
+    },
+    {
+      "id": "ja-ex-plus-form-write-causative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative",
+      "prompt": "書く（かく） → 使役形・非過去・肯定（長い標準形）",
+      "answer": "書かせる",
+      "acceptedAnswers": [
+        "かかせる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative using the full standard せる／させる pattern, not a shorter causative. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "짧은 사역형이 아니라 せる／させる가 붙는 긴 표준형으로 비과거 긍정 사역형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Change く to か and add せる to form the causative.",
+        "ko": "く를 か로 바꾸고 せる를 붙여 사역형을 만듭니다."
+      },
+      "entryId": "ja-lex-bb2f2d29c5eb5cba5609"
+    },
+    {
+      "id": "ja-ex-plus-form-speak-causative-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative-passive",
+      "prompt": "話す（はなす） → 使役受身形・非過去・肯定",
+      "answer": "話させられる",
+      "acceptedAnswers": [
+        "はなさせられる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative-passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 사역 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Godan verbs ending in す keep the full させられる pattern; do not shorten this to さされる.",
+        "ko": "す로 끝나는 5단 동사는 させられる 형태를 유지합니다. さされる로 줄이지 않습니다."
+      },
+      "entryId": "ja-lex-89553e3b9060e68b0f54"
+    },
+    {
+      "id": "ja-ex-plus-form-investigate-conditional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "conditional",
+      "prompt": "調べる（しらべる） → 条件形（ば）・肯定",
+      "answer": "調べれば",
+      "acceptedAnswers": [
+        "しらべれば"
+      ],
+      "instruction": {
+        "en": "Write the affirmative ば-conditional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 긍정 ば 조건형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For an ichidan ば-conditional, replace final る with れば.",
+        "ko": "1단 동사의 ば 조건형은 마지막 る를 れば로 바꿉니다."
+      },
+      "entryId": "ja-lex-8b955ef9f706f73eaa17"
+    },
+    {
+      "id": "ja-ex-plus-form-wake-volitional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "volitional",
+      "prompt": "起きる（おきる） → 意志形・普通形",
+      "answer": "起きよう",
+      "acceptedAnswers": [
+        "おきよう"
+      ],
+      "instruction": {
+        "en": "Write the plain volitional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 의지형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The ichidan volitional replaces る with よう.",
+        "ko": "1단 동사의 의지형은 る를 よう로 바꿉니다."
+      },
+      "entryId": "ja-lex-2c698cba6f3d5ad7a288"
+    },
+    {
+      "id": "ja-ex-plus-form-cheap-past",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "adjective",
+      "prompt": "安い（やすい） → 過去・肯定",
+      "answer": "安かった",
+      "acceptedAnswers": [
+        "やすかった"
+      ],
+      "instruction": {
+        "en": "Write the affirmative plain past of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 긍정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Replace the final い with かった for the affirmative past.",
+        "ko": "과거 긍정형은 마지막 い를 かった로 바꿉니다."
+      },
+      "entryId": "ja-lex-57503a45aa6454d6f760"
+    },
+    {
+      "id": "ja-ex-plus-form-run-te",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "te",
+      "prompt": "走る（はしる） → て形",
+      "answer": "走って",
+      "acceptedAnswers": [
+        "はしって"
+      ],
+      "instruction": {
+        "en": "Write the て-form of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 て형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "走る is godan despite ending in る; its て-form is 走って.",
+        "ko": "走る는 る로 끝나지만 5단 동사이므로 て형은 走って입니다."
+      },
+      "entryId": "ja-lex-4888146e8a00e87fe4fc"
+    },
+    {
+      "id": "ja-ex-plus-form-collect-past",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "past",
+      "prompt": "集める（あつめる） → 過去・肯定",
+      "answer": "集めた",
+      "acceptedAnswers": [
+        "あつめた"
+      ],
+      "instruction": {
+        "en": "Write the affirmative plain past of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 긍정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For this ichidan verb, replace る with た.",
+        "ko": "이 1단 동사는 る를 た로 바꿉니다."
+      },
+      "entryId": "ja-lex-010d94301c7f0abb6f06"
+    },
+    {
+      "id": "ja-ex-plus-form-forget-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "negative",
+      "prompt": "忘れる（わすれる） → 非過去・否定",
+      "answer": "忘れない",
+      "acceptedAnswers": [
+        "わすれない"
+      ],
+      "instruction": {
+        "en": "Write the plain non-past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 비과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Remove final る and add ない.",
+        "ko": "마지막 る를 빼고 ない를 붙입니다."
+      },
+      "entryId": "ja-lex-9ec3c08fa9194c90fd5d"
+    },
+    {
+      "id": "ja-ex-plus-form-wait-potential",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "potential",
+      "prompt": "待つ（まつ） → 可能形・非過去・肯定（標準形）",
+      "answer": "待てる",
+      "acceptedAnswers": [
+        "まてる"
+      ],
+      "instruction": {
+        "en": "Write the standard affirmative non-past potential of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 표준 비과거 긍정 가능형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The godan potential changes つ to て and adds る.",
+        "ko": "5단 동사의 가능형은 つ를 て로 바꾸고 る를 붙입니다."
+      },
+      "entryId": "ja-lex-9aedf218ab64fa1425c6"
+    },
+    {
+      "id": "ja-ex-plus-form-teach-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "passive",
+      "prompt": "教える（おしえる） → 受身形・非過去・肯定",
+      "answer": "教えられる",
+      "acceptedAnswers": [
+        "おしえられる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The passive of 教える replaces its last る with られる.",
+        "ko": "教える의 수동형은 마지막 る를 られる로 바꿉니다."
+      },
+      "entryId": "ja-lex-61b5c253ac4953d08228"
+    },
+    {
+      "id": "ja-ex-plus-form-play-causative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative",
+      "prompt": "遊ぶ（あそぶ） → 使役形・非過去・肯定（長い標準形）",
+      "answer": "遊ばせる",
+      "acceptedAnswers": [
+        "あそばせる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative using the full standard せる／させる pattern, not a shorter causative. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "짧은 사역형이 아니라 せる／させる가 붙는 긴 표준형으로 비과거 긍정 사역형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Change ぶ to ば and add せる.",
+        "ko": "ぶ를 ば로 바꾸고 せる를 붙입니다."
+      },
+      "entryId": "ja-lex-8a2ae8dae4c9c16d347d"
+    },
+    {
+      "id": "ja-ex-plus-form-wait-causative-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative-passive",
+      "prompt": "待つ（まつ） → 使役受身形・非過去・肯定",
+      "answer": "待たせられる",
+      "acceptedAnswers": [
+        "またせられる",
+        "待たされる",
+        "またされる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative-passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 사역 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "待たせられる and its shorter form 待たされる are both accepted.",
+        "ko": "待たせられる와 줄인 형태 待たされる를 모두 쓸 수 있습니다."
+      },
+      "entryId": "ja-lex-9aedf218ab64fa1425c6"
+    },
+    {
+      "id": "ja-ex-plus-form-disappear-conditional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "conditional",
+      "prompt": "消える（きえる） → 条件形（ば）・肯定",
+      "answer": "消えれば",
+      "acceptedAnswers": [
+        "きえれば"
+      ],
+      "instruction": {
+        "en": "Write the affirmative ば-conditional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 긍정 ば 조건형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The ichidan ば-conditional is 消えれば.",
+        "ko": "1단 동사 消える의 ば 조건형은 消えれば입니다."
+      },
+      "entryId": "ja-lex-da0c858bec31a6870702"
+    },
+    {
+      "id": "ja-ex-plus-form-collect-volitional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "volitional",
+      "prompt": "集める（あつめる） → 意志形・普通形",
+      "answer": "集めよう",
+      "acceptedAnswers": [
+        "あつめよう"
+      ],
+      "instruction": {
+        "en": "Write the plain volitional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 의지형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Replace the final る with よう.",
+        "ko": "마지막 る를 よう로 바꿉니다."
+      },
+      "entryId": "ja-lex-010d94301c7f0abb6f06"
+    },
+    {
+      "id": "ja-ex-plus-form-calm-past-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "adjective",
+      "prompt": "穏やか（おだやか） → 過去・否定",
+      "answer": "穏やかではなかった",
+      "acceptedAnswers": [
+        "おだやかではなかった",
+        "穏やかじゃなかった",
+        "おだやかじゃなかった"
+      ],
+      "instruction": {
+        "en": "Write the plain past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "穏やか is a な-adjective. Its plain past negative uses ではなかった; じゃなかった is also a valid plain variant.",
+        "ko": "穏やか는 な형용사입니다. 보통체 과거 부정형에는 ではなかった를 쓰며 じゃなかった도 가능합니다."
+      },
+      "entryId": "ja-lex-fcf61383e933f74b51a9"
+    },
+    {
+      "id": "ja-ex-plus-form-supplement-te",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "te",
+      "prompt": "補う（おぎなう） → て形",
+      "answer": "補って",
+      "acceptedAnswers": [
+        "おぎなって"
+      ],
+      "instruction": {
+        "en": "Write the て-form of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 て형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Godan verbs ending in う use って in the て-form.",
+        "ko": "う로 끝나는 5단 동사의 て형은 って로 바뀝니다."
+      },
+      "entryId": "ja-lex-29e81173bc5a755cb152"
+    },
+    {
+      "id": "ja-ex-plus-form-acknowledge-past",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "past",
+      "prompt": "認める（みとめる） → 過去・肯定",
+      "answer": "認めた",
+      "acceptedAnswers": [
+        "みとめた"
+      ],
+      "instruction": {
+        "en": "Write the affirmative plain past of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 긍정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Use the reading みとめる here. As an ichidan verb, it takes た after removing る.",
+        "ko": "여기서는 みとめる로 읽습니다. 1단 동사이므로 る를 빼고 た를 붙입니다."
+      },
+      "entryId": "ja-lex-bc945824a1ba1da87aaa"
+    },
+    {
+      "id": "ja-ex-plus-form-help-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "negative",
+      "prompt": "助ける（たすける） → 非過去・否定",
+      "answer": "助けない",
+      "acceptedAnswers": [
+        "たすけない"
+      ],
+      "instruction": {
+        "en": "Write the plain non-past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 비과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Use the ordinary reading たすける and replace final る with ない.",
+        "ko": "일반적인 읽기 たすける를 사용하며, 마지막 る를 ない로 바꿉니다."
+      },
+      "entryId": "ja-lex-a35ae299beca2f801815"
+    },
+    {
+      "id": "ja-ex-plus-form-swim-potential",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "potential",
+      "prompt": "泳ぐ（およぐ） → 可能形・非過去・肯定（標準形）",
+      "answer": "泳げる",
+      "acceptedAnswers": [
+        "およげる"
+      ],
+      "instruction": {
+        "en": "Write the standard affirmative non-past potential of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 표준 비과거 긍정 가능형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For the godan potential, ぐ changes to げ and る is added.",
+        "ko": "5단 동사의 가능형은 ぐ를 げ로 바꾸고 る를 붙입니다."
+      },
+      "entryId": "ja-lex-151fea7b8f934ddbf30d"
+    },
+    {
+      "id": "ja-ex-plus-form-break-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "passive",
+      "prompt": "壊す（こわす） → 受身形・非過去・肯定",
+      "answer": "壊される",
+      "acceptedAnswers": [
+        "こわされる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The passive of this godan verb uses さ＋れる.",
+        "ko": "이 5단 동사의 수동형은 さ에 れる를 붙입니다."
+      },
+      "entryId": "ja-lex-ee8382849c43b6cc4d0f"
+    },
+    {
+      "id": "ja-ex-plus-form-swim-causative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative",
+      "prompt": "泳ぐ（およぐ） → 使役形・非過去・肯定（長い標準形）",
+      "answer": "泳がせる",
+      "acceptedAnswers": [
+        "およがせる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative using the full standard せる／させる pattern, not a shorter causative. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "짧은 사역형이 아니라 せる／させる가 붙는 긴 표준형으로 비과거 긍정 사역형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Change ぐ to が and add せる.",
+        "ko": "ぐ를 が로 바꾸고 せる를 붙입니다."
+      },
+      "entryId": "ja-lex-151fea7b8f934ddbf30d"
+    },
+    {
+      "id": "ja-ex-plus-form-swim-causative-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative-passive",
+      "prompt": "泳ぐ（およぐ） → 使役受身形・非過去・肯定",
+      "answer": "泳がせられる",
+      "acceptedAnswers": [
+        "およがせられる",
+        "泳がされる",
+        "およがされる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative-passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 사역 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Both 泳がせられる and the shorter 泳がされる express the causative-passive.",
+        "ko": "泳がせられる와 줄인 형태 泳がされる는 모두 사역 수동형입니다."
+      },
+      "entryId": "ja-lex-151fea7b8f934ddbf30d"
+    },
+    {
+      "id": "ja-ex-plus-form-supplement-conditional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "conditional",
+      "prompt": "補う（おぎなう） → 条件形（ば）・肯定",
+      "answer": "補えば",
+      "acceptedAnswers": [
+        "おぎなえば"
+      ],
+      "instruction": {
+        "en": "Write the affirmative ば-conditional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 긍정 ば 조건형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The ば-conditional changes final う to え and adds ば.",
+        "ko": "ば 조건형은 마지막 う를 え로 바꾸고 ば를 붙입니다."
+      },
+      "entryId": "ja-lex-29e81173bc5a755cb152"
+    },
+    {
+      "id": "ja-ex-plus-form-acknowledge-volitional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "volitional",
+      "prompt": "認める（みとめる） → 意志形・普通形",
+      "answer": "認めよう",
+      "acceptedAnswers": [
+        "みとめよう"
+      ],
+      "instruction": {
+        "en": "Write the plain volitional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 의지형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Using みとめる, remove final る and add よう.",
+        "ko": "みとめる라는 읽기에서 마지막 る를 빼고 よう를 붙입니다."
+      },
+      "entryId": "ja-lex-bc945824a1ba1da87aaa"
+    },
+    {
+      "id": "ja-ex-plus-form-appropriate-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "adjective",
+      "prompt": "妥当（だとう） → 非過去・否定",
+      "answer": "妥当ではない",
+      "acceptedAnswers": [
+        "だとうではない",
+        "妥当じゃない",
+        "だとうじゃない"
+      ],
+      "instruction": {
+        "en": "Write the plain non-past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 비과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "妥当 is a な-adjective, so use ではない. The plain contraction じゃない is also valid.",
+        "ko": "妥当는 な형용사이므로 ではない를 씁니다. 보통체 축약형 じゃない도 가능합니다."
+      },
+      "entryId": "ja-lex-63484f8b509819d81934"
+    },
+    {
+      "id": "ja-ex-plus-form-overturn-te",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "te",
+      "prompt": "覆す（くつがえす） → て形",
+      "answer": "覆して",
+      "acceptedAnswers": [
+        "くつがえして"
+      ],
+      "instruction": {
+        "en": "Write the て-form of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 て형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Godan verbs ending in す form their て-form with して.",
+        "ko": "す로 끝나는 5단 동사의 て형은 して로 바뀝니다."
+      },
+      "entryId": "ja-lex-7189c7fbfc0c72ab548a"
+    },
+    {
+      "id": "ja-ex-plus-form-take-into-account-past",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "past",
+      "prompt": "踏まえる（ふまえる） → 過去・肯定",
+      "answer": "踏まえた",
+      "acceptedAnswers": [
+        "ふまえた"
+      ],
+      "instruction": {
+        "en": "Write the affirmative plain past of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 과거 긍정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The ichidan past replaces the final る with た.",
+        "ko": "1단 동사의 과거형은 마지막 る를 た로 바꿉니다."
+      },
+      "entryId": "ja-lex-ff919e72069cf19b77fa"
+    },
+    {
+      "id": "ja-ex-plus-form-damage-negative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "negative",
+      "prompt": "損なう（そこなう） → 非過去・否定",
+      "answer": "損なわない",
+      "acceptedAnswers": [
+        "そこなわない"
+      ],
+      "instruction": {
+        "en": "Write the plain non-past negative of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 비과거 부정형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "In the negative of a godan verb ending in う, use わない, not あない.",
+        "ko": "う로 끝나는 5단 동사의 부정형은 あない가 아니라 わない를 씁니다."
+      },
+      "entryId": "ja-lex-8942844e69c49623b3fb"
+    },
+    {
+      "id": "ja-ex-plus-form-connect-potential",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "potential",
+      "prompt": "繋げる（つなげる） → 可能形・非過去・肯定（標準形）",
+      "answer": "繋げられる",
+      "acceptedAnswers": [
+        "つなげられる"
+      ],
+      "instruction": {
+        "en": "Write the standard affirmative non-past potential of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 표준 비과거 긍정 가능형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For the standard ichidan potential, replace る with られる; this task requests the form retaining ら.",
+        "ko": "표준적인 1단 동사의 가능형은 る를 られる로 바꿉니다. 이 문제에서는 ら를 유지하는 형태를 씁니다."
+      },
+      "entryId": "ja-lex-450421510ffeccfacc1a"
+    },
+    {
+      "id": "ja-ex-plus-form-overturn-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "passive",
+      "prompt": "覆す（くつがえす） → 受身形・非過去・肯定",
+      "answer": "覆される",
+      "acceptedAnswers": [
+        "くつがえされる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The godan passive changes す to さ and adds れる.",
+        "ko": "5단 동사의 수동형은 す를 さ로 바꾸고 れる를 붙입니다."
+      },
+      "entryId": "ja-lex-7189c7fbfc0c72ab548a"
+    },
+    {
+      "id": "ja-ex-plus-form-dry-causative",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative",
+      "prompt": "乾く（かわく） → 使役形・非過去・肯定（長い標準形）",
+      "answer": "乾かせる",
+      "acceptedAnswers": [
+        "かわかせる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative using the full standard せる／させる pattern, not a shorter causative. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "짧은 사역형이 아니라 せる／させる가 붙는 긴 표준형으로 비과거 긍정 사역형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The requested full causative uses か＋せる: 乾かせる. The lexical transitive pair 乾く／乾かす is practised separately in the transitivity questions.",
+        "ko": "요구하는 긴 사역형은 か에 せる를 붙인 乾かせる입니다. 어휘적인 자동사·타동사 짝 乾く／乾かす는 별도의 자동사·타동사 문제에서 연습합니다."
+      },
+      "entryId": "ja-lex-72a10d94e27ff2aef629"
+    },
+    {
+      "id": "ja-ex-plus-form-accept-causative-passive",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "causative-passive",
+      "prompt": "引き受ける（ひきうける） → 使役受身形・非過去・肯定",
+      "answer": "引き受けさせられる",
+      "acceptedAnswers": [
+        "ひきうけさせられる"
+      ],
+      "instruction": {
+        "en": "Write the affirmative non-past causative-passive of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 비과거 긍정 사역 수동형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "For this ichidan verb, remove final る and add させられる.",
+        "ko": "이 1단 동사는 마지막 る를 빼고 させられる를 붙입니다."
+      },
+      "entryId": "ja-lex-52f1ce6dace7e4e9ec9c"
+    },
+    {
+      "id": "ja-ex-plus-form-take-into-account-conditional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "conditional",
+      "prompt": "踏まえる（ふまえる） → 条件形（ば）・肯定",
+      "answer": "踏まえれば",
+      "acceptedAnswers": [
+        "ふまえれば"
+      ],
+      "instruction": {
+        "en": "Write the affirmative ば-conditional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 긍정 ば 조건형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "Replace final る with れば to make the ば-conditional.",
+        "ko": "마지막 る를 れば로 바꾸어 ば 조건형을 만듭니다."
+      },
+      "entryId": "ja-lex-ff919e72069cf19b77fa"
+    },
+    {
+      "id": "ja-ex-plus-form-connect-volitional",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "volitional",
+      "prompt": "繋げる（つなげる） → 意志形・普通形",
+      "answer": "繋げよう",
+      "acceptedAnswers": [
+        "つなげよう"
+      ],
+      "instruction": {
+        "en": "Write the plain volitional of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 보통체 의지형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The ichidan volitional replaces る with よう.",
+        "ko": "1단 동사의 의지형은 る를 よう로 바꿉니다."
+      },
+      "entryId": "ja-lex-450421510ffeccfacc1a"
+    },
+    {
+      "id": "ja-ex-plus-form-precise-before-noun",
+      "category": "forms",
+      "route": "forms",
+      "formKind": "adjective",
+      "prompt": "緻密（ちみつ） → 名詞修飾：［　］計画",
+      "answer": "緻密な",
+      "acceptedAnswers": [
+        "ちみつな"
+      ],
+      "instruction": {
+        "en": "Write the form directly before 計画 of the given word. Enter the whole form; kanji or hiragana is accepted.",
+        "ko": "주어진 단어의 計画 바로 앞의 명사 수식형을 입력하세요. 한자 표기나 히라가나로 전체 형태를 입력합니다."
+      },
+      "explanation": {
+        "en": "The な-adjective 緻密 takes な directly before a noun.",
+        "ko": "な형용사 緻密는 명사 바로 앞에서 な를 붙입니다."
+      },
+      "entryId": "ja-lex-d86e4069f750d8dbf89d"
+    },
+    {
+      "id": "ja-ex-plus-particle-transport",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "電車［　］学校へ行く。",
+      "answer": "で",
+      "options": [
+        "を",
+        "に",
+        "で",
+        "と"
+      ],
+      "instruction": {
+        "en": "Choose the particle marking the means of transport: by train.",
+        "ko": "이동 수단인 ‘전철로’를 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "で marks the means used to travel.",
+        "ko": "で는 이동에 사용하는 수단을 나타냅니다."
+      },
+      "entryId": "ja-lex-e6dc63b5488f74fa46ac"
+    },
+    {
+      "id": "ja-ex-plus-particle-companion",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "友達［　］一緒に映画を見る。",
+      "answer": "と",
+      "options": [
+        "に",
+        "と",
+        "を",
+        "で"
+      ],
+      "instruction": {
+        "en": "Choose the particle meaning together with the friend.",
+        "ko": "친구와 함께한다는 뜻의 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "と marks the person accompanying the speaker.",
+        "ko": "と는 행동을 함께하는 상대를 나타냅니다."
+      },
+      "entryId": "ja-lex-4d2f9d2f7a1424881274"
+    },
+    {
+      "id": "ja-ex-plus-particle-work-place",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "父はこの工場［　］働く。",
+      "answer": "で",
+      "options": [
+        "が",
+        "を",
+        "で",
+        "へ"
+      ],
+      "instruction": {
+        "en": "Choose the particle for the place where the work happens.",
+        "ko": "일하는 동작이 이루어지는 장소를 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "で marks the location of the activity 働く.",
+        "ko": "で는 働く라는 활동이 이루어지는 장소를 나타냅니다."
+      },
+      "entryId": "ja-lex-0d3ced629aee823748ef"
+    },
+    {
+      "id": "ja-ex-plus-particle-investigate-object",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "研究者は古い記録［　］調べる。",
+      "answer": "を",
+      "options": [
+        "で",
+        "に",
+        "が",
+        "を"
+      ],
+      "instruction": {
+        "en": "Choose the particle marking what the researcher examines.",
+        "ko": "연구자가 조사하는 대상을 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "The records are the direct object of 調べる, so use を.",
+        "ko": "기록은 調べる의 직접 목적어이므로 を를 씁니다."
+      },
+      "entryId": "ja-lex-8b955ef9f706f73eaa17"
+    },
+    {
+      "id": "ja-ex-plus-particle-wait-until",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "友達が来る［　］待つ。",
+      "answer": "まで",
+      "options": [
+        "から",
+        "だけ",
+        "まで",
+        "より"
+      ],
+      "instruction": {
+        "en": "Choose the particle meaning until the friend arrives.",
+        "ko": "친구가 올 때까지라는 뜻의 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "まで sets the endpoint of the waiting period.",
+        "ko": "まで는 기다리는 기간의 끝을 나타냅니다."
+      },
+      "entryId": "ja-lex-9aedf218ab64fa1425c6"
+    },
+    {
+      "id": "ja-ex-plus-particle-check-object",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "出発の時間［　］確かめる。",
+      "answer": "を",
+      "options": [
+        "に",
+        "を",
+        "へ",
+        "で"
+      ],
+      "instruction": {
+        "en": "Choose the particle marking the information being checked.",
+        "ko": "확인하는 정보의 대상을 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "を marks the time as the object of 確かめる.",
+        "ko": "を는 시간이 確かめる의 목적어임을 나타냅니다."
+      },
+      "entryId": "ja-lex-f4a4e8cb6d975ec330c6"
+    },
+    {
+      "id": "ja-ex-plus-particle-grounds-existence",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "その説明には根拠［　］ない。",
+      "answer": "が",
+      "options": [
+        "を",
+        "へ",
+        "が",
+        "で"
+      ],
+      "instruction": {
+        "en": "Choose the subject marker for the thing that does not exist.",
+        "ko": "존재하지 않는 대상의 주격 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "が marks 根拠 as the thing whose existence is denied.",
+        "ko": "が는 존재하지 않는 대상이 根拠임을 나타냅니다."
+      },
+      "entryId": "ja-lex-933466f59178a9715d46"
+    },
+    {
+      "id": "ja-ex-plus-particle-contradiction-location",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "二人の主張［　］矛盾がある。",
+      "answer": "に",
+      "options": [
+        "を",
+        "と",
+        "で",
+        "に"
+      ],
+      "instruction": {
+        "en": "Choose the particle marking where the contradiction exists.",
+        "ko": "모순이 존재하는 대상을 장소처럼 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "に marks the claims as the location of the contradiction.",
+        "ko": "に는 주장을 모순이 존재하는 대상으로 나타냅니다."
+      },
+      "entryId": "ja-lex-d9f1b6ced30be45fb263"
+    },
+    {
+      "id": "ja-ex-plus-particle-overturn-object",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "新しい証拠は従来の見方［　］覆す。",
+      "answer": "を",
+      "options": [
+        "を",
+        "に",
+        "で",
+        "と"
+      ],
+      "instruction": {
+        "en": "Choose the particle marking what the evidence overturns.",
+        "ko": "증거가 뒤집는 대상을 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "見方 is the direct object of 覆す.",
+        "ko": "見方는 覆す의 직접 목적어입니다."
+      },
+      "entryId": "ja-lex-7189c7fbfc0c72ab548a"
+    },
+    {
+      "id": "ja-ex-plus-particle-take-account-object",
+      "category": "particles",
+      "route": "particles",
+      "prompt": "前回の失敗［　］踏まえた計画だ。",
+      "answer": "を",
+      "options": [
+        "で",
+        "へ",
+        "を",
+        "に"
+      ],
+      "instruction": {
+        "en": "Choose the particle marking what is taken into account.",
+        "ko": "고려하는 대상을 나타내는 조사를 고르세요."
+      },
+      "explanation": {
+        "en": "踏まえる takes the material considered as an object with を.",
+        "ko": "踏まえる는 고려하는 내용을 を가 붙는 목적어로 취합니다."
+      },
+      "entryId": "ja-lex-ff919e72069cf19b77fa"
+    },
+    {
+      "id": "ja-ex-plus-counter-one-book",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "棚から本を［1冊］選んだ。",
+      "answer": "いっさつ",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "Bound books are counted with 冊. One is いっさつ, with a small っ.",
+        "ko": "제본된 책은 冊로 셉니다. 하나는 작은 っ이 있는 いっさつ입니다."
+      },
+      "entryId": "ja-lex-7107b9d2a4f63adfbacd"
+    },
+    {
+      "id": "ja-ex-plus-counter-three-cars",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "駐車場に車が［3台］並んでいる。",
+      "answer": "さんだい",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "Vehicles use 台. With three, the pronunciation is さんだい.",
+        "ko": "차량은 台로 셉니다. 셋일 때는 さんだい로 읽습니다."
+      },
+      "entryId": "ja-lex-7e3f0cf314c078b0888a"
+    },
+    {
+      "id": "ja-ex-plus-counter-one-sheet",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "白い紙を［1枚］取り出した。",
+      "answer": "いちまい",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "Flat sheets use 枚. The numeral stays いち before まい.",
+        "ko": "얇고 평평한 것은 枚로 셉니다. まい 앞에서 숫자는 いち를 유지합니다."
+      },
+      "entryId": "ja-lex-0f0295e5053449cf5f63"
+    },
+    {
+      "id": "ja-ex-plus-counter-six-sheets",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "紙を［6枚］重ねた。",
+      "answer": "ろくまい",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "With 枚, six remains ろく: ろくまい, without a small っ.",
+        "ko": "枚와 함께 쓰면 6은 ろく를 유지하여 ろくまい가 되며 작은 っ을 넣지 않습니다."
+      },
+      "entryId": "ja-lex-0f0295e5053449cf5f63"
+    },
+    {
+      "id": "ja-ex-plus-counter-three-notebooks",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "新しいノートを［3冊］買った。",
+      "answer": "さんさつ",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "Notebooks use 冊, and three is さんさつ.",
+        "ko": "공책은 冊로 세며, 셋은 さんさつ입니다."
+      },
+      "entryId": "ja-lex-6fe2d2d44c9d5485a710"
+    },
+    {
+      "id": "ja-ex-plus-counter-six-pens",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "机にペンを［6本］置いた。",
+      "answer": "ろっぽん",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "Long, thin pens use 本. Six changes to ろっぽん.",
+        "ko": "가늘고 긴 펜은 本으로 셉니다. 여섯은 ろっぽん으로 소리가 바뀝니다."
+      },
+      "entryId": "ja-lex-af9e5f2d1e90d6c39f11"
+    },
+    {
+      "id": "ja-ex-plus-counter-ten-pencils",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "箱に鉛筆が［10本］入っている。",
+      "answer": "じゅっぽん",
+      "acceptedAnswers": [
+        "じっぽん"
+      ],
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "Ten with 本 is じゅっぽん. The established variant じっぽん is also accepted.",
+        "ko": "本으로 센 열 개는 じゅっぽん입니다. 관용적인 다른 읽기 じっぽん도 가능합니다."
+      },
+      "entryId": "ja-lex-0fb5f0898a163136e90c"
+    },
+    {
+      "id": "ja-ex-plus-counter-six-glasses",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "空のコップを［6個］並べた。",
+      "answer": "ろっこ",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "This counts the empty objects, not servings of liquid. With 個, six becomes ろっこ.",
+        "ko": "액체의 잔 수가 아니라 빈 물건의 개수를 셉니다. 個와 함께 쓰면 여섯은 ろっこ가 됩니다."
+      },
+      "entryId": "ja-lex-80048be9b6cd781ad5f9"
+    },
+    {
+      "id": "ja-ex-plus-counter-one-vase",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "窓辺に花瓶を［1個］置いた。",
+      "answer": "いっこ",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "The supplied object counter 個 combines with one as いっこ.",
+        "ko": "제시된 물건의 개수를 세는 個는 1과 결합하여 いっこ가 됩니다."
+      },
+      "entryId": "ja-lex-67eebcb26e786ddc8bbc"
+    },
+    {
+      "id": "ja-ex-plus-counter-one-goat",
+      "category": "counters",
+      "route": "counters",
+      "prompt": "牧場では山羊を［1頭］飼っている。",
+      "answer": "いっとう",
+      "instruction": {
+        "en": "Type the entire bracketed number-and-counter expression in hiragana, using the supplied counter.",
+        "ko": "제시된 조수사를 사용하여 대괄호 안 숫자와 조수사 전체를 히라가나로 입력하세요."
+      },
+      "explanation": {
+        "en": "The supplied livestock counter 頭 is とう; with one it becomes いっとう.",
+        "ko": "제시된 가축을 세는 조수사 頭는 とう이며, 하나를 셀 때는 いっとう가 됩니다."
+      },
+      "entryId": "ja-lex-35039ab3f42784555aa7"
+    },
+    {
+      "id": "ja-ex-plus-kanji-mountain-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "海ではなく、高い［やま］に登る。",
+      "answer": "山",
+      "options": [
+        "川",
+        "山",
+        "海"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "やま is 山, a mountain.",
+        "ko": "やま는 산을 뜻하는 山입니다."
+      },
+      "entryId": "ja-lex-9c96db61330678a75105"
+    },
+    {
+      "id": "ja-ex-plus-kanji-water-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "氷が溶けて［みず］になった。",
+      "answer": "水",
+      "options": [
+        "氷",
+        "火",
+        "水"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "みず is 水; 氷 is the frozen form.",
+        "ko": "みず는 水입니다. 氷는 얼어 있는 형태입니다."
+      },
+      "entryId": "ja-lex-a3a927fa010c5f26acb9"
+    },
+    {
+      "id": "ja-ex-plus-kanji-mountain-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "雪に覆われた［やま］が遠くに見える。",
+      "answer": "山",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "The requested spelling for やま is 山.",
+        "ko": "やま의 한자 표기는 山입니다."
+      },
+      "entryId": "ja-lex-9c96db61330678a75105"
+    },
+    {
+      "id": "ja-ex-plus-kanji-water-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "喉が渇いたので［みず］を飲む。",
+      "answer": "水",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "Write the liquid water noun as 水.",
+        "ko": "마시는 물을 뜻하는 명사는 水로 씁니다."
+      },
+      "entryId": "ja-lex-a3a927fa010c5f26acb9"
+    },
+    {
+      "id": "ja-ex-plus-kanji-paper-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "この［かみ］に住所を書く。",
+      "answer": "紙",
+      "options": [
+        "神",
+        "紙",
+        "髪"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "The material written on is 紙, not hair 髪 or a deity 神.",
+        "ko": "주소를 쓰는 재료는 紙이며, 머리카락 髪이나 신 神가 아닙니다."
+      },
+      "entryId": "ja-lex-0f0295e5053449cf5f63"
+    },
+    {
+      "id": "ja-ex-plus-kanji-hair-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "朝、頭の［かみ］をとかした。",
+      "answer": "髪",
+      "options": [
+        "髪",
+        "神",
+        "紙"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "Hair on the head is 髪.",
+        "ko": "머리에 난 머리카락은 髪입니다."
+      },
+      "entryId": "ja-lex-ebc6a1b2e44df2801db6"
+    },
+    {
+      "id": "ja-ex-plus-kanji-paper-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "プリンターに白い［かみ］を補充する。",
+      "answer": "紙",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "The printer is supplied with paper, written 紙.",
+        "ko": "프린터에 보충하는 종이는 紙로 씁니다."
+      },
+      "entryId": "ja-lex-0f0295e5053449cf5f63"
+    },
+    {
+      "id": "ja-ex-plus-kanji-hair-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "伸びた［かみ］を短く切った。",
+      "answer": "髪",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "The growing hair that is cut short is written 髪.",
+        "ko": "자라서 짧게 자르는 머리카락은 髪로 씁니다."
+      },
+      "entryId": "ja-lex-ebc6a1b2e44df2801db6"
+    },
+    {
+      "id": "ja-ex-plus-kanji-weather-hot-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "夏の昼は外が［あつい］。",
+      "answer": "暑い",
+      "options": [
+        "厚い",
+        "熱い",
+        "暑い"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "For hot weather or air temperature, use 暑い.",
+        "ko": "더운 날씨나 기온에는 暑い를 씁니다."
+      },
+      "entryId": "ja-lex-c80d64d67bddfcec736f"
+    },
+    {
+      "id": "ja-ex-plus-kanji-object-hot-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "沸かしたばかりの湯は［あつい］。",
+      "answer": "熱い",
+      "options": [
+        "熱い",
+        "暑い",
+        "厚い"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "The hot water itself has a high temperature, so use 熱い.",
+        "ko": "물 자체의 온도가 높으므로 熱い를 씁니다."
+      },
+      "entryId": "ja-lex-88a49060eb0a6e7a2125"
+    },
+    {
+      "id": "ja-ex-plus-kanji-weather-hot-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "今日は気温が高くて［あつい］。",
+      "answer": "暑い",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "Weather-related heat uses 暑い, including the written kana い.",
+        "ko": "날씨가 더울 때는 가나 い를 포함하여 暑い로 씁니다."
+      },
+      "entryId": "ja-lex-c80d64d67bddfcec736f"
+    },
+    {
+      "id": "ja-ex-plus-kanji-object-hot-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "鍋の取っ手が［あつい］ので布を使う。",
+      "answer": "熱い",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "For the temperature of an object you touch, write 熱い.",
+        "ko": "만지는 물체의 온도가 뜨거울 때는 熱い로 씁니다."
+      },
+      "entryId": "ja-lex-88a49060eb0a6e7a2125"
+    },
+    {
+      "id": "ja-ex-plus-kanji-chopsticks-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "豆を［はし］でつまんで口に運ぶ。",
+      "answer": "箸",
+      "options": [
+        "橋",
+        "端",
+        "箸"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "The eating utensils are 箸; 橋 is a bridge and 端 an edge.",
+        "ko": "식사 도구는 箸이며, 橋는 다리, 端은 끝부분입니다."
+      },
+      "entryId": "ja-lex-9f3aa74f8819b01217d0"
+    },
+    {
+      "id": "ja-ex-plus-kanji-brush-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "墨で絵を描くために［ふで］を選ぶ。",
+      "answer": "筆",
+      "options": [
+        "笛",
+        "筆",
+        "箸"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "The brush used with ink is 筆.",
+        "ko": "먹을 묻혀 사용하는 붓은 筆입니다."
+      },
+      "entryId": "ja-lex-5bcee1723459a1126fd6"
+    },
+    {
+      "id": "ja-ex-plus-kanji-chopsticks-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "食卓に二本一組の［はし］を並べる。",
+      "answer": "箸",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "A pair of chopsticks is written 箸.",
+        "ko": "한 쌍의 젓가락은 箸로 씁니다."
+      },
+      "entryId": "ja-lex-9f3aa74f8819b01217d0"
+    },
+    {
+      "id": "ja-ex-plus-kanji-brush-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "書道で使った［ふで］を洗う。",
+      "answer": "筆",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "For the calligraphy brush, write 筆.",
+        "ko": "서예에 사용하는 붓은 筆로 씁니다."
+      },
+      "entryId": "ja-lex-5bcee1723459a1126fd6"
+    },
+    {
+      "id": "ja-ex-plus-kanji-bucket-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "井戸の水を木の［おけ］にくむ。",
+      "answer": "桶",
+      "options": [
+        "樽",
+        "桶",
+        "机"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "The wooden container read おけ is written 桶.",
+        "ko": "おけ라고 읽는 나무 용기는 桶로 씁니다."
+      },
+      "entryId": "ja-lex-ace5c1c121ba6a1e3515"
+    },
+    {
+      "id": "ja-ex-plus-kanji-sign-choice",
+      "category": "kanji",
+      "route": "vocabmeaning",
+      "prompt": "景気回復の［きざし］が見える。",
+      "answer": "兆し",
+      "options": [
+        "印",
+        "徴候",
+        "兆し"
+      ],
+      "instruction": {
+        "en": "Choose the spelling that matches both the bracketed reading and the sentence.",
+        "ko": "대괄호 안 읽기와 문장에 모두 맞는 표기를 고르세요."
+      },
+      "explanation": {
+        "en": "きざし is written 兆し: the kanji plus the kana し.",
+        "ko": "きざし는 한자와 가나 し를 합쳐 兆し로 씁니다."
+      },
+      "entryId": "ja-lex-69ff4b9fba6d0193e9fd"
+    },
+    {
+      "id": "ja-ex-plus-kanji-bucket-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "浴場で木製の［おけ］に湯を入れる。",
+      "answer": "桶",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "Write the container name おけ as 桶.",
+        "ko": "용기 이름 おけ는 桶로 씁니다."
+      },
+      "entryId": "ja-lex-ace5c1c121ba6a1e3515"
+    },
+    {
+      "id": "ja-ex-plus-kanji-sign-type",
+      "category": "kanji",
+      "route": "vocabinput",
+      "prompt": "春の［きざし］を小さな芽に感じた。",
+      "answer": "兆し",
+      "instruction": {
+        "en": "Type the bracketed word in kanji, retaining any necessary kana endings. The reading alone is not an answer.",
+        "ko": "필요한 가나 어미를 유지하며 대괄호 안 단어를 한자로 입력하세요. 읽기만 입력하는 것은 정답이 아닙니다."
+      },
+      "explanation": {
+        "en": "An early indication is 兆し. Keep the kana ending し.",
+        "ko": "초기 징후는 兆し입니다. 끝의 가나 し를 유지합니다."
+      },
+      "entryId": "ja-lex-69ff4b9fba6d0193e9fd"
+    },
+    {
+      "id": "ja-ex-plus-trans-enter-intransitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "子供が一人で建物に［　］。",
+      "answer": "入る",
+      "options": [
+        "入る",
+        "入れる"
+      ],
+      "instruction": {
+        "en": "Choose the intransitive dictionary form meaning “enter”. Do not use a potential or causative form.",
+        "ko": "‘들어가다’라는 뜻의 자동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "入る describes the event happening to the subject marked with が. 入れる acts on an object.",
+        "ko": "入る는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 入れる는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-5cf6e9c59ab1e284c8a1"
+    },
+    {
+      "id": "ja-ex-plus-trans-enter-transitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "係員が荷物を車に［　］。",
+      "answer": "入れる",
+      "options": [
+        "入る",
+        "入れる"
+      ],
+      "instruction": {
+        "en": "Choose the transitive dictionary form meaning “put something in”. Do not use a potential or causative form.",
+        "ko": "‘넣다’라는 뜻의 타동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "入れる acts on an object marked with を. 入る describes the corresponding event happening to the subject.",
+        "ko": "入れる는 を가 붙는 목적어에 작용합니다. 入る는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-9487373f71c9e01778bb"
+    },
+    {
+      "id": "ja-ex-plus-trans-enter-intransitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "入れると対になる動詞：観客が順番に会場に［　］。",
+      "answer": "入る",
+      "acceptedAnswers": [
+        "はいる"
+      ],
+      "instruction": {
+        "en": "Type the intransitive dictionary form meaning “enter”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘들어가다’라는 뜻의 자동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "入る describes the event happening to the subject marked with が. 入れる acts on an object.",
+        "ko": "入る는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 入れる는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-5cf6e9c59ab1e284c8a1"
+    },
+    {
+      "id": "ja-ex-plus-trans-enter-transitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "入ると対になる動詞：店員が商品を袋に［　］。",
+      "answer": "入れる",
+      "acceptedAnswers": [
+        "いれる"
+      ],
+      "instruction": {
+        "en": "Type the transitive dictionary form meaning “put something in”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘넣다’라는 뜻의 타동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "入れる acts on an object marked with を. 入る describes the corresponding event happening to the subject.",
+        "ko": "入れる는 を가 붙는 목적어에 작용합니다. 入る는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-9487373f71c9e01778bb"
+    },
+    {
+      "id": "ja-ex-plus-trans-change-intransitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "季節によって景色が［　］。",
+      "answer": "変わる",
+      "options": [
+        "変わる",
+        "変える"
+      ],
+      "instruction": {
+        "en": "Choose the intransitive dictionary form meaning “change by itself”. Do not use a potential or causative form.",
+        "ko": "‘바뀌다’라는 뜻의 자동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "変わる describes the event happening to the subject marked with が. 変える acts on an object.",
+        "ko": "変わる는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 変える는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-676f7d6210b548c15459"
+    },
+    {
+      "id": "ja-ex-plus-trans-change-transitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "担当者が予定を［　］。",
+      "answer": "変える",
+      "options": [
+        "変わる",
+        "変える"
+      ],
+      "instruction": {
+        "en": "Choose the transitive dictionary form meaning “change something”. Do not use a potential or causative form.",
+        "ko": "‘바꾸다’라는 뜻의 타동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "変える acts on an object marked with を. 変わる describes the corresponding event happening to the subject.",
+        "ko": "変える는 を가 붙는 목적어에 작용합니다. 変わる는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-15843d2a18a66dbf3108"
+    },
+    {
+      "id": "ja-ex-plus-trans-change-intransitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "変えると対になる動詞：天気が急に［　］。",
+      "answer": "変わる",
+      "acceptedAnswers": [
+        "かわる"
+      ],
+      "instruction": {
+        "en": "Type the intransitive dictionary form meaning “change by itself”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘바뀌다’라는 뜻의 자동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "変わる describes the event happening to the subject marked with が. 変える acts on an object.",
+        "ko": "変わる는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 変える는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-676f7d6210b548c15459"
+    },
+    {
+      "id": "ja-ex-plus-trans-change-transitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "変わると対になる動詞：店は商品の並べ方を［　］。",
+      "answer": "変える",
+      "acceptedAnswers": [
+        "かえる"
+      ],
+      "instruction": {
+        "en": "Type the transitive dictionary form meaning “change something”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘바꾸다’라는 뜻의 타동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "変える acts on an object marked with を. 変わる describes the corresponding event happening to the subject.",
+        "ko": "変える는 を가 붙는 목적어에 작용합니다. 変わる는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-15843d2a18a66dbf3108"
+    },
+    {
+      "id": "ja-ex-plus-trans-gather-intransitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "駅前に人が［　］。",
+      "answer": "集まる",
+      "options": [
+        "集まる",
+        "集める"
+      ],
+      "instruction": {
+        "en": "Choose the intransitive dictionary form meaning “gather”. Do not use a potential or causative form.",
+        "ko": "‘모이다’라는 뜻의 자동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "集まる describes the event happening to the subject marked with が. 集める acts on an object.",
+        "ko": "集まる는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 集める는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-e56881a0772b250f21d0"
+    },
+    {
+      "id": "ja-ex-plus-trans-gather-transitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "研究者が資料を［　］。",
+      "answer": "集める",
+      "options": [
+        "集まる",
+        "集める"
+      ],
+      "instruction": {
+        "en": "Choose the transitive dictionary form meaning “collect something”. Do not use a potential or causative form.",
+        "ko": "‘모으다’라는 뜻의 타동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "集める acts on an object marked with を. 集まる describes the corresponding event happening to the subject.",
+        "ko": "集める는 を가 붙는 목적어에 작용합니다. 集まる는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-010d94301c7f0abb6f06"
+    },
+    {
+      "id": "ja-ex-plus-trans-gather-intransitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "集めると対になる動詞：広場に子供たちが［　］。",
+      "answer": "集まる",
+      "acceptedAnswers": [
+        "あつまる"
+      ],
+      "instruction": {
+        "en": "Type the intransitive dictionary form meaning “gather”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘모이다’라는 뜻의 자동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "集まる describes the event happening to the subject marked with が. 集める acts on an object.",
+        "ko": "集まる는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 集める는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-e56881a0772b250f21d0"
+    },
+    {
+      "id": "ja-ex-plus-trans-gather-transitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "集まると対になる動詞：編集者が読者の意見を［　］。",
+      "answer": "集める",
+      "acceptedAnswers": [
+        "あつめる"
+      ],
+      "instruction": {
+        "en": "Type the transitive dictionary form meaning “collect something”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘모으다’라는 뜻의 타동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "集める acts on an object marked with を. 集まる describes the corresponding event happening to the subject.",
+        "ko": "集める는 を가 붙는 목적어에 작용합니다. 集まる는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-010d94301c7f0abb6f06"
+    },
+    {
+      "id": "ja-ex-plus-trans-break-intransitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "強い衝撃で機械が［　］。",
+      "answer": "壊れる",
+      "options": [
+        "壊れる",
+        "壊す"
+      ],
+      "instruction": {
+        "en": "Choose the intransitive dictionary form meaning “become broken”. Do not use a potential or causative form.",
+        "ko": "‘부서지다’라는 뜻의 자동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "壊れる describes the event happening to the subject marked with が. 壊す acts on an object.",
+        "ko": "壊れる는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 壊す는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-72648bd747756c2db721"
+    },
+    {
+      "id": "ja-ex-plus-trans-break-transitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "作業員が古い壁を［　］。",
+      "answer": "壊す",
+      "options": [
+        "壊れる",
+        "壊す"
+      ],
+      "instruction": {
+        "en": "Choose the transitive dictionary form meaning “break something”. Do not use a potential or causative form.",
+        "ko": "‘부수다’라는 뜻의 타동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "壊す acts on an object marked with を. 壊れる describes the corresponding event happening to the subject.",
+        "ko": "壊す는 を가 붙는 목적어에 작용합니다. 壊れる는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-ee8382849c43b6cc4d0f"
+    },
+    {
+      "id": "ja-ex-plus-trans-break-intransitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "壊すと対になる動詞：落とすとこの模型が［　］。",
+      "answer": "壊れる",
+      "acceptedAnswers": [
+        "こわれる"
+      ],
+      "instruction": {
+        "en": "Type the intransitive dictionary form meaning “become broken”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘부서지다’라는 뜻의 자동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "壊れる describes the event happening to the subject marked with が. 壊す acts on an object.",
+        "ko": "壊れる는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 壊す는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-72648bd747756c2db721"
+    },
+    {
+      "id": "ja-ex-plus-trans-break-transitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "壊れると対になる動詞：工事では古い建物を［　］。",
+      "answer": "壊す",
+      "acceptedAnswers": [
+        "こわす"
+      ],
+      "instruction": {
+        "en": "Type the transitive dictionary form meaning “break something”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘부수다’라는 뜻의 타동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "壊す acts on an object marked with を. 壊れる describes the corresponding event happening to the subject.",
+        "ko": "壊す는 を가 붙는 목적어에 작용합니다. 壊れる는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-ee8382849c43b6cc4d0f"
+    },
+    {
+      "id": "ja-ex-plus-trans-dry-intransitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "晴れた日は洗濯物がよく［　］。",
+      "answer": "乾く",
+      "options": [
+        "乾く",
+        "乾かす"
+      ],
+      "instruction": {
+        "en": "Choose the intransitive dictionary form meaning “become dry”. Do not use a potential or causative form.",
+        "ko": "‘마르다’라는 뜻의 자동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "乾く describes the event happening to the subject marked with が. 乾かす acts on an object.",
+        "ko": "乾く는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 乾かす는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-72a10d94e27ff2aef629"
+    },
+    {
+      "id": "ja-ex-plus-trans-dry-transitive-choice",
+      "category": "transitivity",
+      "route": "vocabmeaning",
+      "prompt": "母は濡れた服を［　］。",
+      "answer": "乾かす",
+      "options": [
+        "乾く",
+        "乾かす"
+      ],
+      "instruction": {
+        "en": "Choose the transitive dictionary form meaning “dry something”. Do not use a potential or causative form.",
+        "ko": "‘말리다’라는 뜻의 타동사 사전형을 선택하세요. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "乾かす acts on an object marked with を. 乾く describes the corresponding event happening to the subject.",
+        "ko": "乾かす는 を가 붙는 목적어에 작용합니다. 乾く는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-da3f9d14fdaa8d9dcc52"
+    },
+    {
+      "id": "ja-ex-plus-trans-dry-intransitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "乾かすと対になる動詞：風があると床が早く［　］。",
+      "answer": "乾く",
+      "acceptedAnswers": [
+        "かわく"
+      ],
+      "instruction": {
+        "en": "Type the intransitive dictionary form meaning “become dry”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘마르다’라는 뜻의 자동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "乾く describes the event happening to the subject marked with が. 乾かす acts on an object.",
+        "ko": "乾く는 が가 붙는 주어에게 그 일이 일어남을 나타냅니다. 乾かす는 목적어에 작용합니다."
+      },
+      "entryId": "ja-lex-72a10d94e27ff2aef629"
+    },
+    {
+      "id": "ja-ex-plus-trans-dry-transitive-type",
+      "category": "transitivity",
+      "route": "vocabinput",
+      "prompt": "乾くと対になる動詞：美容師は客の髪を［　］。",
+      "answer": "乾かす",
+      "acceptedAnswers": [
+        "かわかす"
+      ],
+      "instruction": {
+        "en": "Type the transitive dictionary form meaning “dry something”, the lexical counterpart of the supplied verb. Do not use a potential or causative form.",
+        "ko": "‘말리다’라는 뜻의 타동사 사전형을 입력하세요. 제시된 동사와 어휘적으로 짝을 이루는 동사를 씁니다. 가능형이나 사역형은 쓰지 않습니다."
+      },
+      "explanation": {
+        "en": "乾かす acts on an object marked with を. 乾く describes the corresponding event happening to the subject.",
+        "ko": "乾かす는 を가 붙는 목적어에 작용합니다. 乾く는 그에 대응하는 일이 주어에게 일어남을 나타냅니다."
+      },
+      "entryId": "ja-lex-da3f9d14fdaa8d9dcc52"
+    }
+  ],
+  "existingFormKinds": {
+    "ja-ex-form-eat-te": "te",
+    "ja-ex-form-read-past": "past",
+    "ja-ex-form-write-te": "te",
+    "ja-ex-form-swim-te": "te",
+    "ja-ex-form-speak-te": "te",
+    "ja-ex-form-wait-past": "past",
+    "ja-ex-form-buy-negative": "negative",
+    "ja-ex-form-play-past": "past",
+    "ja-ex-form-go-te": "te",
+    "ja-ex-form-come-negative": "negative",
+    "ja-ex-form-do-past": "past",
+    "ja-ex-form-high-past": "adjective",
+    "ja-ex-form-cheap-negative": "adjective",
+    "ja-ex-form-good-negative": "adjective",
+    "ja-ex-form-necessary-before-noun": "adjective",
+    "ja-ex-form-regrettable-past": "adjective"
+  }
+}

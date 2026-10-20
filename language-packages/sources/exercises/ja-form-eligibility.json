@@ -1,0 +1,229 @@
+{
+  "scope": "Pure plain-form transformations, not naturalness in every invented sentence. Politeness/keigo conversion is excluded; plain inflections of listed honorific lexical verbs are permitted.",
+  "gates": [
+    {
+      "words": [
+        "ある"
+      ],
+      "groups": [
+        "potential",
+        "passive",
+        "causative",
+        "causative-passive"
+      ],
+      "reason": "The existential lemma has conflicting generic-table potential output and no ordinary passive/causative target in NINJAL. Preserve basic forms; withhold these groups rather than teaching あれる/あられる as interchangeable standard targets.",
+      "references": [
+        "https://www2.ninjal.ac.jp/basicverbbank/single_headwords/ある-在る・有る.html"
+      ],
+      "scope": "withheld-standard-form-target; not a claim about all contextual constructions",
+      "readings": {
+        "ある": "ある"
+      }
+    },
+    {
+      "words": [
+        "できる",
+        "出来る"
+      ],
+      "groups": [
+        "potential",
+        "passive",
+        "causative",
+        "causative-passive"
+      ],
+      "reason": "This ability/result predicate is not an ordinary target for a second potential or generic voice stacking. Do not generate できられる/できさせる as default learner answers.",
+      "references": [
+        "https://www.jpf.go.jp/j/urawa/j_rsorcs/textbook/dl/setsumei/setsumei_all.pdf",
+        "https://repository.ninjal.ac.jp/record/1047/files/kkrep_051_05.pdf"
+      ],
+      "scope": "withheld-standard-form-target",
+      "readings": {
+        "できる": "できる",
+        "出来る": "できる"
+      }
+    },
+    {
+      "words": [
+        "見える",
+        "聞こえる"
+      ],
+      "groups": [
+        "potential",
+        "passive",
+        "causative",
+        "causative-passive"
+      ],
+      "reason": "Spontaneous perception predicates are distinct from the potential of 見る/聞く. Generic stacked potential/voice targets need a special context and are withheld from ordinary form drills.",
+      "references": [
+        "https://www.jpf.go.jp/j/urawa/j_rsorcs/textbook/dl/setsumei/setsumei_all.pdf"
+      ],
+      "scope": "withheld-standard-form-target; special contextual uses not declared impossible",
+      "readings": {
+        "見える": "みえる",
+        "聞こえる": "きこえる"
+      }
+    },
+    {
+      "words": [
+        "要る"
+      ],
+      "groups": [
+        "potential",
+        "passive",
+        "causative",
+        "causative-passive"
+      ],
+      "reason": "The necessity predicate is not an ordinary action-potential or voice target. Generic 要れる/要られる answers would confuse it with unrelated forms of 居る.",
+      "references": [
+        "https://repository.ninjal.ac.jp/record/1047/files/kkrep_051_05.pdf",
+        "https://www.jpf.go.jp/j/urawa/j_rsorcs/textbook/dl/setsumei/setsumei_all.pdf"
+      ],
+      "scope": "editorial learner-target restriction; not universal semantic impossibility",
+      "readings": {
+        "要る": "いる"
+      }
+    },
+    {
+      "words": [
+        "分かる"
+      ],
+      "groups": [
+        "potential",
+        "passive"
+      ],
+      "reason": "Do not teach generic 分かれる as the potential of understanding; it is normally a different lexical verb. The passive requires a special construction. The ordinary causative 分からせる and its full causative-passive remain available.",
+      "references": [
+        "https://www.jpf.go.jp/j/urawa/j_rsorcs/textbook/dl/setsumei/setsumei_all.pdf",
+        "https://repository.ninjal.ac.jp/record/1047/files/kkrep_051_05.pdf"
+      ],
+      "scope": "specific group restriction, not a blanket stative exclusion",
+      "readings": {
+        "分かる": "わかる"
+      }
+    },
+    {
+      "words": [
+        "似る"
+      ],
+      "groups": [
+        "potential",
+        "passive",
+        "causative",
+        "causative-passive"
+      ],
+      "reason": "Resemblance is not an ordinary voluntary-action transformation target. Generic voice stacking is withheld; the separate lexical transitive 似せる must not be silently taught as the regular causative.",
+      "references": [
+        "https://repository.ninjal.ac.jp/record/1047/files/kkrep_051_05.pdf",
+        "https://www2.ninjal.ac.jp/dictionaries/IPALBV/mibook.html"
+      ],
+      "scope": "context-sensitive learner-target restriction",
+      "readings": {
+        "似る": "にる"
+      }
+    },
+    {
+      "words": [
+        "号する"
+      ],
+      "groups": [
+        "potential"
+      ],
+      "reason": "Lexicalised single-kanji する compounds cannot all take a mechanically appended できる. Do not teach 号できる without specific attestation.",
+      "references": [
+        "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/explanation/074.html"
+      ],
+      "scope": "specific unverified potential; other regular sourced forms retained",
+      "readings": {
+        "号する": "ごうする"
+      }
+    },
+    {
+      "words": [
+        "お辞儀をする",
+        "世話をする"
+      ],
+      "groups": [
+        "potential"
+      ],
+      "reason": "An object+を+する expression can need a particle change or a contextual ことができる construction. A mechanical whole-expression potential is not generated by this pure-form bridge.",
+      "references": [
+        "https://www.jpf.go.jp/j/urawa/j_rsorcs/textbook/dl/setsumei/setsumei_all.pdf",
+        "https://www.coelang.tufs.ac.jp/mt/ja/gmod/contents/explanation/074.html"
+      ],
+      "scope": "not an inability to express the meaning; separate contextual expression needed",
+      "readings": {
+        "お辞儀をする": "おじぎをする",
+        "世話をする": "せわをする"
+      }
+    },
+    {
+      "words": [
+        "空く"
+      ],
+      "groups": [
+        "potential",
+        "passive"
+      ],
+      "reason": "The selected あく entry is an intransitive availability/opening predicate; its generic potential would coincide with the separate transitive 空ける. NINJAL omits the potential and gives a voice value needing contextual review.",
+      "references": [
+        "https://www2.ninjal.ac.jp/basicverbbank/single_headwords/あく-空く・開く.html"
+      ],
+      "scope": "selected reading-specific learner-target restriction",
+      "readings": {
+        "空く": "あく"
+      }
+    },
+    {
+      "words": [
+        "疲れる"
+      ],
+      "groups": [
+        "potential",
+        "passive"
+      ],
+      "reason": "The selected fatigue state is not an ordinary additional potential/passive drill. Its causative疲れさせる is retained; this is a narrow editorial target restriction, not a ban on all stative morphology.",
+      "references": [
+        "https://www.jpf.go.jp/j/urawa/j_rsorcs/textbook/dl/setsumei/setsumei_all.pdf"
+      ],
+      "scope": "reviewed generic-bridge restriction",
+      "readings": {
+        "疲れる": "つかれる"
+      }
+    },
+    {
+      "words": [
+        "間に合う",
+        "くぼむ"
+      ],
+      "groups": [
+        "potential",
+        "passive"
+      ],
+      "reason": "The intransitive event/state readings should not acquire a context-free extra potential/passive target from a regular bridge. Basic inflections and the separately justified full causative remain supported.",
+      "references": [
+        "https://repository.ninjal.ac.jp/record/1862/files/kk_nkss_022.pdf"
+      ],
+      "scope": "reviewed bridge restriction, not universal semantic impossibility",
+      "readings": {
+        "間に合う": "まにあう",
+        "くぼむ": "くぼむ"
+      }
+    }
+  ],
+  "honorificLexemePolicy": {
+    "permit": [
+      "te",
+      "past",
+      "negative",
+      "conditional",
+      "volitional"
+    ],
+    "withhold": [
+      "potential",
+      "passive",
+      "causative",
+      "causative-passive"
+    ],
+    "reason": "Keep ordinary source-listed plain inflections, but do not use a generic table to create new honorific/voice layering without contextual verification."
+  }
+}

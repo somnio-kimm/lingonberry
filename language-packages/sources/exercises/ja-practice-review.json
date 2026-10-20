@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "reviewStatus": "peer-accepted",
+  "scope": "Standard pure-form transformations of all current Japanese verbs/adjectives, with explicit lexical exclusions. Not naturalness certification in every sentence.",
+  "inputs": {
+    "candidates.json": "04452cd9ae7ba0ceffad5925d7b2973f30c505341ec7c94ea6e253dd633440f8",
+    "reviewed-additions.json": "bc8abed7814858f23aadbc0313bf8d5cd53eebeec459d867e4cdea3bf228c928",
+    "corrected-reading-candidates.json": "c0b53873b65a0d7522bff63310b182654894bb858a5c1075a7ee656b6345777b"
+  },
+  "eligibilitySha256": "b400b0d100893b784a88400127f76c3681e02595071f3f1f5729c08400fa82ad",
+  "baselineCoreSha256": "1720bc6b92f8108f30537d8094b4760d7b15460f39735cc4b93d112031299585",
+  "sourceSelectionSha256": "21d01f974a3d3fe450daf230745440ce72b18f9621ef4a619ad3d2234b26831b",
+  "readingCorrections": [
+    {
+      "id": "ja-lex-3a7a5ef5e419ac07d5cc",
+      "word": "見苦しい",
+      "baselinePronunciation": "みくるしい",
+      "correctedPronunciation": "みぐるしい"
+    }
+  ],
+  "peerReview": {
+    "reviewedEntries": 26,
+    "reviewedGroups": 195,
+    "reviewedVariantStrings": 379,
+    "reviewedAdditionsSha256": "bc8abed7814858f23aadbc0313bf8d5cd53eebeec459d867e4cdea3bf228c928",
+    "eligibilitySha256": "b400b0d100893b784a88400127f76c3681e02595071f3f1f5729c08400fa82ad",
+    "blockingFindings": []
+  },
+  "provenanceNote": "Exact source rows, snapshots, licences and one-based form proofs are preserved in the hash-bound companion audit; runtime output contains references only. No publisher example sentences are imported.",
+  "expectedRuntimeCounts": {
+    "entries": 1402,
+    "groups": 11953,
+    "explicitlyExcludedFeatureGroups": 51,
+    "entriesWithoutSupportedForms": 0
+  }
+}
