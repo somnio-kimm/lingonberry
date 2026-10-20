@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "variants": [
+    {
+      "entryId": "ja-lex-6e9000b07471740cc8c1",
+      "readings": [
+        "みょうにち",
+        "あした",
+        "あす"
+      ],
+      "reason": "All express tomorrow in this entry; they differ in register, which the general meaning does not constrain."
+    },
+    {
+      "entryId": "ja-lex-a3ee94b079020fb2d078",
+      "readings": [
+        "きのう",
+        "さくじつ"
+      ],
+      "reason": "Both express yesterday, matching this entry rather than a surname or historical night sense."
+    },
+    {
+      "entryId": "ja-lex-148630e2c1af4f654fea",
+      "readings": [
+        "にほん",
+        "にっぽん"
+      ],
+      "reason": "Both are current names of Japan, matching the country sense rather than surnames."
+    },
+    {
+      "entryId": "ja-lex-a4a929b90775da8b8686",
+      "readings": [
+        "わたし",
+        "わたくし"
+      ],
+      "reason": "Both are first-person pronouns meaning I or me; the separate private-matter readings are not included."
+    },
+    {
+      "entryId": "ja-lex-d3699665711ad5bc0245",
+      "readings": [
+        "ことし",
+        "こんねん"
+      ],
+      "reason": "Both denote the current year, which is the selected dictionary sense."
+    },
+    {
+      "entryId": "ja-lex-20e851e2c171095c3dd1",
+      "readings": [
+        "あさって",
+        "みょうごにち"
+      ],
+      "reason": "Both denote the day after tomorrow; archaic あさて is not included in this current-reading policy."
+    },
+    {
+      "entryId": "ja-lex-e6dc63b5488f74fa46ac",
+      "readings": [
+        "いく",
+        "ゆく"
+      ],
+      "reason": "Both are verified dictionary forms for the selected go sense. This does not imply interchangeable inflected forms."
+    }
+  ],
+  "excludedSpellings": [
+    "今日",
+    "開く",
+    "抱く",
+    "一日",
+    "一人",
+    "何",
+    "市場",
+    "生"
+  ],
+  "references": [
+    {
+      "title": "Wiktionary — 明日: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/明日"
+    },
+    {
+      "title": "Wiktionary — 昨日: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/昨日"
+    },
+    {
+      "title": "Wiktionary — 日本: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/日本"
+    },
+    {
+      "title": "Wiktionary — 私: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/私"
+    },
+    {
+      "title": "Wiktionary — 今年: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/今年"
+    },
+    {
+      "title": "Wiktionary — 明後日: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/明後日"
+    },
+    {
+      "title": "Wiktionary — 行く: verified current same-sense readings",
+      "url": "https://en.wiktionary.org/wiki/行く"
+    }
+  ]
+}
