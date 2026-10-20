@@ -1,3 +1,4 @@
+import {assembleExercises} from './exercises.js';
 import {allowsExplanation} from '../shared/language-pairs.js';
 import {validateDescriptor, validateExplanation, validatePackage} from './schema.js';
 
@@ -32,6 +33,7 @@ export function assembleStudy(study,explanation){
   return {
     targetLanguage, explanationLanguage, studyVersion: study.version, explanationVersion: explanation.version,
     licenses: [study.license, explanation.license],
+    ...assembleExercises(study,explanation),
     retiredEntries:study.retiredEntries||[],reviewInvalidations:study.reviewInvalidations||[],
     entries: study.entries.map(entry => ({...entry, meaning: meanings.get(entry.id).meaning,meanings:meanings.get(entry.id).meanings,
       ...(entry.additionalExamples?.length?{additionalExamples:entry.additionalExamples.map((example,i)=>({...example,translation:meanings.get(entry.id).additionalExampleTranslations[i]}))}:{}),
