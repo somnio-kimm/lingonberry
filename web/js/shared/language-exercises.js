@@ -27,3 +27,12 @@ export function exerciseAnswerCorrect(question,input){
  return [question.answer,...(question.acceptedAnswers||[])].some(answer=>fold(answer)===fold(input));
 }
 export function chooseExerciseQuestion(questions,previousId,random=Math.random){const candidates=questions.length>1?questions.filter(q=>q.id!==previousId):questions;return candidates[Math.floor(random()*candidates.length)];}
+export const JAPANESE_FORM_KINDS=Object.freeze({te:['Te Form','て형'],past:['Past','과거형'],negative:['Negative','부정형'],potential:['Potential','가능형'],passive:['Passive','수동형'],causative:['Causative','사역형'],'causative-passive':['Causative Passive','사역 수동형'],conditional:['Conditional','조건형'],volitional:['Volitional','의지형'],adjective:['Adjective','형용사']});
+export const formKindLabel=(id,locale='en')=>JAPANESE_FORM_KINDS[id]?.[locale==='ko'?1:0]||id;
+/** Choose a type first so a large dictionary reading pool cannot drown out other practice. */
+export function chooseBalancedExercise(questions,regular,previousId,random=Math.random){
+ const groups=new Map();for(const question of questions){const rows=groups.get(question.category)||[];rows.push(question);groups.set(question.category,rows);}
+ if(regular)groups.set('vocabulary',[regular]);
+ const options=[...groups.values()];if(!options.length)return;
+ return chooseExerciseQuestion(options[Math.floor(random()*options.length)],previousId,random);
+}

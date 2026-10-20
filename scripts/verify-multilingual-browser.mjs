@@ -12,7 +12,7 @@ const catalog=await read('web/catalog.json');
 const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready'&&document.querySelector('main').dataset.viewState==='ready');
 async function tab(page,name){await page.locator(`[data-tab=${name}]`).click();await ready(page);}
 async function choose(page,language,explanation){await tab(page,'settings');await page.selectOption('#target',language);await page.selectOption('#explanation',explanation);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');}
-async function route(page,name){await tab(page,'home');await page.locator(`[data-route=${name}]`).click();await ready(page);}
+async function route(page,name){await tab(page,'home');await page.locator(`[data-route=${name}]`).click();await ready(page);if(name.startsWith('vocab')&&await page.locator('[data-exercise]').count())await page.selectOption('[data-exercise]','vocabulary');}
 async function packages(page,language){await tab(page,'settings');await page.locator('#manage-packages').click();await page.locator(`[data-language=${language}]`).click();}
 async function download(page,id){await page.locator(`[data-available="${id}"] .download-package`).click();await page.locator(`[data-package="${id}"] .remove-package`).waitFor();}
 try{
