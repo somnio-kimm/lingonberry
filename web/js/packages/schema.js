@@ -1,3 +1,4 @@
+import {validateExercises,validateExerciseTranslations} from './exercises.js';
 import {compareContentVersions} from '../shared/review-content.js';
 export const MAX_PACKAGE_BYTES = 30 * 1024 * 1024;
 const locale = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
@@ -93,6 +94,7 @@ export function validatePackage(value, expected) {
       }
     }
   }
+  validateExercises(value);
   if (expected) {
     for (const key of ['id', 'kind', 'targetLanguage', 'version', 'explanationLanguage', 'studyVersion']) {
       requireValue(value[key] === expected[key], `${key} differs from catalog`);
@@ -112,5 +114,6 @@ export function validateExplanation(study, explanation) {
     if (entry.example) text(translated.exampleTranslation, 'missing example translation');
     requireValue((entry.additionalExamples?.length||0)===(translated.additionalExampleTranslations?.length||0),'incomplete additional example translations');
   }
+  validateExerciseTranslations(study,explanation);
   return explanation;
 }

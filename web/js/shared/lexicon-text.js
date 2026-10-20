@@ -1,5 +1,5 @@
 const labels={
- 'Topic':'주제',
+ 'Topic':'주제','Exercise Type':'문제 유형','Vocabulary':'단어','Root Families':'어근 모음','Form Input':'형태 입력','Particles':'조사','Counters':'조수사','Verb Patterns':'동사 구문','Articles and Countability':'관사와 가산성',
  'Editorial Dictionary — Review Pending':'편집 기준 사전 · 검수 진행 중','Bilingual Example Under Review':'영어·한국어 번역이 있는 예문을 준비 중입니다.','No Example Available':'예문이 없어요.',
  'Study Level':'학습 레벨','All':'전체','Word List':'단어 목록','Flashcards':'플래시카드','Word Input':'단어 입력','Meaning Quiz':'뜻 선택','Cloze':'빈칸 채우기','Sentence Scramble':'문장 완성','Dictation':'받아쓰기','Review':'복습','Settings':'설정','Study':'학습',
  'Search':'검색','Filters':'필터','Part of Speech':'품사','Study Status':'학습 상태','New':'새 단어','Learning':'학습 중','Mastered':'숙달','Shuffle':'섞기','Next':'다음','Submit':'제출','Skip':'건너뛰기','Examples':'예문','Close':'닫기','Speak Word':'단어 듣기','Speak Example':'예문 듣기',

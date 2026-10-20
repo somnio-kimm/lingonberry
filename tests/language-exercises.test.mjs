@@ -1,0 +1,21 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {validateExercises,validateExerciseTranslations,assembleExercises} from '../web/js/packages/exercises.js';
+import {createExerciseQuestions,exerciseAnswerCorrect,chooseExerciseQuestion} from '../web/js/shared/language-exercises.js';
+import {renderExerciseExplanation,renderExercisePrompt} from '../web/js/shared/exercise-view.js';
+import {createLexiconStore} from '../web/js/shared/lexicon-store.js';
+const entry={id:'ja-taberu',word:'食べる',pronunciation:'たべる'};
+const exercise={id:'ja-ex-tab',entryId:entry.id,route:'vocabinput',category:'okurigana',prompt:'食べる → 食【　】べる',answer:'た',segments:[{text:'食',reading:'た',kind:'kanji'},{text:'べる',reading:'べる',kind:'kana'}]};
+const core=()=>({kind:'study',targetLanguage:'ja',entries:[entry],exercises:[structuredClone(exercise)]});
+const pair=()=>({kind:'explanation',targetLanguage:'ja',entries:[{id:entry.id}],exercises:[{id:exercise.id,instruction:'Write only the reading of 食.',explanation:'食 is た; べる is written in kana.'}]});
+test('exercise data joins the separately downloaded explanation by stable ID',()=>{validateExercises(core());validateExercises(pair());validateExerciseTranslations(core(),pair());assert.equal(assembleExercises(core(),pair()).exercises[0].instruction,'Write only the reading of 食.');});
+test('reject corrupt or incomplete exercises before installation',()=>{
+ for(const mutate of [p=>p.exercises.push(p.exercises[0]),p=>p.exercises[0].entryId='missing',p=>p.exercises[0].route='keigo',p=>p.exercises[0].segments[0].reading='たべ',p=>p.exercises[0].options=['た','た'],p=>p.exercises[0].explanation='English in core']){const p=core();mutate(p);assert.throws(()=>validateExercises(p),/Invalid language package/);}
+ const p=pair();p.exercises=[];assert.throws(()=>validateExerciseTranslations(core(),p),/incomplete/);
+});
+test('reading boundary accepts kana input but not the morphological stem',()=>{assert.ok(exerciseAnswerCorrect(exercise,' タ '));assert.ok(!exerciseAnswerCorrect(exercise,'たべ'));assert.ok(!exerciseAnswerCorrect(exercise,'たべる'));});
+test('exercise pool respects category, route and already-filtered level/POS/status words',()=>{const rows=[exercise,{...exercise,id:'ja-ex-other',entryId:'other'},{...exercise,id:'ja-ex-form',route:'forms',category:'forms'}];const questions=createExerciseQuestions(rows,[{id:entry.id}], 'vocabinput','okurigana','ko');assert.deepEqual(questions.map(q=>q.id),[exercise.id]);assert.equal(questions[0].locale,'ko');assert.equal(createExerciseQuestions(rows,[],'vocabinput','all','en').length,0);});
+test('choice grading uses an option ID and displays the actual answer in Review',()=>{const q=createExerciseQuestions([{...exercise,route:'vocabmeaning',options:['会う','合う'],answer:'会う'}],[{id:entry.id}],'vocabmeaning','all','en')[0];assert.ok(exerciseAnswerCorrect(q,'0'));assert.ok(!exerciseAnswerCorrect(q,'1'));assert.equal(q.options.find(o=>o.id==='1').text,'合う');});
+test('kana segments appear in answer explanation, never in the question markup',()=>{const q={...exercise,exercise:true,word:{},instruction:'Read only 食.',explanation:'食 = た'};assert.ok(!renderExercisePrompt(q).includes('た'));assert.match(renderExerciseExplanation(q),/<rt>た<\/rt>/);assert.match(renderExerciseExplanation(q),/べる/);});
+test('avoid immediate repeats, keep one-question pools usable',()=>{assert.equal(chooseExerciseQuestion([{id:'a'},{id:'b'}],'a',()=>0).id,'b');assert.equal(chooseExerciseQuestion([{id:'a'}],'a').id,'a');assert.equal(chooseExerciseQuestion([]),undefined);});
+test('custom exercise mistakes participate in mixed retests and auto removal',()=>{const data=new Map(),storage={getItem:k=>data.get(k),setItem:(k,v)=>data.set(k,v)},store=createLexiconStore(storage,{id:'ja',levels:['N5']});const q={...exercise,exercise:true,mode:'vocabinput',locale:'ko',word:{id:entry.id}};store.record(q,'たべ',false);assert.equal(Object.values(store.state.wrongs)[0].question.segments[0].reading,'た');store.preference('autoRemoveResolvedWrongs',true);store.record(q,'た',true,true);assert.equal(Object.keys(store.state.wrongs).length,0);});
