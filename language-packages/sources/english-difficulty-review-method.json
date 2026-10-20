@@ -1,0 +1,31 @@
+{
+  "existingEntriesReviewed": 11997,
+  "expansionEntries": 359,
+  "originalAdditions": 20,
+  "peerReviewedExpansion": 359,
+  "partitions": [
+    {
+      "id": 1,
+      "entries": 3999
+    },
+    {
+      "id": 2,
+      "entries": 3999
+    },
+    {
+      "id": 3,
+      "entries": 3999
+    }
+  ],
+  "additionFileDigests": {
+    "a": "d774c35134332aea47ee0c68927719d02a53378fa83db43428f29943791cc5a1",
+    "b": "7b0f4e506bb14b630e8e3c088348f8006d010d06cfca67372b0671d5aa0a4928",
+    "c": "7aa1477b3f30928a97f13096dc1ddcfaf6d13760899ebd49b8ef505010777955"
+  },
+  "excludedVariants": [
+    "fervour (already represented by fervor)",
+    "enervating (inflection of enervate)"
+  ],
+  "calibrationDecisions": 53,
+  "rootFamilyAdditions": 2
+}
