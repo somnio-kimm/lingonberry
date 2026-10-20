@@ -10,7 +10,7 @@ import { renderToneQuiz } from '../quizzes/tone.js';
 import { renderClozeQuiz } from '../quizzes/cloze.js';
 import { renderScrambleQuiz } from '../quizzes/scramble.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export const reviewState={session:null,filters:{level:'all',tag:'all',mode:'all',open:false}};
+export const reviewState={session:null,filters:{level:null,tag:'all',mode:'all',open:false}};
 export function renderRetest(el){
  const session=reviewState.session;let childCleanup=()=>{};
  const back=()=>navigate('wrong',{title:t('wrongBook')});

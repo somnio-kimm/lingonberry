@@ -6,14 +6,16 @@ export function createLexiconStore(storage,profile){
  const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
  let state=saved?.version===1&&object(saved.wordStatus)&&object(saved.wrongs)&&object(saved.preferences)?{...fresh(),...saved,preferences:{...fresh().preferences,...saved.preferences}}:fresh();
  if(!object(state.contentMigrations))state.contentMigrations={};
+ const savedLevel=state.preferences.studyLevel;
  if(profile.normaliseLevel)state.preferences.studyLevel=profile.normaliseLevel(state.preferences.studyLevel);
- if(!profile.levels.includes(state.preferences.studyLevel)&&state.preferences.studyLevel!=='all')state.preferences.studyLevel=profile.levels[0];
+ if(!profile.levels.includes(state.preferences.studyLevel))state.preferences.studyLevel=profile.levels[0];
  let warning=false;
  const save=()=>{try{storage.setItem(key,JSON.stringify(state));warning=false;return true;}catch{warning=true;return false;}};
+ if(savedLevel!==state.preferences.studyLevel)save();
  return {
   get state(){return state;},get warning(){return warning;},
   preference(name,value){
-   const allowed={theme:['system','light','dark'],uiLanguage:['en','ko'],studyLevel:['all',...profile.levels],hapticEnabled:[true,false],autoRemoveResolvedWrongs:[true,false],clozeShowTranslation:[true,false],scrambleShowTranslation:[true,false]};
+   const allowed={theme:['system','light','dark'],uiLanguage:['en','ko'],studyLevel:profile.levels,hapticEnabled:[true,false],autoRemoveResolvedWrongs:[true,false],clozeShowTranslation:[true,false],scrambleShowTranslation:[true,false]};
    if(!allowed[name]?.includes(value))throw new Error('Invalid preference');
    state.preferences[name]=value;
    if(name==='autoRemoveResolvedWrongs'&&value)for(const [id,row]of Object.entries(state.wrongs))if(row.count===0)delete state.wrongs[id];

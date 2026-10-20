@@ -6,7 +6,7 @@ const tierGroups=Object.freeze({foundation:0,everyday:0,independent:1,advanced:2
 const legacyTiers=Object.freeze({'1.0':0,'3.0':0,'5.0':1,'6.5':2,'8.0':3});
 /** Saved target scores select the containing range. */
 export function normaliseEnglishSelection(value){
- if(value==='all'||ENGLISH_LEVELS.includes(value))return value;
+ if(ENGLISH_LEVELS.includes(value))return value;
  if(typeof value!=='string'||!/^\d\.[05]$/u.test(value))return ENGLISH_LEVELS[0];
  const band=Number(value);
  if(band<1||band>9)return ENGLISH_LEVELS[0];

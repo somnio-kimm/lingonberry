@@ -9,8 +9,8 @@ export const studyProfiles=Object.freeze({
  fr:{id:'fr',exam:'DELF / DALF',levels:cefr,speech:'fr-FR',nounArticles:true},
 });
 export function matchesStudyLevel(word,selected,profile){
- if(selected==='all')return true;
- return (profile.id==='en'?assignEnglishLevel(word):word.level)===selected;
+ const level=profile.levels.includes(selected)?selected:profile.levels[0];
+ return (profile.id==='en'?assignEnglishLevel(word):word.level)===level;
 }
 export function normaliseStudyAnswer(value){return String(value??'').normalize('NFC').trim().replace(/[’‘]/gu,"'").replace(/\s+/gu,' ');}
 export function displayStudyWord(word){return word.article?word.article+(/[’']$/u.test(word.article)?'':' ')+word.lemma:word.lemma;}

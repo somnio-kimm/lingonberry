@@ -107,7 +107,6 @@ export function wrongBookCombinedFilterMarkup(
   { levelOf, groupsOf, showMode=false, modeFilter='all', forModeRow=[] },
 ) {
   const levelFilters = [
-    ['all', t('filterAll'), forLevelRow.length],
     ...[1, 2, 3, 4, 5, 6, 7].map((lv) => {
       const n = forLevelRow.filter((w) => levelOf(w) === lv).length;
       return [String(lv), lv === 7 ? hskBandLabel(7) : `HSK ${lv}`, n];

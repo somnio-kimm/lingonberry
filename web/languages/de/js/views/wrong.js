@@ -57,11 +57,12 @@ export function renderWrong(el,ctx) {
  const nounWord=row=>row.quizMode==='adjendings'&&row.questionSnapshot?.noun?{...wordsById.get(row.questionSnapshot.noun.id),...row.questionSnapshot.noun,pos:'noun'}:null;
  const nounMarkup=(row,index)=>{const noun=nounWord(row);return noun?`<button type='button' class='wrong-word-block wrong-noun-block' data-open-noun='${index}' aria-label='${t('Word details')}: ${e(noun.lemma)}'><span class='wrong-main-word' lang='de'>${wordHeading(noun)}</span><span class='wrong-word-meaning' lang='${getLocale()}'>${e(wordMeaning(noun))}</span></button>`:'';};
 
- const filters=ctx.wrongFilters||={level:'all',pos:'all',mode:'all',open:false};
+ const filters=ctx.wrongFilters||={level:ctx.store.state.preferences.studyLevel,pos:'all',mode:'all',open:false};
+ if(!ctx.catalog.levels.some(row=>row.id===filters.level))filters.level=ctx.store.state.preferences.studyLevel;
  let catalog;
  function draw(){
   stopMedia();const all=wrongEntries(ctx.units,ctx.store.state,ctx.words),rows=filterWrongEntries(all,filters),review=reviewItems(rows,catalog||(catalog=reviewCatalog(ctx.words,all)));
-  const groups=[['level',t('Study level'),['all',...ctx.catalog.levels.map(l=>l.id)]],['pos',t('Part of speech'),['all',...new Set(all.map(r=>r.type))]],['mode',t('Exercise type'),['all',...Object.keys(modeLabels).filter(mode=>mode===filters.mode||all.some(r=>wrongMode(r)===mode))]]];
+  const groups=[['level',t('Study level'),ctx.catalog.levels.map(l=>l.id)],['pos',t('Part of speech'),['all',...new Set(all.map(r=>r.type))]],['mode',t('Exercise type'),['all',...Object.keys(modeLabels).filter(mode=>mode===filters.mode||all.some(r=>wrongMode(r)===mode))]]];
   const label=(key,id)=>id==='all'?t('All'):key==='level'?studyLevelLabel(id):key==='mode'?t(modeLabels[id]):t(types[id]||{saved:'Saved exercise',other:'Other'}[id]||id);
   const counts=(key,id)=>filterWrongEntries(all,{...filters,[key]:id}).length;
   const filterMarkup=all.length?`<details class='filter-fold filter-fold--combined wrong-filter-panel' ${filters.open?'open':''}><summary class='filter-fold-sum filter-fold-sum--combined'><div class='filter-fold-sum-head'><span class='filter-fold-k filter-fold-k--panel'>${t('Filters')}</span></div><div class='filter-fold-sum-picks'>${groups.map(([key,title])=>`<span class='filter-fold-pick-l'>${title}</span><span class='filter-fold-pick-v'>${e(label(key,filters[key]))} (${counts(key,filters[key])})</span>`).join('')}</div></summary><div class='filter-fold-body filter-fold-split'>${groups.map(([key,title,ids],i)=>`${i?`<div class='filter-split-divider'></div>`:''}<div class='filter-split-head'>${title}</div><div class='wl-filter-row'>${ids.map(id=>`<button class='wl-filter ${filters[key]===id?'active':''}' data-wrong-filter='${key}' data-value='${e(id)}' aria-pressed='${filters[key]===id}'>${e(label(key,id))} (${counts(key,id)})</button>`).join('')}</div>`).join('')}</div></details>`:'';

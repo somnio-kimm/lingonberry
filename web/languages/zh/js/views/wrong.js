@@ -43,7 +43,7 @@ function details(record,q){
  return `${condition?['vocabinput','vocabmeaning'].includes(record.mode)?condition:`<div class='wrong-question-block'>${condition}</div>`:''}${duplicate?'':`<p class='wrong-line wrong-answer-row'><span class='wrong-answer-label'>${t('wrongCorrectAnswer')}:</span> <span class='wrong-correct' lang='${answerLang}'>${correct}</span></p>`}<p class='wrong-line wrong-answer-row'><span class='wrong-answer-label'>${t('wrongUserAnswer')}:</span> <span class='wrong-answer-value--wrong' lang='${answerLang}'>${given}</span></p>`;
 }
 export function renderWrong(el){
- const filters=reviewState.filters;let alive=true,loading=true,error='';
+ const filters=reviewState.filters;if(![1,2,3,4,5,6,7].includes(Number(filters.level)))filters.level=String(Store.hskLevels[0]||1);let alive=true,loading=true,error='';
  function draw(){
   if(!alive)return;TTS.stop();
   const all=Store.wrongAnswers,rows=filteredWrongs(all,filters),queue=makeReviewQueue(rows,Store.words);

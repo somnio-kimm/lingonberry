@@ -35,4 +35,4 @@ test('review counts and progress stay isolated by language and reset is transact
  ja.setWordStatus('word','mastered');storage.setItem=()=>{throw new Error('quota');};assert.throws(()=>ja.reset());assert.equal(ja.wordStatus('word'),'mastered');
 });
 
-test('English filters use discrete IELTS groups',()=>{assert.equal(matchesStudyLevel({level:'IELTS 7.0–8.0'},'IELTS 4.0–6.5',studyProfiles.en),false);assert.equal(matchesStudyLevel({level:'IELTS 7.0–8.0'},'IELTS 7.0–8.0',studyProfiles.en),true);assert.equal(matchesStudyLevel({level:'IELTS 8.5–9.0'},'all',studyProfiles.en),true);});
+test('English filters use discrete IELTS groups',()=>{assert.equal(matchesStudyLevel({level:'IELTS 7.0–8.0'},'IELTS 4.0–6.5',studyProfiles.en),false);assert.equal(matchesStudyLevel({level:'IELTS 7.0–8.0'},'IELTS 7.0–8.0',studyProfiles.en),true);assert.equal(matchesStudyLevel({level:'IELTS 8.5–9.0'},'all',studyProfiles.en),false);});
