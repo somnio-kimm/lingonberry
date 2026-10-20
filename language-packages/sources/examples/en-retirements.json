@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "targetLanguage": "en",
+  "sourceCoreSha256": "a684ed3f90efc4e6cf955b36ad4450d08af7f2952f5e27c0c5c476170ecbdbca",
+  "records": [
+    {
+      "id": "en-lex-228106f0bcc6c0b43048",
+      "sourceVersion": "3.0.0",
+      "replacementId": "en-lex-d616c8f7d442c2763f4b",
+      "disposition": "deferred-additional-example",
+      "recordDigest": "e90bd2bbf2d0ca40827f7aa8ae33cd3f27217f666e7a17e8a077b25057ec1d95",
+      "reason": "Preserve this unpublished example for a future additional-example merge; the surviving entry already has a primary example. Do not overwrite it or silently change the old draft ID."
+    }
+  ]
+}

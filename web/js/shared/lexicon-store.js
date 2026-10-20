@@ -2,9 +2,10 @@
 export function createLexiconStore(storage,profile){
  const key=`learn-language.${profile.id}.lexicon.v1`;
  let saved;try{saved=JSON.parse(storage.getItem(key));}catch{}
- const fresh=()=>({version:1,wordStatus:{},wrongs:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:true,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true}});
+ const fresh=()=>({version:1,wordStatus:{},wrongs:{},contentMigrations:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:true,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true}});
  const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
  let state=saved?.version===1&&object(saved.wordStatus)&&object(saved.wrongs)&&object(saved.preferences)?{...fresh(),...saved,preferences:{...fresh().preferences,...saved.preferences}}:fresh();
+ if(!object(state.contentMigrations))state.contentMigrations={};
  if(profile.normaliseLevel)state.preferences.studyLevel=profile.normaliseLevel(state.preferences.studyLevel);
  if(!profile.levels.includes(state.preferences.studyLevel)&&state.preferences.studyLevel!=='all')state.preferences.studyLevel=profile.levels[0];
  let warning=false;
@@ -20,8 +21,13 @@ export function createLexiconStore(storage,profile){
   },
   wordStatus(id){return state.wordStatus[id]||'new';},
   setWordStatus(id,status){if(!id||!['new','learning','mastered'].includes(status))throw new Error('Invalid word status');state.wordStatus[id]=status;save();},
+  migrateEquivalentEntries(rows=[]){
+   const rank=['new','learning','mastered'];let changed=false;
+   for(const row of rows){if(!row.sameConcept||!row.replacementId||Object.hasOwn(state.contentMigrations,row.id)||!Object.hasOwn(state.wordStatus,row.id))continue;const old=state.wordStatus[row.id]||'new',current=state.wordStatus[row.replacementId]||'new';if(rank.indexOf(old)>rank.indexOf(current))state.wordStatus[row.replacementId]=old;state.contentMigrations[row.id]=row.replacementId;changed=true;}
+   if(changed)save();
+  },
   record(question,input,correct,retest=false){
-   const id=[question.mode,question.id,question.locale].join(':');
+   const id=[question.mode,question.id,question.locale,...(question.reviewRevision?[question.reviewRevision]:[])].join(':');
    if(!correct){const old=state.wrongs[id];state.wrongs[id]={id,question:JSON.parse(JSON.stringify(question)),input,count:(old?.count||0)+1};}
    else if(retest&&state.wrongs[id]){state.wrongs[id].count=Math.max(0,state.wrongs[id].count-1);if(!state.wrongs[id].count&&state.preferences.autoRemoveResolvedWrongs)delete state.wrongs[id];}
    save();

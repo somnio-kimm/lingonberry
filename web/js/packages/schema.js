@@ -1,3 +1,4 @@
+import {compareContentVersions} from '../shared/review-content.js';
 export const MAX_PACKAGE_BYTES = 30 * 1024 * 1024;
 const locale = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
 const identifier = /^[a-z0-9][a-z0-9._-]{0,99}$/;
@@ -72,6 +73,23 @@ export function validatePackage(value, expected) {
         object(entry.example, 'example');
         text(entry.example.text, 'example text');
         requireValue(entry.example.translations === undefined, 'example translations belong in explanation packs');
+      }
+    }
+  }
+  if(value.kind==='study'){
+    const retired=new Set();
+    if(value.retiredEntries!==undefined){
+      requireValue(Array.isArray(value.retiredEntries)&&value.retiredEntries.length<=50000,'retired entries');
+      for(const row of value.retiredEntries){
+        object(row,'retired entry');requireValue(typeof row.id==='string'&&identifier.test(row.id)&&!ids.has(row.id)&&!retired.has(row.id),'retired entry id');retired.add(row.id);text(row.reason,'retirement reason');
+        if(row.replacementId!==undefined)requireValue(ids.has(row.replacementId),'retirement replacement');
+        if(row.sameConcept!==undefined)requireValue(typeof row.sameConcept==='boolean'&&!!row.replacementId,'equivalent retirement');
+      }
+    }
+    if(value.reviewInvalidations!==undefined){
+      requireValue(Array.isArray(value.reviewInvalidations)&&value.reviewInvalidations.length<=100000,'review invalidations');const changed=new Set();
+      for(const row of value.reviewInvalidations){
+        object(row,'review invalidation');requireValue((ids.has(row.id)||retired.has(row.id))&&!changed.has(row.id),'review invalidation id');changed.add(row.id);checkVersion(row.minimumVersion);requireValue(compareContentVersions(row.minimumVersion,value.version)<=0,'future review invalidation');
       }
     }
   }

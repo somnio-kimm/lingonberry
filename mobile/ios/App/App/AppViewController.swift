@@ -21,7 +21,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages")) else { return }
+        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections")) else { return }
         verificationStarted = true
         verifyPackages(attempt: 0)
     }
@@ -48,7 +48,8 @@ class AppViewController: CAPBridgeViewController {
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
                 const pairs = [];
-                for (const [target, explanation, entryId, meaning] of [['de','ko','de-noun-abend-editorial-main','저녁'],['de','en','de-noun-abend-editorial-main','evening'],['zh','en','hsk1_1','to love; to like deeply'],['zh','ko','hsk1_1','사랑하다; 좋아하다']]) {
+                const checks = english ? [['en','en','en-lex-d2e8946b4935cf8fc6d1','angular momentum'],['en','ko','en-lex-d2e8946b4935cf8fc6d1','각운동량']] : [['de','ko','de-noun-abend-editorial-main','저녁'],['de','en','de-noun-abend-editorial-main','evening'],['zh','en','hsk1_1','to love; to like deeply'],['zh','ko','hsk1_1','사랑하다; 좋아하다']];
+                for (const [target, explanation, entryId, meaning] of checks) {
                   document.querySelector('[data-tab=settings]').click();
                   await wait(() => document.querySelector('#manage-packages'));
                   if (!offline) {
@@ -56,8 +57,8 @@ class AppViewController: CAPBridgeViewController {
                     await wait(() => document.querySelector(`[data-language=${target}]`));
                     document.querySelector(`[data-language=${target}]`).click();
                     await wait(() => document.querySelector(`[data-explanation=${explanation}]`));
-                    const missing = document.querySelector(`[data-available="${target}-${explanation}"] .download-package`);
-                    if (missing) {missing.click();await wait(() => document.querySelector(`[data-package="${target}-${explanation}"]`));}
+                    const missing = document.querySelector(`[data-explanation="${explanation}"] .download-package`);
+                    if (missing) {missing.click();await wait(() => document.querySelector(`[data-package="${target}-${explanation}"]`) && !document.querySelector(`[data-explanation="${explanation}"] .download-package`));}
                     document.querySelector('[data-tab=settings]').click();
                   }
                   await wait(() => document.querySelector('#target'));
@@ -67,11 +68,17 @@ class AppViewController: CAPBridgeViewController {
                   await wait(() => document.querySelector('#package-status').dataset.state === 'ready');
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=wordlist],[data-quiz=wordlist]'));
+                  if (english) {document.querySelector('[data-level=all]').click();await wait(() => document.querySelector('[data-route=wordlist]'));}
                   document.querySelector('[data-route=wordlist],[data-quiz=wordlist]').click();
-                  await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.textContent === meaning);
+                  if (english) {
+                    await wait(() => document.querySelector('#search-input'));
+                    const input=document.querySelector('#search-input');input.value='spin';input.dispatchEvent(new Event('input',{bubbles:true}));
+                    await wait(() => document.querySelector(`.wl-row[data-word="${entryId}"] .wl-meaning`)?.textContent.includes(meaning));
+                  } else await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.textContent === meaning);
                   pairs.push(target + '-' + explanation);
                 }
                 const result = {passed:true,pairs,origin:location.origin,wordCount:document.querySelectorAll('.wl-row').length,locale:document.documentElement.lang};
+                if (english) return JSON.stringify(result);
                 document.querySelector('[data-tab=settings]').click();
                 await wait(() => document.querySelector('#target'));
                 select('target','');
@@ -80,7 +87,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages")], in: nil, in: .page) { result in
+                """, arguments: ["offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections")], in: nil, in: .page) { result in
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                     case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")
