@@ -1,3 +1,6 @@
+import {assembleStudy} from '../web/js/packages/study.js';
+import {studyWords} from '../web/js/presentation/study-profiles.js';
+import {prepareLanguageExercises} from '../web/js/shared/exercise-pools.js';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -14,11 +17,11 @@ try{
   await tab(page,'settings');await page.locator('#manage-packages').click();await page.locator(`[data-language=${language}]`).click();for(const locale of ['en','ko']){await page.locator(`[data-available="${language}-${locale}"] .download-package`).click();await page.locator(`[data-package="${language}-${locale}"] .remove-package`).waitFor();}
   for(const locale of ['en','ko']){
    await tab(page,'settings');await page.selectOption('#target',language);await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');
-   const pair=await read(catalog.find(row=>row.id===language+'-'+locale).url.slice(1));
+   const pair=await read(catalog.find(row=>row.id===language+'-'+locale).url.slice(1)),assembled=assembleStudy(core,pair),prepared=prepareLanguageExercises(assembled,studyWords(assembled));
    if(core.families?.length){await route(page,'roots');if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]','IELTS 8.5–9.0');for(const word of ['include','preclude','occlude'])assert.ok(await page.locator('[data-root-word]').filter({hasText:new RegExp('^'+word+'$')}).count());await page.locator('[data-root-word]').filter({hasText:/^occlude$/}).click();await page.locator('[role=dialog]').waitFor();assert.ok((await page.locator('[role=dialog]').innerText()).includes('occlude'));await page.keyboard.press('Escape');checked++;}
    for(const category of [...new Set(core.exercises.map(row=>row.category))]){
     const seed=core.exercises.find(row=>row.category===category),entry=core.entries.find(row=>row.id===seed.entryId);await route(page,seed.route);if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]',entry.level);await page.selectOption('[data-exercise]',category);
-    const prompt=await page.locator('.lexicon-prompt').innerText(),row=core.exercises.find(row=>row.category===category&&row.prompt===prompt),translated=pair.exercises.find(item=>item.id===row.id);assert.ok(row);assert.match(await page.locator('.lexicon-question').innerText(),new RegExp(translated.instruction.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));assert.equal(await page.locator('.reading-segments').count(),0);
+    const id=await page.locator('[data-exercise-id]').getAttribute('data-exercise-id'),row=prepared.find(row=>row.id===id),translated=row;assert.ok(row);assert.match(await page.locator('.lexicon-question').innerText(),new RegExp(translated.instruction.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));assert.equal(await page.locator('.reading-segments').count(),0);
     if(row.options)await page.locator(`[data-option="${row.options.indexOf(row.answer)}"]`).click();else await page.locator('#vocab-answer').fill(row.answer);
     await page.locator('[data-submit]').click();await page.locator('.lexicon-question.correct').waitFor();assert.ok((await page.locator('.exercise-explanation').innerText()).includes(translated.explanation));checked++;
    }

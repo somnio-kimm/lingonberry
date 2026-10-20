@@ -1,6 +1,6 @@
 # Language-specific practice
 
-Vocabulary choices share Meaning Quiz; vocabulary writing shares Word Input. Open Filters → Exercise Type to select a category. Vocabulary is the original dictionary quiz. All mixes it with available curated categories. Study Level, Part of Speech and Study Status still restrict the pool.
+Vocabulary choices share Meaning Quiz; vocabulary writing shares Word Input. Use the Exercise Type picker above Filters to select a category. Vocabulary is the original dictionary quiz. All is the default and balances the available types, including package-enabled dictionary practice. Study Level, Part of Speech and Study Status still restrict the pool.
 
 Japanese categories include contextual reading, on’yomi, kun’yomi, kanji/okurigana boundaries, confusable kanji and transitive/intransitive pairs. Form Input, Particles and Counters have separate Study buttons. For 食べる, the kanji 食 carries た and the written kana are べる; the exercise does not confuse this orthographic boundary with the verb stem たべ. Verified segment alignment appears only after submission.
 
