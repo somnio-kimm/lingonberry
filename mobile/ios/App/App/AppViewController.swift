@@ -73,12 +73,33 @@ class AppViewController: CAPBridgeViewController {
                   if (english || japanese) {
                     await wait(() => document.querySelector('#search-input'));
                     const input=document.querySelector('#search-input');input.value=japanese?'どう':'spin';input.dispatchEvent(new Event('input',{bubbles:true}));
-                    await wait(() => document.querySelector(`.wl-row[data-word="${entryId}"] .wl-meaning`)?.textContent.includes(meaning));
+                    const found = () => document.querySelector(`.wl-row[data-word="${entryId}"] .wl-meaning`)?.textContent.includes(meaning);
+                    for (const level of [...document.querySelectorAll('[data-level-filter] option')].map(option => option.value)) {
+                      if (found()) break;
+                      const filter = document.querySelector('[data-level-filter]');filter.value = level;
+                      filter.dispatchEvent(new Event('change', {bubbles:true}));
+                      await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                    await wait(found);
                   } else await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.textContent === meaning);
                   pairs.push(target + '-' + explanation);
                 }
                 const result = {passed:true,pairs,origin:location.origin,wordCount:document.querySelectorAll('.wl-row').length,locale:document.documentElement.lang};
-                if (english || japanese) return JSON.stringify(result);
+                if (english || japanese) {
+                  document.querySelector('[data-tab=home]').click();
+                  await wait(() => document.querySelector('[data-route=vocabinput]'));
+                  const routes = japanese ? ['forms','particles','counters'] : ['patterns','articles','roots'];
+                  result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
+                  if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
+                  document.querySelector('[data-route=vocabinput]').click();
+                  await wait(() => document.querySelector('[data-exercise]'));
+                  result.exerciseCategories = [...document.querySelectorAll('[data-exercise] option')].map(option => option.value);
+                  if (result.exerciseCategories.length < 3) throw new Error('Vocabulary exercise filters are missing');
+                  document.querySelector('[data-tab=home]').click();
+                  await wait(() => document.querySelector('[data-level]'));
+                  if (english) [...document.querySelectorAll('[data-level]')].at(-1).click();
+                  return JSON.stringify(result);
+                }
                 document.querySelector('[data-tab=settings]').click();
                 await wait(() => document.querySelector('#target'));
                 select('target','');
