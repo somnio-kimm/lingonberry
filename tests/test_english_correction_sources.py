@@ -53,6 +53,42 @@ class EnglishSourceEvidenceTests(unittest.TestCase):
         self.assertEqual(report['proofsVerified'], 1)
         self.assertEqual(report['decisionDigest'], module.digest([self.decision]))
 
+    def test_japanese_review_checks_the_target_language_and_retained_records(self):
+        review_path = self.root / 'japanese-review.jsonl'
+        review_path.write_text(json.dumps(self.review) + '\n')
+        records = self.directory / 'a-decisions.jsonl'
+        records.write_text(json.dumps(self.decision) + '\n')
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertTrue(module.verify(self.directory, self.catalog, self.directory / 'report.json', language='ja', review_path=review_path))
+        with sqlite3.connect(self.catalog) as conn:
+            conn.execute("UPDATE source_rows SET language='ja'")
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertFalse(module.verify(self.directory, self.catalog, self.directory / 'report.json', language='ja', review_path=review_path))
+        self.decision.update(decision='retain', evidence=[])
+        records.write_text(json.dumps(self.decision) + '\n')
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertFalse(module.verify(self.directory, self.catalog, self.directory / 'report.json', language='ja', review_path=review_path))
+        self.decision.update(decision='correct')
+        records.write_text(json.dumps(self.decision) + '\n')
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertTrue(module.verify(self.directory, self.catalog, self.directory / 'report.json', language='ja', review_path=review_path))
+
+    def test_reading_only_character_evidence_must_match_the_actual_category(self):
+        raw = {'word': '溝', 'lang_code': 'ja', 'pos': 'character', 'categories': ['Japanese kanji with kun reading どぶ'], 'senses': [{'tags': ['kanji', 'no-gloss']}]}
+        self.provenance['sourceRowDigest'] = module.digest(raw)
+        with sqlite3.connect(self.catalog) as conn:
+            conn.execute('UPDATE source_rows SET language=?,row_digest=?,raw_json=?,provenance_json=?', ('ja', module.digest(raw), json.dumps(raw), json.dumps(self.provenance)))
+        proof = {**self.provenance, 'senseOrdinal': 1, 'glosses': [], 'readingCategory': raw['categories'][0]}
+        self.decision['evidence'] = [proof]
+        review_path = self.root / 'reading-review.jsonl'
+        review_path.write_text(json.dumps(self.review) + '\n')
+        for category, expected in [(raw['categories'][0], False), ('Japanese kanji with kun reading どふ', True)]:
+            proof['readingCategory'] = category
+            (self.directory / 'a-decisions.jsonl').write_text(json.dumps(self.decision) + '\n')
+            with contextlib.redirect_stdout(io.StringIO()):
+                failed = module.verify(self.directory, self.catalog, self.directory / 'report.json', language='ja', review_path=review_path)
+            self.assertEqual(failed, expected)
+
     def test_invented_gloss_licence_position_or_digest_is_rejected(self):
         original = dict(self.decision['evidence'][0])
         for field, wrong in [('glosses', ['Hair spray.']), ('license', 'CC0-1.0'), ('sourceLine', 99), ('senseOrdinal', 0), ('sourceRowDigest', '0' * 64)]:

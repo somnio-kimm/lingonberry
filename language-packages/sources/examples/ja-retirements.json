@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "sourceCoreSha256": "3e667f6f07dd896314a19b3e2e3f931c30a1b110a0cc983e086f59827084cb29",
+  "note": "Preserve the original authoring records for retired concepts. They are not automatically applied to different replacement meanings.",
+  "records": [
+    {
+      "id": "ja-lex-71bfeb4b64631ed53587",
+      "kind": "authored",
+      "sourceVersion": "3.0.0",
+      "replacementId": "ja-lex-c51396980e963cdfb21d",
+      "recordDigest": "31f3ba97906e414e0be790e4022c1148f8d6be7e2af15702a9d35d3c0accb801",
+      "disposition": "superseded-concept"
+    },
+    {
+      "id": "ja-lex-8e4deb4ac1acee6d03b8",
+      "kind": "authored",
+      "sourceVersion": "3.0.0",
+      "replacementId": "ja-lex-61b41d1af6d24e46426d",
+      "recordDigest": "27cd3eae83b202ea1d9aebcca0c8fffa7e7f11f94d0ae31f94ec614d6eb2b136",
+      "disposition": "superseded-concept"
+    },
+    {
+      "id": "ja-lex-ff2645f97025600c3051",
+      "kind": "authored",
+      "sourceVersion": "3.0.0",
+      "replacementId": "ja-lex-bd04d96b7498d5a29a1e",
+      "recordDigest": "9e535114c3b547e34d418cf2ea622f687c9a116e0f6702986aba80195010a123",
+      "disposition": "superseded-concept"
+    },
+    {
+      "id": "ja-lex-8e4deb4ac1acee6d03b8",
+      "kind": "correction",
+      "sourceVersion": "3.0.0",
+      "replacementId": "ja-lex-61b41d1af6d24e46426d",
+      "recordDigest": "7f512155bd6bc5c8b91b9a8d67c0aa00c86d9acc990a0db9211915424c2b2ff7",
+      "disposition": "superseded-concept"
+    },
+    {
+      "id": "ja-lex-ff2645f97025600c3051",
+      "kind": "correction",
+      "sourceVersion": "3.0.0",
+      "replacementId": "ja-lex-bd04d96b7498d5a29a1e",
+      "recordDigest": "e76fb5973cc85a2b973885c9c76d50011a02167a3cceb53f582721dfc94ffbcc",
+      "disposition": "superseded-concept"
+    }
+  ]
+}

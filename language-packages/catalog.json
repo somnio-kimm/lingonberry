@@ -127,32 +127,32 @@
     "id": "ja-core",
     "kind": "study",
     "targetLanguage": "ja",
-    "version": "3.0.0",
-    "url": "/language-packages/ja-core-3.0.0.json",
-    "bytes": 15133805,
-    "sha256": "3e667f6f07dd896314a19b3e2e3f931c30a1b110a0cc983e086f59827084cb29"
+    "version": "4.0.0",
+    "url": "/language-packages/ja-core-4.0.0.json",
+    "bytes": 17788163,
+    "sha256": "fc1e6335647c852a499fe3c229e73c5baeaca1d4cf6aa4f6d9131b10f670549d"
   },
   {
     "id": "ja-en",
     "kind": "explanation",
     "targetLanguage": "ja",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "explanationLanguage": "en",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/ja-en-3.0.0.json",
-    "bytes": 5581967,
-    "sha256": "e4c48c7df2e43047b11bca302df34598f28966ed548d19034dc64a8725586361"
+    "studyVersion": "4.0.0",
+    "url": "/language-packages/ja-en-4.0.0.json",
+    "bytes": 8327313,
+    "sha256": "b21661afdb4fdea3cf385faef974371d3462504bef2bf10ba585ce626125af62"
   },
   {
     "id": "ja-ko",
     "kind": "explanation",
     "targetLanguage": "ja",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "explanationLanguage": "ko",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/ja-ko-3.0.0.json",
-    "bytes": 5547011,
-    "sha256": "a0862c1d43f5c7764988aa44e3f829511f1422203d1ec14c4c13e56a03ac0f2b"
+    "studyVersion": "4.0.0",
+    "url": "/language-packages/ja-ko-4.0.0.json",
+    "bytes": 8311311,
+    "sha256": "a5450789991e76d1771471c45e8931a8af109b7bef5ea0845f2400a32b9cef5d"
   },
   {
     "id": "ko-core",
