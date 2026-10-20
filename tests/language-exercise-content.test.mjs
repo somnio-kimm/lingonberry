@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {validateExercises,validateExerciseTranslations} from '../web/js/packages/exercises.js';
 import {EXERCISE_ROUTES,exerciseAnswerCorrect} from '../web/js/shared/language-exercises.js';
-for(const language of ['ja'])test(`${language} original exercise content has complete bilingual answers and verified dictionary links`,async()=>{
+for(const language of ['ja','en'])test(`${language} original exercise content has complete bilingual answers and verified dictionary links`,async()=>{
  const read=async path=>JSON.parse(await readFile(new URL('../'+path,import.meta.url),'utf8')),source=await read(`language-packages/sources/exercises/${language}.json`),core=await read(`language-packages/${language}-core-4.0.0.json`);
  core.exercises=source.exercises.map(({instruction,explanation,...row})=>row);validateExercises(core);assert.ok(source.exercises.length>=40);assert.equal(source.license,'MIT');assert.deepEqual(new Set(source.exercises.map(row=>row.category)),new Set(Object.keys(EXERCISE_ROUTES[language])));
  for(const locale of ['en','ko']){const pair={kind:'explanation',targetLanguage:language,entries:core.entries,exercises:source.exercises.map(row=>({id:row.id,instruction:row.instruction[locale],explanation:row.explanation[locale]}))};validateExercises(pair);validateExerciseTranslations({...core,families:undefined},pair);assert.ok(pair.exercises.every(row=>locale!=='ko'||/[가-힣]/u.test(row.explanation)));}
