@@ -1,0 +1,323 @@
+{
+  "reviewer": "root",
+  "decisions": [
+    {
+      "id": "en-lex-606555516b19031224fd",
+      "word": "candidly",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. Frankly and honestly."
+    },
+    {
+      "id": "en-lex-6c6c4a822e4f43229164",
+      "word": "catastrophe",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. An exceptionally severe disaster."
+    },
+    {
+      "id": "en-lex-0149a82171d22034be16",
+      "word": "dominance",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A genetic trait that is well expressed in the next generation when different breeds are crossed."
+    },
+    {
+      "id": "en-lex-3cc1b01a4d882c1b4b14",
+      "word": "proceedings",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A written record of the discussion, progress, and outcome of a meeting."
+    },
+    {
+      "id": "en-lex-f20b4924c6ed50fe4840",
+      "word": "proclamation",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. An act of officially announcing the opinion, policy, position, etc., of a country, group or individual."
+    },
+    {
+      "id": "en-lex-4c5da5fb067caa611446",
+      "word": "propulsion",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. An act of pushing an object and making it move forward."
+    },
+    {
+      "id": "en-lex-7ae0ada845aee3cc66a5",
+      "word": "proximity",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. Nearness in space, time or relationship."
+    },
+    {
+      "id": "en-lex-0526e1cca1da5f4780d6",
+      "word": "refraction",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. The bending of a wave as it passes between different media."
+    },
+    {
+      "id": "en-lex-0ebae21e2b5b14dc504a",
+      "word": "relativity",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A quality of a certain fact or object being interdependent on another fact or object."
+    },
+    {
+      "id": "en-lex-7fe66c85302dc819578d",
+      "word": "resumption",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. The act of resuming a temporarily suspended meeting, etc."
+    },
+    {
+      "id": "en-lex-79d28875de818685384b",
+      "word": "scrimmage",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A rough fight."
+    },
+    {
+      "id": "en-lex-d2e8946b4935cf8fc6d1",
+      "word": "spin",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. An intrinsic form of angular momentum possessed by particles."
+    },
+    {
+      "id": "en-lex-7a21db5dd0d380c825c1",
+      "word": "streamline",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. To minimize waste and improve a system so that it becomes more economical and efficient."
+    },
+    {
+      "id": "en-lex-e6ca51bf931d5952eabc",
+      "word": "streamlining",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. An act of minimizing waste and improving a system to be more economical and efficient."
+    },
+    {
+      "id": "en-lex-f6234ab3bf05ebe7eadc",
+      "word": "strenuous",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. Requiring much power or effort."
+    },
+    {
+      "id": "en-lex-3fa88e2bad9e266e6359",
+      "word": "synthesize",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. To combine two or more things to form one entity."
+    },
+    {
+      "id": "en-lex-4b8c0ef7994960bb4cf0",
+      "word": "tact",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. Skill in dealing with people without causing offence."
+    },
+    {
+      "id": "en-lex-f1a00666a09c5d16f205",
+      "word": "tedious",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. Boring or tiresome because of length or repetition."
+    },
+    {
+      "id": "en-lex-70f315261ba3496a7348",
+      "word": "topography",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. The surface features of a place."
+    },
+    {
+      "id": "en-lex-cb5a4fee1fc0bc49d166",
+      "word": "totality",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A certain object's characteristic of being whole."
+    },
+    {
+      "id": "en-lex-3807f92de4dbe0db9cca",
+      "word": "trance",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A state of deep absorption in which awareness of surroundings is reduced."
+    },
+    {
+      "id": "en-lex-a8d9eff22bf8f5080df4",
+      "word": "translucent",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. Having a quality of not letting light pass through completely so that things on the opposite side are seen vaguely."
+    },
+    {
+      "id": "en-lex-4dff84ccac7801803fc1",
+      "word": "tycoon",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A wealthy and powerful business person."
+    },
+    {
+      "id": "en-lex-9805da2432cc4153af91",
+      "word": "vicinity",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A spot close to a certain place, object, or a person."
+    },
+    {
+      "id": "en-lex-cbd3ee0cc98a0de0d79f",
+      "word": "viscosity",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A measure of a fluid's resistance to flow."
+    },
+    {
+      "id": "en-lex-afed6b39e69538cdd50e",
+      "word": "vitality",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A lively spirit."
+    },
+    {
+      "id": "en-lex-af29627216dbef34b728",
+      "word": "yearn",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. To have a strong desire for something or to do something; to long for or to do something."
+    },
+    {
+      "id": "en-lex-864a404a7eaacfb75d0f",
+      "word": "yearning",
+      "band": 2,
+      "reason": "Root calibration: useful general academic, news, descriptive or standard subject vocabulary in this stored sense; SAT-style rather than highest GRE difficulty. A pitiable feeling that one misses someone very deeply."
+    },
+    {
+      "id": "en-lex-7b61601a1b78da093df4",
+      "word": "fruition",
+      "band": 2,
+      "reason": "Accepted independent calibration: The stored botanical meaning is actual bearing of fruit, not the abstract realisation of an ambition; rarity of the noun does not make the concept GRE-level."
+    },
+    {
+      "id": "en-lex-9860cc28c4265b60aa66",
+      "word": "gratis",
+      "band": 1,
+      "reason": "Accepted independent calibration: It simply means free of charge. A formal loanword label alone does not justify the highest band."
+    },
+    {
+      "id": "en-lex-64290f1ea7da28f1154d",
+      "word": "impending",
+      "band": 2,
+      "reason": "Accepted independent calibration: The uncommon noun merely labels an expected event. Substantivisation alone does not justify GRE placement."
+    },
+    {
+      "id": "en-lex-a1b2759c9551ad533b22",
+      "word": "initiate",
+      "band": 2,
+      "reason": "Accepted independent calibration: The stored meaning is a new organisational member; formal noun vocabulary, not a specialised initiation concept."
+    },
+    {
+      "id": "en-lex-1a08cf625ac776bf6041",
+      "word": "intermittently",
+      "band": 2,
+      "reason": "Accepted independent calibration: It describes stopping and starting at intervals, a useful general academic time-pattern word rather than advanced precision vocabulary."
+    },
+    {
+      "id": "en-lex-d7feeecd866adc24bf51",
+      "word": "juncture",
+      "band": 2,
+      "reason": "Accepted independent calibration: The actual sense is a physical joining point, not the nuanced critical moment sense; suitable for SAT/general academic reading."
+    },
+    {
+      "id": "en-lex-fde10ddc3cbe15b00a76",
+      "word": "lasting",
+      "band": 1,
+      "reason": "Accepted independent calibration: The old sense of lasting forever remains semantically simple; obsolete labelling is not an independent difficulty criterion."
+    },
+    {
+      "id": "en-lex-61d871fb429a3d3d4167",
+      "word": "laughable",
+      "band": 1,
+      "reason": "Accepted independent calibration: The older meaning is simply amusing, rather than a subtle judgement of absurdity; it should not enter GRE solely for being older."
+    },
+    {
+      "id": "en-lex-c71a25d409e5ee9b1fdb",
+      "word": "magnitude",
+      "band": 2,
+      "reason": "Accepted independent calibration: Size, extent or importance is broad academic vocabulary with no specialised mathematical sense selected here."
+    },
+    {
+      "id": "en-lex-050e7dfc1128b8ce36a5",
+      "word": "mal",
+      "band": 1,
+      "reason": "Accepted independent calibration: The stored entry is only a rare label for illness. Lexical rarity without a demanding conceptual distinction should not fill GRE."
+    },
+    {
+      "id": "en-lex-c75037d501fec4dc546b",
+      "word": "memento",
+      "band": 2,
+      "reason": "Accepted independent calibration: The actual sense is a physical keepsake left by a deceased person; memorial context does not make the noun conceptually graduate-level."
+    },
+    {
+      "id": "en-lex-9c2f827fbde28f4248d8",
+      "word": "menial",
+      "band": 2,
+      "reason": "Accepted independent calibration: The noun labels a domestic servant; the more nuanced adjective evaluation is not the selected sense."
+    },
+    {
+      "id": "en-lex-1b3d90a955bf0b6e3c13",
+      "word": "metropolis",
+      "band": 2,
+      "reason": "Accepted independent calibration: This is a large central city, an ordinary geography/civics concept suitable for advanced general reading."
+    },
+    {
+      "id": "en-lex-36c0e74a3274057349a7",
+      "word": "misconduct",
+      "band": 2,
+      "reason": "Accepted independent calibration: A rare verb meaning act improperly; unusual POS alone is insufficient for GRE placement."
+    },
+    {
+      "id": "en-lex-d0b4a7b59745f68b0ad0",
+      "word": "molest",
+      "band": 2,
+      "reason": "Accepted independent calibration: The dated broad sense simply means trouble or harass; the original reason relies on age of usage rather than conceptual difficulty."
+    },
+    {
+      "id": "en-lex-0aac71d8acd64690ad07",
+      "word": "monogamy",
+      "band": 2,
+      "reason": "Accepted independent calibration: A widely taught social concept of marriage to one person; useful academic vocabulary rather than specialist graduate-level precision."
+    },
+    {
+      "id": "en-lex-330ebecc313f2ce7deea",
+      "word": "oblique",
+      "band": 2,
+      "reason": "Accepted independent calibration: The selected sense is only geometric slant, not indirect speech or reasoning; a SAT candidate, subject to final lexical-register calibration."
+    },
+    {
+      "id": "en-lex-132cc6d04dba18679076",
+      "word": "oe",
+      "band": 1,
+      "reason": "Accepted independent calibration: A rare small-island label, with limited general graduate-reading value; lexical rarity alone is not a strong reason to use it to meet the GRE quota."
+    },
+    {
+      "id": "en-lex-70fb3eec11a4a0f95dd0",
+      "word": "oscillation",
+      "band": 2,
+      "reason": "Accepted independent calibration: This is the ordinary technical periodic-fluctuation sense taught in general physical science; useful academic vocabulary rather than a nuanced GRE-specific meaning."
+    },
+    {
+      "id": "en-lex-6553f7d98f82cb552794",
+      "word": "outrageous",
+      "band": 2,
+      "reason": "Accepted independent calibration: The familiar word is given a simple archaic fierce/violent sense; the expert rationale relies solely on archaic labelling rather than difficult lexical distinction."
+    },
+    {
+      "id": "en-lex-9ffdc47eac7881a112ef",
+      "word": "pest",
+      "band": 2,
+      "reason": "Accepted independent calibration: The familiar headword has an archaic plague sense here. This is historical reading vocabulary; old usage alone should not inflate the GRE count."
+    },
+    {
+      "id": "en-lex-7d82886d9d7455a00758",
+      "word": "phonograph",
+      "band": 2,
+      "reason": "Accepted independent calibration: The dated verb names the operation of a recording device; unusual conversion to a verb is not an advanced conceptual distinction."
+    },
+    {
+      "id": "en-lex-1a5f7fd5eb04d58c9119",
+      "word": "plump",
+      "band": 2,
+      "reason": "Accepted independent calibration: The uncommon adverb just means directly or suddenly; the expert rationale rests on an unusual POS, rather than a substantial semantic distinction."
+    },
+    {
+      "id": "en-lex-5032d643de0539f7441b",
+      "word": "polygamy",
+      "band": 2,
+      "reason": "Accepted independent calibration: The stored meaning is the broadly taught social-marriage concept of one husband having several wives, parallel in general academic difficulty to monogamy."
+    },
+    {
+      "id": "en-lex-bfcf9e555b92b5c4401e",
+      "word": "precedence",
+      "band": 2,
+      "reason": "Accepted independent calibration: The stored sense is merely a previous occurrence; the usual nuanced sense of priority is not selected. A less usual sense alone does not justify GRE."
+    }
+  ]
+}
