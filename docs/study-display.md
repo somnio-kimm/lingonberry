@@ -5,3 +5,9 @@ Word details and flashcard backs use one selected example. A reviewed bilingual 
 The detail sheet uses a single **Examples** heading and its speaker reads the selected sentence. Source provenance remains in the unchanged language packages and licence notices. This display fallback does not promote untranslated reference sentences into scored cloze, scramble or sentence-dictation exercises.
 
 Study and Review level selectors offer only the language’s specific levels. Saved All selections in the shared vocabulary presentations migrate to the first level (for example N5 or IELTS 1.0–3.5) while preserving word status and Review records. Chinese/German Review filters also start from a specific level. All remains available for unrelated filters such as part of speech, exercise type and study status.
+
+## Shared multilingual design
+
+Japanese, English and the other shared dictionary screens now use the same German/Chinese filter summaries and status/POS chips, Word List cards, detail sheet, flashcard toolbar/front/back/navigation, quiz controls and Review card layout. Language-specific readings use ruby without changing shared card dimensions. Study headings use the common Study Level label; the English range chips keep their wider two-column layout.
+
+`node scripts/verify-design-parity-browser.mjs` compares rendered mobile card, row, filter, sheet, flashcard and empty Review geometry against German and saves screenshots under `/private/tmp/lingonberry-design`.
