@@ -31,3 +31,11 @@ Imported Wiktionary facts retain contributor attribution, CC BY-SA 4.0 and artic
 5. Run unit, package-backed browser and native online/offline checks before pointing the mobile content source at the pushed immutable commit.
 
 The coverage ledgers distinguish actual exercise categories from the default vocabulary modes. Empty specialised coverage is not a claim that a word has no linguistic relationships. The source audits retain unresolved/context-dependent cases for later editorial review. These datasets have computational validation and AI-assisted linguistic review, not native-speaker certification.
+
+## Release verification — 20 October 2026
+
+Japanese 4.2 retains 12,027 entries and generates 61,162 questions. Its source-backed metadata includes all 2,575 corpus kanji and all 1,402 verb/adjective entries (11,953 form groups; 51 lexical feature groups deliberately excluded). English 4.3 retains 12,356 entries, provides 7,612 countability records and 611 historical-source families covering 2,294 entry IDs. Fifteen noun cases remain withheld from countability grading; their exact reasons are recorded in `language-packages/sources/exercises/en-countability-review.json`.
+
+Validation passed: 328 unit tests, JavaScript/JSON/offline-shell checks, 32 package-backed category/locale browser paths, root-search keyboard focus, concealed answers, grading and offline reuse. The broader five-language browser suite also passed download/removal, keyboard/IME, default quizzes, Review and retests.
+
+The installed iPhone 18 Pro Max / iOS 27.0 simulator passed Japanese and English native checks online and with HTTP/HTTPS fetches blocked, each using both English and Korean explanation packages. Native checks verified broad package data rather than only starter menus: 7,147 Japanese Form Input questions at N1 and 665 English Articles and Countability questions at the highest IELTS study group. The app was relaunched normally and its Study screen visually verified in Device Hub.
