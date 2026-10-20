@@ -1,0 +1,1900 @@
+{
+  "language": "en",
+  "license": "MIT",
+  "notice": "Original Lingonberry exercises and bilingual explanations, 2026. Dictionary and grammar references verify facts; no publisher exercises, definitions or example sentences are reproduced. Bands follow the linked dictionary entry, not an official exam grammar syllabus. Some phrasal-verb questions practise a simpler paraphrase of the linked advanced word.",
+  "references": [
+    {
+      "title": "Merriam-Webster: inspect etymology",
+      "url": "https://www.merriam-webster.com/dictionary/inspect"
+    },
+    {
+      "title": "Merriam-Webster: spectator etymology",
+      "url": "https://www.merriam-webster.com/dictionary/spectator"
+    },
+    {
+      "title": "Merriam-Webster: perspective etymology",
+      "url": "https://www.merriam-webster.com/dictionary/perspective"
+    },
+    {
+      "title": "Merriam-Webster: introspection etymology",
+      "url": "https://www.merriam-webster.com/dictionary/introspection"
+    },
+    {
+      "title": "Merriam-Webster: describe etymology",
+      "url": "https://www.merriam-webster.com/dictionary/describe"
+    },
+    {
+      "title": "Merriam-Webster: prescribe etymology",
+      "url": "https://www.merriam-webster.com/dictionary/prescribe"
+    },
+    {
+      "title": "Merriam-Webster: manuscript etymology",
+      "url": "https://www.merriam-webster.com/dictionary/manuscript"
+    },
+    {
+      "title": "Merriam-Webster: transport etymology",
+      "url": "https://www.merriam-webster.com/dictionary/transport"
+    },
+    {
+      "title": "Merriam-Webster: import etymology",
+      "url": "https://www.merriam-webster.com/dictionary/import"
+    },
+    {
+      "title": "Merriam-Webster: support etymology",
+      "url": "https://www.merriam-webster.com/dictionary/support"
+    },
+    {
+      "title": "Merriam-Webster: preclude",
+      "url": "https://www.merriam-webster.com/dictionary/preclude"
+    },
+    {
+      "title": "Merriam-Webster: occlude",
+      "url": "https://www.merriam-webster.com/dictionary/occlude"
+    },
+    {
+      "title": "Merriam-Webster: acquiesce",
+      "url": "https://www.merriam-webster.com/dictionary/acquiesce"
+    },
+    {
+      "title": "Cambridge Dictionary: infinitive and -ing patterns",
+      "url": "https://dictionaryblog.cambridge.org/2024/03/06/avoiding-common-mistakes-with-verb-patterns-2/"
+    },
+    {
+      "title": "Cambridge Dictionary: count and mass uses",
+      "url": "https://dictionaryblog.cambridge.org/2018/04/04/i-love-coffee-would-you-like-a-coffee-words-that-can-be-countable-and-uncountable/"
+    },
+    {
+      "title": "British Council: count and uncount nouns",
+      "url": "https://learnenglish.britishcouncil.org/free-resources/grammar/english-grammar-reference/common-problems-count-uncount-nouns"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "en-ex-expand-collocations-001",
+      "entryId": "en-lex-b47f0db9b75eaeb6a0ef",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "You gave your word, so please ___ your promise.",
+      "answer": "keep",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Keep a promise means do what you said you would do.",
+        "ko": "keep a promise는 약속한 일을 지킨다는 뜻입니다."
+      },
+      "options": [
+        "keep",
+        "catch",
+        "wear",
+        "spend"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-002",
+      "entryId": "en-lex-d424bdbf1db4e12524ae",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "Check the total carefully so that you do not ___ a mistake.",
+      "answer": "make",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Make a mistake is the usual combination for doing something incorrectly.",
+        "ko": "실수하다는 make a mistake라고 합니다."
+      },
+      "options": [
+        "do",
+        "make",
+        "pay",
+        "wear"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-003",
+      "entryId": "en-lex-4c9a26de3d8bee018c77",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "After getting up, I ___ my bed by straightening the sheets.",
+      "answer": "make",
+      "instruction": {
+        "en": "Complete the expression with make or do.",
+        "ko": "make 또는 do로 표현을 완성하세요."
+      },
+      "explanation": {
+        "en": "Make the bed means arrange its sheets and covers neatly.",
+        "ko": "make the bed는 침대의 시트와 이불을 정돈한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-004",
+      "entryId": "en-lex-28fc24048d0893924067",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "I ___ my homework after dinner.",
+      "answer": "do",
+      "instruction": {
+        "en": "Complete the expression with make or do.",
+        "ko": "make 또는 do로 표현을 완성하세요."
+      },
+      "explanation": {
+        "en": "Do homework is the usual combination; homework is the task you work on.",
+        "ko": "숙제를 하다는 do homework라고 합니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-005",
+      "entryId": "en-lex-2f51bca229e0e7359c15",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "Please ___ an effort to arrive before the doors close.",
+      "answer": "make",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Make an effort means try deliberately and use energy.",
+        "ko": "make an effort는 의식적으로 힘을 들여 노력한다는 뜻입니다."
+      },
+      "options": [
+        "make",
+        "pay",
+        "catch",
+        "wear"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-006",
+      "entryId": "en-lex-d8bc4ab5b1bd953fa22d",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "As the organiser, I will ___ responsibility for checking the bookings.",
+      "answer": "take",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Take responsibility for means accept a duty.",
+        "ko": "take responsibility for는 어떤 일의 책임을 맡는다는 뜻입니다."
+      },
+      "options": [
+        "spend",
+        "take",
+        "catch",
+        "wear"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-007",
+      "entryId": "en-lex-f6741785abf0e3649834",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "Please ___ the speech to a conclusion; we have only a minute left.",
+      "answer": "bring",
+      "instruction": {
+        "en": "Complete the expression with bring or wear.",
+        "ko": "bring 또는 wear로 표현을 완성하세요."
+      },
+      "explanation": {
+        "en": "Bring a speech to a conclusion means bring it to an ending.",
+        "ko": "bring a speech to a conclusion은 연설을 마무리한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-008",
+      "entryId": "en-lex-68aab6128fb6f4e1fee2",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "The team will ___ research into how commuters choose their routes.",
+      "answer": "conduct",
+      "instruction": {
+        "en": "Complete the expression with conduct or construct.",
+        "ko": "conduct 또는 construct로 표현을 완성하세요."
+      },
+      "explanation": {
+        "en": "Conduct research is a formal way to say carry out a systematic investigation.",
+        "ko": "conduct research는 체계적인 연구를 수행한다는 격식 표현입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-009",
+      "entryId": "en-lex-7f49ad3a0869044b77b7",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "After several discussions, the panel managed to ___ a consensus.",
+      "answer": "reach",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Reach a consensus means arrive at a shared position.",
+        "ko": "reach a consensus는 공통된 의견에 도달한다는 뜻입니다."
+      },
+      "options": [
+        "reach",
+        "wear",
+        "spend",
+        "catch"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-010",
+      "entryId": "en-lex-7ea5598f01546c5214ba",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "What inference can we ___ from the repeated pattern?",
+      "answer": "draw",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Draw an inference means derive a conclusion from evidence.",
+        "ko": "draw an inference는 증거를 바탕으로 추론한다는 뜻입니다."
+      },
+      "options": [
+        "paint",
+        "draw",
+        "wear",
+        "pay"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-011",
+      "entryId": "en-lex-2e7f46f648612dc71d17",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "The next experiment will ___ the hypothesis against new observations.",
+      "answer": "test",
+      "instruction": {
+        "en": "Complete the expression with test or taste.",
+        "ko": "test 또는 taste로 표현을 완성하세요."
+      },
+      "explanation": {
+        "en": "Test a hypothesis means check whether evidence supports it.",
+        "ko": "test a hypothesis는 증거가 가설을 뒷받침하는지 검증한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-012",
+      "entryId": "en-lex-61a1f24e5ec553d04fdf",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "The team will carry ___ an analysis of the recorded interviews.",
+      "answer": "out",
+      "instruction": {
+        "en": "Complete carry ___ an analysis with out or off, meaning perform an analysis.",
+        "ko": "분석을 수행한다는 뜻이 되도록 carry ___ an analysis에 out 또는 off를 입력하세요."
+      },
+      "explanation": {
+        "en": "Carry out an analysis means perform a detailed examination.",
+        "ko": "carry out an analysis는 상세한 분석을 수행한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-013",
+      "entryId": "en-lex-cdf9247679f22fd8214a",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "The expense claims came ___ close scrutiny after the audit.",
+      "answer": "under",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Come under scrutiny means become the subject of careful examination.",
+        "ko": "come under scrutiny는 면밀한 검토의 대상이 된다는 뜻입니다."
+      },
+      "options": [
+        "under",
+        "among",
+        "beyond",
+        "along"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-014",
+      "entryId": "en-lex-83a8724e37ffa394caf9",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "This ruling may ___ a precedent for similar cases.",
+      "answer": "set",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Set a precedent means create an earlier case that later decisions may follow.",
+        "ko": "set a precedent는 이후 판단의 기준이 될 수 있는 선례를 만든다는 뜻입니다."
+      },
+      "options": [
+        "wear",
+        "set",
+        "catch",
+        "spend"
+      ]
+    },
+    {
+      "id": "en-ex-expand-collocations-015",
+      "entryId": "en-editorial-probity",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "Auditors must uphold high standards of financial ___: complete honesty is essential.",
+      "answer": "probity",
+      "instruction": {
+        "en": "Type the seven-letter noun meaning integrity in financial conduct.",
+        "ko": "재정 업무의 청렴함을 뜻하는 일곱 글자 명사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Financial probity is honesty and integrity in handling money.",
+        "ko": "financial probity는 재정을 다룰 때의 정직성과 청렴함입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-collocations-016",
+      "entryId": "en-lex-4b2ea2731a194c645f5c",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "Clear wording helps resolve the ___ between the two possible readings.",
+      "answer": "ambiguity",
+      "instruction": {
+        "en": "Type the nine-letter noun meaning uncertainty between interpretations.",
+        "ko": "여러 해석 사이의 불명확함을 뜻하는 아홉 글자 명사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Resolve an ambiguity means clarify which interpretation is intended.",
+        "ko": "resolve an ambiguity는 가능한 여러 해석 가운데 의도한 뜻을 명확히 한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-017",
+      "entryId": "en-lex-25f1da8a9ac8845baea8",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "It is cold outside. ___ your coat before you leave.",
+      "answer": "Put on",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Put on means dress yourself in the garment.",
+        "ko": "put on은 옷을 입는다는 뜻입니다."
+      },
+      "options": [
+        "Put on",
+        "Take off",
+        "Throw away",
+        "Cut up"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-018",
+      "entryId": "en-lex-4c9a26de3d8bee018c77",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "It is morning. ___ and leave your bed; breakfast is ready.",
+      "answer": "Get up",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Get up means rise from bed here.",
+        "ko": "여기서 get up은 잠자리에서 일어난다는 뜻입니다."
+      },
+      "options": [
+        "Lie down",
+        "Get up",
+        "Stay in",
+        "Fall over"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-019",
+      "entryId": "en-lex-25f1da8a9ac8845baea8",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "Put ___ your coat before going into the cold.",
+      "answer": "on",
+      "instruction": {
+        "en": "Type one particle to mean start wearing.",
+        "ko": "입기 시작한다는 뜻이 되도록 부사 하나를 입력하세요."
+      },
+      "explanation": {
+        "en": "Put on a coat means begin wearing it.",
+        "ko": "put on a coat는 외투를 입는다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-020",
+      "entryId": "en-lex-4c9a26de3d8bee018c77",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "Get ___ and leave your bed; it is time for breakfast.",
+      "answer": "up",
+      "instruction": {
+        "en": "Type one particle to mean rise from bed.",
+        "ko": "잠자리에서 일어나다가 되도록 부사 하나를 입력하세요."
+      },
+      "explanation": {
+        "en": "Get up is the expression for rising from bed.",
+        "ko": "get up은 잠자리에서 일어나는 표현입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-021",
+      "entryId": "en-lex-84aef0ea684cb6483691",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "The hall is unavailable, so we must ___ the concert until Friday.",
+      "answer": "put off",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Put off means postpone to a later time.",
+        "ko": "put off는 더 나중으로 연기한다는 뜻입니다."
+      },
+      "options": [
+        "put off",
+        "carry on",
+        "look into",
+        "take after"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-022",
+      "entryId": "en-lex-8160c65a7e21557293ae",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "I cannot ___ this constant drilling noise any longer.",
+      "answer": "put up with",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Put up with means tolerate something unpleasant.",
+        "ko": "put up with는 불쾌한 것을 참는다는 뜻입니다."
+      },
+      "options": [
+        "put up with",
+        "look forward to",
+        "run out of",
+        "come down with"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-023",
+      "entryId": "en-lex-84aef0ea684cb6483691",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "We will put the meeting ___ until next week.",
+      "answer": "off",
+      "instruction": {
+        "en": "Type the particle meaning postpone.",
+        "ko": "연기한다는 뜻이 되도록 부사를 입력하세요."
+      },
+      "explanation": {
+        "en": "The particle off makes put off mean postpone.",
+        "ko": "put off에서 off가 연기한다는 뜻을 만듭니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-024",
+      "entryId": "en-lex-8160c65a7e21557293ae",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "I cannot put up ___ the noise; please turn the machine off.",
+      "answer": "with",
+      "instruction": {
+        "en": "Type the missing word or words.",
+        "ko": "빈칸에 들어갈 단어나 표현을 입력하세요."
+      },
+      "explanation": {
+        "en": "The complete expression is put up with something.",
+        "ko": "완전한 표현은 put up with something입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-025",
+      "entryId": "en-lex-921e6a5480c07e6da172",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "The investigation aims to ___ corruption throughout the organisation so that none remains.",
+      "answer": "root out",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Root out means find and eliminate a persistent problem.",
+        "ko": "root out은 뿌리 깊은 문제를 찾아 없앤다는 뜻입니다."
+      },
+      "options": [
+        "root out",
+        "brush up",
+        "look up to",
+        "come across"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-026",
+      "entryId": "en-lex-20a14717e28142b48731",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "The council voted to ___ the outdated licensing rule so that it no longer applied.",
+      "answer": "do away with",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Do away with means abolish or remove entirely.",
+        "ko": "do away with는 완전히 없애거나 폐지한다는 뜻입니다."
+      },
+      "options": [
+        "do away with",
+        "look forward to",
+        "put up with",
+        "run into"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-027",
+      "entryId": "en-lex-921e6a5480c07e6da172",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "The review is intended to root ___ fraud from the payment system.",
+      "answer": "out",
+      "instruction": {
+        "en": "Type one particle to complete root ___, meaning eliminate.",
+        "ko": "없애다를 뜻하는 root ___의 부사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Root out a problem means eliminate it thoroughly.",
+        "ko": "root out a problem은 문제를 철저히 없앤다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-028",
+      "entryId": "en-lex-20a14717e28142b48731",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "The reform will do away ___ the compulsory fee altogether.",
+      "answer": "with",
+      "instruction": {
+        "en": "Type the missing word or words.",
+        "ko": "빈칸에 들어갈 단어나 표현을 입력하세요."
+      },
+      "explanation": {
+        "en": "Do away with a rule or fee means abolish it.",
+        "ko": "do away with a rule or fee는 규정이나 요금을 폐지한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-029",
+      "entryId": "en-editorial-preclude",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "The confirmed timestamp is from last month, so we can ___ the possibility that the file was created yesterday.",
+      "answer": "rule out",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Rule out excludes a possibility; it is a common paraphrase of preclude in this context.",
+        "ko": "rule out은 가능성을 배제하며, 이 문맥에서는 preclude를 풀어 쓴 표현입니다."
+      },
+      "options": [
+        "rule out",
+        "bring about",
+        "hold on to",
+        "look forward to"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-030",
+      "entryId": "en-lex-e76f8af9650c347e308d",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "They refused to abandon the project. After three failed trials, the researchers decided to ___ trying.",
+      "answer": "carry on",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Carry on trying means continue despite the setbacks; this context expresses perseverance.",
+        "ko": "carry on trying은 계속 시도한다는 뜻이며, 여기서는 실패에도 굴하지 않는 끈기를 나타냅니다."
+      },
+      "options": [
+        "carry on",
+        "give up",
+        "put off",
+        "rule out"
+      ]
+    },
+    {
+      "id": "en-ex-expand-phrasal-031",
+      "entryId": "en-editorial-preclude",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "The evidence rules ___ any possibility of an accidental deletion.",
+      "answer": "out",
+      "instruction": {
+        "en": "Type one particle to mean exclude as a possibility.",
+        "ko": "가능성을 배제한다는 뜻이 되도록 부사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Rule out means exclude a possibility.",
+        "ko": "rule out은 어떤 가능성을 배제한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-phrasal-032",
+      "entryId": "en-lex-e76f8af9650c347e308d",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "Despite repeated setbacks, we will carry ___ working towards the same goal.",
+      "answer": "on",
+      "instruction": {
+        "en": "Type one particle to mean continue.",
+        "ko": "계속하다가 되도록 부사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Carry on working means continue working, which expresses perseverance here.",
+        "ko": "carry on working은 계속 일한다는 뜻이며 여기서는 끈기 있게 노력함을 나타냅니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-033",
+      "entryId": "en-lex-74a90efdb6c7676e320f",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "Your ___ helped me choose a suitable course.",
+      "answer": "advice",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Advice is the guidance noun; advise is a verb. This is a contextual spelling pair, not same-POS synonyms.",
+        "ko": "advice는 조언이라는 명사이고 advise는 동사입니다. 같은 품사 동의어가 아니라 문맥으로 구별하는 철자 쌍입니다."
+      },
+      "options": [
+        "advice",
+        "advise"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-034",
+      "entryId": "en-lex-49af8899be7a0a0556e6",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "Please ___ slowly while I count to five.",
+      "answer": "breathe",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Breathe is the action verb; breath is the noun.",
+        "ko": "breathe는 숨 쉬다라는 동사이고 breath는 숨이라는 명사입니다."
+      },
+      "options": [
+        "breath",
+        "breathe"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-035",
+      "entryId": "en-lex-4c06ab12ad23b8b8a1a3",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "Could you ___ me on which course to choose?",
+      "answer": "advise",
+      "instruction": {
+        "en": "Type advice or advise; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 advice 또는 advise를 입력하세요."
+      },
+      "explanation": {
+        "en": "After could you, use the verb advise rather than the noun advice.",
+        "ko": "could you 뒤에는 명사 advice가 아니라 동사 advise를 씁니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-036",
+      "entryId": "en-lex-b0e4ff1ed20b95c135c2",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "The screw is ___, so tighten it before using the chair.",
+      "answer": "loose",
+      "instruction": {
+        "en": "Type loose or lose; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 loose 또는 lose를 입력하세요."
+      },
+      "explanation": {
+        "en": "Loose means not firmly fastened; lose is a verb.",
+        "ko": "loose는 단단히 고정되지 않은 상태를 나타내는 형용사이고 lose는 동사입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-037",
+      "entryId": "en-lex-da8f59c9865d4285b841",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "A late delivery could ___ the whole production schedule.",
+      "answer": "affect",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Affect means influence here. Effect as a verb means bring about, not influence an existing schedule.",
+        "ko": "여기서 affect는 영향을 주다입니다. 동사 effect는 실현하다로, 기존 일정에 영향을 준다는 뜻과 다릅니다."
+      },
+      "options": [
+        "affect",
+        "effect"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-038",
+      "entryId": "en-lex-9a76f2eea90e0fc5d363",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "The new medicine had a noticeable ___ on the severity of the symptoms.",
+      "answer": "effect",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Effect is the result or influence noun in have an effect on.",
+        "ko": "have an effect on에서 effect는 결과나 영향을 나타내는 명사입니다."
+      },
+      "options": [
+        "affect",
+        "effect"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-039",
+      "entryId": "en-lex-8608239f49f8c0323903",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "Fair treatment is a moral ___ that guides our decisions.",
+      "answer": "principle",
+      "instruction": {
+        "en": "Type principle or principal; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 principle 또는 principal를 입력하세요."
+      },
+      "explanation": {
+        "en": "Principle is a guiding rule; principal can name the head of a school.",
+        "ko": "principle은 행동을 이끄는 원칙이고 principal은 학교장을 가리킬 수 있습니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-040",
+      "entryId": "en-lex-efac4f8e1120a56b56cb",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "Her kind remark about my presentation was a welcome ___.",
+      "answer": "compliment",
+      "instruction": {
+        "en": "Type compliment or complement; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 compliment 또는 complement를 입력하세요."
+      },
+      "explanation": {
+        "en": "A compliment expresses praise; a complement completes or fits with something.",
+        "ko": "compliment는 칭찬이고 complement는 무엇을 완성하거나 보완하는 것을 나타냅니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-041",
+      "entryId": "en-lex-6878d67b075a7825b101",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "The two skills ___ each other: one helps us plan and the other helps us execute.",
+      "answer": "complement",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Complement means fit together usefully; compliment means praise.",
+        "ko": "complement는 서로 잘 맞아 보완한다는 뜻이고 compliment는 칭찬한다는 뜻입니다."
+      },
+      "options": [
+        "compliment",
+        "complement"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-042",
+      "entryId": "en-lex-2a019f60311a72411244",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "From the footprints, we can ___ that someone crossed the garden.",
+      "answer": "infer",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "An observer infers from evidence; a sign or speaker may imply an unstated meaning.",
+        "ko": "관찰자는 증거에서 결론을 infer하고, 단서나 말하는 사람은 뜻을 imply할 수 있습니다."
+      },
+      "options": [
+        "imply",
+        "infer"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-043",
+      "entryId": "en-lex-e6272ef8a0f88a466b5c",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "Her carefully chosen words ___ that she disagrees, although she never says so directly.",
+      "answer": "imply",
+      "instruction": {
+        "en": "Type imply or infer; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 imply 또는 infer를 입력하세요."
+      },
+      "explanation": {
+        "en": "Words imply an unstated meaning; the listener infers it.",
+        "ko": "말은 직접 밝히지 않은 뜻을 imply하고, 듣는 사람은 그 뜻을 infer합니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-044",
+      "entryId": "en-lex-0cdc3e97ba3c1fb0363a",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "The safety briefing must ___ the experiment; it takes place first.",
+      "answer": "precede",
+      "instruction": {
+        "en": "Type precede or proceed; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 precede 또는 proceed를 입력하세요."
+      },
+      "explanation": {
+        "en": "Precede means occur before; proceed means move forward.",
+        "ko": "precede는 먼저 일어나다이고 proceed는 진행하다입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-045",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "The interviewer used an open question to ___ a detailed account.",
+      "answer": "elicit",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Elicit is a verb meaning draw out a response. Illicit is an adjective meaning prohibited.",
+        "ko": "elicit은 반응을 이끌어 내다라는 동사이고 illicit은 금지된이라는 형용사입니다."
+      },
+      "options": [
+        "illicit",
+        "elicit"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-046",
+      "entryId": "en-editorial-ingenuous",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "His ___ admission sounded sincere and unguarded, with no attempt to impress us.",
+      "answer": "ingenuous",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Ingenuous means sincere and unsuspecting; ingenious means cleverly inventive.",
+        "ko": "ingenuous는 솔직하고 꾸밈없다는 뜻이고 ingenious는 기발하고 영리하다는 뜻입니다."
+      },
+      "options": [
+        "ingenious",
+        "ingenuous"
+      ]
+    },
+    {
+      "id": "en-ex-expand-confusables-047",
+      "entryId": "en-editorial-apprise",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "Please ___ the board of the revised deadline before the meeting.",
+      "answer": "apprise",
+      "instruction": {
+        "en": "Type apprise or appraise; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 apprise 또는 appraise를 입력하세요."
+      },
+      "explanation": {
+        "en": "Apprise someone of something means inform them. Appraise means assess value or quality.",
+        "ko": "apprise someone of something은 내용을 알리다이고 appraise는 가치나 질을 평가하다입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-confusables-048",
+      "entryId": "en-lex-829fee56fa9459db1b4f",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "The warning says the eruption is ___ and may happen within hours.",
+      "answer": "imminent",
+      "instruction": {
+        "en": "Type imminent or eminent; choose by meaning and grammar.",
+        "ko": "뜻과 문법에 맞게 imminent 또는 eminent를 입력하세요."
+      },
+      "explanation": {
+        "en": "Imminent means about to happen; eminent describes a distinguished person.",
+        "ko": "imminent는 곧 일어날 듯하다는 뜻이고 eminent는 명망 있는 사람을 나타냅니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-049",
+      "entryId": "en-lex-1065805c1c0721b9a264",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "Before chewing, please ___ your mouth.",
+      "answer": "close",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Close belongs to the historical closing family; here it means shut the mouth.",
+        "ko": "close는 역사적으로 닫다 계열과 연결되며, 여기서는 입을 다물라는 뜻입니다."
+      },
+      "options": [
+        "close",
+        "import",
+        "inspect",
+        "describe"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-050",
+      "entryId": "en-lex-fc7bc0a8a91ee19e9302",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The volunteers ___ the performers quietly behind the scenes.",
+      "answer": "support",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Support is historically connected with Latin portare, carry; here it means give help.",
+        "ko": "support는 역사적으로 라틴어 portare와 연결되며, 여기서는 뒤에서 돕는다는 뜻입니다."
+      },
+      "options": [
+        "exclude",
+        "occlude",
+        "support",
+        "prescribe"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-051",
+      "entryId": "en-lex-1065805c1c0721b9a264",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "You can breathe through your nose when you ___ your mouth.",
+      "answer": "close",
+      "instruction": {
+        "en": "Type the five-letter verb from the closing family.",
+        "ko": "닫다 계열에 속하는 다섯 글자 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "The closing-family word fits the action of shutting the mouth.",
+        "ko": "닫다 계열의 단어가 입을 다무는 동작에 맞습니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-052",
+      "entryId": "en-lex-fc7bc0a8a91ee19e9302",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "Our backstage helpers ___ the performers throughout the show.",
+      "answer": "support",
+      "instruction": {
+        "en": "Type the seven-letter helping verb from the portare family.",
+        "ko": "portare 계열에서 돕다를 뜻하는 일곱 글자 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Support can mean help behind the scenes; its history connects with carrying.",
+        "ko": "support는 뒤에서 돕다이며, 어원상 나르다와 연결됩니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-053",
+      "entryId": "en-lex-dec0bc768d2aca520f0d",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The mechanic will ___ the damaged brake before deciding whether it is safe.",
+      "answer": "inspect",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Inspect comes through Latin inspicere and inspectus, connected with looking closely.",
+        "ko": "inspect는 자세히 살피는 것과 관련된 라틴어 inspicere와 inspectus를 거칩니다."
+      },
+      "options": [
+        "import",
+        "describe",
+        "inspect",
+        "exclude"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-054",
+      "entryId": "en-lex-369e5cdc49e0e7a0844a",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "In your report, ___ the changes you observed, so the reader can picture them.",
+      "answer": "describe",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Describe belongs to the Latin scribere family; it means represent something in words or another form.",
+        "ko": "describe는 라틴어 scribere 계열이며 말이나 글 등으로 표현한다는 뜻입니다."
+      },
+      "options": [
+        "prescribe",
+        "describe",
+        "transport",
+        "import"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-055",
+      "entryId": "en-lex-454fdf290ba20b8544be",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "Refrigerated lorries ___ the fruit from the farm to the port.",
+      "answer": "transport",
+      "instruction": {
+        "en": "Type the nine-letter verb from the portare family meaning carry to another place.",
+        "ko": "portare 계열에서 다른 장소로 운반하다를 뜻하는 아홉 글자 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Transport combines historical trans- with portare and means carry between places.",
+        "ko": "transport는 역사적으로 trans-와 portare가 결합했으며 장소 사이로 운반하다입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-056",
+      "entryId": "en-lex-ab6fdd4f7a0e9cafd785",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "Because these beans are grown abroad, local shops must ___ them.",
+      "answer": "import",
+      "instruction": {
+        "en": "Type the six-letter inward-carrying verb from the portare family.",
+        "ko": "portare 계열에서 국내로 들여오다를 뜻하는 여섯 글자 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Import has Latin in- plus portare ancestry and means bring goods into a country.",
+        "ko": "import는 라틴어 in-와 portare에서 왔으며 외국 상품을 국내로 들여오다입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-057",
+      "entryId": "en-lex-8e0cd015e5e797afbff8",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The editor decided to ___ the repeated paragraph from the final text.",
+      "answer": "exclude",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Exclude shares the closing family with an outward historical element; here a passage is removed.",
+        "ko": "exclude는 닫다 계열에서 밖을 나타내는 요소와 연결되며, 여기서는 문단을 제외합니다."
+      },
+      "options": [
+        "include",
+        "exclude",
+        "describe",
+        "inspect"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-058",
+      "entryId": "en-lex-74478b5d74ccaee0ea08",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The novelist sent the revised ___ to the publisher before printing began.",
+      "answer": "manuscript",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Manuscript combines Latin elements for hand and written. A modern manuscript can be typed.",
+        "ko": "manuscript는 손과 쓰인 것을 뜻하는 라틴어 요소에서 왔습니다. 현대 원고는 타이핑한 것일 수도 있습니다."
+      },
+      "options": [
+        "spectator",
+        "manuscript",
+        "porter",
+        "prescription"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-059",
+      "entryId": "en-lex-09e8a2d5d732a4f59a58",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "The regulations ___ a maximum noise level for every machine.",
+      "answer": "prescribe",
+      "instruction": {
+        "en": "Type the nine-letter rule-setting verb from the scribere family.",
+        "ko": "scribere 계열에서 규칙을 정하다를 뜻하는 아홉 글자 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Prescribe can mean lay down a rule, not only order medicine. Its ancestor relates to writing beforehand.",
+        "ko": "prescribe는 약 처방뿐 아니라 규칙을 정한다는 뜻도 있습니다. 어원은 미리 쓰는 것과 관련됩니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-060",
+      "entryId": "en-lex-b4ad9b017d5892b6298c",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "Looking at the dispute from the child's ___ changes how we understand it.",
+      "answer": "perspective",
+      "instruction": {
+        "en": "Type the eleven-letter noun meaning viewpoint from the looking family.",
+        "ko": "보다 계열에서 관점을 뜻하는 열한 글자 명사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Perspective belongs historically to a Latin looking family; here it means viewpoint.",
+        "ko": "perspective는 역사적으로 라틴어의 보다 계열과 연결되며 여기서는 관점입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-061",
+      "entryId": "en-editorial-preclude",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The anonymous design should ___ identification of individual respondents.",
+      "answer": "preclude",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Preclude is connected with closing beforehand; here it makes identification impossible.",
+        "ko": "preclude는 미리 닫는 것과 연결되며 여기서는 신원 확인을 불가능하게 합니다."
+      },
+      "options": [
+        "include",
+        "preclude",
+        "inspect",
+        "describe"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-062",
+      "entryId": "en-editorial-occlude",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "A screen can ___ the camera's view of the marker.",
+      "answer": "occlude",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Occlude blocks an opening or view. Its oc- reflects assimilation of ob-, not an invented separate prefix.",
+        "ko": "occlude는 통로나 시야를 막다입니다. oc-는 ob-가 동화된 형태이지 별도로 만든 접두사가 아닙니다."
+      },
+      "options": [
+        "include",
+        "prescribe",
+        "occlude",
+        "import"
+      ]
+    },
+    {
+      "id": "en-ex-expand-roots-063",
+      "entryId": "en-editorial-preclude",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "A legally binding prohibition would ___ the proposed sale altogether.",
+      "answer": "preclude",
+      "instruction": {
+        "en": "Type the eight-letter closing-family verb meaning make impossible.",
+        "ko": "닫다 계열에서 불가능하게 막다를 뜻하는 여덟 글자 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Preclude makes an action impossible; it is stronger than delaying it.",
+        "ko": "preclude는 행동을 불가능하게 막으며 단순히 미루는 것보다 강한 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-roots-064",
+      "entryId": "en-lex-8b9eafe838ae9ca69ba3",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "She examined her own motives through careful ___.",
+      "answer": "introspection",
+      "instruction": {
+        "en": "Type the thirteen-letter noun for examining your own thoughts.",
+        "ko": "자신의 생각을 살피는 성찰을 뜻하는 열세 글자 명사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Introspection uses the historical image of looking inward for examining thoughts and feelings.",
+        "ko": "introspection은 안을 바라본다는 역사적 이미지와 연결되는 자기 생각과 감정의 성찰입니다."
+      }
+    },
+    {
+      "id": "en-ex-expand-patterns-065",
+      "entryId": "en-lex-c8c76eaaaffa2ff15ae1",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "I clearly remember ___ the door yesterday; I can still picture turning the key.",
+      "answer": "locking",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Remember doing recalls a past action; remember to do concerns not forgetting a duty.",
+        "ko": "remember doing은 과거 행동을 기억함이고 remember to do는 할 일을 잊지 않음입니다."
+      },
+      "options": [
+        "locking",
+        "to lock",
+        "lock"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-066",
+      "entryId": "en-lex-950c803c8059187b6998",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "She stopped walking ___ a call, then resumed her walk.",
+      "answer": "to answer",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "The infinitive gives the purpose of stopping the walk. Stopped answering would mean no longer answered.",
+        "ko": "to부정사는 걷기를 멈춘 목적을 나타냅니다. stopped answering은 응답을 그만두었다는 뜻입니다."
+      },
+      "options": [
+        "answering",
+        "to answer",
+        "answer"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-067",
+      "entryId": "en-lex-4573ba0587be347edc1a",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The teacher allowed us ___ a dictionary during the exercise.",
+      "answer": "to use",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Allow takes an object plus a to-infinitive for the permitted action.",
+        "ko": "허용된 행동을 나타낼 때 allow + 목적어 + to부정사를 씁니다."
+      },
+      "options": [
+        "using",
+        "use",
+        "to use"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-068",
+      "entryId": "en-lex-7ceba2ad347dcd8f43d2",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "We persuaded the organiser ___ the start time.",
+      "answer": "to change",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Persuade someone to do something names the person persuaded and the resulting action.",
+        "ko": "persuade + 사람 + to부정사는 설득받는 사람과 그 행동을 나타냅니다."
+      },
+      "options": [
+        "to change",
+        "changing",
+        "change"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-069",
+      "entryId": "en-lex-ccbffff3ca5539560fd8",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "She insisted on ___ the figures herself.",
+      "answer": "checking",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "On is a preposition, so the following activity takes the -ing form.",
+        "ko": "on은 전치사이므로 뒤의 행동은 -ing형으로 나타냅니다."
+      },
+      "options": [
+        "to check",
+        "check",
+        "checking"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-070",
+      "entryId": "en-lex-90f17c0ac0fd3392652d",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The barrier prevented visitors from ___ the damaged staircase.",
+      "answer": "using",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Use prevent someone from doing something. From takes an -ing form.",
+        "ko": "prevent + 사람 + from + -ing를 씁니다. from 뒤에는 -ing형이 옵니다."
+      },
+      "options": [
+        "use",
+        "using",
+        "to use"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-071",
+      "entryId": "en-lex-eff62f757ce306f25837",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The apprentices aspire ___ independent designers.",
+      "answer": "to become",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Aspire to do expresses a strong ambition for a future achievement.",
+        "ko": "aspire to do는 미래의 성취를 강하게 바란다는 뜻입니다."
+      },
+      "options": [
+        "becoming",
+        "become",
+        "to become"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-072",
+      "entryId": "en-lex-f5772bbca38f57e8caa6",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The agreement places us under an obligation ___ users before changing the fees.",
+      "answer": "to inform",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "An obligation to do something identifies the action that is required.",
+        "ko": "an obligation to do something은 해야 할 의무의 내용을 나타냅니다."
+      },
+      "options": [
+        "informing",
+        "to inform",
+        "inform"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-073",
+      "entryId": "en-lex-e38b8567e530ff12554a",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "Accuracy is the main criterion for ___ the final method.",
+      "answer": "selecting",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "For is a preposition here, so use an -ing form for the activity.",
+        "ko": "여기서 for는 전치사이므로 뒤의 활동을 -ing형으로 씁니다."
+      },
+      "options": [
+        "selecting",
+        "to select",
+        "select"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-074",
+      "entryId": "en-editorial-preclude",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The rule precludes anyone without a pass from ___ the archive.",
+      "answer": "entering",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Preclude someone from doing something means prevent that person from doing it.",
+        "ko": "preclude + 사람 + from + -ing는 그 사람이 행동하지 못하게 막는다는 뜻입니다."
+      },
+      "options": [
+        "enter",
+        "entering",
+        "to enter"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-075",
+      "entryId": "en-editorial-acquiesce",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The committee reluctantly acquiesced to ___ the timetable.",
+      "answer": "changing",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "The to in acquiesce to is a preposition, so an action after it takes -ing.",
+        "ko": "acquiesce to의 to는 전치사이므로 뒤에 행동이 오면 -ing형을 씁니다."
+      },
+      "options": [
+        "to change",
+        "change",
+        "changing"
+      ]
+    },
+    {
+      "id": "en-ex-expand-patterns-076",
+      "entryId": "en-editorial-penchant",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "She has a penchant for ___ unusual historical maps.",
+      "answer": "collecting",
+      "instruction": {
+        "en": "Choose the verb form that expresses the intended meaning.",
+        "ko": "문맥의 뜻에 맞는 동사 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "A penchant for an activity means a marked liking for it; for takes -ing here.",
+        "ko": "a penchant for는 특정 활동을 유난히 좋아한다는 뜻이며 for 뒤에는 -ing형을 씁니다."
+      },
+      "options": [
+        "collect",
+        "collecting",
+        "to collect"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-077",
+      "entryId": "en-lex-748db27bbf31599e1e5e",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "As a drink in general, ___ coffee contains caffeine.",
+      "answer": "—",
+      "instruction": {
+        "en": "Use coffee as an uncountable name for the drink in general, not an individual serving. Choose — for no article.",
+        "ko": "coffee를 한 잔의 분량이 아닌 음료 자체를 나타내는 불가산명사로 사용하세요. 관사가 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "Coffee names the drink as a substance here, so the general statement has no article.",
+        "ko": "여기서는 음료 자체를 일반적으로 말하므로 불가산 용법의 coffee 앞에 관사가 없습니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-078",
+      "entryId": "en-lex-748db27bbf31599e1e5e",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "Please bring me ___ coffee: one cup, with no sugar.",
+      "answer": "a",
+      "instruction": {
+        "en": "Choose a or an for this indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "A coffee means one serving. The same drink can be uncountable as a substance and countable as a serving.",
+        "ko": "a coffee는 커피 한 잔입니다. 음료 자체는 불가산으로, 한 잔의 분량은 가산으로 쓸 수 있습니다."
+      },
+      "options": [
+        "a",
+        "an"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-079",
+      "entryId": "en-lex-4c9a26de3d8bee018c77",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "This room has just one bed. Please put the blanket on ___ bed.",
+      "answer": "the",
+      "instruction": {
+        "en": "Choose the article. Choose — when no article is needed.",
+        "ko": "관사를 고르세요. 관사가 필요 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "The earlier sentence identifies the only bed in this room.",
+        "ko": "앞 문장에서 이 방의 유일한 침대를 밝혔으므로 the를 씁니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-080",
+      "entryId": "en-lex-1f225af580b3f5bfb94e",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The report presents two separate ___ of evidence.",
+      "answer": "pieces",
+      "instruction": {
+        "en": "Choose the form that fits the meaning and countability.",
+        "ko": "뜻과 명사의 가산성을 고려하여 알맞은 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Evidence is normally uncountable; individual items can be counted as pieces.",
+        "ko": "evidence는 보통 불가산명사이며 개별 항목은 pieces로 셉니다."
+      },
+      "options": [
+        "evidences",
+        "pieces",
+        "evidence"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-081",
+      "entryId": "en-lex-2a51f81f52ad7d8fceaa",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The role requires ___ working knowledge of spreadsheets.",
+      "answer": "a",
+      "instruction": {
+        "en": "Choose a or an for this indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "A working knowledge is an established expression for a usable degree of knowledge, although knowledge is usually uncountable.",
+        "ko": "a working knowledge는 실무에 쓸 수 있는 지식을 나타내는 표현입니다. knowledge는 보통 불가산이지만 이 표현에는 a를 씁니다."
+      },
+      "options": [
+        "an",
+        "a"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-082",
+      "entryId": "en-lex-68aab6128fb6f4e1fee2",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The team completed one study. ___ research described in that study will be discussed today.",
+      "answer": "The",
+      "instruction": {
+        "en": "Choose A, An or The to refer back to the particular research already identified.",
+        "ko": "이미 밝힌 특정 연구를 다시 가리키도록 A, An, The 중에서 선택하세요."
+      },
+      "explanation": {
+        "en": "A specific body of research is identified, so use the even though research is uncountable.",
+        "ko": "특정 연구를 가리키므로 research가 불가산명사여도 the를 씁니다."
+      },
+      "options": [
+        "A",
+        "An",
+        "The"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-083",
+      "entryId": "en-lex-2e7f46f648612dc71d17",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The researcher proposed ___ hypothesis that has not yet been tested.",
+      "answer": "a",
+      "instruction": {
+        "en": "Choose a or an for this indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "Hypothesis is a singular countable noun beginning with a pronounced h sound.",
+        "ko": "hypothesis는 단수 가산명사이고 h 소리를 발음하므로 a를 씁니다."
+      },
+      "options": [
+        "a",
+        "an"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-084",
+      "entryId": "en-lex-61a1f24e5ec553d04fdf",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The paper contains two independent ___ of the same dataset.",
+      "answer": "analyses",
+      "instruction": {
+        "en": "Choose the form that fits the meaning and countability.",
+        "ko": "뜻과 명사의 가산성을 고려하여 알맞은 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Separate examinations can be counted; the plural of analysis is analyses.",
+        "ko": "개별 분석은 셀 수 있으며 analysis의 복수형은 analyses입니다."
+      },
+      "options": [
+        "analysis",
+        "analyses",
+        "analysises"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-085",
+      "entryId": "en-lex-e38b8567e530ff12554a",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "We agreed on one criterion yesterday. Today we applied ___ criterion to every proposal.",
+      "answer": "the",
+      "instruction": {
+        "en": "Choose the article. Choose — when no article is needed.",
+        "ko": "관사를 고르세요. 관사가 필요 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "The refers back to the criterion already agreed on.",
+        "ko": "이미 합의한 그 기준을 다시 가리키므로 the를 씁니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-086",
+      "entryId": "en-lex-4b2ea2731a194c645f5c",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "In general, ___ ambiguity in wording can lead readers to different interpretations.",
+      "answer": "—",
+      "instruction": {
+        "en": "Use ambiguity as an uncountable quality, not one individual ambiguous expression. Choose — for no article.",
+        "ko": "ambiguity를 개별 표현 하나가 아닌 불가산 성질로 사용하세요. 관사가 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "Ambiguity is an uncountable quality when discussed generally.",
+        "ko": "표현의 모호함이라는 성질을 일반적으로 말할 때 ambiguity는 불가산 용법입니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-087",
+      "entryId": "en-lex-4b2ea2731a194c645f5c",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The editor found ___ ambiguity in one sentence: bank could mean two different things.",
+      "answer": "an",
+      "instruction": {
+        "en": "Choose a or an for this indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "An ambiguity is one particular instance of ambiguous wording; this is a countable use.",
+        "ko": "an ambiguity는 모호한 표현의 특정 사례 하나를 나타내는 가산 용법입니다."
+      },
+      "options": [
+        "a",
+        "an"
+      ]
+    },
+    {
+      "id": "en-ex-expand-articles-088",
+      "entryId": "en-editorial-probity",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "As a professional value, ___ probity matters even when nobody is watching.",
+      "answer": "—",
+      "instruction": {
+        "en": "Choose the article. Choose — when no article is needed.",
+        "ko": "관사를 고르세요. 관사가 필요 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "Probity is an uncountable abstract quality, used generally here.",
+        "ko": "probity는 청렴함이라는 불가산 추상명사이며 여기서는 일반적인 성질을 말합니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    }
+  ],
+  "families": [
+    {
+      "id": "en-family-specere",
+      "root": "specere / spectare",
+      "meaning": {
+        "en": "Historical Latin family associated with looking and watching. Modern meanings must still be learnt separately.",
+        "ko": "보다와 지켜보다에 관련된 역사적 라틴어 계열입니다. 현대의 뜻은 각각 따로 익혀야 합니다."
+      },
+      "members": [
+        {
+          "entryId": "en-lex-dec0bc768d2aca520f0d",
+          "word": "inspect",
+          "parts": "in- + specere → inspicere; inspectus",
+          "note": {
+            "en": "Latin inspicere concerns looking into something; inspectus supplies the form behind inspect. Modern inspect means examine carefully.",
+            "ko": "라틴어 inspicere는 안을 살피는 것과 관련되고 inspectus가 inspect의 형태와 연결됩니다. 현대에는 자세히 검사하다입니다."
+          }
+        },
+        {
+          "entryId": "en-lex-2ee33d378b220b8d9cd9",
+          "word": "spectator",
+          "parts": "Latin spectator < spectare",
+          "note": {
+            "en": "Spectare is a Latin verb for watching. A spectator watches an event; the word does not mean someone who inspects it officially.",
+            "ko": "spectare는 지켜보다를 뜻하는 라틴어 동사입니다. spectator는 행사를 관람하는 사람이지 공식 검사자라는 뜻은 아닙니다."
+          }
+        },
+        {
+          "entryId": "en-lex-b4ad9b017d5892b6298c",
+          "word": "perspective",
+          "parts": "Latin looking family: prospectus; perspectivus < perspicere",
+          "note": {
+            "en": "The history has more than one route: the noun is linked through French and Italian to Latin prospectus, while optical forms connect with perspectivus and perspicere. These all belong to the looking family. The selected modern sense is viewpoint, not a mechanical sum of a prefix and a root.",
+            "ko": "어원에는 여러 갈래가 있습니다. 명사는 프랑스어와 이탈리아어를 거쳐 라틴어 prospectus와 연결되고, 광학 관련 형태는 perspectivus와 perspicere에 연결됩니다. 모두 보다 계열에 속합니다. 여기서 배우는 관점이라는 뜻을 접두사와 어근의 단순 합으로 해석하면 안 됩니다."
+          }
+        },
+        {
+          "entryId": "en-lex-8b9eafe838ae9ca69ba3",
+          "word": "introspection",
+          "parts": "intro- + specere → introspicere; introspectus",
+          "note": {
+            "en": "The historical image is looking inward. The modern noun is examination of personal thoughts and feelings, not examination of the body with a device.",
+            "ko": "역사적 이미지는 안을 바라보는 것입니다. 현대 명사는 자신의 생각과 감정을 성찰함이며 기구로 몸속을 검사하는 뜻이 아닙니다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "en-family-scribere",
+      "root": "scribere / scriptus",
+      "meaning": {
+        "en": "Historical Latin family associated with writing. The forms scrib- and script- occur in related words.",
+        "ko": "쓰다와 관련된 역사적 라틴어 계열입니다. 관련 단어에 scrib-와 script- 형태가 나타납니다."
+      },
+      "members": [
+        {
+          "entryId": "en-lex-369e5cdc49e0e7a0844a",
+          "word": "describe",
+          "parts": "de- + scribere → describere",
+          "note": {
+            "en": "The Latin writing ancestry helps recall representation in words. Modern describe can be spoken as well as written.",
+            "ko": "라틴어의 쓰다 계통은 말로 표현한다는 뜻을 기억하는 데 도움이 됩니다. 현대의 describe는 글뿐 아니라 말로 묘사하는 데도 씁니다."
+          }
+        },
+        {
+          "entryId": "en-lex-09e8a2d5d732a4f59a58",
+          "word": "prescribe",
+          "parts": "prae- + scribere → praescribere",
+          "note": {
+            "en": "The Latin ancestor concerns writing in advance or laying down an instruction. The linked sense is setting a rule; prescribing medicine is another modern use.",
+            "ko": "라틴어 조상은 미리 쓰거나 지시를 정하는 것과 관련됩니다. 연결된 뜻은 규칙을 정하다이며 약을 처방하다는 다른 현대 용법도 있습니다."
+          }
+        },
+        {
+          "entryId": "en-lex-74478b5d74ccaee0ea08",
+          "word": "manuscript",
+          "parts": "Latin manu scriptus",
+          "note": {
+            "en": "The historical expression concerns something written by hand. Today a manuscript submitted for publication may be handwritten or typed.",
+            "ko": "역사적 표현은 손으로 쓴 것을 가리킵니다. 오늘날 출판용 원고는 손으로 쓰거나 타이핑한 것일 수 있습니다."
+          }
+        }
+      ]
+    },
+    {
+      "id": "en-family-portare",
+      "root": "portare",
+      "meaning": {
+        "en": "Historical Latin family associated with carrying. Similar spelling alone does not establish membership.",
+        "ko": "나르다와 관련된 역사적 라틴어 계열입니다. 철자가 비슷하다고 모두 같은 계열인 것은 아닙니다."
+      },
+      "members": [
+        {
+          "entryId": "en-lex-454fdf290ba20b8544be",
+          "word": "transport",
+          "parts": "trans- + portare → transportare",
+          "note": {
+            "en": "The ancestry combines across with carrying, through Latin or French. The linked modern sense is moving an object between places.",
+            "ko": "라틴어 또는 프랑스어를 거친 어원에서 가로질러와 나르다가 결합합니다. 연결된 현대 뜻은 물건을 다른 장소로 운반하다입니다."
+          }
+        },
+        {
+          "entryId": "en-lex-ab6fdd4f7a0e9cafd785",
+          "word": "import",
+          "parts": "in- + portare → importare",
+          "note": {
+            "en": "The inward direction is historical; in- appears as im- before p. Modern import brings goods or services into a country.",
+            "ko": "안쪽 방향을 나타내는 역사적 결합으로 p 앞에서 in-이 im-으로 나타납니다. 현대에는 상품이나 서비스를 국내로 들여오다입니다."
+          }
+        },
+        {
+          "entryId": "en-lex-fc7bc0a8a91ee19e9302",
+          "word": "support",
+          "parts": "sub- + portare → supportare; French supporter",
+          "note": {
+            "en": "The Latin ancestor combines sub- with carrying, with assimilation before p. The modern helping sense is figurative; do not interpret every use as literal carrying underneath.",
+            "ko": "라틴어 조상은 sub-와 나르다가 결합하고 p 앞에서 동화가 일어납니다. 현대의 돕다는 비유적 뜻이므로 모든 용법을 아래에서 실제로 나르기로 해석하면 안 됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
