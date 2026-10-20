@@ -1,6 +1,6 @@
 const labels={
  'Topic':'주제',
- 'Editorial Dictionary — Review Pending':'편집 기준 사전 · 검수 진행 중','Bilingual Example Under Review':'영어·한국어 번역이 있는 예문을 준비 중입니다.','Source Examples':'출처 예문','Translation Under Review':'번역 검수 중',
+ 'Editorial Dictionary — Review Pending':'편집 기준 사전 · 검수 진행 중','Bilingual Example Under Review':'영어·한국어 번역이 있는 예문을 준비 중입니다.','No Example Available':'예문이 없어요.',
  'Study Level':'학습 레벨','All':'전체','Word List':'단어 목록','Flashcards':'플래시카드','Word Input':'단어 입력','Meaning Quiz':'뜻 선택','Cloze':'빈칸 채우기','Sentence Scramble':'문장 완성','Dictation':'받아쓰기','Review':'복습','Settings':'설정','Study':'학습',
  'Search':'검색','Filters':'필터','Part of Speech':'품사','Study Status':'학습 상태','New':'새 단어','Learning':'학습 중','Mastered':'숙달','Shuffle':'섞기','Next':'다음','Submit':'제출','Skip':'건너뛰기','Examples':'예문','Close':'닫기','Speak Word':'단어 듣기','Speak Example':'예문 듣기',
  'Noun':'명사','Verb':'동사','Adjective':'형용사','Adverb':'부사','Pronoun':'대명사','Expression':'표현','Particle':'불변화사','Conjunction':'접속사','Number':'수사','Numeral':'수사','Interjection':'감탄사','Preposition':'전치사','Determiner':'한정사','Classifier':'단위 명사','Prefix':'접두사','Suffix':'접미사',
