@@ -21,9 +21,11 @@ export function createDictionaryExercises(study,words){
    }
   }
   for(const row of data.forms||[]){const word=byId.get(row.entryId);if(!word)continue;
-   for(const group of row.groups){const name=group.formKind==='adjective'?adjectiveLabels[group.subKind][ko?1:0]:formKindLabel(group.formKind,locale),full=['causative','causative-passive'].includes(group.formKind);
+   for(const group of row.groups){let name=group.formKind==='adjective'?adjectiveLabels[group.subKind][ko?1:0]:formKindLabel(group.formKind,locale),full=['causative','causative-passive'].includes(group.formKind);
+    if(group.formKind==='conditional'||group.subKind==='conditional')name=group.answers.some(answer=>/なら(?:ば)?$/u.test(answer))?(ko?'なら 조건형':'Nara Conditional'):(ko?'ば 조건형':'Ba Conditional');
+    const potential=group.formKind==='potential';
     result.push({id:`form-${row.entryId}-${group.formKind}${group.subKind?'-'+group.subKind:''}`,entryId:row.entryId,route:'forms',category:'forms',formKind:group.formKind,subKind:group.subKind,prompt:`${word.lemma}（${word.pronunciation}）\n${name}`,context:word.studyMeaning,
-     instruction:ko?`지정된 보통체 형태를 입력하세요.${full?' 줄이지 않은 형태를 쓰세요.':''}`:`Type the specified plain form.${full?' Use the full, uncontracted form.':''}`,answer:group.answers[0],acceptedAnswers:group.answers.slice(1),explanation:`${word.lemma} → ${group.answers.join(' / ')}\n${name}`});
+     instruction:ko?`지정된 표준 보통체 형태를 입력하세요.${full?' 줄이지 않은 형태를 쓰세요.':''}${potential?' 1단 동사와 来る는 ら를 생략하지 마세요.':''}`:`Type the specified standard plain form.${full?' Use the full, uncontracted form.':''}${potential?' Retain ら for ichidan verbs and 来る.':''}`,answer:group.answers[0],acceptedAnswers:group.answers.slice(1),explanation:`${word.lemma} → ${group.answers.join(' / ')}\n${name}`});
    }
   }
  }
