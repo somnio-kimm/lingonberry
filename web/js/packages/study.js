@@ -34,7 +34,7 @@ export function assembleStudy(study,explanation){
     targetLanguage, explanationLanguage, studyVersion: study.version, explanationVersion: explanation.version,
     licenses: [study.license, explanation.license],
     ...assembleExercises(study,explanation),
-    readingPractice:study.readingPractice,
+    readingPractice:study.readingPractice,practiceData:study.practiceData,
     retiredEntries:study.retiredEntries||[],reviewInvalidations:study.reviewInvalidations||[],
     entries: study.entries.map(entry => ({...entry, meaning: meanings.get(entry.id).meaning,meanings:meanings.get(entry.id).meanings,
       ...(entry.additionalExamples?.length?{additionalExamples:entry.additionalExamples.map((example,i)=>({...example,translation:meanings.get(entry.id).additionalExampleTranslations[i]}))}:{}),
