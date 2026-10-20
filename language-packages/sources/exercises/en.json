@@ -1,0 +1,1301 @@
+{
+  "language": "en",
+  "license": "MIT",
+  "notice": "Original Lingonberry exercises and bilingual explanations, 2026. AI-assisted authoring and editorial checks; not native-speaker certification. Reference links document lexical and historical facts only. No publisher exercises, example sentences, definitions, quotations or audio are reproduced. Existing dictionary entries retain their separate licences. This is a focused starter collection, not complete English grammar or exam coverage. Preclude and occlude appear as unlinked historical examples; illicit is a contrast item anchored to elicit, not a claim of dictionary coverage. Levels come from linked core entries and are editorial study tiers, not official IELTS vocabulary lists.",
+  "references": [
+    {
+      "title": "Wiktionary: include",
+      "url": "https://en.wiktionary.org/wiki/include"
+    },
+    {
+      "title": "Wiktionary: exclude",
+      "url": "https://en.wiktionary.org/wiki/exclude"
+    },
+    {
+      "title": "Wiktionary: conclude",
+      "url": "https://en.wiktionary.org/wiki/conclude"
+    },
+    {
+      "title": "Wiktionary: Latin concludo",
+      "url": "https://en.wiktionary.org/wiki/concludo"
+    },
+    {
+      "title": "Wiktionary: disclose",
+      "url": "https://en.wiktionary.org/wiki/disclose"
+    },
+    {
+      "title": "Wiktionary: close",
+      "url": "https://en.wiktionary.org/wiki/close"
+    },
+    {
+      "title": "Wiktionary: preclude",
+      "url": "https://en.wiktionary.org/wiki/preclude"
+    },
+    {
+      "title": "Wiktionary: Latin praecludo",
+      "url": "https://en.wiktionary.org/wiki/praecludo"
+    },
+    {
+      "title": "Wiktionary: occlude",
+      "url": "https://en.wiktionary.org/wiki/occlude"
+    },
+    {
+      "title": "Wiktionary: Latin occludo",
+      "url": "https://en.wiktionary.org/wiki/occludo"
+    },
+    {
+      "title": "Wiktionary: elicit",
+      "url": "https://en.wiktionary.org/wiki/elicit"
+    },
+    {
+      "title": "Wiktionary: illicit",
+      "url": "https://en.wiktionary.org/wiki/illicit"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "en-ex-collocations-decision",
+      "entryId": "en-lex-8669fec2a310f163d231",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "We must ___ a decision before the booking closes.",
+      "answer": "make",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "We normally make a decision. Take a decision is also used in British English, but it is not one of these options.",
+        "ko": "결정하다는 보통 make a decision이라고 합니다. 영국 영어의 take a decision도 가능하지만 이 선택지에는 없습니다."
+      },
+      "options": [
+        "make",
+        "do",
+        "catch",
+        "keep"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-attention",
+      "entryId": "en-lex-713fc5dec3d0421b2026",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "Please ___ attention to the final safety announcement.",
+      "answer": "pay",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Pay attention to means listen or look carefully.",
+        "ko": "pay attention to는 주의를 기울여 듣거나 본다는 뜻입니다."
+      },
+      "options": [
+        "take",
+        "pay",
+        "do",
+        "catch"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-rain",
+      "entryId": "en-lex-ebac390854eebd4340ae",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "The match was cancelled because of ___ rain.",
+      "answer": "heavy",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Heavy rain describes rain falling in large amounts.",
+        "ko": "비가 많이 오는 것은 heavy rain이라고 표현합니다."
+      },
+      "options": [
+        "strong",
+        "heavy",
+        "broad",
+        "tall"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-coffee",
+      "entryId": "en-lex-35a8bc168fa100e69189",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "This coffee has a very intense flavour; it is too ___ for me.",
+      "answer": "strong",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Strong coffee has an intense flavour or high concentration.",
+        "ko": "strong coffee는 맛이 진하거나 농도가 높은 커피입니다."
+      },
+      "options": [
+        "wide",
+        "tall",
+        "heavy",
+        "strong"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-responsibility",
+      "entryId": "en-lex-683b167cbbb722ab1864",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "The manager agreed to ___ responsibility for the mistake.",
+      "answer": "take",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Take responsibility means accept that you are responsible.",
+        "ko": "take responsibility는 책임을 인정하고 맡는다는 뜻입니다."
+      },
+      "options": [
+        "do",
+        "take",
+        "catch",
+        "break"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-silence",
+      "entryId": "en-lex-4cf569008d53320f7e9c",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "Nobody spoke until a quiet cough seemed to ___ the silence.",
+      "answer": "break",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Break the silence means interrupt a period with no sound.",
+        "ko": "break the silence는 소리를 내어 침묵을 깨뜨린다는 뜻입니다."
+      },
+      "options": [
+        "pay",
+        "do",
+        "break",
+        "take"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-cold",
+      "entryId": "en-lex-d61dab21f33295a3c54c",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "Wear something warm; I hope you do not ___ a cold.",
+      "answer": "catch",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Catch a cold means become ill with a cold.",
+        "ko": "catch a cold는 감기에 걸린다는 뜻입니다."
+      },
+      "options": [
+        "make",
+        "do",
+        "pay",
+        "catch"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-advice",
+      "entryId": "en-lex-09c7d9b0aa9c69a86718",
+      "category": "collocations",
+      "route": "vocabmeaning",
+      "prompt": "Could you ___ some advice to our new volunteer?",
+      "answer": "give",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Give advice means offer guidance. Take advice means follow it.",
+        "ko": "give advice는 조언해 주다, take advice는 조언을 받아들이다라는 뜻입니다."
+      },
+      "options": [
+        "give",
+        "take",
+        "break",
+        "catch"
+      ]
+    },
+    {
+      "id": "en-ex-collocations-homework",
+      "entryId": "en-lex-7adb1e2985d3f61a370a",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "I usually ___ my homework before dinner.",
+      "answer": "do",
+      "instruction": {
+        "en": "Type the missing verb beginning with d.",
+        "ko": "d로 시작하는 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Do homework is the usual verb–noun combination.",
+        "ko": "숙제를 하다는 do homework라고 합니다."
+      }
+    },
+    {
+      "id": "en-ex-collocations-promise",
+      "entryId": "en-lex-0c908c6bcb1f571bdc70",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "I said I would help, and I intend to ___ my promise.",
+      "answer": "keep",
+      "instruction": {
+        "en": "Type the missing verb beginning with k.",
+        "ko": "k로 시작하는 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Keep a promise means do what you promised.",
+        "ko": "keep a promise는 약속을 지킨다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-collocations-progress",
+      "entryId": "en-lex-8669fec2a310f163d231",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "With regular practice, we can ___ steady progress.",
+      "answer": "make",
+      "instruction": {
+        "en": "Type the missing verb beginning with m.",
+        "ko": "m로 시작하는 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "Make progress means improve or move towards a goal.",
+        "ko": "make progress는 발전하거나 목표를 향해 나아간다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-collocations-attention-type",
+      "entryId": "en-lex-713fc5dec3d0421b2026",
+      "category": "collocations",
+      "route": "vocabinput",
+      "prompt": "You need to ___ attention when the instructions change.",
+      "answer": "pay",
+      "instruction": {
+        "en": "Type the missing verb beginning with p.",
+        "ko": "p로 시작하는 동사를 입력하세요."
+      },
+      "explanation": {
+        "en": "The usual combination is pay attention.",
+        "ko": "주의를 기울인다는 표현은 pay attention입니다."
+      }
+    },
+    {
+      "id": "en-ex-phrasal-dictionary",
+      "entryId": "en-lex-3e3c005234372b064e7f",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "Please ___ this unfamiliar word in the dictionary.",
+      "answer": "look up",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Look up a word means search for information about it.",
+        "ko": "look up은 사전 등에서 정보를 찾아본다는 뜻입니다."
+      },
+      "options": [
+        "look up",
+        "turn off",
+        "give up",
+        "run out"
+      ]
+    },
+    {
+      "id": "en-ex-phrasal-lamp",
+      "entryId": "en-lex-5bc4d52dbbb73d4ffc8a",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "Before you leave the empty room, ___ the lamp to save electricity.",
+      "answer": "turn off",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Turn off a lamp means stop its electrical operation.",
+        "ko": "turn off는 전등 등의 전원을 끈다는 뜻입니다."
+      },
+      "options": [
+        "put off",
+        "turn off",
+        "take off",
+        "show off"
+      ]
+    },
+    {
+      "id": "en-ex-phrasal-delay",
+      "entryId": "en-lex-6ea8bf0353728bf137e3",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "The organiser decided to ___ the picnic until the storm had passed.",
+      "answer": "put off",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Put off an event means postpone it.",
+        "ko": "put off는 행사를 연기한다는 뜻입니다."
+      },
+      "options": [
+        "take off",
+        "give up",
+        "put off",
+        "look up"
+      ]
+    },
+    {
+      "id": "en-ex-phrasal-discover",
+      "entryId": "en-lex-79545ddfcb6867e6a1e8",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "We need to ___ why the parcel was returned.",
+      "answer": "find out",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Find out means discover information.",
+        "ko": "find out은 정보를 알아내거나 이유를 발견한다는 뜻입니다."
+      },
+      "options": [
+        "find out",
+        "put away",
+        "turn off",
+        "give up"
+      ]
+    },
+    {
+      "id": "en-ex-phrasal-collect",
+      "entryId": "en-lex-4bf40701ff076c9bef51",
+      "category": "phrasal",
+      "route": "vocabmeaning",
+      "prompt": "Could you ___ the parcel from the collection point on your way home?",
+      "answer": "pick up",
+      "instruction": {
+        "en": "Choose the expression that completes the sentence.",
+        "ko": "문장을 완성하는 표현을 선택하세요."
+      },
+      "explanation": {
+        "en": "Pick up a parcel means collect it.",
+        "ko": "pick up은 소포 등을 찾아오거나 수령한다는 뜻입니다."
+      },
+      "options": [
+        "turn down",
+        "give away",
+        "put off",
+        "pick up"
+      ]
+    },
+    {
+      "id": "en-ex-phrasal-light-on",
+      "entryId": "en-lex-5bc4d52dbbb73d4ffc8a",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "The reading light is switched off. Please turn it ___.",
+      "answer": "on",
+      "instruction": {
+        "en": "Type the one missing particle.",
+        "ko": "구동사를 완성하는 짧은 말 한 개를 입력하세요."
+      },
+      "explanation": {
+        "en": "Turn on means start the light or device.",
+        "ko": "turn on은 전등이나 장치를 켠다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-phrasal-surrender",
+      "entryId": "en-lex-09c7d9b0aa9c69a86718",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "The puzzle is difficult, but I will not give ___ trying to solve it.",
+      "answer": "up",
+      "instruction": {
+        "en": "Type the one missing particle.",
+        "ko": "구동사를 완성하는 짧은 말 한 개를 입력하세요."
+      },
+      "explanation": {
+        "en": "Give up means stop trying.",
+        "ko": "give up은 시도를 그만두거나 포기한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-phrasal-no-milk",
+      "entryId": "en-lex-4aa92ccb71daaa24347d",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "We have run ___ of milk, so there is none left for tea.",
+      "answer": "out",
+      "instruction": {
+        "en": "Type the one missing particle.",
+        "ko": "구동사를 완성하는 짧은 말 한 개를 입력하세요."
+      },
+      "explanation": {
+        "en": "Run out of means use all of something.",
+        "ko": "run out of는 무엇을 다 써서 더 이상 없다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-phrasal-jacket",
+      "entryId": "en-lex-683b167cbbb722ab1864",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "It is warm indoors, so you can take ___ your jacket.",
+      "answer": "off",
+      "instruction": {
+        "en": "Type the one missing particle.",
+        "ko": "구동사를 완성하는 짧은 말 한 개를 입력하세요."
+      },
+      "explanation": {
+        "en": "Take off an item of clothing means remove it.",
+        "ko": "take off는 입은 옷을 벗는다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-phrasal-continue",
+      "entryId": "en-lex-c4153aa0e26052d952af",
+      "category": "phrasal",
+      "route": "vocabinput",
+      "prompt": "After the short break, we will carry ___ with the discussion.",
+      "answer": "on",
+      "instruction": {
+        "en": "Type the one missing particle.",
+        "ko": "구동사를 완성하는 짧은 말 한 개를 입력하세요."
+      },
+      "explanation": {
+        "en": "Carry on with something means continue it.",
+        "ko": "carry on with는 하던 일을 계속한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-patterns-enjoy",
+      "entryId": "en-lex-63d29a4811e5c8a91f3a",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "I enjoy ___ by the river after work.",
+      "answer": "walking",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Enjoy is followed by an -ing form when the next word names an activity.",
+        "ko": "enjoy 뒤에 활동을 나타내는 동사가 오면 -ing형을 씁니다."
+      },
+      "options": [
+        "to walk",
+        "walk",
+        "walking"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-avoid",
+      "entryId": "en-lex-7e68f7bcd0ab8bb4c0e8",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "We try to avoid ___ during the busiest hour.",
+      "answer": "travelling",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Avoid takes an -ing complement.",
+        "ko": "avoid 뒤에는 동명사 -ing형을 씁니다."
+      },
+      "options": [
+        "travelling",
+        "to travel",
+        "travel"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-decide",
+      "entryId": "en-lex-82e80337473fbcec238d",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "They decided ___ the early train.",
+      "answer": "to take",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Decide is followed by a to-infinitive for the chosen action.",
+        "ko": "decide 뒤에 결정한 행동을 나타낼 때 to부정사를 씁니다."
+      },
+      "options": [
+        "taking",
+        "take",
+        "to take"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-suggest",
+      "entryId": "en-lex-823bb5c92d091e6b3bfd",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "Mina suggested ___ the tickets online.",
+      "answer": "booking",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Suggest can take an -ing form; suggest to book is not the pattern here.",
+        "ko": "suggest 뒤에는 booking 같은 -ing형을 쓸 수 있으며, 여기서는 to book을 쓰지 않습니다."
+      },
+      "options": [
+        "to book",
+        "booking",
+        "book"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-hope",
+      "entryId": "en-lex-4a0f83964d08f9e01367",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "We hope ___ the repairs by Friday.",
+      "answer": "to finish",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Hope takes a to-infinitive for a hoped-for action.",
+        "ko": "hope 뒤에 바라는 행동을 나타낼 때 to부정사를 씁니다."
+      },
+      "options": [
+        "finish",
+        "finishing",
+        "to finish"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-mind",
+      "entryId": "en-lex-98e0f757c754ceb34a91",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "Would you mind ___ the window?",
+      "answer": "closing",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Would you mind is followed by an -ing form.",
+        "ko": "Would you mind 뒤에는 -ing형을 씁니다."
+      },
+      "options": [
+        "closing",
+        "to close",
+        "close"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-agree",
+      "entryId": "en-lex-e8aec1373aeb07e73a6d",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The neighbours agreed ___ the cost.",
+      "answer": "to share",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Agree takes a to-infinitive when someone agrees to do an action.",
+        "ko": "어떤 행동을 하기로 동의할 때 agree 뒤에 to부정사를 씁니다."
+      },
+      "options": [
+        "sharing",
+        "to share",
+        "share"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-consider",
+      "entryId": "en-lex-4e98a889c400b6f1ba9e",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "We are considering ___ nearer the station.",
+      "answer": "moving",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Consider takes an -ing form for an action being considered.",
+        "ko": "consider 뒤에 고려하는 행동을 나타내면 -ing형을 씁니다."
+      },
+      "options": [
+        "move",
+        "to move",
+        "moving"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-allow",
+      "entryId": "en-lex-4573ba0587be347edc1a",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "The museum allows visitors ___ photographs without flash.",
+      "answer": "to take",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Use allow + person + to-infinitive.",
+        "ko": "allow + 사람 + to부정사 구조를 씁니다."
+      },
+      "options": [
+        "taking",
+        "take",
+        "to take"
+      ]
+    },
+    {
+      "id": "en-ex-patterns-finish",
+      "entryId": "en-lex-2d7f541013e1a00edc07",
+      "category": "patterns",
+      "route": "patterns",
+      "prompt": "Please finish ___ the form before you submit it.",
+      "answer": "checking",
+      "instruction": {
+        "en": "Choose the correct verb pattern.",
+        "ko": "알맞은 동사 연결 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Finish takes an -ing form for the activity being completed.",
+        "ko": "finish 뒤에는 끝마치는 활동을 나타내는 -ing형을 씁니다."
+      },
+      "options": [
+        "to check",
+        "checking",
+        "check"
+      ]
+    },
+    {
+      "id": "en-ex-articles-university",
+      "entryId": "en-lex-33ee047ba4f3800e885e",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "She hopes to study at ___ university in Scotland.",
+      "answer": "a",
+      "instruction": {
+        "en": "Choose a or an for an indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 관사 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "University begins with a consonant sound, /j/, so use a for a non-specific university.",
+        "ko": "university는 /j/라는 자음 소리로 시작하므로 특정하지 않은 대학 앞에는 a를 씁니다."
+      },
+      "options": [
+        "a",
+        "an"
+      ]
+    },
+    {
+      "id": "en-ex-articles-hour",
+      "entryId": "en-lex-5ef604813ae56e217f6c",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The repair took about ___ hour.",
+      "answer": "an",
+      "instruction": {
+        "en": "Choose a or an for an indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 관사 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "Hour begins with a vowel sound because h is silent.",
+        "ko": "hour의 h는 발음하지 않아 모음 소리로 시작하므로 an을 씁니다."
+      },
+      "options": [
+        "a",
+        "an"
+      ]
+    },
+    {
+      "id": "en-ex-articles-honest",
+      "entryId": "en-lex-90bc6b96fe3e306c5580",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "I would like ___ honest answer to my question.",
+      "answer": "an",
+      "instruction": {
+        "en": "Choose a or an for an indefinite reference.",
+        "ko": "특정하지 않은 대상을 나타내는 관사 a 또는 an을 선택하세요."
+      },
+      "explanation": {
+        "en": "Honest begins with a vowel sound; the h is silent.",
+        "ko": "honest의 h는 묵음이므로 an honest answer라고 합니다."
+      },
+      "options": [
+        "a",
+        "an"
+      ]
+    },
+    {
+      "id": "en-ex-articles-specific-door",
+      "entryId": "en-lex-bb6a9161b1fa732ca8e5",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "Please close ___ door that we have just walked through.",
+      "answer": "the",
+      "instruction": {
+        "en": "Choose a, an or the. Choose — when no article is needed.",
+        "ko": "a, an, the 중 알맞은 것을 고르세요. 관사가 필요 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "The relative clause identifies a particular door, so use the.",
+        "ko": "뒤의 절이 특정한 문을 가리키므로 the를 씁니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-articles-advice",
+      "entryId": "en-lex-74a90efdb6c7676e320f",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "In general, ___ advice is useful only when it suits the situation.",
+      "answer": "—",
+      "instruction": {
+        "en": "Choose a, an or the. Choose — when no article is needed.",
+        "ko": "a, an, the 중 알맞은 것을 고르세요. 관사가 필요 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "Advice is uncountable. This sentence discusses it in general, so no article is used.",
+        "ko": "advice는 불가산명사입니다. 이 문장에서는 조언을 일반적으로 말하므로 관사를 쓰지 않습니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-articles-equipment",
+      "entryId": "en-lex-f056e6924a728e427b7f",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "Our club needs ___ new equipment, but we have not chosen any yet.",
+      "answer": "—",
+      "instruction": {
+        "en": "Choose a, an or the. Choose — when no article is needed.",
+        "ko": "a, an, the 중 알맞은 것을 고르세요. 관사가 필요 없으면 —를 선택하세요."
+      },
+      "explanation": {
+        "en": "Equipment is uncountable, and this sentence does not identify a particular set.",
+        "ko": "equipment는 셀 수 없는 명사이며 여기서는 특정 장비를 가리키지 않습니다."
+      },
+      "options": [
+        "a",
+        "an",
+        "the",
+        "—"
+      ]
+    },
+    {
+      "id": "en-ex-articles-information",
+      "entryId": "en-lex-af9eff0a6679b9a9b42e",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The receptionist gave us two ___ of information.",
+      "answer": "pieces",
+      "instruction": {
+        "en": "Choose the form that fits the noun’s countability.",
+        "ko": "명사를 셀 수 있는지 고려하여 알맞은 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Use pieces of information to count individual facts; information itself is uncountable.",
+        "ko": "정보를 개별적으로 셀 때 pieces of information을 씁니다. information 자체는 불가산명사입니다."
+      },
+      "options": [
+        "pieces",
+        "informations",
+        "information"
+      ]
+    },
+    {
+      "id": "en-ex-articles-furniture",
+      "entryId": "en-lex-df09e9a6163365f0a2d7",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "The furniture in both rooms ___ included in the price.",
+      "answer": "is",
+      "instruction": {
+        "en": "Choose the form that fits the noun’s countability.",
+        "ko": "명사를 셀 수 있는지 고려하여 알맞은 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Furniture takes singular agreement even when it refers to several objects.",
+        "ko": "furniture는 여러 가구를 뜻해도 단수 동사와 연결됩니다."
+      },
+      "options": [
+        "is",
+        "are",
+        "were"
+      ]
+    },
+    {
+      "id": "en-ex-articles-bread",
+      "entryId": "en-lex-4d275227ee3c7d882ec7",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "Please cut two ___ of bread for the soup.",
+      "answer": "slices",
+      "instruction": {
+        "en": "Choose the form that fits the noun’s countability.",
+        "ko": "명사를 셀 수 있는지 고려하여 알맞은 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "A slice is a countable unit for bread in this sentence.",
+        "ko": "이 문장에서는 slice를 써서 빵을 두 조각으로 셉니다."
+      },
+      "options": [
+        "slices",
+        "breads",
+        "bread"
+      ]
+    },
+    {
+      "id": "en-ex-articles-luggage",
+      "entryId": "en-lex-51cb1709522818313cf4",
+      "category": "articles",
+      "route": "articles",
+      "prompt": "We do not have ___ luggage, so we can walk to the station.",
+      "answer": "much",
+      "instruction": {
+        "en": "Choose the form that fits the noun’s countability.",
+        "ko": "명사를 셀 수 있는지 고려하여 알맞은 형태를 선택하세요."
+      },
+      "explanation": {
+        "en": "Use much with uncountable luggage.",
+        "ko": "불가산명사 luggage의 양에는 much를 씁니다."
+      },
+      "options": [
+        "many",
+        "much",
+        "a few"
+      ]
+    },
+    {
+      "id": "en-ex-confusables-response",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "A gentle follow-up question may ___ a more detailed response.",
+      "answer": "elicit",
+      "instruction": {
+        "en": "Choose elicit or illicit from the context. These sound alike but are not synonyms.",
+        "ko": "문맥에 맞게 elicit 또는 illicit을 선택하세요. 발음이 비슷하지만 동의어는 아닙니다."
+      },
+      "explanation": {
+        "en": "Elicit is a verb for drawing out a response. Illicit is an adjective for something forbidden. The context needs the verb here.",
+        "ko": "elicit은 반응 등을 이끌어 내는 동사이고 illicit은 금지되거나 불법적인 것을 나타내는 형용사입니다. 여기서는 동사가 필요합니다."
+      },
+      "options": [
+        "elicit",
+        "illicit"
+      ]
+    },
+    {
+      "id": "en-ex-confusables-trade",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "The report describes an ___ trade in stolen paintings.",
+      "answer": "illicit",
+      "instruction": {
+        "en": "Choose elicit or illicit from the context. These sound alike but are not synonyms.",
+        "ko": "문맥에 맞게 elicit 또는 illicit을 선택하세요. 발음이 비슷하지만 동의어는 아닙니다."
+      },
+      "explanation": {
+        "en": "Illicit is an adjective for something forbidden. Elicit is a verb for drawing out a response. The context needs an adjective here.",
+        "ko": "illicit은 금지되거나 불법적인 것을 나타내는 형용사이고 elicit은 반응 등을 이끌어 내는 동사입니다. 여기서는 형용사가 필요합니다."
+      },
+      "options": [
+        "elicit",
+        "illicit"
+      ]
+    },
+    {
+      "id": "en-ex-confusables-reaction",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "The unusual ending was designed to ___ a strong reaction from readers.",
+      "answer": "elicit",
+      "instruction": {
+        "en": "Choose elicit or illicit from the context. These sound alike but are not synonyms.",
+        "ko": "문맥에 맞게 elicit 또는 illicit을 선택하세요. 발음이 비슷하지만 동의어는 아닙니다."
+      },
+      "explanation": {
+        "en": "Elicit is a verb for drawing out a response. Illicit is an adjective for something forbidden. The context needs the verb here.",
+        "ko": "elicit은 반응 등을 이끌어 내는 동사이고 illicit은 금지되거나 불법적인 것을 나타내는 형용사입니다. 여기서는 동사가 필요합니다."
+      },
+      "options": [
+        "elicit",
+        "illicit"
+      ]
+    },
+    {
+      "id": "en-ex-confusables-payments",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabmeaning",
+      "prompt": "The investigation uncovered ___ payments hidden from the auditors.",
+      "answer": "illicit",
+      "instruction": {
+        "en": "Choose elicit or illicit from the context. These sound alike but are not synonyms.",
+        "ko": "문맥에 맞게 elicit 또는 illicit을 선택하세요. 발음이 비슷하지만 동의어는 아닙니다."
+      },
+      "explanation": {
+        "en": "Illicit is an adjective for something forbidden. Elicit is a verb for drawing out a response. The context needs an adjective here.",
+        "ko": "illicit은 금지되거나 불법적인 것을 나타내는 형용사이고 elicit은 반응 등을 이끌어 내는 동사입니다. 여기서는 형용사가 필요합니다."
+      },
+      "options": [
+        "elicit",
+        "illicit"
+      ]
+    },
+    {
+      "id": "en-ex-confusables-feedback",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "The interviewer used open questions to ___ honest feedback.",
+      "answer": "elicit",
+      "instruction": {
+        "en": "Type elicit or illicit. Use the sentence’s grammar and meaning.",
+        "ko": "문장의 문법과 뜻에 맞게 elicit 또는 illicit을 입력하세요."
+      },
+      "explanation": {
+        "en": "Elicit is a verb for drawing out a response. Illicit is an adjective for something forbidden. The context needs the verb here.",
+        "ko": "elicit은 반응 등을 이끌어 내는 동사이고 illicit은 금지되거나 불법적인 것을 나타내는 형용사입니다. 여기서는 동사가 필요합니다."
+      }
+    },
+    {
+      "id": "en-ex-confusables-sales",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "The warehouse was used for ___ sales that broke the law.",
+      "answer": "illicit",
+      "instruction": {
+        "en": "Type elicit or illicit. Use the sentence’s grammar and meaning.",
+        "ko": "문장의 문법과 뜻에 맞게 elicit 또는 illicit을 입력하세요."
+      },
+      "explanation": {
+        "en": "Illicit is an adjective for something forbidden. Elicit is a verb for drawing out a response. The context needs an adjective here.",
+        "ko": "illicit은 금지되거나 불법적인 것을 나타내는 형용사이고 elicit은 반응 등을 이끌어 내는 동사입니다. 여기서는 형용사가 필요합니다."
+      }
+    },
+    {
+      "id": "en-ex-confusables-memories",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "A familiar scent can ___ memories from childhood.",
+      "answer": "elicit",
+      "instruction": {
+        "en": "Type elicit or illicit. Use the sentence’s grammar and meaning.",
+        "ko": "문장의 문법과 뜻에 맞게 elicit 또는 illicit을 입력하세요."
+      },
+      "explanation": {
+        "en": "Elicit is a verb for drawing out a response. Illicit is an adjective for something forbidden. The context needs the verb here.",
+        "ko": "elicit은 반응 등을 이끌어 내는 동사이고 illicit은 금지되거나 불법적인 것을 나타내는 형용사입니다. 여기서는 동사가 필요합니다."
+      }
+    },
+    {
+      "id": "en-ex-confusables-deal",
+      "entryId": "en-lex-f25b511a37f8cdce2a39",
+      "category": "confusables",
+      "route": "vocabinput",
+      "prompt": "The officials were accused of arranging an ___ deal behind closed doors.",
+      "answer": "illicit",
+      "instruction": {
+        "en": "Type elicit or illicit. Use the sentence’s grammar and meaning.",
+        "ko": "문장의 문법과 뜻에 맞게 elicit 또는 illicit을 입력하세요."
+      },
+      "explanation": {
+        "en": "Illicit is an adjective for something forbidden. Elicit is a verb for drawing out a response. The context needs an adjective here.",
+        "ko": "illicit은 금지되거나 불법적인 것을 나타내는 형용사이고 elicit은 반응 등을 이끌어 내는 동사입니다. 여기서는 형용사가 필요합니다."
+      }
+    },
+    {
+      "id": "en-ex-roots-meal",
+      "entryId": "en-lex-b36e29b64eec0693d82d",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The tour fee will ___ lunch as part of the package.",
+      "answer": "include",
+      "instruction": {
+        "en": "Choose the member of the close/shut family that fits the sentence.",
+        "ko": "닫다 어원과 관련된 단어 중 문맥에 맞는 것을 선택하세요."
+      },
+      "explanation": {
+        "en": "Include belongs to the Latin claudere family through includere. Its modern sense here is to make something part of a whole.",
+        "ko": "include는 라틴어 includere를 거쳐 claudere와 연결됩니다. 여기서는 전체의 일부로 포함한다는 뜻입니다."
+      },
+      "options": [
+        "include",
+        "exclude",
+        "conclude",
+        "disclose"
+      ]
+    },
+    {
+      "id": "en-ex-roots-duplicates",
+      "entryId": "en-lex-8e0cd015e5e797afbff8",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The totals must ___ duplicate records so that each sale is counted only once.",
+      "answer": "exclude",
+      "instruction": {
+        "en": "Choose the member of the close/shut family that fits the sentence.",
+        "ko": "닫다 어원과 관련된 단어 중 문맥에 맞는 것을 선택하세요."
+      },
+      "explanation": {
+        "en": "Exclude shares the historical closing root with include, but here it means leave out.",
+        "ko": "exclude는 include와 역사적으로 같은 닫다 어근을 공유하지만, 여기서는 빼거나 제외한다는 뜻입니다."
+      },
+      "options": [
+        "conclude",
+        "include",
+        "exclude",
+        "disclose"
+      ]
+    },
+    {
+      "id": "en-ex-roots-ceremony",
+      "entryId": "en-lex-076ee5f17a63b72f7a8e",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The host will ___ the ceremony with a short thank-you speech.",
+      "answer": "conclude",
+      "instruction": {
+        "en": "Choose the member of the close/shut family that fits the sentence.",
+        "ko": "닫다 어원과 관련된 단어 중 문맥에 맞는 것을 선택하세요."
+      },
+      "explanation": {
+        "en": "Conclude developed from a Latin verb connected with closing; here it means bring to an end.",
+        "ko": "conclude는 닫다와 관련된 라틴어 동사에서 왔으며, 여기서는 끝마친다는 뜻입니다."
+      },
+      "options": [
+        "include",
+        "disclose",
+        "exclude",
+        "conclude"
+      ]
+    },
+    {
+      "id": "en-ex-roots-identity",
+      "entryId": "en-lex-5a1c2b90cc87481dad2a",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The witness asked us not to ___ her identity to anyone.",
+      "answer": "disclose",
+      "instruction": {
+        "en": "Choose the member of the close/shut family that fits the sentence.",
+        "ko": "닫다 어원과 관련된 단어 중 문맥에 맞는 것을 선택하세요."
+      },
+      "explanation": {
+        "en": "Disclose is historically related to close through French and Latin. Here it means make information known.",
+        "ko": "disclose는 프랑스어와 라틴어를 거쳐 close와 역사적으로 연결됩니다. 여기서는 정보를 공개한다는 뜻입니다."
+      },
+      "options": [
+        "disclose",
+        "include",
+        "conclude",
+        "exclude"
+      ]
+    },
+    {
+      "id": "en-ex-roots-window",
+      "entryId": "en-lex-1065805c1c0721b9a264",
+      "category": "roots",
+      "route": "vocabmeaning",
+      "prompt": "The room is getting cold; please ___ the window.",
+      "answer": "close",
+      "instruction": {
+        "en": "Choose the member of the close/shut family that fits the sentence.",
+        "ko": "닫다 어원과 관련된 단어 중 문맥에 맞는 것을 선택하세요."
+      },
+      "explanation": {
+        "en": "Close is the ordinary modern verb for shutting something. The family relationship is historical, not a rule for swapping prefixes.",
+        "ko": "close는 무엇을 닫는다는 일반적인 동사입니다. 같은 어원이라는 사실이 접두사를 마음대로 바꿔도 된다는 규칙은 아닙니다."
+      },
+      "options": [
+        "conclude",
+        "close",
+        "include",
+        "disclose"
+      ]
+    },
+    {
+      "id": "en-ex-roots-membership",
+      "entryId": "en-lex-b36e29b64eec0693d82d",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "The invitation list should ___ every member of the team.",
+      "answer": "include",
+      "instruction": {
+        "en": "Type the family member beginning with i. Use the modern meaning, not just the root.",
+        "ko": "i로 시작하는 관련 단어를 입력하세요. 어원뿐 아니라 현대의 뜻도 고려하세요."
+      },
+      "explanation": {
+        "en": "The in- element in the Latin ancestor relates to putting within; modern include means make part of a group.",
+        "ko": "라틴어 조상 단어의 in-은 안에 넣는 것과 관련됩니다. 현대 include는 집단의 일부로 포함한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-roots-restriction",
+      "entryId": "en-lex-8e0cd015e5e797afbff8",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "We must ___ private addresses from the public version of the report.",
+      "answer": "exclude",
+      "instruction": {
+        "en": "Type the family member beginning with e. Use the modern meaning, not just the root.",
+        "ko": "e로 시작하는 관련 단어를 입력하세요. 어원뿐 아니라 현대의 뜻도 고려하세요."
+      },
+      "explanation": {
+        "en": "Ex- relates to out in the Latin ancestor. Exclude here means keep the addresses out of the report.",
+        "ko": "라틴어 조상 단어의 ex-는 밖과 관련됩니다. 여기서 exclude는 주소를 보고서에서 제외한다는 뜻입니다."
+      }
+    },
+    {
+      "id": "en-ex-roots-closing-talk",
+      "entryId": "en-lex-076ee5f17a63b72f7a8e",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "I will ___ my talk with a summary of the three main findings.",
+      "answer": "conclude",
+      "instruction": {
+        "en": "Type the family member beginning with c. Use the modern meaning, not just the root.",
+        "ko": "c로 시작하는 관련 단어를 입력하세요. 어원뿐 아니라 현대의 뜻도 고려하세요."
+      },
+      "explanation": {
+        "en": "Conclude and close can both mean finish a talk here. Both belong to the historical closing family.",
+        "ko": "여기서는 conclude와 close 모두 발표를 끝맺는다는 뜻으로 쓸 수 있습니다. 두 단어 모두 역사적인 닫다 어족에 속합니다."
+      },
+      "acceptedAnswers": [
+        "close"
+      ]
+    },
+    {
+      "id": "en-ex-roots-confidential",
+      "entryId": "en-lex-5a1c2b90cc87481dad2a",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "Staff must not ___ confidential passwords to anyone outside the team.",
+      "answer": "disclose",
+      "instruction": {
+        "en": "Type the family member beginning with d. Use the modern meaning, not just the root.",
+        "ko": "d로 시작하는 관련 단어를 입력하세요. 어원뿐 아니라 현대의 뜻도 고려하세요."
+      },
+      "explanation": {
+        "en": "Disclose means reveal information in this context. It is related historically to the close family.",
+        "ko": "여기서 disclose는 정보를 드러내거나 공개한다는 뜻입니다. 역사적으로 close 어족과 연결됩니다."
+      }
+    },
+    {
+      "id": "en-ex-roots-gate",
+      "entryId": "en-lex-1065805c1c0721b9a264",
+      "category": "roots",
+      "route": "vocabinput",
+      "prompt": "Please ___ the gate after you have walked through it.",
+      "answer": "close",
+      "instruction": {
+        "en": "Type the family member beginning with c. Use the modern meaning, not just the root.",
+        "ko": "c로 시작하는 관련 단어를 입력하세요. 어원뿐 아니라 현대의 뜻도 고려하세요."
+      },
+      "explanation": {
+        "en": "Close means shut. The -clus- forms seen in relatives come from a different form of the same Latin verb.",
+        "ko": "close는 닫다라는 뜻입니다. 관련 단어의 -clus-는 같은 라틴어 동사의 다른 형태에서 나온 것입니다."
+      }
+    }
+  ],
+  "families": [
+    {
+      "id": "en-family-claudere",
+      "root": "claudere / clausus",
+      "meaning": {
+        "en": "Historical Latin family connected with closing or shutting.",
+        "ko": "닫다와 관련된 역사적 라틴어 어족."
+      },
+      "members": [
+        {
+          "entryId": "en-lex-b36e29b64eec0693d82d",
+          "word": "include",
+          "parts": "in- + claudere → includere",
+          "note": {
+            "en": "The Latin ancestor combines an in- element with a verb for closing. Related examples not yet linked in this dictionary: preclude comes through praecludere (prae- + claudere); occlude comes through occludere (ob- + claudere). In occlude, oc- is the assimilated form of ob-, not a separate invented prefix. These histories do not make the three modern words interchangeable. Preclude can rule out a possibility; occlude can block an opening or a view.",
+            "ko": "라틴어 조상 단어는 in-과 닫다를 뜻하는 동사가 결합한 형태입니다. 아직 이 사전에 연결되지 않은 예로 preclude는 praecludere(prae- + claudere), occlude는 occludere(ob- + claudere)에서 왔습니다. occlude의 oc-는 ob-가 뒤 소리에 동화된 형태이며 별도의 접두사를 새로 만든 것이 아닙니다. 현대의 세 단어는 서로 바꿔 쓸 수 없습니다. preclude는 가능성을 차단하고, occlude는 구멍이나 시야를 막는 뜻으로 쓸 수 있습니다."
+          }
+        },
+        {
+          "entryId": "en-lex-8e0cd015e5e797afbff8",
+          "word": "exclude",
+          "parts": "ex- + claudere → excludere",
+          "note": {
+            "en": "The Latin ancestor has an outward element. Modern exclude often means keep outside a group or leave out of consideration.",
+            "ko": "라틴어 조상 단어에는 밖을 나타내는 요소가 있습니다. 현대 exclude는 집단에서 제외하거나 고려 대상에서 빼는 데 쓰입니다."
+          }
+        },
+        {
+          "entryId": "en-lex-076ee5f17a63b72f7a8e",
+          "word": "conclude",
+          "parts": "con- + claudere → concludere",
+          "note": {
+            "en": "The historical combination involves closing together. Modern senses include ending something and reaching a judgement; neither should be guessed mechanically from the prefix.",
+            "ko": "역사적 결합은 함께 닫는 것과 관련됩니다. 현대에는 끝내다, 결론을 내리다 등의 뜻이며 접두사만으로 기계적으로 해석하면 안 됩니다."
+          }
+        },
+        {
+          "entryId": "en-lex-5a1c2b90cc87481dad2a",
+          "word": "disclose",
+          "parts": "French desclore; Latin dis- + claudere",
+          "note": {
+            "en": "This word came through French, with Latin closing-related ancestry. Its reveal sense contrasts with concealment; it is not simply a newly formed English dis- + close rule.",
+            "ko": "프랑스어를 거쳐 들어왔고 라틴어의 닫다 계열과 연결됩니다. 공개하다는 뜻으로, 현대 영어에서 dis-와 close를 새로 결합하는 규칙이라고 보면 안 됩니다."
+          }
+        },
+        {
+          "entryId": "en-lex-1065805c1c0721b9a264",
+          "word": "close",
+          "parts": "One route: French clos < Latin clausus < claudere",
+          "note": {
+            "en": "Part of the history runs through French clos and Latin clausus, a participial form of claudere; the English verb also has older English ancestry. Related words show -clud- and -clus-. Historical connections help recall but do not determine every modern meaning.",
+            "ko": "어원의 한 갈래는 프랑스어 clos와 라틴어 claudere의 분사형 clausus를 거칩니다. 영어 동사에는 더 오래된 영어 계통도 있습니다. 관련 단어에 -clud-와 -clus-가 나타나지만, 이런 관계만으로 현대의 모든 뜻이 결정되지는 않습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
