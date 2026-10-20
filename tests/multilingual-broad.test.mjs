@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {assignIeltsTopics} from '../scripts/content/ielts-topics.mjs';
 import {isCircularDefinition} from '../scripts/build-broad-multilingual-packages.mjs';
-import {IELTS_TOPICS,matchesIeltsFocus} from '../web/js/shared/study-topics.js';
+import {STUDY_TOPICS,matchesStudyTopic} from '../web/js/shared/study-topics.js';
 import {studyWords,studyProfiles} from '../web/js/presentation/study-profiles.js';
 import {createLexiconQuestions} from '../web/js/shared/lexicon-questions.js';
 const read=async name=>JSON.parse(await readFile(new URL('../'+name,import.meta.url),'utf8'));
@@ -17,13 +17,17 @@ for(const language of ['ja','ko','en','es','fr'])test(`${language}: broad dictio
  assert.equal(sentences.length,old.entries.length);assert.equal(engine.listeningQuestions('listenword',words).length,core.entries.length);
  assert.equal(core.contentReview.examplesPending,core.entries.length-sentences.length);
 });
-test('IELTS focus retains shared vocabulary and composes with topic filters',()=>{
+test('English topics filter legacy packages independently of exam tags',()=>{
  const shared=assignIeltsTopics({word:'teacher',meaning:'A person who teaches at a school.'});
- assert.ok(shared.includes('ielts:shared'));assert.ok(shared.includes('topic:education'));
- assert.equal(matchesIeltsFocus(shared,'academic','education'),true);assert.equal(matchesIeltsFocus(shared,'general-training','education'),true);assert.equal(matchesIeltsFocus(shared,'academic','travel'),false);
- const research=assignIeltsTopics({word:'hypothesis',meaning:'A testable explanation used in research.'});assert.ok(research.includes('ielts:academic'));assert.equal(matchesIeltsFocus(research,'general-training'),false);
- const travel=assignIeltsTopics({word:'reservation',meaning:'An arrangement to keep a hotel room.'});assert.ok(travel.includes('ielts:general-training'));assert.equal(matchesIeltsFocus(travel,'academic'),false);
- for(const tag of [...shared,...research,...travel].filter(tag=>tag.startsWith('topic:')))assert.ok(IELTS_TOPICS[tag.slice(6)]);
+ const research=assignIeltsTopics({word:'hypothesis',meaning:'A testable explanation used in research.'});
+ const travel=assignIeltsTopics({word:'reservation',meaning:'An arrangement to keep a hotel room.'});
+ assert.equal(matchesStudyTopic(shared,'education'),true);assert.equal(matchesStudyTopic(shared,'travel'),false);
+ assert.equal(matchesStudyTopic(research,'research'),true);assert.equal(matchesStudyTopic(travel,'travel'),true);
+ for(const tags of [shared,research,travel]){
+  assert.equal(matchesStudyTopic(tags,'all'),true);
+  for(const tag of tags.filter(tag=>tag.startsWith('topic:')))assert.ok(STUDY_TOPICS[tag.slice(6)]);
+ }
+ assert.equal(matchesStudyTopic(undefined,'research'),false);
 });
 test('English definitions cannot simply repeat the headword',()=>{
  assert.equal(isCircularDefinition('school','A school.'),true);assert.equal(isCircularDefinition('eat','To eat.'),true);assert.equal(isCircularDefinition('school','A place where children are taught.'),false);

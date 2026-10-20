@@ -1,6 +1,6 @@
 # Broad multilingual dictionaries — editorial preview
 
-Version 2.0.0 established the broad dictionaries; version 3.0.0 adds original examples and explicit sense/reading corrections. Eligible English/Korean explanation packages are available; Korean study offers English explanations only. All requested exam-level/target-band selectors remain populated. A headword can have different entries for different parts of speech; entry totals and distinct headwords are reported separately.
+Version 2.0.0 established the broad dictionaries; version 3.0.0 adds original examples and explicit sense/reading corrections. Eligible English/Korean explanation packages are available; Korean study offers English explanations only. Study-level selectors remain populated; English now uses four grouped IELTS ranges instead of individual half-band targets. A headword can have different entries for different parts of speech; entry totals and distinct headwords are reported separately.
 
 | Language | Entries | Distinct Headwords | Complete Bilingual Examples | Source Sentences |
 |---|---:|---:|---:|---:|
@@ -12,15 +12,17 @@ Version 2.0.0 established the broad dictionaries; version 3.0.0 adds original ex
 
 ## What is complete and what remains
 
-Broad vocabulary import, bilingual meanings, preserved starter content, downloadable packages, IELTS topic filters and progress isolation are implemented. This is not a completed exam syllabus or a linguistically approved store release. Native-speaker review is pending, and most words still lack a complete bilingual usage example.
+Broad vocabulary import, bilingual meanings, preserved starter content, downloadable packages, English topic filters and progress isolation are implemented. This is not a completed exam syllabus or a linguistically approved store release. Native-speaker review is pending, and most words still lack a complete bilingual usage example.
 
 The 281 original examples and 5,786 newly authored examples provide 6,067 entries with complete examples. Another 48,030 entries remain without a primary usage example. All new rows have structural/focus checks; independent AI editorial review covered 479 rows (120 each in Japanese/Spanish/French, all 89 English and all 30 Korean rows). This is not a native-speaker review or full-corpus approval. Licensed native source sentences are shown separately as Source Examples; missing translations say Translation Under Review. Their presence does not count as complete bilingual example coverage. Cloze, Sentence Scramble and Sentence Dictation only use complete examples; Cloze also requires a valid target span. Word Dictation, typed recall, meaning choices, Word List and Flashcards can use the broader dictionary. No generic repeated “Today we discuss X” sentence is inserted to fill gaps.
 
 The next content work is sense/level review, translating useful native examples, and writing specific original examples for words without a suitable source sentence. The [example-edition report](example-editions.json) records the exact outstanding counts, immutable source versions and authoring hashes. The original import report remains the 2.0.0 baseline. Spanish/French have fewer admitted words because ambiguous senses, noun genders and French aspiration could not be established sufficiently; they are not padded to hit a round number.
 
-## IELTS focus and topics
+## English levels and topics
 
-Filters add Exam Focus (All / Shared / Academic / General Training) and Topic. Academic and General Training include Shared words. Topics include education, research, environment, health, technology, economy, society, work, housing, travel, everyday services, relationships, culture and communication. Tags describe the selected sense/example, not an exclusive official exam word list. They are editorial heuristics and need review. IELTS targets include every half band from 1.0 to 9.0; five cumulative vocabulary tiers do not predict a score.
+English uses IELTS 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0 with exact group filtering, plus All. There are no exam-focus controls or Academic/General Training badges. Topic filters remain available for education, research, environment, health, technology, economy, society, work, housing, travel, everyday services, relationships, culture and communication. Topic tags are editorial heuristics and need review.
+
+The app adapts existing packages without replacing their immutable payloads or changing progress IDs. See [English study levels](english-study-levels.md) for assignment rules, counts and selection migration.
 
 ## Sources and editorial policy
 

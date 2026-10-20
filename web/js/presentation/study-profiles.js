@@ -1,15 +1,16 @@
+import {ENGLISH_LEVELS,assignEnglishLevel,normaliseEnglishSelection} from '../shared/english-levels.js';
 /** Executable capabilities stay bundled; package definitions/examples are data only. */
 const cefr=['A1','A2','B1','B2','C1','C2'];
 export const studyProfiles=Object.freeze({
  ja:{id:'ja',exam:'JLPT',levels:['N5','N4','N3','N2','N1'],speech:'ja-JP',reading:true},
  ko:{id:'ko',exam:'TOPIK',levels:['1','2','3','4','5','6'],speech:'ko-KR'},
- en:{id:'en',exam:'IELTS',levels:Array.from({length:17},(_,i)=>(1+i/2).toFixed(1)),speech:'en-GB',targetScore:true},
+ en:{id:'en',exam:'IELTS',levels:ENGLISH_LEVELS,speech:'en-GB',normaliseLevel:normaliseEnglishSelection},
  es:{id:'es',exam:'DELE',levels:cefr,speech:'es-ES',nounArticles:true},
  fr:{id:'fr',exam:'DELF / DALF',levels:cefr,speech:'fr-FR',nounArticles:true},
 });
 export function matchesStudyLevel(word,selected,profile){
  if(selected==='all')return true;
- return profile.targetScore?Number(word.level)<=Number(selected):word.level===selected;
+ return (profile.id==='en'?assignEnglishLevel(word):word.level)===selected;
 }
 export function normaliseStudyAnswer(value){return String(value??'').normalize('NFC').trim().replace(/[’‘]/gu,"'").replace(/\s+/gu,' ');}
 export function displayStudyWord(word){return word.article?word.article+(/[’']$/u.test(word.article)?'':' ')+word.lemma:word.lemma;}
@@ -22,7 +23,7 @@ export function studyInputAnswers(word,profile){
 }
 export function studyWords(study){
  if(!study)return [];
- return study.entries.map(entry=>({id:entry.id,lemma:entry.word,level:entry.level,cefr:entry.level,pos:entry.partOfSpeech,subtype:entry.grammar?.subtype,article:entry.article,
+ return study.entries.map(entry=>({id:entry.id,lemma:entry.word,level:study.targetLanguage==='en'?assignEnglishLevel(entry):entry.level,cefr:study.targetLanguage==='en'?assignEnglishLevel(entry):entry.level,pos:entry.partOfSpeech,subtype:entry.grammar?.subtype,article:entry.article,
   pronunciation:entry.pronunciation,aliases:entry.aliases||[],acceptedArticles:entry.grammar?.acceptedArticles||[],studyTier:entry.grammar?.studyTier,tags:entry.tags||[],
   referenceExamples:entry.referenceExamples||[],exampleStatus:entry.exampleStatus,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,
   examples:[entry.example,...(entry.additionalExamples||[])].filter(Boolean).map(example=>({...example,de:example.text,studyTranslation:example.translation,[study.explanationLanguage]:example.translation})),

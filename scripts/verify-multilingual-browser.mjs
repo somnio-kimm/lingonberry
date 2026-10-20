@@ -1,3 +1,4 @@
+import {studyProfiles,studyWords} from '../web/js/presentation/study-profiles.js';
 import {allowsExplanation} from '../web/js/shared/language-pairs.js';
 import assert from 'node:assert/strict';
 import {readFile,mkdir} from 'node:fs/promises';
@@ -41,11 +42,11 @@ try{
   }
   if(language==='en'){
    await route(page,'wordlist');if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]','all');
-   await page.selectOption('[data-focus]','academic');assert.equal(await page.locator('.filter-fold').evaluate(node=>node.open),true);await page.selectOption('[data-topic]','research');assert.equal(await page.locator('.filter-fold').evaluate(node=>node.open),true);await page.locator('.wl-row').first().waitFor();
+   assert.equal(await page.locator('[data-focus]').count(),0);assert.deepEqual(await page.locator('[data-level-filter] option').evaluateAll(nodes=>nodes.map(node=>node.value)),['all','IELTS 1.0–3.5','IELTS 4.0–6.5','IELTS 7.0–8.0','IELTS 8.5–9.0']);await page.selectOption('[data-topic]','research');assert.equal(await page.locator('.filter-fold').evaluate(node=>node.open),true);await page.locator('.wl-row').first().waitFor();
    const visible=await page.locator('[data-word]').evaluateAll(nodes=>nodes.map(node=>node.dataset.word));
-   assert.ok(visible.every(id=>{const tags=core.entries.find(row=>row.id===id).tags;return tags.includes('topic:research')&&(tags.includes('ielts:academic')||tags.includes('ielts:shared'));}));
-   await page.locator('[data-word]').first().click();await page.locator('.lexicon-topic-tags').waitFor();await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await mkdir('/private/tmp/learn-language-broad-shots',{recursive:true});await page.screenshot({path:'/private/tmp/learn-language-broad-shots/ielts-topic-detail.png'});await page.keyboard.press('Escape');
-   await page.selectOption('[data-focus]','all');await page.selectOption('[data-topic]','all');
+   assert.ok(visible.every(id=>{const tags=core.entries.find(row=>row.id===id).tags;return tags.includes('topic:research');}));
+   await page.locator('[data-word]').first().click();await page.locator('.lexicon-topic-tags').waitFor();await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await mkdir('/private/tmp/learn-language-broad-shots',{recursive:true});await page.screenshot({path:'/private/tmp/learn-language-broad-shots/english-topic-detail.png'});await page.keyboard.press('Escape');
+   await page.selectOption('[data-topic]','all');
   }
   await route(page,'flashcards');await page.locator('[data-flip]').click();await page.locator('[data-next-card]').click();await page.locator('[data-shuffle]').click();
   await route(page,'vocabinput');const questionId=await page.locator('[data-question-word]').getAttribute('data-question-word'),entry=core.entries.find(row=>row.id===questionId);
@@ -79,7 +80,24 @@ try{
   }
   await tab(page,'wrong');await page.selectOption('[data-mode]','all');
   await tab(page,'home');assert.deepEqual(await page.locator('[data-route]').evaluateAll(nodes=>nodes.map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']);
-  await tab(page,'home');for(const level of core.exam.levels){await page.locator(`[data-level="${level}"]`).click();await page.locator('[data-route=wordlist]').click();await page.locator('.wl-row').first().waitFor();await tab(page,'home');}
+  await tab(page,'home');for(const level of studyProfiles[language].levels){await page.locator(`[data-level="${level}"]`).click();await page.locator('[data-route=wordlist]').click();await page.locator('.wl-row').first().waitFor();if(language==='en'){const expected=new Set(studyWords(core).filter(word=>word.level===level).map(word=>word.id));const visible=await page.locator('[data-word]').evaluateAll(nodes=>nodes.map(node=>node.dataset.word));assert.ok(visible.every(id=>expected.has(id)),level);assert.ok((await page.locator('.wl-hsk').allTextContents()).every(text=>text===level));}await tab(page,'home');}
+  if(language==='en'){
+   for(const [locale,label] of [['ko','학습 레벨'],['en','Study Level']]){
+    await tab(page,'settings');await page.selectOption('#display-language',locale);await tab(page,'home');
+    assert.equal(await page.locator('.study-level-card h2').innerText(),'IELTS · '+label);
+    assert.ok(await page.locator('.english-level-options button').evaluateAll(nodes=>nodes.every(node=>node.scrollWidth<=node.clientWidth)), 'range labels fit phone chips');
+    for(const mode of ['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']){
+     await route(page,mode);assert.equal(await page.locator('[data-focus]').count(),0);
+     assert.deepEqual(await page.locator('[data-level-filter] option').evaluateAll(nodes=>nodes.map(node=>node.value)),['all','IELTS 1.0–3.5','IELTS 4.0–6.5','IELTS 7.0–8.0','IELTS 8.5–9.0']);
+    }
+    await tab(page,'wrong');assert.equal(await page.locator('[data-focus]').count(),0);
+   }
+   const previous=await page.evaluate(()=>{const key='learn-language.en.lexicon.v1',saved=JSON.parse(localStorage.getItem(key));saved.preferences.studyLevel='6.5';localStorage.setItem(key,JSON.stringify(saved));return saved;});
+   await page.reload();await ready(page);await tab(page,'home');assert.equal(await page.locator('[data-level="IELTS 4.0–6.5"]').getAttribute('aria-pressed'),'true');
+   await page.locator('[data-level="IELTS 4.0–6.5"]').click();
+   const migrated=await page.evaluate(()=>JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1')));
+   assert.deepEqual(migrated.wrongs,previous.wrongs);assert.deepEqual(migrated.wordStatus,previous.wordStatus);assert.equal(migrated.preferences.studyLevel,'IELTS 4.0–6.5');
+  }
   console.log('Verified '+language);checks.push(`${language}: independent ${Object.keys(pairs).join('/').toUpperCase()} explanation downloads, meanings, examples, keyboard inputs, retest, same-POS quiz, dictation, Cloze/Scramble, Review/retest and every target level`);
  }
  await tab(page,'settings');await page.selectOption('#display-language','ko');await page.waitForFunction(()=>document.documentElement.lang==='ko');await route(page,'wordlist');assert.equal(await page.locator('h2').innerText(),'단어 목록');
