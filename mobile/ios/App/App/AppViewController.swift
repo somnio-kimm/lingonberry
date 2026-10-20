@@ -97,6 +97,19 @@ class AppViewController: CAPBridgeViewController {
                   if (result.exerciseCategories.length < 3) throw new Error('Vocabulary exercise filters are missing');
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-level]'));
+                  [...document.querySelectorAll('[data-level]')].at(-1).click();
+                  document.querySelector(`[data-route=${japanese ? 'forms' : 'articles'}]`).click();
+                  await wait(() => document.querySelector('[data-exercise]'));
+                  const coverageLabel = document.querySelector(`[data-exercise] option[value=${japanese ? 'forms' : 'articles'}]`)?.textContent || '';
+                  result.dictionaryPracticeQuestions = Number(coverageLabel.match(/\\((\\d+)\\)/)?.[1] || 0);
+                  if (result.dictionaryPracticeQuestions < 100) throw new Error('Broad dictionary practice package was not installed');
+                  if (japanese) {
+                    result.formKinds = [...document.querySelectorAll('[data-form-kind] option')].map(option => option.value);
+                    if (!result.formKinds.includes('causative-passive') || !result.formKinds.includes('potential')) throw new Error('Japanese form types are missing');
+                  }
+
+                  document.querySelector('[data-tab=home]').click();
+                  await wait(() => document.querySelector('[data-level]'));
                   if (english) [...document.querySelectorAll('[data-level]')].at(-1).click();
                   return JSON.stringify(result);
                 }
