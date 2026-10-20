@@ -30,7 +30,7 @@ test('saved half-band selections choose the containing range without losing prog
  for(const [savedLevel,expected] of [
   ['1.0','IELTS 1.0–3.5'],['3.5','IELTS 1.0–3.5'],['4.0','IELTS 4.0–6.5'],['6.5','IELTS 4.0–6.5'],
   ['7.0','IELTS 7.0–8.0'],['8.0','IELTS 7.0–8.0'],['8.5','IELTS 8.5–9.0'],['9.0','IELTS 8.5–9.0'],
-  ['all','all'],['IELTS 7.0–8.0','IELTS 7.0–8.0'],['bad','IELTS 1.0–3.5'],
+  ['all','IELTS 1.0–3.5'],['IELTS 7.0–8.0','IELTS 7.0–8.0'],['bad','IELTS 1.0–3.5'],
  ]){
   const saved={version:1,wordStatus:{go:'mastered'},wrongs:{q:{question:{word:{id:'go',lemma:'go',level:'1.0'}},input:'went',count:3}},preferences:{studyLevel:savedLevel}};
   const data=new Map([['learn-language.en.lexicon.v1',JSON.stringify(saved)]]);
