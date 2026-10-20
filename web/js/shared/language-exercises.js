@@ -1,3 +1,4 @@
+import {shuffle} from './vocabulary.js';
 /** Bundled exercise rules; prompts and answers arrive only as validated package data. */
 export const EXERCISE_CATEGORIES=Object.freeze({
  reading:['Word Reading','단어 읽기'],onyomi:['On’yomi','음독'],kunyomi:['Kun’yomi','훈독'],okurigana:['Kanji and Okurigana','한자와 오쿠리가나'],
@@ -11,11 +12,11 @@ export const EXERCISE_ROUTES=Object.freeze({
 export const exerciseLabel=(id,locale='en')=>EXERCISE_CATEGORIES[id]?.[locale==='ko'?1:0]||id;
 export function exerciseCategories(exercises,route){return [...new Set(exercises.filter(row=>row.route===route).map(row=>row.category))];}
 export function exerciseModes(language){return Object.fromEntries(Object.values(EXERCISE_ROUTES[language]||{}).flat().filter(route=>!route.startsWith('vocab')).map(route=>[route,[exerciseLabel(route),'📝','teal']]));}
-export function createExerciseQuestions(exercises,words,route,category,locale){
+export function createExerciseQuestions(exercises,words,route,category,locale,random=Math.random){
  const byId=new Map(words.map(word=>[word.id,word]));
  return exercises.filter(row=>row.route===route&&(category==='all'||row.category===category)&&byId.has(row.entryId)).map(row=>({
   ...row,id:row.id,exercise:true,mode:route,locale,word:byId.get(row.entryId),
-  options:row.options?.map((text,index)=>({id:String(index),text})),
+  options:row.options?shuffle(row.options.map((text,index)=>({id:String(index),text})),random):undefined,
   correctOption:row.options?String(row.options.indexOf(row.answer)):undefined,
  }));
 }
