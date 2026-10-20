@@ -68,7 +68,7 @@ class AppViewController: CAPBridgeViewController {
                   await wait(() => document.querySelector('#package-status').dataset.state === 'ready');
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=wordlist],[data-quiz=wordlist]'));
-                  if (english || japanese) {document.querySelector('[data-level=all]').click();await wait(() => document.querySelector('[data-route=wordlist]'));}
+                  if (english || japanese) {const level=japanese?'N5':'IELTS 4.0–6.5';document.querySelector(`[data-level="${level}"]`).click();await wait(() => document.querySelector('[data-route=wordlist]'));}
                   document.querySelector('[data-route=wordlist],[data-quiz=wordlist]').click();
                   if (english || japanese) {
                     await wait(() => document.querySelector('#search-input'));
