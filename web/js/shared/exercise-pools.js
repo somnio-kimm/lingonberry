@@ -13,3 +13,13 @@ export function countExerciseTypes(exercises,words,route,formKind='all'){
  for(const row of exercises)if(row.route===route&&ids.has(row.entryId)&&(formKind==='all'||row.formKind===formKind))counts.set(row.category,(counts.get(row.category)||0)+1);
  return counts;
 }
+
+/** Select lightweight source rows first; materialise only the question shown on screen. */
+export function selectExerciseRow(exercises,words,{route,category='all',formKind='all',previousId,includeVocabulary=false,random=Math.random}){
+ const ids=new Set(words.map(word=>word.id)),groups=new Map();
+ for(const row of exercises){if(row.route!==route||!ids.has(row.entryId)||(category!=='all'&&row.category!==category)||(formKind!=='all'&&row.formKind!==formKind))continue;const key=category==='all'&&route.startsWith('vocab')?row.category:'exercise';const group=groups.get(key)||[];group.push(row);groups.set(key,group);}
+ if(includeVocabulary)groups.set('vocabulary',[null]);
+ const values=[...groups.values()];if(!values.length)return undefined;const group=values[Math.floor(random()*values.length)];
+ const available=group.length>1?group.filter(row=>row?.id!==previousId):group;
+ return available[Math.floor(random()*available.length)];
+}

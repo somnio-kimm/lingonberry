@@ -1,6 +1,6 @@
 import {rootReferenceViews} from '../shared/root-references.js';
-import {prepareLanguageExercises,countExerciseTypes} from '../shared/exercise-pools.js';
-import {exerciseLabel,exerciseModes,exerciseCategories,createExerciseQuestions,chooseExerciseQuestion,exerciseAnswerCorrect,chooseBalancedExercise,JAPANESE_FORM_KINDS,formKindLabel} from '../shared/language-exercises.js';
+import {prepareLanguageExercises,countExerciseTypes,selectExerciseRow} from '../shared/exercise-pools.js';
+import {exerciseLabel,exerciseModes,exerciseCategories,createExerciseQuestions,exerciseAnswerCorrect,formKindLabel} from '../shared/language-exercises.js';
 import {renderExerciseExplanation,renderExercisePrompt} from '../shared/exercise-view.js';
 import {selectWordExample} from '../shared/word-example.js';
 import {createReviewContentPolicy} from '../shared/review-content.js';
@@ -90,11 +90,11 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  }
  function chooseQuestion(mode){
   const list=pool(mode==='listenword'||mode==='listensentence'?'listening':mode);let selected;
-  const category=state(mode).exercise,custom=category==='vocabulary'?[]:createExerciseQuestions(exercises.filter(row=>state(mode).formKind==='all'||row.formKind===state(mode).formKind),list,mode,category,study.explanationLanguage);
-  if(!Object.hasOwn(commonModes,mode)&&!mode.startsWith('listen'))return reviewContent.prepare(chooseExerciseQuestion(custom,previousQuestionId));
-  if(mode.startsWith('vocab')&&category!=='vocabulary'){
-   if(category==='all'){const regular=engine.createVocabularyPool(mode,list,study.explanationLanguage).choose(previousQuestionId);return reviewContent.prepare(chooseBalancedExercise(custom,regular,previousQuestionId));}
-   return reviewContent.prepare(chooseExerciseQuestion(custom,previousQuestionId));
+  const category=state(mode).exercise;
+  if(!Object.hasOwn(commonModes,mode)&&!mode.startsWith('listen')||mode.startsWith('vocab')&&category!=='vocabulary'){
+   const regular=mode.startsWith('vocab')&&category==='all'?engine.createVocabularyPool(mode,list,study.explanationLanguage).choose(previousQuestionId):undefined;
+   const row=selectExerciseRow(exercises,list,{route:mode,category,formKind:state(mode).formKind,previousId:previousQuestionId,includeVocabulary:!!regular});
+   return reviewContent.prepare(row===null?regular:row?createExerciseQuestions([row],list,mode,category,study.explanationLanguage)[0]:undefined);
   }
   if(['cloze','scramble'].includes(mode))selected=engine.createSentencePool(mode,list,study.explanationLanguage).choose(previousQuestionId);
   else if(mode.startsWith('listen')){const questions=engine.listeningQuestions(mode,list,study.explanationLanguage,words);selected=questions[Math.floor(Math.random()*questions.length)];}

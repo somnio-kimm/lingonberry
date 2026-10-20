@@ -32,3 +32,16 @@ test('practice packages reject cross-language metadata, missing entries, bad URL
  const invalid=[{...pack,targetLanguage:'en'},{...pack,kind:'explanation'},{...pack,entries:[]},{...pack,practiceData:{...data,code:'alert(1)'}},{...pack,practiceData:{version:1,kanji:[{literal:'食',on:['ショク','ショク'],kun:[]}]}},{...pack,practiceData:{version:1,forms:[{entryId:word.id,groups:[{formKind:'past',answers:['食べた'],references:['javascript:alert(1)']}]}]}}];
  for(const value of invalid)assert.throws(()=>validatePracticeData(value),/Invalid language package/);
 });
+
+test('large pools choose a category before a row, avoid repeats and allow ordinary vocabulary',async()=>{
+ const {selectExerciseRow}=await import('../web/js/shared/exercise-pools.js');
+ const rows=Array.from({length:10000},(_,i)=>({id:'read-'+i,entryId:word.id,route:'vocabinput',category:'reading'}));rows.push({id:'rare',entryId:word.id,route:'vocabinput',category:'okurigana'});
+ assert.equal(selectExerciseRow(rows,[word],{route:'vocabinput',random:()=>0.6}).id,'rare');
+ assert.equal(selectExerciseRow(rows,[word],{route:'vocabinput',includeVocabulary:true,random:()=>0.99}),null);
+ assert.notEqual(selectExerciseRow(rows,[word],{route:'vocabinput',category:'reading',previousId:'read-0',random:()=>0}).id,'read-0');
+ assert.equal(selectExerciseRow(rows,[],{route:'vocabinput'}),undefined);
+});
+
+test('selected-sense countability uses the meaning as context instead of claiming all dictionary senses',()=>{
+ const row=createDictionaryExercises({targetLanguage:'en',explanationLanguage:'en',practiceData:{version:1,countability:[{entryId:'arms',labels:['plural-only'],scope:'selected-sense'}]}},[{id:'arms',lemma:'arms',studyMeaning:'weapons'}])[0];assert.equal(row.context,'weapons');assert.match(row.instruction,/displayed meaning/);assert.ok(!row.instruction.includes('dictionary uses'));assert.match(row.explanation,/Other senses/);
+});

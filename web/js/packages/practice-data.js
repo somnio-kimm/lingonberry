@@ -7,7 +7,7 @@ export function validatePracticeData(pack){
  const rows=(value,max)=>Array.isArray(value)&&value.length<=max;
  const unique=value=>new Set(value).size===value.length;
  const entries=new Map(pack.entries.map(row=>[row.id,row]));
- const refs=value=>rows(value,30)&&value.length>0&&unique(value)&&value.every(url=>{try{return typeof url==='string'&&url.length<=2000&&new URL(url).protocol==='https:';}catch{return false;}});
+ const refs=value=>rows(value,30)&&value.length>0&&unique(value)&&value.every(url=>{try{return typeof url==='string'&&url.length<=2000&&new URL(url).protocol==='https:'&&!new URL(url).username&&!new URL(url).password;}catch{return false;}});
  check(pack.kind==='study'&&data?.version===1&&['ja','en'].includes(pack.targetLanguage),'practice metadata');
  check(Object.keys(data).every(key=>['version','kanji','forms','countability','rootFamilies'].includes(key)),'practice metadata fields');
  if(data.kanji!==undefined){
@@ -20,7 +20,7 @@ export function validatePracticeData(pack){
   check(pack.targetLanguage==='ja'&&rows(data.forms,entries.size),'form metadata');const seen=new Set();
   for(const row of data.forms){check(entries.has(row.entryId)&&!seen.has(row.entryId)&&['verb','adjective'].includes(entries.get(row.entryId).partOfSpeech),'form entry');seen.add(row.entryId);check(rows(row.groups,20)&&row.groups.length>0,'form groups');const kinds=new Set();
    for(const group of row.groups){const key=`${group.formKind}:${group.subKind||''}`;check(Object.hasOwn(JAPANESE_FORM_KINDS,group.formKind)&&!kinds.has(key),'form kind');kinds.add(key);
-    check(group.formKind==='adjective'?['negative','past','past-negative','te','conditional','adverbial'].includes(group.subKind):group.subKind===undefined,'form subtype');
+    check(group.formKind==='adjective'?['negative','past','past-negative','te','conditional','adverbial','adnominal'].includes(group.subKind):group.subKind===undefined,'form subtype');
     check(rows(group.answers,30)&&group.answers.length>0&&unique(group.answers)&&group.answers.every(text),'form answers');check(refs(group.references),'form references');
    }
   }

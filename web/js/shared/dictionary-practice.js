@@ -1,6 +1,6 @@
 import {normaliseKana} from './japanese-reading.js';
 import {formKindLabel} from './language-exercises.js';
-const adjectiveLabels={negative:['Negative','부정형'],past:['Past','과거형'],'past-negative':['Past Negative','과거 부정형'],te:['Te Form','て형'],conditional:['Conditional','조건형'],adverbial:['Adverbial','부사형']};
+const adjectiveLabels={adnominal:['Adnominal','관형형'],negative:['Negative','부정형'],past:['Past','과거형'],'past-negative':['Past Negative','과거 부정형'],te:['Te Form','て형'],conditional:['Conditional','조건형'],adverbial:['Adverbial','부사형']};
 const countLabels={countable:['Countable','가산 명사'],uncountable:['Uncountable','불가산 명사'],both:['Countable and Uncountable','가산·불가산 명사'],'plural-only':['Plural Only','복수 전용 명사']};
 /** KANJIDIC dots mark written endings, hyphens mark bound readings. The input is the full reading. */
 export const kanjiAnswer=reading=>normaliseKana(reading.replace(/[.\-]/gu,''));
