@@ -54,7 +54,7 @@ try{
   await page.locator('#vocab-answer').fill('incorrect answer');await page.locator('#vocab-submit').click();assert.equal(await page.locator('.vocab-answer-cell.wrong').count(),1);
   await tab(page,'wrong');assert.equal(await page.locator('.wrong-card').count(),1);await page.locator('.wrong-card').click();await page.locator('[data-close]').click();await page.locator('[data-retest]').click();
   const expected=entry.article?entry.article+(/[’']$/u.test(entry.article)?'':' ')+entry.word:entry.word;
-  await page.locator('#vocab-answer').fill(expected);await page.locator('#vocab-submit').click();assert.equal(await page.locator('.vocab-answer-cell.correct').count(),1);await page.locator('[data-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.lexicon-review-footer').innerText()).includes('0'));
+  await page.locator('#vocab-answer').fill(expected);await page.locator('#vocab-submit').click();assert.equal(await page.locator('.vocab-answer-cell.correct').count(),1);await page.locator('[data-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.wrong-card-actions').innerText()).includes('0'));
   await route(page,'vocabmeaning');assert.ok(await page.locator('[data-option]').count()>=2);await page.locator('[data-option]').first().click();await page.locator('#vocab-submit').click();await page.locator('[data-next]').waitFor();
   await route(page,'listening');
   if(language==='ja'){
@@ -77,7 +77,7 @@ try{
    await page.locator('[data-retest]').click();
    if(mode==='cloze'){const id=await page.locator('[data-question-word]').getAttribute('data-question-word');await page.locator(`[data-cloze-option="${id}"]`).click();}
    else {const count=await page.locator('[data-tile]').count();for(let id=0;id<count;id++)await page.locator(`[data-tile="${id}"]`).click();}
-   await page.locator('[data-sentence-submit]').click();assert.equal(await page.locator('.lexicon-question.correct').count(),1);await page.locator('[data-sentence-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.lexicon-review-footer').innerText()).includes('0'));
+   await page.locator('[data-sentence-submit]').click();assert.equal(await page.locator('.lexicon-question.correct').count(),1);await page.locator('[data-sentence-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.wrong-card-actions').innerText()).includes('0'));
   }
   await tab(page,'wrong');await page.selectOption('[data-mode]','all');
   await tab(page,'home');assert.deepEqual(await page.locator('[data-route]').evaluateAll(nodes=>nodes.map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']);
@@ -85,7 +85,7 @@ try{
   if(language==='en'){
    for(const [locale,label] of [['ko','학습 레벨'],['en','Study Level']]){
     await tab(page,'settings');await page.selectOption('#display-language',locale);await tab(page,'home');
-    assert.equal(await page.locator('.study-level-card h2').innerText(),'IELTS · '+label);
+    assert.equal(await page.locator('.study-level-card h2').innerText(),label);
     assert.ok(await page.locator('.english-level-options button').evaluateAll(nodes=>nodes.every(node=>node.scrollWidth<=node.clientWidth)), 'range labels fit phone chips');
     for(const mode of ['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']){
      await route(page,mode);assert.equal(await page.locator('[data-focus]').count(),0);
