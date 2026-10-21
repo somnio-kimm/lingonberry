@@ -15,9 +15,10 @@ test('search covers variants, explanation meanings and external examples indepen
  assert.deepEqual(model.find({kind:'prefix',query:'duckling'}),[]);
  assert.equal(model.total,3);assert.deepEqual(rows,before);
 });
-test('dictionary links resolve only an unambiguous headword, including case/width normalisation',()=>{
- const model=createMorphemeModel(rows,[{id:'a',lemma:'absent'},{id:'b',lemma:'bow'},{id:'c',lemma:'bow'}]);
- assert.equal(model.uniqueWord('ＡＢＳＥＮＴ').id,'a');assert.equal(model.uniqueWord('bow'),undefined);assert.equal(model.uniqueWord('external'),undefined);
+test('dictionary links retain every headword sense and explicit alias without duplicate entries',()=>{
+ const model=createMorphemeModel(rows,[{id:'a',lemma:'absent'},{id:'b',lemma:'address',aliases:['address']},{id:'c',lemma:'address'},{id:'d',lemma:'colour',aliases:['color']}]);
+ assert.equal(model.matchingWords('ＡＢＳＥＮＴ')[0].id,'a');assert.deepEqual(model.matchingWords('address').map(word=>word.id),['b','c']);assert.equal(model.matchingWords(' color ')[0].id,'d');assert.deepEqual(model.matchingWords('external'),[]);
+ const copy=model.matchingWords('address');copy.pop();assert.equal(model.matchingWords('address').length,2);
 });
 test('related words page predictably to the end without duplicates or unbounded batches',()=>{
  const examples=Array.from({length:47},(_,i)=>'word '+i),model=createMorphemeModel([{...rows[0],examples}],[]);

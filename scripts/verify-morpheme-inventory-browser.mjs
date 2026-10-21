@@ -37,5 +37,17 @@ try{
   await page.locator('#root-search').fill('');await page.selectOption('[data-root-kind]','root');assert.ok(Number(await page.locator('[data-root-count]').getAttribute('data-visible'))>1000);
   await page.evaluate(()=>window.cleanupInventory());console.log('Verified real English inventory count, pagination, aud-family search and root-only coverage:',locale,expected);
  }
+ for(const locale of ['en','ko']){
+  const addresses=await page.evaluate(async locale=>{
+   const [{createPresentation},{assembleStudy}]=await Promise.all([import('/js/presentation/multilingual.js'),import('/js/packages/study.js')]);
+   const catalog=await fetch('/catalog.json').then(r=>r.json()),read=id=>fetch(catalog.find(row=>row.id===id).url).then(r=>r.json());
+   const study=assembleStudy(await read('en-core'),await read('en-'+locale)),host=document.querySelector('main');let app;
+   app=createPresentation({language:'en',navigate(){},refresh:()=>app.render('roots',host),onPreferences(){}});app.setStudy(study);app.setPreferences({theme:'system',uiLanguage:locale});app.render('roots',host);window.cleanupRootPresentation=()=>app.stop();
+   return study.entries.filter(row=>row.word==='address').map(row=>({id:row.id,meaning:row.meaning,level:row.level}));
+  },locale);
+  assert.ok(addresses.length>=2);await page.locator('#root-search').fill('address');
+  for(const entry of addresses){const row=page.locator(`[data-root-entry="${entry.id}"]`).first();await row.waitFor();assert.ok((await row.innerText()).includes(entry.meaning));assert.ok((await row.innerText()).includes(entry.level));await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),entry.meaning);await page.keyboard.press('Escape');}
+  await page.evaluate(()=>window.cleanupRootPresentation());console.log('Verified real address noun/verb dictionary links, meanings and levels:',locale);
+ }
  assert.deepEqual(errors,[]);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
