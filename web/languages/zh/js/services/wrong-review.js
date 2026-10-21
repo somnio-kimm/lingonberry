@@ -1,3 +1,4 @@
+import {shuffle} from '../../../../js/shared/random.js';
 import { LISTENING_MODES, validListeningQuestion } from './listening-tests.js';
 import { validVocabularyQuestion } from './vocabulary-tests.js';
 import { Pinyin } from './pinyin.js';
@@ -41,8 +42,8 @@ export function characterDifferences(expected,actual){
 export function makeReviewQueue(rows,words,random=Math.random){
  const items=[],unavailable=[];
  for(const record of rows){const question=resolveWrongQuestion(record,words);if(question)items.push({recordId:record.id,mode:record.mode,question});else unavailable.push(record);}
- for(let i=items.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}
- return {items,unavailable,index:0,results:items.map(()=>null)};
+ const ordered=shuffle(items,random);
+ return {items:ordered,unavailable,index:0,results:ordered.map(()=>null)};
 }
 export const reviewScore=session=>({correct:session.results.filter(r=>r?.correct).length,total:session.results.filter(r=>r&&!r.skipped).length,incorrect:session.results.filter(r=>r&&!r.correct&&!r.skipped).length,skipped:session.results.filter(r=>r?.skipped).length});
 

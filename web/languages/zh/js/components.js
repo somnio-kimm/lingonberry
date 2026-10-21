@@ -1,3 +1,4 @@
+export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
 export {showQuizBurst,scorePill} from '../../../js/shared/ui.js';
@@ -191,13 +192,6 @@ export function showStatusSheet(wordId, onDone, fallbackWord) {
     onDone?.();
   });
 }
-
-export function shuffle(a) {
-  const b = [...a];
-  for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; }
-  return b;
-}
-export function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
 export const modeTitle = mode => t(SCREENS[mode]?.title || `mode_${mode}`) || mode;
 export const modeIcon = mode => SCREENS[mode]?.icon || (['listenword','listensentence'].includes(mode) ? '🎧' : '❓');
