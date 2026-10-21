@@ -1,3 +1,4 @@
+export {shuffle as shuffleWords} from '../../../../js/shared/random.js';
 import { escapeHtml as e } from '../../../../js/shared/ui.js';
 import { dictionaryEntries, wordType } from './dictionary.js';
 export function wordHeading(w) {
@@ -6,10 +7,4 @@ export function wordHeading(w) {
 }
 export const studyWords=(words,level,filters={})=>dictionaryEntries(words,{...filters,level});
 export const studyTypes=words=>[...new Set(words.map(wordType))];
-export function shuffleWords(words,random=Math.random) {
-  const shuffled=[...words];
-  for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
-  return shuffled;
-}
-
 export function filterStudyStatus(words,store,status='all'){return status==='all'?[...words]:words.filter(w=>store.wordStatus(w.id)===status);}
