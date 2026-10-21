@@ -1,3 +1,4 @@
+import {createReadingChoices} from './reading-choices.js';
 import {createDictionaryExercises} from './dictionary-practice.js';
 import {createJapaneseReadingExercises} from './japanese-reading.js';
 /** Build per-study data once. Curated questions take precedence over generic reading prompts. */
@@ -6,7 +7,8 @@ export function prepareLanguageExercises(study,words){
  const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.boundaryKind||'reading'].join(':');
  const covered=new Set(curated.map(key));
  const generated=[...createDictionaryExercises(study,words),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice):[])];
- return [...curated,...generated.filter(row=>!covered.has(key(row)))];
+ const rows=[...curated,...generated.filter(row=>!covered.has(key(row)))];
+ return study?.targetLanguage==='ja'?[...rows,...createReadingChoices(rows,words,study.explanationLanguage)]:rows;
 }
 export function countExerciseTypes(exercises,words,route,formKind='all'){
  const ids=new Set(words.map(word=>word.id)),counts=new Map();
