@@ -370,3 +370,8 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .phrase-gap-result{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.3;margin:0 4px;border-bottom:2px solid var(--green);min-width:3em}
 .phrase-gap-result .input-correction{color:var(--green)}
 .phrase-gap-result .input-wrong{color:var(--red);font-size:.75em}
+
+/* Japanese uses the Chinese answer-reading hierarchy, with ruby over words/kanji groups. */
+.listening-transcript:lang(ja){font-size:22px;font-weight:700;line-height:1.9}
+.listening-transcript:lang(ja) ruby{ruby-position:over;ruby-align:center}
+.listening-transcript:lang(ja) rt{font-size:13px;font-weight:600;line-height:1.2;color:var(--green)}

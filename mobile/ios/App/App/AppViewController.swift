@@ -62,18 +62,33 @@ class AppViewController: CAPBridgeViewController {
                     document.querySelector('[data-route=listening],[data-quiz=listening]').click();
                     await wait(()=>document.querySelector('.listening-mode-controls') && document.querySelector('.filter-fold'));
                   };
-                  const checks=[];let baseline;
+                  const checks=[],baselines=new Map();
+                  const measure = () => {
+                    const q=document.querySelector('.listening-question'),box=q.getBoundingClientRect(),filter=document.querySelector('.filter-fold').getBoundingClientRect();
+                    const item = selector => {const node=document.querySelector(selector),b=node.getBoundingClientRect(),style=getComputedStyle(node);return {x:b.left-box.left,y:b.top-box.top,width:b.width,height:b.height,radius:style.borderRadius,font:style.fontSize};};
+                    return {width:box.width,height:box.height,gap:box.top-filter.bottom,speaker:item('#listening-play'),answer:item('.listening-question .vocab-answer-cell'),field:item('#listening-answer'),hint:item('#listening-hint'),submit:item('#listening-submit'),skip:item('#listening-skip')};
+                  };
                   for(const language of ['de','zh','en','ja']) {
                     await open(language);
-                    const main=document.querySelector('main').getBoundingClientRect(),modes=document.querySelector('.listening-mode-controls').getBoundingClientRect(),filter=document.querySelector('.filter-fold').getBoundingClientRect();
-                    const geometry={top:modes.top-main.top,left:modes.left-main.left,width:modes.width,height:modes.height};
-                    const buttons=[...document.querySelectorAll('.listening-mode-controls button')].map(button=>({text:button.textContent,width:button.getBoundingClientRect().width,height:button.getBoundingClientRect().height}));
-                    if(modes.bottom>filter.top || buttons.length!==2 || Math.abs(buttons[0].width-buttons[1].width)>0.5 || buttons.some(button=>button.height<44))throw new Error('Invalid Dictation selector: '+language);
-                    if(baseline && Object.keys(geometry).some(key=>Math.abs(geometry[key]-baseline[key])>0.5))throw new Error('Dictation differs from German: '+language);
-                    baseline ||= geometry;checks.push({language,geometry,buttons});
+                    if(document.querySelector('.filter-fold').open)document.querySelector('.filter-fold>summary').click();
+                    for(const mode of ['listenword','listensentence']) {
+                      document.querySelector(`button[data-listening-mode="${mode}"]`).click();
+                      await wait(()=>document.querySelector('.listening-test')?.dataset.listeningMode===mode && document.querySelector('#listening-answer'));
+                      const geometry=measure(),target=language==='ja'?'zh':'de',key=target+':'+mode;
+                      if(language==='de'||language==='zh')baselines.set(language+':'+mode,geometry);
+                      else if(JSON.stringify(geometry)!==JSON.stringify(baselines.get(key)))throw new Error('Full Dictation differs from '+target+': '+language+' '+mode+' '+JSON.stringify(geometry));
+                      if(document.querySelector('#listening-answer').tagName!=='TEXTAREA'||document.querySelector('.listening-transcript rt'))throw new Error('Invalid answer field or early reading disclosure');
+                      checks.push({language,mode,geometry});
+                    }
                   }
+                  const {createPackageStorage}=await import('./js/packages/storage.js'),storage=createPackageStorage(),records=await storage.list();
+                  const coreRecord=records.filter(row=>row.id==='ja-core').sort((a,b)=>b.version.localeCompare(a.version,undefined,{numeric:true}))[0],core=await storage.get(coreRecord.id,coreRecord.version),entry=core.entries.find(row=>row.word==='食べる');
+                  const {renderJapaneseRuby}=await import('./js/shared/japanese-furigana.js');
+                  const sample=document.createElement('div');sample.className='listening-transcript';sample.lang='ja-JP';sample.style.cssText='position:absolute;top:-10000px';sample.innerHTML=renderJapaneseRuby(entry.word,entry.pronunciation);document.querySelector('main').append(sample);
+                  const rt=sample.querySelector('rt');if(!rt)throw new Error('Japanese furigana is missing');const ruby={reading:rt.textContent,font:getComputedStyle(rt).fontSize};sample.remove();
+                  if(ruby.reading!=='た'||ruby.font!=='13px')throw new Error('Japanese furigana/okurigana alignment differs');
                   await open(original.target || 'en',original.explanation);
-                  return JSON.stringify({passed:true,checks,restored:original.target || 'en'});
+                  return JSON.stringify({passed:true,checks,furigana:ruby,restored:original.target || 'en'});
                 }
                 const pairs = [];
                 const originalEnglishLevel = JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1') || '{}').preferences?.studyLevel;

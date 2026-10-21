@@ -59,10 +59,10 @@ try{
   await route(page,'vocabmeaning');assert.ok(await page.locator('[data-option]').count()>=2);assert.equal(await page.locator('#vocab-submit').count(),0);await page.locator('[data-option]').first().click();await page.locator('[data-next]').waitFor();
   await route(page,'listening');
   if(language==='ja'){
-   await page.evaluate(()=>{window.deferTestSpeech=true;});await page.locator('#listening-answer').fill('answer');await page.locator('#listening-play').click();await page.locator('[data-skip]').click();await page.evaluate(()=>{window.finishTestSpeech();window.deferTestSpeech=false;});await page.locator('#listening-answer').fill('answer');assert.equal(await page.locator('#listening-submit').isEnabled(),false,'completion of skipped audio cannot unlock the next question');
+   await page.evaluate(()=>{window.deferTestSpeech=true;});await page.locator('#listening-answer').fill('answer');await page.locator('#listening-play').click();await page.locator('#listening-skip').click();await page.evaluate(()=>{window.finishTestSpeech();window.deferTestSpeech=false;});await page.locator('#listening-answer').fill('answer');assert.equal(await page.locator('#listening-submit').isEnabled(),false,'completion of skipped audio cannot unlock the next question');
   }
   for(const kind of ['word','sentence']){
-   await page.locator(`[data-kind=${kind}]`).click();await page.locator('#listening-answer').fill('answer');assert.equal(await page.locator('#listening-submit').isEnabled(),false);
+   await page.locator(`button[data-listening-mode=listen${kind}]`).click();await page.locator('#listening-answer').fill('answer');assert.equal(await page.locator('#listening-submit').isEnabled(),false);
    await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-submit').disabled);await page.locator('#listening-answer').fill(await page.evaluate(()=>window.testSpokenText));await page.locator('#listening-answer').evaluate(node=>{node.dispatchEvent(new CompositionEvent('compositionstart',{bubbles:true}));node.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',isComposing:true,bubbles:true}));});assert.equal(await page.locator('#listening-submit').isEnabled(),false,'composition must finish before submission');await page.locator('#listening-answer').evaluate(node=>node.dispatchEvent(new CompositionEvent('compositionend',{bubbles:true})));await page.locator('#listening-submit').click();assert.equal(await page.locator('.vocab-answer-cell.correct').count(),1);
   }
   for(const mode of ['cloze','scramble']){

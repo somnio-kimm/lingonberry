@@ -92,6 +92,7 @@ Run `npm test`, `npm run check`, then the relevant browser checks:
 ```sh
 node scripts/verify-study-design-browser.mjs
 node scripts/verify-dictation-design-browser.mjs
+node scripts/verify-dictation-screen-browser.mjs
 node scripts/verify-design-parity-browser.mjs
 node scripts/verify-practice-design-browser.mjs
 ```
@@ -103,3 +104,15 @@ The first is the reusable design contract: German/Chinese base styles, shared se
 Use `renderPhraseGapSentence` through `renderExercisePrompt` for explicitly authored nonadjacent blanks. Each typing blank is a transparent, single-underline device-keyboard input with a 44px minimum target. Keep inputs within the existing question card, retain shared Submit/Skip/Next flow and use `bindTypingAnswers` for all-field readiness, Enter navigation and IME handling. Selection still checks on tap. Show corrected parts inline and cross out only incorrect parts. Do not create a second answer box below the sentence. See [Separated Phrase Gaps](phrase-gaps.md) and `verify-phrase-gaps-browser.mjs` for the reference behaviour and responsive checks.
 
 The Dictation contract measures actual downloaded-package screens in all seven study languages, English/Korean display, phone/tablet widths and both themes. It compares selector position, size, spacing and button styles directly with German, checks title → selector → Filters order, mode changes and the audio gate, and saves screenshots. The opt-in native `--verify-dictation-design` check compares German, Chinese, English and Japanese controls on-device without downloading packages or recording study answers.
+
+## Complete Dictation screen
+
+Every language must use `web/js/shared/listening-view.js` for the entire Dictation screen, not just its header and tabs. German and Chinese remain the baselines. Adapters provide question/answer policies, data filters, labels, stored-answer recording and optional reading markup; they must not duplicate the speaker/card/answer/action HTML.
+
+The question card uses `.card.panel.listening-question`. Its top row contains the mode/level badge on the left and the standard 44px `.word-listen` speaker on the right. The blank device-keyboard textarea sits inside `.vocab-answer-cell`, with one row for Word and two for Sentence, followed by Meaning hint. Submit/Skip and Next stay below the card in the existing action bars. Audio must finish before submission, and stale playback must not unlock a new question. Filter changes preserve Word/Sentence mode. Saved-question retests omit mode controls/filters, keep original question IDs and use the same answer/feedback body.
+
+English follows the German layout, including typed correction, crossed-out wrong input and the green correct answer. English explanation of English sentences must not duplicate the complete answer as a translation or reveal it through a hint; its hint uses the anchor word's meaning instead. Hints/translations use the selected explanation's content and language, independently of Display Language. All adapters use `listening-text.js` for consistent English/Korean labels.
+
+Japanese follows the Chinese answer-reading hierarchy after checking. `japanese-furigana.js` renders known whole-word readings above kanji groups, keeping written kana endings outside ruby. Sentence annotation uses exact installed dictionary words and verified forms; standard polite stems are derived only where the stored negative paradigm identifies the class. It matches complete segmented spans, preserves punctuation, and leaves unknown or ambiguous non-anchor readings plain. It does not infer per-kanji readings from on/kun lists or show answers/furigana before checking. Existing source licences/attribution remain in the installed packages; no external service or new language-data download is needed.
+
+Run `node scripts/verify-dictation-screen-browser.mjs` as well as the control-order contract. It compares full front-card/speaker/textarea/hint/action geometry with German (English and the other generic languages) or Chinese (Japanese), across both modes, EN/KO display, phone/tablet and light/dark. It also checks hint content, audio gating, correction, English self-translation suppression, saved retest balances and dictionary-backed Japanese feedback. Inspect the screenshots under `/private/tmp/dictation-screen`. The opt-in native Dictation check verifies both full-screen modes for German/Chinese/English/Japanese and Japanese ruby without submitting real study answers.
