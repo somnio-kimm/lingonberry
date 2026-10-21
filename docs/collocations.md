@@ -6,11 +6,13 @@ The first shared edition contains 66 original collocations: English 9, German 10
 
 - Word List shows a phrase preview below the word meaning. Search matches the phrase and its explanation as well as the headword.
 - Open the word block to see Collocations / 연어: phrase, its own meaning, an original usage example and the example translation. Both phrase and example can be spoken using the existing device voice.
-- Meaning Quiz → Exercise Type → Collocations tests phrase meanings. Options are meanings of the same phrase type.
-- Word Input → Exercise Type → Collocations asks for the studied collocation in dictionary form, with a headword cue. Reviewed alternative expressions are accepted. The phrase audio stays out of typing questions before submission.
+- Study → Collocations → Selection tests phrase meanings. Options are meanings of the same phrase type.
+- Study → Collocations → Typing asks for the studied collocation in dictionary form, with a headword cue. Reviewed alternative expressions are accepted. The phrase audio stays out of typing questions before submission.
 - Mistakes use the existing Review and mixed retest stores. Package updates preserve the original word IDs and learner progress.
 
 German and Chinese use their existing vocabulary controls, input/IME handling, feedback and Review paths. The other languages generate their collocation questions through the existing shared custom-exercise renderer. Word details use one shared collocation section renderer in all seven languages.
+
+Default Meaning Quiz and Word Input remain ordinary vocabulary tests. Specialist features have separate Study buttons. Choice answers check on tap; typing uses Submit. English-with-English explanations omit the example translation.
 
 ## Data and licences
 

@@ -12,9 +12,13 @@ Japanese and English use the same bundled question renderer, device keyboard, fi
 
 ## English
 
-- Countability prompts normally ask about recorded dictionary uses. A separately reviewed selected-sense fact instead displays the study meaning and asks about that meaning. Mixed plural-only/countable/uncountable evidence is not flattened into a misleading single answer.
-- Historical source families preserve explicit source-language ancestry and distinguish homonymous reconstructed roots. Ambiguous same-POS English etymologies are withheld unless safely aligned. Family membership is reference material, not automatic word segmentation or a formula for a modern meaning. Original root questions remain separately curated.
+- Articles and Countability is no longer offered as a test. Old package data remains readable so installed downloads and saved progress are compatible.
+- Root Families presents familiar roots, prefixes and suffixes with a short origin label, English/Korean meaning and related dictionary words. Browse includes all curated families; Practice follows the selected study level. Confusable Words remains a separate feature: spelling similarity alone does not establish a common root. The advanced historical-source audit remains an editorial reference, not the learner browser.
 - Collocations, phrasal verbs, verb patterns and confusables use contextual original exercises. Source relations without a disambiguated question and bilingual guidance remain audit candidates; an audit candidate is not a ready exercise.
+
+## Study screens
+
+Meaning Quiz and Word Input contain only ordinary vocabulary. Each specialist category has its own Study button, with Selection/Typing switches where both are available. Choices check immediately when tapped, following German and Chinese; typing uses Submit. Japanese answer gaps use single underlines. English-with-English explanations keep word definitions but omit example-sentence translations.
 
 ## Sources and commercial reuse
 

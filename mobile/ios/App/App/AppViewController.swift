@@ -88,24 +88,28 @@ class AppViewController: CAPBridgeViewController {
                 if (english || japanese) {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=vocabinput]'));
-                  const routes = japanese ? ['forms','particles','counters'] : ['patterns','articles','roots'];
+                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana','forms','particles','counters','collocations'] : ['patterns','roots','collocations','phrasal','confusables'];
                   result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
                   if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
+                  if (english && document.querySelector('[data-route=articles]')) throw new Error('Removed article test is still visible');
                   document.querySelector('[data-route=vocabinput]').click();
-                  await wait(() => document.querySelector('[data-exercise]'));
-                  result.exerciseCategories = [...document.querySelectorAll('[data-exercise] option')].map(option => option.value);
-                  if (result.exerciseCategories.length < 3) throw new Error('Vocabulary exercise filters are missing');
+                  await wait(() => document.querySelector('.vocab-question'));
+                  if (document.querySelector('[data-exercise]') || document.querySelector('[data-exercise-id]')?.dataset.exerciseId) throw new Error('Default vocabulary contains specialist questions');
+                  result.isolatedVocabulary = true;
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-level]'));
                   [...document.querySelectorAll('[data-level]')].at(-1).click();
-                  document.querySelector(`[data-route=${japanese ? 'forms' : 'articles'}]`).click();
-                  await wait(() => document.querySelector('[data-exercise]'));
-                  const coverageLabel = document.querySelector(`[data-exercise] option[value=${japanese ? 'forms' : 'articles'}]`)?.textContent || '';
-                  result.dictionaryPracticeQuestions = Number(coverageLabel.match(/\\((\\d+)\\)/)?.[1] || 0);
-                  if (result.dictionaryPracticeQuestions < 100) throw new Error('Broad dictionary practice package was not installed');
+                  document.querySelector(`[data-route=${japanese ? 'forms' : 'roots'}]`).click();
                   if (japanese) {
+                    await wait(() => document.querySelector('[data-form-kind]'));
                     result.formKinds = [...document.querySelectorAll('[data-form-kind] option')].map(option => option.value);
                     if (!result.formKinds.includes('causative-passive') || !result.formKinds.includes('potential')) throw new Error('Japanese form types are missing');
+                  } else {
+                    await wait(() => document.querySelector('[data-root-view=browse]'));
+                    document.querySelector('[data-root-view=browse]').click();
+                    await wait(() => document.querySelector('[data-root-kind]'));
+                    result.rootMembers = document.querySelectorAll('[data-root-word]').length;
+                    if (result.rootMembers < 3 || !document.querySelector('.root-origin')) throw new Error('Learner root families are missing');
                   }
 
                   document.querySelector('[data-tab=home]').click();
