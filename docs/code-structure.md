@@ -8,6 +8,14 @@ The app uses plain modules with data/model functions separated from view/event c
 - `web/js/shared/*-view.js`: markup and view-owned events. Reuse `study-components.js`, `study-theme.css` and the shared design reference. Return cleanup for pagers and event handlers.
 - Feature text belongs outside HTML/event code. Ordinary shared labels use `lexicon-text.js`; the root inventory's source-language labels, usage labels and count formatting live in `morpheme-text.js`.
 
+## Shared mechanics
+
+- `typing-answer.js`: one device-keyboard/IME lifecycle with explicit readiness and active-view gates.
+- `mistake-balance.js`: outstanding-mistake arithmetic; adapters retain their own history formats.
+- `random.js`: one nonmutating shuffle and random selection implementation.
+
+The [whole-source audit](runtime-audit.md) records concrete removals, intentional language boundaries and remaining coupling hotspots.
+
 ## Root inventory example
 
 `createMorphemeModel(rows,words)` prepares the search index and an ambiguity-safe dictionary lookup once when the installed explanation data changes. The presentation reuses it while switching tabs or refreshing the screen. The view asks the model for filtered rows or a bounded related-word page; it does not rebuild source relationships, infer dictionary senses or calculate pagination inline.
