@@ -1,2 +1,3 @@
-/** Outstanding mistake balance; saved histories and dismissal semantics stay unchanged. */
-export const wrongAnswerCount=(attempts,dismissed=-1)=>attempts.slice(dismissed+1).reduce((count,attempt)=>attempt.skipped?count:attempt.correct===false?count+1:attempt.correct===true&&attempt.review!==false?Math.max(0,count-1):count,0);
+import {advanceMistakeBalance} from '../../../../js/shared/mistake-balance.js';
+/** German history starts at zero after the last dismissal; regular correct answers do not repay mistakes. */
+export const wrongAnswerCount=(attempts,dismissed=-1)=>attempts.slice(dismissed+1).reduce(advanceMistakeBalance,0);
