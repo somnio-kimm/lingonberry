@@ -88,10 +88,10 @@ class AppViewController: CAPBridgeViewController {
                 if (english || japanese) {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=vocabinput]'));
-                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana','forms','particles','counters','collocations'] : ['patterns','roots','collocations','phrasal','confusables'];
+                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana','forms','particles','counters','collocations'] : ['patterns','roots','collocations','phrasal'];
                   result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
                   if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
-                  if (english && document.querySelector('[data-route=articles]')) throw new Error('Removed article test is still visible');
+                  if (english && document.querySelector('[data-route=articles],[data-route=confusables]')) throw new Error('Removed English test is still visible');
                   document.querySelector('[data-route=vocabinput]').click();
                   await wait(() => document.querySelector('.vocab-question'));
                   if (document.querySelector('[data-exercise]') || document.querySelector('[data-exercise-id]')?.dataset.exerciseId) throw new Error('Default vocabulary contains specialist questions');
