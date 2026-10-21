@@ -16,7 +16,7 @@ The approved list excludes Japanese politeness/style conversion and English word
 | English | Phrasal verbs | Collocations & Phrasal Verbs → Phrase Type → Phrasal Verbs |
 | English | Confusables, including elicit / illicit | Meaning Quiz / Word Input → Confusable Words |
 | English | Historical roots and related words | Root Families; Meaning Quiz / Word Input → Root Families |
-| English | Verb patterns | Verb Patterns |
+| English | Verb patterns | Removed from Study and active pools; existing Review snapshots retained |
 | English | Articles and countability | Articles and Countability |
 
 Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble and Dictation remain the common defaults. Exercise Type is above the ordinary Filters, using the existing grammar selector layout. Custom typing/selection cards reuse the default vocabulary prompt, answer box, choices and bottom action bars. Japanese forms show the base word and reading, meaning, then the requested condition, like the default German form block.
