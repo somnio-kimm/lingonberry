@@ -21,7 +21,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections")) else { return }
+        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design")) else { return }
         verificationStarted = true
         verifyPackages(attempt: 0)
     }
@@ -47,6 +47,34 @@ class AppViewController: CAPBridgeViewController {
                   element.dispatchEvent(new Event('change', {bubbles:true}));
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
+                if (dictation) {
+                  const original = JSON.parse(localStorage.getItem('learn-language.preferences.v1') || '{}');
+                  const open = async (target, explanation) => {
+                    document.querySelector('[data-tab=settings]').click();
+                    await wait(()=>document.querySelector('#target'));
+                    select('target',target);
+                    await wait(()=>document.querySelector('#explanation option[value="en"],#explanation option[value="ko"]'));
+                    const value = explanation || (document.querySelector('#explanation option[value="en"]')?'en':'ko');
+                    select('explanation',value);
+                    await wait(()=>document.querySelector('#package-status').dataset.state==='ready');
+                    document.querySelector('[data-tab=home]').click();
+                    await wait(()=>document.querySelector('[data-route=listening],[data-quiz=listening]'));
+                    document.querySelector('[data-route=listening],[data-quiz=listening]').click();
+                    await wait(()=>document.querySelector('.listening-mode-controls') && document.querySelector('.filter-fold'));
+                  };
+                  const checks=[];let baseline;
+                  for(const language of ['de','zh','en','ja']) {
+                    await open(language);
+                    const main=document.querySelector('main').getBoundingClientRect(),modes=document.querySelector('.listening-mode-controls').getBoundingClientRect(),filter=document.querySelector('.filter-fold').getBoundingClientRect();
+                    const geometry={top:modes.top-main.top,left:modes.left-main.left,width:modes.width,height:modes.height};
+                    const buttons=[...document.querySelectorAll('.listening-mode-controls button')].map(button=>({text:button.textContent,width:button.getBoundingClientRect().width,height:button.getBoundingClientRect().height}));
+                    if(modes.bottom>filter.top || buttons.length!==2 || Math.abs(buttons[0].width-buttons[1].width)>0.5 || buttons.some(button=>button.height<44))throw new Error('Invalid Dictation selector: '+language);
+                    if(baseline && Object.keys(geometry).some(key=>Math.abs(geometry[key]-baseline[key])>0.5))throw new Error('Dictation differs from German: '+language);
+                    baseline ||= geometry;checks.push({language,geometry,buttons});
+                  }
+                  await open(original.target || 'en',original.explanation);
+                  return JSON.stringify({passed:true,checks,restored:original.target || 'en'});
+                }
                 const pairs = [];
                 const originalEnglishLevel = JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1') || '{}').preferences?.studyLevel;
                 const checks = japanese ? [['ja','en','ja-lex-7985a44e7b819ef6641a','in what manner'],['ja','ko','ja-lex-7985a44e7b819ef6641a','어떻게']] : english ? [['en','en','en-lex-d2e8946b4935cf8fc6d1','angular momentum'],['en','ko','en-lex-d2e8946b4935cf8fc6d1','각운동량']] : [['de','ko','de-noun-abend-editorial-main','저녁'],['de','en','de-noun-abend-editorial-main','evening'],['zh','en','hsk1_1','to love; to like deeply'],['zh','ko','hsk1_1','사랑하다; 좋아하다']];
@@ -161,7 +189,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
+                """, arguments: ["dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                     case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")
