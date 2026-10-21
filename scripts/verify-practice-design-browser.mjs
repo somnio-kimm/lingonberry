@@ -24,9 +24,14 @@ try{
    assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
    await page.screenshot({path:`/private/tmp/practice-design-shots/${language}-${width}-${theme}.png`,fullPage:true});checks++;
   }
+  if(language==='en'){
+   await page.evaluate(()=>window.designRoute('roots'));const row=page.locator('.root-member.wl-row').first();
+   assert.ok(await row.evaluate(node=>parseFloat(getComputedStyle(node.querySelector('.wl-headword')).fontSize)>parseFloat(getComputedStyle(node.querySelector('.wl-meaning')).fontSize)));
+   await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();await page.keyboard.press('Escape');checks++;
+  }
   if(language==='ja'){
    await page.evaluate(()=>window.designRoute('vocabmeaning'));for(const category of ['reading','onyomi','kunyomi','okurigana']){await page.selectOption('[data-exercise]',category);assert.ok(await page.locator('[data-option]').count()>=3);checks++;}
-   await page.evaluate(()=>window.designRoute('forms'));assert.equal(await page.locator('.form-original-word .grammar-word').count(),1);assert.equal(await page.locator('.form-problem .vocab-prompt').count(),1);checks++;
+   await page.evaluate(()=>window.designRoute('forms'));assert.equal(await page.locator('.form-original-word .grammar-word').count(),1);assert.equal(await page.locator('.form-problem .vocab-prompt,.form-problem .grammar-prompt').count(),1);checks++;
   }
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${checks} real-package design/feature checks at phone/tablet widths in both themes.`);
