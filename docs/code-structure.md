@@ -29,3 +29,5 @@ The view uses named card, word, result and event functions. Filtering keeps the 
 Follow the existing feature boundary first. Extract a model when it owns a real reusable data rule; extract a view when it owns a complete screen or component lifecycle. Do not create a wrapper merely to rename one call, duplicate a second source of truth, or combine unrelated features into a universal configuration object.
 
 The multilingual presentation still coordinates several established screens and the German/Chinese renderers retain their existing adapters. Further extraction should follow one screen or responsibility at a time with its existing tests, rather than replacing all language flows in one refactor.
+
+Dictation has one shared screen renderer (`listening-view.js`) and common display copy (`listening-text.js`) for all study languages. The generic presentation supplies filtering, progress and retest hooks rather than its own listening markup. `japanese-furigana.js` owns the installed reading/form index and escaped ruby projection; it does not alter question answers, packages or learner IDs. Listening cleanup is idempotent and owned by the mounted screen.
