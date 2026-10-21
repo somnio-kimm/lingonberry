@@ -199,19 +199,9 @@ export function shuffle(a) {
 }
 export function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
-export function srsColor(lv) {
-  return lv === 0 ? 'var(--text3)' : lv <= 2 ? 'var(--orange)' : lv <= 4 ? 'var(--blue)' : 'var(--green)';
-}
-
-export const modeColor = mode => `var(--${SCREENS[mode]?.accentColor || 'blue'})`;
 export const modeTitle = mode => t(SCREENS[mode]?.title || `mode_${mode}`) || mode;
 export const modeIcon = mode => SCREENS[mode]?.icon || (['listenword','listensentence'].includes(mode) ? '🎧' : '❓');
 export const QUIZ_MODES = HOME_MODES;
-
-/** Quiz feedback: green ✓ or red ✕ */
-export function quizMark(ok) {
-  return `<div class="quiz-result-icon quiz-result-icon--${ok ? 'ok' : 'bad'}" aria-hidden="true">${ok ? '✓' : '✕'}</div>`;
-}
 
 /** Keep a wrong syllable visible under its correction. */
 export function quizPinyinFeedback(answer, correction, correct) {

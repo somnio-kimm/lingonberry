@@ -1,7 +1,6 @@
 import {normaliseKana} from './japanese-reading.js';
 import {formKindLabel} from './language-exercises.js';
 const adjectiveLabels={adnominal:['Adnominal','관형형'],negative:['Negative','부정형'],past:['Past','과거형'],'past-negative':['Past Negative','과거 부정형'],te:['Te Form','て형'],conditional:['Conditional','조건형'],adverbial:['Adverbial','부사형']};
-const countLabels={countable:['Countable','가산 명사'],uncountable:['Uncountable','불가산 명사'],both:['Countable and Uncountable','가산·불가산 명사'],'plural-only':['Plural Only','복수 전용 명사']};
 /** KANJIDIC dots mark written endings, hyphens mark bound readings. The input is the full reading. */
 export const kanjiAnswer=reading=>normaliseKana(reading.replace(/[.\-]/gu,''));
 export function createDictionaryExercises(study,words){
@@ -28,11 +27,6 @@ export function createDictionaryExercises(study,words){
      instruction:ko?`지정된 표준 보통체 형태를 입력하세요.${full?' 줄이지 않은 형태를 쓰세요.':''}${potential?' 1단 동사와 来る는 ら를 생략하지 마세요.':''}`:`Type the specified standard plain form.${full?' Use the full, uncontracted form.':''}${potential?' Retain ら for ichidan verbs and 来る.':''}`,answer:group.answers[0],acceptedAnswers:group.answers.slice(1),explanation:`${word.lemma} → ${group.answers.join(' / ')}\n${name}`});
    }
   }
- }
- if(study.targetLanguage==='en')for(const row of data.countability||[]){const word=byId.get(row.entryId);if(!word)continue;const key=row.labels.length===2?'both':row.labels[0],label=id=>countLabels[id][ko?1:0];
-  result.push({id:`countability-${row.entryId}`,entryId:row.entryId,route:'articles',category:'articles',prompt:word.lemma,context:row.scope==='selected-sense'?word.studyMeaning:undefined,
-   instruction:row.scope==='selected-sense'?(ko?'표시된 뜻에 해당하는 이 명사의 가산성을 선택하세요.':'For the displayed meaning, select this noun’s countability.'):(ko?'이 명사의 사전에 실린 여러 용법을 통틀어 가산성을 선택하세요.':'Across this noun’s dictionary uses, select its countability.'),
-   answer:label(key),options:Object.keys(countLabels).map(label),explanation:row.scope==='selected-sense'?(ko?`${word.lemma}: ${label(key)}. 표시된 뜻에 해당하는 용법입니다. 다른 뜻에서는 달라질 수 있습니다.`:`${word.lemma}: ${label(key)} for the displayed meaning. Other senses can behave differently.`):(ko?`${word.lemma}: ${label(key)}. 문맥과 뜻에 따라 용법이 달라질 수 있습니다. 이 분류는 사전에 실린 용법 전체를 대상으로 합니다.`:`${word.lemma}: ${label(key)}. Usage can depend on meaning and context. This classification covers the dictionary’s recorded noun uses.`)});
  }
  return result;
 }
