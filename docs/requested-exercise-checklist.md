@@ -12,8 +12,8 @@ The approved list excludes Japanese politeness/style conversion and English word
 | Japanese | Verb and adjective forms | Form Input → Form |
 | Japanese | Particles | Particles |
 | Japanese | Counters and sound changes | Counters |
-| English | Collocations | Meaning Quiz / Word Input → Collocations |
-| English | Phrasal verbs | Meaning Quiz / Word Input → Phrasal Verbs |
+| English | Collocations | Collocations & Phrasal Verbs → Phrase Type → Collocations |
+| English | Phrasal verbs | Collocations & Phrasal Verbs → Phrase Type → Phrasal Verbs |
 | English | Confusables, including elicit / illicit | Meaning Quiz / Word Input → Confusable Words |
 | English | Historical roots and related words | Root Families; Meaning Quiz / Word Input → Root Families |
 | English | Verb patterns | Verb Patterns |
