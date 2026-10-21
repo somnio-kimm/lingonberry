@@ -1,3 +1,4 @@
+import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
 export {showQuizBurst,scorePill} from '../../../js/shared/ui.js';
 import { SCREENS, HOME_MODES } from './app-definition.js';
@@ -150,7 +151,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord) {
       <div class="py-per-char py-per-char--sheet">${Pinyin.htmlMarkedColumns(w.syllables)}</div>
       <div class="study-sheet-meaning">${wordMeaning(w)}</div>
     </div>
-    <div class="study-status-title">${t('changeStudyStatus')}</div>
+    ${renderCollocations(w,Store.uiLang)}<div class="study-status-title">${t('changeStudyStatus')}</div>
     <div class="status-btns">
       <button class="status-btn ${w.srs.level === 0 ? 'active' : ''}" data-lv="0">
         <span class="status-dot" style="background:var(--text3)"></span>${t('statusNew')}
@@ -170,6 +171,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord) {
       </div>`).join('')}</div>` : ''}
   </div>`;
 
+  bindCollocationAudio(overlay,w,text=>TTS.speak(text));
   document.body.appendChild(overlay);
   const close = () => { TTS.stop(); overlay.remove(); onDone?.(); if(focus?.isConnected)focus.focus({preventScroll:true}); };
   overlay.querySelector('.close-btn').onclick = close;

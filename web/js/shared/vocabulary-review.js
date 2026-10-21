@@ -11,9 +11,10 @@ return function vocabularyReview({mode, question, word, locale, prompt = '', exa
   if (!meaning) meaning = question?.example?.[locale] || example?.[locale] || '';
   if (!meaning && originalLocale === locale) meaning = mode === 'vocabinput' ? savedPrompt : question?.answer || correctAnswer;
   return {
-    mode, requiresArticle: mode === 'vocabinput' && requiresNounArticle(savedWord), word: vocabularyWord(savedWord) || question?.example?.de || example?.de || '', wordId: savedWord.id,
+    mode, requiresArticle: mode === 'vocabinput' && !question?.collocationId && requiresNounArticle(savedWord), word: vocabularyWord(savedWord) || question?.example?.de || example?.de || '', wordId: savedWord.id,
     meaning, locale: originalLocale, prompt: savedPrompt,
-    correctAnswer: mode === 'vocabinput' && requiresNounArticle(savedWord) ? vocabularyInputAnswer(savedWord) : question?.answer || correctAnswer, userAnswer,
+    correctAnswer: mode === 'vocabinput' && !question?.collocationId && requiresNounArticle(savedWord) ? vocabularyInputAnswer(savedWord) : question?.answer || correctAnswer, userAnswer,
+    collocationPhrase:question?.collocationId?question.phrase:undefined,
     options: mode === 'vocabmeaning' && Array.isArray(question?.options) ? question.options : [],
   };
 }
@@ -26,7 +27,7 @@ export function vocabularyReviewQuestion(review, labels, wordLanguage, wordPromp
 
 export function vocabularyReviewChoices(review, labels) {
   if (!review.options.length) return '';
-  return `<div class="wrong-choice-list"><ol class="vocab-review-options">${review.options.map(option => {
+  return `<div class="wrong-choice-list">${review.collocationPhrase?`<p class="wrong-vocab-prompt">${e(review.collocationPhrase)}</p>`:''}<ol class="vocab-review-options">${review.options.map(option => {
     const correct = option.id === review.wordId, wrong = !correct && option.text === review.userAnswer;
     return `<li class="vocab-review-option ${correct ? 'correct' : wrong ? 'wrong' : ''}" lang="${e(review.locale || '')}"><span class="wrong-choice-text">${wrong ? `<del>${e(option.text)}</del>` : e(option.text)}</span>${wrong ? `<span class="wrong-choice-status">${e(labels.yours)}</span>` : ''}</li>`;
   }).join('')}</ol></div>`;

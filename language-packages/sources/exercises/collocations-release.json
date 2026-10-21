@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "languages": {
+    "de": {
+      "from": "3.0.0",
+      "to": "3.1.0"
+    },
+    "en": {
+      "from": "4.3.0",
+      "to": "4.4.0"
+    },
+    "es": {
+      "from": "3.0.0",
+      "to": "3.1.0"
+    },
+    "fr": {
+      "from": "3.0.0",
+      "to": "3.1.0"
+    },
+    "ja": {
+      "from": "4.2.0",
+      "to": "4.3.0"
+    },
+    "ko": {
+      "from": "3.0.0",
+      "to": "3.1.0"
+    },
+    "zh": {
+      "from": "2.0.0",
+      "to": "2.1.0"
+    }
+  },
+  "sourcePackages": [
+    {
+      "path": "language-packages/de-core-3.0.0.json",
+      "sha256": "d8c5c049be5f2d88f53b4c2363865015c151512c360331bbfaa0e934e0483afc"
+    },
+    {
+      "path": "language-packages/de-en-3.0.0.json",
+      "sha256": "f02ed46dec96c0cfebce177f853380c5190890f0cffeba7041f634dc369ee032"
+    },
+    {
+      "path": "language-packages/de-ko-3.0.0.json",
+      "sha256": "7c79a1d1c66cf97097ad251703aac3ffa3aea03e9cd7d55eff36615aec745318"
+    },
+    {
+      "path": "language-packages/en-core-4.3.0.json",
+      "sha256": "5a1dd53a9f80cc60400a40ca9f7b29b87eabfe86366de6d53972b66ce23233d5"
+    },
+    {
+      "path": "language-packages/en-en-4.3.0.json",
+      "sha256": "729d7ff6b3dc6b2dbe8f76fae0eb5928378f80c3601e3653f44a5452fbc8e245"
+    },
+    {
+      "path": "language-packages/en-ko-4.3.0.json",
+      "sha256": "9c1f3e2c5a78143647ab97f9e818c0baf4aded73bf0453d8acfd937a0464b027"
+    },
+    {
+      "path": "language-packages/es-core-3.0.0.json",
+      "sha256": "5e0f762058461addbb8b167d5a43a34a3ddf75071ed0a6837465e24217d17f83"
+    },
+    {
+      "path": "language-packages/es-en-3.0.0.json",
+      "sha256": "e0d0e8921d6949270fa4e53b2fa200e24ae0defd888f4b534354f44a7f9bfb5e"
+    },
+    {
+      "path": "language-packages/es-ko-3.0.0.json",
+      "sha256": "b6b728910ec37635a1bd82eebc615989d2105c7d689db0036d6b42ae75645529"
+    },
+    {
+      "path": "language-packages/fr-core-3.0.0.json",
+      "sha256": "789b4d56a65be68edc35100bfb3e2b811e6480fb5fbfda10b1c73f308df26a5b"
+    },
+    {
+      "path": "language-packages/fr-en-3.0.0.json",
+      "sha256": "3e18d475a05dc1e8021ea64cb9ff9694fa33445104d73e4ca83a9d4f5a1fe6d9"
+    },
+    {
+      "path": "language-packages/fr-ko-3.0.0.json",
+      "sha256": "475442e61b02052cde4a9235a7a86a0bb6619a2ffd74916a79f9beeb967fae96"
+    },
+    {
+      "path": "language-packages/ja-core-4.2.0.json",
+      "sha256": "6e5b8b7867ff8d3fec7c5cc610731ef8836afd66e8f0fca5ee3ebb3408ea73f5"
+    },
+    {
+      "path": "language-packages/ja-en-4.2.0.json",
+      "sha256": "9b0adabae4945e937e2ca1d258fd486ff46798976f4035f8a214a5f682af132b"
+    },
+    {
+      "path": "language-packages/ja-ko-4.2.0.json",
+      "sha256": "c17f02becce32dc57eda8b73d8ac08c9a85f4201111adb23f5358a28906ed75c"
+    },
+    {
+      "path": "language-packages/ko-core-3.0.0.json",
+      "sha256": "065d6b28250412730b202b92829cf855c44c1d44e96774be6a24d75f7c6ae3c3"
+    },
+    {
+      "path": "language-packages/ko-en-3.0.0.json",
+      "sha256": "c647ed2ae24c19730d41fe4415a073f4ff1476a4f978762c354ac460c97c8d29"
+    },
+    {
+      "path": "language-packages/zh-core-2.0.0.json",
+      "sha256": "cb7c29958b9c201aadf13f7db930e22f4c6a98d83ff476724f8d3de2b0515f6e"
+    },
+    {
+      "path": "language-packages/zh-en-2.0.0.json",
+      "sha256": "5325102b4c8b98233c95aa30c4564819b649256965beb4049ed7068f7d947096"
+    },
+    {
+      "path": "language-packages/zh-ko-2.0.0.json",
+      "sha256": "21abbd4b869dbec6d3d1ab94ec1145bbda90ba7263acf4d756f6dcb59e513b74"
+    }
+  ]
+}

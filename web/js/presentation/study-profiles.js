@@ -25,7 +25,7 @@ export function studyWords(study){
  if(!study)return [];
  return study.entries.map(entry=>({id:entry.id,lemma:entry.word,level:study.targetLanguage==='en'?assignEnglishLevel(entry):entry.level,cefr:study.targetLanguage==='en'?assignEnglishLevel(entry):entry.level,pos:entry.partOfSpeech,subtype:entry.grammar?.subtype,article:entry.article,
   pronunciation:entry.pronunciation,aliases:entry.aliases||[],acceptedArticles:entry.grammar?.acceptedArticles||[],studyTier:entry.grammar?.studyTier,tags:entry.tags||[],
-  referenceExamples:entry.referenceExamples||[],exampleStatus:entry.exampleStatus,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,
+  referenceExamples:entry.referenceExamples||[],exampleStatus:entry.exampleStatus,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:entry.collocations||[],
   examples:[entry.example,...(entry.additionalExamples||[])].filter(Boolean).map(example=>({...example,de:example.text,studyTranslation:example.translation,[study.explanationLanguage]:example.translation})),
  }));
 }

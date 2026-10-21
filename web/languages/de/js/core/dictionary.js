@@ -1,3 +1,4 @@
+import {collocationSearchTerms} from '../../../../js/shared/collocations.js';
 import { STUDY_LEVELS } from '../app-definition.js';
 const levels=STUDY_LEVELS.map(level=>level.id);
 const levelRank=word=>{const rank=levels.indexOf(word.cefr);return rank<0?levels.length:rank;};
@@ -12,7 +13,7 @@ export function dictionaryEntries(words,{level='all',pos='all',query=''}={}) {
  const exact=filtered.filter(w=>queryText&&[w.lemma,w.plural,w.comparative,w.superlative,...values(w.declension).map(x=>x.replace(/^(der|die|das|den|dem|des) /u,'')),...values(w.forms),...values(w.attested_forms).map(x=>x.replace(/^(hat|ist) /u,'')),...values(w.pronoun_forms),...values(w.article_forms),...w.meaning_en.flatMap(x=>x.split(';').map(y=>y.trim().replace(/^to /u,''))),...w.meaning_ko.flatMap(x=>x.split(';'))].some(x=>foldDictionaryText(x)===queryText));
  return (exact.length?exact:filtered.filter(w=>{
   if(!tokens.length)return true;
-  const text=w._search||foldDictionaryText([w.lemma,w.studyMeaning,...w.meaning_en,...w.meaning_ko,w.plural,w.comparative,w.superlative,...values(w.declension),...values(w.forms),...values(w.attested_forms),...values(w.pronoun_forms),...values(w.article_forms)].filter(Boolean).join(' '));
+  const text=w._search||foldDictionaryText([w.lemma,w.studyMeaning,...collocationSearchTerms(w),...w.meaning_en,...w.meaning_ko,w.plural,w.comparative,w.superlative,...values(w.declension),...values(w.forms),...values(w.attested_forms),...values(w.pronoun_forms),...values(w.article_forms)].filter(Boolean).join(' '));
   return tokens.every(token=>text.includes(token));
  })).sort((a,b)=>levelRank(a)-levelRank(b)||compare.compare(a.lemma,b.lemma)||a.sense_id.localeCompare(b.sense_id));
 }

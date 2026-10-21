@@ -1,0 +1,337 @@
+{
+  "version": 1,
+  "sourceSha256": "99c600e2d1e62d26b6bafacb080c1098d9111b8fa44a51fd4eeec2b62cd2bbfc",
+  "notice": "AI-assisted independent linguistic review of original Lingonberry phrases, examples and translations. Not fluent-speaker certification. No copied publisher definitions/examples are included. Review metadata and original content MIT.",
+  "rows": [
+    {
+      "id": "ja-collocation-001",
+      "status": "accepted",
+      "rowSha256": "cd9a542a58c50a182cd387f31ef1f99f2021ec351d7f471ad433172968c4318f"
+    },
+    {
+      "id": "ja-collocation-002",
+      "status": "accepted",
+      "rowSha256": "798f33a1ccd7c937a14c9e7dfc6275bc9c7eb25f75ef26db16e5eaeca6a89d26"
+    },
+    {
+      "id": "ja-collocation-003",
+      "status": "accepted",
+      "rowSha256": "0901cf8afd509ca1a5a9f164fa436c91ce064a79fbb749076c8804d54db06ee5"
+    },
+    {
+      "id": "ja-collocation-004",
+      "status": "accepted",
+      "rowSha256": "ce8305dccf760331a1ca1d898741aca829e28cf5411f7030c81b3c514f4e8cb3"
+    },
+    {
+      "id": "ja-collocation-005",
+      "status": "accepted",
+      "rowSha256": "78f88b4874ed58a150a786efbe0227b50e8b31ecb860c75505227996767e6396"
+    },
+    {
+      "id": "ja-collocation-006",
+      "status": "accepted",
+      "rowSha256": "ea764c5b959d6e90575961a875e182eab0c1ffe93785655022f9704ee79191d3"
+    },
+    {
+      "id": "ja-collocation-007",
+      "status": "accepted",
+      "rowSha256": "38f9a485e4e06f4c9d23d3b4f3b8e3fff95d90c594b5ebbd87f7bb93decc5e9e"
+    },
+    {
+      "id": "ja-collocation-008",
+      "status": "accepted",
+      "rowSha256": "3cdc242c38d51b872d878e072e57c80c8eeffffdb7e497f78b109b6f9c29232d"
+    },
+    {
+      "id": "ko-collocation-001",
+      "status": "accepted",
+      "rowSha256": "17b7e077755a5a6cd8ced2c406dfb74a1a8eea0e492d09140a98af483896846c"
+    },
+    {
+      "id": "ko-collocation-002",
+      "status": "accepted",
+      "rowSha256": "5389522da4ab9cd62ad20ad8d69a510178fd221273bb3c24790e9305ae55b4e2"
+    },
+    {
+      "id": "ko-collocation-003",
+      "status": "accepted",
+      "rowSha256": "d8062bf00428b2c4ab2621edd4bdd5385e69ab666d4c32afa0651fc9588a460f"
+    },
+    {
+      "id": "ko-collocation-004",
+      "status": "accepted",
+      "rowSha256": "6717aad4a922847a96d6ce7704eebeb63fc56aef234324a666045395e928cef9"
+    },
+    {
+      "id": "ko-collocation-005",
+      "status": "accepted",
+      "rowSha256": "776af021b6f465daa207a2ce4acfd8ef1db79198696160f8a06ecac2fa7a66f0"
+    },
+    {
+      "id": "ko-collocation-006",
+      "status": "accepted",
+      "rowSha256": "7cfc20e2e2cf1feb99002919977e2366c8c0e75eae923a0c12547f3cf7fcb600"
+    },
+    {
+      "id": "ko-collocation-007",
+      "status": "accepted",
+      "rowSha256": "1526a2897a2ee0a38416eb8c8b2e8fc6bc93158b86b9fc1bf558063c1819641b"
+    },
+    {
+      "id": "ko-collocation-008",
+      "status": "accepted",
+      "rowSha256": "326c953263fdf871247e9b7ec2efbe2d14c68547cab30d098337e8fdb4fe89ee"
+    },
+    {
+      "id": "ko-collocation-009",
+      "status": "accepted",
+      "rowSha256": "19f4849488d1e14b9ad72de6398a6f57469d9940e55913b70026a91f29547851"
+    },
+    {
+      "id": "zh-collocation-001",
+      "status": "accepted",
+      "rowSha256": "20a7bcf91c2dafbf7bcff0a1d6c931b4b4a379a7fc5fd3dc9c3c91def35f0e18"
+    },
+    {
+      "id": "zh-collocation-002",
+      "status": "accepted-after-corrections",
+      "rowSha256": "5545f338b305a3fe13c036921d8394c36648557779d72c89baa0794ac69383f5"
+    },
+    {
+      "id": "zh-collocation-003",
+      "status": "accepted-after-corrections",
+      "rowSha256": "2186a8f6d0d4b830ceca845cdbab7f441201671fe5251a983f787328454d09d8"
+    },
+    {
+      "id": "zh-collocation-004",
+      "status": "accepted",
+      "rowSha256": "1844b056e947cd82b36b4041b766c8430f93235a6a1d1067afbe7bcab9a6cd32"
+    },
+    {
+      "id": "zh-collocation-005",
+      "status": "accepted-after-corrections",
+      "rowSha256": "d9b618769f3878a5deee190a3d836ed51d0597bbc106ae811f5f65e9b9fad052"
+    },
+    {
+      "id": "zh-collocation-006",
+      "status": "accepted",
+      "rowSha256": "a44478db5e7a423ea8c8f6c2ef029fdff5e0cf732b20b67aadb94be3c0bb201f"
+    },
+    {
+      "id": "zh-collocation-007",
+      "status": "accepted",
+      "rowSha256": "772231d626b76e15f462f7010afb87737541d2f344d0b42b730ee110b40ef2d2"
+    },
+    {
+      "id": "zh-collocation-008",
+      "status": "accepted",
+      "rowSha256": "88574041a137a6244297a578344a6bbe068629b88f08a3b9e85ac339430cb0c0"
+    },
+    {
+      "id": "zh-collocation-009",
+      "status": "accepted",
+      "rowSha256": "2bfcd27dde88c0b46449c810d7ebc0d8453b1492a6e411d333dc0f236b7358b2"
+    },
+    {
+      "id": "zh-collocation-010",
+      "status": "accepted",
+      "rowSha256": "2630cf559c301e740b47fe7df869a70eff1f6553bec8df81b06ae0d93f0bdc09"
+    },
+    {
+      "id": "en-collocation-001",
+      "status": "accepted",
+      "rowSha256": "6acc6ba2c57a58869a064d5ae49eed28f56ae6d33e2c2c77cc787660c6258aae"
+    },
+    {
+      "id": "en-collocation-002",
+      "status": "accepted",
+      "rowSha256": "71ee11f5204a7dcf317ef686b1c9615ab9c85d974bbbed4beeadf67b3c6d0b05"
+    },
+    {
+      "id": "en-collocation-003",
+      "status": "accepted",
+      "rowSha256": "a299b3c6bbae54627655c8d8ca4907a036e4696a99655dd7cfddfb1cd2ea901e"
+    },
+    {
+      "id": "en-collocation-004",
+      "status": "accepted",
+      "rowSha256": "bd32531f0db9ed2ede23287bdf55aea5ae26f671508a210b496559274ad532d5"
+    },
+    {
+      "id": "en-collocation-005",
+      "status": "accepted",
+      "rowSha256": "d2544dd1a8445d550ebf2b23b613c82eca014d61d39934067ddafcbb3a54ea42"
+    },
+    {
+      "id": "en-collocation-006",
+      "status": "accepted",
+      "rowSha256": "cd9b9522ebc34b15bc58757816067f626320787f528fab5e19f16e579c798b29"
+    },
+    {
+      "id": "en-collocation-007",
+      "status": "accepted",
+      "rowSha256": "497132e7fb95cf895e9f3f8f21f532bc6770d7c14d1ff6d1a5a77d72abfa1918"
+    },
+    {
+      "id": "en-collocation-008",
+      "status": "accepted",
+      "rowSha256": "43e30b095d1447d1368853f0e74df8a3187cd8e50ca697e80fd1f59803be850d"
+    },
+    {
+      "id": "en-collocation-009",
+      "status": "accepted",
+      "rowSha256": "43bbf59a6d126e6142aaa3f6d3ba367d574a3de7963714475f16047f59074642"
+    },
+    {
+      "id": "de-collocation-001",
+      "status": "accepted",
+      "rowSha256": "6d23e2fb1f7bc7a6a3da585a1dd32cf9a8248f39298c1530a20c7cf5dc8b8615"
+    },
+    {
+      "id": "de-collocation-002",
+      "status": "accepted",
+      "rowSha256": "abe67a203d39f9570147734504d931e6b53aa3ea77b50618e5548a08ddf8c145"
+    },
+    {
+      "id": "de-collocation-003",
+      "status": "accepted",
+      "rowSha256": "91db58602ed3a128fffae248fd7a07daf7f65fb06f3503757aebf52d9be8d7e7"
+    },
+    {
+      "id": "de-collocation-004",
+      "status": "accepted",
+      "rowSha256": "89b479d5414ac37ae182bb42d9a724ee5d428f3cce4c7df6000878fb17edbad8"
+    },
+    {
+      "id": "de-collocation-005",
+      "status": "accepted",
+      "rowSha256": "9ec5235e7741a92cee7f47906e9a4caba276e0669c02458337a6bd1b2384d269"
+    },
+    {
+      "id": "de-collocation-006",
+      "status": "accepted",
+      "rowSha256": "0305a6a0de6038be8e5013d1ecff245c5be2e2b284d55515dd7fe89036fe2536"
+    },
+    {
+      "id": "de-collocation-007",
+      "status": "accepted",
+      "rowSha256": "18070ab4d4aa7e199aa904c7650bc609771095fd72253a5ec1ad520082a8b615"
+    },
+    {
+      "id": "de-collocation-008",
+      "status": "accepted-after-corrections",
+      "rowSha256": "aeadeca7d08056460b2b408cab6480baaa9f18281c8940d7056590084b84dc55"
+    },
+    {
+      "id": "de-collocation-009",
+      "status": "accepted",
+      "rowSha256": "b74ad0c750bda21e4d96196ea38415181b811ac93e9652c3e7eae72ad815cfe7"
+    },
+    {
+      "id": "de-collocation-010",
+      "status": "accepted",
+      "rowSha256": "4e862365a2635b4b7c050ee83eca5320c65c5c7251554873211c45a24332fc0a"
+    },
+    {
+      "id": "es-collocation-001",
+      "status": "accepted",
+      "rowSha256": "08fff06b40fa32c03d47cff431fee08f1cc87d22b4a93dba5d28e65eaabe18e8"
+    },
+    {
+      "id": "es-collocation-002",
+      "status": "accepted",
+      "rowSha256": "9bc8f8501f070262c74da5972e87be78ebb98ca5fa6043b68ff8ca79c3124f41"
+    },
+    {
+      "id": "es-collocation-003",
+      "status": "accepted",
+      "rowSha256": "43eb01e4ab3c3ffa1e7130107c044da0f1889dc66a8bf89ee826f1dd2d3df3f0"
+    },
+    {
+      "id": "es-collocation-004",
+      "status": "accepted",
+      "rowSha256": "3cfe7a6f9a057201d485871f524f7293f6c1cf253dd68cfccf5224f31fd48e46"
+    },
+    {
+      "id": "es-collocation-005",
+      "status": "accepted",
+      "rowSha256": "e475f7326ba61d5950e5c544b1309cfbf1b57782a5f1547645db5f2565a57aa2"
+    },
+    {
+      "id": "es-collocation-006",
+      "status": "accepted-after-corrections",
+      "rowSha256": "55f026855166db5c55ac9087371ee17e7a25a0e9a048a456fff1c27e9098869a"
+    },
+    {
+      "id": "es-collocation-007",
+      "status": "accepted",
+      "rowSha256": "e0973a05b2b5adf37822971a5842373e67a5d5942c4bc36681b7c08207f95337"
+    },
+    {
+      "id": "es-collocation-008",
+      "status": "accepted",
+      "rowSha256": "099381d857398b069c150a4af7e5dd4460100ec3f25bd0929f3833987926aa94"
+    },
+    {
+      "id": "es-collocation-009",
+      "status": "accepted",
+      "rowSha256": "b08d71b322ef14966c35dafb4494a0e28f2d7009edd53a827c226af540c69c5b"
+    },
+    {
+      "id": "es-collocation-010",
+      "status": "accepted",
+      "rowSha256": "48871088585da73f87ac280a46b255b37f29874a162ebc38029acc092b22146b"
+    },
+    {
+      "id": "fr-collocation-001",
+      "status": "accepted",
+      "rowSha256": "7b7119534f7712f179afee427bfff94d815a9e8bc4bcfae8a038031e7dd2e4e4"
+    },
+    {
+      "id": "fr-collocation-002",
+      "status": "accepted",
+      "rowSha256": "374759458e9e9235b6d27caa8498051b64434d715a8ae18cf080fdfc24e0468c"
+    },
+    {
+      "id": "fr-collocation-003",
+      "status": "accepted",
+      "rowSha256": "6a78ba7b829aa6947a7e29a6288fb13d934487a3817103607fc78f904a6c9b41"
+    },
+    {
+      "id": "fr-collocation-004",
+      "status": "accepted",
+      "rowSha256": "29373e294f90342a831a4cffd1aa73a38a632787ead09b4beca169d7db669030"
+    },
+    {
+      "id": "fr-collocation-005",
+      "status": "accepted",
+      "rowSha256": "c11810b41725dcf7a60589ac3177c7f16a779cc2c41d34a407079e4bcddb0550"
+    },
+    {
+      "id": "fr-collocation-006",
+      "status": "accepted-after-corrections",
+      "rowSha256": "ff49afc35f3ed2b73c453c915a5d8648d26810ef956dab9b63c10e1fa4d097d8"
+    },
+    {
+      "id": "fr-collocation-007",
+      "status": "accepted",
+      "rowSha256": "475539b2a24051408600ebd6d93c56b7fe09ef8fd669814d7182044ef40faf7c"
+    },
+    {
+      "id": "fr-collocation-008",
+      "status": "accepted-after-corrections",
+      "rowSha256": "ec9c7835efe5822855286bd9316634fa9d2a9d1de86882c896c00a97f98e8a64"
+    },
+    {
+      "id": "fr-collocation-009",
+      "status": "accepted-after-corrections",
+      "rowSha256": "8b0c87c5019f90cde6219af98ff02de7eac1ddc30babe46331fb218aac759a5c"
+    },
+    {
+      "id": "fr-collocation-010",
+      "status": "accepted",
+      "rowSha256": "9c22372fde5bd85413130ecc07244d6c67fc82975694b28d299b06ea6747816c"
+    }
+  ]
+}

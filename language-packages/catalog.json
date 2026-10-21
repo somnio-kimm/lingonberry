@@ -3,206 +3,206 @@
     "id": "de-core",
     "kind": "study",
     "targetLanguage": "de",
-    "version": "3.0.0",
-    "url": "/language-packages/de-core-3.0.0.json",
-    "bytes": 15228999,
-    "sha256": "d8c5c049be5f2d88f53b4c2363865015c151512c360331bbfaa0e934e0483afc"
+    "version": "3.1.0",
+    "url": "/language-packages/de-core-3.1.0.json",
+    "bytes": 24245857,
+    "sha256": "adb52b742e6949474ebf5090add2018e65c9f695b5a5126bc867897c34952f22"
   },
   {
     "id": "de-en",
     "kind": "explanation",
     "targetLanguage": "de",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "en",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/de-en-3.0.0.json",
-    "bytes": 8149546,
-    "sha256": "f02ed46dec96c0cfebce177f853380c5190890f0cffeba7041f634dc369ee032"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/de-en-3.1.0.json",
+    "bytes": 11592977,
+    "sha256": "ebe573f933b8d3f2482c6034cece9ff3b86d12689300cba8bbd11db05fbbf28f"
   },
   {
     "id": "de-ko",
     "kind": "explanation",
     "targetLanguage": "de",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "ko",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/de-ko-3.0.0.json",
-    "bytes": 7730452,
-    "sha256": "7c79a1d1c66cf97097ad251703aac3ffa3aea03e9cd7d55eff36615aec745318"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/de-ko-3.1.0.json",
+    "bytes": 11190211,
+    "sha256": "408d1ea6f4541cbd9003692e00b6e570f91e0f5d5c952d006728e512060f219d"
   },
   {
     "id": "en-core",
     "kind": "study",
     "targetLanguage": "en",
-    "version": "4.3.0",
-    "url": "/language-packages/en-core-4.3.0.json",
-    "bytes": 29124992,
-    "sha256": "5a1dd53a9f80cc60400a40ca9f7b29b87eabfe86366de6d53972b66ce23233d5"
+    "version": "4.4.0",
+    "url": "/language-packages/en-core-4.4.0.json",
+    "bytes": 29128579,
+    "sha256": "275b8da1d1f233117e5d221c240164f135f1c30666f4e6f52a3c27c95680fdc7"
   },
   {
     "id": "en-en",
     "kind": "explanation",
     "targetLanguage": "en",
-    "version": "4.3.0",
+    "version": "4.4.0",
     "explanationLanguage": "en",
-    "studyVersion": "4.3.0",
-    "url": "/language-packages/en-en-4.3.0.json",
-    "bytes": 11906198,
-    "sha256": "729d7ff6b3dc6b2dbe8f76fae0eb5928378f80c3601e3653f44a5452fbc8e245"
+    "studyVersion": "4.4.0",
+    "url": "/language-packages/en-en-4.4.0.json",
+    "bytes": 11910809,
+    "sha256": "564a232b8ab117521c119cdd6ee40dc2f8d1191291ebdf85f21349f75b85055d"
   },
   {
     "id": "en-ko",
     "kind": "explanation",
     "targetLanguage": "en",
-    "version": "4.3.0",
+    "version": "4.4.0",
     "explanationLanguage": "ko",
-    "studyVersion": "4.3.0",
-    "url": "/language-packages/en-ko-4.3.0.json",
-    "bytes": 11927002,
-    "sha256": "9c1f3e2c5a78143647ab97f9e818c0baf4aded73bf0453d8acfd937a0464b027"
+    "studyVersion": "4.4.0",
+    "url": "/language-packages/en-ko-4.4.0.json",
+    "bytes": 11931528,
+    "sha256": "9012fdd6e7c6ecc3dda48d13726e7fb696ff16ef5903890351e9961f4239d8ab"
   },
   {
     "id": "es-core",
     "kind": "study",
     "targetLanguage": "es",
-    "version": "3.0.0",
-    "url": "/language-packages/es-core-3.0.0.json",
-    "bytes": 10817333,
-    "sha256": "5e0f762058461addbb8b167d5a43a34a3ddf75071ed0a6837465e24217d17f83"
+    "version": "3.1.0",
+    "url": "/language-packages/es-core-3.1.0.json",
+    "bytes": 15112257,
+    "sha256": "f536b511b039e8122011336ecc452fe02187c142e1efeb1d11e33935aa7affca"
   },
   {
     "id": "es-en",
     "kind": "explanation",
     "targetLanguage": "es",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "en",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/es-en-3.0.0.json",
-    "bytes": 4337400,
-    "sha256": "e0d0e8921d6949270fa4e53b2fa200e24ae0defd888f4b534354f44a7f9bfb5e"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/es-en-3.1.0.json",
+    "bytes": 5532126,
+    "sha256": "016a6622e005dd7abc0ec0c22210b720d2c19e391265c7a8ccf38347975cc350"
   },
   {
     "id": "es-ko",
     "kind": "explanation",
     "targetLanguage": "es",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "ko",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/es-ko-3.0.0.json",
-    "bytes": 4339901,
-    "sha256": "b6b728910ec37635a1bd82eebc615989d2105c7d689db0036d6b42ae75645529"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/es-ko-3.1.0.json",
+    "bytes": 5535034,
+    "sha256": "1b92abf04086c083c932db73f45aaa5e149e81225c53f23faa9382e75f098985"
   },
   {
     "id": "fr-core",
     "kind": "study",
     "targetLanguage": "fr",
-    "version": "3.0.0",
-    "url": "/language-packages/fr-core-3.0.0.json",
-    "bytes": 10939423,
-    "sha256": "789b4d56a65be68edc35100bfb3e2b811e6480fb5fbfda10b1c73f308df26a5b"
+    "version": "3.1.0",
+    "url": "/language-packages/fr-core-3.1.0.json",
+    "bytes": 15298913,
+    "sha256": "bb28f6b9a073c0aa256f6080a5b049e4f3331d8060dc0e4a3655ed7144f1ebb8"
   },
   {
     "id": "fr-en",
     "kind": "explanation",
     "targetLanguage": "fr",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "en",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/fr-en-3.0.0.json",
-    "bytes": 4331933,
-    "sha256": "3e18d475a05dc1e8021ea64cb9ff9694fa33445104d73e4ca83a9d4f5a1fe6d9"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/fr-en-3.1.0.json",
+    "bytes": 5528708,
+    "sha256": "19016de7864388887cfca7917ac0ed2b76ac1264c7b8f6a562371f1b6c4f9485"
   },
   {
     "id": "fr-ko",
     "kind": "explanation",
     "targetLanguage": "fr",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "ko",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/fr-ko-3.0.0.json",
-    "bytes": 4331156,
-    "sha256": "475442e61b02052cde4a9235a7a86a0bb6619a2ffd74916a79f9beeb967fae96"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/fr-ko-3.1.0.json",
+    "bytes": 5528306,
+    "sha256": "4a6e6ba6f04d58e1663b2c6229e986568c806f1a2e4adb8f5c87ab9ba5beda82"
   },
   {
     "id": "ja-core",
     "kind": "study",
     "targetLanguage": "ja",
-    "version": "4.2.0",
-    "url": "/language-packages/ja-core-4.2.0.json",
-    "bytes": 28705291,
-    "sha256": "6e5b8b7867ff8d3fec7c5cc610731ef8836afd66e8f0fca5ee3ebb3408ea73f5"
+    "version": "4.3.0",
+    "url": "/language-packages/ja-core-4.3.0.json",
+    "bytes": 28708376,
+    "sha256": "7437385b6f924b516672c7aedb08b939036e8ac48f01fbfde85b6ccb0d6ad0a8"
   },
   {
     "id": "ja-en",
     "kind": "explanation",
     "targetLanguage": "ja",
-    "version": "4.2.0",
+    "version": "4.3.0",
     "explanationLanguage": "en",
-    "studyVersion": "4.2.0",
-    "url": "/language-packages/ja-en-4.2.0.json",
-    "bytes": 10878755,
-    "sha256": "9b0adabae4945e937e2ca1d258fd486ff46798976f4035f8a214a5f682af132b"
+    "studyVersion": "4.3.0",
+    "url": "/language-packages/ja-en-4.3.0.json",
+    "bytes": 10882570,
+    "sha256": "d5893b5abf891d5ad071d60823504b19a5983479adee2c00e2d28c23295798e1"
   },
   {
     "id": "ja-ko",
     "kind": "explanation",
     "targetLanguage": "ja",
-    "version": "4.2.0",
+    "version": "4.3.0",
     "explanationLanguage": "ko",
-    "studyVersion": "4.2.0",
-    "url": "/language-packages/ja-ko-4.2.0.json",
-    "bytes": 10868837,
-    "sha256": "c17f02becce32dc57eda8b73d8ac08c9a85f4201111adb23f5358a28906ed75c"
+    "studyVersion": "4.3.0",
+    "url": "/language-packages/ja-ko-4.3.0.json",
+    "bytes": 10872900,
+    "sha256": "ae8157f6aab7faf89f60df9b089976e7fbd820c6f49f6c7316a9daddf0607fc8"
   },
   {
     "id": "ko-core",
     "kind": "study",
     "targetLanguage": "ko",
-    "version": "3.0.0",
-    "url": "/language-packages/ko-core-3.0.0.json",
-    "bytes": 20227959,
-    "sha256": "065d6b28250412730b202b92829cf855c44c1d44e96774be6a24d75f7c6ae3c3"
+    "version": "3.1.0",
+    "url": "/language-packages/ko-core-3.1.0.json",
+    "bytes": 29581000,
+    "sha256": "472bc600d5c6f250761d8d8652e33a8df7791a4cb7494e9244d634f23544e5eb"
   },
   {
     "id": "ko-en",
     "kind": "explanation",
     "targetLanguage": "ko",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "explanationLanguage": "en",
-    "studyVersion": "3.0.0",
-    "url": "/language-packages/ko-en-3.0.0.json",
-    "bytes": 4959496,
-    "sha256": "c647ed2ae24c19730d41fe4415a073f4ff1476a4f978762c354ac460c97c8d29"
+    "studyVersion": "3.1.0",
+    "url": "/language-packages/ko-en-3.1.0.json",
+    "bytes": 6355699,
+    "sha256": "fbfe7e930bc0a098cbbf9fae9785487057aa7a16149b3827e9c1372d5a82c7a0"
   },
   {
     "id": "zh-core",
     "kind": "study",
     "targetLanguage": "zh",
-    "version": "2.0.0",
-    "url": "/language-packages/zh-core-2.0.0.json",
-    "bytes": 13266559,
-    "sha256": "cb7c29958b9c201aadf13f7db930e22f4c6a98d83ff476724f8d3de2b0515f6e"
+    "version": "2.1.0",
+    "url": "/language-packages/zh-core-2.1.0.json",
+    "bytes": 13270026,
+    "sha256": "dadea2be54b24b0d34aedc7584bbd4d1a6abf85f7e473fa57246f49d29524dd7"
   },
   {
     "id": "zh-en",
     "kind": "explanation",
     "targetLanguage": "zh",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "explanationLanguage": "en",
-    "studyVersion": "2.0.0",
-    "url": "/language-packages/zh-en-2.0.0.json",
-    "bytes": 2653371,
-    "sha256": "5325102b4c8b98233c95aa30c4564819b649256965beb4049ed7068f7d947096"
+    "studyVersion": "2.1.0",
+    "url": "/language-packages/zh-en-2.1.0.json",
+    "bytes": 2658003,
+    "sha256": "f7d05acc3d1690899022ae7e1b7a5b33b745b70e6e987e8c1121964f30713121"
   },
   {
     "id": "zh-ko",
     "kind": "explanation",
     "targetLanguage": "zh",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "explanationLanguage": "ko",
-    "studyVersion": "2.0.0",
-    "url": "/language-packages/zh-ko-2.0.0.json",
-    "bytes": 2704099,
-    "sha256": "21abbd4b869dbec6d3d1ab94ec1145bbda90ba7263acf4d756f6dcb59e513b74"
+    "studyVersion": "2.1.0",
+    "url": "/language-packages/zh-ko-2.1.0.json",
+    "bytes": 2709061,
+    "sha256": "686ebe25a735dc586477a98761deaf91af7ca584308f241a08901cc76beb9bcb"
   }
 ]

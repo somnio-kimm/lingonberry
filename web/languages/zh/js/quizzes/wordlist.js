@@ -1,3 +1,4 @@
+import {collocationPreview} from '../../../../js/shared/collocation-view.js';
 import {escapeHtml as e} from '../../../../js/shared/ui.js';
 import { Store } from '../services/store.js';
 import { Pinyin } from '../services/pinyin.js';
@@ -10,7 +11,7 @@ import { t,wordMeaning } from '../services/i18n.js';
 export function renderWordList(el){
  let status='all',tag='all',search='',open=false,pager=null,frame=0,alive=true;
  const active=Store.activeWords;
- const row=w=>`<div class="wl-row" data-id="${e(w.id)}"><div class="wl-main" role="button" tabindex="0"><div class="wl-py-hz">${Pinyin.htmlMarkedColumns(w.syllables)}</div><div class="wl-meaning">${wordMeaning(w)}</div></div><div class="wl-trail"><span class="wl-tag wl-hsk">${hskBandLabel(w.hskLevel)}</span><span class="wl-tag wl-pos">${wordPosGroupDisplay(w)}</span>${statusTagHTML(w.srs.level)}<button type="button" class="wl-speak" data-hz="${e(w.hanzi)}">🔊</button></div></div>`;
+ const row=w=>`<div class="wl-row" data-id="${e(w.id)}"><div class="wl-main" role="button" tabindex="0"><div class="wl-py-hz">${Pinyin.htmlMarkedColumns(w.syllables)}</div><div class="wl-meaning">${wordMeaning(w)}</div>${collocationPreview(w)}</div><div class="wl-trail"><span class="wl-tag wl-hsk">${hskBandLabel(w.hskLevel)}</span><span class="wl-tag wl-pos">${wordPosGroupDisplay(w)}</span>${statusTagHTML(w.srs.level)}<button type="button" class="wl-speak" data-hz="${e(w.hanzi)}">🔊</button></div></div>`;
  function results(initialCount=80){
   if(!alive)return;
   const query=wordSearchQuery(search),filtered=filterByPosTag(filterByStudyStatus(active,status),tag).filter(w=>matchesWordSearch(w,query));
