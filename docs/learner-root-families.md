@@ -19,3 +19,7 @@ The immutable English 4.5.0 core and independent English/Korean explanations pre
 `learner-word-families-release.json` records the reviewed source hash, source permalink commit, baseline hashes and fixed version transition. Run `node scripts/build-learner-families.mjs --dry-run` to validate; omit `--dry-run` to reproduce the identical release. The writer rejects differing existing release bytes.
 
 The release test checks source integrity, stable vocabulary, separate bilingual glosses, preserved confusables and absence of technical proto-root forms. Package-backed browser checks exercise the separate screens, root search, grading, offline reuse and matching phone/tablet layouts.
+
+## Native verification — 21 October 2026
+
+SOMNIO-TABLET passed English and Japanese checks online and with HTTP/HTTPS fetches blocked, using both English and Korean explanation packages. The checks verified the separate specialist menus, vocabulary-only defaults, learner root groups/origins and Japanese form categories. The app was relaunched normally after verification; the update preserved its existing installation and study data.
