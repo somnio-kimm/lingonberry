@@ -1,5 +1,7 @@
 # Archived design as the baseline
 
+For current implementation conventions and reusable components, follow [Shared Study Design Reference](study-design.md). This document records the original restoration.
+
 The Chinese and German view renderers and their dependency graphs are imported from `learn_language_legacy_20261014`. Both language stylesheets and the shared `study-theme.css` are copied directly. `archived-ui-source.json` records the source paths and original checksums for review.
 
 The archived Home menus (nine modes each), level selectors, Word List, flashcards, quiz screens, Wrong Answers and Settings are retained. The unified host supplies installed package data to those renderers. It does not introduce replacement layouts for those screens.
