@@ -1,3 +1,4 @@
+import {bindTypingAnswer} from '../../../../js/shared/typing-answer.js';
 import { createQuestionCatalog } from '../core/question-catalog.js';
 import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared/ui.js';
 import { t,getLocale,wordMeaning } from '../core/i18n.js';
@@ -13,7 +14,7 @@ const options=(values,label)=>`<option value="all">${t('All')}</option>${values.
 function renderGrammarQuiz(el,ctx,initialMode,session={}) {
  const inputFamily=initialMode!=='articles';
  const level=ctx.store.state.preferences.studyLevel,pool=studyWords(ctx.words,level);
- let mode=initialMode,questionWords=[],questions=[],question=null,answer='',feedback='',score=0,total=0,status='all',pos='all',tense='all',person='all',grammaticalCase='all',number='all',pattern='all',gender='all',filterOpen=false,composing=false,destroyed=false;
+ let mode=initialMode,questionWords=[],questions=[],question=null,answer='',feedback='',score=0,total=0,status='all',pos='all',tense='all',person='all',grammaticalCase='all',number='all',pattern='all',gender='all',filterOpen=false,typing,destroyed=false;
  const controls=createStudyControls(el,ctx),review=session.question?null:ctx.quizReview;ctx.quizReview=null;
  const builders = {
   articles: articleQuestions,
@@ -47,10 +48,10 @@ function renderGrammarQuiz(el,ctx,initialMode,session={}) {
  function resetScroll(){el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);}
  function next(first=false) {
   stopMedia();const available=eligible(),different=available.filter(q=>q.id!==question?.id),choices=different.length?different:available;
-  question=first&&reviewed?reviewed:choices[Math.floor(Math.random()*choices.length)];answer='';feedback='';composing=false;draw();resetScroll();
+  question=first&&reviewed?reviewed:choices[Math.floor(Math.random()*choices.length)];answer='';feedback='';draw();resetScroll();
  }
  function submit() {
-  if(feedback||composing||!answer.trim()||!question)return;
+  if(feedback||typing?.isComposing||!answer.trim()||!question)return;
   const correct=mode==='articles'?articleAnswerCorrect(question,answer):mode==='verbforms'?verbFormCorrect(question,answer):nominalAnswerCorrect(question,answer);
   el.querySelector('#form-answer')?.blur();total++;if(correct)score++;feedback=correct?'correct':'wrong';filterOpen=false;ctx.haptic();
   const input=mode==='articles'?answer+' '+question.word.lemma:answer;
@@ -60,6 +61,7 @@ function renderGrammarQuiz(el,ctx,initialMode,session={}) {
   const at=q.sentence.indexOf('___');return `<div class="nominal-sentence" lang="de">${e(q.sentence.slice(0,at))}${filled?`<span class="correct-answer nominal-filled">${e(q.answer)}</span>`:formBlank()}${e(q.sentence.slice(at+3))}</div>`;
  }
  function draw() {
+  typing?.destroy();typing=undefined;
   const shownScore=session.score?.()||{correct:score,total};
   const noun=question?.noun?{...wordsById.get(question.noun.id),...question.noun}:null;
   const nominal=['cases','adjendings'].includes(mode);
@@ -86,19 +88,19 @@ function renderGrammarQuiz(el,ctx,initialMode,session={}) {
    const select=el.querySelector('#'+id);if(select){select.value=value;select.onchange=()=>{change(select.value);ctx.haptic();next();};}
   }
   el.querySelectorAll('[data-article]').forEach(b=>b.onclick=()=>{answer=b.dataset.article;ctx.haptic();draw();});
-  const field=el.querySelector('#form-answer');if(field){
-   const changed=()=>{answer=field.value;const button=el.querySelector('#grammar-submit');if(button)button.disabled=composing||!answer.trim();};
-   field.oninput=()=>{filterOpen=false;const fold=el.querySelector('.filter-fold');if(fold)fold.open=false;changed();};
-   field.addEventListener('compositionstart',()=>{composing=true;changed();});field.addEventListener('compositionend',()=>{composing=false;changed();});
-   field.onkeydown=ev=>{if(ev.key==='Enter'&&!ev.isComposing&&!composing&&ev.keyCode!==229){ev.preventDefault();submit();}};
-  }
-  el.querySelector('#grammar-submit')?.addEventListener('click',submit);
+  const field=el.querySelector('#form-answer');
+  if(field)typing=bindTypingAnswer(field,{
+   button:el.querySelector('#grammar-submit'),
+   onChange:value=>{answer=value;filterOpen=false;const fold=el.querySelector('.filter-fold');if(fold)fold.open=false;},
+   onSubmit:submit,isActive:()=>!destroyed&&!feedback,
+  });
+  else el.querySelector('#grammar-submit')?.addEventListener('click',submit);
   el.querySelector('#grammar-skip')?.addEventListener('click',()=>{ctx.haptic();if(session.onSkip)session.onSkip();else next();});
   el.querySelector('#grammar-next')?.addEventListener('click',()=>{ctx.haptic();if(session.onNext)session.onNext();else next();});
   el.querySelector('#grammar-status')?.addEventListener('click',()=>{ctx.haptic();controls.open(question.word,()=>{if(!eligible().some(q=>q.id===question.id))next();else draw();});});
   el.querySelector('#grammar-speak')?.addEventListener('click',()=>speakGerman(feedback&&nominal?question.example.de:feedback&&mode==='articles'?question.displayAnswer:question.word.lemma,()=>{},()=>{if(destroyed)return;const message=el.querySelector('.study-audio-status');if(message){message.hidden=false;message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');}}));
  }
- rebuild();next(true);return()=>{destroyed=true;controls.cleanup();stopMedia();};
+ rebuild();next(true);return()=>{destroyed=true;typing?.destroy();controls.cleanup();stopMedia();};
 }
 export const renderArticles=(el,ctx,session={})=>renderGrammarQuiz(el,ctx,session.question?.mode||'articles',session);
 export const renderCases=(el,ctx,session)=>renderGrammarQuiz(el,ctx,'cases',session);

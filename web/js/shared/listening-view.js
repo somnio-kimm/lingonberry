@@ -1,3 +1,4 @@
+import {bindTypingAnswer} from './typing-answer.js';
 import {escapeHtml as e} from './ui.js';
 import { DeviceSpeech } from './device-speech.js';
 
@@ -5,18 +6,15 @@ export function renderListeningView(el, config, session = {}) {
   const labels = config.labels;
   let mode = session.question?.mode || 'listenword', question, input = '', feedback = '', heard = false, playing = false;
   let hint = false, hintUsed = false, plays = 0, score = 0, total = 0, status = 'all', pos = 'all', open = false;
-  let alive = true, generation = 0, composing = false, ready = !config.prepare || !!session.question;
-  let loadError = false;
+  let alive = true, generation = 0, ready = !config.prepare || !!session.question;
+  let loadError = false,typing;
   function cancelAudio() { generation++; playing = false; DeviceSpeech.stop(); }
-  function syncSubmit() {
-    const button = el.querySelector('#listening-submit');
-    if (button) button.disabled = !heard || playing || composing || !input.trim();
-  }
+  function syncSubmit() { typing?.refresh(); }
   function next() {
     cancelAudio(); const choices = ready ? session.question ? [session.question] : config.questions(mode,{status,pos}) : [];
     const different = choices.filter(q => q.spokenText !== question?.spokenText);
     question = (different.length ? different : choices)[Math.floor(Math.random() * (different.length || choices.length))];
-    input = ''; feedback = ''; heard = false; hint = hintUsed = false; plays = 0; composing = false; draw();el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);
+    input = ''; feedback = ''; heard = false; hint = hintUsed = false; plays = 0; draw();el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);
   }
   async function play() {
     if (!alive || !question || playing) return;
@@ -32,14 +30,14 @@ export function renderListeningView(el, config, session = {}) {
     syncSubmit();
   }
   function submit() {
-    if (!alive || !question || feedback || !heard || playing || composing || !input.trim()) return;
+    if (!alive || !question || feedback || !heard || playing || typing?.isComposing || !input.trim()) return;
     el.querySelector('#listening-answer')?.blur();const correct = config.answerCorrect(question,input); feedback = correct ? 'correct' : 'wrong'; total++; if(correct)score++;
     cancelAudio(); config.record(question,input,correct,{heard:true,hintUsed,plays},session); session.onAnswer?.(correct,input,[],null,{listening:{heard:true,hintUsed,plays}});
     config.haptic?.(correct); draw(); config.update?.();el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);
   }
   function draw() {
     if (!alive) return;
-    cancelAudio(); composing = false;
+    cancelAudio(); typing?.destroy();typing=undefined;
     const shown = session.score?.() || {correct:score,total};
     el.innerHTML=`<div class="vocab-quiz-header"><div class="section-title">${labels.title}</div><span class="score-pill">${shown.correct} / ${shown.total}</span></div>${session.question?'':`<div class="listening-mode-controls" role="group" aria-label="${labels.mode}">${['listenword','listensentence'].map(m=>`<button class="btn-small" data-listening-mode="${m}" aria-pressed="${m===mode}">${m==='listenword'?labels.word:labels.sentence}</button>`).join('')}</div>${ready?config.filters?.({status,pos,open})||'':''}`}
       ${question?`<div class="listening-test quiz-after-filter" data-question-id="${e(question.id)}" data-listening-mode="${mode}"><section class="card panel listening-question"><div class="vocab-question-top"><span class="badge">${mode==='listenword'?labels.word:labels.sentence} · ${e(config.level(question))}</span><button type="button" class="word-listen" id="listening-play" aria-label="${e((heard?labels.replay:labels.play).replace(/^🔊\s*/u,''))}" aria-busy="false">🔊</button></div><p class="listening-status" role="status" hidden></p>
@@ -51,20 +49,19 @@ export function renderListeningView(el, config, session = {}) {
     el.querySelectorAll('[data-tag]').forEach(button=>button.onclick=()=>{pos=button.dataset.tag;next();});
     el.querySelector('#listening-play')?.addEventListener('click',play);
     const field=el.querySelector('#listening-answer');
-    const changed=value=>{if(!alive)return;input=value;syncSubmit();};
-    if(field){
-      field.oninput=()=>{if(field.isConnected)changed(field.value);};field.addEventListener('compositionstart',()=>{composing=true;syncSubmit();});field.addEventListener('compositionend',()=>{if(!alive||!field.isConnected)return;composing=false;changed(field.value);});
-      field.onkeydown=ev=>{if(ev.key==='Enter'&&!ev.isComposing&&!composing&&ev.keyCode!==229){ev.preventDefault();submit();}};
-    }
+    if(field)typing=bindTypingAnswer(field,{
+      button:el.querySelector('#listening-submit'),
+      onChange:value=>{input=value;},onSubmit:submit,
+      enabled:()=>heard&&!playing,isActive:()=>alive&&!feedback,
+    });
     el.querySelector('#listening-hint')?.addEventListener('click',()=>{
       hint=!hint;hintUsed ||= hint;const button=el.querySelector('#listening-hint');button.setAttribute('aria-expanded',String(hint));el.querySelector('.listening-hint-text')?.remove();
       if(hint){const text=document.createElement('p');text.className='listening-hint-text';text.lang=question.locale;text.textContent=config.hint(question);button.after(text);}
     });
-    el.querySelector('#listening-submit')?.addEventListener('click',submit);
     el.querySelector('#listening-next')?.addEventListener('click',()=>session.onNext?session.onNext():next());
     el.querySelector('#listening-skip')?.addEventListener('click',()=>session.onSkip?session.onSkip():next());syncSubmit();
   }
   next();
   if(!ready)config.prepare().then(()=>{if(!alive)return;ready=true;next();}).catch(()=>{if(!alive)return;loadError=true;draw();});
-  return()=>{alive=false;cancelAudio();el.querySelector('#listening-answer')?.blur();};
+  return()=>{alive=false;typing?.destroy();cancelAudio();el.querySelector('#listening-answer')?.blur();};
 }
