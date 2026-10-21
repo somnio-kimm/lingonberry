@@ -6,7 +6,7 @@ export const EXERCISE_CATEGORIES=Object.freeze({
  collocations:['Collocations','연어'],phrasal:['Phrasal Verbs','구동사'],patterns:['Verb Patterns','동사 구문'],articles:['Articles and Countability','관사와 가산성'],confusables:['Confusable Words','헷갈리는 단어'],roots:['Root Families','어근 모음'],
 });
 export const EXERCISE_ROUTES=Object.freeze({
- ja:{reading:['vocabinput'],onyomi:['vocabinput'],kunyomi:['vocabinput'],okurigana:['vocabinput'],kanji:['vocabmeaning','vocabinput'],transitivity:['vocabmeaning','vocabinput'],forms:['forms'],particles:['particles'],counters:['counters']},
+ ja:{reading:['vocabmeaning','vocabinput'],onyomi:['vocabmeaning','vocabinput'],kunyomi:['vocabmeaning','vocabinput'],okurigana:['vocabmeaning','vocabinput'],kanji:['vocabmeaning','vocabinput'],transitivity:['vocabmeaning','vocabinput'],forms:['forms'],particles:['particles'],counters:['counters']},
  en:{collocations:['vocabmeaning','vocabinput'],phrasal:['vocabmeaning','vocabinput'],confusables:['vocabmeaning','vocabinput'],roots:['vocabmeaning','vocabinput'],patterns:['patterns'],articles:['articles']},
 });
 export const exerciseLabel=(id,locale='en')=>EXERCISE_CATEGORIES[id]?.[locale==='ko'?1:0]||id;
