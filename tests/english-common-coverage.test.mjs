@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {auditCommonCoverage,readCommonWordLists,expandCommonEnglish} from '../scripts/content/english-common-coverage.mjs';
-import {validateExplanation,validatePackage} from '../web/js/packages/schema.js';
+import {validateExplanation} from '../web/js/packages/schema.js';
 import {ENGLISH_LEVELS} from '../web/js/shared/english-levels.js';
 import {findSentenceFocus} from '../web/js/shared/lexicon-sentences.js';
 const text=path=>readFile(new URL('../'+path,import.meta.url),'utf8'),read=async path=>JSON.parse(await text(path)),base='language-packages/sources/english-common/';
