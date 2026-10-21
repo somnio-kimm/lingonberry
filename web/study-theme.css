@@ -320,3 +320,6 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 
 /* English range labels need wider chips at phone widths. */
 .study-level-options.english-level-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+.collocation-preview{font-size:13px;color:var(--secondary);line-height:1.5;margin-top:5px}.collocation-phrase{font-size:20px;font-weight:600;line-height:1.5;display:flex;align-items:center;justify-content:space-between;gap:12px}.study-collocations .example-sentence{margin:12px 0 6px}.collocation-picker label{display:grid;gap:6px}.collocation-picker select{font:inherit;min-height:44px}
+
+.vocab-question-top{min-height:44px}
