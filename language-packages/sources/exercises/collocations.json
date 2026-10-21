@@ -1,0 +1,1199 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "notice": "Original Lingonberry collocation examples and translations, 2026, MIT. Common lexical combinations are factual material. AI-assisted authoring; fluent-speaker certification remains pending. No dictionary definitions, publisher exercise banks or source example sentences are copied. This is a starter covering every current study-level filter, not full dictionary coverage.",
+  "languages": {
+    "en": [
+      {
+        "id": "en-collocation-001",
+        "entryId": "en-lex-896635cf8f5255ab6c37",
+        "anchor": "decision",
+        "phrase": "make a decision",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "take a decision",
+          "reach a decision",
+          "come to a decision",
+          "arrive at a decision"
+        ],
+        "example": "We need to make a decision today.",
+        "meaning": {
+          "en": "decide what to do",
+          "ko": "결정을 내리다"
+        },
+        "exampleTranslation": {
+          "en": "We need to make a decision today.",
+          "ko": "우리는 오늘 결정을 내려야 합니다."
+        }
+      },
+      {
+        "id": "en-collocation-002",
+        "entryId": "en-lex-8f9855d1c839d8e688c6",
+        "anchor": "attention",
+        "phrase": "pay attention",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Please pay attention to the instructions.",
+        "meaning": {
+          "en": "listen or watch carefully",
+          "ko": "주의를 기울이다"
+        },
+        "exampleTranslation": {
+          "en": "Please pay attention to the instructions.",
+          "ko": "설명에 주의를 기울여 주세요."
+        }
+      },
+      {
+        "id": "en-collocation-003",
+        "entryId": "en-lex-b47f0db9b75eaeb6a0ef",
+        "anchor": "promise",
+        "phrase": "keep a promise",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "I always try to keep a promise.",
+        "meaning": {
+          "en": "do what you promised",
+          "ko": "약속을 지키다"
+        },
+        "exampleTranslation": {
+          "en": "I always try to keep a promise.",
+          "ko": "나는 항상 약속을 지키려고 노력합니다."
+        }
+      },
+      {
+        "id": "en-collocation-004",
+        "entryId": "en-lex-a379ec178cdafa198379",
+        "anchor": "photo",
+        "phrase": "take a photo",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "take a photograph"
+        ],
+        "example": "May I take a photo here?",
+        "meaning": {
+          "en": "capture an image with a camera",
+          "ko": "사진을 찍다"
+        },
+        "exampleTranslation": {
+          "en": "May I take a photo here?",
+          "ko": "여기에서 사진을 찍어도 될까요?"
+        }
+      },
+      {
+        "id": "en-collocation-005",
+        "entryId": "en-lex-ac7379b144820476a685",
+        "anchor": "shower",
+        "phrase": "take a shower",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "have a shower"
+        ],
+        "example": "I take a shower after exercise.",
+        "meaning": {
+          "en": "wash yourself under running water",
+          "ko": "샤워를 하다"
+        },
+        "exampleTranslation": {
+          "en": "I take a shower after exercise.",
+          "ko": "나는 운동 후에 샤워를 합니다."
+        }
+      },
+      {
+        "id": "en-collocation-006",
+        "entryId": "en-lex-28fc24048d0893924067",
+        "anchor": "homework",
+        "phrase": "do homework",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "The children do homework after dinner.",
+        "meaning": {
+          "en": "work on school assignments outside class",
+          "ko": "숙제를 하다"
+        },
+        "exampleTranslation": {
+          "en": "The children do homework after dinner.",
+          "ko": "아이들은 저녁 식사 후에 숙제를 합니다."
+        }
+      },
+      {
+        "id": "en-collocation-007",
+        "entryId": "en-lex-68aab6128fb6f4e1fee2",
+        "anchor": "research",
+        "phrase": "conduct research",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "carry out research",
+          "do research",
+          "undertake research"
+        ],
+        "example": "The team will conduct research into language learning.",
+        "meaning": {
+          "en": "investigate a subject systematically",
+          "ko": "연구를 수행하다"
+        },
+        "exampleTranslation": {
+          "en": "The team will conduct research into language learning.",
+          "ko": "연구팀은 언어 학습에 관한 연구를 수행할 것입니다."
+        }
+      },
+      {
+        "id": "en-collocation-008",
+        "entryId": "en-lex-61a1f24e5ec553d04fdf",
+        "anchor": "analysis",
+        "phrase": "carry out an analysis",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "conduct an analysis",
+          "perform an analysis"
+        ],
+        "example": "We will carry out an analysis of the results.",
+        "meaning": {
+          "en": "examine something systematically",
+          "ko": "분석을 수행하다"
+        },
+        "exampleTranslation": {
+          "en": "We will carry out an analysis of the results.",
+          "ko": "우리는 결과에 대한 분석을 수행할 것입니다."
+        }
+      },
+      {
+        "id": "en-collocation-009",
+        "entryId": "en-lex-cdf9247679f22fd8214a",
+        "anchor": "scrutiny",
+        "phrase": "come under scrutiny",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "The proposal has come under scrutiny.",
+        "meaning": {
+          "en": "be examined very closely",
+          "ko": "면밀한 검토를 받다"
+        },
+        "exampleTranslation": {
+          "en": "The proposal has come under scrutiny.",
+          "ko": "그 제안은 면밀한 검토를 받게 되었습니다."
+        }
+      }
+    ],
+    "de": [
+      {
+        "id": "de-collocation-001",
+        "entryId": "de-noun-entscheidung-editorial-main",
+        "anchor": "Entscheidung",
+        "phrase": "eine Entscheidung treffen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "eine Entscheidung fällen"
+        ],
+        "example": "Wir müssen heute eine Entscheidung treffen.",
+        "meaning": {
+          "en": "make a decision",
+          "ko": "결정을 내리다"
+        },
+        "exampleTranslation": {
+          "en": "We need to make a decision today.",
+          "ko": "우리는 오늘 결정을 내려야 합니다."
+        }
+      },
+      {
+        "id": "de-collocation-002",
+        "entryId": "de-noun-tee-editorial-main",
+        "anchor": "Tee",
+        "phrase": "Tee trinken",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Am Abend trinke ich gern Tee.",
+        "meaning": {
+          "en": "drink tea",
+          "ko": "차를 마시다"
+        },
+        "exampleTranslation": {
+          "en": "I like drinking tea in the evening.",
+          "ko": "나는 저녁에 차를 마시는 것을 좋아합니다."
+        }
+      },
+      {
+        "id": "de-collocation-003",
+        "entryId": "de-noun-bett-editorial-main",
+        "anchor": "Bett",
+        "phrase": "ins Bett gehen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "zu Bett gehen"
+        ],
+        "example": "Nach dem Film gehe ich ins Bett.",
+        "meaning": {
+          "en": "go to bed",
+          "ko": "잠자리에 들다"
+        },
+        "exampleTranslation": {
+          "en": "I go to bed after the film.",
+          "ko": "나는 영화를 본 뒤에 잠자리에 듭니다."
+        }
+      },
+      {
+        "id": "de-collocation-004",
+        "entryId": "de-noun-frage-editorial-main",
+        "anchor": "Frage",
+        "phrase": "eine Frage stellen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Darf ich eine Frage stellen?",
+        "meaning": {
+          "en": "ask a question",
+          "ko": "질문을 하다"
+        },
+        "exampleTranslation": {
+          "en": "May I ask a question?",
+          "ko": "질문을 해도 될까요?"
+        }
+      },
+      {
+        "id": "de-collocation-005",
+        "entryId": "de-noun-foto-editorial-main",
+        "anchor": "Foto",
+        "phrase": "ein Foto machen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "ein Foto aufnehmen",
+          "ein Foto schießen",
+          "ein Foto knipsen"
+        ],
+        "example": "Kannst du ein Foto machen?",
+        "meaning": {
+          "en": "take a photo",
+          "ko": "사진을 찍다"
+        },
+        "exampleTranslation": {
+          "en": "Can you take a photo?",
+          "ko": "사진을 찍어 줄 수 있니?"
+        }
+      },
+      {
+        "id": "de-collocation-006",
+        "entryId": "de-ref-4d285ee2c58c4dbc07d8",
+        "anchor": "Hilfe",
+        "phrase": "Hilfe leisten",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Die Feuerwehr leistet nach dem Unfall Hilfe.",
+        "meaning": {
+          "en": "provide help",
+          "ko": "도움을 주다"
+        },
+        "exampleTranslation": {
+          "en": "The fire brigade provides help after the accident.",
+          "ko": "소방대는 사고 후에 도움을 제공합니다."
+        }
+      },
+      {
+        "id": "de-collocation-007",
+        "entryId": "de-noun-interesse-editorial-main",
+        "anchor": "Interesse",
+        "phrase": "Interesse zeigen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Die Kinder zeigen Interesse an Musik.",
+        "meaning": {
+          "en": "show interest",
+          "ko": "관심을 보이다"
+        },
+        "exampleTranslation": {
+          "en": "The children show an interest in music.",
+          "ko": "아이들은 음악에 관심을 보입니다."
+        }
+      },
+      {
+        "id": "de-collocation-008",
+        "entryId": "de-noun-beweis-editorial-main",
+        "anchor": "Beweis",
+        "phrase": "einen Beweis erbringen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "einen Beweis liefern"
+        ],
+        "example": "Die Untersuchung soll einen Beweis erbringen.",
+        "meaning": {
+          "en": "provide proof",
+          "ko": "증거를 제시하다"
+        },
+        "exampleTranslation": {
+          "en": "The investigation is intended to provide proof.",
+          "ko": "그 조사는 증거를 제시하는 것을 목표로 합니다."
+        }
+      },
+      {
+        "id": "de-collocation-009",
+        "entryId": "de-noun-einwand-editorial-main",
+        "anchor": "Einwand",
+        "phrase": "einen Einwand erheben",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Die Nachbarin hat einen Einwand erhoben.",
+        "meaning": {
+          "en": "raise an objection",
+          "ko": "이의를 제기하다"
+        },
+        "exampleTranslation": {
+          "en": "The neighbour has raised an objection.",
+          "ko": "그 이웃 여성은 이의를 제기했습니다."
+        }
+      },
+      {
+        "id": "de-collocation-010",
+        "entryId": "de-noun-fehlschluss-editorial-main",
+        "anchor": "Fehlschluss",
+        "phrase": "einem Fehlschluss erliegen",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Auch Fachleute können einem Fehlschluss erliegen.",
+        "meaning": {
+          "en": "fall into an error of reasoning",
+          "ko": "잘못된 추론에 빠지다"
+        },
+        "exampleTranslation": {
+          "en": "Even experts can fall into an error of reasoning.",
+          "ko": "전문가도 잘못된 추론에 빠질 수 있습니다."
+        }
+      }
+    ],
+    "es": [
+      {
+        "id": "es-collocation-001",
+        "entryId": "es-lex-e2d3736f19f12382155f",
+        "anchor": "decisión",
+        "phrase": "tomar una decisión",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Tenemos que tomar una decisión hoy.",
+        "meaning": {
+          "en": "make a decision",
+          "ko": "결정을 내리다"
+        },
+        "exampleTranslation": {
+          "en": "We have to make a decision today.",
+          "ko": "우리는 오늘 결정을 내려야 합니다."
+        }
+      },
+      {
+        "id": "es-collocation-002",
+        "entryId": "es-lex-705451fd51e8e00021de",
+        "anchor": "atención",
+        "phrase": "prestar atención",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "poner atención"
+        ],
+        "example": "Debes prestar atención a las instrucciones.",
+        "meaning": {
+          "en": "pay attention",
+          "ko": "주의를 기울이다"
+        },
+        "exampleTranslation": {
+          "en": "You must pay attention to the instructions.",
+          "ko": "설명에 주의를 기울여야 합니다."
+        }
+      },
+      {
+        "id": "es-collocation-003",
+        "entryId": "es-lex-c9a58dfb83db72478f78",
+        "anchor": "promesa",
+        "phrase": "cumplir una promesa",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Siempre intento cumplir una promesa.",
+        "meaning": {
+          "en": "keep a promise",
+          "ko": "약속을 지키다"
+        },
+        "exampleTranslation": {
+          "en": "I always try to keep a promise.",
+          "ko": "나는 항상 약속을 지키려고 노력합니다."
+        }
+      },
+      {
+        "id": "es-collocation-004",
+        "entryId": "es-lex-586818008513cd7c8035",
+        "anchor": "pregunta",
+        "phrase": "hacer una pregunta",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "formular una pregunta"
+        ],
+        "example": "¿Puedo hacer una pregunta?",
+        "meaning": {
+          "en": "ask a question",
+          "ko": "질문을 하다"
+        },
+        "exampleTranslation": {
+          "en": "May I ask a question?",
+          "ko": "질문을 해도 될까요?"
+        }
+      },
+      {
+        "id": "es-collocation-005",
+        "entryId": "es-lex-4262f868a66ec5ab7177",
+        "anchor": "ducha",
+        "phrase": "darse una ducha",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "tomar una ducha"
+        ],
+        "example": "Voy a darme una ducha después de correr.",
+        "meaning": {
+          "en": "take a shower",
+          "ko": "샤워를 하다"
+        },
+        "exampleTranslation": {
+          "en": "I am going to take a shower after running.",
+          "ko": "나는 달린 뒤에 샤워를 할 것입니다."
+        }
+      },
+      {
+        "id": "es-collocation-006",
+        "entryId": "es-lex-b181d8ba8bad1c2d54f4",
+        "anchor": "trabajo",
+        "phrase": "buscar trabajo",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "buscar un trabajo"
+        ],
+        "example": "Mina empieza a buscar trabajo.",
+        "meaning": {
+          "en": "look for work",
+          "ko": "일자리를 찾다"
+        },
+        "exampleTranslation": {
+          "en": "Mina is starting to look for work.",
+          "ko": "미나는 일자리를 찾기 시작합니다."
+        }
+      },
+      {
+        "id": "es-collocation-007",
+        "entryId": "es-lex-051d5f6f446e5762ce8e",
+        "anchor": "contrato",
+        "phrase": "firmar un contrato",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Vamos a firmar un contrato mañana.",
+        "meaning": {
+          "en": "sign a contract",
+          "ko": "계약서에 서명하다"
+        },
+        "exampleTranslation": {
+          "en": "We are going to sign a contract tomorrow.",
+          "ko": "우리는 내일 계약서에 서명할 것입니다."
+        }
+      },
+      {
+        "id": "es-collocation-008",
+        "entryId": "es-lex-3767993d7db29a8988f5",
+        "anchor": "semilla",
+        "phrase": "sembrar una semilla",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Cada niño puede sembrar una semilla.",
+        "meaning": {
+          "en": "sow a seed",
+          "ko": "씨앗을 심다"
+        },
+        "exampleTranslation": {
+          "en": "Each child can sow a seed.",
+          "ko": "아이들은 각자 씨앗을 심을 수 있습니다."
+        }
+      },
+      {
+        "id": "es-collocation-009",
+        "entryId": "es-lex-344f85925e0f3e5ee018",
+        "anchor": "calumnia",
+        "phrase": "difundir una calumnia",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Es injusto difundir una calumnia sobre alguien.",
+        "meaning": {
+          "en": "spread a slanderous allegation",
+          "ko": "중상하는 말을 퍼뜨리다"
+        },
+        "exampleTranslation": {
+          "en": "It is unfair to spread a slanderous allegation about someone.",
+          "ko": "누군가에 대해 중상하는 말을 퍼뜨리는 것은 부당합니다."
+        }
+      },
+      {
+        "id": "es-collocation-010",
+        "entryId": "es-lex-537043283625de3b38d0",
+        "anchor": "dilación",
+        "phrase": "actuar sin dilación",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "La situación exige actuar sin dilación.",
+        "meaning": {
+          "en": "act without delay",
+          "ko": "지체 없이 행동하다"
+        },
+        "exampleTranslation": {
+          "en": "The situation calls for action without delay.",
+          "ko": "그 상황에서는 지체 없이 행동해야 합니다."
+        }
+      }
+    ],
+    "fr": [
+      {
+        "id": "fr-collocation-001",
+        "entryId": "fr-lex-09bb8052195ae76db694",
+        "anchor": "décision",
+        "phrase": "prendre une décision",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Nous devons prendre une décision aujourd’hui.",
+        "meaning": {
+          "en": "make a decision",
+          "ko": "결정을 내리다"
+        },
+        "exampleTranslation": {
+          "en": "We have to make a decision today.",
+          "ko": "우리는 오늘 결정을 내려야 합니다."
+        }
+      },
+      {
+        "id": "fr-collocation-002",
+        "entryId": "fr-lex-a820d55b4cadb29a2e05",
+        "anchor": "attention",
+        "phrase": "faire attention",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "prêter attention"
+        ],
+        "example": "Il faut faire attention aux instructions.",
+        "meaning": {
+          "en": "pay attention",
+          "ko": "주의를 기울이다"
+        },
+        "exampleTranslation": {
+          "en": "You need to pay attention to the instructions.",
+          "ko": "설명에 주의를 기울여야 합니다."
+        }
+      },
+      {
+        "id": "fr-collocation-003",
+        "entryId": "fr-lex-5d2fa2ca53606f5890ac",
+        "anchor": "promesse",
+        "phrase": "tenir une promesse",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "J’essaie toujours de tenir une promesse.",
+        "meaning": {
+          "en": "keep a promise",
+          "ko": "약속을 지키다"
+        },
+        "exampleTranslation": {
+          "en": "I always try to keep a promise.",
+          "ko": "나는 항상 약속을 지키려고 노력합니다."
+        }
+      },
+      {
+        "id": "fr-collocation-004",
+        "entryId": "fr-lex-aafb13f6974a6f822943",
+        "anchor": "question",
+        "phrase": "poser une question",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Puis-je poser une question ?",
+        "meaning": {
+          "en": "ask a question",
+          "ko": "질문을 하다"
+        },
+        "exampleTranslation": {
+          "en": "May I ask a question?",
+          "ko": "질문을 해도 될까요?"
+        }
+      },
+      {
+        "id": "fr-collocation-005",
+        "entryId": "fr-lex-14d0f95a2289329d5b4e",
+        "anchor": "douche",
+        "phrase": "prendre une douche",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Je prends une douche après le sport.",
+        "meaning": {
+          "en": "take a shower",
+          "ko": "샤워를 하다"
+        },
+        "exampleTranslation": {
+          "en": "I take a shower after exercise.",
+          "ko": "나는 운동 후에 샤워를 합니다."
+        }
+      },
+      {
+        "id": "fr-collocation-006",
+        "entryId": "fr-lex-8d883e2fb2a9f7a8b55a",
+        "anchor": "travail",
+        "phrase": "chercher du travail",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "chercher un travail"
+        ],
+        "example": "Mina commence à chercher du travail.",
+        "meaning": {
+          "en": "look for work",
+          "ko": "일자리를 찾다"
+        },
+        "exampleTranslation": {
+          "en": "Mina is starting to look for work.",
+          "ko": "미나는 일자리를 찾기 시작합니다."
+        }
+      },
+      {
+        "id": "fr-collocation-007",
+        "entryId": "fr-lex-1d181a633b20d621293a",
+        "anchor": "banque",
+        "phrase": "ouvrir un compte en banque",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "ouvrir un compte à la banque"
+        ],
+        "example": "Je voudrais ouvrir un compte en banque.",
+        "meaning": {
+          "en": "open a bank account",
+          "ko": "은행 계좌를 개설하다"
+        },
+        "exampleTranslation": {
+          "en": "I would like to open a bank account.",
+          "ko": "은행 계좌를 개설하고 싶습니다."
+        }
+      },
+      {
+        "id": "fr-collocation-008",
+        "entryId": "fr-lex-3b6b659993e8f0fdb1a0",
+        "anchor": "crédibilité",
+        "phrase": "renforcer sa crédibilité",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Un laboratoire peut renforcer sa crédibilité avec des résultats fiables.",
+        "meaning": {
+          "en": "strengthen one’s credibility",
+          "ko": "자신의 신뢰성을 높이다"
+        },
+        "exampleTranslation": {
+          "en": "A laboratory can strengthen its credibility with reliable results.",
+          "ko": "연구소는 신뢰할 수 있는 결과를 통해 신뢰성을 높일 수 있습니다."
+        }
+      },
+      {
+        "id": "fr-collocation-009",
+        "entryId": "fr-lex-3bad5d4861dadae66be1",
+        "anchor": "suspicion",
+        "phrase": "éveiller la suspicion",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Les réponses contradictoires du suspect peuvent éveiller la suspicion des enquêteurs.",
+        "meaning": {
+          "en": "arouse suspicion",
+          "ko": "의심을 불러일으키다"
+        },
+        "exampleTranslation": {
+          "en": "The suspect's contradictory answers can arouse the investigators' suspicion.",
+          "ko": "용의자의 모순된 답변은 수사관들의 의심을 불러일으킬 수 있습니다."
+        }
+      },
+      {
+        "id": "fr-collocation-010",
+        "entryId": "fr-lex-bbbcd4f4d66609739ce8",
+        "anchor": "photosynthèse",
+        "phrase": "réaliser la photosynthèse",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "Les plantes utilisent la lumière pour réaliser la photosynthèse.",
+        "meaning": {
+          "en": "carry out photosynthesis",
+          "ko": "광합성을 하다"
+        },
+        "exampleTranslation": {
+          "en": "Plants use light to carry out photosynthesis.",
+          "ko": "식물은 빛을 이용해 광합성을 합니다."
+        }
+      }
+    ],
+    "ja": [
+      {
+        "id": "ja-collocation-001",
+        "entryId": "ja-lex-95324fd1d584a1acb44d",
+        "anchor": "決定",
+        "phrase": "決定を下す",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "先生が決定を下しました。",
+        "meaning": {
+          "en": "make a decision",
+          "ko": "결정을 내리다"
+        },
+        "exampleTranslation": {
+          "en": "The teacher made a decision.",
+          "ko": "선생님이 결정을 내렸습니다."
+        }
+      },
+      {
+        "id": "ja-collocation-002",
+        "entryId": "ja-lex-aebea62550cb7c62bdaa",
+        "anchor": "注意",
+        "phrase": "注意を払う",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "車に注意を払って歩きます。",
+        "meaning": {
+          "en": "pay attention",
+          "ko": "주의를 기울이다"
+        },
+        "exampleTranslation": {
+          "en": "I pay attention to cars while walking.",
+          "ko": "차에 주의를 기울이며 걷습니다."
+        }
+      },
+      {
+        "id": "ja-collocation-003",
+        "entryId": "ja-lex-b9f77d3605a5d630a399",
+        "anchor": "約束",
+        "phrase": "約束を守る",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "私は友達との約束を守ります。",
+        "meaning": {
+          "en": "keep a promise",
+          "ko": "약속을 지키다"
+        },
+        "exampleTranslation": {
+          "en": "I keep my promises to friends.",
+          "ko": "나는 친구와의 약속을 지킵니다."
+        }
+      },
+      {
+        "id": "ja-collocation-004",
+        "entryId": "ja-lex-d0984f0298e42acddbfc",
+        "anchor": "質問",
+        "phrase": "質問をする",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "質問する"
+        ],
+        "example": "授業の後で質問をします。",
+        "meaning": {
+          "en": "ask a question",
+          "ko": "질문을 하다"
+        },
+        "exampleTranslation": {
+          "en": "I ask a question after class.",
+          "ko": "수업이 끝난 뒤에 질문을 합니다."
+        }
+      },
+      {
+        "id": "ja-collocation-005",
+        "entryId": "ja-lex-994211ff4fee5c9217e4",
+        "anchor": "風邪",
+        "phrase": "風邪を引く",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "風邪をひく"
+        ],
+        "example": "弟が風邪を引きました。",
+        "meaning": {
+          "en": "catch a cold",
+          "ko": "감기에 걸리다"
+        },
+        "exampleTranslation": {
+          "en": "My younger brother caught a cold.",
+          "ko": "남동생이 감기에 걸렸습니다."
+        }
+      },
+      {
+        "id": "ja-collocation-006",
+        "entryId": "ja-lex-7a9504f9a3619c8f7ce1",
+        "anchor": "電話",
+        "phrase": "電話をかける",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "電話を掛ける"
+        ],
+        "example": "今夜、母に電話をかけます。",
+        "meaning": {
+          "en": "make a phone call",
+          "ko": "전화를 걸다"
+        },
+        "exampleTranslation": {
+          "en": "I will phone my mother tonight.",
+          "ko": "오늘 밤 어머니께 전화를 걸겠습니다."
+        }
+      },
+      {
+        "id": "ja-collocation-007",
+        "entryId": "ja-lex-9fbc3be6ec26bf5418c8",
+        "anchor": "声明",
+        "phrase": "声明を発表する",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "会社は明日声明を発表します。",
+        "meaning": {
+          "en": "issue a statement",
+          "ko": "성명을 발표하다"
+        },
+        "exampleTranslation": {
+          "en": "The company will issue a statement tomorrow.",
+          "ko": "회사는 내일 성명을 발표할 것입니다."
+        }
+      },
+      {
+        "id": "ja-collocation-008",
+        "entryId": "ja-lex-19be2f574c87535c93a2",
+        "anchor": "責務",
+        "phrase": "責務を果たす",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "市長は責務を果たすと約束しました。",
+        "meaning": {
+          "en": "fulfil one’s responsibilities",
+          "ko": "책무를 다하다"
+        },
+        "exampleTranslation": {
+          "en": "The mayor promised to fulfil their responsibilities.",
+          "ko": "시장은 책무를 다하겠다고 약속했습니다."
+        }
+      }
+    ],
+    "ko": [
+      {
+        "id": "ko-collocation-001",
+        "entryId": "ko-lex-e29e3716d530c096ecf5",
+        "anchor": "결정",
+        "phrase": "결정을 내리다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "결정하다"
+        ],
+        "example": "우리는 오늘 결정을 내렸어요.",
+        "meaning": {
+          "en": "make a decision",
+          "ko": "어떻게 할지 정하다"
+        },
+        "exampleTranslation": {
+          "en": "We made a decision today.",
+          "ko": "우리는 오늘 어떻게 할지 정했어요."
+        }
+      },
+      {
+        "id": "ko-collocation-002",
+        "entryId": "ko-lex-6276592c70768da9456d",
+        "anchor": "주의",
+        "phrase": "주의를 기울이다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "길을 건널 때는 차에 주의를 기울여요.",
+        "meaning": {
+          "en": "pay attention",
+          "ko": "어떤 일에 마음을 집중하다"
+        },
+        "exampleTranslation": {
+          "en": "Pay attention to cars when crossing the road.",
+          "ko": "길을 건널 때는 차를 잘 살펴요."
+        }
+      },
+      {
+        "id": "ko-collocation-003",
+        "entryId": "ko-lex-d7696a60382f3038ffe2",
+        "anchor": "약속",
+        "phrase": "약속을 지키다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "저는 친구와의 약속을 지켜요.",
+        "meaning": {
+          "en": "keep a promise",
+          "ko": "약속한 대로 행동하다"
+        },
+        "exampleTranslation": {
+          "en": "I keep my promises to friends.",
+          "ko": "저는 친구와 약속한 대로 행동해요."
+        }
+      },
+      {
+        "id": "ko-collocation-004",
+        "entryId": "ko-lex-ccb08c6fa5aea5126342",
+        "anchor": "사진",
+        "phrase": "사진을 찍다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "여기에서 사진을 찍어도 돼요?",
+        "meaning": {
+          "en": "take a photo",
+          "ko": "사진기로 모습을 기록하다"
+        },
+        "exampleTranslation": {
+          "en": "May I take a photo here?",
+          "ko": "여기에서 사진으로 모습을 남겨도 돼요?"
+        }
+      },
+      {
+        "id": "ko-collocation-005",
+        "entryId": "ko-lex-33584178adb007c4dbaa",
+        "anchor": "감기",
+        "phrase": "감기에 걸리다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "동생이 감기에 걸렸어요.",
+        "meaning": {
+          "en": "catch a cold",
+          "ko": "감기를 앓게 되다"
+        },
+        "exampleTranslation": {
+          "en": "My younger sibling caught a cold.",
+          "ko": "동생이 감기를 앓게 되었어요."
+        }
+      },
+      {
+        "id": "ko-collocation-006",
+        "entryId": "ko-lex-f77c295149de5f438a24",
+        "anchor": "전화",
+        "phrase": "전화를 걸다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "오늘 저녁에 엄마에게 전화를 걸 거예요.",
+        "meaning": {
+          "en": "make a phone call",
+          "ko": "전화로 연락을 시도하다"
+        },
+        "exampleTranslation": {
+          "en": "I will call my mum this evening.",
+          "ko": "오늘 저녁에 엄마에게 전화로 연락할 거예요."
+        }
+      },
+      {
+        "id": "ko-collocation-007",
+        "entryId": "ko-lex-a1c40ceb798fd9c49267",
+        "anchor": "책임",
+        "phrase": "책임을 지다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "제가 이번 일에 책임을 지겠습니다.",
+        "meaning": {
+          "en": "take responsibility",
+          "ko": "책임을 맡아 감당하다"
+        },
+        "exampleTranslation": {
+          "en": "I will take responsibility for this matter.",
+          "ko": "제가 이번 일의 책임을 맡아 감당하겠습니다."
+        }
+      },
+      {
+        "id": "ko-collocation-008",
+        "entryId": "ko-lex-0c32fd14e3f63d7491a0",
+        "anchor": "본론",
+        "phrase": "본론으로 들어가다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "이제 본론으로 들어가겠습니다.",
+        "meaning": {
+          "en": "get to the main point",
+          "ko": "이야기의 중심 내용으로 넘어가다"
+        },
+        "exampleTranslation": {
+          "en": "I will now get to the main point.",
+          "ko": "이제 이야기의 중심 내용으로 넘어가겠습니다."
+        }
+      },
+      {
+        "id": "ko-collocation-009",
+        "entryId": "ko-lex-f434f32549835a6f8ec7",
+        "anchor": "혐의",
+        "phrase": "혐의를 부인하다",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "그 사람은 혐의를 부인했습니다.",
+        "meaning": {
+          "en": "deny an allegation",
+          "ko": "혐의가 사실이 아니라고 주장하다"
+        },
+        "exampleTranslation": {
+          "en": "The person denied the allegation.",
+          "ko": "그 사람은 혐의가 사실이 아니라고 주장했습니다."
+        }
+      }
+    ],
+    "zh": [
+      {
+        "id": "zh-collocation-001",
+        "entryId": "hsk3_214",
+        "anchor": "决定",
+        "phrase": "做出决定",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "作出决定"
+        ],
+        "example": "我们今天需要做出决定。",
+        "meaning": {
+          "en": "make a decision",
+          "ko": "결정을 내리다"
+        },
+        "exampleTranslation": {
+          "en": "We need to make a decision today.",
+          "ko": "우리는 오늘 결정을 내려야 합니다."
+        }
+      },
+      {
+        "id": "zh-collocation-002",
+        "entryId": "hsk3_476",
+        "anchor": "注意",
+        "phrase": "注意安全",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "过马路时，请注意安全。",
+        "meaning": {
+          "en": "pay attention to safety",
+          "ko": "안전에 유의하다"
+        },
+        "exampleTranslation": {
+          "en": "Please take care when crossing the road.",
+          "ko": "길을 건널 때는 안전에 유의해 주세요."
+        }
+      },
+      {
+        "id": "zh-collocation-003",
+        "entryId": "hsk5_1378",
+        "anchor": "约定",
+        "phrase": "约定时间",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "我们需要先约定时间。",
+        "meaning": {
+          "en": "agree on a time",
+          "ko": "시간을 정하다"
+        },
+        "exampleTranslation": {
+          "en": "We need to agree on a time first.",
+          "ko": "우리는 먼저 시간을 정해야 합니다."
+        }
+      },
+      {
+        "id": "zh-collocation-004",
+        "entryId": "hsk3_459",
+        "anchor": "照片",
+        "phrase": "拍照片",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "拍照"
+        ],
+        "example": "我可以在这里拍照片吗？",
+        "meaning": {
+          "en": "take a photo",
+          "ko": "사진을 찍다"
+        },
+        "exampleTranslation": {
+          "en": "May I take a photo here?",
+          "ko": "여기에서 사진을 찍어도 될까요?"
+        }
+      },
+      {
+        "id": "zh-collocation-005",
+        "entryId": "hsk3_132",
+        "anchor": "感冒",
+        "phrase": "得感冒",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "患感冒"
+        ],
+        "example": "弟弟上周得了感冒。",
+        "meaning": {
+          "en": "catch a cold",
+          "ko": "감기에 걸리다"
+        },
+        "exampleTranslation": {
+          "en": "My younger brother caught a cold last week.",
+          "ko": "남동생은 지난주에 감기에 걸렸습니다."
+        }
+      },
+      {
+        "id": "zh-collocation-006",
+        "entryId": "hsk1_35",
+        "anchor": "电话",
+        "phrase": "打电话",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "我今晚给妈妈打电话。",
+        "meaning": {
+          "en": "make a phone call",
+          "ko": "전화를 걸다"
+        },
+        "exampleTranslation": {
+          "en": "I will phone my mother tonight.",
+          "ko": "나는 오늘 밤 어머니께 전화를 걸겠습니다."
+        }
+      },
+      {
+        "id": "zh-collocation-007",
+        "entryId": "hsk2_51",
+        "anchor": "红茶",
+        "phrase": "喝红茶",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "我喜欢下午喝红茶。",
+        "meaning": {
+          "en": "drink black tea",
+          "ko": "홍차를 마시다"
+        },
+        "exampleTranslation": {
+          "en": "I like drinking black tea in the afternoon.",
+          "ko": "나는 오후에 홍차를 마시는 것을 좋아합니다."
+        }
+      },
+      {
+        "id": "zh-collocation-008",
+        "entryId": "hsk4_33",
+        "anchor": "表格",
+        "phrase": "填写表格",
+        "type": "verb-phrase",
+        "acceptedAnswers": [
+          "填表格"
+        ],
+        "example": "请先填写表格。",
+        "meaning": {
+          "en": "fill in a form",
+          "ko": "서식을 작성하다"
+        },
+        "exampleTranslation": {
+          "en": "Please fill in the form first.",
+          "ko": "먼저 서식을 작성해 주세요."
+        }
+      },
+      {
+        "id": "zh-collocation-009",
+        "entryId": "hsk6_60",
+        "anchor": "病毒",
+        "phrase": "感染病毒",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "他旅行时感染了病毒。",
+        "meaning": {
+          "en": "contract a virus",
+          "ko": "바이러스에 감염되다"
+        },
+        "exampleTranslation": {
+          "en": "He contracted a virus while travelling.",
+          "ko": "그는 여행 중에 바이러스에 감염되었습니다."
+        }
+      },
+      {
+        "id": "zh-collocation-010",
+        "entryId": "hsk7_46",
+        "anchor": "罢工",
+        "phrase": "组织罢工",
+        "type": "verb-phrase",
+        "acceptedAnswers": [],
+        "example": "工会决定下周组织罢工。",
+        "meaning": {
+          "en": "organise a strike",
+          "ko": "파업을 조직하다"
+        },
+        "exampleTranslation": {
+          "en": "The union decided to organise a strike next week.",
+          "ko": "노동조합은 다음 주에 파업을 조직하기로 결정했습니다."
+        }
+      }
+    ]
+  }
+}
