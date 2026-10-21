@@ -28,16 +28,6 @@
 .set-package-action { padding:0 12px 12px; }
 .set-action-card #set-reset { background:var(--red-soft);color:var(--red); }
 
-/* Text controls share one size across Settings, library and study screens. */
-:root { --control-font-size:14px; }
-:root body :is(.set-action-button,.set-seg-btn,.set-chip,.set-textbtn,
-  .download-package,.remove-package,.primary,.btn-primary,.btn,.btn-small,
-  .quiz-status-btn,.status-btn,.wl-filter,.filter-chip,.level-chip,.hsk-chip,
-  .listening-mode-controls button,.form-mode-controls button,.segmented button,
-  .filter-fold-sum,.filter-fold-sum .filter-fold-k,.filter-fold-sum .filter-fold-v,
-  .filter-fold-sum .filter-fold-pick-l,.filter-fold-sum .filter-fold-pick-v),
-:root body select { font-size:var(--control-font-size);font-weight:600;line-height:1.3; }
-:root body .text-button:not(.dismiss-wrong):not(.del-wrong) { font-size:var(--control-font-size); }
 .language-library .package-progress { padding:16px; }
 .package-progress p { margin:0 0 12px; }
 .package-progress progress { display:block;width:100%;margin:0 0 12px; }
