@@ -26,7 +26,8 @@ test('published full inventory preserves study words and covers every source sen
  assert.deepEqual(core.entries,before.entries);assert.deepEqual(core.families,before.families);assert.deepEqual(core.exercises,before.exercises);
  assert.ok(core.morphemes.length>1000);assert.equal(core.morphemes.length,source.coverage.entries);assert.equal(core.morphemes.reduce((n,r)=>n+r.senses.length,0),source.coverage.senses);
  for(const form of ['ab-','ad-','-ling'])assert.ok(core.morphemes.some(row=>row.form===form));
- assert.ok(source.coverage.sourceCorrections.some(row=>row.form==='anilino-'));assert.ok(core.morphemes.every(row=>readableMorpheme(row.form)&&row.variants.every(readableMorpheme)));
+ assert.ok(source.coverage.sourceCorrections.some(row=>row.form==='anilino-'));
+ for(const [form,meaning,origin]of [['non-','ninth','Latin'],['un-','one','Latin'],['auto-','Reflexive, regarding or to oneself.','Greek']])assert.equal(source.entries.find(row=>row.form===form&&row.senses.some(s=>s.en===meaning)).origin,origin);assert.ok(core.morphemes.every(row=>readableMorpheme(row.form)&&row.variants.every(readableMorpheme)));
  for(const locale of ['en','ko']){
   const pair=await read(`language-packages/en-${locale}-${release.to}.json`);validateExplanation(core,pair);
   assert.equal(pair.morphemes.flatMap(row=>row.senses).length,source.coverage.senses);
