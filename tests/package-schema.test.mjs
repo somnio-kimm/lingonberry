@@ -41,3 +41,7 @@ for (const [name, change] of [
     assert.throws(() => validateExplanation(study.data, explanation.data), /Invalid language package/);
   });
 }
+
+test('licence links retain a finite bound while allowing the new source attribution',()=>{
+ const {data}=fixture();data.license.links=Array.from({length:20},(_,index)=>({title:'Source '+index,url:'https://example.com/'+index}));validatePackage(data);data.license.links.push({title:'Extra',url:'https://example.com/extra'});assert.throws(()=>validatePackage(data),/licence links/);
+});
