@@ -1,30 +1,20 @@
 # English study groups
 
-> The counts below describe the original 3.0.0 grouping. The [4.0.0 correction edition](english-meaning-corrections.md) retains these four groups with 11,977 active entries after retiring 39 invalid or duplicate entries.
+English 4.8.0 provides four editorial study groups. Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble, Dictation and Review share the selected group; entries are alphabetical within it. There is no All study level and no separate Academic/General Training exam filter. English uses British English speech and retains topic filters.
 
-Choose IELTS 1.0–3.5, IELTS 4.0–6.5, IELTS 7.0–8.0, IELTS 8.5–9.0 or All on Study or in an activity's filters. Each group selects only its own entries. Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble, Dictation and Review share the selection. English keeps British English speech and ordinary topic filters. There are no separate Academic/General Training exam filters or badges.
+| Study group | Current entries | Purpose |
+| --- | ---: | --- |
+| IELTS 1.0–3.5 | 3,854 | Basic everyday meanings and foundational grammar words |
+| IELTS 4.0–6.5 | 4,623 | General intermediate meanings, including the remaining common-word baseline |
+| IELTS 7.0–8.0 | 2,902 | Advanced academic and specialised meanings |
+| IELTS 8.5–9.0 | 1,366 | Precision vocabulary, including 1,333 distinct GRE-level headwords |
 
-## Editorial assignments
+These are editorial learning groups, not official IELTS vocabulary lists or predictions of exam scores. Stored meanings determine placement; a frequent spelling may also have a less common sense in a higher group. [Common-word coverage](english-common-coverage.md) records how every NGSL 1.2 headword and supplementary day/month/number headword is available in the first two groups while retaining specialised entries.
 
-All 12,016 entries are retained, including separate entries for different parts of speech or senses. The existing five editorial vocabulary tiers are regrouped as follows:
-
-| Study group | Existing editorial tiers | Entries |
-|---|---|---:|
-| IELTS 1.0–3.5 | Foundation + Everyday | 2,002 |
-| IELTS 4.0–6.5 | Independent | 2,501 |
-| IELTS 7.0–8.0 | Advanced | 3,005 |
-| IELTS 8.5–9.0 | Precision | 4,508 |
-
-These are editorial vocabulary study groups, not official IELTS vocabulary lists or a prediction of test scores. The source tiers use frequency evidence and authored starter selections; per-sense difficulty still needs review. The existing review-pending notice remains visible. IELTS assesses language performance on its [nine-band scale](https://ielts.org/take-a-test/your-results/ielts-scoring-in-detail); rare words alone do not establish a score.
-
-Words are alphabetical within each group. Sentence exercises still require complete examples; changing groups does not fill missing examples or certify translation quality.
+The earlier 4.2.0 difficulty review classified the then-current 12,356 entries. The 4.8.0 expansion adds 389 bilingual entries and moves 249 individually bound general senses; its separate source ledger documents those changes. More than 1,000 distinct precision headwords remain at the top. Existing definitions, examples, attribution and stable IDs are preserved. Not every existing dictionary entry has a complete example, and editorial review is not native-speaking lexicographer certification.
 
 ## Existing downloads and progress
 
-`web/js/shared/english-levels.js` adapts legacy packages when loaded. Source payloads, hashes, licences, provenance, entry IDs and examples remain unchanged. No replacement content download is needed. Explicit group assignments in future packages take precedence over the legacy tier mapping.
+Update English explanations in **Settings → Language Packages → English** to get the 4.8.0 content. Installing a new shell preserves downloaded package versions. Core and explanation packages update together without erasing progress; published old snapshots remain immutable.
 
-Old entry levels 1.0, 3.0, 5.0, 6.5 and 8.0 identified the five editorial tiers. They were not independently assessed scores. The adapter uses the tiers above; in particular, Advanced entries previously labelled 6.5 now belong to IELTS 7.0–8.0, and Precision entries previously labelled 8.0 belong to IELTS 8.5–9.0. This keeps the existing difficulty progression while populating all four groups.
-
-Saved user target scores have a separate meaning: they migrate to the range containing that score. For example, a saved target of 6.5 selects IELTS 4.0–6.5; 8.5 selects IELTS 8.5–9.0. All and existing group selections stay unchanged. Word statuses, Review counts, question snapshots and historical answers remain intact. Review uses the current entry group where available and adapts legacy snapshots when an entry is unavailable.
-
-No new external word list was imported. Existing content attribution and licensing remain applicable. Generation remains paused.
+`web/js/shared/english-levels.js` still adapts historic five-tier payloads to these four groups. Old entry levels 1.0, 3.0, 5.0, 6.5 and 8.0 named editorial tiers rather than independently assessed IELTS scores. Saved target scores migrate to their containing range; invalid or former All selections use the introductory group. Review uses a current entry's group where available and adapts old snapshots when necessary.

@@ -121,6 +121,24 @@ class AppViewController: CAPBridgeViewController {
                     const rootSearch=document.querySelector('#root-search');rootSearch.value='aud';rootSearch.dispatchEvent(new Event('input',{bubbles:true}));
                     result.rootMembers = document.querySelectorAll('[data-root-word]').length;
                     if (result.rootMembers < 3 || !document.querySelector('.root-origin')) throw new Error('Learner root families are missing');
+                    if (installed.contentReview?.commonCoverage) {
+                      result.commonCoverage = installed.contentReview.commonCoverage;
+                      result.commonWords = [];
+                      const pair = await storage.get('en-ko',core.version), meanings = new Map(pair.entries.map(row=>[row.id,row.meaning]));
+                      for (const spelling of ['the','and','email','trousers','Monday','March','May','parent','spin']) {
+                        const entry = installed.entries.find(row=>row.word===spelling && row.level==='IELTS 1.0–3.5');
+                        if (!entry) throw new Error('Missing basic dictionary entry: '+spelling);
+                        document.querySelector('[data-tab=home]').click();
+                        await wait(()=>document.querySelector('[data-level]'));
+                        document.querySelector(`[data-level="${entry.level}"]`).click();
+                        document.querySelector('[data-route=wordlist]').click();
+                        await wait(()=>document.querySelector('#search-input'));
+                        const input=document.querySelector('#search-input');input.value=spelling;input.dispatchEvent(new Event('input',{bubbles:true}));
+                        await wait(()=>document.querySelector(`.wl-row[data-word="${entry.id}"] .wl-meaning`)?.textContent===meanings.get(entry.id));
+                        result.commonWords.push(spelling);
+                      }
+                    }
+
                   }
 
                   document.querySelector('[data-tab=home]').click();

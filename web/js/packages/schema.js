@@ -45,7 +45,7 @@ export function validatePackage(value, expected) {
   object(value.license, 'license');
   text(value.license.identifier, 'license identifier');
   text(value.license.notice, 'license notice', 100000);
-  if(value.license.links!==undefined){requireValue(Array.isArray(value.license.links)&&value.license.links.length<=10,'licence links');for(const link of value.license.links){text(link.title,'licence link title',200);text(link.url,'licence link URL',2000);const url=new URL(link.url);requireValue(url.protocol==='https:'&&!url.username&&!url.password,'licence link HTTPS');}}
+  if(value.license.links!==undefined){requireValue(Array.isArray(value.license.links)&&value.license.links.length<=20,'licence links');for(const link of value.license.links){text(link.title,'licence link title',200);text(link.url,'licence link URL',2000);const url=new URL(link.url);requireValue(url.protocol==='https:'&&!url.username&&!url.password,'licence link HTTPS');}}
   requireValue(Array.isArray(value.entries) && value.entries.length > 0 && value.entries.length <= 50000, 'entries');
   const ids = new Set();
   for (const entry of value.entries) {
