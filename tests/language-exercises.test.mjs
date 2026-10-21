@@ -31,3 +31,12 @@ test('English combines phrase sections while preserving content labels and histo
  const section=rows.filter(row=>exerciseSectionCategories('en','collocations').includes(row.category));
  assert.deepEqual(section.flatMap(row=>createExerciseQuestions([row],[{id:'write'}],row.route,row.category,'en')).map(row=>row.category),['collocations','phrasal']);
 });
+
+test('English Verb Patterns is absent from active menus and pools while historical answers remain gradable',async()=>{
+ const {exerciseModes,EXERCISE_ROUTES}=await import('../web/js/shared/language-exercises.js');
+ const {prepareLanguageExercises}=await import('../web/js/shared/exercise-pools.js');
+ const old={id:'en-pattern-promise',entryId:'promise',category:'patterns',route:'patterns',prompt:'promise ___ help',answer:'to',instruction:'Complete the phrase.',explanation:'promise to do something.'};
+ assert.equal(exerciseModes('en').patterns,undefined);assert.ok(EXERCISE_ROUTES.en.patterns.includes('patterns'));
+ const rows=prepareLanguageExercises({targetLanguage:'en',explanationLanguage:'en',exercises:[old]},[{id:'promise',lemma:'promise',pos:'verb'}]);
+ assert.equal(rows.some(row=>row.category==='patterns'),false);assert.equal(exerciseAnswerCorrect({...old,exercise:true,mode:'patterns'},'to'),true);
+});
