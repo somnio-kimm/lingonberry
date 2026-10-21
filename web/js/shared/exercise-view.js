@@ -1,3 +1,4 @@
+import {renderPhraseGapSentence} from './phrase-gap-view.js';
 import {escapeHtml as e} from './ui.js';
 /** Render answer slots as the shared single underline; preserve marked characters. */
 export function renderExerciseGap(text,locale='en'){
@@ -12,7 +13,8 @@ export function renderExerciseExplanation(question){
  const segments=question.segments?.map(segment=>`<span class="reading-segment ${segment.kind}">${segment.kind==='kanji'?`<ruby>${e(segment.text)}<rt>${e(segment.reading)}</rt></ruby>`:e(segment.text)}</span>`).join('');
  return `<div class="exercise-explanation">${segments?`<div class="reading-segments" lang="ja">${segments}</div>`:''}<p>${e(question.explanation)}</p></div>`;
 }
-export function renderExercisePrompt(question){
+export function renderExercisePrompt(question,options={}){
+ if(question.gapFill)return `<p class="vocab-instruction">${e(question.instruction)}</p>${renderPhraseGapSentence(question,options)}${question.context?`<p class="grammar-meaning exercise-context">${e(question.context)}</p>`:''}`;
  const lang=e(question.word.language||'');
  if(question.route==='forms'||question.mode==='forms'){
   const word=question.word;

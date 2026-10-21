@@ -26,7 +26,7 @@ try{
     if(category==='roots')await page.locator('[data-root-view=quiz]').click();
     const mode=seed.options?'choice':'input';if(await page.locator(`[data-answer-mode=${mode}]`).count())await page.locator(`[data-answer-mode=${mode}]`).click();
     const id=await page.locator('[data-exercise-id]').getAttribute('data-exercise-id'),row=prepared.find(row=>row.id===id);assert.ok(row);assert.equal(await page.locator('.reading-segments').count(),0);
-    if(row.options){assert.equal(await page.locator('[data-submit]').count(),0);await page.locator(`[data-option="${row.options.indexOf(row.answer)}"]`).click();}else{await page.locator('#vocab-answer').fill(row.answer);await page.locator('[data-submit]').click();}
+    if(row.options){assert.equal(await page.locator('[data-submit]').count(),0);await page.locator(`[data-option="${row.options.indexOf(row.answer)}"]`).click();}else{if(row.gapFill){for(const [index,answer]of row.gapFill.answers.entries())await page.locator(`[data-phrase-gap="${index}"]`).fill(answer);}else await page.locator('#vocab-answer').fill(row.answer);await page.locator('[data-submit]').click();}
     await page.locator('.lexicon-question.correct').waitFor();assert.ok((await page.locator('.exercise-explanation').innerText()).includes(row.explanation));checked++;
    }
   }

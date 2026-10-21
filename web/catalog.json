@@ -34,32 +34,32 @@
     "id": "en-core",
     "kind": "study",
     "targetLanguage": "en",
-    "version": "4.6.0",
-    "url": "/language-packages/en-core-4.6.0.json",
-    "bytes": 31720024,
-    "sha256": "1256a511b47ebafb48ef0ea334b40063a5a7160ca71b45d68614aa0f410110bf"
+    "version": "4.7.0",
+    "url": "/language-packages/en-core-4.7.0.json",
+    "bytes": 31743596,
+    "sha256": "3d5363eedec244bb816c6258dfa3bae97c53c7c9ed446f8e0019adb0cfbd39c3"
   },
   {
     "id": "en-en",
     "kind": "explanation",
     "targetLanguage": "en",
-    "version": "4.6.0",
+    "version": "4.7.0",
     "explanationLanguage": "en",
-    "studyVersion": "4.6.0",
-    "url": "/language-packages/en-en-4.6.0.json",
-    "bytes": 13333236,
-    "sha256": "4541164c89a72ce4ff408118e933700128d9215e95ab1cbd92aa7ade203b9efe"
+    "studyVersion": "4.7.0",
+    "url": "/language-packages/en-en-4.7.0.json",
+    "bytes": 13343928,
+    "sha256": "fa59f7aa6cbc1968f49807e659826fe0436391f1297d139e411a1cfe0248bc11"
   },
   {
     "id": "en-ko",
     "kind": "explanation",
     "targetLanguage": "en",
-    "version": "4.6.0",
+    "version": "4.7.0",
     "explanationLanguage": "ko",
-    "studyVersion": "4.6.0",
-    "url": "/language-packages/en-ko-4.6.0.json",
-    "bytes": 13338501,
-    "sha256": "2e59779ac67691fb887c1b0a7ac8d6ecfdab103f1c2a25cdff24bb66dfffa4c5"
+    "studyVersion": "4.7.0",
+    "url": "/language-packages/en-ko-4.7.0.json",
+    "bytes": 13351223,
+    "sha256": "c1496f52eaf04364662afff6281034b99a8195cfdf4d5e02c35aaeb655346a8e"
   },
   {
     "id": "es-core",

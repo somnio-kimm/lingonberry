@@ -1,3 +1,4 @@
+import {gradePhraseGaps} from './phrase-gaps.js';
 import {shuffle} from './vocabulary.js';
 /** Bundled exercise rules; prompts and answers arrive only as validated package data. */
 const EXERCISE_CATEGORIES=Object.freeze({
@@ -27,6 +28,7 @@ export function createExerciseQuestions(exercises,words,route,category,locale,ra
 }
 export function exerciseAnswerCorrect(question,input){
  if(question.options)return input===question.correctOption;
+ if(question.gapFill)return gradePhraseGaps(question.gapFill,input).correct;
  // Kana input methods may produce full-width Latin or katakana. Never strip kana endings.
  const fold=value=>String(value).normalize('NFKC').trim().toLocaleLowerCase().replace(/\s+/gu,' ').replace(/[ァ-ヶ]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
  return [question.answer,...(question.acceptedAnswers||[])].some(answer=>fold(answer)===fold(input));

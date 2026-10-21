@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/a16664b5706c804e0be75e909d51fe37f752735e/",
-  "description": "Immutable seven-language content plus English 4.6 full readable root/affix inventory: 5863 source entries, 7261 English/Korean meanings, retained source licences, no reconstructed display labels, preserved study history and vocabulary defaults."
+  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/eb1920511614b481c1b2117eeddefb860d919f30/",
+  "description": "Immutable seven-language content plus English 4.7: 18 separated-phrase scenarios with English/Korean contexts and explanations, full readable roots/affixes and unchanged vocabulary/progress IDs."
 }
