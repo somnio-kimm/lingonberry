@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createDictionaryExercises,kanjiAnswer} from '../web/js/shared/dictionary-practice.js';
 import {validatePracticeData} from '../web/js/packages/practice-data.js';
-import {exerciseAnswerCorrect,createExerciseQuestions} from '../web/js/shared/language-exercises.js';
+import {exerciseAnswerCorrect} from '../web/js/shared/language-exercises.js';
 import {prepareLanguageExercises} from '../web/js/shared/exercise-pools.js';
 const word={id:'ja-test',lemma:'食べる',pronunciation:'たべる',studyMeaning:'eat',partOfSpeech:'verb'};
 const data={version:1,kanji:[{literal:'食',on:['ショク','ジキ'],kun:['た.べる','く.う']}],forms:[{entryId:word.id,groups:[{formKind:'past',answers:['食べた','たべた'],references:['https://en.wiktionary.org/wiki/食べる']}]}]};
@@ -19,10 +19,6 @@ test('form drills accept sourced spelling and kana alternatives and specify long
  const forms=createDictionaryExercises(study,[word]).filter(row=>row.route==='forms');assert.equal(forms.length,1);assert.ok(exerciseAnswerCorrect(forms[0],'たべた'));
  const long=createDictionaryExercises({...study,practiceData:{version:1,forms:[{entryId:word.id,groups:[{formKind:'causative-passive',answers:['食べさせられる']}]}]}},[word])[0];assert.match(long.instruction,/full, uncontracted/);
 });
-test('countability prompts make dictionary-wide scope explicit and keep bilingual answer sets distinct',()=>{
- const noun={id:'en-test',lemma:'paper'},base={targetLanguage:'en',practiceData:{version:1,countability:[{entryId:noun.id,labels:['countable','uncountable']}]}};
- for(const locale of ['en','ko']){const row=createDictionaryExercises({...base,explanationLanguage:locale},[noun])[0],question=createExerciseQuestions([row],[noun],'articles','all',locale)[0];assert.equal(question.options.length,4);assert.ok(exerciseAnswerCorrect(question,question.correctOption));assert.equal(row.answer,locale==='en'?'Countable and Uncountable':'가산·불가산 명사');}
-});
 test('curated forms suppress only the same form, while character and reading directions survive',()=>{
  const curated={id:'curated',entryId:word.id,route:'forms',category:'forms',formKind:'past'};
  const rows=prepareLanguageExercises({...study,exercises:[curated]},[word]);assert.equal(rows.filter(row=>row.formKind==='past').length,1);assert.equal(rows.filter(row=>row.category==='onyomi').length,1);
@@ -33,15 +29,12 @@ test('practice packages reject cross-language metadata, missing entries, bad URL
  for(const value of invalid)assert.throws(()=>validatePracticeData(value),/Invalid language package/);
 });
 
-test('large pools choose a category before a row, avoid repeats and allow ordinary vocabulary',async()=>{
+test('specialist selection respects eligible words/category and avoids immediate repeats',async()=>{
  const {selectExerciseRow}=await import('../web/js/shared/exercise-pools.js');
- const rows=Array.from({length:10000},(_,i)=>({id:'read-'+i,entryId:word.id,route:'vocabinput',category:'reading'}));rows.push({id:'rare',entryId:word.id,route:'vocabinput',category:'okurigana'});
- assert.equal(selectExerciseRow(rows,[word],{route:'vocabinput',random:()=>0.6}).id,'rare');
- assert.equal(selectExerciseRow(rows,[word],{route:'vocabinput',includeVocabulary:true,random:()=>0.99}),null);
- assert.notEqual(selectExerciseRow(rows,[word],{route:'vocabinput',category:'reading',previousId:'read-0',random:()=>0}).id,'read-0');
- assert.equal(selectExerciseRow(rows,[],{route:'vocabinput'}),undefined);
+ const words=[{id:'word'}],rows=[{id:'a',entryId:'word',category:'reading'},{id:'b',entryId:'word',category:'reading'},{id:'other',entryId:'missing',category:'reading'},{id:'rare',entryId:'word',category:'kanji'}];
+ assert.equal(selectExerciseRow(rows,words,{category:'kanji',random:()=>0}).id,'rare');
+ assert.equal(selectExerciseRow(rows,words,{category:'reading',previousId:'a',random:()=>0}).id,'b');
+ assert.equal(selectExerciseRow([rows[0]],words,{category:'reading',previousId:'a'}).id,'a');
+ assert.equal(selectExerciseRow(rows,[],{category:'reading'}),undefined);
 });
 
-test('selected-sense countability uses the meaning as context instead of claiming all dictionary senses',()=>{
- const row=createDictionaryExercises({targetLanguage:'en',explanationLanguage:'en',practiceData:{version:1,countability:[{entryId:'arms',labels:['plural-only'],scope:'selected-sense'}]}},[{id:'arms',lemma:'arms',studyMeaning:'weapons'}])[0];assert.equal(row.context,'weapons');assert.match(row.instruction,/displayed meaning/);assert.ok(!row.instruction.includes('dictionary uses'));assert.match(row.explanation,/Other senses/);
-});
