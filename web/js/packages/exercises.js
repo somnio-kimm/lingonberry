@@ -1,3 +1,4 @@
+import {joinGapAnswers} from '../shared/phrase-gaps.js';
 import {validatePracticeData} from './practice-data.js';
 import {EXERCISE_ROUTES,JAPANESE_FORM_KINDS} from '../shared/language-exercises.js';
 const fail=message=>{throw new Error(`Invalid language package: ${message}`);};
@@ -11,10 +12,21 @@ export function validateExercises(pack){
  if(pack.readingPractice!==undefined){const p=pack.readingPractice;check(pack.kind==='study'&&pack.targetLanguage==='ja'&&p?.version===1,'reading practice policy');list(p.excludedSpellings,'reading exclusions');p.excludedSpellings.forEach(value=>text(value,'reading exclusion'));list(p.variants,'reading variants');const seen=new Set();for(const row of p.variants){check(entries.has(row.entryId)&&!seen.has(row.entryId),'reading variant entry');seen.add(row.entryId);check(Array.isArray(row.readings)&&row.readings.length>0&&row.readings.length<=20,'reading variants');row.readings.forEach(value=>check(typeof value==='string'&&/^[ぁ-ゖァ-ヶー]+$/u.test(value),'kana reading variant'));const entry=pack.entries.find(entry=>entry.id===row.entryId);check(row.readings.includes(entry.pronunciation),'primary reading variant');}}
  if(pack.exercises!==undefined){list(pack.exercises,'exercises');for(const row of pack.exercises){
   check(row&&id(row.id)&&!ids.has(row.id),'exercise id');ids.add(row.id);
-  if(pack.kind==='explanation'){text(row.instruction,'exercise instruction');text(row.explanation,'exercise explanation');continue;}
+  if(pack.kind==='explanation'){check(Object.keys(row).every(key=>['id','instruction','explanation','context'].includes(key)),'exercise translation fields');text(row.instruction,'exercise instruction');text(row.explanation,'exercise explanation');if(row.context!==undefined)text(row.context,'exercise context');continue;}
   check(entries.has(row.entryId),'exercise entry');check(EXERCISE_ROUTES[pack.targetLanguage]?.[row.category]?.includes(row.route),'exercise route');text(row.prompt,'exercise prompt');text(row.answer,'exercise answer');
-  check(row.instruction===undefined&&row.explanation===undefined,'exercise translations belong in explanation packs');
+  check(row.instruction===undefined&&row.explanation===undefined&&row.context===undefined,'exercise translations belong in explanation packs');
   if(row.acceptedAnswers!==undefined){check(Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length<=20,'accepted exercise answers');row.acceptedAnswers.forEach(value=>text(value,'accepted exercise answer'));}
+  if(row.gapFill!==undefined){
+   const gap=row.gapFill;
+   check(['collocations','phrasal'].includes(row.category)&&['vocabinput','vocabmeaning'].includes(row.route),'phrase gap category');
+   check(gap&&Object.keys(gap).every(key=>['parts','answers','alternatives'].includes(key)),'phrase gap fields');
+   check(Array.isArray(gap.answers)&&gap.answers.length>=1&&gap.answers.length<=4,'phrase gap answers');
+   check(Array.isArray(gap.parts)&&gap.parts.length===gap.answers.length+1&&gap.parts.every(part=>typeof part==='string'&&part.length<=1000),'phrase gap parts');
+   const validAnswers=answers=>Array.isArray(answers)&&answers.length===gap.answers.length&&answers.every(answer=>typeof answer==='string'&&answer.trim()&&answer.length<=80&&!answer.includes('…'));
+   check(validAnswers(gap.answers),'phrase gap answer');
+   check(gap.alternatives===undefined||Array.isArray(gap.alternatives)&&gap.alternatives.length<=20&&gap.alternatives.every(validAnswers),'phrase gap alternatives');
+   check(row.prompt===gap.parts.join('___')&&row.answer===joinGapAnswers(gap.answers),'phrase gap display alignment');
+  }
   if(row.options!==undefined){check(Array.isArray(row.options)&&row.options.length>=2&&row.options.length<=6&&new Set(row.options).size===row.options.length&&row.options.includes(row.answer),'exercise options');row.options.forEach(value=>text(value,'exercise option'));}
   if(row.formKind!==undefined)check(pack.targetLanguage==='ja'&&row.route==='forms'&&Object.hasOwn(JAPANESE_FORM_KINDS,row.formKind),'Japanese form kind');
   check(row.route!=='vocabmeaning'||!!row.options,'vocabulary choice options');check(row.route!=='vocabinput'||!row.options,'vocabulary typing options');
@@ -25,7 +37,7 @@ export function validateExercises(pack){
 export function validateExerciseTranslations(study,pair){
  for(const key of ['exercises','families']){
   const rows=study[key]||[],translated=new Map((pair[key]||[]).map(row=>[row.id,row]));check(rows.length===translated.size,`incomplete ${key} translations`);
-  for(const row of rows){const translation=translated.get(row.id);check(!!translation,`missing ${key} translation`);if(key==='families'){check(row.members.length===translation.members.length&&row.members.every(member=>translation.members.some(item=>item.entryId===member.entryId)),'root member translations');}}
+  for(const row of rows){const translation=translated.get(row.id);check(!!translation,`missing ${key} translation`);if(key==='exercises'&&row.gapFill)text(translation.context,'phrase gap context');if(key==='families'){check(row.members.length===translation.members.length&&row.members.every(member=>translation.members.some(item=>item.entryId===member.entryId)),'root member translations');}}
  }
 }
 export function assembleExercises(study,pair){
