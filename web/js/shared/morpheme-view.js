@@ -23,17 +23,17 @@ export function renderMorphemeInventory(host,{
  }
 
  function renderRelatedWord(text) {
-  const word = model.uniqueWord(text);
-  if (!word) {
+  const matches = model.matchingWords(text);
+  if (!matches.length) {
    return `<div class="wl-row root-member"><div class="wl-main"><span class="wl-headword">${e(text)}</span></div></div>`;
   }
-  return `<div class="wl-row root-member" data-root-entry="${e(word.id)}">
+  return matches.map(word=>`<div class="wl-row root-member" data-root-entry="${e(word.id)}">
    <div class="wl-main">
     <button class="wl-headword root-member-trigger" data-root-word="${e(word.id)}">${e(text)}</button>
     <div class="wl-meaning">${e(word.studyMeaning)}</div>
    </div>
    <div class="wl-trail">${tags(word)}</div>
-  </div>`;
+  </div>`).join('');
  }
 
  function renderRelatedWords(row) {
