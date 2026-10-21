@@ -6,7 +6,7 @@ const read=async p=>JSON.parse(await readFile(new URL('../'+p,import.meta.url),'
 const server=await startServer();let browser;
 const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready'&&document.querySelector('main').dataset.viewState==='ready');
 async function tab(page,tab){await page.locator(`[data-tab=${tab}]`).click();await ready(page);}
-async function route(page,name,language){await tab(page,'home');await page.locator(language==='zh'?`[data-quiz=${name}]`:`[data-route=${name}]`).click();}
+async function route(page,name,language){await tab(page,'home');await page.locator(language==='zh'?`[data-quiz=${name}]`:`[data-route=${name}]`).click();await ready(page);}
 try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];await page.addInitScript(()=>{Object.defineProperty(window,'SpeechSynthesisUtterance',{value:class{constructor(text){this.text=text;}},configurable:true});Object.defineProperty(window,'speechSynthesis',{value:{getVoices:()=>['de-DE','zh-CN','ja-JP','ko-KR','en-GB','es-ES','fr-FR'].map(lang=>({lang,localService:true})),cancel(){},speak(utterance){window.testSpokenText=utterance.text;setTimeout(()=>utterance.onend?.(),0);}},configurable:true});});page.on('pageerror',e=>errors.push(e.message));await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);
  const catalog=await read('web/catalog.json');let checks=0;
@@ -20,7 +20,7 @@ try{
   // Chinese detail overlays handle Escape through their existing sheet policy; close explicitly if needed.
   if(await page.locator('.detail-overlay').count())await page.locator('.detail-overlay .close-btn,.detail-overlay [data-close],.detail-overlay .detail-sheet-close').first().click();
   for(const mode of ['vocabinput','vocabmeaning']){
-   await route(page,mode,language);const picker=page.locator(language==='de'||language==='zh'?'[data-collocation-kind]':'[data-exercise]');await picker.selectOption('collocations');await page.locator('.vocab-question').waitFor();
+   await route(page,'collocations',language);const switcher=page.locator(language==='de'||language==='zh'?`[data-collocation-answer=${mode}]`:`[data-answer-mode=${mode==='vocabinput'?'input':'choice'}]`);if(await switcher.count())await switcher.click();await page.locator('.vocab-question').waitFor();
    if(mode==='vocabinput'){
     const prompt=await page.locator('.vocab-prompt').innerText();const expected=core.entries.flatMap(row=>(row.collocations||[]).map(item=>({word:row.word,...item}))).find(item=>prompt.includes('('+item.word+')'));const exerciseId=await page.locator('[data-exercise-id]').getAttribute('data-exercise-id').catch(()=>null),legacy=core.exercises?.find(row=>row.id===exerciseId);assert.ok(expected||legacy,language+': no matching typing anchor');await page.locator('#vocab-answer').fill('wrong collocation');await page.locator('#vocab-submit').click();await page.locator('.vocab-answer-cell.wrong').waitFor();await tab(page,'wrong');await page.locator(language==='de'||language==='zh'?'#retest-filtered':'[data-retest]').click();await page.locator('#vocab-answer').fill(expected?.phrase||legacy.answer);await page.locator('#vocab-submit').click();await page.locator('.vocab-answer-cell.correct').waitFor();
    }else{

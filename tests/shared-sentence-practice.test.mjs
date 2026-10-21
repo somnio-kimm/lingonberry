@@ -42,8 +42,8 @@ test('Scramble accepts swapped identical tiles but rejects reusing one tile twic
 
 test('the seven shared defaults lead menus before language-specific quizzes',()=>{
  assert.deepEqual(DEFAULT_STUDY_MODES,['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']);
- assert.deepEqual(germanModes,[...DEFAULT_STUDY_MODES,'articles','verbforms']);
- assert.deepEqual(chineseModes,[...DEFAULT_STUDY_MODES.map(id=>id==='flashcards'?'flashcard':id),'pinyin','tone']);
+ assert.deepEqual(germanModes,[...DEFAULT_STUDY_MODES,'collocations','articles','verbforms']);
+ assert.deepEqual(chineseModes,[...DEFAULT_STUDY_MODES.map(id=>id==='flashcards'?'flashcard':id),'collocations','pinyin','tone']);
  for(const ids of [germanModes,chineseModes])assert.equal(new Set(ids).size,ids.length);
  assert.deepEqual(orderStudyModes(['vocabinput','scramble','vocabmeaning','wordlist','flashcards','cloze']),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble']);
 });

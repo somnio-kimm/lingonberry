@@ -16,21 +16,21 @@ try{
   },language);
   for(const width of [390,1024])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:900});await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;},theme);
-   await page.evaluate(()=>window.designRoute('vocabinput'));await page.selectOption('[data-exercise]','vocabulary');
+   await page.evaluate(()=>window.designRoute('vocabinput'));assert.equal(await page.locator('[data-exercise]').count(),0);
    const baseline=await page.locator('.lexicon-question').evaluate(node=>{const s=getComputedStyle(node),i=getComputedStyle(node.querySelector('input'));return {padding:s.padding,borderRadius:s.borderRadius,font:i.fontSize,align:i.textAlign};});
-   await page.selectOption('[data-exercise]',language==='ja'?'okurigana':'collocations');
+   await page.evaluate(route=>window.designRoute(route),language==='ja'?'okurigana':'collocations');const typing=page.locator('[data-answer-mode=input]');if(await typing.count())await typing.click();
    const custom=await page.locator('.lexicon-question').evaluate(node=>{const s=getComputedStyle(node),i=getComputedStyle(node.querySelector('input'));return {padding:s.padding,borderRadius:s.borderRadius,font:i.fontSize,align:i.textAlign};});assert.deepEqual(custom,baseline);
    assert.equal(await page.locator('.exercise-picker.panel').count(),0);assert.equal(await page.locator('.vocab-question .vocab-prompt').count(),1);
    assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
    await page.screenshot({path:`/private/tmp/practice-design-shots/${language}-${width}-${theme}.png`,fullPage:true});checks++;
   }
   if(language==='en'){
-   await page.evaluate(()=>window.designRoute('roots'));const row=page.locator('.root-member.wl-row').first();
+   await page.evaluate(()=>window.designRoute('roots'));await page.locator('[data-root-view=browse]').click();const row=page.locator('.root-member.wl-row').first();
    assert.ok(await row.evaluate(node=>parseFloat(getComputedStyle(node.querySelector('.wl-headword')).fontSize)>parseFloat(getComputedStyle(node.querySelector('.wl-meaning')).fontSize)));
    await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();await page.keyboard.press('Escape');checks++;
   }
   if(language==='ja'){
-   await page.evaluate(()=>window.designRoute('vocabmeaning'));for(const category of ['reading','onyomi','kunyomi','okurigana']){await page.selectOption('[data-exercise]',category);assert.ok(await page.locator('[data-option]').count()>=3);checks++;}
+   for(const category of ['reading','onyomi','kunyomi','okurigana']){await page.evaluate(route=>window.designRoute(route),category);const selection=page.locator('[data-answer-mode=choice]');if(await selection.count())await selection.click();assert.ok(await page.locator('[data-option]').count()>=3);assert.equal(await page.locator('[data-submit]').count(),0);checks++;}
    await page.evaluate(()=>window.designRoute('forms'));assert.equal(await page.locator('.form-original-word .grammar-word').count(),1);assert.equal(await page.locator('.form-problem .vocab-prompt,.form-problem .grammar-prompt').count(),1);checks++;
   }
  }

@@ -2,6 +2,7 @@ import { Store } from './store.js';
 
 const M = {
   ko: {
+    mode_collocations:'연어',
     listenSentence: "문장 듣기",
     listen_title: "받아쓰기",
     listen_mode: "받아쓰기 모드",
@@ -165,6 +166,7 @@ const M = {
     toneCheck: '제출',
   },
   en: {
+    mode_collocations:'Collocations',
     listenSentence: "Listen to sentence",
     listen_title: "Dictation",
     listen_mode: "Dictation mode",
