@@ -1,5 +1,5 @@
 const labels={
- 'Families':'계열','Words':'단어','Type':'종류','Root':'어근',
+ 'Families':'계열','Words':'단어','Type':'종류','Root':'어근','Infix':'접요사','Interfix':'연결 형태소','Circumfix':'접환사','Affix':'접사',
  'Selection':'선택','Typing':'입력','Answer Mode':'답변 방식','Browse':'목록','Practice':'문제','All Families':'전체 어근 목록','Selected Study Level':'선택한 학습 레벨','Collocations':'연어',
  'Source':'출처',
  'Cards':'장','Previous Word':'이전 단어','Next Word':'다음 단어','Change Study Status':'학습 상태 변경','Keep Practising to Build Your Review List':'학습 중 틀린 문제가 여기에 표시돼요.',

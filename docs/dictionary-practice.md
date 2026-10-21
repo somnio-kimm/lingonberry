@@ -13,7 +13,7 @@ Japanese and English use the same bundled question renderer, device keyboard, fi
 ## English
 
 - Articles and Countability is no longer offered as a test. Old package data remains readable so installed downloads and saved progress are compatible.
-- Root Families presents familiar roots, prefixes and suffixes with a short origin label, English/Korean meaning and related dictionary words. Browse includes all curated families; Practice follows the selected study level. Confusable Words has been removed from active Study practice; spelling similarity alone does not establish a common root. The advanced historical-source audit remains an editorial reference, not the learner browser.
+- Root Families presents familiar roots, prefixes and suffixes with a short origin label, English/Korean meaning and related dictionary words. Browse uses the full readable source inventory, independently of current study words; Practice retains explicitly reviewed word-family questions and follows the selected study level. Confusable Words has been removed from active Study practice; spelling similarity alone does not establish a common root. The advanced historical-source audit remains an editorial reference, not the learner browser.
 - Collocations, phrasal verbs, verb patterns and confusables use contextual original exercises. Source relations without a disambiguated question and bilingual guidance remain audit candidates; an audit candidate is not a ready exercise.
 
 ## Study screens

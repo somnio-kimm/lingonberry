@@ -11,3 +11,4 @@
 [data-root-list] .word-row-window{display:grid;gap:16px}
 
 .root-origin{font-size:14px;font-weight:400;color:var(--secondary);margin-left:8px}
+.morpheme-meanings{padding-left:1.35em;line-height:1.65}.morpheme-register{vertical-align:middle}.morpheme-words{margin:14px 0}.morpheme-words summary{font-size:14px;color:var(--secondary);margin-bottom:10px;cursor:pointer}.morpheme-source{display:inline-block;font-size:14px;margin-top:12px}
