@@ -1,7 +1,8 @@
+import {validateMorphemes,validateMorphemeTranslations} from './morphemes.js';
 import {validateCollocations,validateCollocationTranslations} from './collocations.js';
 import {validateExercises,validateExerciseTranslations} from './exercises.js';
 import {compareContentVersions} from '../shared/review-content.js';
-export const MAX_PACKAGE_BYTES = 30 * 1024 * 1024;
+export const MAX_PACKAGE_BYTES = 64 * 1024 * 1024;
 const locale = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
 const identifier = /^[a-z0-9][a-z0-9._-]{0,99}$/;
 const version = /^\d+\.\d+\.\d+$/;
@@ -97,6 +98,7 @@ export function validatePackage(value, expected) {
   }
   validateCollocations(value);
   validateExercises(value);
+  validateMorphemes(value);
   if (expected) {
     for (const key of ['id', 'kind', 'targetLanguage', 'version', 'explanationLanguage', 'studyVersion']) {
       requireValue(value[key] === expected[key], `${key} differs from catalog`);
@@ -118,5 +120,6 @@ export function validateExplanation(study, explanation) {
     requireValue((entry.additionalExamples?.length||0)===(translated.additionalExampleTranslations?.length||0),'incomplete additional example translations');
   }
   validateExerciseTranslations(study,explanation);
+  validateMorphemeTranslations(study,explanation);
   return explanation;
 }

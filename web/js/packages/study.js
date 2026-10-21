@@ -1,3 +1,4 @@
+import {assembleMorphemes} from './morphemes.js';
 import {assembleCollocations} from './collocations.js';
 import {assembleExercises} from './exercises.js';
 import {allowsExplanation} from '../shared/language-pairs.js';
@@ -35,6 +36,7 @@ export function assembleStudy(study,explanation){
     targetLanguage, explanationLanguage, studyVersion: study.version, explanationVersion: explanation.version,
     licenses: [study.license, explanation.license],
     ...assembleExercises(study,explanation),
+    morphemes:assembleMorphemes(study,explanation),
     readingPractice:study.readingPractice,practiceData:study.practiceData,
     retiredEntries:study.retiredEntries||[],reviewInvalidations:study.reviewInvalidations||[],
     entries: study.entries.map(entry => ({...entry, meaning: meanings.get(entry.id).meaning,meanings:meanings.get(entry.id).meanings,collocations:assembleCollocations(entry,meanings.get(entry.id)),

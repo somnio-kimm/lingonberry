@@ -25,7 +25,7 @@ try{
    await page.screenshot({path:`/private/tmp/practice-design-shots/${language}-${width}-${theme}.png`,fullPage:true});checks++;
   }
   if(language==='en'){
-   await page.evaluate(()=>window.designRoute('roots'));await page.locator('[data-root-view=browse]').click();const row=page.locator('.root-member.wl-row').first();
+   await page.evaluate(()=>window.designRoute('roots'));await page.locator('[data-root-view=browse]').click();await page.locator('#root-search').fill('aud');const row=page.locator('.root-member.wl-row[data-root-entry]').first();
    assert.ok(await row.evaluate(node=>parseFloat(getComputedStyle(node.querySelector('.wl-headword')).fontSize)>parseFloat(getComputedStyle(node.querySelector('.wl-meaning')).fontSize)));
    await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();await page.keyboard.press('Escape');checks++;
   }

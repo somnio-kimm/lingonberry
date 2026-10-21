@@ -108,6 +108,7 @@ class AppViewController: CAPBridgeViewController {
                     await wait(() => document.querySelector('[data-root-view=browse]'));
                     document.querySelector('[data-root-view=browse]').click();
                     await wait(() => document.querySelector('[data-root-kind]'));
+                    const rootSearch=document.querySelector('#root-search');rootSearch.value='aud';rootSearch.dispatchEvent(new Event('input',{bubbles:true}));
                     result.rootMembers = document.querySelectorAll('[data-root-word]').length;
                     if (result.rootMembers < 3 || !document.querySelector('.root-origin')) throw new Error('Learner root families are missing');
                   }
