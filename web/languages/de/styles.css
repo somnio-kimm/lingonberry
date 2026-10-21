@@ -513,8 +513,6 @@ html[data-theme="dark"] .wl-list.wl-list--wordlist .wl-row:active{background:rgb
 .sentence-next{width:100%;margin-top:12px;}
 
 .cloze-tools .speak-btn{border:0;background:transparent;}
-.grammar-selectors{display:flex;gap:10px;margin-top:14px;}
-.grammar-selectors label{flex:1;min-width:0;color:var(--muted);}
 .grammar-question{text-align:center;position:relative;padding-top:20px;}
 .grammar-card-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
 .grammar-card-tools .speak-btn{border:0;background:none;color:var(--accent);font-size:20px;}
