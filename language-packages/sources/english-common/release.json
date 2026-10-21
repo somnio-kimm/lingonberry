@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "from": "4.7.0",
+  "to": "4.8.0",
+  "inputs": [
+    {
+      "path": "language-packages/en-core-4.7.0.json",
+      "sha256": "3d5363eedec244bb816c6258dfa3bae97c53c7c9ed446f8e0019adb0cfbd39c3"
+    },
+    {
+      "path": "language-packages/en-en-4.7.0.json",
+      "sha256": "fa59f7aa6cbc1968f49807e659826fe0436391f1297d139e411a1cfe0248bc11"
+    },
+    {
+      "path": "language-packages/en-ko-4.7.0.json",
+      "sha256": "c1496f52eaf04364662afff6281034b99a8195cfdf4d5e02c35aaeb655346a8e"
+    },
+    {
+      "path": "language-packages/sources/english-common/additions.json",
+      "sha256": "ee18b80f4b0b8ea820d23f6290f5e6c535ae7ffa3130fdccf00e2695d9c2e471"
+    },
+    {
+      "path": "language-packages/sources/english-common/level-review.json",
+      "sha256": "f2f63470e0ad7f94dd66fa38d396e9ee9b5d14bd8c530e1f1e02aae0c6e4bd7c"
+    }
+  ]
+}

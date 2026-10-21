@@ -29,10 +29,10 @@ test('old packages without collocations remain usable and do not fabricate data'
 
 test('every language starter spans its existing study levels without changing anchor IDs',async()=>{
  const {readFile}=await import('node:fs/promises'),read=async path=>JSON.parse(await readFile(new URL('../'+path,import.meta.url),'utf8'));
- const source=await read('language-packages/sources/exercises/collocations.json'),catalog=await read('language-packages/catalog.json');
+ const source=await read('language-packages/sources/exercises/collocations.json'),release=await read('language-packages/sources/exercises/collocations-release.json');
  assert.deepEqual(Object.keys(source.languages).sort(),['de','en','es','fr','ja','ko','zh']);
  for(const [language,rows] of Object.entries(source.languages)){
-  const core=await read(catalog.find(row=>row.id===language+'-core').url.slice(1)),byId=new Map(core.entries.map(row=>[row.id,row])),covered=new Set();
+  const core=await read(`language-packages/${language}-core-${release.languages[language].to}.json`),byId=new Map(core.entries.map(row=>[row.id,row])),covered=new Set();
   for(const row of rows){assert.equal(byId.get(row.entryId)?.word,row.anchor);assert.ok(row.phrase.includes(row.anchor));assert.ok(row.meaning.en&&row.meaning.ko&&row.exampleTranslation.en&&row.exampleTranslation.ko);covered.add(byId.get(row.entryId).level);}
   assert.deepEqual([...covered].sort(),[...new Set(core.entries.map(row=>row.level))].sort(),language);
  }
