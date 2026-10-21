@@ -5,7 +5,7 @@ Use this reference for every new or changed feature in every study language. The
 ## Source of truth
 
 - `web/study-theme.css`: semantic colours, theme behaviour, geometry tokens and shared component classes. Put reusable visual rules here.
-- `web/js/shared/study-components.js`: escaped HTML primitives for search, segmented choices and reference-card headings. Reuse these rather than copying their markup or inline styles.
+- `web/js/shared/study-components.js`: escaped HTML primitives for search, quiz headers, segmented choices and reference-card headings. Reuse these rather than copying their markup or inline styles.
 - `web/js/shared/word-rows.js`: incremental list rendering and cleanup.
 - `web/js/shared/exercise-view.js`: language-specific exercise content inside the shared quiz presentation.
 - German/Chinese renderers demonstrate the established Study, Word List, Flashcards, Review and quiz structure. Their stylesheets provide legacy base rules; new features must not depend on a new independent palette or change a base rule in only one language.
@@ -77,6 +77,7 @@ Do not style a nested word list through a broad descendant selector: the outer r
 
 ## Interaction and language contract
 
+- Dictation uses `renderStudyQuizHeader` (including the initial 0 / 0 score) followed immediately by `renderStudyTabs` with `variant:'listening'`, then Filters, then the question. Word is left and Sentence is right. All languages reuse these renderers; do not put a separate compact switch below Filters. Saved-question retests omit the mode switch.
 - Word-choice answers check on tap and then show Next. Do not add Submit to selection questions. Typing uses Submit and the device keyboard; Chinese pinyin input retains its dedicated keyboard.
 - Submit, Skip and Next stay at the end of content, above the navigation by normal page flow. Do not make them floating overlays.
 - Meaning Quiz and Word Input remain vocabulary-only. Put specialist features in their own Study sections unless the user explicitly asks to merge them.
@@ -90,6 +91,7 @@ Run `npm test`, `npm run check`, then the relevant browser checks:
 
 ```sh
 node scripts/verify-study-design-browser.mjs
+node scripts/verify-dictation-design-browser.mjs
 node scripts/verify-design-parity-browser.mjs
 node scripts/verify-practice-design-browser.mjs
 ```
@@ -99,3 +101,5 @@ The first is the reusable design contract: German/Chinese base styles, shared se
 ## Separated phrase gaps
 
 Use `renderPhraseGapSentence` through `renderExercisePrompt` for explicitly authored nonadjacent blanks. Each typing blank is a transparent, single-underline device-keyboard input with a 44px minimum target. Keep inputs within the existing question card, retain shared Submit/Skip/Next flow and use `bindTypingAnswers` for all-field readiness, Enter navigation and IME handling. Selection still checks on tap. Show corrected parts inline and cross out only incorrect parts. Do not create a second answer box below the sentence. See [Separated Phrase Gaps](phrase-gaps.md) and `verify-phrase-gaps-browser.mjs` for the reference behaviour and responsive checks.
+
+The Dictation contract measures actual downloaded-package screens in all seven study languages, English/Korean display, phone/tablet widths and both themes. It compares selector position, size, spacing and button styles directly with German, checks title → selector → Filters order, mode changes and the audio gate, and saves screenshots. The opt-in native `--verify-dictation-design` check compares German, Chinese, English and Japanese controls on-device without downloading packages or recording study answers.
