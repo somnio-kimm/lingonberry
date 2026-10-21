@@ -9,7 +9,7 @@ Every English entry has an explicit editorial difficulty decision tied to its st
 | IELTS 7.0–8.0 — SAT-style academic vocabulary | 3,150 | 3,001 |
 | IELTS 8.5–9.0 — GRE-level vocabulary | 1,367 | 1,334 |
 
-Total: 12,356 entries. A headword can have separate senses or parts of speech, sometimes at different levels. The highest group’s minimum of 1,000 counts distinct headwords, not duplicate senses, spelling variants or ordinary inflections. All groups display alphabetically. Root Families now links include, preclude and occlude, with the complete related family visible as context.
+Total: 12,356 entries. A headword can have separate senses or parts of speech, sometimes at different levels. The highest group’s minimum of 1,000 counts distinct headwords, not duplicate senses, spelling variants or ordinary inflections. All groups display alphabetically. The separate [Root Families](learner-root-families.md) browser includes familiar roots and affixes, including the include/preclude/occlude family, with simple origins, meanings and related words.
 
 The full review covered 11,997 baseline entries individually in three complete partitions, followed by independent checks of expert assignments and conservative calibration. This baseline included 20 original additions to the previous 11,977-entry package. Another 359 genuinely advanced entries were authored and independently reviewed, each with English/Korean meanings and an original example with both explanations. No basic word was promoted to satisfy the count. Beginner, comb, tidy, lamp, oven, passport and rabbit now belong to the lowest group. Lexical familiarity, register and the actual stored sense all matter; rarity or conceptual complexity alone does not determine a level.
 
