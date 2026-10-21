@@ -3,7 +3,7 @@ export {VOCABULARY_MODES,vocabularyWord,vocabularyType,vocabularyMeaning,snapsho
 export const requiresNounArticle=word=>word?.pos==='noun'&&['der','die','das'].includes(word.article);
 export const nounArticles=word=>[...new Set([word?.article,...(word?.accepted_articles||[])])].filter(article=>['der','die','das'].includes(article));
 export const vocabularyInputAnswer=word=>requiresNounArticle(word)?word.article+' '+vocabularyWord(word):vocabularyWord(word);
-export const vocabularyExpectedAnswer=question=>question.mode==='vocabinput'&&requiresNounArticle(question.word)?vocabularyInputAnswer(question.word):question.answer;
+export const vocabularyExpectedAnswer=question=>question.mode==='vocabinput'&&!question.collocationId&&requiresNounArticle(question.word)?vocabularyInputAnswer(question.word):question.answer;
 function gradeInput(question,input) {
  let answers=question.acceptedAnswers||[question.answer];
  if(requiresNounArticle(question.word)){

@@ -1,3 +1,4 @@
+import {collocationQuestions,collocationAnswerCorrect} from './collocations.js';
 // Vocabulary-only questions: no external definitions or sentence text is added.
 export const VOCABULARY_MODES = Object.freeze(['vocabinput','vocabmeaning']);
 export const vocabularyWord = word => word.lemma ?? word.hanzi ?? '';
@@ -23,7 +24,8 @@ export function shuffle(values, random) {
 /** Shared pool algorithm; input spelling and grading are language policies. */
 export function createVocabularyEngine({inputAnswer=vocabularyWord,gradeInput=(question,input)=>
   (question.acceptedAnswers||[question.answer]).some(answer=>normalize(input)===normalize(answer))}={}) {
-function createVocabularyPool(mode, words, locale = 'en') {
+function createVocabularyPool(mode, words, locale = 'en', category='vocabulary') {
+  if(category==='collocations'){const questions=collocationQuestions(mode,words,words.find(word=>word.studyExplanationLanguage)?.studyExplanationLanguage||locale);return {all:()=>questions,choose(excludeId,random=Math.random){const pool=questions.length>1?questions.filter(q=>q.id!==excludeId):questions;const q=pool[Math.floor(random()*pool.length)];return q?.options?{...q,options:shuffle(q.options,random)}:q;}};}
   locale = words.find(word => word.studyExplanationLanguage)?.studyExplanationLanguage || locale;
   if (!VOCABULARY_MODES.includes(mode) || !/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(locale)) return {all:()=>[],choose:()=>undefined};
   const rows = words.map(word => {
@@ -76,7 +78,7 @@ function createVocabularyPool(mode, words, locale = 'en') {
 function vocabularyQuestions(mode,words,locale='en',random=Math.random){return createVocabularyPool(mode,words,locale).all(random);}
 
 function vocabularyAnswerCorrect(question,input) {
-  return question.mode==='vocabmeaning'?input===question.word.id:gradeInput(question,input);
+  return question.mode==='vocabmeaning'?input===question.word.id:question.collocationId?collocationAnswerCorrect(question,input):gradeInput(question,input);
 }
 return {createVocabularyPool,vocabularyQuestions,vocabularyAnswerCorrect};
 }
