@@ -95,3 +95,7 @@ node scripts/verify-practice-design-browser.mjs
 ```
 
 The first is the reusable design contract: German/Chinese base styles, shared search/tabs/reference cards/word rows, light and dark themes, phone and tablet widths. The other checks use real downloaded data for established screens and specialist exercises. Inspect screenshots for changed screens as well as checking measurements. Add a representative case for a new shared component or feature; a new screen must not become its own untested visual standard.
+
+## Separated phrase gaps
+
+Use `renderPhraseGapSentence` through `renderExercisePrompt` for explicitly authored nonadjacent blanks. Each typing blank is a transparent, single-underline device-keyboard input with a 44px minimum target. Keep inputs within the existing question card, retain shared Submit/Skip/Next flow and use `bindTypingAnswers` for all-field readiness, Enter navigation and IME handling. Selection still checks on tap. Show corrected parts inline and cross out only incorrect parts. Do not create a second answer box below the sentence. See [Separated Phrase Gaps](phrase-gaps.md) and `verify-phrase-gaps-browser.mjs` for the reference behaviour and responsive checks.
