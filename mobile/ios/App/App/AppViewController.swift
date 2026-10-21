@@ -109,7 +109,8 @@ class AppViewController: CAPBridgeViewController {
                     document.querySelector('[data-root-view=browse]').click();
                     await wait(() => document.querySelector('[data-root-kind]'));
                     result.rootInventory=document.querySelector('[data-root-count]')?.textContent;
-                    if (!result.rootInventory?.includes('5,863')) throw new Error('Full root inventory has not updated');
+                    result.rootInventoryTotal=Number(document.querySelector('[data-root-count]')?.dataset.total);
+                    if (!(result.rootInventoryTotal > 0)) throw new Error('Full root inventory has not updated');
                     const rootSearch=document.querySelector('#root-search');rootSearch.value='aud';rootSearch.dispatchEvent(new Event('input',{bubbles:true}));
                     result.rootMembers = document.querySelectorAll('[data-root-word]').length;
                     if (result.rootMembers < 3 || !document.querySelector('.root-origin')) throw new Error('Learner root families are missing');

@@ -1,25 +1,129 @@
 import {renderStudySearch,renderStudyReferenceHeading} from './study-components.js';
 import {escapeHtml as e} from './ui.js';
 import {mountWordRows} from './word-rows.js';
-const originKo={'Latin':'라틴어','Greek':'그리스어','English':'영어','Middle English':'중세 영어','Old English':'고대 영어','French':'프랑스어','Old French':'고프랑스어','German':'독일어','Sanskrit':'산스크리트어','Italian':'이탈리아어','Japanese':'일본어','Spanish':'스페인어','Hebrew':'히브리어','Chinese':'중국어','Russian':'러시아어','Portuguese':'포르투갈어','Arabic':'아랍어','Korean':'한국어','Old Norse':'고대 노르드어','Dutch':'네덜란드어','New Latin':'신라틴어','Medieval Latin':'중세 라틴어','Late Latin':'후기 라틴어','Latin from Greek':'그리스어에서 유래한 라틴어','Latin from Frankish':'프랑크어에서 유래한 라틴어','Greek from Hebrew':'히브리어에서 유래한 그리스어','Not specified':'출처에 명시되지 않음'};
-const originLabel=(origin,ko)=>ko?(originKo[origin]||(/Latin|Greek/u.test(origin)?'라틴어 / 그리스어':origin)):origin;
-const registers={offensive:['Offensive','모욕적'],derogatory:['Derogatory','비하적'],vulgar:['Vulgar','비속어'],obsolete:['Obsolete','폐어'],archaic:['Archaic','고어'],dated:['Dated','구식'],rare:['Rare','드문 표현'],uncommon:['Uncommon','드문 표현'],slang:['Slang','속어'],informal:['Informal','비격식'],nonstandard:['Nonstandard','비표준'],misspelling:['Misspelling','잘못된 표기'],proscribed:['Proscribed','사용을 피하는 표현'],humorous:['Humorous','익살스러운 표현']};
-export function renderMorphemeSense(sense,locale){return `${(sense.tags||[]).filter(tag=>registers[tag]).map(tag=>`<span class="wl-tag wl-pos morpheme-register">${e(registers[tag][locale==='ko'?1:0])}</span> `).join('')}${e(sense.meaning)}`;}
-const fold=value=>String(value).normalize('NFKC').toLocaleLowerCase();
-/** All-source browsing stays available even when a morpheme has no word in the study dictionary. */
-export function renderMorphemeInventory(host,{rows,words,state:f,t,locale,tabs,bindTabs,openWord,tags}){
- const ko=locale==='ko',byWord=new Map();for(const word of words){const key=fold(word.lemma),list=byWord.get(key)||[];list.push(word);byWord.set(key,list);}
- const kinds=['all',...new Set(rows.map(row=>row.kind))],searchIndex=new Map(rows.map(row=>[row.id,fold([row.form,...row.variants,...row.senses.map(s=>s.meaning),...row.examples].join(' '))]));
- host.innerHTML=`<div class="lexicon-view"><h2 class="section-title study-list-title">${t('Root Families')}</h2>${tabs}<p class="muted" data-root-count></p><div class="grammar-selectors"><label>${t('Type')}<select data-root-kind>${kinds.map(kind=>`<option value="${kind}" ${(f.rootKind||'all')===kind?'selected':''}>${e(t(kind==='all'?'All':kind[0].toUpperCase()+kind.slice(1)))}</option>`).join('')}</select></label></div>${renderStudySearch({id:'root-search',value:f.rootQuery||'',label:t('Search')})}<div data-root-list class="study-reference-list"></div></div>`;
- const list=host.querySelector('[data-root-list]'),byId=new Map(rows.map(row=>[row.id,row]));let pager;
- const relatedWord=text=>{const choices=byWord.get(fold(text))||[],word=choices.length===1?choices[0]:undefined;return word?`<div class="wl-row root-member" data-root-entry="${e(word.id)}"><div class="wl-main"><button class="wl-headword root-member-trigger" data-root-word="${e(word.id)}">${e(text)}</button><div class="wl-meaning">${e(word.studyMeaning)}</div></div><div class="wl-trail">${tags(word)}</div></div>`:`<div class="wl-row root-member"><div class="wl-main"><span class="wl-headword">${e(text)}</span></div></div>`;};
- function render(){
-  pager?.cleanup();const query=fold(f.rootQuery||'');
-  const matching=rows.filter(row=>(!f.rootKind||f.rootKind==='all'||f.rootKind===row.kind)&&(!query||searchIndex.get(row.id).includes(query)));
-  host.querySelector('[data-root-count]').textContent=ko?`${matching.length.toLocaleString()}개 항목 · 전체 ${rows.length.toLocaleString()}개`:`${matching.length.toLocaleString()} Entries · ${rows.length.toLocaleString()} Total`;
-  pager=mountWordRows(list,matching,row=>`<section class="panel study-reference-card" data-morpheme="${e(row.id)}">${renderStudyReferenceHeading({word:[row.form,...row.variants].join(', '),origin:originLabel(row.origin,ko)})}<ol class="morpheme-meanings study-reference-meanings">${row.senses.map(s=>`<li>${renderMorphemeSense(s,locale)}</li>`).join('')}</ol>${row.examples.length?`<details class="morpheme-words study-reference-words" open><summary>${ko?'관련 단어':'Related Words'} (${row.examples.length})</summary><div class="wl-list wl-list--wordlist"><div data-related-list class="word-row-window">${row.examples.slice(0,12).map(relatedWord).join('')}</div></div>${row.examples.length>12?`<button class="btn-small text-button" data-more-related="${e(row.id)}" data-shown="12">${t('Show More Words')}</button>`:''}</details>`:''}<a class="morpheme-source study-reference-source" href="${e(row.source)}" target="_blank" rel="noopener noreferrer">${t('Source')}</a></section>`,{initialCount:8,batchSize:8,moreLabel:t('Show More Words'),emptyMarkup:`<section class="panel">${t('No Matching Words')}</section>`});
+import {createMorphemeModel,MORPHEME_PAGING} from './morpheme-model.js';
+import {morphemeOriginLabel,morphemeRegisters,morphemeCountLabel,morphemeRelatedLabel} from './morpheme-text.js';
+
+export function renderMorphemeSense(sense,locale) {
+ const badges = morphemeRegisters(sense.tags,locale).map(label =>
+  `<span class="wl-tag wl-pos morpheme-register">${e(label)}</span> `,
+ );
+ return badges.join('') + e(sense.meaning);
+}
+
+/** The model owns data lookup; this view owns markup, user events and their cleanup. */
+export function renderMorphemeInventory(host,{
+ rows,words,model=createMorphemeModel(rows,words),state,t,locale,tabs,bindTabs,openWord,tags,
+}) {
+ function renderKindOptions() {
+  return model.kinds.map(kind => {
+   const label = kind==='all' ? 'All' : kind[0].toUpperCase()+kind.slice(1);
+   return `<option value="${e(kind)}" ${(state.rootKind||'all')===kind?'selected':''}>${e(t(label))}</option>`;
+  }).join('');
  }
- render();bindTabs(host);host.querySelector('[data-root-kind]').onchange=event=>{f.rootKind=event.target.value;render();};host.querySelector('#root-search').oninput=event=>{f.rootQuery=event.target.value;render();};
- list.onclick=event=>{if(event.target.closest('a'))return;const more=event.target.closest('[data-more-related]');if(more){const row=byId.get(more.dataset.moreRelated),start=Number(more.dataset.shown),end=Math.min(start+20,row.examples.length);more.parentElement.querySelector('[data-related-list]').insertAdjacentHTML('beforeend',row.examples.slice(start,end).map(relatedWord).join(''));more.dataset.shown=String(end);more.hidden=end>=row.examples.length;return;}const row=event.target.closest('[data-root-entry]');if(row)openWord(row.dataset.rootEntry);};
- return()=>pager?.cleanup();
+
+ function renderRelatedWord(text) {
+  const word = model.uniqueWord(text);
+  if (!word) {
+   return `<div class="wl-row root-member"><div class="wl-main"><span class="wl-headword">${e(text)}</span></div></div>`;
+  }
+  return `<div class="wl-row root-member" data-root-entry="${e(word.id)}">
+   <div class="wl-main">
+    <button class="wl-headword root-member-trigger" data-root-word="${e(word.id)}">${e(text)}</button>
+    <div class="wl-meaning">${e(word.studyMeaning)}</div>
+   </div>
+   <div class="wl-trail">${tags(word)}</div>
+  </div>`;
+ }
+
+ function renderRelatedWords(row) {
+  if (!row.examples.length) return '';
+  const page = model.relatedWords(row.id,0,MORPHEME_PAGING.initialWords);
+  return `<details class="morpheme-words study-reference-words" open>
+   <summary>${e(morphemeRelatedLabel(locale,row.examples.length))}</summary>
+   <div class="wl-list wl-list--wordlist">
+    <div data-related-list class="word-row-window">${page.words.map(renderRelatedWord).join('')}</div>
+   </div>
+   ${page.hasMore?`<button class="btn-small text-button" data-more-related="${e(row.id)}" data-shown="${page.next}">${e(t('Show More Words'))}</button>`:''}
+  </details>`;
+ }
+
+ function renderCard(row) {
+  const heading = renderStudyReferenceHeading({
+   word:[row.form,...row.variants].join(', '),
+   origin:morphemeOriginLabel(row.origin,locale),
+  });
+  return `<section class="panel study-reference-card" data-morpheme="${e(row.id)}">
+   ${heading}
+   <ol class="morpheme-meanings study-reference-meanings">${row.senses.map(sense=>`<li>${renderMorphemeSense(sense,locale)}</li>`).join('')}</ol>
+   ${renderRelatedWords(row)}
+   <a class="morpheme-source study-reference-source" href="${e(row.source)}" target="_blank" rel="noopener noreferrer">${e(t('Source'))}</a>
+  </section>`;
+ }
+
+ host.innerHTML = `<div class="lexicon-view">
+  <h2 class="section-title study-list-title">${e(t('Root Families'))}</h2>
+  ${tabs}
+  <p class="muted" data-root-count></p>
+  <div class="grammar-selectors"><label>${e(t('Type'))}<select data-root-kind>${renderKindOptions()}</select></label></div>
+  ${renderStudySearch({id:'root-search',value:state.rootQuery||'',label:t('Search')})}
+  <div data-root-list class="study-reference-list"></div>
+ </div>`;
+ const list = host.querySelector('[data-root-list]');
+ const count = host.querySelector('[data-root-count]');
+ const search = host.querySelector('#root-search');
+ const kind = host.querySelector('[data-root-kind]');
+ let pager;
+
+ function renderResults() {
+  pager?.cleanup();
+  const matching = model.find({query:state.rootQuery,kind:state.rootKind});
+  count.textContent = morphemeCountLabel(locale,matching.length,model.total);
+  count.dataset.total = String(model.total);
+  count.dataset.visible = String(matching.length);
+  pager = mountWordRows(list,matching,renderCard,{
+   initialCount:MORPHEME_PAGING.cards,
+   batchSize:MORPHEME_PAGING.cards,
+   moreLabel:t('Show More Words'),
+   emptyMarkup:`<section class="panel">${e(t('No Matching Words'))}</section>`,
+  });
+ }
+
+ function showMoreRelated(button) {
+  const page = model.relatedWords(button.dataset.moreRelated,Number(button.dataset.shown));
+  const container = button.parentElement.querySelector('[data-related-list]');
+  container.insertAdjacentHTML('beforeend',page.words.map(renderRelatedWord).join(''));
+  button.dataset.shown = String(page.next);
+  button.hidden = !page.hasMore;
+ }
+
+ function handleListClick(event) {
+  if (event.target.closest('a')) return;
+  const more = event.target.closest('[data-more-related]');
+  if (more) {
+   showMoreRelated(more);
+   return;
+  }
+  const row = event.target.closest('[data-root-entry]');
+  if (row) openWord(row.dataset.rootEntry);
+ }
+
+ renderResults();
+ bindTabs(host);
+ kind.onchange = () => {
+  state.rootKind = kind.value;
+  renderResults();
+ };
+ search.oninput = () => {
+  state.rootQuery = search.value;
+  renderResults();
+ };
+ list.onclick = handleListClick;
+
+ return () => {
+  pager.cleanup();
+  kind.onchange = null;
+  search.oninput = null;
+  list.onclick = null;
+ };
 }
