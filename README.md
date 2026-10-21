@@ -42,3 +42,5 @@ Japanese 4.2 extends source-backed character readings to all 2,575 kanji in the 
 The requested [explanation matrix](docs/explanation-matrix.md) has 43 pairs: every other supported language, plus English → English. Thirteen pairs currently have complete downloadable packages; the other 30 require further translation work. Partial extra-language texts are retained in authoring records without being offered as complete downloads. See [example authoring and coverage](docs/example-authoring.md).
 
 UI development follows the [shared German/Chinese design reference](docs/study-design.md), reusable components and browser parity checks.
+
+The [runtime structure guide](docs/code-structure.md) explains model, presentation, view and localisation responsibilities.
