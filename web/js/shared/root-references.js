@@ -7,3 +7,5 @@ export function rootReferenceViews(study,words,locale){
   meaning:ko?`역사적 공통 출처 · ${historicalLanguageLabel(family.language,locale)}. 현대 단어의 뜻을 단순히 합성하는 규칙은 아닙니다.`:`Shared historical source · ${historicalLanguageLabel(family.language,locale)}. This is not a rule for deriving modern meanings.`,
   members:family.members.filter(member=>byId.has(member.entryId)).map(member=>({entryId:member.entryId,word:byId.get(member.entryId).lemma,note:byId.get(member.entryId).studyMeaning,references:member.references}))}));
 }
+
+export const learnerOriginLabel=(code,locale='en')=>({la:['Latin','라틴어'],grc:['Greek','그리스어'],ang:['Old English','고대 영어']}[code]?.[locale==='ko'?1:0]||code||'');

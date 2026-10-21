@@ -11,7 +11,12 @@ export const EXERCISE_ROUTES=Object.freeze({
 });
 export const exerciseLabel=(id,locale='en')=>EXERCISE_CATEGORIES[id]?.[locale==='ko'?1:0]||id;
 export function exerciseCategories(exercises,route){return [...new Set(exercises.filter(row=>row.route===route).map(row=>row.category))];}
-export function exerciseModes(language){return Object.fromEntries(Object.values(EXERCISE_ROUTES[language]||{}).flat().filter(route=>!route.startsWith('vocab')).map(route=>[route,[exerciseLabel(route),'📝','teal']]));}
+export function exerciseModes(language){
+ const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])];
+ const icons={reading:'📚',onyomi:'音',kunyomi:'訓',okurigana:'✍️',kanji:'🔎',transitivity:'🔄',forms:'⌨️',particles:'📝',counters:'🔢',collocations:'🔗',phrasal:'🧩',confusables:'🔍',roots:'🌱',patterns:'📝',articles:'🔠'};
+ return Object.fromEntries(categories.map(id=>[id,[exerciseLabel(id),icons[id]||'📝','teal']]));
+}
+
 export function createExerciseQuestions(exercises,words,route,category,locale,random=Math.random){
  const byId=new Map(words.map(word=>[word.id,word]));
  return exercises.filter(row=>row.route===route&&(category==='all'||row.category===category)&&byId.has(row.entryId)).map(row=>({

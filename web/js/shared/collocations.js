@@ -17,7 +17,7 @@ export function collocationAnswerCorrect(question,input){
 }
 export function collocationExercises(words,locale){
  return ['vocabinput','vocabmeaning'].flatMap(mode=>collocationQuestions(mode,words,locale).map(q=>({id:q.id.replace(/:/gu,'-'),entryId:q.word.id,category:'collocations',route:mode,collocationId:q.collocationId,phrase:q.phrase,prompt:q.prompt,answer:q.answer,acceptedAnswers:q.acceptedAnswers,
-  ...(q.options?{options:q.options.map(option=>option.text)}:{}),instruction:collocationInstruction(mode,locale),explanation:`${q.phrase}\n${q.word.collocations.find(row=>row.id===q.collocationId).meaning}\n${q.example.de}\n${q.example[locale]}`})));
+  ...(q.options?{options:q.options.map(option=>option.text)}:{}),instruction:collocationInstruction(mode,locale),explanation:`${q.phrase}\n${q.word.collocations.find(row=>row.id===q.collocationId).meaning}\n${q.example.de}${q.word.studyLanguage==='en'&&locale==='en'?'':'\n'+q.example[locale]}`})));
 }
 
 export const collocationSearchTerms=word=>(word.collocations||[]).flatMap(row=>[row.phrase,row.meaning]);

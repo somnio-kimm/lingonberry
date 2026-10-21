@@ -1,4 +1,5 @@
-import {collocationPicker} from '../../../../js/shared/collocation-view.js';
+import {lexiconText} from '../../../../js/shared/lexicon-text.js';
+import {collocationAnswerModes} from '../../../../js/shared/collocation-view.js';
 import {collocationInstruction} from '../../../../js/shared/collocations.js';
 import { speakGerman, stopMedia } from '../core/media.js';
 import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared/ui.js';
@@ -11,7 +12,7 @@ export function renderVocabularyTest(el, ctx, mode, session = {}) {
   let question, input = '', feedback = '', score = 0, total = 0, status = 'all', pos = 'all', open = false, composing = false;
   const pool = studyWords(ctx.words, level);
   let preparedPool,poolSignature;
-  let alive = true, category='vocabulary';
+  let alive = true, category=session.category||'vocabulary';
   function next() {
     if (!alive) return;
     if(session.question)question=session.question;
@@ -30,7 +31,7 @@ export function renderVocabularyTest(el, ctx, mode, session = {}) {
     if (!alive) return;
     stopMedia();
     const shown = session.score?.() || { correct: score, total };
-    el.innerHTML = `<div class="sentence-quiz-header"><div class="section-title">${t(mode === 'vocabinput' ? 'Word input' : 'Meaning quiz')}</div>${scorePill(shown.correct,shown.total)}</div>${!session.question&&pool.some(word=>word.collocations?.length)?collocationPicker(getLocale(),category):''}${session.question ? '' : studyFilterMarkup(pool, ctx.store, status, pos, open)}${question ? `<div class="vocab-test quiz-after-filter" data-question-id="${e(question.id)}" data-vocab-mode="${mode}">
+    el.innerHTML = `<div class="sentence-quiz-header"><div class="section-title">${session.category?lexiconText(getLocale(),'Collocations'):t(mode === 'vocabinput' ? 'Word input' : 'Meaning quiz')}</div>${scorePill(shown.correct,shown.total)}</div>${!session.question&&session.category?collocationAnswerModes(getLocale(),mode):''}${session.question ? '' : studyFilterMarkup(pool, ctx.store, status, pos, open)}${question ? `<div class="vocab-test quiz-after-filter" data-question-id="${e(question.id)}" data-vocab-mode="${mode}">
       <section class="panel vocab-question"><div class="vocab-question-top"><span class="badge">${question.collocationId?(getLocale()==='ko'?'연어':'Collocations'):e(typeLabel(question.word))} · ${question.locale.toUpperCase()}</span><button type="button" class="word-listen" id="vocab-listen" aria-label="${t('Listen to word')}">🔊</button></div><p class="vocab-instruction">${question.collocationId?collocationInstruction(mode,question.locale):t(mode === 'vocabinput' ? requiresNounArticle(question.word) ? 'Type the noun with its article.' : 'Type the word for this meaning.' : 'Choose the correct meaning.')}</p><div class="vocab-prompt" lang="${mode === 'vocabinput' ? question.locale : 'de'}">${mode === 'vocabinput'||question.collocationId ? e(question.prompt) : wordHeading(question.word)}</div>
       ${mode === 'vocabinput' ? `<div class="vocab-answer-cell ${feedback || 'active'}">${feedback ? `<div role="status" aria-label="${t(feedback === 'correct' ? 'Correct' : 'Incorrect')}"><span class="vocab-correction" lang="de">${e(vocabularyExpectedAnswer(question))}</span>${feedback === 'wrong' ? `<del class="vocab-wrong" lang="de">${e(input)}</del>` : ''}</div>` : `<input id="vocab-answer" type="text" inputmode="text" enterkeyhint="done" value="${e(input)}" lang="de" aria-label="${t('Your answer')}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="120">`}</div>` : ''}<p class="vocab-speech-status" role="status" hidden></p></section>
       ${mode === 'vocabmeaning' ? `<div class="vocab-options">${question.options.map(option => `<button class="vocab-choice ${feedback ? option.id === question.word.id ? 'correct' : option.text === input ? 'wrong' : '' : ''}" data-vocab-option="${e(option.id)}" data-vocab-type="${e(option.type)}" lang="${question.locale}" ${feedback ? 'disabled' : ''}>${e(option.text)}</button>`).join('')}</div>` : ''}
@@ -41,7 +42,7 @@ export function renderVocabularyTest(el, ctx, mode, session = {}) {
     el.querySelectorAll('[data-tag]').forEach(button => button.onclick = () => { pos = button.dataset.tag; next(); });
     function showSpeechError(){if(!alive)return;const message=el.querySelector('.vocab-speech-status');if(message){message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');message.hidden=false;}}
     el.querySelector('#vocab-listen')?.addEventListener('click',()=>{const message=el.querySelector('.vocab-speech-status');if(message)message.hidden=true;speakGerman(question.collocationId?question.phrase:question.word.pos==='noun'&&question.word.article?question.word.article+' '+question.word.lemma:question.word.lemma,()=>{},()=>showSpeechError());});
-    const picker=el.querySelector('[data-collocation-kind]');if(picker)picker.onchange=()=>{category=picker.value;preparedPool=undefined;poolSignature=undefined;next();};
+    el.querySelectorAll('[data-collocation-answer]').forEach(button=>button.onclick=()=>{mode=button.dataset.collocationAnswer;preparedPool=undefined;poolSignature=undefined;next();});
     const field = el.querySelector('#vocab-answer');
     if (field) {
       field.oninput = () => { if (!alive) return; input = field.value; const button=el.querySelector('#vocab-submit'); if(button)button.disabled = !input.trim() || composing; };
@@ -58,3 +59,5 @@ export function renderVocabularyTest(el, ctx, mode, session = {}) {
 }
 export const renderWordInput = (el, ctx, session) => renderVocabularyTest(el, ctx, 'vocabinput', session);
 export const renderMeaningQuiz = (el, ctx, session) => renderVocabularyTest(el, ctx, 'vocabmeaning', session);
+
+export const renderCollocationPractice=(el,ctx,session={})=>renderVocabularyTest(el,ctx,session.question?.mode||'vocabmeaning',{...session,category:'collocations'});

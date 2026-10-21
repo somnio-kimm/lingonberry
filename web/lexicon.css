@@ -9,3 +9,5 @@
 .exercise-picker{margin:14px 0;flex-wrap:wrap}.exercise-picker label{display:grid;gap:6px;min-width:120px}.exercise-picker select{font:inherit;min-height:44px}.exercise-picker label{font-size:14px;font-weight:600;color:var(--secondary)}.exercise-picker select{color:var(--text);font-weight:400}.lexicon-view>label{display:grid;gap:6px;margin:12px 0}.lexicon-prompt{white-space:pre-line}
 .exercise-explanation p{white-space:pre-line}
 [data-root-list] .word-row-window{display:grid;gap:16px}
+
+.root-origin{font-size:14px;font-weight:400;color:var(--secondary);margin-left:8px}
