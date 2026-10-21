@@ -17,3 +17,5 @@ PRs target `main`. When a change depends on an open PR, a stacked PR may target 
 Keep each feature with its own tests. Keep unrelated cleanup and content migrations separate. The root MIT license covers code and original starter content; imported datasets must retain their own license notices and provenance.
 
 UI changes must follow [Shared Study Design Reference](docs/study-design.md). Reuse the documented components/tokens and include the relevant design-contract browser check with phone/tablet and light/dark evidence.
+
+For refactoring, follow [runtime responsibilities](docs/code-structure.md): separate source/data rules from view events, keep a single state owner and extract one responsibility with its regression checks.
