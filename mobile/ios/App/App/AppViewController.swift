@@ -48,6 +48,7 @@ class AppViewController: CAPBridgeViewController {
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
                 const pairs = [];
+                const originalEnglishLevel = JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1') || '{}').preferences?.studyLevel;
                 const checks = japanese ? [['ja','en','ja-lex-7985a44e7b819ef6641a','in what manner'],['ja','ko','ja-lex-7985a44e7b819ef6641a','어떻게']] : english ? [['en','en','en-lex-d2e8946b4935cf8fc6d1','angular momentum'],['en','ko','en-lex-d2e8946b4935cf8fc6d1','각운동량']] : [['de','ko','de-noun-abend-editorial-main','저녁'],['de','en','de-noun-abend-editorial-main','evening'],['zh','en','hsk1_1','to love; to like deeply'],['zh','ko','hsk1_1','사랑하다; 좋아하다']];
                 for (const [target, explanation, entryId, meaning] of checks) {
                   document.querySelector('[data-tab=settings]').click();
@@ -88,10 +89,10 @@ class AppViewController: CAPBridgeViewController {
                 if (english || japanese) {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=vocabinput]'));
-                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana','forms','particles','counters','collocations'] : ['patterns','roots','collocations','phrasal'];
+                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana','forms','particles','counters','collocations'] : ['roots','collocations'];
                   result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
                   if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
-                  if (english && document.querySelector('[data-route=articles],[data-route=confusables]')) throw new Error('Removed English test is still visible');
+                  if (english && document.querySelector('[data-route=articles],[data-route=confusables],[data-route=patterns],[data-route=phrasal]')) throw new Error('Removed English test is still visible');
                   document.querySelector('[data-route=vocabinput]').click();
                   await wait(() => document.querySelector('.vocab-question'));
                   if (document.querySelector('[data-exercise]') || document.querySelector('[data-exercise-id]')?.dataset.exerciseId) throw new Error('Default vocabulary contains specialist questions');
@@ -110,7 +111,13 @@ class AppViewController: CAPBridgeViewController {
                     await wait(() => document.querySelector('[data-root-kind]'));
                     result.rootInventory=document.querySelector('[data-root-count]')?.textContent;
                     result.rootInventoryTotal=Number(document.querySelector('[data-root-count]')?.dataset.total);
-                    if (!(result.rootInventoryTotal > 0)) throw new Error('Full root inventory has not updated');
+                    const {createPackageStorage} = await import('./js/packages/storage.js');
+                    const storage = createPackageStorage(), records = await storage.list();
+                    const core = records.filter(row => row.id === 'en-core').sort((a,b) => b.version.localeCompare(a.version,undefined,{numeric:true}))[0];
+                    result.englishPackages = records.filter(row => row.targetLanguage === 'en').map(row => ({id:row.id,version:row.version}));
+                    const installed = core && await storage.get(core.id,core.version);
+                    result.installedRootCount = installed?.morphemes?.length || 0;
+                    if (result.rootInventoryTotal !== result.installedRootCount || result.rootInventoryTotal < 1000) throw new Error('Visible full root inventory does not match the installed package');
                     const rootSearch=document.querySelector('#root-search');rootSearch.value='aud';rootSearch.dispatchEvent(new Event('input',{bubbles:true}));
                     result.rootMembers = document.querySelectorAll('[data-root-word]').length;
                     if (result.rootMembers < 3 || !document.querySelector('.root-origin')) throw new Error('Learner root families are missing');
@@ -118,7 +125,14 @@ class AppViewController: CAPBridgeViewController {
 
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-level]'));
-                  if (english) [...document.querySelectorAll('[data-level]')].at(-1).click();
+                  if (english) {
+                    const original = [...document.querySelectorAll('[data-level]')].find(node => node.dataset.level === originalEnglishLevel);
+                    original?.click();
+                    document.querySelector('[data-route=roots]').click();
+                    await wait(() => document.querySelector('[data-root-view=browse]'));
+                    document.querySelector('[data-root-view=browse]').click();
+                    const search = document.querySelector('#root-search');search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));
+                  }
                   return JSON.stringify(result);
                 }
                 document.querySelector('[data-tab=settings]').click();

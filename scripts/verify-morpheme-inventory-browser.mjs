@@ -21,5 +21,21 @@ try{
   await page.evaluate(()=>window.cleanupInventory());assert.equal(await page.locator('#root-search').evaluate(node=>node.oninput),null);assert.equal(await page.locator('[data-root-list]').evaluate(node=>node.onclick),null);
   console.log('Verified independent full inventory, bounded rows/examples, search focus, type filters and dictionary links:',locale);
  }
+ // Exercise the actual downloaded inventory as well as the bounded synthetic fixture.
+ for(const locale of ['en','ko']){
+  const expected=await page.evaluate(async locale=>{
+   const [{assembleStudy},{renderMorphemeInventory},{lexiconText}]=await Promise.all([import('/js/packages/study.js'),import('/js/shared/morpheme-view.js'),import('/js/shared/lexicon-text.js')]);
+   const catalog=await fetch('/catalog.json').then(r=>r.json()),read=id=>fetch(catalog.find(row=>row.id===id).url).then(r=>r.json());
+   const study=assembleStudy(await read('en-core'),await read('en-'+locale)),host=document.querySelector('main');
+   window.cleanupInventory=renderMorphemeInventory(host,{rows:study.morphemes,words:[],state:{},t:value=>lexiconText(locale,value),locale,tabs:'',bindTabs(){},openWord(){},tags:()=>''});
+   return study.morphemes.length;
+  },locale);
+  assert.ok(expected>1000);assert.equal(Number(await page.locator('[data-root-count]').getAttribute('data-total')),expected);
+  assert.equal(Number(await page.locator('[data-root-count]').getAttribute('data-visible')),expected);
+  const before=await page.locator('[data-morpheme]').count();await page.locator('.word-list-more>button').click();assert.ok(await page.locator('[data-morpheme]').count()>before);
+  await page.locator('#root-search').fill('aud');assert.ok((await page.locator('[data-root-list]').innerText()).includes('audience'));
+  await page.locator('#root-search').fill('');await page.selectOption('[data-root-kind]','root');assert.ok(Number(await page.locator('[data-root-count]').getAttribute('data-visible'))>1000);
+  await page.evaluate(()=>window.cleanupInventory());console.log('Verified real English inventory count, pagination, aud-family search and root-only coverage:',locale,expected);
+ }
  assert.deepEqual(errors,[]);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
