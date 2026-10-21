@@ -62,7 +62,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  }
  function exerciseControls(route){
   if(Object.hasOwn(commonModes,route))return '';
-  const f=state(route),rows=exercises.filter(row=>row.category===route),available=[...new Set(rows.map(row=>row.options?'choice':'input'))];
+  const f=state(route),rows=exercises.filter(row=>row.category===route),available=['choice','input'].filter(mode=>rows.some(row=>(row.options?'choice':'input')===mode));
   if(!available.includes(f.answerMode))f.answerMode=available.includes('choice')?'choice':available[0];
   const kinds=[...new Set(rows.map(row=>row.formKind).filter(Boolean))];
   return `${route==='roots'?rootViewTabs():''}${available.length>1?`<div class="form-mode-controls" role="group" aria-label="${t('Answer Mode')}">${available.map(mode=>`<button data-answer-mode="${mode}" aria-pressed="${f.answerMode===mode}">${t(mode==='choice'?'Selection':'Typing')}</button>`).join('')}</div>`:''}${kinds.length?`<div class="grammar-selectors"><label>${t('Form')}<select data-form-kind><option value="all">${t('All')}</option>${kinds.map(id=>`<option value="${id}" ${f.formKind===id?'selected':''}>${e(formKindLabel(id,locale()))}</option>`).join('')}</select></label></div>`:''}`;
@@ -71,7 +71,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  function bindRootTabs(host){host.querySelectorAll('[data-root-view]').forEach(button=>button.onclick=()=>{state('roots').rootView=button.dataset.rootView;resetQuestion();refresh();});}
  function chooseFeatureQuestion(feature){
   const f=state(feature),list=pool(feature),rows=exercises.filter(row=>row.category===feature&&(f.formKind==='all'||row.formKind===f.formKind));
-  const available=[...new Set(rows.map(row=>row.options?'choice':'input'))];if(!available.includes(f.answerMode))f.answerMode=available.includes('choice')?'choice':available[0];
+  const available=['choice','input'].filter(mode=>rows.some(row=>(row.options?'choice':'input')===mode));if(!available.includes(f.answerMode))f.answerMode=available.includes('choice')?'choice':available[0];
   const row=selectExerciseRow(rows.filter(row=>(row.options?'choice':'input')===f.answerMode),list,{category:feature,previousId:previousQuestionId});
   const q=row&&createExerciseQuestions([row],list,row.route,feature,study.explanationLanguage)[0];return reviewContent.prepare(q?{...q,answerMode:f.answerMode,mode:feature}:undefined);
  }

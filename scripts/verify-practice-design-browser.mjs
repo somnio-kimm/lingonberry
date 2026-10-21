@@ -18,7 +18,7 @@ try{
    await page.setViewportSize({width,height:900});await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;},theme);
    await page.evaluate(()=>window.designRoute('vocabinput'));assert.equal(await page.locator('[data-exercise]').count(),0);
    const baseline=await page.locator('.lexicon-question').evaluate(node=>{const s=getComputedStyle(node),i=getComputedStyle(node.querySelector('input'));return {padding:s.padding,borderRadius:s.borderRadius,font:i.fontSize,align:i.textAlign};});
-   await page.evaluate(route=>window.designRoute(route),language==='ja'?'okurigana':'collocations');const typing=page.locator('[data-answer-mode=input]');if(await typing.count())await typing.click();
+   await page.evaluate(route=>window.designRoute(route),language==='ja'?'okurigana':'collocations');const typing=page.locator('[data-answer-mode=input]');if(await typing.count()){assert.deepEqual(await page.locator('[data-answer-mode]').evaluateAll(nodes=>nodes.map(node=>node.dataset.answerMode)),['choice','input']);await typing.click();}
    const custom=await page.locator('.lexicon-question').evaluate(node=>{const s=getComputedStyle(node),i=getComputedStyle(node.querySelector('input'));return {padding:s.padding,borderRadius:s.borderRadius,font:i.fontSize,align:i.textAlign};});assert.deepEqual(custom,baseline);
    assert.equal(await page.locator('.exercise-picker.panel').count(),0);assert.equal(await page.locator('.vocab-question .vocab-prompt').count(),1);
    assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
