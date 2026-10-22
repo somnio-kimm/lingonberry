@@ -21,7 +21,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design")) else { return }
+        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings")) else { return }
         verificationStarted = true
         verifyPackages(attempt: 0)
     }
@@ -47,6 +47,27 @@ class AppViewController: CAPBridgeViewController {
                   element.dispatchEvent(new Event('change', {bubbles:true}));
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
+                if (settings) {
+                  const original=JSON.parse(localStorage.getItem('learn-language.preferences.v1')||'{}');
+                  const settingsPage=async()=>{document.querySelector('[data-tab=settings]').click();await wait(()=>document.querySelector('#target')&&document.querySelector('main').dataset.viewState==='ready');};
+                  const values=()=>({theme:document.documentElement.dataset.theme,uiLanguage:document.querySelector('#display-language').value,hapticEnabled:document.querySelector('#set-haptic').getAttribute('aria-checked')==='true',autoRemoveResolvedWrongs:document.querySelector('#set-hide-resolved').getAttribute('aria-checked')==='true'});
+                  const open=async(target,explanation)=>{
+                    await settingsPage();select('target',target);
+                    await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('#package-status').dataset.state!=='loading');
+                    const options=[...document.querySelector('#explanation').options].map(option=>option.value).filter(Boolean);
+                    const chosen=options.includes(explanation)?explanation:options.includes('en')?'en':options[0];
+                    if(chosen){select('explanation',chosen);await wait(()=>document.querySelector('#package-status').dataset.state==='ready'&&document.querySelector('main').dataset.viewState==='ready');}
+                  };
+                  await settingsPage();const expected=values(),targets=[...document.querySelector('#target').options].map(option=>option.value).filter(Boolean),checks=[];
+                  if(!targets.length)throw new Error('No installed languages available for the settings check');
+                  for(const target of targets){
+                    await open(target,original.explanation);const actual=values();
+                    if(JSON.stringify(actual)!==JSON.stringify(expected))throw new Error('App settings changed for '+target+': '+JSON.stringify(actual));
+                    checks.push({language:target,settings:actual});
+                  }
+                  await open(original.target||targets[0],original.explanation);
+                  return JSON.stringify({passed:true,checks,restored:original.target||targets[0]});
+                }
                 if (dictation) {
                   const original = JSON.parse(localStorage.getItem('learn-language.preferences.v1') || '{}');
                   const open = async (target, explanation) => {
@@ -204,7 +225,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
+                """, arguments: ["settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                     case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")

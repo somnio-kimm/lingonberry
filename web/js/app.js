@@ -1,3 +1,4 @@
+import {normaliseAppSettings,readAppSettings} from './shared/app-settings.js';
 import {APP_NAME} from './shared/app-config.js';
 import {allowsExplanation} from './shared/language-pairs.js';
 import {createPackageManager} from './packages/manager.js';
@@ -13,16 +14,16 @@ const $=id=>document.getElementById(id),root=$('shell'),main=$('app'),tabs=$('ma
 const settingsKey='learn-language.preferences.v1';
 let saved={};try{saved=JSON.parse(localStorage.getItem(settingsKey)||'{}')||{};}catch{}
 let target=typeof saved.target==='string'?saved.target:'',explanation=typeof saved.explanation==='string'?saved.explanation:'';
-let theme=['light','dark','system'].includes(saved.theme)?saved.theme:'system';
-let explicitUi=['en','ko'].includes(saved.uiLanguage)?saved.uiLanguage:'en';
+let {theme,uiLanguage:explicitUi,hapticEnabled,autoRemoveResolvedWrongs}=readAppSettings(localStorage,saved);
+const sharedSettings=()=>({theme,uiLanguage:explicitUi,hapticEnabled,autoRemoveResolvedWrongs});
 const uiLanguage=()=>explicitUi,label=()=>interfaceText(uiLanguage());
 function languageName(id,bilingual=false){const locale=uiLanguage()==='en'?'en-GB':uiLanguage(),name=new Intl.DisplayNames([bilingual?'en-GB':locale],{type:'language'}).of(id);if(!bilingual)return name;const native=id==='fr'?'Français':new Intl.DisplayNames([id],{type:'language'}).of(id);return native===name?name:`${name} · ${native}`;}
-function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,explanation,theme,uiLanguage:explicitUi}));}catch{}}
+function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,explanation,...sharedSettings()}));}catch{}}
 const manager=createPackageManager({storage:createPackageStorage(),baseUrl:location.href}),presentations=new Map();
 let catalog=[],records=[],current=null,phase='idle',route='home',adapter,cleanup=()=>{},operation=0,drawToken=0;
 let packageTarget='',packageController=null,packageProgress=null,packageMessage='',selectionMessage='';
 const usablePairs=()=>installedPairs(records).filter(item=>presentationDefinitions[item.targetLanguage]&&allowsExplanation(item.targetLanguage,item.explanationLanguage));
-function preferences(value){theme=value.theme;explicitUi=value.uiLanguage;save();}
+function preferences(value){({theme,uiLanguage:explicitUi,hapticEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
 async function presentation(id){if(!presentations.has(id)){const definition=presentationDefinitions[id];if(!definition)throw new Error('Unsupported study language.');const module=await definition.load();presentations.set(id,module.createPresentation({language:id,navigate,refresh:()=>draw(),onPreferences:preferences}));}return presentations.get(id);}
 function navigate(next){if(next!=='packages'&&!adapter?.screens[next])return;if(!current&&!['home','wrong','settings','packages'].includes(next))return;route=next;main.scrollTop=0;draw();window.scrollTo(0,0);}
 function updateChrome(){
@@ -40,7 +41,7 @@ async function draw(){
  const token=++drawToken;main.dataset.viewState='loading';cleanup();cleanup=()=>{};adapter?.stop();
  const next=await presentation(current?.targetLanguage||target||'de');if(token!==drawToken)return;
  if(adapter&&adapter!==next)adapter.setStudy(null);
- adapter=next;adapter.setStudy(current?.targetLanguage===adapter.id?current:null);adapter.setPreferences({theme,uiLanguage:uiLanguage()});
+ adapter=next;adapter.setStudy(current?.targetLanguage===adapter.id?current:null);adapter.setPreferences(sharedSettings());
  for(const style of new Set(Object.values(presentationDefinitions).map(definition=>definition.style)))$(style).disabled=style!==presentationDefinitions[adapter.id].style;
  const layout=presentationDefinitions[adapter.id].layout;root.id=layout.root;main.id=layout.main;tabs.id=layout.tabs;
  if(route!=='packages'&&!adapter.screens[route])route='home';if(route==='home'&&!current)route='settings';updateChrome();

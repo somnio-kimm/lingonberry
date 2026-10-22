@@ -3,7 +3,7 @@ import {advanceMistakeBalance} from './mistake-balance.js';
 export function createLexiconStore(storage,profile){
  const key=`learn-language.${profile.id}.lexicon.v1`;
  let saved;try{saved=JSON.parse(storage.getItem(key));}catch{}
- const fresh=()=>({version:1,wordStatus:{},wrongs:{},contentMigrations:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:true,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true,clozeShowReading:true,scrambleShowReading:true}});
+ const fresh=()=>({version:1,wordStatus:{},wrongs:{},contentMigrations:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:false,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true,clozeShowReading:true,scrambleShowReading:true}});
  const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
  let state=saved?.version===1&&object(saved.wordStatus)&&object(saved.wrongs)&&object(saved.preferences)?{...fresh(),...saved,preferences:{...fresh().preferences,...saved.preferences}}:fresh();
  if(!object(state.contentMigrations))state.contentMigrations={};

@@ -42,3 +42,12 @@ To add Korean, English or Japanese as a study language, add its content adapter 
 The Chinese SRS and wrong-answer history and the German quiz history remain separate adapters. They are not duplicates: they encode different progression and historical grading contracts. A future shared persistence migration should be a separate, versioned data migration with recovery tests. Likewise, language CSS remains intact alongside the existing shared theme; this refactor changes ownership and execution, not the approved visual layout.
 
 Architecture tests ensure every bundled JavaScript module is reachable, all relative imports resolve, shared modules do not depend on language implementations, and the service worker covers the current source. Exercise-policy tests protect noun articles, same-part-of-speech choices, Chinese cloze eligibility and dictation homophones. Browser checks cover both language routes, Settings actions, offline package use and listening progression with deterministic test speech; that mock is not evidence of native audio quality.
+
+
+## App-wide settings
+
+Appearance, Display Language, Haptic Feedback and Auto-Remove from Review are owned by the host's `learn-language.preferences.v1` record. `shared/app-settings.js` supplies validation, defaults and the initial legacy migration. All cached adapters receive the same settings after a change and before a screen is rendered; their existing storage fields are compatibility mirrors for exercise logic. Study levels, word status, saved mistakes and progress remain language-specific.
+
+Haptic feedback defaults off, including when older language records inherited the former on default. An explicit app-wide on/off choice persists through language switches and restarts. If no shared Review-removal choice exists yet, migration retains the currently selected language's choice once; subsequent switches never read another language's old choice back into global Settings. Erasing a language's study data keeps shared settings.
+
+Run `node scripts/verify-shared-settings-browser.mjs` to check all seven languages, explanation switches, reloads, haptic on/off behaviour and progress/level retention on phone/tablet in light/dark themes. The DEBUG-only native `--verify-shared-settings` check compares all installed languages and restores the original study/explanation selection without submitting answers or toggling Review removal.
