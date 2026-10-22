@@ -13,7 +13,7 @@ test('Cloze offers immediate choices and only Next after checking',()=>{
  const checked=render('cloze','wrong');assert.match(checked.html,/data-sentence-next/);assert.doesNotMatch(checked.html,/data-sentence-skip/);assert.match(checked.html,/cloze-option-meaning/);
 });
 test('Scramble separates the three cards, keeps Reset and toggles Japanese readings',()=>{
- const front=render('scramble');assert.equal((front.html.match(/<section class="panel/g)||[]).length,3);assert.match(front.html,/scramble-answer/);assert.match(front.html,/scramble-pool/);assert.match(front.html,/data-sentence-reset/);
+ const front=render('scramble');assert.equal((front.html.match(/<section class="panel/g)||[]).length,3);assert.match(front.html,/scramble-answer/);assert.match(front.html,/scramble-pool/);assert.match(front.html,/<span class="scramble-chip-hanzi">本<\/span>/);assert.match(front.html,/data-sentence-reset/);
  front.handlers.get('[data-sentence-reset]')();front.handlers.get('[data-show-reading]')();assert.deepEqual(front.calls,['reset',false]);
  const checked=render('scramble','correct');assert.match(checked.html,/scramble-answer/);assert.match(checked.html,/scramble-pool/);assert.doesNotMatch(checked.html,/data-sentence-reset/);assert.match(checked.html,/data-sentence-next/);
 });

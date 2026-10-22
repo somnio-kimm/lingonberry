@@ -36,7 +36,7 @@ try{
       assert.equal(await page.locator('.sentence-question .flow-chip').count(),0,language+' tiles outside question');
       const panels=await page.locator('.quiz-after-filter>.panel,.quiz-after-filter>.card').count();assert.equal(panels,3,language+' question/answer/pool cards');
       const reset=page.locator('[data-sentence-reset],#quiz-reset,#clr-btn');assert.equal(await reset.count(),1);value[mode].reset=await measure(page,'[data-sentence-reset],#quiz-reset,#clr-btn');
-      const tile=page.locator('[data-tile],[data-pool],[data-pi]').first();await tile.click();await reset.click();assert.equal(await page.locator('[data-return],[data-chosen],.chosen[data-i]').count(),0);
+      const tile=page.locator('[data-tile],[data-pool],[data-pi]').first();if(language==='ja')assert.equal(await page.locator('[data-tile]').evaluateAll(nodes=>nodes.every(node=>node.children.length===1&&node.firstElementChild.classList.contains('scramble-chip-hanzi'))),true,'Japanese ruby and kana endings share one inline tile label');await tile.click();await reset.click();assert.equal(await page.locator('[data-return],[data-chosen],.chosen[data-i]').count(),0);
      }
     }
     assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth),`${language} ${mode} fits viewport`);
