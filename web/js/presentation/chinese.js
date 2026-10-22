@@ -1,3 +1,4 @@
+import {APP_SETTING_KEYS} from '../shared/app-settings.js';
 import {APP_NAME} from '../shared/app-config.js';
 import {SCREENS} from '../../languages/zh/js/app-definition.js';
 import {createScreenRenderers} from '../shared/screen-renderers.js';
@@ -20,8 +21,8 @@ export function createPresentation({navigate}) {
    reset:async()=>{TTS.stop();for(const key of ['srsById','words','wordsDataVersion','wrong','streak'])localStorage.removeItem('learn-language.zh.'+key);lastStudy=undefined;return false;},
   },
   setStudy(study){if(study===lastStudy)return;lastStudy=study;setPackageWords(study?chineseWords(study):[]);},
-  setPreferences({theme,uiLanguage}){Store.theme=theme;Store.uiLang=uiLanguage;},
-  preferences(){return {theme:Store.theme,uiLanguage:Store.uiLang};},
+  setPreferences(values){for(const key of APP_SETTING_KEYS){const local=key==='uiLanguage'?'uiLang':key;if(Object.hasOwn(values,key)&&Store[local]!==values[key])Store[local]=values[key];}},
+  preferences(){return {theme:Store.theme,uiLanguage:Store.uiLang,hapticEnabled:Store.hapticEnabled,autoRemoveResolvedWrongs:Store.autoRemoveResolvedWrongs};},
   title(route){return route==='home'?APP_NAME:t(SCREENS[route]?.title||'tabHome');},
   tab(route){return t(SCREENS[route].tab);},
   render(route,el){return (renderers[route]||renderers.home)(el);},

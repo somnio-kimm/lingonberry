@@ -19,7 +19,7 @@ export function createStore(storage) {
     theme: ['light','dark','system'].includes(state.preferences?.theme) ? state.preferences.theme : 'system',
     studyLevel: STUDY_LEVEL_IDS.includes(normaliseStudyLevel(state.preferences?.studyLevel)) ? normaliseStudyLevel(state.preferences.studyLevel) : STUDY_LEVEL_IDS[0],
     uiLang: ['en','ko'].includes(state.preferences?.uiLang) ? state.preferences.uiLang : 'en',
-    hapticEnabled: state.preferences?.hapticEnabled !== false,
+    hapticEnabled: state.preferences?.hapticEnabled === true,
     autoRemoveResolvedWrongs: state.preferences?.autoRemoveResolvedWrongs === true,
     clozeShowTranslation: state.preferences?.clozeShowTranslation !== false,
     scrambleShowTranslation: state.preferences?.scrambleShowTranslation !== false,
