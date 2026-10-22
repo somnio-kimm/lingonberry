@@ -36,3 +36,13 @@ test('review counts and progress stay isolated by language and reset is transact
 });
 
 test('English filters use discrete IELTS groups',()=>{assert.equal(matchesStudyLevel({level:'IELTS 7.0–8.0'},'IELTS 4.0–6.5',studyProfiles.en),false);assert.equal(matchesStudyLevel({level:'IELTS 7.0–8.0'},'IELTS 7.0–8.0',studyProfiles.en),true);assert.equal(matchesStudyLevel({level:'IELTS 8.5–9.0'},'all',studyProfiles.en),false);});
+
+
+test('Japanese sentence reading switches persist independently without changing explanation settings',()=>{
+ const data=new Map(),storage={getItem:key=>data.get(key),setItem:(key,value)=>data.set(key,value)};
+ const first=createLexiconStore(storage,studyProfiles.ja);
+ assert.equal(first.state.preferences.clozeShowReading,true);first.preference('clozeShowReading',false);
+ const reopened=createLexiconStore(storage,studyProfiles.ja);
+ assert.equal(reopened.state.preferences.clozeShowReading,false);assert.equal(reopened.state.preferences.scrambleShowReading,true);
+ assert.equal(reopened.state.preferences.clozeShowTranslation,false);assert.deepEqual(reopened.state.wrongs,{});
+});
