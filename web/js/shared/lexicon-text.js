@@ -1,4 +1,6 @@
 const labels={
+ 'Wrong Attempts':'오답 횟수','Wrong Answer':'오답',
+ 'Choose the correct meaning.':'알맞은 뜻을 고르세요.','Type the word for this meaning.':'뜻에 맞는 단어를 입력하세요.','Show Reading':'읽기 표시','Reset':'초기화','Tap words to build the sentence.':'단어를 눌러 문장을 완성하세요.',
  'Dictation mode':'받아쓰기 모드','Families':'계열','Words':'단어','Type':'종류','Root':'어근','Infix':'접요사','Interfix':'연결 형태소','Circumfix':'접환사','Affix':'접사',
  'Question Type':'문제 종류','Standard':'기본 문제','Sentence Gaps':'문장 빈칸','Phrase Type':'표현 종류','Phrasal Verbs':'구동사','Collocations & Phrasal Verbs':'연어·구동사',
  'Selection':'선택','Typing':'입력','Answer Mode':'답변 방식','Browse':'목록','Practice':'문제','All Families':'전체 어근 목록','Selected Study Level':'선택한 학습 레벨','Collocations':'연어',

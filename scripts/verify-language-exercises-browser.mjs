@@ -17,7 +17,7 @@ try{
  await page.locator('#vocab-answer').dispatchEvent('compositionstart');assert.ok(await page.locator('[data-submit]').isDisabled());await page.locator('#vocab-answer').dispatchEvent('compositionend');assert.ok(await page.locator('[data-submit]').isEnabled());
  await page.locator('[data-submit]').click();assert.ok(await page.locator('.lexicon-question.wrong').count());assert.equal(await page.locator('.reading-segment.kanji rt').innerText(),'た');
  await page.evaluate(()=>window.testRoute('wrong'));assert.match(await page.locator('.wrong-card').innerText(),/たべ/);assert.match(await page.locator('.wrong-card').innerText(),/食の|食의/);
- await page.locator('[data-retest]').click();await page.locator('#vocab-answer').fill('た');await page.locator('[data-submit]').click();assert.ok(await page.locator('.lexicon-question.correct').count());await page.locator('[data-next]').click();assert.match(await page.locator('.lexicon-retest-complete').innerText(),/Correct: 1/);
+ await page.locator('[data-retest]').click();await page.locator('#vocab-answer').fill('た');await page.locator('[data-submit]').click();assert.ok(await page.locator('.lexicon-question.correct').count());await page.locator('[data-next]').click();assert.match(await page.locator('.retest-complete').innerText(),/Correct: 1/);
  await page.evaluate(()=>window.testRoute('particles'));await page.locator('[data-option="0"]').click();assert.ok(await page.locator('.lexicon-question.correct').count());
  assert.deepEqual(errors,[]);console.log('Passed: language-specific menu, category filters, hidden readings, IME, corrections, Review, retest and grammar choices.');
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
