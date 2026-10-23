@@ -386,5 +386,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .sentence-quiz-text[lang="ja"] ruby,.scramble-chip[lang="ja"] ruby{ruby-position:over;ruby-align:center}
 .sentence-quiz-text[lang="ja"] rt,.scramble-chip[lang="ja"] rt,.vocab-correction[lang="ja"] rt{font-size:12px;font-weight:600;color:var(--blue)}
 .scramble-answer-label{font-size:13px;color:var(--secondary);margin-bottom:8px}
-.example-sentence[lang="ja"] ruby{ruby-position:over;ruby-align:center}
-.example-sentence[lang="ja"] rt{font-size:12px;font-weight:600;color:var(--blue)}
+/* Native ruby keeps kana on the same baseline and reserves a reading row above every line. */
+.lexicon-view .example-sentence:lang(ja),.lexicon-detail .example-sentence:lang(ja){line-height:2.4;padding-top:4px}
+.example-sentence:lang(ja) ruby{display:revert;ruby-position:over;ruby-align:center;vertical-align:baseline;line-height:inherit;margin:0}
+.example-sentence:lang(ja) rt{display:revert;order:initial;margin:0;min-height:0;font-size:12px;font-weight:600;line-height:1.2;color:var(--blue)}
