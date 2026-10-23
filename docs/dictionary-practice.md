@@ -8,9 +8,8 @@ Japanese and English use the same bundled question renderer, device keyboard, fi
 - Kanji/okurigana boundary questions are generated only for a contiguous kanji group followed by a matching kana suffix. They separately ask for the kanji reading portion or the written ending. They never guess how a multi-kanji group divides internally.
 - On’yomi/kun’yomi use KANJIDIC2's `ja_on`/`ja_kun` attributes. The prompt explicitly asks for a listed character reading, not the reading necessarily used in the linked word. All listed readings are accepted. Kun-reading answers include the ending after a dot; dots/hyphens are omitted in input, while long vowels are preserved. Nanori and search codes are excluded.
 - Historical plain-form transformation data uses source-attested paradigms and individually reviewed class bridges. Kana and written alternatives are accepted. Full causative/causative-passive prompts explicitly request the uncontracted form. Lexical exceptions are withheld by the source compiler; a generic table is not treated as proof that every voice/potential form is a natural learner target.
-- Confusable kanji uses original contextual questions. Their presence at every level is not an exhaustive question bank for every entry.
 
-Collocations, Transitive and Intransitive Verbs, Form Input, Particles and Counters are no longer offered as Japanese Study exercises or included in new practice pools. Existing packages, dictionary information and saved Review questions remain readable. Other study languages retain their Collocations sections.
+Collocations, Transitive and Intransitive Verbs, Form Input, Particles, Counters and Confusable Kanji are no longer offered as Japanese Study exercises or included in new practice pools. Existing packages, dictionary information and saved Review questions remain readable. Other study languages retain their Collocations sections.
 
 ## English
 
