@@ -22,7 +22,7 @@ try{
    if(language==='ja'){
     await mkdir('/private/tmp/japanese-study-menu',{recursive:true});
     for(const width of [390,1024])for(const theme of ['light','dark']){
-     await page.setViewportSize({width,height:900});await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;},theme);await tab(page,'home');
+     await page.setViewportSize({width,height:900});await tab(page,'settings');await page.locator(`[data-theme-choice=${theme}]`).click();await tab(page,'home');assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
      assert.equal(await page.locator('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]').count(),0);
      assert.deepEqual(await page.locator('[data-route]').evaluateAll(nodes=>nodes.slice(0,7).map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']);
      assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.screenshot({path:`/private/tmp/japanese-study-menu/${locale}-${width}-${theme}.png`,fullPage:true});
