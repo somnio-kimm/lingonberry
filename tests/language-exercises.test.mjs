@@ -26,7 +26,7 @@ test('English combines phrase sections while preserving content labels and histo
  const {lexiconText}=await import('../web/js/shared/lexicon-text.js');
  assert.equal(exerciseModes('en').phrasal,undefined);assert.equal(exerciseModes('en').collocations[0],'Collocations & Phrasal Verbs');
  assert.deepEqual(exerciseSectionCategories('en','collocations'),['collocations','phrasal']);assert.deepEqual(exerciseSectionCategories('en','phrasal'),['phrasal']);assert.deepEqual(exerciseSectionCategories('ja','collocations'),['collocations']);
- assert.equal(exerciseModes('ja').collocations[0],'Collocations');assert.equal(exerciseLabel('phrasal','ko'),'구동사');assert.equal(lexiconText('ko',exerciseModes('en').collocations[0]),'연어·구동사');assert.ok(EXERCISE_ROUTES.en.phrasal.includes('vocabinput'));
+ assert.equal(exerciseModes('ja').collocations,undefined);assert.equal(exerciseLabel('phrasal','ko'),'구동사');assert.equal(lexiconText('ko',exerciseModes('en').collocations[0]),'연어·구동사');assert.ok(EXERCISE_ROUTES.en.phrasal.includes('vocabinput'));
  const rows=['collocations','phrasal'].map(category=>({id:category,entryId:'write',route:'vocabinput',category,answer:'write … down'}));
  const section=rows.filter(row=>exerciseSectionCategories('en','collocations').includes(row.category));
  assert.deepEqual(section.flatMap(row=>createExerciseQuestions([row],[{id:'write'}],row.route,row.category,'en')).map(row=>row.category),['collocations','phrasal']);
@@ -39,4 +39,19 @@ test('English Verb Patterns is absent from active menus and pools while historic
  assert.equal(exerciseModes('en').patterns,undefined);assert.ok(EXERCISE_ROUTES.en.patterns.includes('patterns'));
  const rows=prepareLanguageExercises({targetLanguage:'en',explanationLanguage:'en',exercises:[old]},[{id:'promise',lemma:'promise',pos:'verb'}]);
  assert.equal(rows.some(row=>row.category==='patterns'),false);assert.equal(exerciseAnswerCorrect({...old,exercise:true,mode:'patterns'},'to'),true);
+});
+
+
+test('Japanese removes the five requested sections from active menus and pools while keeping historical grading',async()=>{
+ const {exerciseModes,exerciseLabel,EXERCISE_ROUTES}=await import('../web/js/shared/language-exercises.js');
+ const {prepareLanguageExercises}=await import('../web/js/shared/exercise-pools.js');
+ for(const category of ['collocations','transitivity','forms','particles','counters'])assert.equal(exerciseModes('ja')[category],undefined);
+ for(const category of ['reading','onyomi','kunyomi','okurigana','kanji'])assert.ok(exerciseModes('ja')[category],category);
+ for(const language of ['en','ko','es','fr'])assert.ok(exerciseModes(language).collocations,language+' retains collocations');
+ const old=['collocations','transitivity','forms','particles','counters'].map(category=>({id:category,entryId:'open',category,route:'vocabinput',prompt:'Complete the sentence.',answer:'開ける',instruction:'Write the answer.',explanation:'Original explanation.'}));
+ const word={id:'open',lemma:'開ける',pronunciation:'あける',pos:'verb',studyMeaning:'open',collocations:[{id:'open-door',phrase:'ドアを開ける',meaning:'open the door',example:'ドアを開ける。',exampleTranslation:'Open the door.'}]};
+ const rows=prepareLanguageExercises({targetLanguage:'ja',explanationLanguage:'en',exercises:old},[word]);
+ assert.equal(rows.some(row=>['collocations','transitivity','forms','particles','counters'].includes(row.category)),false);
+ for(const row of old)assert.equal(exerciseAnswerCorrect({...row,exercise:true},'開ける'),true);
+ assert.ok(EXERCISE_ROUTES.ja.transitivity);assert.equal(exerciseLabel('transitivity','ko'),'타동사와 자동사');
 });

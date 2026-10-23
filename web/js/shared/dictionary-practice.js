@@ -3,7 +3,7 @@ import {formKindLabel} from './language-exercises.js';
 const adjectiveLabels={adnominal:['Adnominal','관형형'],negative:['Negative','부정형'],past:['Past','과거형'],'past-negative':['Past Negative','과거 부정형'],te:['Te Form','て형'],conditional:['Conditional','조건형'],adverbial:['Adverbial','부사형']};
 /** KANJIDIC dots mark written endings, hyphens mark bound readings. The input is the full reading. */
 export const kanjiAnswer=reading=>normaliseKana(reading.replace(/[.\-]/gu,''));
-export function createDictionaryExercises(study,words){
+export function createDictionaryExercises(study,words,{includeForms=true}={}){
  const data=study?.practiceData;if(data?.version!==1)return [];
  const ko=study.explanationLanguage==='ko',locale=ko?'ko':'en',byId=new Map(words.map(word=>[word.id,word])),result=[];
  if(study.targetLanguage==='ja'){
@@ -19,7 +19,7 @@ export function createDictionaryExercises(study,words){
      explanation:`${literal}: ${raw.join(' / ')}\n${ko?'허용되는 입력':'Accepted answers'}: ${answers.join(' / ')}\n${ko?'점 뒤는 오쿠리가나, 붙임표는 접사로 쓰이는 읽기를 표시합니다. 입력할 때 점과 붙임표는 빼세요.':'A dot separates okurigana; a hyphen marks a bound reading. Omit dots and hyphens when typing.'}`});
    }
   }
-  for(const row of data.forms||[]){const word=byId.get(row.entryId);if(!word)continue;
+  if(includeForms)for(const row of data.forms||[]){const word=byId.get(row.entryId);if(!word)continue;
    for(const group of row.groups){let name=group.formKind==='adjective'?adjectiveLabels[group.subKind][ko?1:0]:formKindLabel(group.formKind,locale),full=['causative','causative-passive'].includes(group.formKind);
     if(group.formKind==='conditional'||group.subKind==='conditional')name=group.answers.some(answer=>/なら(?:ば)?$/u.test(answer))?(ko?'なら 조건형':'Nara Conditional'):(ko?'ば 조건형':'Ba Conditional');
     const potential=group.formKind==='potential';

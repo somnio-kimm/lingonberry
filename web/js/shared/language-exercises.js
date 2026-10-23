@@ -13,9 +13,11 @@ export const EXERCISE_ROUTES=Object.freeze({
 export const exerciseLabel=(id,locale='en')=>EXERCISE_CATEGORIES[id]?.[locale==='ko'?1:0]||id;
 /** Sections may combine content categories without rewriting stored exercise identities. */
 export const exerciseSectionCategories=(language,section)=>language==='en'&&section==='collocations'?['collocations','phrasal']:[section];
+const removedCategories=Object.freeze({en:['articles','confusables','patterns'],ja:['collocations','transitivity','forms','particles','counters']});
+export const isActiveExerciseCategory=(language,category)=>!removedCategories[language]?.includes(category);
 export function exerciseModes(language){
  // Keep the package schema registry above readable for existing downloads and Review history.
- const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])].filter(id=>!(language==='en'&&['articles','confusables','phrasal','patterns'].includes(id)));
+ const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])].filter(id=>isActiveExerciseCategory(language,id)&&!(language==='en'&&id==='phrasal'));
  const icons={reading:'📚',onyomi:'音',kunyomi:'訓',okurigana:'✍️',kanji:'🔎',transitivity:'🔄',forms:'⌨️',particles:'📝',counters:'🔢',collocations:'🔗',phrasal:'🧩',confusables:'🔍',roots:'🌱',patterns:'📝',articles:'🔠'};
  return Object.fromEntries(categories.map(id=>[id,[language==='en'&&id==='collocations'?'Collocations & Phrasal Verbs':exerciseLabel(id),icons[id]||'📝','teal']]));
 }
