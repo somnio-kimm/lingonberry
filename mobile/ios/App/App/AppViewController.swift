@@ -21,7 +21,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings")) else { return }
+        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana")) else { return }
         verificationStarted = true
         verifyPackages(attempt: 0)
     }
@@ -47,6 +47,34 @@ class AppViewController: CAPBridgeViewController {
                   element.dispatchEvent(new Event('change', {bubbles:true}));
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
+                if (furigana) {
+                  const {renderJapaneseRuby}=await import('./js/shared/japanese-furigana.js');
+                  const host=document.createElement('div'),checks=[];host.style.cssText='position:absolute;left:-10000px;top:0';document.body.append(host);
+                  try {
+                    for(const context of ['lexicon-detail','lexicon-view'])for(const width of [260,640]) {
+                      host.className=context;host.style.width=width+'px';
+                      host.innerHTML=`<p class="example-sentence" lang="ja">あ${renderJapaneseRuby('食べる','たべる')}い</p><p class="example-sentence" lang="ja">${('あ'+renderJapaneseRuby('取り扱う','とりあつかう')+'い。').repeat(8)}</p>`;
+                      await document.fonts.ready;
+                      for(const [index,sentence]of [...host.children].entries()) {
+                        const style=getComputedStyle(sentence),line=parseFloat(style.lineHeight),font=parseFloat(style.fontSize),glyphs=[],canvas=document.createElement('canvas').getContext('2d');
+                        const ink=(text,node,box)=>{const s=getComputedStyle(node);canvas.font=`${s.fontWeight} ${s.fontSize} ${s.fontFamily}`;const m=canvas.measureText(text),baseline=box.bottom-m.fontBoundingBoxDescent;return {top:baseline-m.actualBoundingBoxAscent,bottom:baseline+m.actualBoundingBoxDescent};};
+                        const walker=document.createTreeWalker(sentence,NodeFilter.SHOW_TEXT);let text;
+                        while(text=walker.nextNode()) {
+                          if(text.parentElement.closest('rt'))continue;let at=0;
+                          for(const character of text.textContent){const end=at+character.length;if(/[^。]/u.test(character)){const range=document.createRange();range.setStart(text,at);range.setEnd(text,end);const box=range.getBoundingClientRect();glyphs.push({top:box.top,ink:ink(character,text.parentElement,box)});}at=end;}
+                        }
+                        const rows=[];for(const glyph of glyphs){let row=rows.find(row=>Math.abs(row[0].top-glyph.top)<line/2);if(!row){row=[];rows.push(row);}row.push(glyph);}
+                        if(line<font*2.2||(!index&&rows.length!==1)||rows.some(row=>Math.max(...row.map(g=>g.top))-Math.min(...row.map(g=>g.top))>=1))throw new Error('Japanese sentence baseline/reading clearance differs');
+                        for(const rt of sentence.querySelectorAll('rt')) {
+                          const box=rt.getBoundingClientRect(),bounds=ink(rt.textContent,rt,box),base=rt.parentElement.firstChild,baseRange=document.createRange();baseRange.selectNodeContents(base);const baseInk=ink(base.textContent,rt.parentElement,baseRange.getBoundingClientRect());
+                          if(getComputedStyle(rt.parentElement).display.includes('flex')||bounds.bottom>baseInk.top+.5||box.top<sentence.getBoundingClientRect().top-1||!Number.isFinite(bounds.top)||glyphs.some(g=>Math.min(g.ink.bottom,bounds.bottom)-Math.max(g.ink.top,bounds.top)>.5))throw new Error('Japanese furigana overlaps or lacks reserved space: '+JSON.stringify({context,width,index,display:getComputedStyle(rt).display,rubyDisplay:getComputedStyle(rt.parentElement).display,top:box.top,bottom:box.bottom,sentenceTop:sentence.getBoundingClientRect().top,bounds,glyphs}));
+                        }
+                        checks.push({context,width,wrapped:!!index,rows:rows.length,lineHeight:line,fontSize:font});
+                      }
+                    }
+                    return JSON.stringify({passed:true,checks});
+                  }finally{host.remove();}
+                }
                 if (settings) {
                   const original=JSON.parse(localStorage.getItem('learn-language.preferences.v1')||'{}');
                   const settingsPage=async()=>{document.querySelector('[data-tab=settings]').click();await wait(()=>document.querySelector('#target')&&document.querySelector('main').dataset.viewState==='ready');};
@@ -226,7 +254,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
+                """, arguments: ["furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                     case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")
