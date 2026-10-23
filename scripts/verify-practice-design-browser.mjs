@@ -31,7 +31,7 @@ try{
   }
   if(language==='ja'){
    for(const category of ['reading','onyomi','kunyomi','okurigana']){await page.evaluate(route=>window.designRoute(route),category);const selection=page.locator('[data-answer-mode=choice]');if(await selection.count())await selection.click();assert.ok(await page.locator('[data-option]').count()>=3);assert.equal(await page.locator('[data-submit]').count(),0);checks++;}
-   await page.evaluate(()=>window.designRoute('home'));assert.equal(await page.locator('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]').count(),0);checks++;
+   await page.evaluate(()=>window.designRoute('home'));assert.equal(await page.locator('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters],[data-route=kanji]').count(),0);checks++;
   }
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${checks} real-package design/feature checks at phone/tablet widths in both themes.`);
