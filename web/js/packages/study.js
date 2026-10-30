@@ -1,3 +1,4 @@
+import {assembleCollocations} from './collocations.js';
 import {assembleExercises} from './exercises.js';
 import {allowsExplanation} from '../shared/language-pairs.js';
 import {validateDescriptor, validateExplanation, validatePackage} from './schema.js';
@@ -36,7 +37,7 @@ export function assembleStudy(study,explanation){
     ...assembleExercises(study,explanation),
     readingPractice:study.readingPractice,practiceData:study.practiceData,
     retiredEntries:study.retiredEntries||[],reviewInvalidations:study.reviewInvalidations||[],
-    entries: study.entries.map(entry => ({...entry, meaning: meanings.get(entry.id).meaning,meanings:meanings.get(entry.id).meanings,
+    entries: study.entries.map(entry => ({...entry, meaning: meanings.get(entry.id).meaning,meanings:meanings.get(entry.id).meanings,collocations:assembleCollocations(entry,meanings.get(entry.id)),
       ...(entry.additionalExamples?.length?{additionalExamples:entry.additionalExamples.map((example,i)=>({...example,translation:meanings.get(entry.id).additionalExampleTranslations[i]}))}:{}),
       ...(entry.example ? {example: {...entry.example, translation: meanings.get(entry.id).exampleTranslation}} : {})})),
   };

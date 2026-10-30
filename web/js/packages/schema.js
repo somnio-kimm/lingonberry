@@ -1,3 +1,4 @@
+import {validateCollocations,validateCollocationTranslations} from './collocations.js';
 import {validateExercises,validateExerciseTranslations} from './exercises.js';
 import {compareContentVersions} from '../shared/review-content.js';
 export const MAX_PACKAGE_BYTES = 30 * 1024 * 1024;
@@ -94,6 +95,7 @@ export function validatePackage(value, expected) {
       }
     }
   }
+  validateCollocations(value);
   validateExercises(value);
   if (expected) {
     for (const key of ['id', 'kind', 'targetLanguage', 'version', 'explanationLanguage', 'studyVersion']) {
@@ -111,6 +113,7 @@ export function validateExplanation(study, explanation) {
   for (const entry of study.entries) {
     requireValue(meanings.has(entry.id), `missing translation: ${entry.id}`);
     const translated=meanings.get(entry.id);
+    validateCollocationTranslations(entry,translated);
     if (entry.example) text(translated.exampleTranslation, 'missing example translation');
     requireValue((entry.additionalExamples?.length||0)===(translated.additionalExampleTranslations?.length||0),'incomplete additional example translations');
   }
