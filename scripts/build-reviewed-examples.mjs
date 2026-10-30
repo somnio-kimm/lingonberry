@@ -24,7 +24,8 @@ export async function buildReviewedExampleEdition({completion,version,output}){
   [`${source}/ja-completion-ownership.json`,json(completion.ownership)],
   [`${source}/NOTICE.txt`,packages[0].license.notice+'\n']
  ];
- const proof={sourceVersion:completion.core.version,sourceSha256:completion.manifest.sourceSha256,...coverage,files:artifacts.map(([path,bytes])=>({path,bytes:Buffer.byteLength(bytes),sha256:hash(bytes)}))};
+ const sourcePackages=completion.catalog.filter(row=>Object.hasOwn(completion.manifest.sourceSha256,row.id));
+ const proof={sourceVersion:completion.core.version,sourcePackages,sourceSha256:completion.manifest.sourceSha256,...coverage,files:artifacts.map(([path,bytes])=>({path,bytes:Buffer.byteLength(bytes),sha256:hash(bytes)}))};
  packages[0].contentReview.completionReview={status:'AI-editorial-checked',nativeSpeakerReview:'pending',...proof};
  const buildReport=json({version,...proof});artifacts.push([`${source}/ja-completion-report.json`,buildReport]);
  for(const [path,bytes]of artifacts)await checkImmutable(join(output,path),bytes);

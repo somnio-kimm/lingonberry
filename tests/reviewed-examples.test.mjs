@@ -110,7 +110,11 @@ test('equivalent corrections require a reading and credited evidence',()=>{
 test('the preview builder writes reproducible package descriptors and exact review/source artifacts',async()=>{
  const output=await mkdtemp(join(tmpdir(),'lingonberry-reviewed-preview-'));
  try{
-  const completion={...fixture(),manifest:{sourceSha256:{'ja-core':'source-core','ja-en':'source-en','ja-ko':'source-ko'}},catalog:['ja-core','ja-en','ja-ko'].map(id=>({id}))};
+  const completion=fixture();
+  completion.catalog=[completion.core,...completion.pairs].map(pack=>{
+   const bytes=Buffer.from(JSON.stringify(pack));return {id:pack.id,kind:pack.kind,targetLanguage:'ja',version:pack.version,url:`/language-packages/${pack.id}-${pack.version}.json`,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};
+  });
+  completion.manifest={sourceSha256:Object.fromEntries(completion.catalog.map(row=>[row.id,row.sha256]))};
   const result=await buildReviewedExampleEdition({completion,version:'4.4.0',output});
   const catalog=JSON.parse(await readFile(join(output,'language-packages/catalog.json'),'utf8'));
   for(const descriptor of catalog){const bytes=await readFile(join(output,descriptor.url));assert.equal(descriptor.bytes,bytes.length);assert.equal(descriptor.sha256,createHash('sha256').update(bytes).digest('hex'));}
@@ -118,6 +122,7 @@ test('the preview builder writes reproducible package descriptors and exact revi
   const reviewFile=join(output,'language-packages/sources/examples/editions/4.4.0/ja-completion-reviews.jsonl');
   assert.deepEqual(JSON.parse((await readFile(reviewFile,'utf8')).trim()),completion.reviews[0]);
   assert.equal(result.fullCoverage,true);assert.equal(result.files.length,5);
+  assert.deepEqual(result.sourcePackages,completion.catalog);
   assert.match(await readFile(join(output,'language-packages/sources/examples/editions/4.4.0/NOTICE.txt'),'utf8'),/Lingonberry contributors/);
   await buildReviewedExampleEdition({completion,version:'4.4.0',output});
   completion.authored[0].en='I walk elsewhere every morning.';completion.reviews[0].recordSha256=exampleDigest(completion.authored[0]);
