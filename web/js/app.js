@@ -16,7 +16,7 @@ let target=typeof saved.target==='string'?saved.target:'',explanation=typeof sav
 let theme=['light','dark','system'].includes(saved.theme)?saved.theme:'system';
 let explicitUi=['en','ko'].includes(saved.uiLanguage)?saved.uiLanguage:'en';
 const uiLanguage=()=>explicitUi,label=()=>interfaceText(uiLanguage());
-function languageName(id,bilingual=false){const locale=uiLanguage()==='en'?'en-GB':uiLanguage(),name=new Intl.DisplayNames([bilingual?'en-GB':locale],{type:'language'}).of(id);if(!bilingual)return name;const native=new Intl.DisplayNames([id],{type:'language'}).of(id);return native===name?name:`${name} · ${native}`;}
+function languageName(id,bilingual=false){const locale=uiLanguage()==='en'?'en-GB':uiLanguage(),name=new Intl.DisplayNames([bilingual?'en-GB':locale],{type:'language'}).of(id);if(!bilingual)return name;const native=id==='fr'?'Français':new Intl.DisplayNames([id],{type:'language'}).of(id);return native===name?name:`${name} · ${native}`;}
 function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,explanation,theme,uiLanguage:explicitUi}));}catch{}}
 const manager=createPackageManager({storage:createPackageStorage(),baseUrl:location.href}),presentations=new Map();
 let catalog=[],records=[],current=null,phase='idle',route='home',adapter,cleanup=()=>{},operation=0,drawToken=0;
