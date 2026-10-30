@@ -1,3 +1,4 @@
+import {japaneseReadingPrompt} from './japanese-reading-prompt.js';
 import {isActiveExerciseCategory} from './language-exercises.js';
 import {createRootPractice} from './root-practice.js';
 import {collocationExercises} from './collocations.js';
@@ -13,7 +14,8 @@ export function prepareLanguageExercises(study,words){
   if(japanese&&row.category==='okurigana'&&row.boundaryKind!=='spelling'){
    if(converted.has(row.entryId))continue;converted.add(row.entryId);const word=byId.get(row.entryId);
    const replacement=word&&createOkuriganaSpellingQuestion(word,study.explanationLanguage,spellingData);if(replacement)curated.push(replacement);
-  }else curated.push(row);
+  }else if(japanese&&row.category==='reading'&&byId.has(row.entryId))curated.push({...row,...japaneseReadingPrompt(byId.get(row.entryId),row.prompt)});
+  else curated.push(row);
  }
  const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.collocationId||'',row.rootFamilyId||'',row.boundaryKind||'reading'].join(':');
  const covered=new Set(curated.map(key));

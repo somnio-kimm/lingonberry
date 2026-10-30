@@ -1,3 +1,4 @@
+import {japaneseReadingPrompt} from './japanese-reading-prompt.js';
 /** Dictionary-driven readings; never infer on/kun labels or split a compound's kanji. */
 export const normaliseKana=value=>String(value||'').normalize('NFKC').replace(/[ァ-ヶ]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
 const kana=/^[ぁ-ゖー]+$/u;
@@ -42,9 +43,9 @@ export function createJapaneseReadingExercises(words,locale,policy,spellingData=
  for(const word of words){
   if(excluded.has(word.lemma)||bySpelling.get(word.lemma).size>1&&!variants.has(word.id))continue;
   const readings=[...new Set([...japaneseReadings(word),...(variants.get(word.id)||[]).map(normaliseKana)])];if(!readings.length||!/[\p{Script=Han}]/u.test(word.lemma))continue;
-  const example=word.examples?.find(item=>item.text?.includes(word.lemma)&&!normaliseKana(item.text).includes(readings[0]));
+  const example=word.examples?.map(item=>item.text&&!normaliseKana(item.text).includes(readings[0])?japaneseReadingPrompt(word,item.text):undefined).find(item=>item&&item.prompt!==word.lemma);
   const context=normaliseKana(word.studyMeaning).includes(readings[0])?'':word.studyMeaning;
-  rows.push({id:`reading-${word.id}`,entryId:word.id,route:'vocabinput',category:'reading',context,prompt:example?`${word.lemma}\n${example.text}`:word.lemma,answer:readings[0],acceptedAnswers:readings.slice(1),instruction:ko?'표시된 단어 전체의 읽기를 히라가나로 입력하세요.':'Type the reading of the complete displayed word in hiragana.',explanation:`${word.lemma} → ${readings.join(' / ')}\n${word.studyMeaning||''}`});
+  rows.push({id:`reading-${word.id}`,entryId:word.id,route:'vocabinput',category:'reading',context,...(example||japaneseReadingPrompt(word,word.lemma)),answer:readings[0],acceptedAnswers:readings.slice(1),instruction:ko?'밑줄 친 단어의 읽기를 히라가나로 입력하세요.':'Type the reading of the underlined word in hiragana.',explanation:`${word.lemma} → ${readings.join(' / ')}\n${word.studyMeaning||''}`});
   const spelling=createOkuriganaSpellingQuestion(word,locale,spellingData);if(spelling)rows.push(spelling);
  }
  return rows;
