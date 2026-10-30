@@ -35,6 +35,8 @@ node scripts/audit-reviewed-examples.mjs local-data/japanese-example-completion/
 
 The audit reports drafted, independently reviewed, missing, stale and unresolved records separately. It writes `audit.json` inside that local workspace; it neither publishes packages nor resumes the old generation queue. Only closed numbered batches are collected. A revised sentence or translation needs a fresh independent review. The completion gate refuses stale source senses, self-review, hidden coverage gaps or open findings. Hashes verify which text was reviewed; they cannot establish linguistic correctness by themselves.
 
+Capture the exact paired record/source snapshot and its hashes before reading; write verdicts from that snapshot so a concurrent author repair cannot receive a pass for text the reviewer never saw. A pass for unchanged text resolves an earlier finding only with `resolves: [SHA256_OF_FINDING_REVIEW_ROW]` and explanatory notes from the same reviewer. File ordering alone never clears a finding. A changed sentence receives its own new record hash and fresh review instead.
+
 After every author and reviewer has finished, build the new immutable preview:
 
 ```sh

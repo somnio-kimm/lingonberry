@@ -34,6 +34,19 @@ function headwordCorrection(record,entry){
  for(const link of evidence){const url=new URL(link);if(url.protocol!=='https:'||url.username||url.password)throw new Error('Invalid correction evidence URL: '+record.id);}
  return correction;
 }
+function resolveReviewGroup(rows){
+ const findings=new Map(rows.filter(row=>row.verdict!=='pass').map(row=>[exampleDigest(row),row])),resolved=new Set();
+ for(const row of rows){
+  if(row.resolves===undefined)continue;
+  if(row.verdict!=='pass'||!Array.isArray(row.resolves)||!row.resolves.length||!row.notes.some(note=>typeof note==='string'&&note.trim()))throw new Error('Finding resolution requires a pass and explanation: '+row.id);
+  for(const digest of row.resolves){
+   if(!findings.has(digest))throw new Error('Unknown finding resolution: '+row.id);
+   resolved.add(digest);
+  }
+ }
+ // File names and array order cannot erase an unresolved semantic finding.
+ return [...findings].find(([digest])=>!resolved.has(digest))?.[1]||rows.find(row=>row.verdict==='pass');
+}
 /** Structural checks verify review evidence, not linguistic correctness itself. */
 export function auditReviewedExamples({core,pairs,inputs,ownership,authored,reviews}){
  if(core.targetLanguage!=='ja')throw new Error('This completion gate expects Japanese content');
@@ -61,17 +74,19 @@ export function auditReviewedExamples({core,pairs,inputs,ownership,authored,revi
   if(record.provenance.kind==='app-authored'&&!record.provenance.creator?.trim())throw new Error('Missing original creator: '+record.id);
   hashes.set(record.id,{recordSha256:exampleDigest(record),sourceBindingSha256:exampleDigest(exampleSourceBinding(source.get(record.id)))});
  }
- const latest=new Map();let staleReviews=0;
+ const reviewGroups=new Map();let staleReviews=0;
  for(const review of reviews){
   if(!source.has(review.id))throw new Error('Review outside completion scope: '+review.id);
   if(!['pass','revise','uncertain'].includes(review.verdict)||!Array.isArray(review.notes)||typeof review.reviewer!=='string'||!review.reviewer.trim())throw new Error('Invalid semantic review: '+review.id);
   if(review.reviewer===ownership[review.id])throw new Error('Independent review required: '+review.id);
   const hashesForRecord=hashes.get(review.id);
   if(!hashesForRecord||review.recordSha256!==hashesForRecord.recordSha256||review.sourceBindingSha256!==hashesForRecord.sourceBindingSha256){staleReviews++;continue;}
-  const key=JSON.stringify([review.id,review.reviewer]);latest.set(key,review);
+  const key=JSON.stringify([review.id,review.reviewer]);
+  if(!reviewGroups.has(key))reviewGroups.set(key,[]);reviewGroups.get(key).push(review);
  }
  const currentById=new Map();
- for(const review of latest.values()){
+ for(const group of reviewGroups.values()){
+  const review=resolveReviewGroup(group);
   if(!currentById.has(review.id))currentById.set(review.id,[]);
   currentById.get(review.id).push(review);
  }

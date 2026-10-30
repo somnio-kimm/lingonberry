@@ -60,9 +60,15 @@ test('a changed source hash, missing review or unresolved finding blocks publica
   const args=fixture();change(args);assert.equal(auditReviewedExamples(args).fullCoverage,false);assert.throws(()=>compileReviewedExamples(args),/not ready/);
  }
 });
-test('a fresh pass can replace the same reviewer’s finding, but another open finding cannot be hidden',()=>{
- const args=fixture();args.reviews.unshift({...args.reviews[0],verdict:'revise'});assert.equal(auditReviewedExamples(args).fullCoverage,true);
- args.reviews.push({...args.reviews[0],reviewer:'root',verdict:'uncertain'});assert.deepEqual(auditReviewedExamples(args).findings,['walk']);
+test('a pass must explicitly resolve the same reviewer’s finding, independent of file order',()=>{
+ const args=fixture();args.reviews.unshift({...args.reviews[0],verdict:'revise'});assert.equal(auditReviewedExamples(args).fullCoverage,false);
+ args.reviews[1]={...args.reviews[1],resolves:[exampleDigest(args.reviews[0])],notes:['Re-read the exact current record and confirmed the earlier concern was mistaken.']};
+ assert.equal(auditReviewedExamples(args).fullCoverage,true);args.reviews.reverse();assert.equal(auditReviewedExamples(args).fullCoverage,true);
+ const {resolves,...unresolved}=args.reviews[0];args.reviews.push({...unresolved,reviewer:'root',verdict:'uncertain'});assert.deepEqual(auditReviewedExamples(args).findings,['walk']);
+});
+test('finding resolution cannot refer to an unknown finding or omit the reviewer’s explanation',()=>{
+ const args=fixture();args.reviews[0].resolves=['0'.repeat(64)];args.reviews[0].notes=['Checked again'];assert.throws(()=>auditReviewedExamples(args),/Unknown finding/);
+ args.reviews[0].notes=[];assert.throws(()=>auditReviewedExamples(args),/requires a pass and explanation/);
 });
 test('partial drafting is reported without pretending to have full coverage',()=>{
  const args=fixture();args.authored=[];args.reviews=[];
