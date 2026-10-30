@@ -55,7 +55,7 @@ class AppViewController: CAPBridgeViewController {
                     const study=assembleStudy(await storage.get('ja-core',pair.studyVersion),await storage.get(pair.id,pair.version)),words=studyWords(study),word=words.find(row=>row.lemma==='久しい'),rows=prepareLanguageExercises(study,words);
                     if(readingTarget) {
                       const school=words.find(row=>row.lemma==='学校'),question=rows.find(row=>row.entryId===school?.id&&row.category==='reading'&&row.route==='vocabmeaning');
-                      if(!question||question.answer!=='がっこう'||question.prompt.split('学校').length!==2||question.prompt.startsWith('学校\n'))throw new Error('Reading target repeats the headword');
+                      if(!question||question.answer!=='がっこう'||question.prompt.split('学校').length!==2||question.prompt.startsWith('学校'+String.fromCharCode(10)))throw new Error('Reading target repeats the headword');
                       if(exerciseLabel('reading','ko')!=='한자 읽기'||exerciseLabel('okurigana','ko')!=='오쿠리가나')throw new Error('Korean reading labels differ');
                       for(const display of ['en','ko']) {
                         const host=document.createElement('div');host.className='lexicon-view';host.style.cssText='position:absolute;left:-10000px;top:0;width:300px';host.innerHTML=renderExercisePrompt({...question,word:school},{uiLanguage:display});document.body.append(host);
