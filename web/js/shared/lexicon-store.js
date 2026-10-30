@@ -1,3 +1,4 @@
+import {advanceMistakeBalance} from './mistake-balance.js';
 /** Small language-neutral progress store for the additional vocabulary presentations. */
 export function createLexiconStore(storage,profile){
  const key=`learn-language.${profile.id}.lexicon.v1`;
@@ -30,8 +31,8 @@ export function createLexiconStore(storage,profile){
   },
   record(question,input,correct,retest=false){
    const id=[question.mode,question.id,question.locale,...(question.reviewRevision?[question.reviewRevision]:[])].join(':');
-   if(!correct){const old=state.wrongs[id];state.wrongs[id]={id,question:JSON.parse(JSON.stringify(question)),input,count:(old?.count||0)+1};}
-   else if(retest&&state.wrongs[id]){state.wrongs[id].count=Math.max(0,state.wrongs[id].count-1);if(!state.wrongs[id].count&&state.preferences.autoRemoveResolvedWrongs)delete state.wrongs[id];}
+   if(!correct){const old=state.wrongs[id];state.wrongs[id]={id,question:JSON.parse(JSON.stringify(question)),input,count:advanceMistakeBalance(old?.count||0,{correct:false})};}
+   else if(retest&&state.wrongs[id]){state.wrongs[id].count=advanceMistakeBalance(state.wrongs[id].count,{correct:true});if(!state.wrongs[id].count&&state.preferences.autoRemoveResolvedWrongs)delete state.wrongs[id];}
    save();
   },
   removeWrong(id){delete state.wrongs[id];save();},
