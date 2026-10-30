@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {bindTypingAnswer} from '../web/js/shared/typing-answer.js';
+import {bindTypingAnswer,bindTypingAnswers} from '../web/js/shared/typing-answer.js';
 function fixture(){
  const field=new EventTarget(),button=new EventTarget(),changes=[],answers=[];
  Object.assign(field,{value:'',isConnected:true});button.disabled=true;
@@ -28,4 +28,15 @@ test('external audio readiness and stale fields gate both click and Enter',()=>{
 });
 test('cleanup removes all handlers, including button submission',()=>{
  const f=fixture();f.field.value='answer';f.binding.destroy();f.send(f.field,'input');f.send(f.button,'click');f.send(f.field,'keydown',{key:'Enter'});assert.deepEqual(f.answers,[]);assert.deepEqual(f.changes,[]);
+});
+test('separate gaps require every answer, advance with Enter and respect IME composition',()=>{
+ const fields=[new EventTarget(),new EventTarget()],button=new EventTarget(),answers=[];let focused=-1;
+ fields.forEach((field,index)=>Object.assign(field,{value:'',isConnected:true,focus:()=>{focused=index;}}));
+ const binding=bindTypingAnswers(fields,{button,onChange(){},onSubmit:values=>answers.push(values)});
+ const send=(target,type,properties={})=>{const event=new Event(type,{cancelable:true});Object.assign(event,properties);target.dispatchEvent(event);};
+ fields[0].value='write';send(fields[0],'input');assert.equal(button.disabled,true);send(fields[0],'keydown',{key:'Enter'});assert.equal(focused,1);assert.deepEqual(answers,[]);
+ fields[1].value='down';send(fields[1],'compositionstart');send(fields[1],'input');send(button,'click');assert.equal(button.disabled,true);assert.deepEqual(answers,[]);
+ send(fields[1],'keydown',{key:'Enter',isComposing:true});send(fields[1],'compositionend');assert.equal(button.disabled,false);
+ send(fields[1],'keydown',{key:'Enter'});assert.deepEqual(answers,[['write','down']]);
+ binding.destroy();send(button,'click');assert.equal(answers.length,1);
 });

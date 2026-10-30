@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "from": "4.6.0",
+  "to": "4.7.0",
+  "sourcePackages": [
+    {
+      "path": "language-packages/en-core-4.6.0.json",
+      "sha256": "1256a511b47ebafb48ef0ea334b40063a5a7160ca71b45d68614aa0f410110bf"
+    },
+    {
+      "path": "language-packages/en-en-4.6.0.json",
+      "sha256": "4541164c89a72ce4ff408118e933700128d9215e95ab1cbd92aa7ade203b9efe"
+    },
+    {
+      "path": "language-packages/en-ko-4.6.0.json",
+      "sha256": "2e59779ac67691fb887c1b0a7ac8d6ecfdab103f1c2a25cdff24bb66dfffa4c5"
+    },
+    {
+      "path": "language-packages/sources/exercises/phrase-gaps.json",
+      "sha256": "72d9c1efcb99b8f2d7b75d2024afc0556f2e857d76f1a7d0a24f1b97f41079b0"
+    }
+  ]
+}
