@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {mkdtemp,readFile,rm,access} from 'node:fs/promises';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+import {createHash} from 'node:crypto';
 import {exampleDigest,exampleSourceBinding,auditReviewedExamples,compileReviewedExamples} from '../scripts/content/reviewed-examples.mjs';
+import {buildReviewedExampleEdition} from '../scripts/build-reviewed-examples.mjs';
 
 function fixture(){
  const license={identifier:'CC-BY-SA-4.0',notice:'Credited original dictionary.',links:[]};
@@ -101,4 +106,26 @@ test('equivalent corrections require a reading and credited evidence',()=>{
  for(const change of [args=>delete args.authored[0].headwordCorrection.pronunciation,args=>args.authored[0].headwordCorrection.provenance.evidenceUrls=[],args=>args.authored[0].headwordCorrection.provenance.evidenceUrls=['http://example.com']]){
   const args=correctEquivalent(fixture());change(args);assert.throws(()=>auditReviewedExamples(args),/required|evidence URL/);
  }
+});
+test('the preview builder writes reproducible package descriptors and exact review/source artifacts',async()=>{
+ const output=await mkdtemp(join(tmpdir(),'lingonberry-reviewed-preview-'));
+ try{
+  const completion={...fixture(),manifest:{sourceSha256:{'ja-core':'source-core','ja-en':'source-en','ja-ko':'source-ko'}},catalog:['ja-core','ja-en','ja-ko'].map(id=>({id}))};
+  const result=await buildReviewedExampleEdition({completion,version:'4.4.0',output});
+  const catalog=JSON.parse(await readFile(join(output,'language-packages/catalog.json'),'utf8'));
+  for(const descriptor of catalog){const bytes=await readFile(join(output,descriptor.url));assert.equal(descriptor.bytes,bytes.length);assert.equal(descriptor.sha256,createHash('sha256').update(bytes).digest('hex'));}
+  assert.deepEqual(JSON.parse(await readFile(join(output,'web/catalog.json'),'utf8')),catalog);
+  const reviewFile=join(output,'language-packages/sources/examples/editions/4.4.0/ja-completion-reviews.jsonl');
+  assert.deepEqual(JSON.parse((await readFile(reviewFile,'utf8')).trim()),completion.reviews[0]);
+  assert.equal(result.fullCoverage,true);assert.equal(result.files.length,5);
+  assert.match(await readFile(join(output,'language-packages/sources/examples/editions/4.4.0/NOTICE.txt'),'utf8'),/Lingonberry contributors/);
+  await buildReviewedExampleEdition({completion,version:'4.4.0',output});
+  completion.authored[0].en='I walk elsewhere every morning.';completion.reviews[0].recordSha256=exampleDigest(completion.authored[0]);
+  await assert.rejects(buildReviewedExampleEdition({completion,version:'4.4.0',output}),/Refusing to overwrite/);
+ }finally{await rm(output,{recursive:true,force:true});}
+});
+test('the preview builder refuses incomplete review before writing any output',async()=>{
+ const directory=await mkdtemp(join(tmpdir(),'lingonberry-reviewed-incomplete-')),output=join(directory,'unpublished');
+ try{const completion=fixture();completion.reviews=[];await assert.rejects(buildReviewedExampleEdition({completion,version:'4.4.0',output}),/unreviewed/);await assert.rejects(access(output),{code:'ENOENT'});}
+ finally{await rm(directory,{recursive:true,force:true});}
 });
