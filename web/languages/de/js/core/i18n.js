@@ -1,5 +1,6 @@
 let locale='en';
 const ko={
+ 'Collocations':'연어',
  'Grammatical number':'단수 / 복수','Answer':'답변','Article selection':'관사 선택','Form input':'형태 입력','Original word':'원형 단어','Type the requested form.':'제시된 조건에 맞는 형태를 입력하세요.',
  'Submit':'제출','Next':'다음','Wrong answer':'오답',
  'Type the noun with its article.':'관사와 함께 명사를 입력하세요.',

@@ -47,6 +47,10 @@ export const SCREENS = Object.freeze({
     load: () => import('./quizzes/flashcard.js'),
     view: 'renderFlashcard',
   },
+  collocations: {
+    title: 'mode_collocations', icon:'🔗',tileColor:'teal',menu:true,quiz:true,
+    load:()=>import('./quizzes/vocabulary-tests.js'),view:'renderCollocationPractice',
+  },
   vocabinput: {
     title: "mode_vocabinput",
     icon: "✍️",

@@ -1,13 +1,14 @@
+import {createRootPractice} from './root-practice.js';
 import {collocationExercises} from './collocations.js';
 import {createReadingChoices} from './reading-choices.js';
 import {createDictionaryExercises} from './dictionary-practice.js';
 import {createJapaneseReadingExercises} from './japanese-reading.js';
 /** Build per-study data once. Curated questions take precedence over generic reading prompts. */
 export function prepareLanguageExercises(study,words){
- const curated=study?.exercises||[];
- const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.collocationId||'',row.boundaryKind||'reading'].join(':');
+ const curated=(study?.exercises||[]).filter(row=>!(study?.targetLanguage==='en'&&row.category==='articles'));
+ const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.collocationId||'',row.rootFamilyId||'',row.boundaryKind||'reading'].join(':');
  const covered=new Set(curated.map(key));
- const generated=[...collocationExercises(words,study?.explanationLanguage),...createDictionaryExercises(study,words),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice):[])];
+ const generated=[...collocationExercises(words,study?.explanationLanguage),...createRootPractice(study,words),...(study?.targetLanguage==='ja'?createDictionaryExercises(study,words):[]),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice):[])];
  const rows=[...curated,...generated.filter(row=>!covered.has(key(row)))];
  return study?.targetLanguage==='ja'?[...rows,...createReadingChoices(rows,words,study.explanationLanguage)]:rows;
 }
@@ -20,7 +21,7 @@ export function countExerciseTypes(exercises,words,route,formKind='all'){
 /** Select lightweight source rows first; materialise only the question shown on screen. */
 export function selectExerciseRow(exercises,words,{route,category='all',formKind='all',previousId,includeVocabulary=false,random=Math.random}){
  const ids=new Set(words.map(word=>word.id)),groups=new Map();
- for(const row of exercises){if(row.route!==route||!ids.has(row.entryId)||(category!=='all'&&row.category!==category)||(formKind!=='all'&&row.formKind!==formKind))continue;const key=category==='all'&&route.startsWith('vocab')?row.category:'exercise';const group=groups.get(key)||[];group.push(row);groups.set(key,group);}
+ for(const row of exercises){if(route&&row.route!==route||!ids.has(row.entryId)||(category!=='all'&&row.category!==category)||(formKind!=='all'&&row.formKind!==formKind))continue;const key=category==='all'&&route?.startsWith('vocab')?row.category:'exercise';const group=groups.get(key)||[];group.push(row);groups.set(key,group);}
  if(includeVocabulary)groups.set('vocabulary',[null]);
  const values=[...groups.values()];if(!values.length)return undefined;const group=values[Math.floor(random()*values.length)];
  const available=group.length>1?group.filter(row=>row?.id!==previousId):group;
