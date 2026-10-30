@@ -6,6 +6,7 @@ import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
 import {exampleDigest,exampleSourceBinding,auditReviewedExamples,compileReviewedExamples} from '../scripts/content/reviewed-examples.mjs';
 import {buildReviewedExampleEdition} from '../scripts/build-reviewed-examples.mjs';
+import {createReviewContentPolicy} from '../web/js/shared/review-content.js';
 
 function fixture(){
  const license={identifier:'CC-BY-SA-4.0',notice:'Credited original dictionary.',links:[]};
@@ -87,11 +88,18 @@ function correctEquivalent(args){
  return args;
 }
 test('a reviewed equivalent correction preserves the person concept, translations and progress ID',()=>{
- const args=correctEquivalent(fixture()),{packages}=compileReviewedExamples(args);
+ const args=correctEquivalent(fixture());args.core.reviewInvalidations=[{id:'walk',minimumVersion:'4.0.0'}];
+ const {packages}=compileReviewedExamples(args);
  assert.equal(packages[0].entries[0].id,'walk');assert.equal(packages[0].entries[0].word,'再犯者');assert.equal(packages[0].entries[0].pronunciation,'さいはんしゃ');
  assert.equal(packages[1].entries[0].meaning,'repeat offender');assert.equal(packages[2].entries[0].meaning,'재범자');
  assert.equal(packages[0].entries[0].example.provenance.editorialReview.recordSha256,args.reviews[0].recordSha256);
  assert.deepEqual(packages[0].entries[0].editorialCorrection.provenance.evidenceUrls,args.authored[0].headwordCorrection.provenance.evidenceUrls);
+ const policy=createReviewContentPolicy({studyVersion:'4.4.0',reviewInvalidations:packages[0].reviewInvalidations}),oldQuestion={word:{id:'walk'},contentVersion:'4.3.0'};
+ assert.equal(policy.isCurrent(oldQuestion),false);assert.equal(policy.isCurrent(policy.prepare(oldQuestion)),true);
+ assert.equal(args.core.reviewInvalidations[0].minimumVersion,'4.0.0');
+});
+test('example completion cannot downgrade a content edition',()=>{
+ for(const version of ['4.3.0','4.2.0','invalid'])assert.throws(()=>compileReviewedExamples({...fixture(),version}),/newer immutable version/);
 });
 test('a modified correction proposal needs a new independent review',()=>{
  const args=correctEquivalent(fixture());args.authored[0].headwordCorrection.pronunciation='modified';

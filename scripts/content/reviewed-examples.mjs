@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {validateExampleRecord,validateCorrection} from './example-records.mjs';
 import {compileExamples} from './compile-examples.mjs';
+import {compareContentVersions} from '../../web/js/shared/review-content.js';
 
 const bindingFields=['id','word','reading','partOfSpeech','level','meaningEn','meaningKo'];
 function canonical(value){
@@ -87,6 +88,7 @@ export function auditReviewedExamples({core,pairs,inputs,ownership,authored,revi
 
 /** Fill missing examples with explicitly reviewed equivalents; never reapply old sense corrections. */
 export function compileReviewedExamples({core,pairs,inputs,ownership,authored,reviews,version}){
+ if(compareContentVersions(version,core.version)<=0)throw new Error('Example completion requires a newer immutable version');
  const report=auditReviewedExamples({core,pairs,inputs,ownership,authored,reviews});
  if(!report.fullCoverage)throw new Error(`Example completion is not ready: ${report.missingIds.length} missing, ${report.unreviewedIds.length} unreviewed, ${report.findings.length} unresolved`);
  const bindings=new Map(inputs.map(row=>[row.id,exampleDigest(exampleSourceBinding(row))]));
@@ -98,6 +100,11 @@ export function compileReviewedExamples({core,pairs,inputs,ownership,authored,re
  const corrected=new Map(corrections.map(row=>[row.id,row]));
  const checked=authored.map(record=>({...record,provenance:{...record.provenance,review:'AI-editorial-checked; native-speaker-review-pending',editorialReview:{status:'checked',nativeSpeakerReview:'pending',recordSha256:exampleDigest(record),sourceBindingSha256:bindings.get(record.id),reviewers:report.evidence.get(record.id).map(row=>row.reviewer).sort()}}}));
  const packages=compileExamples({core,pairs,authored:checked,corrections,version});
+ if(corrections.length){
+  const invalidations=new Map((core.reviewInvalidations||[]).map(row=>[row.id,row.minimumVersion]));
+  for(const correction of corrections)invalidations.set(correction.id,version);
+  packages[0].reviewInvalidations=[...invalidations].map(([id,minimumVersion])=>({id,minimumVersion}));
+ }
  const before=new Map(core.entries.map(row=>[row.id,row]));
  for(const row of packages[0].entries){
   const old=before.get(row.id),{example,exampleStatus,...unchanged}=row,{example:oldExample,exampleStatus:oldStatus,...oldUnchanged}=old;
