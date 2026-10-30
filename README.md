@@ -40,3 +40,5 @@ The 3.0.0 editorial preview contains 54,097 entries across Japanese JLPT N5–N1
 Japanese 4.2 extends source-backed character readings to all 2,575 kanji in the dictionary and plain-form practice to all 1,402 verbs/adjectives. English 4.3 adds broad noun countability and searchable historical-source families. Both include additional original exercises across every study level, while contextual grammar and collocation banks remain curated. See [dictionary-backed practice, licensing and coverage](docs/dictionary-practice.md) for the distinction between supported entries and remaining editorial gaps.
 
 The requested [explanation matrix](docs/explanation-matrix.md) has 43 pairs: every other supported language, plus English → English. Thirteen pairs currently have complete downloadable packages; the other 30 require further translation work. Partial extra-language texts are retained in authoring records without being offered as complete downloads. See [example authoring and coverage](docs/example-authoring.md).
+
+UI development follows the [shared German/Chinese design reference](docs/study-design.md), reusable components and browser parity checks.
