@@ -1,6 +1,6 @@
 # Separated Phrase Gaps
 
-In English **Collocations** or **Phrasal Verbs**, select **Question Type → Sentence Gaps**. **Typing** provides a separate device-keyboard input for each blank; **Selection** offers the missing parts in order and checks immediately on tap. Standard questions remain available. Meaning Quiz and Word Input continue to test vocabulary meanings only.
+In English **Collocations & Phrasal Verbs**, select **Phrase Type → All / Collocations / Phrasal Verbs**, then **Question Type → Sentence Gaps**. **Typing** provides a separate device-keyboard input for each blank; **Selection** offers the missing parts in order and checks immediately on tap. Standard questions remain available. There is one combined Study button; source categories, saved mistakes and historical Phrasal Verbs retests keep their identities. Meaning Quiz and Word Input continue to test vocabulary meanings only.
 
 For example, `Please ___ it ___ before you forget.` accepts `write` and `down` in separate fields. Enter moves to the next empty field. Submit becomes available only when every field is filled and IME composition has finished. After checking, each blank contains the corrected expression, with incorrect input crossed out beneath it. Next resets every input. Review keeps the original sentence, submitted parts and a snapshot suitable for mixed retests.
 

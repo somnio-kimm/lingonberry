@@ -20,3 +20,14 @@ test('kana segments appear in answer explanation, never in the question markup',
 test('custom exercise mistakes participate in mixed retests and auto removal',()=>{const data=new Map(),storage={getItem:k=>data.get(k),setItem:(k,v)=>data.set(k,v)},store=createLexiconStore(storage,{id:'ja',levels:['N5']});const q={...exercise,exercise:true,mode:'vocabinput',locale:'ko',word:{id:entry.id}};store.record(q,'たべ',false);assert.equal(Object.values(store.state.wrongs)[0].question.segments[0].reading,'た');store.preference('autoRemoveResolvedWrongs',true);store.record(q,'た',true,true);assert.equal(Object.keys(store.state.wrongs).length,0);});
 test('form metadata cannot introduce unsupported or cross-language exercise modes',()=>{const p=core();p.exercises[0]={...exercise,route:'forms',category:'forms',formKind:'potential'};validateExercises(p);p.exercises[0].formKind='politeness';assert.throws(()=>validateExercises(p),/form kind/);});
 test('form prompts use the default base word, meaning and condition hierarchy',()=>{const html=renderExercisePrompt({route:'forms',word:{lemma:'食べる',studyMeaning:'먹다',pronunciation:'たべる',language:'ja'},condition:'Te Form',instruction:'Write the form.',prompt:'食べる（たべる）\nTe Form'});assert.match(html,/form-original-word/);assert.ok(html.indexOf('먹다')<html.indexOf('form-problem'));assert.match(html,/<rt>たべる<\/rt>/);assert.equal((html.match(/Te Form/g)||[]).length,1);assert.match(html,/grammar-prompt/);});
+
+test('English combines phrase sections while preserving content labels and historical mode identity',async()=>{
+ const {exerciseModes,exerciseSectionCategories,exerciseLabel,EXERCISE_ROUTES}=await import('../web/js/shared/language-exercises.js');
+ const {lexiconText}=await import('../web/js/shared/lexicon-text.js');
+ assert.equal(exerciseModes('en').phrasal,undefined);assert.equal(exerciseModes('en').collocations[0],'Collocations & Phrasal Verbs');
+ assert.deepEqual(exerciseSectionCategories('en','collocations'),['collocations','phrasal']);assert.deepEqual(exerciseSectionCategories('en','phrasal'),['phrasal']);assert.deepEqual(exerciseSectionCategories('ja','collocations'),['collocations']);
+ assert.equal(exerciseModes('ja').collocations[0],'Collocations');assert.equal(exerciseLabel('phrasal','ko'),'구동사');assert.equal(lexiconText('ko',exerciseModes('en').collocations[0]),'연어·구동사');assert.ok(EXERCISE_ROUTES.en.phrasal.includes('vocabinput'));
+ const rows=['collocations','phrasal'].map(category=>({id:category,entryId:'write',route:'vocabinput',category,answer:'write … down'}));
+ const section=rows.filter(row=>exerciseSectionCategories('en','collocations').includes(row.category));
+ assert.deepEqual(section.flatMap(row=>createExerciseQuestions([row],[{id:'write'}],row.route,row.category,'en')).map(row=>row.category),['collocations','phrasal']);
+});
