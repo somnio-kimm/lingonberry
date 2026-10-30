@@ -1,3 +1,5 @@
+import {japaneseReadingPrompt} from './japanese-reading-prompt.js';
+import {lexiconText} from './lexicon-text.js';
 import {renderPhraseGapSentence} from './phrase-gap-view.js';
 import {escapeHtml as e} from './ui.js';
 /** Render answer slots as the shared single underline; preserve marked characters. */
@@ -14,6 +16,12 @@ export function renderExerciseExplanation(question){
  return `<div class="exercise-explanation">${segments?`<div class="reading-segments" lang="ja">${segments}</div>`:''}<p>${e(question.explanation)}</p></div>`;
 }
 export function renderExercisePrompt(question,options={}){
+ if(question.category==='reading'){
+  const {prompt,readingFocus:focus}=japaneseReadingPrompt(question.word,question.prompt),display=options.uiLanguage||question.locale||'en';
+  const instruction=lexiconText(display,question.options?'Choose the reading of the underlined word.':'Type the reading of the underlined word in hiragana.');
+  const marked=e(prompt.slice(0,focus.start))+`<span class="study-reading-target">${e(focus.text)}</span>`+e(prompt.slice(focus.start+focus.text.length));
+  return `<p class="vocab-instruction">${e(instruction)}</p><div class="vocab-prompt lexicon-prompt" lang="ja">${marked}</div>${question.context?`<p class="grammar-meaning exercise-context">${e(question.context)}</p>`:''}`;
+ }
  if(question.gapFill)return `<p class="vocab-instruction">${e(question.instruction)}</p>${renderPhraseGapSentence(question,options)}${question.context?`<p class="grammar-meaning exercise-context">${e(question.context)}</p>`:''}`;
  const lang=e(question.word.language||'');
  if(question.route==='forms'||question.mode==='forms'){

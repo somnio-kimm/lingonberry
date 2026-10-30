@@ -2,7 +2,7 @@ import {gradePhraseGaps} from './phrase-gaps.js';
 import {shuffle} from './vocabulary.js';
 /** Bundled exercise rules; prompts and answers arrive only as validated package data. */
 const EXERCISE_CATEGORIES=Object.freeze({
- reading:['Word Reading','단어 읽기'],onyomi:['On’yomi','음독'],kunyomi:['Kun’yomi','훈독'],okurigana:['Kanji and Okurigana','한자와 오쿠리가나'],
+ reading:['Word Reading','한자 읽기'],onyomi:['On’yomi','음독'],kunyomi:['Kun’yomi','훈독'],okurigana:['Kanji and Okurigana','오쿠리가나'],
  forms:['Form Input','형태 입력'],particles:['Particles','조사'],counters:['Counters','조수사'],transitivity:['Transitive and Intransitive Verbs','타동사와 자동사'],kanji:['Confusable Kanji','헷갈리는 한자'],
  collocations:['Collocations','연어'],phrasal:['Phrasal Verbs','구동사'],patterns:['Verb Patterns','동사 구문'],articles:['Articles and Countability','관사와 가산성'],confusables:['Confusable Words','헷갈리는 단어'],roots:['Root Families','어근 모음'],
 });
