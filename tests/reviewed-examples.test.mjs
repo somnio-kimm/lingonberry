@@ -73,3 +73,32 @@ test('duplicate IDs, unknown examples, incomplete translations and implicit focu
   [args=>delete args.authored[0].provenance.creator,/creator/]
  ]){const args=fixture();change(args);assert.throws(()=>auditReviewedExamples(args),pattern);}
 });
+function correctEquivalent(args){
+ args.core.entries[0]={...args.core.entries[0],word:'再犯',pronunciation:'さいはん',partOfSpeech:'noun'};
+ args.inputs[0]={...args.inputs[0],word:'再犯',reading:'さいはん',partOfSpeech:'noun',meaningEn:'repeat offender',meaningKo:'재범자'};
+ args.pairs[0].entries[0].meaning='repeat offender';args.pairs[1].entries[0].meaning='재범자';
+ args.authored[0]={...args.authored[0],text:'この記録は再犯者の人数を示している。',en:'This record shows the number of repeat offenders.',ko:'이 기록은 재범자의 수를 보여 준다.',focus:{text:'再犯者',start:5},headwordCorrection:{word:'再犯者',pronunciation:'さいはんしゃ',reason:'The current concept defines a person, so use the person noun rather than the act noun.',provenance:{kind:'editorial-correction',license:'CC-BY-SA-4.0',creator:'Lingonberry contributors',evidenceUrls:['https://kotobank.jp/word/%E5%86%8D%E7%8A%AF-167974']}}};
+ args.reviews[0].recordSha256=exampleDigest(args.authored[0]);args.reviews[0].sourceBindingSha256=exampleDigest(exampleSourceBinding(args.inputs[0]));
+ return args;
+}
+test('a reviewed equivalent correction preserves the person concept, translations and progress ID',()=>{
+ const args=correctEquivalent(fixture()),{packages}=compileReviewedExamples(args);
+ assert.equal(packages[0].entries[0].id,'walk');assert.equal(packages[0].entries[0].word,'再犯者');assert.equal(packages[0].entries[0].pronunciation,'さいはんしゃ');
+ assert.equal(packages[1].entries[0].meaning,'repeat offender');assert.equal(packages[2].entries[0].meaning,'재범자');
+ assert.equal(packages[0].entries[0].example.provenance.editorialReview.recordSha256,args.reviews[0].recordSha256);
+ assert.deepEqual(packages[0].entries[0].editorialCorrection.provenance.evidenceUrls,args.authored[0].headwordCorrection.provenance.evidenceUrls);
+});
+test('a modified correction proposal needs a new independent review',()=>{
+ const args=correctEquivalent(fixture());args.authored[0].headwordCorrection.pronunciation='modified';
+ assert.equal(auditReviewedExamples(args).independentlyReviewed,0);assert.throws(()=>compileReviewedExamples(args),/unreviewed/);
+});
+test('equivalent correction proposals cannot alter level, POS or meanings',()=>{
+ for(const field of ['level','partOfSpeech','meaningEn','meaningKo','meanings','id']){
+  const args=correctEquivalent(fixture());args.authored[0].headwordCorrection[field]='unrelated';assert.throws(()=>auditReviewedExamples(args),/Only a headword/);
+ }
+});
+test('equivalent corrections require a reading and credited evidence',()=>{
+ for(const change of [args=>delete args.authored[0].headwordCorrection.pronunciation,args=>args.authored[0].headwordCorrection.provenance.evidenceUrls=[],args=>args.authored[0].headwordCorrection.provenance.evidenceUrls=['http://example.com']]){
+  const args=correctEquivalent(fixture());change(args);assert.throws(()=>auditReviewedExamples(args),/required|evidence URL/);
+ }
+});
