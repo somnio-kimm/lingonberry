@@ -9,7 +9,11 @@ export function compileExamples({core,pairs,authored,corrections=[],version}){
  for(const row of authored){if(records.has(row.id))throw new Error('Duplicate example: '+row.id);validateExampleRecord(row,originals.get(row.id),core.targetLanguage);records.set(row.id,row);}
  for(const row of corrections){if(edits.has(row.id))throw new Error('Duplicate correction: '+row.id);validateCorrection(row,originals.get(row.id));if(!records.has(row.id))throw new Error('Sense corrections require a matched replacement example: '+row.id);edits.set(row.id,row);}
  const notice=`Lingonberry example expansion, edition ${version}.\n\nOriginal examples and translations retain their credited creators and CC BY 4.0 licence. Source-derived examples and adaptations retain their own source licences, creators, URLs and change notices in each record. AI-assisted editorial review is recorded per example; fluent-speaker review remains pending. Sense, article and grammatical corrections to licensed dictionary entries are CC BY-SA 4.0 adaptations. Stable entry IDs and original source provenance are retained. The authoring and correction records are included in language-packages/sources/examples/.\n\nEarlier edition source notices follow:\n\n${core.license.notice}`;
- const license={...core.license,notice,links:(core.license.links||[]).map(link=>link.title==='Unrestricted Content Downloads and Source Information'?{...link,url:'https://github.com/somnio-kimm/lingonberry/tree/main/language-packages'}:link)};
+ const creators=[...new Set(authored.flatMap(record=>{
+  const provenance=exampleProvenance(record),sources=provenance.sources||[provenance.source];
+  return [provenance.creator,...sources.filter(Boolean).map(source=>source.creator||source.author)].filter(Boolean);
+ }))].sort();
+ const license={...core.license,notice:notice+`\n\nCredits for this example edition: ${creators.join('; ')}. Each record retains its applicable licence and any source/adaptation notices.`,links:(core.license.links||[]).map(link=>link.title==='Unrestricted Content Downloads and Source Information'?{...link,url:'https://github.com/somnio-kimm/lingonberry/tree/main/language-packages'}:link)};
  const entries=core.entries.map(original=>{
   const record=records.get(original.id),edit=edits.get(original.id);if(!record)return original;
   const updated={...applyEntryCorrection(original,edit)},example={text:record.text,...(record.focus?{focus:record.focus}:{}),provenance:exampleProvenance(record)};

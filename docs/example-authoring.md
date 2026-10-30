@@ -35,6 +35,18 @@ node scripts/audit-reviewed-examples.mjs local-data/japanese-example-completion/
 
 The audit reports drafted, independently reviewed, missing, stale and unresolved records separately. It writes `audit.json` inside that local workspace; it neither publishes packages nor resumes the old generation queue. Only closed numbered batches are collected. A revised sentence or translation needs a fresh independent review. The completion gate refuses stale source senses, self-review, hidden coverage gaps or open findings. Hashes verify which text was reviewed; they cannot establish linguistic correctness by themselves.
 
+Capture the exact paired record/source snapshot and its hashes before reading; write verdicts from that snapshot so a concurrent author repair cannot receive a pass for text the reviewer never saw. A pass for unchanged text resolves an earlier finding only with `resolves: [SHA256_OF_FINDING_REVIEW_ROW]` and explanatory notes from the same reviewer. File ordering alone never clears a finding. A changed sentence receives its own new record hash and fresh review instead.
+
+After every author and reviewer has finished, build the new immutable preview:
+
+```sh
+node scripts/build-reviewed-examples.mjs local-data/japanese-example-completion/2026-10-30 /tmp/japanese-completion-4.4.0 4.4.0
+```
+
+The builder refuses unfinished content before writing output. Its new core/English/Korean package descriptors bind exact payload sizes and hashes. It retains the original reviewed drafts, review ledgers, source bindings, ownership and licence notice beside a hashed completion report. Existing artifacts cannot be replaced with different bytes. Building a preview does not publish it or alter the installed packages; inspect it and run release checks before copying the versioned files/catalogue into the content PR.
+
+After pinning a reviewed release in the native shell, the DEBUG-only `--verify-japanese-completion` check updates both Japanese explanations through the Settings controls and checks every installed entry for its native example and English/Korean translation. It also runs the existing dictionary/reading-route checks and records no study answers. Release builds exclude the verification code. Explicit equivalent corrections use the shared review-invalidation policy to exclude obsolete questions from retests while preserving stored history and word progress.
+
 Use `compileReviewedExamples` for this completion, passing the reviewed records and current inputs explicitly. It requires full reviewed coverage, fills only missing primary examples, preserves current meanings and uncorrected headwords, and never reapplies the historical correction sidecars. Source-derived records retain their own creator, licence and change notices rather than being relabelled as original app content. Keep the original reviewed drafts and their hashes with the eventual immutable edition so its editorial checks can be reproduced.
 
 If a Japanese equivalent does not express the existing concept, put an explicit `headwordCorrection` inside its example record: `word`, `pronunciation`, optional `aliases`, `reason` and `provenance` with creator, CC BY-SA 4.0 and factual HTTPS `evidenceUrls`. The independent reviewer must check the proposal and its matching example; the record hash binds both. This narrow path cannot change the stable ID, meanings, part of speech or level. It records the equivalent correction in the new edition and retains the original concept provenance. Previously published examples remain unchanged; obsolete reference examples tied to the corrected headword are discarded. Corrections to meanings or grammatical categories need a separate scoped review, not this completion importer.

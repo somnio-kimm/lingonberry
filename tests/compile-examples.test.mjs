@@ -23,5 +23,6 @@ test('mixed source reuse preserves creators and source licences in examples and 
  assert.deepEqual(study.entries[0].example.provenance,record.provenance);
  assert.deepEqual(en.entries[0].exampleTranslationProvenance,record.provenance);
  assert.match(study.license.notice,/Source-derived examples and adaptations retain their own source licences/);
+ assert.match(study.license.notice,/Credits for this example edition: Credited source and translation editors; English Wiktionary contributors/);
  assert.match(study.license.notice,/Original dictionary attribution/);
 });

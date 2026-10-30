@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/24c8aa20b9590d433d98aadb25d4dfdce8e56f9f/",
-  "description": "Immutable seven-language content plus English 4.8: complete NGSL 1.2 and supplementary headword coverage; 389 original bilingual entries, reviewed common-sense levels and preserved vocabulary/progress identities."
+  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/e6cf8dccb3a0293ca343e6eb18a4bdeafdd422b1/",
+  "description": "Immutable seven-language content with English 4.8 and Japanese 4.4: all 12,027 Japanese entries have primary examples and English/Korean translations, with 10,000 new independently AI-reviewed triplets and preserved component attribution."
 }

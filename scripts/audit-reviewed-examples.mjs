@@ -7,7 +7,7 @@ import {auditReviewedExamples} from './content/reviewed-examples.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 const rows=async path=>(await readFile(path,'utf8')).split('\n').filter(line=>line.trim()).map(line=>JSON.parse(line));
-export async function auditExampleDirectory(directory){
+export async function loadExampleDirectory(directory){
  const manifest=await json(join(directory,'manifest.json')),catalog=await json(join(root,'language-packages/catalog.json'));
  const packages=[];
  for(const id of ['ja-core','ja-en','ja-ko']){
@@ -33,7 +33,10 @@ export async function auditExampleDirectory(directory){
    }
   }
  }
- const report=auditReviewedExamples({core:packages[0],pairs:packages.slice(1),inputs,ownership,authored,reviews});
+ return {core:packages[0],pairs:packages.slice(1),inputs,ownership,authored,reviews,manifest,catalog};
+}
+export async function auditExampleDirectory(directory){
+ const completion=await loadExampleDirectory(directory),report=auditReviewedExamples(completion);
  const {evidence,...serializable}=report;
  await writeFile(join(directory,'audit.json'),JSON.stringify(serializable,null,2)+'\n');
  return serializable;
