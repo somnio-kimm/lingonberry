@@ -21,7 +21,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana")) else { return }
+        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana")) else { return }
         verificationStarted = true
         verifyPackages(attempt: 0)
     }
@@ -47,6 +47,22 @@ class AppViewController: CAPBridgeViewController {
                   element.dispatchEvent(new Event('change', {bubbles:true}));
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
+                if (okurigana) {
+                  const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{prepareLanguageExercises}=await import('./js/shared/exercise-pools.js'),{exerciseAnswerCorrect}=await import('./js/shared/language-exercises.js'),{renderExercisePrompt}=await import('./js/shared/exercise-view.js');
+                  const storage=createPackageStorage(),pairs=installedPairs(await storage.list()).filter(row=>row.targetLanguage==='ja'&&['en','ko'].includes(row.explanationLanguage)),checks=[];
+                  if(!pairs.length)throw new Error('A Japanese explanation package must be installed');
+                  for(const pair of pairs) {
+                    const study=assembleStudy(await storage.get('ja-core',pair.studyVersion),await storage.get(pair.id,pair.version)),words=studyWords(study),word=words.find(row=>row.lemma==='久しい'),rows=prepareLanguageExercises(study,words);
+                    const typed=rows.find(row=>row.entryId===word?.id&&row.category==='okurigana'&&row.route==='vocabinput'),choice=rows.find(row=>row.entryId===word?.id&&row.category==='okurigana'&&row.route==='vocabmeaning');
+                    if(typed?.prompt!=='ひさしい'||typed.answer!=='久しい'||!exerciseAnswerCorrect(typed,'久しい')||exerciseAnswerCorrect(typed,'ひさしい')||exerciseAnswerCorrect(typed,'久い')||!choice?.options.includes('久い')||choice.options.length<3||choice.options.some(value=>!value.startsWith('久')))throw new Error('Incorrect kana-to-complete-word Okurigana exercise');
+                    const prompt=renderExercisePrompt({...typed,exercise:true,word});
+                    if(prompt.includes('久しい')||prompt.includes('<rt>'))throw new Error('Okurigana question reveals the written answer');
+                    const act=words.find(row=>row.lemma==='行う'),variant=rows.find(row=>row.entryId===act?.id&&row.category==='okurigana'&&row.route==='vocabinput');
+                    if(!variant||!exerciseAnswerCorrect(variant,'行なう'))throw new Error('Dictionary-authorised alternative spelling was rejected');
+                    checks.push({locale:pair.explanationLanguage,prompt:typed.prompt,answer:typed.answer,options:choice.options,acceptedVariant:'行なう'});
+                  }
+                  return JSON.stringify({passed:true,checks});
+                }
                 if (furigana) {
                   const {renderJapaneseRuby}=await import('./js/shared/japanese-furigana.js');
                   const host=document.createElement('div'),checks=[];host.style.cssText='position:absolute;left:-10000px;top:0';document.body.append(host);
@@ -254,7 +270,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
+                """, arguments: ["okurigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-okurigana"),"furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                     case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")
