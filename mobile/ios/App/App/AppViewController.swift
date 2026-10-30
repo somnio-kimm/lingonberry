@@ -48,12 +48,13 @@ class AppViewController: CAPBridgeViewController {
                 };
                 if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
                 if (okurigana || readingTarget) {
-                  const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{prepareLanguageExercises}=await import('./js/shared/exercise-pools.js'),{exerciseAnswerCorrect,exerciseLabel}=await import('./js/shared/language-exercises.js'),{renderExercisePrompt}=await import('./js/shared/exercise-view.js');
+                  const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{prepareLanguageExercises}=await import('./js/shared/exercise-pools.js'),{exerciseAnswerCorrect,exerciseLabel,exerciseModes}=await import('./js/shared/language-exercises.js'),{renderExercisePrompt}=await import('./js/shared/exercise-view.js');
                   const storage=createPackageStorage(),pairs=installedPairs(await storage.list()).filter(row=>row.targetLanguage==='ja'&&['en','ko'].includes(row.explanationLanguage)),checks=[];
                   if(!pairs.length)throw new Error('A Japanese explanation package must be installed');
                   for(const pair of pairs) {
                     const study=assembleStudy(await storage.get('ja-core',pair.studyVersion),await storage.get(pair.id,pair.version)),words=studyWords(study),word=words.find(row=>row.lemma==='久しい'),rows=prepareLanguageExercises(study,words);
                     if(readingTarget) {
+                      if(exerciseModes('ja').onyomi||exerciseModes('ja').kunyomi||rows.some(row=>['onyomi','kunyomi'].includes(row.category)))throw new Error('Removed character-reading sections are active');
                       const school=words.find(row=>row.lemma==='学校'),question=rows.find(row=>row.entryId===school?.id&&row.category==='reading'&&row.route==='vocabmeaning');
                       if(!question||question.answer!=='がっこう'||question.prompt.split('学校').length!==2||question.prompt.startsWith('学校'+String.fromCharCode(10)))throw new Error('Reading target repeats the headword');
                       if(exerciseLabel('reading','ko')!=='한자 읽기'||exerciseLabel('okurigana','ko')!=='오쿠리가나')throw new Error('Korean reading labels differ');
@@ -63,7 +64,7 @@ class AppViewController: CAPBridgeViewController {
                           const target=host.querySelector('.study-reading-target'),instruction=host.querySelector('.vocab-instruction'),text=host.querySelector('.vocab-prompt').textContent,style=target&&getComputedStyle(target);
                           const expected=display==='ko'?'밑줄 친 단어의 읽기를 선택하세요.':'Choose the reading of the underlined word.';
                           if(target?.textContent!=='学校'||text.split('学校').length!==2||instruction.textContent!==expected||!style.textDecorationLine.includes('underline')||style.textDecorationColor!==getComputedStyle(instruction).color||host.querySelector('rt'))throw new Error('Reading target UI/locale differs');
-                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected});
+                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected,sections:Object.keys(exerciseModes('ja'))});
                         }finally{host.remove();}
                       }
                       continue;
@@ -212,10 +213,10 @@ class AppViewController: CAPBridgeViewController {
                 if (english || japanese) {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=vocabinput]'));
-                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana'] : ['roots','collocations'];
+                  const routes = japanese ? ['reading','okurigana'] : ['roots','collocations'];
                   result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
                   if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
-                  if (japanese && document.querySelector('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters],[data-route=kanji]')) throw new Error('Removed Japanese test is still visible');
+                  if (japanese && document.querySelector('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters],[data-route=kanji],[data-route=onyomi],[data-route=kunyomi]')) throw new Error('Removed Japanese test is still visible');
                   if (english && document.querySelector('[data-route=articles],[data-route=confusables],[data-route=patterns],[data-route=phrasal]')) throw new Error('Removed English test is still visible');
                   document.querySelector('[data-route=vocabinput]').click();
                   await wait(() => document.querySelector('.vocab-question'));

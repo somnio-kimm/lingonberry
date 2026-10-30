@@ -1,5 +1,6 @@
-import {normaliseKana} from './japanese-reading.js';
-import {formKindLabel} from './language-exercises.js';
+// Legacy exercise fixtures used to audit stored/source answers; excluded from the app bundle.
+import {normaliseKana} from '../../web/js/shared/japanese-reading.js';
+import {formKindLabel} from '../../web/js/shared/language-exercises.js';
 const adjectiveLabels={adnominal:['Adnominal','관형형'],negative:['Negative','부정형'],past:['Past','과거형'],'past-negative':['Past Negative','과거 부정형'],te:['Te Form','て형'],conditional:['Conditional','조건형'],adverbial:['Adverbial','부사형']};
 /** KANJIDIC dots mark written endings, hyphens mark bound readings. The input is the full reading. */
 export const kanjiAnswer=reading=>normaliseKana(reading.replace(/[.\-]/gu,''));
