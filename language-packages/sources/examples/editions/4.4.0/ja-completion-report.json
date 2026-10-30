@@ -1,0 +1,77 @@
+{
+  "version": "4.4.0",
+  "sourceVersion": "4.3.0",
+  "sourcePackages": [
+    {
+      "id": "ja-core",
+      "kind": "study",
+      "targetLanguage": "ja",
+      "version": "4.3.0",
+      "url": "/language-packages/ja-core-4.3.0.json",
+      "bytes": 28708376,
+      "sha256": "7437385b6f924b516672c7aedb08b939036e8ac48f01fbfde85b6ccb0d6ad0a8"
+    },
+    {
+      "id": "ja-en",
+      "kind": "explanation",
+      "targetLanguage": "ja",
+      "version": "4.3.0",
+      "explanationLanguage": "en",
+      "studyVersion": "4.3.0",
+      "url": "/language-packages/ja-en-4.3.0.json",
+      "bytes": 10882570,
+      "sha256": "d5893b5abf891d5ad071d60823504b19a5983479adee2c00e2d28c23295798e1"
+    },
+    {
+      "id": "ja-ko",
+      "kind": "explanation",
+      "targetLanguage": "ja",
+      "version": "4.3.0",
+      "explanationLanguage": "ko",
+      "studyVersion": "4.3.0",
+      "url": "/language-packages/ja-ko-4.3.0.json",
+      "bytes": 10872900,
+      "sha256": "ae8157f6aab7faf89f60df9b089976e7fbd820c6f49f6c7316a9daddf0607fc8"
+    }
+  ],
+  "sourceSha256": {
+    "ja-core": "7437385b6f924b516672c7aedb08b939036e8ac48f01fbfde85b6ccb0d6ad0a8",
+    "ja-en": "d5893b5abf891d5ad071d60823504b19a5983479adee2c00e2d28c23295798e1",
+    "ja-ko": "ae8157f6aab7faf89f60df9b089976e7fbd820c6f49f6c7316a9daddf0607fc8"
+  },
+  "target": 10000,
+  "drafted": 10000,
+  "independentlyReviewed": 10000,
+  "staleReviews": 378,
+  "missingIds": [],
+  "unreviewedIds": [],
+  "findings": [],
+  "fullCoverage": true,
+  "files": [
+    {
+      "path": "language-packages/sources/examples/editions/4.4.0/ja-completion-authored.jsonl",
+      "bytes": 4448725,
+      "sha256": "6ec9be419f293d949a5e11cdefb82f47632144044c8ffa4e4146c1f3d98f727d"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/4.4.0/ja-completion-reviews.jsonl",
+      "bytes": 3023543,
+      "sha256": "a3e77caceb5c4a3b444edc32ae8c90e27bf77d3fcf8e696f25bd9adbb4084ca9"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/4.4.0/ja-completion-bindings.jsonl",
+      "bytes": 2628449,
+      "sha256": "42f1b303de5e6c4646289292168b8a438a3e4b3d7701c817587a30e7aa97f9c6"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/4.4.0/ja-completion-ownership.json",
+      "bytes": 432535,
+      "sha256": "13a32ebd047664affe4f0c523a7eb039657e0dcc26ce76d34096050774e95c89"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/4.4.0/NOTICE.txt",
+      "bytes": 16368,
+      "sha256": "bfc5d4ed6d06751f3b73e92d7bc7ef1409785eae3112bdf7d85ebd92c1302c7d"
+    }
+  ]
+}
