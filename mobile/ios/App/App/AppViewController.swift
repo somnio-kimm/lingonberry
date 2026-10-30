@@ -153,9 +153,10 @@ class AppViewController: CAPBridgeViewController {
                 if (english || japanese) {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=vocabinput]'));
-                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana','forms','particles','counters','collocations'] : ['roots','collocations'];
+                  const routes = japanese ? ['reading','onyomi','kunyomi','okurigana'] : ['roots','collocations'];
                   result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
                   if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
+                  if (japanese && document.querySelector('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]')) throw new Error('Removed Japanese test is still visible');
                   if (english && document.querySelector('[data-route=articles],[data-route=confusables],[data-route=patterns],[data-route=phrasal]')) throw new Error('Removed English test is still visible');
                   document.querySelector('[data-route=vocabinput]').click();
                   await wait(() => document.querySelector('.vocab-question'));
@@ -164,11 +165,11 @@ class AppViewController: CAPBridgeViewController {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-level]'));
                   [...document.querySelectorAll('[data-level]')].at(-1).click();
-                  document.querySelector(`[data-route=${japanese ? 'forms' : 'roots'}]`).click();
+                  document.querySelector(`[data-route=${japanese ? 'reading' : 'roots'}]`).click();
                   if (japanese) {
-                    await wait(() => document.querySelector('[data-form-kind]'));
-                    result.formKinds = [...document.querySelectorAll('[data-form-kind] option')].map(option => option.value);
-                    if (!result.formKinds.includes('causative-passive') || !result.formKinds.includes('potential')) throw new Error('Japanese form types are missing');
+                    await wait(() => document.querySelector('.vocab-question[data-exercise-id]'));
+                    result.readingPractice = !!document.querySelector('.vocab-question')?.dataset.exerciseId;
+                    if (!result.readingPractice) throw new Error('Japanese reading practice is missing');
                   } else {
                     await wait(() => document.querySelector('[data-root-view=browse]'));
                     document.querySelector('[data-root-view=browse]').click();

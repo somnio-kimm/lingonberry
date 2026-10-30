@@ -1,8 +1,9 @@
+import {exerciseModes} from '../web/js/shared/language-exercises.js';
 import {assembleStudy} from '../web/js/packages/study.js';
 import {studyWords} from '../web/js/presentation/study-profiles.js';
 import {prepareLanguageExercises} from '../web/js/shared/exercise-pools.js';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
+import {readFile,mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
 const server=await startServer();let browser;
@@ -18,10 +19,20 @@ try{
   for(const locale of ['en','ko']){
    await tab(page,'settings');await page.selectOption('#target',language);await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');
    const pair=await read(catalog.find(row=>row.id===language+'-'+locale).url.slice(1)),study=assembleStudy(core,pair),prepared=prepareLanguageExercises(study,studyWords(study));
+   if(language==='ja'){
+    await mkdir('/private/tmp/japanese-study-menu',{recursive:true});
+    for(const width of [390,1024])for(const theme of ['light','dark']){
+     await page.setViewportSize({width,height:900});await tab(page,'settings');await page.locator(`[data-theme-choice=${theme}]`).click();await tab(page,'home');assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
+     assert.equal(await page.locator('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]').count(),0);
+     assert.deepEqual(await page.locator('[data-route]').evaluateAll(nodes=>nodes.slice(0,7).map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']);
+     assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.screenshot({path:`/private/tmp/japanese-study-menu/${locale}-${width}-${theme}.png`,fullPage:true});
+    }
+    assert.equal(prepared.some(row=>['collocations','transitivity','forms','particles','counters'].includes(row.category)),false);
+   }
    await route(page,'vocabmeaning');assert.equal(await page.locator('[data-exercise],[data-answer-mode]').count(),0);assert.equal(await page.locator('[data-submit]').count(),0);assert.equal(await page.locator('[data-exercise-id]').getAttribute('data-exercise-id'),'');await page.locator('[data-option]').first().click();await page.locator('[data-next]').waitFor();
    await route(page,'vocabinput');assert.equal(await page.locator('[data-exercise],[data-answer-mode]').count(),0);assert.equal(await page.locator('[data-submit]').count(),1);assert.equal(await page.locator('[data-exercise-id]').getAttribute('data-exercise-id'),'');
    if(language==='en'){await tab(page,'home');assert.equal(await page.locator('[data-route=articles],[data-route=confusables]').count(),0);await page.locator('[data-route=roots]').click();await page.locator('[data-root-view=browse]').click();if(core.morphemes?.length)assert.ok((await page.locator('[data-root-count]').innerText()).includes(core.morphemes.length.toLocaleString()));else assert.equal(await page.locator('[data-root-scope=all]').getAttribute('aria-pressed'),'true');await page.locator('#root-search').fill('aud');assert.ok(await page.locator('[data-root-word]').count()>0);assert.ok((await page.locator('[data-root-list]').innerText()).includes('audience'));assert.ok((await page.locator('.root-origin').first().innerText()).length>0);assert.ok(!(await page.locator('[data-root-list]').innerText()).includes('*h'));await page.locator('#root-search').fill('');}
-   for(const category of [...new Set(prepared.map(row=>row.category))].filter(category=>category!=='articles')){
+   for(const category of [...new Set(prepared.map(row=>row.category))].filter(category=>Object.hasOwn(exerciseModes(language),language==='en'&&category==='phrasal'?'collocations':category))){
     const seed=prepared.find(row=>row.category===category),entry=core.entries.find(row=>row.id===seed.entryId);await tab(page,'home');await page.locator(`[data-level="${entry.level}"]`).click();await page.locator(`[data-route=${language==='en'&&category==='phrasal'?'collocations':category}]`).click();await ready(page);if(language==='en'&&['collocations','phrasal'].includes(category))await page.selectOption('[data-phrase-category]',category);
     if(category==='roots')await page.locator('[data-root-view=quiz]').click();
     const mode=seed.options?'choice':'input';if(await page.locator(`[data-answer-mode=${mode}]`).count())await page.locator(`[data-answer-mode=${mode}]`).click();

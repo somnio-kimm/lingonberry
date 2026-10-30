@@ -19,6 +19,7 @@ try{
   await row.waitFor();assert.ok(await row.locator('.collocation-preview').count());await page.locator('#search-input').fill(seed.collocations[0].phrase);await row.waitFor();await row.locator('.wl-main').click();await page.locator('.study-collocations').waitFor();assert.ok((await page.locator('.study-collocations').innerText()).includes(seed.collocations[0].phrase));await page.locator('[data-collocation-audio]').first().click();await page.waitForFunction(text=>window.testSpokenText===text,seed.collocations[0].phrase);await page.locator('[data-collocation-example]').first().click();await page.waitForFunction(text=>window.testSpokenText===text,seed.collocations[0].example);await page.keyboard.press('Escape');
   // Chinese detail overlays handle Escape through their existing sheet policy; close explicitly if needed.
   if(await page.locator('.detail-overlay').count())await page.locator('.detail-overlay .close-btn,.detail-overlay [data-close],.detail-overlay .detail-sheet-close').first().click();
+  if(language==='ja'){await tab(page,'home');assert.equal(await page.locator('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]').count(),0);continue;}
   for(const mode of ['vocabinput','vocabmeaning']){
    await route(page,'collocations',language);if(await page.locator('[data-question-type]').count())await page.selectOption('[data-question-type]','phrase');const switcher=page.locator(language==='de'||language==='zh'?`[data-collocation-answer=${mode}]`:`[data-answer-mode=${mode==='vocabinput'?'input':'choice'}]`);if(await switcher.count())await switcher.click();await page.locator('.vocab-question').waitFor();
    if(mode==='vocabinput'){
@@ -30,5 +31,5 @@ try{
   }
   console.log('Verified collocations',language);
  }
- assert.deepEqual(errors,[]);await page.context().setOffline(true);await page.reload();await ready(page);console.log(`Passed ${checks} collocation practice paths, all seven word lists/detail sections/audio controls and offline reload.`);
+ assert.deepEqual(errors,[]);await page.context().setOffline(true);await page.reload();await ready(page);console.log(`Passed ${checks} collocation practice paths, all seven word lists/detail sections/audio controls; Japanese retired practice absent and offline reload.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

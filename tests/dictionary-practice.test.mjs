@@ -19,9 +19,9 @@ test('form drills accept sourced spelling and kana alternatives and specify long
  const forms=createDictionaryExercises(study,[word]).filter(row=>row.route==='forms');assert.equal(forms.length,1);assert.ok(exerciseAnswerCorrect(forms[0],'たべた'));
  const long=createDictionaryExercises({...study,practiceData:{version:1,forms:[{entryId:word.id,groups:[{formKind:'causative-passive',answers:['食べさせられる']}]}]}},[word])[0];assert.match(long.instruction,/full, uncontracted/);
 });
-test('curated forms suppress only the same form, while character and reading directions survive',()=>{
+test('retired form questions are excluded while character and reading directions survive',()=>{
  const curated={id:'curated',entryId:word.id,route:'forms',category:'forms',formKind:'past'};
- const rows=prepareLanguageExercises({...study,exercises:[curated]},[word]);assert.equal(rows.filter(row=>row.formKind==='past').length,1);assert.equal(rows.filter(row=>row.category==='onyomi').length,1);
+ const rows=prepareLanguageExercises({...study,exercises:[curated]},[word]);assert.equal(rows.filter(row=>row.formKind==='past').length,0);assert.equal(rows.filter(row=>row.category==='onyomi').length,1);
 });
 test('practice packages reject cross-language metadata, missing entries, bad URLs and duplicate answer sets',()=>{
  assert.doesNotThrow(()=>validatePracticeData(pack));

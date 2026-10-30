@@ -12,7 +12,7 @@ try{
    const [{createPresentation},{assembleStudy}]=await Promise.all([import('/js/presentation/multilingual.js'),import('/js/packages/study.js')]);
    const catalog=await fetch('/catalog.json').then(r=>r.json()),core=await fetch(catalog.find(r=>r.id===language+'-core').url).then(r=>r.json()),pair=await fetch(catalog.find(r=>r.id===language+'-ko').url).then(r=>r.json());
    localStorage.removeItem(`learn-language.${language}.lexicon.v1`);const host=document.createElement('main');host.id='app';document.body.replaceChildren(host);let route='vocabinput',app;
-   const refresh=()=>app.render(route,host);app=createPresentation({language,navigate:value=>{route=value;refresh();},refresh,onPreferences(){}});app.setStudy(assembleStudy(core,pair));window.designRoute=value=>{route='home';refresh();host.querySelector(`[data-route=${value}]`).click();};window.designApp=app;refresh();
+   const refresh=()=>app.render(route,host);app=createPresentation({language,navigate:value=>{route=value;refresh();},refresh,onPreferences(){}});app.setStudy(assembleStudy(core,pair));window.designRoute=value=>{route='home';refresh();if(value!=='home')host.querySelector(`[data-route=${value}]`).click();};window.designApp=app;refresh();
   },language);
   for(const width of [390,1024])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:900});await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;},theme);
@@ -31,7 +31,7 @@ try{
   }
   if(language==='ja'){
    for(const category of ['reading','onyomi','kunyomi','okurigana']){await page.evaluate(route=>window.designRoute(route),category);const selection=page.locator('[data-answer-mode=choice]');if(await selection.count())await selection.click();assert.ok(await page.locator('[data-option]').count()>=3);assert.equal(await page.locator('[data-submit]').count(),0);checks++;}
-   await page.evaluate(()=>window.designRoute('forms'));assert.equal(await page.locator('.form-original-word .grammar-word').count(),1);assert.equal(await page.locator('.form-problem .vocab-prompt,.form-problem .grammar-prompt').count(),1);checks++;
+   await page.evaluate(()=>window.designRoute('home'));assert.equal(await page.locator('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]').count(),0);checks++;
   }
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${checks} real-package design/feature checks at phone/tablet widths in both themes.`);
