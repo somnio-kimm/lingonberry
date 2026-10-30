@@ -42,16 +42,16 @@ test('English Verb Patterns is absent from active menus and pools while historic
 });
 
 
-test('Japanese removes the five requested sections from active menus and pools while keeping historical grading',async()=>{
+test('Japanese removes the six retired sections from active menus and pools while keeping historical grading',async()=>{
  const {exerciseModes,exerciseLabel,EXERCISE_ROUTES}=await import('../web/js/shared/language-exercises.js');
  const {prepareLanguageExercises}=await import('../web/js/shared/exercise-pools.js');
- for(const category of ['collocations','transitivity','forms','particles','counters'])assert.equal(exerciseModes('ja')[category],undefined);
- for(const category of ['reading','onyomi','kunyomi','okurigana','kanji'])assert.ok(exerciseModes('ja')[category],category);
+ for(const category of ['collocations','transitivity','forms','particles','counters','kanji'])assert.equal(exerciseModes('ja')[category],undefined);
+ for(const category of ['reading','onyomi','kunyomi','okurigana'])assert.ok(exerciseModes('ja')[category],category);
  for(const language of ['en','ko','es','fr'])assert.ok(exerciseModes(language).collocations,language+' retains collocations');
- const old=['collocations','transitivity','forms','particles','counters'].map(category=>({id:category,entryId:'open',category,route:'vocabinput',prompt:'Complete the sentence.',answer:'開ける',instruction:'Write the answer.',explanation:'Original explanation.'}));
+ const old=['collocations','transitivity','forms','particles','counters','kanji'].map(category=>({id:category,entryId:'open',category,route:'vocabinput',prompt:'Complete the sentence.',answer:'開ける',instruction:'Write the answer.',explanation:'Original explanation.'}));
  const word={id:'open',lemma:'開ける',pronunciation:'あける',pos:'verb',studyMeaning:'open',collocations:[{id:'open-door',phrase:'ドアを開ける',meaning:'open the door',example:'ドアを開ける。',exampleTranslation:'Open the door.'}]};
  const rows=prepareLanguageExercises({targetLanguage:'ja',explanationLanguage:'en',exercises:old},[word]);
- assert.equal(rows.some(row=>['collocations','transitivity','forms','particles','counters'].includes(row.category)),false);
+ assert.equal(rows.some(row=>['collocations','transitivity','forms','particles','counters','kanji'].includes(row.category)),false);
  for(const row of old)assert.equal(exerciseAnswerCorrect({...row,exercise:true},'開ける'),true);
  assert.ok(EXERCISE_ROUTES.ja.transitivity);assert.equal(exerciseLabel('transitivity','ko'),'타동사와 자동사');
 });

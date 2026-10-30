@@ -184,7 +184,7 @@ class AppViewController: CAPBridgeViewController {
                   const routes = japanese ? ['reading','onyomi','kunyomi','okurigana'] : ['roots','collocations'];
                   result.exerciseRoutes = routes.every(route => document.querySelector(`[data-route=${route}]`));
                   if (!result.exerciseRoutes) throw new Error('Installed language exercise routes are missing');
-                  if (japanese && document.querySelector('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters]')) throw new Error('Removed Japanese test is still visible');
+                  if (japanese && document.querySelector('[data-route=collocations],[data-route=transitivity],[data-route=forms],[data-route=particles],[data-route=counters],[data-route=kanji]')) throw new Error('Removed Japanese test is still visible');
                   if (english && document.querySelector('[data-route=articles],[data-route=confusables],[data-route=patterns],[data-route=phrasal]')) throw new Error('Removed English test is still visible');
                   document.querySelector('[data-route=vocabinput]').click();
                   await wait(() => document.querySelector('.vocab-question'));

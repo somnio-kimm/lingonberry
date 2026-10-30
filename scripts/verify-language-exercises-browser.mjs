@@ -18,6 +18,6 @@ try{
  await page.locator('[data-submit]').click();assert.ok(await page.locator('.lexicon-question.wrong').count());assert.equal(await page.locator('.reading-segment.kanji rt').innerText(),'た');
  await page.evaluate(()=>window.testRoute('wrong'));assert.match(await page.locator('.wrong-card').innerText(),/たべ/);assert.match(await page.locator('.wrong-card').innerText(),/食の|食의/);
  await page.locator('[data-retest]').click();await page.locator('#vocab-answer').fill('た');await page.locator('[data-submit]').click();assert.ok(await page.locator('.lexicon-question.correct').count());await page.locator('[data-next]').click();assert.match(await page.locator('.retest-complete').innerText(),/Correct: 1/);
- await page.evaluate(()=>window.testRoute('home'));assert.equal(await page.locator('[data-route=particles],[data-route=forms],[data-route=counters]').count(),0);
+ await page.evaluate(()=>window.testRoute('home'));assert.equal(await page.locator('[data-route=particles],[data-route=forms],[data-route=counters],[data-route=kanji]').count(),0);
  assert.deepEqual(errors,[]);console.log('Passed: language-specific menu, category filters, hidden readings, IME, corrections, Review, retest and retired Japanese sections.');
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
