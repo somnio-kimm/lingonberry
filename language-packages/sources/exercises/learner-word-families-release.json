@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "from": "4.4.0",
+  "to": "4.5.0",
+  "sourceSha256": "b9bf8e5a853977e7bd41afbd90ec7112b7f6060cd0715512bc74b034fea29859",
+  "review": "AI-assisted author and integration review of historical family membership, exact entry IDs and original English/Korean glosses; not native-speaker certification. Confusable words are independent exercises.",
+  "sourcePackages": [
+    {
+      "path": "language-packages/en-core-4.4.0.json",
+      "sha256": "275b8da1d1f233117e5d221c240164f135f1c30666f4e6f52a3c27c95680fdc7"
+    },
+    {
+      "path": "language-packages/en-en-4.4.0.json",
+      "sha256": "564a232b8ab117521c119cdd6ee40dc2f8d1191291ebdf85f21349f75b85055d"
+    },
+    {
+      "path": "language-packages/en-ko-4.4.0.json",
+      "sha256": "9012fdd6e7c6ecc3dda48d13726e7fb696ff16ef5903890351e9961f4239d8ab"
+    }
+  ],
+  "sourceCommit": "fef00e2ef946a7aa8ce45e7d8dd2f4ad162e0b8a"
+}

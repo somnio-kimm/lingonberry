@@ -1,0 +1,858 @@
+{
+  "version": 1,
+  "notice": "Original Lingonberry learner-facing family selection and compact English/Korean glosses, licensed under MIT. References verify historical facts; no publisher definitions, examples or etymology prose are reproduced. Origin identifies the historical source of the element, including elements transmitted through other languages and later English formations. These families show historical relationships, not rules for mechanically deriving a word’s current meaning. Dictionary entries retain their existing licences and sense provenance.",
+  "license": "MIT",
+  "families": [
+    {
+      "id": "en-family-prefix-ex",
+      "root": "ex-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "out; away",
+        "ko": "밖으로; 멀리"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-8e0cd015e5e797afbff8",
+          "word": "exclude"
+        },
+        {
+          "entryId": "en-lex-61751a133c2fb66031e6",
+          "word": "export"
+        },
+        {
+          "entryId": "en-lex-ec748bd9d47458ad5ef1",
+          "word": "exit"
+        },
+        {
+          "entryId": "en-editorial-exonerate",
+          "word": "exonerate"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/ex-",
+        "https://www.merriam-webster.com/dictionary/exonerate",
+        "https://en.wiktionary.org/wiki/exclude#English",
+        "https://en.wiktionary.org/wiki/export#English",
+        "https://en.wiktionary.org/wiki/exit#English",
+        "https://en.wiktionary.org/wiki/exonerate#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-in-into",
+      "root": "in-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "in; into",
+        "ko": "안에; 안으로"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-b36e29b64eec0693d82d",
+          "word": "include"
+        },
+        {
+          "entryId": "en-lex-f14a5ef19c332ebd40bf",
+          "word": "inject"
+        },
+        {
+          "entryId": "en-lex-ab6fdd4f7a0e9cafd785",
+          "word": "import"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/include#English",
+        "https://en.wiktionary.org/wiki/inject#English",
+        "https://en.wiktionary.org/wiki/import#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-in-not",
+      "root": "in-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "not",
+        "ko": "아닌; ~하지 않는"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-ad1d7ae010bfb7410ff2",
+          "word": "incorrect"
+        },
+        {
+          "entryId": "en-lex-d188e9a6c97c0aa895b2",
+          "word": "inactive"
+        },
+        {
+          "entryId": "en-lex-fbf4a75ea244ebaa0d44",
+          "word": "impossible"
+        },
+        {
+          "entryId": "en-lex-9e2555aef6cbdb1fbf29",
+          "word": "infallible"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/incorrect#English",
+        "https://en.wiktionary.org/wiki/inactive#English",
+        "https://en.wiktionary.org/wiki/impossible#English",
+        "https://en.wiktionary.org/wiki/infallible#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-re",
+      "root": "re-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "again; back",
+        "ko": "다시; 되돌려"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-f2d137b8cdaf32cd1f24",
+          "word": "repeat"
+        },
+        {
+          "entryId": "en-lex-68e5a8b49d183befff0a",
+          "word": "return"
+        },
+        {
+          "entryId": "en-lex-c736b1fcee95300d1124",
+          "word": "rebuild"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/repeat#English",
+        "https://en.wiktionary.org/wiki/return#English",
+        "https://en.wiktionary.org/wiki/rebuild#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-pre",
+      "root": "pre-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "before; in advance",
+        "ko": "전에; 미리"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-92277f59fa112153ac8a",
+          "word": "preview"
+        },
+        {
+          "entryId": "en-lex-8f0a7fedb407082af27e",
+          "word": "predict"
+        },
+        {
+          "entryId": "en-editorial-preclude",
+          "word": "preclude"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/preclude",
+        "https://en.wiktionary.org/wiki/preview#English",
+        "https://en.wiktionary.org/wiki/predict#English",
+        "https://en.wiktionary.org/wiki/preclude#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-sub",
+      "root": "sub-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "under; below",
+        "ko": "아래에; 아래로"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-7e19755c965afe4407d3",
+          "word": "subway"
+        },
+        {
+          "entryId": "en-lex-2efc00a9c16fab7179d6",
+          "word": "submarine"
+        },
+        {
+          "entryId": "en-lex-6036b8b621efedb7e3ca",
+          "word": "subordinate"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/subway#English",
+        "https://en.wiktionary.org/wiki/submarine#English",
+        "https://en.wiktionary.org/wiki/subordinate#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-inter",
+      "root": "inter-",
+      "kind": "prefix",
+      "origin": "la",
+      "meaning": {
+        "en": "between; among",
+        "ko": "사이에; 서로 간에"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-3b50f624fd2c5ab5e295",
+          "word": "international"
+        },
+        {
+          "entryId": "en-lex-febc1cee11123feca076",
+          "word": "interact"
+        },
+        {
+          "entryId": "en-lex-d536cbf29944fbd502c3",
+          "word": "intermission"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/international#English",
+        "https://en.wiktionary.org/wiki/interact#English",
+        "https://en.wiktionary.org/wiki/intermission#English"
+      ]
+    },
+    {
+      "id": "en-family-prefix-anti",
+      "root": "anti-",
+      "kind": "prefix",
+      "origin": "grc",
+      "meaning": {
+        "en": "against; opposite",
+        "ko": "반대하는; 반대의"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-b218e74d6856607bda5b",
+          "word": "antidote"
+        },
+        {
+          "entryId": "en-lex-76bb43c16603932b4f15",
+          "word": "antibiotic"
+        },
+        {
+          "entryId": "en-editorial-antithesis",
+          "word": "antithesis"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/antithesis",
+        "https://en.wiktionary.org/wiki/antidote#English",
+        "https://en.wiktionary.org/wiki/antibiotic#English",
+        "https://en.wiktionary.org/wiki/antithesis#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-less",
+      "root": "-less",
+      "kind": "suffix",
+      "origin": "ang",
+      "meaning": {
+        "en": "without",
+        "ko": "~이 없는"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-cac8a8a1d0a43b558e2d",
+          "word": "harmless"
+        },
+        {
+          "entryId": "en-lex-62978281276b7a11cde4",
+          "word": "hopeless"
+        },
+        {
+          "entryId": "en-lex-26efa218aca4838b0b3c",
+          "word": "careless"
+        },
+        {
+          "entryId": "en-editorial-guileless",
+          "word": "guileless"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/-less",
+        "https://en.wiktionary.org/wiki/harmless#English",
+        "https://en.wiktionary.org/wiki/hopeless#English",
+        "https://en.wiktionary.org/wiki/careless#English",
+        "https://en.wiktionary.org/wiki/guileless#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-ful",
+      "root": "-ful",
+      "kind": "suffix",
+      "origin": "ang",
+      "meaning": {
+        "en": "full of; having a quality",
+        "ko": "~이 가득한; ~한 성질의"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-6b61d854c00ae0c48ff1",
+          "word": "useful"
+        },
+        {
+          "entryId": "en-lex-9d14ed6646b1e5f8ea32",
+          "word": "helpful"
+        },
+        {
+          "entryId": "en-lex-8208821ff16d56384eaf",
+          "word": "colourful"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/-ful",
+        "https://en.wiktionary.org/wiki/useful#English",
+        "https://en.wiktionary.org/wiki/helpful#English",
+        "https://en.wiktionary.org/wiki/colourful#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-ness",
+      "root": "-ness",
+      "kind": "suffix",
+      "origin": "ang",
+      "meaning": {
+        "en": "a state or quality",
+        "ko": "상태나 성질"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-ce6788faad57b77448a4",
+          "word": "darkness"
+        },
+        {
+          "entryId": "en-lex-f169584bd56560464a89",
+          "word": "kindness"
+        },
+        {
+          "entryId": "en-lex-124094244560b4c7b9a9",
+          "word": "happiness"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/-ness",
+        "https://en.wiktionary.org/wiki/darkness#English",
+        "https://en.wiktionary.org/wiki/kindness#English",
+        "https://en.wiktionary.org/wiki/happiness#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-able",
+      "root": "-able",
+      "kind": "suffix",
+      "origin": "la",
+      "meaning": {
+        "en": "can be; suitable for",
+        "ko": "~할 수 있는; ~하기에 적합한"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-e5b97ef6782d4d31ed45",
+          "word": "acceptable"
+        },
+        {
+          "entryId": "en-lex-edc899969f8e07b3c48d",
+          "word": "noticeable"
+        },
+        {
+          "entryId": "en-lex-a9d4b9077d2668880d7a",
+          "word": "understandable"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/acceptable#English",
+        "https://en.wiktionary.org/wiki/noticeable#English",
+        "https://en.wiktionary.org/wiki/understandable#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-ist",
+      "root": "-ist",
+      "kind": "suffix",
+      "origin": "grc",
+      "meaning": {
+        "en": "a person who practises or specialises",
+        "ko": "어떤 활동을 하거나 전문으로 하는 사람"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-ce1418665df037bd7a13",
+          "word": "artist"
+        },
+        {
+          "entryId": "en-lex-94a4f7b080fa9022961f",
+          "word": "scientist"
+        },
+        {
+          "entryId": "en-lex-5888c12593a044c04a75",
+          "word": "pianist"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/-ist",
+        "https://en.wiktionary.org/wiki/artist#English",
+        "https://en.wiktionary.org/wiki/scientist#English",
+        "https://en.wiktionary.org/wiki/pianist#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-logist",
+      "root": "-logist",
+      "kind": "suffix",
+      "origin": "grc",
+      "meaning": {
+        "en": "a specialist in a field of study",
+        "ko": "어떤 학문 분야의 전문가"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-4597e0ea307ce8a0cb6a",
+          "word": "biologist"
+        },
+        {
+          "entryId": "en-lex-d7e2b7fa40e95fb689dc",
+          "word": "psychologist"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/-logist",
+        "https://en.wiktionary.org/wiki/biologist#English",
+        "https://en.wiktionary.org/wiki/psychologist#English"
+      ]
+    },
+    {
+      "id": "en-family-suffix-ology",
+      "root": "-ology",
+      "kind": "suffix",
+      "origin": "grc",
+      "meaning": {
+        "en": "the study of a subject",
+        "ko": "어떤 대상을 연구하는 학문"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-529f2ea7d6c3523181fb",
+          "word": "biology"
+        },
+        {
+          "entryId": "en-lex-d6290402c45b343fa8e4",
+          "word": "psychology"
+        },
+        {
+          "entryId": "en-lex-1dcf0354c1a05c7e38e7",
+          "word": "sociology"
+        },
+        {
+          "entryId": "en-lex-702d0e3e9c7aa6649d28",
+          "word": "geology"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/-ology",
+        "https://en.wiktionary.org/wiki/biology#English",
+        "https://en.wiktionary.org/wiki/psychology#English",
+        "https://en.wiktionary.org/wiki/sociology#English",
+        "https://en.wiktionary.org/wiki/geology#English"
+      ]
+    },
+    {
+      "id": "en-family-root-aud",
+      "root": "aud",
+      "kind": "root",
+      "origin": "la",
+      "meaning": {
+        "en": "hear; listen",
+        "ko": "듣다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-0e86f3967356cf188d1b",
+          "word": "audience"
+        },
+        {
+          "entryId": "en-lex-9a7975434c4ae5aa720e",
+          "word": "audio"
+        },
+        {
+          "entryId": "en-lex-2ae479cbbb31fb8c93f4",
+          "word": "audition"
+        },
+        {
+          "entryId": "en-lex-943909563efbacb7eb6d",
+          "word": "auditor"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/audio-",
+        "https://en.wiktionary.org/wiki/audience#English",
+        "https://en.wiktionary.org/wiki/audio#English",
+        "https://en.wiktionary.org/wiki/audition#English",
+        "https://en.wiktionary.org/wiki/auditor#English"
+      ]
+    },
+    {
+      "id": "en-family-root-spect",
+      "root": "spect",
+      "kind": "root",
+      "origin": "la",
+      "meaning": {
+        "en": "look; see",
+        "ko": "보다; 살펴보다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-dec0bc768d2aca520f0d",
+          "word": "inspect"
+        },
+        {
+          "entryId": "en-lex-2ee33d378b220b8d9cd9",
+          "word": "spectator"
+        },
+        {
+          "entryId": "en-lex-d59650a244d4512b9070",
+          "word": "spectacle"
+        },
+        {
+          "entryId": "en-lex-8b9eafe838ae9ca69ba3",
+          "word": "introspection"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/inspect#English",
+        "https://en.wiktionary.org/wiki/spectator#English",
+        "https://en.wiktionary.org/wiki/spectacle#English",
+        "https://en.wiktionary.org/wiki/introspection#English"
+      ]
+    },
+    {
+      "id": "en-family-root-port",
+      "root": "port",
+      "kind": "root",
+      "origin": "la",
+      "meaning": {
+        "en": "carry",
+        "ko": "나르다; 운반하다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-454fdf290ba20b8544be",
+          "word": "transport"
+        },
+        {
+          "entryId": "en-lex-61751a133c2fb66031e6",
+          "word": "export"
+        },
+        {
+          "entryId": "en-lex-ab6fdd4f7a0e9cafd785",
+          "word": "import"
+        },
+        {
+          "entryId": "en-lex-8b04c2388734a39d6d06",
+          "word": "porter"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/transport#English",
+        "https://en.wiktionary.org/wiki/export#English",
+        "https://en.wiktionary.org/wiki/import#English",
+        "https://en.wiktionary.org/wiki/porter#English"
+      ]
+    },
+    {
+      "id": "en-family-root-scrib-script",
+      "root": "scrib / script",
+      "kind": "root",
+      "origin": "la",
+      "meaning": {
+        "en": "write",
+        "ko": "쓰다; 기록하다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-369e5cdc49e0e7a0844a",
+          "word": "describe"
+        },
+        {
+          "entryId": "en-lex-09e8a2d5d732a4f59a58",
+          "word": "prescribe"
+        },
+        {
+          "entryId": "en-lex-74478b5d74ccaee0ea08",
+          "word": "manuscript"
+        },
+        {
+          "entryId": "en-lex-c7e3032479f9317b2271",
+          "word": "script"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/describe#English",
+        "https://en.wiktionary.org/wiki/prescribe#English",
+        "https://en.wiktionary.org/wiki/manuscript#English",
+        "https://en.wiktionary.org/wiki/script#English"
+      ]
+    },
+    {
+      "id": "en-family-root-dic-dict",
+      "root": "dic / dict",
+      "kind": "root",
+      "origin": "la",
+      "meaning": {
+        "en": "say; speak",
+        "ko": "말하다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-837d9eb0b62b4d853cbf",
+          "word": "dictate"
+        },
+        {
+          "entryId": "en-lex-4d48d72da929b1f94e9f",
+          "word": "dictionary"
+        },
+        {
+          "entryId": "en-lex-8f0a7fedb407082af27e",
+          "word": "predict"
+        },
+        {
+          "entryId": "en-lex-465ef262c754c88c67dd",
+          "word": "contradiction"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/dictate#English",
+        "https://en.wiktionary.org/wiki/dictionary#English",
+        "https://en.wiktionary.org/wiki/predict#English",
+        "https://en.wiktionary.org/wiki/contradiction#English"
+      ]
+    },
+    {
+      "id": "en-family-root-phon",
+      "root": "phon",
+      "kind": "root",
+      "origin": "grc",
+      "meaning": {
+        "en": "sound; voice",
+        "ko": "소리; 목소리"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-6e993e220b3e483c3303",
+          "word": "phone"
+        },
+        {
+          "entryId": "en-lex-b556a1b731a80c0e5c38",
+          "word": "telephone"
+        },
+        {
+          "entryId": "en-lex-8feaaeb07415ede34f7d",
+          "word": "microphone"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/phone#English",
+        "https://en.wiktionary.org/wiki/telephone#English",
+        "https://en.wiktionary.org/wiki/microphone#English"
+      ]
+    },
+    {
+      "id": "en-family-root-graph",
+      "root": "graph",
+      "kind": "root",
+      "origin": "grc",
+      "meaning": {
+        "en": "write; draw",
+        "ko": "쓰다; 그리다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-5b98fa4a290d33cb3b48",
+          "word": "graph"
+        },
+        {
+          "entryId": "en-lex-1e978affc0205a9f7963",
+          "word": "graphic"
+        },
+        {
+          "entryId": "en-lex-f8d56812fb1dc7d07f4b",
+          "word": "biography"
+        },
+        {
+          "entryId": "en-lex-d87c4de25a146d7d375a",
+          "word": "telegraph"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/graph#English",
+        "https://en.wiktionary.org/wiki/graphic#English",
+        "https://en.wiktionary.org/wiki/biography#English",
+        "https://en.wiktionary.org/wiki/telegraph#English"
+      ]
+    },
+    {
+      "id": "en-family-root-bio",
+      "root": "bio",
+      "kind": "root",
+      "origin": "grc",
+      "meaning": {
+        "en": "life",
+        "ko": "생명; 삶"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-529f2ea7d6c3523181fb",
+          "word": "biology"
+        },
+        {
+          "entryId": "en-lex-f8d56812fb1dc7d07f4b",
+          "word": "biography"
+        },
+        {
+          "entryId": "en-lex-0a7cef15b0898b2aaefd",
+          "word": "biochemistry"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/biology#English",
+        "https://en.wiktionary.org/wiki/biography#English",
+        "https://en.wiktionary.org/wiki/biochemistry#English"
+      ]
+    },
+    {
+      "id": "en-family-root-tele",
+      "root": "tele",
+      "kind": "root",
+      "origin": "grc",
+      "meaning": {
+        "en": "far; at a distance",
+        "ko": "멀리; 먼 거리에서"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-c26031d9f4aee42e9831",
+          "word": "telescope"
+        },
+        {
+          "entryId": "en-lex-4c1045ef6dfdf6a038a7",
+          "word": "television"
+        },
+        {
+          "entryId": "en-lex-d87c4de25a146d7d375a",
+          "word": "telegraph"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/telescope#English",
+        "https://en.wiktionary.org/wiki/television#English",
+        "https://en.wiktionary.org/wiki/telegraph#English"
+      ]
+    },
+    {
+      "id": "en-family-root-geo",
+      "root": "geo",
+      "kind": "root",
+      "origin": "grc",
+      "meaning": {
+        "en": "earth; land",
+        "ko": "땅; 지구"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-ed425375c0bd731b0d25",
+          "word": "geography"
+        },
+        {
+          "entryId": "en-lex-702d0e3e9c7aa6649d28",
+          "word": "geology"
+        },
+        {
+          "entryId": "en-lex-03889951c1f50e970414",
+          "word": "geometry"
+        }
+      ],
+      "references": [
+        "https://en.wiktionary.org/wiki/geography#English",
+        "https://en.wiktionary.org/wiki/geology#English",
+        "https://en.wiktionary.org/wiki/geometry#English"
+      ]
+    },
+    {
+      "id": "en-family-root-chron",
+      "root": "chron",
+      "kind": "root",
+      "origin": "grc",
+      "meaning": {
+        "en": "time",
+        "ko": "시간"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-d9ac4536cca9bc0e4579",
+          "word": "chronicle"
+        },
+        {
+          "entryId": "en-editorial-anachronism",
+          "word": "anachronism"
+        },
+        {
+          "entryId": "en-editorial-anachronistic",
+          "word": "anachronistic"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/anachronism",
+        "https://en.wiktionary.org/wiki/chronicle#English",
+        "https://en.wiktionary.org/wiki/anachronism#English",
+        "https://en.wiktionary.org/wiki/anachronistic#English"
+      ]
+    },
+    {
+      "id": "en-family-root-clud-clus",
+      "root": "clud / clus",
+      "kind": "root",
+      "origin": "la",
+      "meaning": {
+        "en": "close; shut",
+        "ko": "닫다; 막다"
+      },
+      "members": [
+        {
+          "entryId": "en-lex-b36e29b64eec0693d82d",
+          "word": "include"
+        },
+        {
+          "entryId": "en-lex-8e0cd015e5e797afbff8",
+          "word": "exclude"
+        },
+        {
+          "entryId": "en-editorial-preclude",
+          "word": "preclude"
+        },
+        {
+          "entryId": "en-editorial-occlude",
+          "word": "occlude"
+        },
+        {
+          "entryId": "en-lex-f6741785abf0e3649834",
+          "word": "conclusion"
+        }
+      ],
+      "references": [
+        "https://www.merriam-webster.com/dictionary/include",
+        "https://www.merriam-webster.com/dictionary/exclude",
+        "https://www.merriam-webster.com/dictionary/preclude",
+        "https://www.merriam-webster.com/dictionary/occlude",
+        "https://www.merriam-webster.com/dictionary/conclusion",
+        "https://www.merriam-webster.com/dictionary/conclude"
+      ]
+    }
+  ]
+}
