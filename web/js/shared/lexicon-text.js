@@ -1,4 +1,5 @@
 const labels={
+ 'Kanji and Okurigana':'한자와 오쿠리가나',
  'Wrong Attempts':'오답 횟수','Wrong Answer':'오답',
  'Choose the correct meaning.':'알맞은 뜻을 고르세요.','Type the word for this meaning.':'뜻에 맞는 단어를 입력하세요.','Show Reading':'읽기 표시','Reset':'초기화','Tap words to build the sentence.':'단어를 눌러 문장을 완성하세요.',
  'Dictation mode':'받아쓰기 모드','Families':'계열','Words':'단어','Type':'종류','Root':'어근','Infix':'접요사','Interfix':'연결 형태소','Circumfix':'접환사','Affix':'접사',
