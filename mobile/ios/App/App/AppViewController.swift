@@ -21,7 +21,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana") || arguments.contains("--verify-japanese-reading-target")) else { return }
+        guard !verificationStarted && (arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-japanese-completion") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana") || arguments.contains("--verify-japanese-reading-target")) else { return }
         verificationStarted = true
         verifyPackages(attempt: 0)
     }
@@ -210,6 +210,20 @@ class AppViewController: CAPBridgeViewController {
                   pairs.push(target + '-' + explanation);
                 }
                 const result = {passed:true,pairs,origin:location.origin,wordCount:document.querySelectorAll('.wl-row').length,locale:document.documentElement.lang};
+                if (completion) {
+                  const {createPackageStorage}=await import('./js/packages/storage.js'),storage=createPackageStorage(),catalog=await fetch('./catalog.json').then(response=>response.json());
+                  const descriptor=id=>catalog.find(row=>row.id===id),core=await storage.get('ja-core',descriptor('ja-core').version);
+                  if(!core?.contentReview?.completionReview?.fullCoverage)throw new Error('Installed Japanese completion proof is missing');
+                  const count=core.entries.length,native=core.entries.filter(row=>row.example?.text?.trim()).length,translations={};
+                  if(count!==core.contentReview.entries||native!==count)throw new Error('Japanese primary example coverage is incomplete');
+                  for(const locale of ['en','ko']){
+                    const pair=await storage.get('ja-'+locale,descriptor('ja-'+locale).version);
+                    if(pair?.studyVersion!==core.version||pair.entries.length!==count)throw new Error('Japanese completion explanation is incompatible');
+                    translations[locale]=pair.entries.filter(row=>row.meaning?.trim()&&row.exampleTranslation?.trim()).length;
+                    if(translations[locale]!==count)throw new Error('Japanese completion translations are missing');
+                  }
+                  result.japaneseExampleCoverage={version:core.version,words:count,examples:native,translations,independentlyReviewed:core.contentReview.completionReview.independentlyReviewed,nativeSpeakerReview:core.contentReview.nativeSpeakerReview};
+                }
                 if (english || japanese) {
                   document.querySelector('[data-tab=home]').click();
                   await wait(() => document.querySelector('[data-route=vocabinput]'));
@@ -286,7 +300,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["readingTarget":ProcessInfo.processInfo.arguments.contains("--verify-japanese-reading-target"),"okurigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-okurigana"),"furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections")], in: nil, in: .page) { result in
+                """, arguments: ["readingTarget":ProcessInfo.processInfo.arguments.contains("--verify-japanese-reading-target"),"okurigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-okurigana"),"furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections") || ProcessInfo.processInfo.arguments.contains("--verify-japanese-completion"),"completion":ProcessInfo.processInfo.arguments.contains("--verify-japanese-completion")], in: nil, in: .page) { result in
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                     case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")
