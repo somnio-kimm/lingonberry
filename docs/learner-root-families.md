@@ -1,12 +1,12 @@
 # Learner roots, prefixes and suffixes
 
-English → Root Families has separate Browse and Practice tabs. Confusable Words is a different Study feature: similar spelling does not prove shared ancestry. Meaning Quiz and Word Input remain ordinary vocabulary tests.
+English → Root Families has separate Browse and Practice tabs. Confusable Words has been removed from Study; similar spelling does not prove shared ancestry. Meaning Quiz and Word Input remain ordinary vocabulary tests.
 
 Browse starts with all 27 curated groups, including aud, ex-, two different in- prefixes, -less, -logist and clud / clus. Each group has a simple Latin, Greek or Old English origin label, an original English/Korean meaning and related dictionary words. Type and search filters work across the whole set. Selected Study Level restricts the browser when wanted; Practice always follows the selected level and ordinary study filters.
 
 The set contains 92 member links to 82 distinct existing vocabulary entries across all four English study bands. It replaces the advanced historical-source browser, not the dictionary. It is a reviewed starter selection, not an etymological analysis of every English word. Origin identifies the historical element, including later English formations and transmission through another language; it does not claim every modern word was borrowed directly from that language.
 
-Practice asks for a related word matching its existing dictionary meaning, using the element and origin as clues. Choices come from same-part-of-speech members with distinct displayed meanings; a group with too few choices can still offer typing. A clue that already contains the complete answer is withheld. Historical relationships are not a formula for deriving a modern meaning. Defaults and confusable-word questions are unchanged.
+Practice asks for a related word matching its existing dictionary meaning, using the element and origin as clues. Choices come from same-part-of-speech members with distinct displayed meanings; a group with too few choices can still offer typing. A clue that already contains the complete answer is withheld. Historical relationships are not a formula for deriving a modern meaning. Default vocabulary modes are unchanged. Confusable-word questions are excluded from active practice; previously saved Review records remain usable.
 
 ## Content and licences
 
@@ -23,3 +23,9 @@ The release test checks source integrity, stable vocabulary, separate bilingual 
 ## Native verification — 21 October 2026
 
 SOMNIO-TABLET passed English and Japanese checks online and with HTTP/HTTPS fetches blocked, using both English and Korean explanation packages. The checks verified the separate specialist menus, vocabulary-only defaults, learner root groups/origins and Japanese form categories. The app was relaunched normally after verification; the update preserved its existing installation and study data.
+
+## Coverage limitation and expansion audit
+
+The 27 learner groups were deliberately selected during a presentation simplification, not extracted as the complete inventory. The existing local Wiktionary audit found 916 candidate root/ancestor groups and accepted 611 as reference-only historical groups. They are not 611 verified learner-ready roots with simple bilingual element meanings. These counts concern the currently studied dictionary, not every English morpheme. They do not establish a total of 1,000 distinct learner families.
+
+Broader coverage remains unfinished. Expansion must retain distinct homonymous elements, identify roots versus productive affixes, supply the element's own meaning and verify each related word. Spelling similarity, inflection variants and multiple historical steps must not be counted as additional families merely to reach a number. Existing candidate/source records remain available for that work; the 27-group learner set is not comprehensive coverage.

@@ -24,8 +24,8 @@ test('learner family release preserves vocabulary and confusables with separatel
   const pair=await read(`language-packages/en-${locale}-${release.to}.json`);validateExplanation(core,pair);
   for(const family of pair.families)assert.equal(family.meaning,source.families.find(row=>row.id===family.id).meaning[locale]);
   const study=assembleStudy(core,pair),rows=prepareLanguageExercises(study,studyWords(study));
-  assert.ok(rows.some(row=>row.category==='roots'));assert.ok(rows.some(row=>row.category==='confusables'));
+  assert.ok(rows.some(row=>row.category==='roots'));assert.ok(!rows.some(row=>row.category==='confusables'));
   assert.ok(!rows.some(row=>row.category==='articles'));
  }
- assert.notDeepEqual(exerciseModes('en').roots,exerciseModes('en').confusables);
+ assert.ok(exerciseModes('en').roots);assert.equal(exerciseModes('en').confusables,undefined);
 });

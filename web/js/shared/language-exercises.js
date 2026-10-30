@@ -12,7 +12,8 @@ export const EXERCISE_ROUTES=Object.freeze({
 export const exerciseLabel=(id,locale='en')=>EXERCISE_CATEGORIES[id]?.[locale==='ko'?1:0]||id;
 export function exerciseCategories(exercises,route){return [...new Set(exercises.filter(row=>row.route===route).map(row=>row.category))];}
 export function exerciseModes(language){
- const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])];
+ // Keep the package schema registry above readable for existing downloads and Review history.
+ const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])].filter(id=>!(language==='en'&&['articles','confusables'].includes(id)));
  const icons={reading:'📚',onyomi:'音',kunyomi:'訓',okurigana:'✍️',kanji:'🔎',transitivity:'🔄',forms:'⌨️',particles:'📝',counters:'🔢',collocations:'🔗',phrasal:'🧩',confusables:'🔍',roots:'🌱',patterns:'📝',articles:'🔠'};
  return Object.fromEntries(categories.map(id=>[id,[exerciseLabel(id),icons[id]||'📝','teal']]));
 }
