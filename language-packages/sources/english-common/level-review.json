@@ -1,0 +1,2994 @@
+{
+  "version": 1,
+  "id": "english-common-coverage-2026-10-21",
+  "decisions": [
+    {
+      "id": "en-lex-78140682f3e476261c06",
+      "word": "parent",
+      "partOfSpeech": "noun",
+      "meaningSha256": "29e2859c12fa23d2455296d783460b0b18a00f204e3268c8f8017280bcb4008d",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-1f87f77d86c366b780e8",
+      "word": "figure",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a219cbcd530ba4b75ff05c86c69f1b33ab3a29839f36fdad8a3a787f0cb7c25e",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-6ed7ef4a6aa7f59b5456",
+      "word": "figure",
+      "partOfSpeech": "verb",
+      "meaningSha256": "5a5299fcdeba2e94a969c8cb473d9f568b87ec33e43a82625ee1b641f3f5b22b",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-13fc047ae060d05d8aa9",
+      "word": "policy",
+      "partOfSpeech": "noun",
+      "meaningSha256": "11b547b16d6d4e7cd94341cbf199ed30ec30334a2131eb8c6c1849e02313059d",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-05e09679f90cbf388455",
+      "word": "position",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2705cb3eba2f9d6f4bbfd0ece82c88048e730f3e2d3bd00e2d6f5a6ccb36604d",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-06ddf9b84aece47a1b19",
+      "word": "position",
+      "partOfSpeech": "verb",
+      "meaningSha256": "2deb2509b5e0bca7fa342278065c6c97456900a1ae22878fe9562ec0e8ae16ea",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-0a2476dc07e388a1959f",
+      "word": "situation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "b3e9088cece08159c5acede92ec76a46aca037c02d8d1e3c9d9dad0630a9be4d",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e3ac7a160c7931c93d32",
+      "word": "accord",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f71fceb50f738ede1a50f04d1d7516012f8b9520069e8c66a1fdf90e9760d4e6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e1954bb4a3d8e9149f3d",
+      "word": "accord",
+      "partOfSpeech": "verb",
+      "meaningSha256": "553a00c75f7499ec511a7a2b454321e45639f6e94afd82710500622c26bc3ff0",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-eb2bdfcf7bde133c33a1",
+      "word": "national",
+      "partOfSpeech": "noun",
+      "meaningSha256": "afe0d0e38ede46e342757000bd8184ec3bb4baa86803fbc2f918b98b6bc8e9eb",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-1131c3e94183ed411a53",
+      "word": "sport",
+      "partOfSpeech": "verb",
+      "meaningSha256": "bf490d2098042621bb25afc04a74f81fbcd0118f25cdc75cf23dddef73b5893b",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-b25687cae25a4ab7a040",
+      "word": "cell",
+      "partOfSpeech": "noun",
+      "meaningSha256": "da2373d8ad8d1c3a0e400d90051c378fe7272c57060aa295f697bd7d91da509e",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-dfba93e5bb9f7f6fbb80",
+      "word": "factor",
+      "partOfSpeech": "noun",
+      "meaningSha256": "6ddccf2f64c4421d80d7e3af5b5b10b48110791c4bdf3ccfe7f628cb3f1258a3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e8f6badb376f640ad3d4",
+      "word": "art",
+      "partOfSpeech": "noun",
+      "meaningSha256": "3dc2a3d4a6d2d2fda07dc689d993f1e0a592551a6ad66bbefde2471abe7268e7",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-addbb7dd782e21472914",
+      "word": "thus",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "3fa545914a3f20e6103d6c5a544d53ce1f302e1203d9b70e03cc4ecaea4d5e36",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8cbfaf325ffce938b0aa",
+      "word": "establish",
+      "partOfSpeech": "verb",
+      "meaningSha256": "76529003ab302dfddee300a5eabde3d566e7ad931fdcb7d87fd14d9f1a82d136",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-61a1f24e5ec553d04fdf",
+      "word": "analysis",
+      "partOfSpeech": "noun",
+      "meaningSha256": "5d003038056dbdfc3325842b84abb12e77e4c8c32a5a10f99f8b451ba1a3a138",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-693aeeda2cf68443a002",
+      "word": "movement",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e11434c81ed2b27c68c9418a5fffab52b3f784c65896ae02823f2ea1d08f03db",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0b6394771f28fb410d92",
+      "word": "potential",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "6bb0d1a26a548beb66fa79af034ac71d0e0462e0a3c40fe0d5f928a859b7b50b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-6e1ea7d9bc7987986cc4",
+      "word": "potential",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a6d3c5d4c4191858cb9bec2988dfd321a531c758d089b4c45db1ffdb10da07cb",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8b4340868544dd5b0c17",
+      "word": "associate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "5e9e2577359c9a89b33dc720ef23e0d443cbe02b9735183ba2269d6137a48592",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-17ae9ff15b2842502f64",
+      "word": "refer",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f957075310cd6e78e1881052d2d18be8c6e44a87cc903baec653196b5120eed9",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-94f28723cdf63c723a35",
+      "word": "assume",
+      "partOfSpeech": "verb",
+      "meaningSha256": "589ac0c70475309c7f201053df207defd4db0c5d404c95236bef19430caa62e3",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-a46e62a09e0884be8b2d",
+      "word": "reference",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d7158eda3b577bd107133cb3efae967dbb8853a1fb4d7d5bb1b31a6ef4e5a2e3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-61e4dfc4197e2d661ae1",
+      "word": "basis",
+      "partOfSpeech": "noun",
+      "meaningSha256": "ce1a131f712373f6692ae885c09983768c81e9056b378e0c0ff5f2855319e89f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4a4665d7f9effbac8cd4",
+      "word": "define",
+      "partOfSpeech": "verb",
+      "meaningSha256": "a68e0ac70fbe549aa1a84c914ebc02ec9488f1d5d4e9b2a54d9039bcd21674e9",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f1d660386013b7a2942a",
+      "word": "object",
+      "partOfSpeech": "noun",
+      "meaningSha256": "709f710406b6eea963fec5cfd62233c0e8a3f8999a5b1d80e19eea3732ef53e3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-622896e43cbf3801ad4b",
+      "word": "object",
+      "partOfSpeech": "verb",
+      "meaningSha256": "c8307b7a78659ecbb7a5c0b76f37a7c0eba8d81a7a30adec128433563518a76e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-7a98b92c2fbdca9936b4",
+      "word": "credit",
+      "partOfSpeech": "noun",
+      "meaningSha256": "7ccbaca671bb550983982ead769fc3426e7021337c4dc01fec3caa38c4295973",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c58d92bc71e34ae28c8b",
+      "word": "discover",
+      "partOfSpeech": "verb",
+      "meaningSha256": "8b7d0cf9d26df96d49f7f01a684870c18db19646bb326cc78698c0ae777625d8",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-a2032b0bc759b5afd13d",
+      "word": "estimate",
+      "partOfSpeech": "noun",
+      "meaningSha256": "bfd8cec294e37fef8ab603a7de22ed96d2afa293d5b7d9b8a63045abf389c883",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ac9cee1485d1b04578a1",
+      "word": "estimate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "533cb16d0e192062428c275d71f0b3e0f319784373b6f89ee303eb9ee3a249ee",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-5dbfac0afd435dced383",
+      "word": "independent",
+      "partOfSpeech": "noun",
+      "meaningSha256": "4b8c019a356a995c115611dd29701aef0c8d25ea36c6126440f02f1f67200d19",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-5c02713fd432fb457e49",
+      "word": "none",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "5b27b8329025a9d8f4473531f8df39318573f4a4b73b8e0db20fde30765ece32",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-174332a0fda1f9d9f0ce",
+      "word": "element",
+      "partOfSpeech": "noun",
+      "meaningSha256": "3567e21a691fcaf993adca06261857e4677da7a899e34b6cdb5de9d67f94e9ad",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-63c4bbe5285a6eb6b3bf",
+      "word": "administration",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0b12f79b503487987be7ace1ede6237db5feb02ddb27bce6c93ae57b4ee4501f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c399629a41fc97ad1e78",
+      "word": "context",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2308503def89c020f35cfb9d8a10653523c506ba7a6a55193147c72cc5a92bb8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-5b18ef8a39c18b986701",
+      "word": "conduct",
+      "partOfSpeech": "noun",
+      "meaningSha256": "9e2c1f82019614fb127191675f11e9e3fa9c3699327ee3da04bb2fa9dc62a27a",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-db20c2f60f7acaa708a7",
+      "word": "conduct",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f67e0eed0a5c3c8c9ab4cdcc9978f1a4edad55f2b0ae33b6eb032a6b303e1cc2",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-9fb75d0e94f3d180f5ea",
+      "word": "executive",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c2b3f3fa29ee66a9852a8368cf9e9057d0a34cc75b90e4e39aac5b3fd441da68",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8642541c1a3c5f6e40a9",
+      "word": "observe",
+      "partOfSpeech": "verb",
+      "meaningSha256": "0694c64d974b44b70098de7bc6d1b71772ace276d308aa5fd17a0dcdd201f60d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4135905aaaee94e8f0a4",
+      "word": "respond",
+      "partOfSpeech": "verb",
+      "meaningSha256": "635b9558ef097acdef4e081c549d77ef090026ea6b8398706db614f0afcfc0c5",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-abbe67c72d2aa5b8638e",
+      "word": "institution",
+      "partOfSpeech": "noun",
+      "meaningSha256": "86d3ba9c2bbd7ae47293d8abf709b13f98674f2176dd403d94f37d0dc20b26c8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0e985c86300d669f5034",
+      "word": "grant",
+      "partOfSpeech": "noun",
+      "meaningSha256": "09c0bbb2b4ae325d53d6a932f8d8604418057030a8a018402be330aae9b29db8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-97a43fee33b5e743790e",
+      "word": "grant",
+      "partOfSpeech": "verb",
+      "meaningSha256": "9e36e108d2f297795ecddfe6585ef3de97e5610a7d2695455053da950f7dc24b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0ac105469ca7fd665962",
+      "word": "sector",
+      "partOfSpeech": "noun",
+      "meaningSha256": "51044144fd4acb7419f43f76f25896a8dd0e603da499c3de885df80cf5083f9c",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-2bb5ecceb38b564c128b",
+      "word": "extent",
+      "partOfSpeech": "noun",
+      "meaningSha256": "6ccb750afbe14c5c27d739aca27096a60ff0e032d6db324bf521b7a1ffbe2949",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-6a64ffe09af6a87de1db",
+      "word": "annual",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c5ab733d25b3d4d18fccecc2c13e17900bf1716e4804f6c9697b0373fdb8f6d7",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-2c2b25108c1b9963b313",
+      "word": "contrast",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f411edac9eff62d7d5292bd9f2c90861d16554ba03ed09f7af74574868bb00eb",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e9d9d727f800c1356ea4",
+      "word": "contrast",
+      "partOfSpeech": "verb",
+      "meaningSha256": "7b6f83ca5d846d254754371e48f246884cbac79202743f4b55fc145f42e1e526",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-88230e0a083f104eaa13",
+      "word": "presence",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c6263f65a2edfbbc40f6aa228832ac61c8344509f83c64e9d26c14f000eefd7c",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-fce9f9eda1f35f529af8",
+      "word": "emerge",
+      "partOfSpeech": "verb",
+      "meaningSha256": "60cb140504c94d792c383119e25b3f888e7d77f278cfdde8745b08f0b84de558",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ca0ec1a7ea87cb5fde25",
+      "word": "concept",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f0e9d4f6548adc4fede0afb631d2199da9abbb5c1b5cd3bfed209e9bac9dd35b",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-2e79ba1233225f695b4e",
+      "word": "reform",
+      "partOfSpeech": "noun",
+      "meaningSha256": "27b19290bb94e755a10d2151699eb271062ce3b51f043bd9d84816cfd8e71c6d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9e6894ed2f9851491db7",
+      "word": "reform",
+      "partOfSpeech": "verb",
+      "meaningSha256": "31b59df5568ba0c8680cc92d6a950f350d895127c01374b7020d48ceb30b3f0a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-fadcd7f709d857d6d12d",
+      "word": "consequence",
+      "partOfSpeech": "noun",
+      "meaningSha256": "704106cbb8d1aac30f3601668b4f181ab59f2dc3d35285275d22809bd2cadbe5",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-a6c2d7a2cd881894fce1",
+      "word": "mass",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0bf851ee4e529f71b8b7e1b4040e51dd137f6e0f28a9fbbb585b7b07f5b62f02",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-765ab2098686d015b0b0",
+      "word": "mass",
+      "partOfSpeech": "verb",
+      "meaningSha256": "9b621fbf0c6e5783a3dbdff5cebd0de4bfa42ee3960f049a8e990804f2379b85",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-10c374687bead295b73a",
+      "word": "demonstrate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f1e92d3548935ea17665330951c7c1e1bb8bd41ea3496fe41f3ce2b282eb9e7f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-bee55579aa9b2d27124d",
+      "word": "union",
+      "partOfSpeech": "noun",
+      "meaningSha256": "64811263b7413ba67c333ec7d649c5227d0b69217abc8b23c598789d820a3531",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-bb7f133a562e8984856e",
+      "word": "path",
+      "partOfSpeech": "noun",
+      "meaningSha256": "691fd8a761ee34181f12f7beb63ef00b92187378da6715709333ab95ca26becd",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-07a2cb2acf04951663a9",
+      "word": "engage",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d703f1641503125a2928af5867b3865b43f67433c3118bcf88a11431072d6079",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-22d9fae1668fec60e3e9",
+      "word": "crisis",
+      "partOfSpeech": "noun",
+      "meaningSha256": "1c353ea7aa592ad20abe1290b24f029977fa170bf9f1030069990cf358a009e6",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-677003f77feca983336c",
+      "word": "investigation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "7d4634ea6e4da06776858310629dd0685de39e0bac4a8940b5ae84d07e60e1c3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-01190670a8f0240dbfa5",
+      "word": "experiment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0901d652a6da178005ea939c5e1263fdb1311afdf80e2b6ce749d551416da022",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4d752b9891a0022a40a8",
+      "word": "experiment",
+      "partOfSpeech": "verb",
+      "meaningSha256": "489530d132848115aa219c55501b7ad1140ecfe06024456ad0a3b983741ad998",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0d57240b2edc1f19bc85",
+      "word": "revenue",
+      "partOfSpeech": "noun",
+      "meaningSha256": "b647fccc48b129d7f43d1ed49292473b0c06be2330017cc2c5f4262dad38b24a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e65bb9b9a7893a78006c",
+      "word": "manufacture",
+      "partOfSpeech": "verb",
+      "meaningSha256": "3e34b4ae92732f1248ee28ae16c163dc324df6ae6d7450e45abec0f08a677497",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8c4ca2b49e1b4d4c7b7a",
+      "word": "cycle",
+      "partOfSpeech": "noun",
+      "meaningSha256": "44c428d0fdd66b341aa057d4e8f04ff4376e48d88b17f0f561c37111fab310b5",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ae4a5971072c18ff9771",
+      "word": "moreover",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "0e1f41a9f1b71e8cf435143481c7b83ea4002081374764e5b2691ef0a6713040",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8b864a954f8cc4f3b180",
+      "word": "oppose",
+      "partOfSpeech": "verb",
+      "meaningSha256": "5df06e105b98ac592f7899a4f3ef23cab1445f74e84949899b37cb6ae1f912ed",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-867d59db10478cc42cbc",
+      "word": "generate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "56b1f3f1d7ff6beeb16596c14e6d50677516d8072dfb0eea340ff8c2865f0f5f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-039f10e38995ef0a9868",
+      "word": "civil",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "1a6ec9c3269cc81eff07cb1abb8f9726df93a1676469d190db485d0415deb34b",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-a3308afb3042e0e7aa2a",
+      "word": "domestic",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "dbe2699bfe2effa5aa51dda147e227e609b9e17016721f9a346bc564619b9d87",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f97a41335251ebfc5b4a",
+      "word": "acquire",
+      "partOfSpeech": "verb",
+      "meaningSha256": "cb068d4ef1116040fada36a9f5382d48095cb8c22077eaca600fca170cae91e7",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e2ae471f1f98719f82f9",
+      "word": "corporate",
+      "partOfSpeech": "noun",
+      "meaningSha256": "54618cf379f27b4d9a1738bec75502cc132d4050066ed23f7aae3579394331d8",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-20c475e5f7d3e4fa05a7",
+      "word": "assessment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "ba72d57f499cba5f7b01093732cc9781f8ce9b7742f594373b5832db7fa7d09f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-87c50d8af34ba015e3a9",
+      "word": "regulation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "05c4517622f1286574677503597b0b32a75c66d63f663b5901674ff675ba9096",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-aa3248deec3225933ec8",
+      "word": "component",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8dfb1015289dbf9462db93ff45b559219421e0c83a91af2bcae9160499f7e72a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-b4ad9b017d5892b6298c",
+      "word": "perspective",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c9b40c4dbd31a0ea9ce6ae7084c0e3be3a22108f075619338276d7048fe6fd0c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0699a78369f40d3acf10",
+      "word": "assess",
+      "partOfSpeech": "verb",
+      "meaningSha256": "9ffd278a91e8b69803c2848f916ae4ab5bc1c119b8004e61b0e750a447d09a59",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-40ba4eb88333d362d3fe",
+      "word": "asset",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8951f93618c987a3a95f3874d20c9b55428312d8853c7c116c554bc2109f317a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2c92e9688e3f3e5f46aa",
+      "word": "commitment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "84a8f60c5dfc4346dbbf51801cfd31b649713cdab364a5dbc57e27606a202823",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-aa3b17c317042c23b71b",
+      "word": "necessarily",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "7aa1dfc9fefbd1d7573314845c4361321727b18101ed746f93be1a25dddd9719",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0150c0b91f2b48096593",
+      "word": "literature",
+      "partOfSpeech": "noun",
+      "meaningSha256": "b127977e2cdef359e5e24b9e0575cfd7a27ec51e1e03222d6b30866134d256e9",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0fd92e89f992704f0d57",
+      "word": "channel",
+      "partOfSpeech": "noun",
+      "meaningSha256": "fb7a75b50b6d3f6ab9c0f7f8c878a59589998f49744916481040f60562964b9c",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e602d59805b3253881f7",
+      "word": "provision",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d8955e74d41828d8383092c87d81df894a19323a77c1557776944ac28a6b735a",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-c3a0283523f2d845411f",
+      "word": "master",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e84562ec3bf6d6b45e82884892284cf0fc2c4934e6719197cf3600323ff46032",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-4f8aab1eaa195ba73584",
+      "word": "master",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f7c7e231c90a3ca841755190f3de354c2c8cd96e952c31f7e3bd1c769a2edf00",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-97fcf70feee1f9813369",
+      "word": "nevertheless",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "a5f72b0df01794d5254bb11ed5047ca6413885cd27a33d2dfe0b1df9b5d48516",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-33ecd98075265acfe0e4",
+      "word": "judgment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "98c81821aaf94b14a0ad6f25885a7aa4840a5265059df0c66cb7b85dae88ed42",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-23a494e5f3b64a21bd9f",
+      "word": "characteristic",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e6dab3d1a66f95b8604c878917613e9279506294301c2e2f1515adb1d3496ad8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e56cd28261440cda19c9",
+      "word": "identity",
+      "partOfSpeech": "noun",
+      "meaningSha256": "ac39db3ab15daed7db2a9eeb4a27883778747edc4b5eaf79bb144791d7039f79",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-0fdf46ad75d3cbd3ce34",
+      "word": "commission",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8b07455c177156257ca3eec7f3d09031e0f00c86685ae14dece66329d84607f7",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2cbf841743283b49457d",
+      "word": "commission",
+      "partOfSpeech": "verb",
+      "meaningSha256": "e2695b4263c834692a2f3a7e49b7ca1faa72189514d5c1159bb5f8f7d45b5f52",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-a173899bd2c499580389",
+      "word": "notion",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e9cff265463bb7bd98f6690b888f59f309693c87237e3acaaa6a244d4e6aa54f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-af3fc42e344c301fa533",
+      "word": "conservative",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "aca2e7cde44e08e3c6a21a2af1debf37658fc2449e7d39a72f2a743bdfee8723",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4d85f1a73e85324779e8",
+      "word": "conservative",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d30304425a0ef8530f677e5348bb2bf4b04c068a8e46787cad24bcbd24326613",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-31a32d4aa32662370179",
+      "word": "opposition",
+      "partOfSpeech": "noun",
+      "meaningSha256": "66b4f4f67c278b186d0a68509a905beecf37823b85c4739baafc84fcd74829c6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e841401ec8f86ef32b37",
+      "word": "outcome",
+      "partOfSpeech": "noun",
+      "meaningSha256": "41bf354a056143831e43337fd9968306470a556b91f64972b08eb711df6b285b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1a86d9bd9fc34223caa0",
+      "word": "arise",
+      "partOfSpeech": "verb",
+      "meaningSha256": "05020a2d61359e204bf6913323a2060a7ade20d70d2ea4123c2af4488d407ab5",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-463fbf938b47d3b686fd",
+      "word": "declare",
+      "partOfSpeech": "verb",
+      "meaningSha256": "2520c32e72f498cba45168229b60339f68621ae35b2a0f2f6f200e4a36d95001",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9754b6cab06c203d8ee5",
+      "word": "fellow",
+      "partOfSpeech": "noun",
+      "meaningSha256": "799fa79c07b35977d6b39d039b9de8618f06dd6c08f4fa42f44baea4098d6815",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-af8e259e8bbeb5cb265c",
+      "word": "peak",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d5e7ff2449242034fab81a1c1d9347489127e91649fd4ecafc913652041660c1",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4f3868a614e4ec81d0b0",
+      "word": "peak",
+      "partOfSpeech": "verb",
+      "meaningSha256": "e660982427a3483dd5921335e755056ab1e320e18f09b8d5b98b00cded79b784",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c9df758e46ffb3497f76",
+      "word": "proportion",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8f33fc070ab6fde9c09cb86a68441a82130719b32589ec7040b71a28930e303e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-75e3d82dfcf0b72d0ccd",
+      "word": "considerable",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "183e597e1524f63d6509cca39c335273dc556ad4b50465daa43f2ed83e042952",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e8df34d65239b6aa55ac",
+      "word": "poll",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a2d05e9ec6f4659e2be0a13d40f2079d98d486de3cae061cbcf8cffaf6034cce",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-530d91578e95f45e822e",
+      "word": "faith",
+      "partOfSpeech": "noun",
+      "meaningSha256": "26ba7c94d6e5db2892aea63c31e286294f3a0b9f67809273a2afc5aab094ae41",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f587461250fdd996269b",
+      "word": "neighborhood",
+      "partOfSpeech": "noun",
+      "meaningSha256": "69e8d95ccf2ad71bd6f9c709776dc90e3a0f2cc03f0116c708ec7e085b6b3497",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-710937ee1a4250f66b53",
+      "word": "justice",
+      "partOfSpeech": "noun",
+      "meaningSha256": "098e37676f46a073ac0c753589b166d07ca2aade671d0dda684af84800998832",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-484d719cc07530d603d6",
+      "word": "phase",
+      "partOfSpeech": "noun",
+      "meaningSha256": "eda9628c80c4797b158d324ac88248af158ef8b679901f183929e32960693faa",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8b1e82b30ec63616aa6b",
+      "word": "latter",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d0fb28e7b05144875f9ceedffcc82a054c37c7af60f332a7b78a79e62611fe5f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0affa203d02196f455d8",
+      "word": "index",
+      "partOfSpeech": "noun",
+      "meaningSha256": "42cbc1cd6d1e79e52a48be5bb5208138f07bdf00ef179d2971a62946b21b052a",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-9282cd368b1ccb311ebb",
+      "word": "impose",
+      "partOfSpeech": "verb",
+      "meaningSha256": "120f45adf383757d8824cad19e74d0e3cf4264c06c169f3bebc3cd7a7b78974d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f40e54df715ba4ed1641",
+      "word": "yield",
+      "partOfSpeech": "noun",
+      "meaningSha256": "edeaa746a29d220d0587ff05498ea80db544d761cd6aae1b0bc06d368ea87148",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0c8897fb69e196c0338a",
+      "word": "yield",
+      "partOfSpeech": "verb",
+      "meaningSha256": "bf37849f0196a8ed7d6b4652764852252188deb133876425030a845d272ea749",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1c8535b6e7a7c0382703",
+      "word": "legislation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "b1d3532dc41f11f90c4c3fce484e4e404e3bb6d0e2d8c3b4278592450774cedf",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4bb4592ef4d3c30ba745",
+      "word": "acknowledge",
+      "partOfSpeech": "verb",
+      "meaningSha256": "ae37e5d4b258d5a15489c3f3ad43f644d6ab1b92d5adfe6817115295365ad1b6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f424ed79c4d87835b9dd",
+      "word": "settlement",
+      "partOfSpeech": "noun",
+      "meaningSha256": "eddc0a64333e8a8a7da2b9cb69d34c2dd3a0f260883c138ced591597550ec752",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-045540b29f9e2da35d01",
+      "word": "expose",
+      "partOfSpeech": "verb",
+      "meaningSha256": "b1d5179e822121c5099b3a78d0643f117b63d7efba54587f0392a6c66945da9d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f8ee2d3286d08f14f43e",
+      "word": "critic",
+      "partOfSpeech": "noun",
+      "meaningSha256": "70426d74dce71881046912620a5309ca008bded3bc63b84f5c81cd3963cdb618",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-fcec9e61f9b24ac4969a",
+      "word": "variable",
+      "partOfSpeech": "noun",
+      "meaningSha256": "304a26f4990b037ffd256824d4a777ea1f093956f349b650c175ccb564cae6ba",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-43c6784a0a0e2ae2a8cf",
+      "word": "pilot",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8933f185ab1e881c3be554b4815bae0b2c0091ad6d6738a1be7416f19e7bd64e",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e96944070a58a9689468",
+      "word": "resolution",
+      "partOfSpeech": "noun",
+      "meaningSha256": "245ccc6f9eabbf53313b502b0ed90d6a5d17228c4788e30f4964525c13a3e54c",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-eb78fe9328872b0a0ab3",
+      "word": "illustrate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "ad9440d21cdb96c06d1f2e407ce988d24122c3a9f92a1c1d0890eaf66711acae",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e6272ef8a0f88a466b5c",
+      "word": "imply",
+      "partOfSpeech": "verb",
+      "meaningSha256": "0036d71eca3b4fa82e250235dbd1dd93eb8f840647c287404729f0d6b9a20761",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-093830d6eea4ee6853b7",
+      "word": "liberal",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "8931991525d22078a62f45b476b1e7022d8007e2746d42b5a0d102737c3edf71",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c73d8a2b0340b5b53e63",
+      "word": "qualify",
+      "partOfSpeech": "verb",
+      "meaningSha256": "92d5d05380c4224caac0d9bb5ff4a03f91ea5b865cfeaf9e20ddd38ec864a913",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-12e8985c40bbc11f21ec",
+      "word": "existence",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0572a2c13215afb6154336c80e455b236aed14aa86d4cde8b0a61ce44af96bae",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9f749536fa9f3ab1e8ef",
+      "word": "prime",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f4a3b41bbd5b37c45336733735cc44779800469db4109599e855f5992f4602fd",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-f9fb36f9b4c67f547dc8",
+      "word": "initiative",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d8def2904b4dd1d2280a4f341720f0dafed6a0bc62f39288c6ff89eff4456ac3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8eb752e6ee486007d14f",
+      "word": "complicate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "39c7e98ce0047aa5246ef18c0f3563ab6ea3be6ab30258e146c40d3583d223ff",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-316ed700971c63fcbedc",
+      "word": "discipline",
+      "partOfSpeech": "noun",
+      "meaningSha256": "66e05f98f89b7ef9a49bc3038b38ae449783bec4429f8929d0409aef5426aae3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0086950c960838ca1e36",
+      "word": "discipline",
+      "partOfSpeech": "verb",
+      "meaningSha256": "b540a449bcbcb9a3ffd04d1b3bd33570737f820f232c7b2d6617cd7db4458aee",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ae22a903eabbdf17fcec",
+      "word": "assumption",
+      "partOfSpeech": "noun",
+      "meaningSha256": "80b586e6dfe3a0354e200c2d19c2e5d94939e839d4016ca46c8d39374ba56cff",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ff56ebc45a89bed80c57",
+      "word": "negotiation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "24dcf7855afd3ca863fa0611b032ecf790a27c7bbf458504dcd1e92928793e95",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-695904aa97e4396c2142",
+      "word": "mechanism",
+      "partOfSpeech": "noun",
+      "meaningSha256": "ce5b0b3c5c0f32054ac069b827f785829d2a64d52bd1cd7fd3f5169d8735f7a0",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-ec8325b8bbccd976f2da",
+      "word": "democracy",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a277091a44d33db0d76098187ecca9a8f06e7ee116f23a6b113a1e412d21d0c4",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-35c8fb6ea849d9e310bb",
+      "word": "observation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "99c95470ab0ba0e99b2355ea2edffb7107d7e11af61db79efce25f2f7aa51165",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-36ff8d92cac62e885806",
+      "word": "concentration",
+      "partOfSpeech": "noun",
+      "meaningSha256": "9be59a357c955adf46447f6ce5eec95026b704d6c6bd54f4b772ef18c7f955e1",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-3bc18a282c6d89d8d73d",
+      "word": "implication",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2ed1f1b3983347e851cb4375b88dfeea0d06303188e3ec0d333c46bd614d48c0",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-51e0876fd7ec452ae5a1",
+      "word": "interaction",
+      "partOfSpeech": "noun",
+      "meaningSha256": "fa381cf14ac159ffb4676e8aaae0aa5efdb4bea4d78e3f3609e06baafd337c99",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-a1f5e5809ef0fe588452",
+      "word": "fundamental",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0c9ccb6509e8cbe1a56a3174759c79d32f256b69597e236adcafc42855f4d440",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-8761f2a00308d792a5ab",
+      "word": "enhance",
+      "partOfSpeech": "verb",
+      "meaningSha256": "6f9a325c4a767354f88b69cc0b0c3cd7dc283e69fdc9b9f914b8159ef38d3fe6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2e851f83019577e21cd4",
+      "word": "distinguish",
+      "partOfSpeech": "verb",
+      "meaningSha256": "8f78512c2bc4763a4ae0cc6f27eb4beffa5a00be4c16926fae86f86e94682827",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4209ac4bfcd602df8631",
+      "word": "substantial",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "fe4d92650a72515ff4736c646f8eb4b5c020325475499250afd386ed5356a472",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-8d171cfc05ce7a39b47e",
+      "word": "corporation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "acb87652a3c525768a988c4f433924259c9d7af96ad8962d605bc63b6685bd0f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-68b68098c835c071efa9",
+      "word": "creation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "68db8e51d607f1c41b78fb5b2e249ce6310678de4f9403854d80ff2cb9019d4f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c37a8ba71a3fca759e74",
+      "word": "occupy",
+      "partOfSpeech": "verb",
+      "meaningSha256": "e9d9a90be14571114614b9c9dc9d1a88161403dc9020a1625f16dd8012336d2a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-476a4cac78073f973e9e",
+      "word": "outline",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2e82db7236f04f4fae17d2de1999df86f47229ae37c6dd5d1463e81c9fdabd4e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-441f65c7cc9d3641b8ca",
+      "word": "outline",
+      "partOfSpeech": "verb",
+      "meaningSha256": "b82ec47ea86dd58cdd420e199360ce9d91111cdb18dfef16148c293df437b9b3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ab9e15e363592ec5a435",
+      "word": "consistent",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "9ded83d930b524814ffd1e01180d66f962695d9880962acde0f972f1ecdd0d2b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-17c42d7adb9c5668591f",
+      "word": "aside",
+      "partOfSpeech": "noun",
+      "meaningSha256": "6c80601665a0907787edd1682dd143f5b057a5fe6ad742197eb145895106370f",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-521b282caba95e6d9a37",
+      "word": "prospect",
+      "partOfSpeech": "noun",
+      "meaningSha256": "221db97b27a6e60974fb8680ad075b8a47322be6e93ad544e7a7af50250d5e16",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-be6fe70c8a2c038771ab",
+      "word": "plot",
+      "partOfSpeech": "noun",
+      "meaningSha256": "883f5d402282e93ce792ef8ff6585be0b59dadee8431ad35966b3220af7cde8a",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e27da4ecc83c74c3c912",
+      "word": "plot",
+      "partOfSpeech": "verb",
+      "meaningSha256": "eac83800955fa2da6dfd6ce3c64c7ab56aadc26d0416b87a5f425765d3f34946",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-ee274ceb8f5b80ca4fe0",
+      "word": "integrate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "37f0c5a3d9a4c5b4d01e734acb02da47e251c34b2256cee5bb317332308c2d20",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-7bffbc17383e212b8a30",
+      "word": "criticism",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f5d72df78d8762d525310490fb378ed5ad23dfb2af428fcf1c061c6dae6f6934",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-063d11901b21853d7813",
+      "word": "retain",
+      "partOfSpeech": "verb",
+      "meaningSha256": "1976bc3b7c78201feee557fbee1ccefefa60098ca743cf1be2880d1fc5dbfb8f",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-a28ab975191b25e6dc39",
+      "word": "sequence",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8b32c417e0452ed912e2ca4eceb79d03c3ce1aafd30877397eec7e63ece011b5",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e54beac1f26a936eab06",
+      "word": "examination",
+      "partOfSpeech": "noun",
+      "meaningSha256": "3468f870cd571b80d7d711d9af112617db794ec5233cd25ce0168eaee35c4b7b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-bcf7770a286e80101e9c",
+      "word": "revolution",
+      "partOfSpeech": "noun",
+      "meaningSha256": "572145f3e2e5efdcc1e8eef315598b76312ab75a9f62a73823af7a54fbd4822a",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-7d7ec36480cb9a3bd945",
+      "word": "spell",
+      "partOfSpeech": "noun",
+      "meaningSha256": "dcf61357fb1caefd0d9b397e4fe950ccfc8aa5067facc741bfa611f6f598ab8e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8855df9e9da66dd87166",
+      "word": "premise",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2fcaf0eac1fe03237ca06ea8088d868a6776087c71e7b4dda2dd43096923c5e8",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-b31f5e12157a59b8b18c",
+      "word": "intellectual",
+      "partOfSpeech": "noun",
+      "meaningSha256": "78b56652d3ee6591c07e31ae0c69c7c47c9d3209c429311f7c10ba53cd85504d",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-5bc5da405c14bb72cac9",
+      "word": "derive",
+      "partOfSpeech": "verb",
+      "meaningSha256": "61111be68ef80b3999391add2aa5e059637f761d14ae78a9952c57ecd0e7bc69",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ef01d2168beed74a58d9",
+      "word": "origin",
+      "partOfSpeech": "noun",
+      "meaningSha256": "63e0137668c67cfb46c08a9d9461780f20d3a7b604a0fe1cb15f8a529246f91d",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-77e8b9a74ffe7a4d18a3",
+      "word": "negotiate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "cfa50d1a69b9ba34494be599287ddd1316eac3422df4dea1184e65c1ea1dd3c7",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-5bde467144f7fc2860fe",
+      "word": "dominate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "ab7249e40b7abc61e5346e2fefaa0da1f37251dc0b26700b7f820705fe01d382",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e2a9f126cc6b7cedb589",
+      "word": "peer",
+      "partOfSpeech": "noun",
+      "meaningSha256": "280eae354143861cae048374a2319940992d0ed13209068db312bc562630fdc6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-a8f7daf4e2a0d4053d68",
+      "word": "acquisition",
+      "partOfSpeech": "noun",
+      "meaningSha256": "39a3f5862054fda697d957c54ab945962a91cf9ec92d327ea13f9597d3868457",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-01b13da6888319bfbeb5",
+      "word": "variation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "db463edc6c496771412f843dc5c5471b7c741be380ce9defe422cd1c70b73269",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-b159f6115a3bd01d63e4",
+      "word": "ultimately",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "d779f849e8dc1e203deaaef7ec82bf62b45256d03f76170330de81ba3f4faf91",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-77ecbb6fb36d47156e31",
+      "word": "proof",
+      "partOfSpeech": "noun",
+      "meaningSha256": "9c3886a5d795775e990421ac1ff7e09eacf89ef7131da61583c82365a6ea3936",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-3f61f4a08f59c9e12e64",
+      "word": "representation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0509aecefe9356aa5e3a7938a9e190a4ad806966d3966c9ba2ae79485dbd5cdd",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3c413e237f994062cb18",
+      "word": "dispute",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d550e07de2862c436f1905025cb08327bd15098520cacd38479fdb7575fb8c90",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e3196deab4368de7ae2b",
+      "word": "dispute",
+      "partOfSpeech": "verb",
+      "meaningSha256": "9fca13a79dd479eb1c61209fe8227a3641a4acc35aa87567d1aeeed94caf76f7",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-97154d31c178d3c4a294",
+      "word": "emphasis",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8a1e74ed6c628e70a573dd8ccff9f17a6493326b55fe0f4657b7379e20ce204c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-cf89b104a591c8cd7033",
+      "word": "undertake",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d09f8b1c28cfdeba8c6d351133537ee5a8d2d0d2139fae3a34a0746714acc540",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-6ff9248ef8875d300f80",
+      "word": "framework",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d5cfeafe38e0c4281102dc128dece64c02a37af305ef2dc6daaacd9d78200a44",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f202c44dd2f1c44b9aed",
+      "word": "contemporary",
+      "partOfSpeech": "noun",
+      "meaningSha256": "bf48b79d43f718067f4ca6c40994948855dbcd3a930f1ba0c4087550720ed44b",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-33fe074ccfff9d77f917",
+      "word": "numerous",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "268ef8adc3716bdcc5b6cb3f4c2cc40b5fa498fe89042ee464201ba0d2547169",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3a5b7548f908db97a4dd",
+      "word": "numerous",
+      "partOfSpeech": "determiner",
+      "meaningSha256": "8f4fb9dd5abb14b621be70ae543c940d3d11477d0a5997b80febf81a2e31ca56",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-278a6ae6d72b786a7695",
+      "word": "era",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c5a454965ce0316521c4c6d8ded95e2bda915999b6067bc9acb697a1d67fecb0",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-de9dc052dd2d89d8535b",
+      "word": "coverage",
+      "partOfSpeech": "noun",
+      "meaningSha256": "043c98dadd561cf1d95596b24d55c6653338608bb5cc60842f053477f923fa7c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3c2fe912227ae7017dec",
+      "word": "isolate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "c53e02332d48e4889922e3d9002c7f6fe6df32605963f9ef0ce2bfee2b385237",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-921e6a5480c07e6da172",
+      "word": "eliminate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "3edbff44f1aa38aeefd241da900ffd3747c13b845aa455efa09cc6c5477cb697",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8e0cd015e5e797afbff8",
+      "word": "exclude",
+      "partOfSpeech": "verb",
+      "meaningSha256": "0eb440472d4e569c8a3c4dadc37a71fb8a12b32d313a90c977f411f0247f4d73",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4a7c494c7e5d0598ae78",
+      "word": "hence",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "85b1a77e7402d35d9ab130bb1159c705d8b26bfccf6aa27254b30406d207ae55",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9273ac6c26c96c4a91d1",
+      "word": "phenomenon",
+      "partOfSpeech": "noun",
+      "meaningSha256": "4aefd5d2f87a053bd7619350eae7d64e2f8119fd2a010b7f436863eb434b2bed",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-027695d201a21686e26d",
+      "word": "formula",
+      "partOfSpeech": "noun",
+      "meaningSha256": "07a4fe76d26e4ea80026c7ad9f40e943328f4f086c411e2b0dd1d6e197ca0d86",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-1e16f43a5ea9874a1997",
+      "word": "perceive",
+      "partOfSpeech": "verb",
+      "meaningSha256": "9f3779b41cf20c153b7c6f955f6d65059761c0414747b282ca7d5d86b4b31201",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9ba6bdeb160218d0c1cb",
+      "word": "convert",
+      "partOfSpeech": "verb",
+      "meaningSha256": "992fca7ee6d3e485d74baef89216cd91b4ec21f3c559a455fbbcba1602b10667",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-470f1d343213c0d52e87",
+      "word": "devote",
+      "partOfSpeech": "verb",
+      "meaningSha256": "63bacb5417ec2116e7b194170a1887e70f8e57fd7c3c4aa98968c73b5b35112b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-daba376f1491114cfbdd",
+      "word": "justify",
+      "partOfSpeech": "verb",
+      "meaningSha256": "66222c8766c1c5765981bde45666469f8186094a2dbabb687b26e0a295ad4261",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2ae26b64edb16c9c7597",
+      "word": "vital",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "e5841a979e9b9fb9120768a3ecb3e29c3a22b2a5a147f0ca9088af36cb764110",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2d544142af3730b11cc4",
+      "word": "distinction",
+      "partOfSpeech": "noun",
+      "meaningSha256": "311872653f9bddc8f668c23a34441ee0cb36e9abb818c3c3b050c672444d8655",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-59827cf42b1a9017d9b7",
+      "word": "incorporate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "846373feb65d8ecdf7be95e18f3959f90a94896c298e02b6b0df7dfaaedc3428",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-0b3511005a90fd50e7a5",
+      "word": "sweep",
+      "partOfSpeech": "noun",
+      "meaningSha256": "310bd5805e891f267e686edc880fc569f68b5e1d833ee4adabe75dde77f213b8",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-04865180e9a03aaaee53",
+      "word": "sweep",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f6a0af7750ba97803c35e572d702f910bd58625b54e0f1e4ce660003322c64c9",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-f5772bbca38f57e8caa6",
+      "word": "obligation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "cdbb06af73a6382d796a3cf24815ab08d15730f645966b153986e3b1a2e82e86",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e6261453286ba02cdb9b",
+      "word": "evaluate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "09766ed8e8877f8169b3993ce0b20705a786a78df8977a58fecbd673f3ba25ee",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-89302d71b9f81e116ff6",
+      "word": "perception",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e5c629586820551573e9e85a8415ed2cb22992657b88a9f26e109d3c2f03b3b4",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-54f951ef47eebb937701",
+      "word": "apparent",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "bf032de2a6a8c75036e18cb1f5fe0218059feefbaf1bb477dc5baf58fbde1b59",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-df4e426fc841c593f2c4",
+      "word": "expansion",
+      "partOfSpeech": "noun",
+      "meaningSha256": "9aab2043cd7366623cd7b021219e66870fbd69c7ca88f2fbf391ac3c492d885d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-080275775377c0b6501f",
+      "word": "demonstration",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2d6d2f1e064c34d27d1c0f61b05fd2aba10feb0525d278a425bcfe8999a37378",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-d434d08948f4b0e76be5",
+      "word": "analyst",
+      "partOfSpeech": "noun",
+      "meaningSha256": "fa19eabaf9b9bddcfaa1290f6b0c034dd6a814e60775c23f35d5caf803d59ec2",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f2e1aa3d7dbbedc7df08",
+      "word": "innovation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "75d950055e68900a8a26b8e6f388cd4a94bd704b5e350961f962e7c0e3e37d0b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-62d9eb919cdac4ff71b5",
+      "word": "extension",
+      "partOfSpeech": "noun",
+      "meaningSha256": "3336a56b392c6d5df4bf1ae6a555e6a81abcd7bb306ca3ac96338d665319115d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9dd51740454242fc5246",
+      "word": "transition",
+      "partOfSpeech": "noun",
+      "meaningSha256": "57b32ecdc29e9e4bdfba78b991e7ace4bb3b49c622a55204767d153a94175f0c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-052c1484842d4e3d8ba7",
+      "word": "extraordinary",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "f29f01942210a974dd974c8b0c3a7ac67c2d4cb75e32afdf7594ef46440c9089",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e4f714f015e67fa4d517",
+      "word": "mode",
+      "partOfSpeech": "noun",
+      "meaningSha256": "82e0461258decb37d0809a5e4cb01eb5770368eecefbc57d9b1de6a7e50b57e5",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-683d2dcc96e40df7b3f0",
+      "word": "overcome",
+      "partOfSpeech": "verb",
+      "meaningSha256": "893c9a8787769c578cea7d998b6c30c1aa22f617e489dc15fcf1372dbc3a4d76",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-5c29918938462668a80c",
+      "word": "extensive",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "25bf2d6bac82c681acc3a78030dd2ec6055d2df73112a6a87227bbc601e45d05",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-25bd9cc4e0fdb537eb98",
+      "word": "interpret",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d1e10c57b6aa095e99c0b95b509039a6f914fc309f61487450d042b28488677a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ac4e3bfc70566ce06833",
+      "word": "consult",
+      "partOfSpeech": "verb",
+      "meaningSha256": "c7f96defa4266cf590cd6227c1cc5442b10d4f9093caecef115acf2a5f87e703",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-25fd9331a569ecd30639",
+      "word": "intervention",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f166e6a42d34dfa624a22ede277134b168fe3d5b18cd9b84951f7698567037d8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8aa7d3ee892b6403c344",
+      "word": "vice",
+      "partOfSpeech": "noun",
+      "meaningSha256": "6e22e5947adcaf402a7bfe89196bd3c6b2bd020669d68178f86a5e43e02f92fa",
+      "from": "IELTS 8.5–9.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-968d3ffcabc744491232",
+      "word": "radical",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "1fe7db2c482ced062ac7ed194965d78214da9eac7991da104c4317009585eeef",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-bbc9937a7265ee92fe4b",
+      "word": "radical",
+      "partOfSpeech": "noun",
+      "meaningSha256": "ac9d8bbabf3ba3962a92942f46969dfe133628b4ae56b19d250ab22063a4c0ef",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-7327fdb7aaf76d243303",
+      "word": "dimension",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f6b5f652d90747a8983387c77b227a9f3b9da2af42ce468a66ce9a11ab535ee5",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e204bc70f4740755bd60",
+      "word": "efficiency",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0844cc629c8bceb3d6a54005143b85db32c605b7c9f8fc99bd239b3462fe0479",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f4af01157c2bb69931e6",
+      "word": "ally",
+      "partOfSpeech": "noun",
+      "meaningSha256": "659ab89cd9ed6d616c6d70e63194c8489307863aed00a2ef681b4ff276ea3660",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-a7f2d158f82639c31b6b",
+      "word": "ally",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d14b7c217bbbee76d49312769ac75c9d206c38a15bad9669b4fc540bf13fa10d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-d6323ecf8dd695fc1018",
+      "word": "sustain",
+      "partOfSpeech": "verb",
+      "meaningSha256": "a9cf527ce6b6c6ad4a81649f1d5cb13f771b1f0e386e05d29012e04bd82e9c58",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-bad51ae9015cc66b1609",
+      "word": "cite",
+      "partOfSpeech": "verb",
+      "meaningSha256": "cd04833bfc765047aafe49204daad92c636f332dcece25b53fd0f9386bf3354f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4b32e626d2feb9addff5",
+      "word": "burden",
+      "partOfSpeech": "noun",
+      "meaningSha256": "561823aa7514af30f73469c1d0296e6d97bc4e2a5805fa882475bff5d3a4f221",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ec78322916345309815b",
+      "word": "burden",
+      "partOfSpeech": "verb",
+      "meaningSha256": "8a3a60b5c8b3e49fbc38cb17715001b2cf000e62933138bb5cbdf2b073f78d78",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-cfed1fd50a31447bd7c6",
+      "word": "philosophy",
+      "partOfSpeech": "noun",
+      "meaningSha256": "8a6a804c09279edae285886dac161d562971d78c17081425c55f88af486e65b4",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-fddf33b1b60ff6829cba",
+      "word": "attribute",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d2dc9191bc0bc645613e9ce409524d489d096f57d7c0d558ddfe1b85ceae2434",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-fa5e94a05e6cd7c64d23",
+      "word": "exposure",
+      "partOfSpeech": "noun",
+      "meaningSha256": "5eb0a01dff448b1a12cc4e99b29da68bad5c47a98a472933524f007c970dc613",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-91cb3c1aa52d3f152b98",
+      "word": "advocate",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e8a04bdcd2caaae348c033dd2f4f5363364625475d2c4c1ab10b76b395f79b27",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-096e5ef7a7b0785cd7ce",
+      "word": "advocate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "ce97838c9ecf8096c9bc11a8c89b7aba16c4bd06c27e46dc6ec4d658e5e8826d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-7d959986d5f32a64d2d5",
+      "word": "establishment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "86d3ba9c2bbd7ae47293d8abf709b13f98674f2176dd403d94f37d0dc20b26c8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ce6f879a40488d042d0e",
+      "word": "characterize",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f4e95371aa8430dc1f5b56d6ba724b503439a4f6faf8ad9293a9ad2448a97443",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-7ef92fe4634e704f85bb",
+      "word": "specify",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d95ee8c2e9d92d18dbf1c96f563147d694ffd6fa52902eb8e34de45ec74eb15b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-77fdf4749182a12daeac",
+      "word": "anticipate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "21d53f57750c4c5eec8970de5a49f712c61fb270db73765a8a3696df05a9de4b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0c09e1a09e144e5bd0a6",
+      "word": "dependent",
+      "partOfSpeech": "noun",
+      "meaningSha256": "1eb9767012dc9863b80e0820b5b0b89fa8ed5b6b164f592a420638034aefe9bc",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-19374bcfd32c5e99e383",
+      "word": "precisely",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "cf20edbff4ace752251f2dc67cd5313174742f8090c05ad4fc539dba1860d9ab",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-99e299401830e76ca4a3",
+      "word": "detect",
+      "partOfSpeech": "verb",
+      "meaningSha256": "6b132d2740b95ef976ec7e104e31b880e2327582e78a0997c5f2d9ea21e29c05",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-a10e08e7bff18aa4c1f7",
+      "word": "moderate",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "6c1744bee9b1018e0861129bc874b926ac1240971d0b63925f18e11cb70034bb",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-5f45cf55ef83452b43dc",
+      "word": "moderate",
+      "partOfSpeech": "noun",
+      "meaningSha256": "7e0676a4f0a9dd0900b6ee20e28768be81556d73afb221bc984ae85149fff95b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ecb1f960f7717eeb7c7e",
+      "word": "moderate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "6e11cfa69f7f4047d182c23d8e2bfd1c1390a83a9186753389541481da8d4aef",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-915940dcba2891f4330d",
+      "word": "significance",
+      "partOfSpeech": "noun",
+      "meaningSha256": "982e60e2497005e0f4a16b67f39278d7e4ad3b6004e1a12a4f647a275043786d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f6521b3077fedc38f120",
+      "word": "universal",
+      "partOfSpeech": "noun",
+      "meaningSha256": "59d667b54f13c72a5af7477cc2636bbb258be908a1aa4e88c8ac71b95857f0b9",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-54bef20260c638ec43b4",
+      "word": "constitute",
+      "partOfSpeech": "verb",
+      "meaningSha256": "023d3b6430aa7d96a3e2f9808ba802e1aad839b122fd34f8a3e6379144540643",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-162981a05d11339404af",
+      "word": "adequate",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "2413827509dd6f59a3e6097ed661b44d76f0277aa39b48441f79ae39ebc9c894",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e761107f183f7b0283b3",
+      "word": "keen",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "c3a87c57db5eabaf519cf17a359bc4d21271b4175232df0111ef655283dd4e8d",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1857d5efab45540b2d11",
+      "word": "cap",
+      "partOfSpeech": "noun",
+      "meaningSha256": "12c95da9d3b0d9ae900d410b0921668ee968bcd2c246e993570493f443b897f7",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-f8c811308514c47f9358",
+      "word": "venture",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a6b14bfb0ec11048b3c75d64052b94a945e567e406528dd2312d95796c7d9c3e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-d83ce9d8720530aba6cd",
+      "word": "venture",
+      "partOfSpeech": "verb",
+      "meaningSha256": "ceb9f76b175908c30dca4a96370bb5fa339e3960ec4fcf63438b795399eb8681",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9483c0c8753e00dc753d",
+      "word": "compound",
+      "partOfSpeech": "noun",
+      "meaningSha256": "64c248d9df8a4ddae782e5984c9c25967af3f7525316fa1dfb8067fee5576974",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e55620a03827b6310472",
+      "word": "compound",
+      "partOfSpeech": "verb",
+      "meaningSha256": "7571add42450c2c98df25ba3d825e9ea5a46ee850929858aca64dfed64f6852e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-884473ad733e54b25149",
+      "word": "preference",
+      "partOfSpeech": "noun",
+      "meaningSha256": "5e4751782154d8776945676b7f7817d91acf4634e1cb978b73eb0d983f7de75e",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-67bc46d5f263e35a4537",
+      "word": "comprehensive",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "0822a5cef51ce1b08537ff53d44d68821aa5524a5d2ec9373065d07005450236",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1eb74e9f28e290e65b57",
+      "word": "incentive",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a51822376083e2708c4c20b35339a5ab4b1334b472ac0af1b15213a545713b41",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9ba767e8e8b934096cee",
+      "word": "capability",
+      "partOfSpeech": "noun",
+      "meaningSha256": "7730798458584732c12470ac8c873e523baf435f4bbf24f172095294d16232cf",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e2a0d01716ec75056867",
+      "word": "absolute",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "232b23530de8840305fbff0b55c5f71416eaeb54fc24b43849096c7d30bba954",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9c15582a6389875fa363",
+      "word": "correspond",
+      "partOfSpeech": "verb",
+      "meaningSha256": "47c35b5c54d7e09cbb4e172afbdab1b5ebe43f0fb1d2bc2b9f2a7440747e911c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-30dc927e079f56504797",
+      "word": "counsel",
+      "partOfSpeech": "noun",
+      "meaningSha256": "53903e44f636424853bf684364efb69e800b7f9174ecc58118c616f49360dcde",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-ad61a51fbd8090e61fae",
+      "word": "counsel",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f33a34ffbebc4d3ad3b38bc9c34503f0a4edf3ab523ddeed4cba2c97a6df900e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-eacd8332d66576d42c55",
+      "word": "possess",
+      "partOfSpeech": "verb",
+      "meaningSha256": "f885f827920900b5160cfc4b3c497f6ec5a5984ee31d1db00bf5f1918bbd5753",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8dadb6e080dca45d0681",
+      "word": "evolution",
+      "partOfSpeech": "noun",
+      "meaningSha256": "98be1ed96f84b3321c3950c7f8aaba90d4eb7ad0ed30da7fbe56049b6263bfc1",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2be8d1bb6b31096d14a7",
+      "word": "awareness",
+      "partOfSpeech": "noun",
+      "meaningSha256": "be53da1072d8ce93a39e494b11ff34d36effd39528fcbb44adcc708ff08539a6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ae81115fbfb3c8387cbf",
+      "word": "privilege",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c5f903543785d331e7191b6375af5ec04afc761c653ed84f5f4af5d420ec6589",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1ca543b5bf3ad1738adc",
+      "word": "dedicate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "a178b0762986e4eaa20cdeee59487029226ab4ba5732e8ac9df4d408e52e2ba5",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-5b7c04fe3c82581c74da",
+      "word": "evaluation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c8969337b017ed80bf9172cf959fc7745f16ec37db6b7e475458246e8993b5d6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0959cb4ee2a4c2667b23",
+      "word": "compromise",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d2bb4b1889d3841533f70f9607e6a1c85fba66ec257109a4ca612ea03ea55957",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-460065f5a06eb9c65ee3",
+      "word": "compromise",
+      "partOfSpeech": "verb",
+      "meaningSha256": "ff3c352b1a039cda9ea20471ef530cbc7143ee0d9e78d43836ab4fcab04de30e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e8042bc73f3519db5f12",
+      "word": "compensation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "43b4f224668ec2ef26021cb90aa488687e12d80ade3b1013a34df9093446bd42",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-b51b8673fc15446caebd",
+      "word": "deficit",
+      "partOfSpeech": "noun",
+      "meaningSha256": "3011dc571ba7f514e155bdc6766744b8ca634b216c002560e8ebf8c2726d9fc5",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-64f9272e8ecf37d2a032",
+      "word": "modify",
+      "partOfSpeech": "verb",
+      "meaningSha256": "7d947e7cb86f89469108cea2192c2371c4f42eb1abf9f65dc1b9f94bffe268f6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-d07eb8df3b2467336925",
+      "word": "equation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "2ba1c2f67431b16b0eedc10426f4d732f658ca7395c2b5f8b1ebe82a89ac4f4c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c59afba13744df5c036d",
+      "word": "entertain",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d72352e23a043e4eb03b4cfb208867f50672df23a328cf7e5ae3a2d9b44eb1a2",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-aeed64a88b75393c85e5",
+      "word": "inflation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "abab5f9c7261201ce4d47b2219590de6e43cb6480c8d5c66c09c624e0aa41089",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-268aa2e99b6ddd739582",
+      "word": "personnel",
+      "partOfSpeech": "noun",
+      "meaningSha256": "dcb0db099d676f79ed6bce4cc8c69cb4dd0fffb937da865e9ca9bd7e7b906761",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-20e68bb32d24bb66e849",
+      "word": "insight",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e6b1f18391737cec358f1d75b391839e8788d32c337aafe223b777db2a65a85f",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-28cf62611cb1ea4955ec",
+      "word": "exceed",
+      "partOfSpeech": "verb",
+      "meaningSha256": "e84401634caaf84fd6848821411b15667818d088167ba5a1218bc63c247670c8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-4b20e402aaad5b76c7d1",
+      "word": "expenditure",
+      "partOfSpeech": "noun",
+      "meaningSha256": "7d504a1e477cd05af0bacbb411678ad3840a0456642d56ec35026c6b858d49da",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c218b1215f53eba8318b",
+      "word": "scholar",
+      "partOfSpeech": "noun",
+      "meaningSha256": "f9d0349f2b0b638779acacaa1ad7dd5100e525106027574282de25f9117dc072",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-33de334e3a145b433ef4",
+      "word": "dramatically",
+      "partOfSpeech": "adverb",
+      "meaningSha256": "0203bb74bdda4d9b86c7d87c9e27bad2ca250a76a60487b1117fd7d18de5ff04",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-780947205bea7540fbae",
+      "word": "creature",
+      "partOfSpeech": "noun",
+      "meaningSha256": "92ee7aa07cec52b3aedf76abd5d798f71c050de42392ab357073f092f9a8aef3",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-938c74d95679bb1b26bc",
+      "word": "clause",
+      "partOfSpeech": "noun",
+      "meaningSha256": "d4f6355ecc53c4db9f88be94696f1ff5fde582498acb576cc353567712c9ff5b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-05d94f462f407fe479cf",
+      "word": "fancy",
+      "partOfSpeech": "verb",
+      "meaningSha256": "cac8a6f2020399127ad65423100f99bcd064ca1908a9e540bb3b824fd385db42",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-41a0ebbd92c17bc0466c",
+      "word": "evolve",
+      "partOfSpeech": "verb",
+      "meaningSha256": "441e180ebe177a9726728b15fe5cc43f891fdc77501290826749bbd96e8cc43e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-d6566e2690f27de76c37",
+      "word": "strengthen",
+      "partOfSpeech": "verb",
+      "meaningSha256": "bfca7cf372dd4dba866b1588b6ba58c0e97d0e69a81008d314c16c5c2c0a55f6",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3577a4fd482b11496125",
+      "word": "constraint",
+      "partOfSpeech": "noun",
+      "meaningSha256": "1672a91128e229c044f870946eed0a4db75c9cd1654fd8f66049b71d794590d2",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1648cd77715c008c0064",
+      "word": "scope",
+      "partOfSpeech": "noun",
+      "meaningSha256": "11f66330b7d860ba71c122cd7b1933cb210d0c0547a63025a316bf4ea0546407",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-005c92d4ecf9bc1169cf",
+      "word": "diversity",
+      "partOfSpeech": "noun",
+      "meaningSha256": "a0d6e7c067092652fb34c931c8c9b2e8dc47e01d4e25c4ae861f451b88be1f61",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3291ca8e0f2c2bf39c63",
+      "word": "distinct",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "e91c7e27da2f101fb02a945251ad39d1e9d2f97d5ca062d6ae08d37217f317a8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9b964b1e3dbff1f826b9",
+      "word": "limitation",
+      "partOfSpeech": "noun",
+      "meaningSha256": "c1d6a9b3277a07d5832ce090deec7b9d8cb6163582b61afe78e7df585e91dfd3",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c5f55745f7ba3d2515d6",
+      "word": "indication",
+      "partOfSpeech": "noun",
+      "meaningSha256": "b999acbc817492766802e2f9bada0b3588d633b7f1a1bafdf6ed51a4469d55b1",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-b3c67248200ae6fc5c6e",
+      "word": "stability",
+      "partOfSpeech": "noun",
+      "meaningSha256": "4523d83fd4cb6f191140847396f97076105a8d97b43e116feec60b926a226dad",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8fba653f063007874684",
+      "word": "neglect",
+      "partOfSpeech": "noun",
+      "meaningSha256": "7302c5215a58f6fc25f927bd1996ce14d3cefc0d18405cb5f8b22294858a8395",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-743b6b3354890e84ddb8",
+      "word": "neglect",
+      "partOfSpeech": "verb",
+      "meaningSha256": "11f1ff07efb3fbc7b764b98138391dc48ad9228ff3af95346f185fa967394c21",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-b686b97e8cf8df29a85e",
+      "word": "mere",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "24363bd831ea5c6d5fb2d1f94e0aae1ea4fe4fe992949297293adff59c65d53e",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3e591777122aa1dfd4b3",
+      "word": "regulate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "3a9e7b96a38f3882a4d6c2359dac8eea3a0d3565fd2ba19e0757f0ed911a3dda",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8adddaa7e35bcb1853da",
+      "word": "amendment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "0ac0539636ff9feb3cde226bd5f24449a86a0638cd63881f7a34a4ad36ddac87",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-38e1890b3a9198a7f364",
+      "word": "civilian",
+      "partOfSpeech": "noun",
+      "meaningSha256": "3e3b397e1978e583ccebd407c67de6437f2fb238192af9e0e32ce6c9cf7a0123",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-223c023ec0327911a6b2",
+      "word": "composition",
+      "partOfSpeech": "noun",
+      "meaningSha256": "68d1147437f1d22ff1f262fcf25fa42f09ee880060dcb819495f3b2d10934cf8",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9dd37829f8c812878133",
+      "word": "greet",
+      "partOfSpeech": "verb",
+      "meaningSha256": "387e35826476fe58902f72681affb7c1efc0135068c4eecfdb7773d3d8a558d5",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-7d70ee9c0a400d2de1d5",
+      "word": "sanction",
+      "partOfSpeech": "noun",
+      "meaningSha256": "5b1e3a9d773c49d566ed2ed7e15cba7afb5c07bc21152e45f75e9940237fd877",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-8303bbc17f8774429066",
+      "word": "sanction",
+      "partOfSpeech": "verb",
+      "meaningSha256": "19712fdcf217c0d69fa970abdf352e7aecc92251b1df92671b8150473c420d53",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-36108ac2152b0859b73e",
+      "word": "stimulate",
+      "partOfSpeech": "verb",
+      "meaningSha256": "04ead66a9e908f528523e6a2512c06e321641dd7b70db727496ed578dc25f9aa",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-9d2eed3b3fbdc3be0d03",
+      "word": "narrative",
+      "partOfSpeech": "noun",
+      "meaningSha256": "493edb23eb3fb209c3219e650b78ea4d439f27db97783f37f13fd6d23518a785",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e4752f6e232657a771d9",
+      "word": "excess",
+      "partOfSpeech": "noun",
+      "meaningSha256": "e42f3ac38d8813423f66485e72fecce92976f3ff4030207abb56d7940ec84917",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-89dac48c3b0b94f30520",
+      "word": "complexity",
+      "partOfSpeech": "noun",
+      "meaningSha256": "5bb8a63fc8374a8e89f1b64b3c2c1d49295d555761ba9c5ea14a4ac970cfbd6a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9ac33d5f6e767bc30a43",
+      "word": "extract",
+      "partOfSpeech": "noun",
+      "meaningSha256": "5fe9190aa9a8ecc49154b975c3719240d98146ef34be48d7cc58b23dcfa289b7",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-370de63edd6f99bd4205",
+      "word": "extract",
+      "partOfSpeech": "verb",
+      "meaningSha256": "cf806f1c230902ed72cd84b144ddf260e88e5c562216aa8c0c7c3098721631d4",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-ecd7e0b7c85a1f911bb9",
+      "word": "bias",
+      "partOfSpeech": "noun",
+      "meaningSha256": "4d3e6250da8ee6843625b61143f32207e8861b972cfbad357b9b70aec8ccb03c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-dda7f75a521b7b9d2bb4",
+      "word": "continuous",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "ac06df9d3502995379ccf6ad4a464111c6d30f9296cf69214a79822e461ac657",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-97fcfdd769d5da265ced",
+      "word": "determination",
+      "partOfSpeech": "noun",
+      "meaningSha256": "245ccc6f9eabbf53313b502b0ed90d6a5d17228c4788e30f4964525c13a3e54c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-217a36c2742fa268b50f",
+      "word": "logic",
+      "partOfSpeech": "noun",
+      "meaningSha256": "06209206b6b32cd11500cb1a039298150c3800c6be2ceadea08c2d758a397283",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-9a3f990693dbfa561ba9",
+      "word": "universe",
+      "partOfSpeech": "noun",
+      "meaningSha256": "eb90ecd9823ceefc67c142d1327aa449c2ec3cfa850e71f2497cbd1005e879ca",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-5d0766c87329e58c4b96",
+      "word": "supplement",
+      "partOfSpeech": "noun",
+      "meaningSha256": "894afe27316f8cd50f67294e98fca509518f171672389b1c33ce52b15a423207",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-3da2add921a534d4da34",
+      "word": "supplement",
+      "partOfSpeech": "verb",
+      "meaningSha256": "0800f8461f927b767ddf529be41347fabe1406564af495268b780a03672f4c6a",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-16d5144f782355ab52be",
+      "word": "adjustment",
+      "partOfSpeech": "noun",
+      "meaningSha256": "86b52a9ce295d737c1662e96946023587cff1672227426fab73614decd5c96b2",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-0b743366ef84dfe74f6a",
+      "word": "abstract",
+      "partOfSpeech": "noun",
+      "meaningSha256": "11156fc7472bddedf5ef9d57d410b5a411308f6b8ff7b2d27569fff8897841d4",
+      "from": "IELTS 7.0–8.0",
+      "band": 2,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e33f4661db8c54054132",
+      "word": "abstract",
+      "partOfSpeech": "verb",
+      "meaningSha256": "1b4c862552fd9c7f87495da41ce279e07f5a1a7b72c1df20f5eb375dee10b673",
+      "from": "IELTS 8.5–9.0",
+      "band": 3,
+      "reason": "Retain this specialised or less usual sense; a separate common sense or common part of speech supplies the lower-band headword."
+    },
+    {
+      "id": "en-lex-e2e360f5515f77fc942f",
+      "word": "precise",
+      "partOfSpeech": "adjective",
+      "meaningSha256": "97812197a3e3680e40ef48aa6216deb63942977f057406fd6c5b7a7a2d5e3394",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-e236fc5c39015271c7ed",
+      "word": "probability",
+      "partOfSpeech": "noun",
+      "meaningSha256": "dd3917fccaea672029e3dbae2714542db83f2e977865dd1eef595b44e85dead4",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-83d6849cf7cf22b21710",
+      "word": "uncertainty",
+      "partOfSpeech": "noun",
+      "meaningSha256": "9a633a88362cc4d68dd44fec6ba19d263bd02b85161f170d9eca2305d7d978c0",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-1ab45db3cf4442a07f15",
+      "word": "comprise",
+      "partOfSpeech": "verb",
+      "meaningSha256": "0e1a0471c06a0f259d4a1c270d7a35d86ec136aa1bd425b0d8336312ce5db70b",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-c04d7a300951e5552d53",
+      "word": "empire",
+      "partOfSpeech": "noun",
+      "meaningSha256": "4ebeb9a5597af63bc45e675661dad3a6048d77fbe8466ca27c98a8dfaa7b8c06",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-addde313c8ffb6bd60fe",
+      "word": "compute",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d3d969dc65a55680eee07bc1790879ae92949a77ac53722c7b349cc44275eec4",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-2e7f46f648612dc71d17",
+      "word": "hypothesis",
+      "partOfSpeech": "noun",
+      "meaningSha256": "ce5d2507b27cabf40c14899a0465569f79a6867bf04ef803b0c91a12909099ab",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-f81e97defa8a860ba1d1",
+      "word": "density",
+      "partOfSpeech": "noun",
+      "meaningSha256": "fc604ba1df57024873d643c80b0fe6950f8fd3421e3e7e0af2827ce1d1a1b664",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed this stored sense as general intermediate vocabulary within the NGSL baseline; frequency is supporting evidence, not an automatic exam-level claim."
+    },
+    {
+      "id": "en-lex-51f73eef0944ec501c54",
+      "word": "offence",
+      "partOfSpeech": "noun",
+      "meaningSha256": "aa65ed714528f999359d4f8a83e6c2aea0798b211cbab6a86c3eb4f2568fe371",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed the actual general sense under its British spelling; the NGSL US spelling is an explicit existing alias, not a different word."
+    },
+    {
+      "id": "en-lex-79f72988369a2dfa5d0c",
+      "word": "fulfil",
+      "partOfSpeech": "verb",
+      "meaningSha256": "d35603664e3c5fb46f58cafffc4a82102fce02f47a6506640cd24b83c8dd972c",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed the actual general sense under its British spelling; the NGSL US spelling is an explicit existing alias, not a different word."
+    },
+    {
+      "id": "en-lex-f38c9c00ebdbb228b90c",
+      "word": "analyse",
+      "partOfSpeech": "verb",
+      "meaningSha256": "78a759be07cfac8038816d6e3ab5b0bbd7e28f55cdfe8de3c5114c581be263a1",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed the actual general sense under its British spelling; the NGSL US spelling is an explicit existing alias, not a different word."
+    },
+    {
+      "id": "en-lex-5eaf38b07ae32c20625a",
+      "word": "emphasise",
+      "partOfSpeech": "verb",
+      "meaningSha256": "afe6a8a52b6f16c7fb73706ee60ad3a71645d7e8c543701aa88aae4f2d05d993",
+      "from": "IELTS 7.0–8.0",
+      "band": 1,
+      "reason": "Reviewed the actual general sense under its British spelling; the NGSL US spelling is an explicit existing alias, not a different word."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Common English vocabulary coverage
+
+English 4.8.0 contains 12,745 study entries. It adds 389 original bilingual entries and reviews 332 existing upper-band senses, moving 249 general senses to IELTS 4.0–6.5 while retaining specialised meanings and 1,333 distinct headwords in the highest band. The four IELTS-labelled groups remain editorial study bands, not official exam vocabulary lists or score predictions.
+
+The reproducible baseline is all 2,809 NGSL 1.2 headwords plus 52 supplementary day/month/number headwords. Every reference headword maps to at least one actual dictionary entry in the first two study bands. The mapping records entry IDs and levels in `language-packages/sources/english-common/coverage.json`; missing and upper-only counts are both zero. This is complete coverage of that stated baseline, not a claim that every English word, sense or inflection has been included.
+
+Matching uses exact headwords, explicitly reviewed standard spelling aliases, and the a/an article forms. `dialog` links to `dialogue`; new entries prefer British spellings such as `favourite`, `labour`, `neighbour` and `catalogue`, with standard US variants searchable. Derived words such as `outing` do not count as `out`; `economics` does not count as `economic`. The calendar months `March` and `May` require their own capitalised entries rather than being counted as the marching verb or modal verb.
+
+Missing basic grammar words, weekdays, months, numbers and everyday nouns such as `email` and `trousers` now have separately authored English and Korean meanings and original examples. Familiar words previously represented only by specialised senses receive distinct common entries: for example, a parent as a mother/father, not just a controlling organisation. New examples contain an unambiguous literal focus so they participate in existing sentence engines. Vocabulary quizzes continue to match part of speech; a category with insufficient valid distractors is not padded with unrelated parts of speech.
+
+Existing entries, examples, provenance, source categories and progress IDs are preserved. Only explicitly reviewed levels and a spelling alias on `dialogue` change in old entries. Meaning translations in existing explanation records are byte-for-byte unchanged. New meanings do not silently replace a different source sense. Root Families links every matching dictionary sense; noun `address` was already present in the introductory band, but its multiple entries previously prevented any reference link.
+
+## Attribution and commercial reuse
+
+NGSL 1.2 and supplementary lists: Browne, C., Culligan, B., and Phillips, J., [New General Service List Project](https://charliebrownecompany.squarespace.com/new-general-service-list), CC BY-SA 4.0. The authors' official site is [newgeneralservicelist.com](https://www.newgeneralservicelist.com/). The fixed source CSVs, snapshot URLs and SHA-256 digests are retained in the source directory. Selection/rank data and coverage adaptations retain CC BY-SA 4.0 attribution; they are not relabelled MIT. Original Lingonberry meanings and bilingual examples are MIT, and all pre-existing dictionary/morpheme licences remain intact. Each installed package includes the source credit and a licence-sheet link. Editorial checks are AI-assisted; native-speaking lexicographer certification remains pending.
+
+## Reproduction and use
+
+Run `node scripts/build-common-english-packages.mjs --dry-run` to validate the SHA-bound inputs, sense decisions, usable bilingual examples, complete baseline coverage and retained expert inventory. Omit `--dry-run` to reproduce the immutable release; changed existing snapshot bytes are refused. Run `npm test`, `npm run check` and the real-package browser checks.
+
+On an existing installation, update each installed English explanation in **Settings → Language Packages → English**. The shared study core updates with the explanation package. Word List retains level-specific filters; select the introductory group for basic words or use the level badge on the root-reference word row to locate its group. Search also recognises explicit spelling aliases. This scoped common-word expansion does not resume bulk multilingual example generation.
