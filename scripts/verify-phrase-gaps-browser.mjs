@@ -19,7 +19,7 @@ try{
    window.gapScenario=category=>{
     const row=study.exercises.find(row=>row.category===category&&row.gapFill),entry=study.entries.find(entry=>entry.id===row.entryId);
     app.setStudy({...study,exercises:study.exercises.filter(item=>!item.gapFill||item.id.replace(/-(input|choice)$/u,'')===row.id.replace(/-(input|choice)$/u,''))});
-    route='home';refresh();host.querySelector(`[data-level="${entry.level}"]`).click();window.gapRoute('collocations');host.querySelector('[data-phrase-category]').value=category;host.querySelector('[data-phrase-category]').dispatchEvent(new Event('change'));return row.gapFill;
+    route='home';refresh();if(host.querySelector('[data-route=phrasal],[data-route=patterns]')||host.querySelectorAll('[data-route=collocations]').length!==1)throw new Error('Incorrect English Study sections');host.querySelector(`[data-level="${entry.level}"]`).click();window.gapRoute('collocations');host.querySelector('[data-phrase-category]').value=category;host.querySelector('[data-phrase-category]').dispatchEvent(new Event('change'));return row.gapFill;
    };
   },locale);
   for(const width of [390,1024])for(const theme of ['light','dark'])for(const category of ['phrasal','collocations']){
@@ -32,7 +32,7 @@ try{
    const baseline=await page.locator('.lexicon-question').evaluate(node=>{const s=getComputedStyle(node);return {padding:s.padding,radius:s.borderRadius};});assert.deepEqual(baseline,{padding:'16px',radius:'16px'});
    assert.ok(await fields.evaluateAll(nodes=>nodes.every(node=>node.getBoundingClientRect().height>=44&&getComputedStyle(node).backgroundColor==='rgba(0, 0, 0, 0)')));
    assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
-   await page.screenshot({path:`/private/tmp/phrase-gap-design/${locale}-${category}-${width}-${theme}.png`,fullPage:true});
+   await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:`/private/tmp/phrase-gap-design/${locale}-${category}-${width}-${theme}.png`,fullPage:true});
    await page.locator('[data-submit]').click();await page.locator('.lexicon-question.wrong').waitFor();assert.equal(await page.locator('.phrase-gap-result.correct').count(),1);assert.equal(await page.locator('.phrase-gap-result.wrong').count(),1);assert.equal(await page.locator('.input-wrong').innerText(),'wrong');assert.equal(await page.locator('[data-submit]').count(),0);assert.equal(await page.locator('[data-next]').count(),1);
    await page.locator('[data-next]').click();assert.equal(await fields.count(),2);assert.equal(await fields.nth(0).inputValue(),'');
    const answers=gap.alternatives?.[0]||gap.answers;for(const [index,answer]of answers.entries())await fields.nth(index).fill(answer);await fields.nth(1).press('Enter');await page.locator('.lexicon-question.correct').waitFor();assert.equal(await page.locator('.phrase-gap-result.wrong').count(),0);

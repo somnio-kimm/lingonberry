@@ -5,7 +5,7 @@ import {createDictionaryExercises} from './dictionary-practice.js';
 import {createJapaneseReadingExercises} from './japanese-reading.js';
 /** Build per-study data once. Curated questions take precedence over generic reading prompts. */
 export function prepareLanguageExercises(study,words){
- const curated=(study?.exercises||[]).filter(row=>!(study?.targetLanguage==='en'&&['articles','confusables'].includes(row.category)));
+ const curated=(study?.exercises||[]).filter(row=>!(study?.targetLanguage==='en'&&['articles','confusables','patterns'].includes(row.category)));
  const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.collocationId||'',row.rootFamilyId||'',row.boundaryKind||'reading'].join(':');
  const covered=new Set(curated.map(key));
  const generated=[...collocationExercises(words,study?.explanationLanguage),...createRootPractice(study,words),...(study?.targetLanguage==='ja'?createDictionaryExercises(study,words):[]),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice):[])];
