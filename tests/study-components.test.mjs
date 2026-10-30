@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {renderStudySearch,renderStudyTabs,renderStudyReferenceHeading,renderStudyQuizHeader} from '../web/js/shared/study-components.js';
+import {renderStudySearch,renderStudyTabs,renderStudyReferenceHeading,renderStudyQuizHeader,renderStudyReviewFilters} from '../web/js/shared/study-components.js';
 test('shared search preserves typed text safely and uses the established device-search input',()=>{
  const html=renderStudySearch({id:'query',value:'<script>"',label:'검색'});assert.match(html,/class="card study-search"/);assert.match(html,/inputmode="text"/);assert.match(html,/enterkeyhint="search"/);assert.match(html,/aria-label="검색"/);assert.ok(!html.includes('<script>'));
 });
@@ -19,4 +19,11 @@ test('Dictation tabs reuse the German/Chinese full-width control variant with sa
 test('Dictation header keeps the initial score and baseline header geometry instead of omitting zero',()=>{
  const html=renderStudyQuizHeader({title:'<Dictation>'});assert.match(html,/vocab-quiz-header/);assert.match(html,/&lt;Dictation&gt;/);assert.match(html,/class="score-pill">0 \/ 0<\/span>/);
  assert.match(renderStudyQuizHeader({title:'Dictation',score:{correct:2,total:3}}),/>2 \/ 3<\/span>/);
+});
+
+
+test('combined Review filters preserve groups, counts, selection and escaped package values',()=>{
+ const html=renderStudyReviewFilters({open:true,groups:[{key:'mode',title:'Exercise Type',selected:'cloze',options:[{value:'cloze',label:'Cloze',count:2},{value:'<x>',label:'<Unsafe>',count:0}]}]});
+ assert.match(html,/wrong-filter-panel" open/);assert.match(html,/data-review-filter="mode" data-value="cloze" aria-pressed="true">Cloze \(2\)/);
+ assert.match(html,/data-value="&lt;x&gt;"/);assert.ok(!html.includes('<Unsafe>'));
 });
