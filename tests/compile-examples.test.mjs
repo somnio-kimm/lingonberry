@@ -16,3 +16,12 @@ test('new editions cannot reuse the old version or silently keep stale translati
  assert.throws(()=>compileExamples({core,pairs,authored:[],corrections,version:'3.0.0'}),/matched replacement/);
  assert.throws(()=>compileExamples({core,pairs,authored,corrections:[{...corrections[0],meaningKo:undefined}],version:'3.0.0'}),/corrected ko/);
 });
+test('mixed source reuse preserves creators and source licences in examples and translations',()=>{
+ const source={creator:'English Wiktionary contributors',license:'CC-BY-SA-4.0',url:'https://en.wiktionary.org/wiki/livre'};
+ const record={...authored[0],provenance:{kind:'licensed-adaptation',license:'CC-BY-SA-4.0',creator:'Credited source and translation editors',sources:[source],changes:'Original translation and punctuation adjustment',review:'AI-editorial-checked; native-speaker-review-pending'}};
+ const [study,en]=compileExamples({core,pairs,authored:[record],corrections,version:'3.0.0'});
+ assert.deepEqual(study.entries[0].example.provenance,record.provenance);
+ assert.deepEqual(en.entries[0].exampleTranslationProvenance,record.provenance);
+ assert.match(study.license.notice,/Source-derived examples and adaptations retain their own source licences/);
+ assert.match(study.license.notice,/Original dictionary attribution/);
+});
