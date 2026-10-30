@@ -11,7 +11,7 @@ export function testDictionaryPracticeRelease(language,version,previous){test(`$
  for(const locale of ['en','ko']){
   const pair=read(`language-packages/${language}-${locale}-${version}.json`),oldPair=read(`language-packages/${language}-${locale}-${previous}.json`);assert.deepEqual(pair.entries,oldPair.entries);
   const study=assembleStudy(core,pair),words=studyWords(study),rows=prepareLanguageExercises(study,words);assert.equal(new Set(rows.map(row=>row.id)).size,rows.length);
-  const byId=new Map(words.map(word=>[word.id,word]));for(const level of new Set(words.map(word=>word.level))){const types=new Set(rows.filter(row=>byId.get(row.entryId).level===level).map(row=>row.category));for(const category of language==='ja'?['reading','onyomi','kunyomi','okurigana']:['collocations','phrasal','roots'])assert.ok(types.has(category),`${level}: missing ${category}`);}
+  const byId=new Map(words.map(word=>[word.id,word]));for(const level of new Set(words.map(word=>word.level))){const types=new Set(rows.filter(row=>byId.get(row.entryId).level===level).map(row=>row.category));for(const category of language==='ja'?['reading','okurigana']:['collocations','phrasal','roots'])assert.ok(types.has(category),`${level}: missing ${category}`);}
  }
  if(language==='ja'){
   const actual=new Set(core.practiceData.kanji.map(row=>row.literal));for(const entry of core.entries)for(const char of entry.word.match(/\p{Script=Han}/gu)||[])assert.ok(char==='々'||actual.has(char),`missing ${char}`);

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createDictionaryExercises,kanjiAnswer} from '../web/js/shared/dictionary-practice.js';
+import {createDictionaryExercises,kanjiAnswer} from './helpers/legacy-japanese-exercises.mjs';
 import {validatePracticeData} from '../web/js/packages/practice-data.js';
 import {exerciseAnswerCorrect} from '../web/js/shared/language-exercises.js';
 import {prepareLanguageExercises} from '../web/js/shared/exercise-pools.js';
@@ -19,9 +19,9 @@ test('form drills accept sourced spelling and kana alternatives and specify long
  const forms=createDictionaryExercises(study,[word]).filter(row=>row.route==='forms');assert.equal(forms.length,1);assert.ok(exerciseAnswerCorrect(forms[0],'たべた'));
  const long=createDictionaryExercises({...study,practiceData:{version:1,forms:[{entryId:word.id,groups:[{formKind:'causative-passive',answers:['食べさせられる']}]}]}},[word])[0];assert.match(long.instruction,/full, uncontracted/);
 });
-test('retired form questions are excluded while character and reading directions survive',()=>{
+test('retired form and character drills are excluded from new practice while source metadata stays available',()=>{
  const curated={id:'curated',entryId:word.id,route:'forms',category:'forms',formKind:'past'};
- const rows=prepareLanguageExercises({...study,exercises:[curated]},[word]);assert.equal(rows.filter(row=>row.formKind==='past').length,0);assert.equal(rows.filter(row=>row.category==='onyomi').length,1);
+ const rows=prepareLanguageExercises({...study,exercises:[curated]},[word]);assert.equal(rows.filter(row=>row.formKind==='past').length,0);assert.equal(rows.filter(row=>['onyomi','kunyomi'].includes(row.category)).length,0);assert.equal(study.practiceData.kanji[0].kun[0],'た.べる');
 });
 test('practice packages reject cross-language metadata, missing entries, bad URLs and duplicate answer sets',()=>{
  assert.doesNotThrow(()=>validatePracticeData(pack));
