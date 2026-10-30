@@ -1,3 +1,4 @@
+import {createMorphemeModel} from '../shared/morpheme-model.js';
 import {renderStudySearch,renderStudyTabs} from '../shared/study-components.js';
 import {renderMorphemeInventory} from '../shared/morpheme-view.js';
 import {collocationSearchTerms} from '../shared/collocations.js';
@@ -29,6 +30,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families','🌱','green']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile),engine=createLexiconQuestions(profile);
+ let morphemeModel;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',heard=false,kind='word',reviewQueue=null,reviewResults,card=0,flipped=false,order=[],chosenTokens=[],closeSheet=()=>{};
  const filters=new Map(),scores=new Map();
  const score=route=>{if(!scores.has(route))scores.set(route,{correct:0,total:0});return scores.get(route);};
@@ -148,7 +150,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  }
  function drawRoots(host){
   const f=state('roots');if(f.rootView==='quiz')return drawQuiz(host,'roots');
-  if(study.morphemes?.length)return renderMorphemeInventory(host,{rows:study.morphemes,words,state:f,t,locale:locale(),tabs:rootViewTabs(),bindTabs:bindRootTabs,openWord:id=>details(byId.get(id)),tags});
+  if(study.morphemes?.length)return renderMorphemeInventory(host,{model:morphemeModel,state:f,t,locale:locale(),tabs:rootViewTabs(),bindTabs:bindRootTabs,openWord:id=>details(byId.get(id)),tags});
   const all=f.allRoots!==false,allowed=new Set((all?words.filter(word=>(f.pos==='all'||word.pos===f.pos)&&(f.status==='all'||store.wordStatus(word.id)===f.status)):pool('roots')).map(word=>word.id));
   const families=(study.families||[]).filter(family=>(!f.rootKind||f.rootKind==='all'||(family.kind||'root')===f.rootKind)&&family.members.some(member=>allowed.has(member.entryId)));
   host.innerHTML=`<div class="lexicon-view"><h2 class="section-title study-list-title">${t('Root Families')}</h2>${rootViewTabs()}<p class="muted" data-root-count>${families.length} ${t('Families')} · ${new Set(families.flatMap(family=>family.members.map(member=>member.entryId))).size} ${t('Words')}</p><div class="grammar-selectors"><label>${t('Type')}<select data-root-kind>${['all','root','prefix','suffix'].map(kind=>`<option value="${kind}" ${(f.rootKind||'all')===kind?'selected':''}>${t(kind==='all'?'All':kind[0].toUpperCase()+kind.slice(1))}</option>`).join('')}</select></label></div><div class="form-mode-controls"><button data-root-scope="all" aria-pressed="${all}">${t('All Families')}</button><button data-root-scope="level" aria-pressed="${!all}">${t('Selected Study Level')}</button></div><div class="card study-search"><input id="root-search" class="input-field" type="search" placeholder="${t('Search')}" aria-label="${t('Search')}" value="${e(f.rootQuery||'')}" autocomplete="off" autocapitalize="none"></div>${controls('roots')}<div data-root-list class="study-reference-list"></div></div>`;
@@ -157,9 +159,29 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
   const search=host.querySelector('#root-search');search.oninput=()=>{f.rootQuery=search.value;results();};
   return()=>pager.cleanup();
  }
+ function setStudy(value) {
+  if (study===value) return;
+  study=value;
+  store.migrateEquivalentEntries(value?.retiredEntries);
+  reviewContent=createReviewContentPolicy(value);
+  if (reviewQueue) reviewQueue=reviewQueue.filter(row=>reviewContent.isCurrent(row.question));
+
+  words=studyWords(value);
+  for (const word of words) {
+   word.search=fold([word.lemma,word.pronunciation,word.studyMeaning,...word.aliases,...collocationSearchTerms(word)].join(' '));
+   word.searchLemma=fold(word.lemma);
+   word.searchAliases=[word.pronunciation,...word.aliases].filter(Boolean).map(fold);
+  }
+  words.sort((left,right)=>left.lemma.localeCompare(right.lemma,language));
+  exercises=prepareLanguageExercises(value,words);
+  byId=new Map(words.map(word=>[word.id,word]));
+  morphemeModel=value?.morphemes?.length?createMorphemeModel(value.morphemes,words):undefined;
+  order=[];
+  resetQuestion();
+ }
  return {id:language,screens,settings:{values:()=>({...preferences(),hapticEnabled:store.state.preferences.hapticEnabled,autoRemoveResolvedWrongs:store.state.preferences.autoRemoveResolvedWrongs}),change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();resetQuestion();return false;}},
   preferences,setPreferences(values){for(const key of ['theme','uiLanguage'])if(store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
-  setStudy(value){if(study===value)return;study=value;store.migrateEquivalentEntries(value?.retiredEntries);reviewContent=createReviewContentPolicy(value);if(reviewQueue)reviewQueue=reviewQueue.filter(row=>reviewContent.isCurrent(row.question));words=studyWords(value);words.forEach(word=>{word.search=fold([word.lemma,word.pronunciation,word.studyMeaning,...word.aliases,...collocationSearchTerms(word)].join(' '));word.searchLemma=fold(word.lemma);word.searchAliases=[word.pronunciation,...word.aliases].filter(Boolean).map(fold);});words.sort((a,b)=>a.lemma.localeCompare(b.lemma,language));exercises=prepareLanguageExercises(value,words);byId=new Map(words.map(word=>[word.id,word]));order=[];resetQuestion();},
+  setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
   render(route,host){host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')drawCards(host,route);else if(route==='wrong')drawReview(host);else if(route==='roots')return drawRoots(host);else drawQuiz(host,route);return()=>{};},
   stop(){DeviceSpeech.stop();closeSheet();},
