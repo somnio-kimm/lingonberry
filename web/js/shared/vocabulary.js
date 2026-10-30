@@ -1,3 +1,5 @@
+import {shuffle} from './random.js';
+export {shuffle} from './random.js';
 import {collocationQuestions,collocationAnswerCorrect} from './collocations.js';
 // Vocabulary-only questions: no external definitions or sentence text is added.
 export const VOCABULARY_MODES = Object.freeze(['vocabinput','vocabmeaning']);
@@ -15,11 +17,6 @@ export function vocabularyMeaning(word, locale) {
   if (typeof word.studyMeaning === 'string') return normalize(word.studyMeaning);
   const value = locale === 'ko' ? word.meaning_ko ?? word.meaningKo : word.meaning_en ?? word.meaningEn;
   return normalize(Array.isArray(value) ? value.join('; ') : value);
-}
-export function shuffle(values, random) {
-  const result = [...values];
-  for (let i = result.length - 1; i > 0; i--) { const j = Math.floor(random() * (i + 1)); [result[i], result[j]] = [result[j], result[i]]; }
-  return result;
 }
 /** Shared pool algorithm; input spelling and grading are language policies. */
 export function createVocabularyEngine({inputAnswer=vocabularyWord,gradeInput=(question,input)=>

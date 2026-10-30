@@ -44,3 +44,5 @@ The requested [explanation matrix](docs/explanation-matrix.md) has 43 pairs: eve
 UI development follows the [shared German/Chinese design reference](docs/study-design.md), reusable components and browser parity checks.
 
 The [runtime structure guide](docs/code-structure.md) explains model, presentation, view and localisation responsibilities.
+
+The [whole-source code audit](docs/runtime-audit.md) records shared logic, retired-code removal, verification and remaining maintainability work.
