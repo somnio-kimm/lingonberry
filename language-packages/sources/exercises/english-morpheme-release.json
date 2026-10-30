@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "from": "4.5.0",
+  "to": "4.6.0",
+  "sourceSha256": "ef90f07a32463784965805516d5848ba823d5bc2370016273fb016cb5d0c6ac2",
+  "sourcePackages": [
+    {
+      "path": "language-packages/en-core-4.5.0.json",
+      "sha256": "decd747bf1d674ab6c0769388257239117addd6c4d45c7db35b14d51a954dc3f"
+    },
+    {
+      "path": "language-packages/en-en-4.5.0.json",
+      "sha256": "3bd0601a3f76322ba4b31bff32b5749186848d9920ca15834a24f37483d3a870"
+    },
+    {
+      "path": "language-packages/en-ko-4.5.0.json",
+      "sha256": "3608beb8399dbb4dc5a1d8385d0e90fdfc7f4e831b3fa307887e1379a9188166"
+    }
+  ]
+}
