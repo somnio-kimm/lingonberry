@@ -17,7 +17,7 @@ export const Store = {
   },
   set theme(v) { _set('theme', ['light', 'dark', 'system'].includes(v) ? v : 'system'); },
 
-  get hapticEnabled() { return _get('hapticEnabled', true); },
+  get hapticEnabled() { return _get('hapticEnabled', false) === true; },
   set hapticEnabled(v) { _set('hapticEnabled', !!v); },
 
   get clozeShowPinyin() { return _get('clozeShowPinyin', true) !== false; },
