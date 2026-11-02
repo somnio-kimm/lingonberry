@@ -13,7 +13,7 @@ export async function loadExampleDirectory(directory){
  if(!['ja','en'].includes(language)||!Array.isArray(shards)||!shards.length||shards.some(name=>!/^[-a-z]+$/u.test(name))||new Set(shards).size!==shards.length)throw new Error('Invalid completion language or shards');
  const packages=[];
  for(const id of [language+'-core',language+'-en',language+'-ko']){
-  const descriptor=catalog.find(row=>row.id===id);if(!descriptor)throw new Error('Missing package: '+id);
+  const descriptor=(manifest.sourcePackages||catalog).find(row=>row.id===id);if(!descriptor)throw new Error('Missing package: '+id);
   const bytes=await readFile(join(root,descriptor.url));
   const digest=createHash('sha256').update(bytes).digest('hex');
   if(digest!==descriptor.sha256||digest!==manifest.sourceSha256[id])throw new Error('Source package changed: '+id);
@@ -21,7 +21,7 @@ export async function loadExampleDirectory(directory){
  }
  const inputs=(await Promise.all(shards.map(name=>rows(join(directory,name+'-input.jsonl'))))).flat();
  const ownership=await json(join(directory,'ownership.json')),authored=[],reviews=[];
- for(const shard of [...shards,...(language==='ja'?['lower-extra']:[]),'root']){
+ for(const shard of [...shards.flatMap(name=>language==='ja'&&name==='lower'?[name,'lower-extra']:[name]),'root']){
   let files;try{files=await readdir(join(directory,shard));}catch(error){if(error.code==='ENOENT')continue;throw error;}
   for(const name of files.sort()){
    if(/^(?:batch-)?\d+(?:-\d+)?\.jsonl$/u.test(name)){

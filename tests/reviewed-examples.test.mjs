@@ -170,7 +170,8 @@ test('English preview artifacts carry the correct language and retain review evi
  const output=await mkdtemp(join(tmpdir(),'lingonberry-english-preview-'));
  try{
   const completion=englishFixture();completion.pairs[1].license={...completion.pairs[1].license,identifier:'CC-BY-SA-4.0 AND CC-BY-4.0',notice:'Newer Korean meaning adaptation credit.\n'+completion.core.license.notice,links:[{title:'Korean translation source',url:'https://example.org/korean-source'}]};completion.catalog=[completion.core,...completion.pairs].map(pack=>({id:pack.id,kind:pack.kind,targetLanguage:'en',version:pack.version,url:`/language-packages/${pack.id}-${pack.version}.json`,bytes:1,sha256:'0'.repeat(64)}));completion.manifest={sourceSha256:Object.fromEntries(completion.catalog.map(row=>[row.id,row.sha256]))};
-  const result=await buildReviewedExampleEdition({completion,version:'5.0.0',output});assert.equal(result.fullCoverage,true);
+  completion.manifest.sourcePackages=structuredClone(completion.catalog);completion.catalog=completion.catalog.map(row=>({...row,version:'9.0.0',sha256:'f'.repeat(64)}));
+  const result=await buildReviewedExampleEdition({completion,version:'5.0.0',output});assert.equal(result.fullCoverage,true);assert.deepEqual(result.sourcePackages,completion.manifest.sourcePackages,'A newer live catalogue cannot replace the reviewed source identities');
   const base=join(output,'language-packages/sources/examples/editions/5.0.0');
   assert.equal(JSON.parse(await readFile(join(base,'en-completion-report.json'),'utf8')).targetLanguage,'en');
   assert.deepEqual(JSON.parse((await readFile(join(base,'en-completion-authored.jsonl'),'utf8')).trim()),completion.authored[0]);

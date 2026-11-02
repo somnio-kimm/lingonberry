@@ -32,7 +32,7 @@ export async function buildReviewedExampleEdition({completion,version,output}){
   [`${source}/${language}-completion-ownership.json`,json(completion.ownership)],
   [`${source}/NOTICE.txt`,packages[0].license.notice+'\n']
  ];
- const sourcePackages=completion.catalog.filter(row=>Object.hasOwn(completion.manifest.sourceSha256,row.id));
+ const sourcePackages=completion.manifest.sourcePackages||completion.catalog.filter(row=>Object.hasOwn(completion.manifest.sourceSha256,row.id));
  const proof={sourceVersion:completion.core.version,sourcePackages,sourceSha256:completion.manifest.sourceSha256,...coverage,files:artifacts.map(([path,bytes])=>({path,bytes:Buffer.byteLength(bytes),sha256:hash(bytes)}))};
  packages[0].contentReview.completionReview={status:'AI-editorial-checked',nativeSpeakerReview:'pending',...proof};
  const buildReport=json({...(language==='en'?{targetLanguage:language}:{}),version,...proof});artifacts.push([`${source}/${language}-completion-report.json`,buildReport]);
