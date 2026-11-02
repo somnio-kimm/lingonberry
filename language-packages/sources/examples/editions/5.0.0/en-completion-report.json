@@ -1,0 +1,78 @@
+{
+  "targetLanguage": "en",
+  "version": "5.0.0",
+  "sourceVersion": "4.8.0",
+  "sourcePackages": [
+    {
+      "id": "en-core",
+      "kind": "study",
+      "targetLanguage": "en",
+      "version": "4.8.0",
+      "url": "/language-packages/en-core-4.8.0.json",
+      "bytes": 32193430,
+      "sha256": "94a86776161a25560a031dfce7edfd487c6f7499acd800685702eb6022184939"
+    },
+    {
+      "id": "en-en",
+      "kind": "explanation",
+      "targetLanguage": "en",
+      "version": "4.8.0",
+      "explanationLanguage": "en",
+      "studyVersion": "4.8.0",
+      "url": "/language-packages/en-en-4.8.0.json",
+      "bytes": 13514892,
+      "sha256": "cd1ed8712268ec1869842bf6ad67d144b4b073d4f95fb8d803fe14e374ced015"
+    },
+    {
+      "id": "en-ko",
+      "kind": "explanation",
+      "targetLanguage": "en",
+      "version": "4.9.0",
+      "explanationLanguage": "ko",
+      "studyVersion": "4.8.0",
+      "url": "/language-packages/en-ko-4.9.0.json",
+      "bytes": 13114465,
+      "sha256": "9bdee025cdb9ba8f1ad0118e20574c07248b3f5e8726050f666ec84742003ec7"
+    }
+  ],
+  "sourceSha256": {
+    "en-core": "94a86776161a25560a031dfce7edfd487c6f7499acd800685702eb6022184939",
+    "en-en": "cd1ed8712268ec1869842bf6ad67d144b4b073d4f95fb8d803fe14e374ced015",
+    "en-ko": "9bdee025cdb9ba8f1ad0118e20574c07248b3f5e8726050f666ec84742003ec7"
+  },
+  "target": 11838,
+  "drafted": 11838,
+  "independentlyReviewed": 11838,
+  "staleReviews": 99,
+  "missingIds": [],
+  "unreviewedIds": [],
+  "findings": [],
+  "fullCoverage": true,
+  "files": [
+    {
+      "path": "language-packages/sources/examples/editions/5.0.0/en-completion-authored.jsonl",
+      "bytes": 5860976,
+      "sha256": "71d3953720de5db5262e2819a9d78e8d6ebba3b6fa5dbdea616c666d85a96324"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/5.0.0/en-completion-reviews.jsonl",
+      "bytes": 3644993,
+      "sha256": "30bff6701e895d90d82bdf500206845033f29b0a7420f8d0b2f9d4c67e5e293f"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/5.0.0/en-completion-bindings.jsonl",
+      "bytes": 2763924,
+      "sha256": "93e9e2af2bb306c45d7a323945ad4898940c4386076bb1a12ecef4e3c0be6566"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/5.0.0/en-completion-ownership.json",
+      "bytes": 449847,
+      "sha256": "98d6ace8a3dfe41bb028a41241d267b2c3e0d2530175017124e0d6d49a468c1d"
+    },
+    {
+      "path": "language-packages/sources/examples/editions/5.0.0/NOTICE.txt",
+      "bytes": 13871,
+      "sha256": "8af88c020a3c198ddbc565053dc674142e25e449abb83256687a81de9bd12272"
+    }
+  ]
+}

@@ -6,6 +6,8 @@ Choose a **study language** (Chinese, German, Japanese, Korean, English, Spanish
 
 Use this folder as the sole active project. Retired source and history are preserved only in ignored recovery backups; see [workspace layout and generation data](docs/workspace.md). Chinese and German content and exercises have been migrated. Every language offers Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble and Dictation (Word and Sentence), in that order. [Collocations](docs/collocations.md) practice is available for English, Korean, Spanish and French; English combines it with Phrasal Verbs. German and Chinese no longer expose collocation practice or word references. Language-specific exercises follow these shared defaults. English [Root Families](docs/learner-root-families.md) browses the full readable source inventory with 5,863 entries and complete English/Korean meanings; Confusable Words is no longer offered as a Study section. See [shared study modes](docs/shared-sentence-practice.md).
 
+English [5.0.0](docs/english-example-completion.md) includes primary examples and Korean sentence translations for all 12,745 study entries. Japanese also has complete English/Korean example coverage. Update installed explanations in Settings → Language Packages to receive new content; stable IDs preserve study progress. Remaining language coverage is documented in the [content reports](docs/multilingual-broad-dictionaries.md).
+
 ## Development
 
 Use Node.js 26.11.1 or newer and npm 12.2.0 or newer:

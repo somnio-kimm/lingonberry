@@ -16,18 +16,26 @@ async function checkImmutable(path,bytes){
 /** Build a preview directory only after every missing example has a current independent pass. */
 export async function buildReviewedExampleEdition({completion,version,output}){
  const {packages,report}=compileReviewedExamples({...completion,version});
- const {evidence,...coverage}=report,source=`language-packages/sources/examples/editions/${version}`;
+ const {evidence,...coverage}=report,source=`language-packages/sources/examples/editions/${version}`,language=completion.core.targetLanguage;
+ if(language==='en'){
+  Object.assign(packages[0].contentReview,{status:'AI-editorial-example-complete',entries:packages[0].entries.length,fullExampleCoverage:true,examplesPending:0,examplePolicy:'Every entry has an English primary example and a Korean translation. New examples passed independent AI editorial review; native-speaker review remains pending. English self-explanations retain sentence identity in the data and omit redundant translations in the app.'});
+  // Explanation editions can carry newer meaning-adaptation credits than their study core.
+  for(const pair of packages.slice(1)){
+   const previous=completion.pairs.find(row=>row.id===pair.id).license,extra=previous.notice.replace(completion.core.license.notice,'').trim();
+   pair.license={...pair.license,identifier:[...new Set([...pair.license.identifier.split(' AND '),...previous.identifier.split(' AND ')])].join(' AND '),notice:pair.license.notice+(extra?'\n\nRetained explanation-edition notices:\n'+extra:''),links:[...new Map([...pair.license.links||[],...previous.links||[]].map(link=>[link.url,link])).values()]};
+  }
+ }
  const artifacts=[
-  [`${source}/ja-completion-authored.jsonl`,jsonl(completion.authored)],
-  [`${source}/ja-completion-reviews.jsonl`,jsonl(completion.reviews)],
-  [`${source}/ja-completion-bindings.jsonl`,jsonl(completion.inputs.map(exampleSourceBinding))],
-  [`${source}/ja-completion-ownership.json`,json(completion.ownership)],
+  [`${source}/${language}-completion-authored.jsonl`,jsonl(completion.authored)],
+  [`${source}/${language}-completion-reviews.jsonl`,jsonl(completion.reviews)],
+  [`${source}/${language}-completion-bindings.jsonl`,jsonl(completion.inputs.map(exampleSourceBinding))],
+  [`${source}/${language}-completion-ownership.json`,json(completion.ownership)],
   [`${source}/NOTICE.txt`,packages[0].license.notice+'\n']
  ];
- const sourcePackages=completion.catalog.filter(row=>Object.hasOwn(completion.manifest.sourceSha256,row.id));
+ const sourcePackages=completion.manifest.sourcePackages||completion.catalog.filter(row=>Object.hasOwn(completion.manifest.sourceSha256,row.id));
  const proof={sourceVersion:completion.core.version,sourcePackages,sourceSha256:completion.manifest.sourceSha256,...coverage,files:artifacts.map(([path,bytes])=>({path,bytes:Buffer.byteLength(bytes),sha256:hash(bytes)}))};
  packages[0].contentReview.completionReview={status:'AI-editorial-checked',nativeSpeakerReview:'pending',...proof};
- const buildReport=json({version,...proof});artifacts.push([`${source}/ja-completion-report.json`,buildReport]);
+ const buildReport=json({...(language==='en'?{targetLanguage:language}:{}),version,...proof});artifacts.push([`${source}/${language}-completion-report.json`,buildReport]);
  for(const [path,bytes]of artifacts)await checkImmutable(join(output,path),bytes);
  for(const [path,bytes]of artifacts){await mkdir(dirname(join(output,path)),{recursive:true});await writeFile(join(output,path),bytes);}
  await mkdir(join(output,'web'),{recursive:true});await mkdir(join(output,'language-packages'),{recursive:true});

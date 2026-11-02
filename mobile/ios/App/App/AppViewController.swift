@@ -22,7 +22,7 @@ class AppViewController: CAPBridgeViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let arguments = ProcessInfo.processInfo.arguments
-        guard !verificationStarted && (arguments.contains("--update-installed-language-packages") || arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-japanese-completion") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana") || arguments.contains("--verify-japanese-reading-target")) else { return }
+        guard !verificationStarted && (arguments.contains("--update-installed-language-packages") || arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-english-examples") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-japanese-completion") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana") || arguments.contains("--verify-japanese-reading-target")) else { return }
         verificationStarted = true
         if arguments.contains("--update-installed-language-packages") { UIApplication.shared.isIdleTimerDisabled = true }
         verifyPackages(attempt: 0)
@@ -84,6 +84,19 @@ class AppViewController: CAPBridgeViewController {
                   return JSON.stringify({passed:true,checks,restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
+                if (englishExamples) {
+                  const {createPackageStorage}=await import('./js/packages/storage.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{selectWordExample}=await import('./js/shared/word-example.js');
+                  const storage=createPackageStorage(),catalog=await fetch('./catalog.json').then(response=>response.json()),descriptor=id=>catalog.find(row=>row.id===id),core=await storage.get('en-core',descriptor('en-core').version),checks=[];
+                  if(!core?.contentReview?.completionReview?.fullCoverage)throw new Error('Installed English completion proof is missing');
+                  if(core.entries.some(row=>!row.example?.text?.trim()))throw new Error('English primary examples are incomplete');
+                  for(const locale of ['en','ko']){
+                    const pair=await storage.get('en-'+locale,descriptor('en-'+locale).version);if(!pair||pair.studyVersion!==core.version)throw new Error('English explanation update is missing');
+                    const words=studyWords(assembleStudy(core,pair));
+                    for(const word of words){const shown=selectWordExample(word,'en');if(!shown?.text?.trim()||(locale==='ko'&&!shown.studyTranslation?.trim())||(locale==='en'&&shown.studyTranslation))throw new Error('English dictionary example display is incomplete: '+word.id);}
+                    checks.push({locale,entries:words.length,examples:words.length,version:core.version});
+                  }
+                  return JSON.stringify({passed:true,checks,independentlyReviewed:core.contentReview.completionReview.independentlyReviewed,preferencesUnchanged:true});
+                }
                 if (okurigana || readingTarget) {
                   const {renderExerciseReview}=await import('./js/shared/exercise-review-view.js'),{createExerciseQuestions}=await import('./js/shared/language-exercises.js'),{lexiconText}=await import('./js/shared/lexicon-text.js');
                   const checkReview=(row,word,display,explanation,words)=>{
@@ -359,7 +372,7 @@ class AppViewController: CAPBridgeViewController {
                 await wait(() => document.querySelector('#target option:checked') && document.querySelector('#explanation option:checked'));
                 result.placeholders = [document.querySelector('#target option:checked').textContent,document.querySelector('#explanation option:checked').textContent];
                 return JSON.stringify(result);
-                """, arguments: ["updateInstalled":ProcessInfo.processInfo.arguments.contains("--update-installed-language-packages"),"readingTarget":ProcessInfo.processInfo.arguments.contains("--verify-japanese-reading-target"),"okurigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-okurigana"),"furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections") || ProcessInfo.processInfo.arguments.contains("--verify-japanese-completion"),"completion":ProcessInfo.processInfo.arguments.contains("--verify-japanese-completion")], in: nil, in: .page) { result in
+                """, arguments: ["updateInstalled":ProcessInfo.processInfo.arguments.contains("--update-installed-language-packages"),"englishExamples":ProcessInfo.processInfo.arguments.contains("--verify-english-examples"),"readingTarget":ProcessInfo.processInfo.arguments.contains("--verify-japanese-reading-target"),"okurigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-okurigana"),"furigana":ProcessInfo.processInfo.arguments.contains("--verify-japanese-furigana"),"settings":ProcessInfo.processInfo.arguments.contains("--verify-shared-settings"),"dictation":ProcessInfo.processInfo.arguments.contains("--verify-dictation-design"),"offline":ProcessInfo.processInfo.arguments.contains("--verify-offline-packages"),"english":ProcessInfo.processInfo.arguments.contains("--verify-english-corrections"),"japanese":ProcessInfo.processInfo.arguments.contains("--verify-japanese-corrections") || ProcessInfo.processInfo.arguments.contains("--verify-japanese-completion"),"completion":ProcessInfo.processInfo.arguments.contains("--verify-japanese-completion")], in: nil, in: .page) { result in
                     UIApplication.shared.isIdleTimerDisabled = false
                     switch result {
                     case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
