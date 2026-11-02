@@ -1,3 +1,5 @@
+import {isActiveExerciseCategory} from '../shared/language-exercises.js';
+const activeCollocations=(language,entry)=>isActiveExerciseCategory(language,'collocations')?entry.collocations||[]:[];
 const markTone={'\u0304':1,'\u0301':2,'\u030c':3,'\u0300':4};
 const initials=['','b','p','m','f','d','t','n','l','g','k','h','j','q','x','zh','ch','sh','r','z','c','s','y','w'];
 const finals=['a','o','e','ai','ei','ao','ou','an','en','ang','eng','ong','i','ia','ie','iao','iu','ian','in','iang','ing','iong','u','ue','ua','uo','uai','ui','uan','un','uang','ueng','ü','üe','üan','ün','er'];
@@ -46,7 +48,7 @@ export function germanWords(study) {
   ...entry.grammar,id:entry.id,lemma:entry.word,sense_id:entry.grammar?.sense_id||entry.id,cefr:entry.level||'A1',pos:entry.partOfSpeech,
   article:entry.article,gender:entry.grammar?.gender||({der:'masculine',die:'feminine',das:'neuter'}[entry.article]),
   meaning_en:study.explanationLanguage==='en'?(entry.meanings||[entry.meaning]):[],meaning_ko:study.explanationLanguage==='ko'?(entry.meanings||[entry.meaning]):[],
-  studyLanguage:study.targetLanguage,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:entry.collocations||[],
+  studyLanguage:study.targetLanguage,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:activeCollocations('de',entry),
   examples:[...(entry.example?[entry.example]:[]),...(entry.additionalExamples||[])].map(example=>({...example,de:example.text,studyTranslation:example.translation,[study.explanationLanguage]:example.translation})),
  };});
 }
@@ -55,7 +57,7 @@ export function chineseWords(study) {
   ...entry.grammar,id:entry.id,hanzi:entry.word,hskLevel:Number(entry.level)||1,
   syllables:entry.syllables||wordSyllables(entry.word,entry.pronunciation),partOfSpeech:entry.partOfSpeech,
   meaningEn:study.explanationLanguage==='en'?entry.meaning:'',meaningKo:study.explanationLanguage==='ko'?entry.meaning:'',
-  studyLanguage:study.targetLanguage,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:entry.collocations||[],
+  studyLanguage:study.targetLanguage,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:activeCollocations('zh',entry),
   sentences:[...(entry.example?[entry.example]:[]),...(entry.additionalExamples||[])].map(example=>({...example,hanzi:example.text,pinyin:example.pronunciation||'',studyTranslation:example.translation,meaningEn:study.explanationLanguage==='en'?example.translation:'',meaningKo:study.explanationLanguage==='ko'?example.translation:''})),
  }));
 }
