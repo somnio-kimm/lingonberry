@@ -13,7 +13,9 @@ export function renderExerciseGap(text,locale='en'){
 export function renderExerciseExplanation(question){
  if(!question.exercise)return '';
  const segments=question.segments?.map(segment=>`<span class="reading-segment ${segment.kind}">${segment.kind==='kanji'?`<ruby>${e(segment.text)}<rt>${e(segment.reading)}</rt></ruby>`:e(segment.text)}</span>`).join('');
- return `<div class="exercise-explanation">${segments?`<div class="reading-segments" lang="ja">${segments}</div>`:''}<p>${e(question.explanation)}</p></div>`;
+ const prose=question.category==='okurigana'?'':`<p>${e(question.explanation)}</p>`;
+ if(!segments&&!prose)return '';
+ return `<div class="exercise-explanation">${segments?`<div class="reading-segments" lang="ja">${segments}</div>`:''}${prose}</div>`;
 }
 export function renderExercisePrompt(question,options={}){
  if(question.category==='reading'){
