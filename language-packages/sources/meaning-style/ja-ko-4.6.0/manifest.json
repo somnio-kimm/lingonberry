@@ -1,0 +1,50 @@
+{
+  "scope": "Targeted natural-Korean corrections for Japanese vocabulary. Full-list short-label and literary-word screening; first 2,100 entries and all changed entries individually assessed. Retained screening decisions do not certify all senses.",
+  "sourcePackages": [
+    {
+      "id": "ja-core",
+      "kind": "study",
+      "targetLanguage": "ja",
+      "version": "4.4.0",
+      "url": "/language-packages/ja-core-4.4.0.json",
+      "bytes": 37348165,
+      "sha256": "11ea3e74ffea80dc0ba1ff0fe8acdbda98457a6e0e9d4084d71b3833fcf2a6b5"
+    },
+    {
+      "id": "ja-en",
+      "kind": "explanation",
+      "targetLanguage": "ja",
+      "version": "4.5.0",
+      "explanationLanguage": "en",
+      "studyVersion": "4.4.0",
+      "url": "/language-packages/ja-en-4.5.0.json",
+      "bytes": 17660357,
+      "sha256": "488b58119c2f59d47eec28d0628b21146f0d9be63872d35a6c3ed20ffe3b836d"
+    },
+    {
+      "id": "ja-ko",
+      "kind": "explanation",
+      "targetLanguage": "ja",
+      "version": "4.5.0",
+      "explanationLanguage": "ko",
+      "studyVersion": "4.4.0",
+      "url": "/language-packages/ja-ko-4.5.0.json",
+      "bytes": 17611535,
+      "sha256": "70b45b708c5b8c788de275274c77d53dcf596689512e7cedf8473b4158fe9b83"
+    }
+  ],
+  "targetEntries": 12027,
+  "shards": [
+    "a",
+    "b",
+    "c"
+  ],
+  "sourcePair": "ja-ko",
+  "toVersion": "4.6.0",
+  "contextPackage": {
+    "path": "language-packages/ja-ko-4.4.0.json",
+    "sha256": "b9d2bdd5270b80712723b28e44c948ee57c7f67aefc84965422c396420b49f2d"
+  },
+  "independentReviewRequired": false,
+  "reviewMethod": "Single-editor AI review with source-definition and example context for edits; no independent or native-speaker review. Report distinguishes individual editorial review from screened unchanged entries."
+}

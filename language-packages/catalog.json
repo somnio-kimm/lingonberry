@@ -147,12 +147,12 @@
     "id": "ja-ko",
     "kind": "explanation",
     "targetLanguage": "ja",
-    "version": "4.5.0",
+    "version": "4.6.0",
     "explanationLanguage": "ko",
     "studyVersion": "4.4.0",
-    "url": "/language-packages/ja-ko-4.5.0.json",
-    "bytes": 17611535,
-    "sha256": "70b45b708c5b8c788de275274c77d53dcf596689512e7cedf8473b4158fe9b83"
+    "url": "/language-packages/ja-ko-4.6.0.json",
+    "bytes": 17618579,
+    "sha256": "0b6fef694cdac1d3eba776c1eb20ad65662dbcf86eba935c54e132f261141a87"
   },
   {
     "id": "ko-core",

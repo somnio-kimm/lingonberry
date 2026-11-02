@@ -34,7 +34,7 @@ function headwordCorrection(record,entry){
  for(const link of evidence){const url=new URL(link);if(url.protocol!=='https:'||url.username||url.password)throw new Error('Invalid correction evidence URL: '+record.id);}
  return correction;
 }
-function resolveReviewGroup(rows){
+export function resolveReviewGroup(rows){
  const findings=new Map(rows.filter(row=>row.verdict!=='pass').map(row=>[exampleDigest(row),row])),resolved=new Set();
  for(const row of rows){
   if(row.resolves===undefined)continue;
