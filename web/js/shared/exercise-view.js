@@ -5,10 +5,10 @@ import {localizeRootPromptOrigin} from './root-references.js';
 import {renderPhraseGapSentence} from './phrase-gap-view.js';
 import {escapeHtml as e} from './ui.js';
 /** Render answer slots as the shared single underline; preserve marked characters. */
-export function renderExerciseGap(text,locale='en'){
+export function renderExerciseGap(text,locale='en',variant='quiz'){
  const pattern=/(?:【[\s＿_]*】|［[\s＿_]*］|\[[\s＿_]*\]|（[\s＿_]*）|\([\s＿_]*\)|_{2,})/gu;
  let result='',at=0;
- for(const match of String(text).matchAll(pattern)){result+=e(String(text).slice(at,match.index))+`<span class="form-question-blank" role="img" aria-label="${locale==='ko'?'빈칸':'Blank'}"></span>`;at=match.index+match[0].length;}
+ for(const match of String(text).matchAll(pattern)){result+=e(String(text).slice(at,match.index))+`<span class="${variant==='review'?'wrong-test-slot wrong-test-blank':'form-question-blank'}" role="img" aria-label="${locale==='ko'?'빈칸':'Blank'}"></span>`;at=match.index+match[0].length;}
  return result+e(String(text).slice(at));
 }
 /** Answer-only reading alignment: never reveal a kana answer before submission. */
