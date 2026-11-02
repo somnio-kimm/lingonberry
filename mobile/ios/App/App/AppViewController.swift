@@ -113,8 +113,13 @@ class AppViewController: CAPBridgeViewController {
                     }
                     const typed=rows.find(row=>row.entryId===word?.id&&row.category==='okurigana'&&row.route==='vocabinput'),choice=rows.find(row=>row.entryId===word?.id&&row.category==='okurigana'&&row.route==='vocabmeaning');
                     if(typed?.prompt!=='ひさしい'||typed.answer!=='久しい'||!exerciseAnswerCorrect(typed,'久しい')||exerciseAnswerCorrect(typed,'ひさしい')||exerciseAnswerCorrect(typed,'久い')||!choice?.options.includes('久い')||choice.options.length<3||choice.options.some(value=>!value.startsWith('久')))throw new Error('Incorrect kana-to-complete-word Okurigana exercise');
-                    const prompt=renderExercisePrompt({...typed,exercise:true,word});
-                    if(prompt.includes('久しい')||prompt.includes('<rt>'))throw new Error('Okurigana question reveals the written answer');
+                    for(const display of ['en','ko'])for(const row of [typed,choice]){
+                      const host=document.createElement('div');host.innerHTML=renderExercisePrompt({...row,exercise:true,word,locale:pair.explanationLanguage},{uiLanguage:display});
+                      const instruction=host.querySelector('.vocab-instruction'),prompt=host.querySelector('.vocab-prompt')?.textContent,meaning=host.querySelector('.exercise-context')?.textContent;
+                      const expected=row.options?(display==='ko'?'올바른 오쿠리가나를 사용한 단어 전체를 선택하세요.':'Choose the complete word with the correct okurigana.'):(display==='ko'?'한자와 올바른 오쿠리가나를 사용해 단어 전체를 입력하세요.':'Write the complete word using kanji and the correct okurigana.');
+                      if(instruction?.textContent!==expected||instruction.lang!==(display==='ko'?'ko':'en-GB')||prompt!=='ひさしい'||host.querySelector('rt')||meaning!==word.studyMeaning)throw new Error('Display-language instruction or explanation-language meaning differs');
+                      checks.push({explanation:pair.explanationLanguage,display,mode:row.options?'choice':'input',instruction:expected,prompt,meaning});
+                    }
                     const act=words.find(row=>row.lemma==='行う'),variant=rows.find(row=>row.entryId===act?.id&&row.category==='okurigana'&&row.route==='vocabinput');
                     if(!variant||!exerciseAnswerCorrect(variant,'行なう'))throw new Error('Dictionary-authorised alternative spelling was rejected');
                     checks.push({locale:pair.explanationLanguage,prompt:typed.prompt,answer:typed.answer,options:choice.options,acceptedVariant:'行なう'});
