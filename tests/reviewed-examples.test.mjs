@@ -35,6 +35,24 @@ test('a complete independently reviewed edition fills examples without changing 
  assert.deepEqual(provenance.editorialReview.reviewers,['upper-b']);assert.equal(provenance.editorialReview.nativeSpeakerReview,'pending');
  assert.deepEqual(args,before);
 });
+function englishFixture(){
+ const args=fixture();args.core={...args.core,id:'en-core',targetLanguage:'en',entries:[{id:'walk',word:'walk',partOfSpeech:'verb',level:'IELTS 1.0–3.5'}]};
+ args.pairs=args.pairs.map(pair=>({...pair,id:'en-'+pair.explanationLanguage,targetLanguage:'en'}));
+ args.inputs[0]={...args.inputs[0],word:'walk',reading:null,level:'IELTS 1.0–3.5'};
+ args.authored[0]={...args.authored[0],text:'We walk to the station every morning.',en:'We walk to the station every morning.',ko:'우리는 매일 아침 역까지 걸어간다.',focus:{text:'walk',start:3}};
+ args.reviews[0]={...args.reviews[0],recordSha256:exampleDigest(args.authored[0]),sourceBindingSha256:exampleDigest(exampleSourceBinding(args.inputs[0]))};
+ return args;
+}
+test('English completion preserves definitions and provides native identity plus Korean example translations',()=>{
+ const args=englishFixture(),{packages,report}=compileReviewedExamples(args);
+ assert.equal(report.fullCoverage,true);assert.equal(packages[0].targetLanguage,'en');
+ assert.equal(packages[1].entries[0].meaning,'walk');assert.equal(packages[1].entries[0].exampleTranslation,args.authored[0].text);
+ assert.equal(packages[2].entries[0].meaning,'걷다');assert.equal(packages[2].entries[0].exampleTranslation,args.authored[0].ko);
+});
+test('English completion cannot approve a different self-translation or omit Korean translation',()=>{
+ const args=englishFixture();args.authored[0].en='A different sentence.';assert.throws(()=>auditReviewedExamples(args),/self-translation/);
+ args.authored[0].en=args.authored[0].text;delete args.authored[0].ko;assert.throws(()=>auditReviewedExamples(args),/Missing ko/);
+});
 test('already published examples and translations remain byte-equivalent in the new edition',()=>{
  const args=fixture(),published={id:'read',word:'読む',partOfSpeech:'verb',level:'N5',example:{text:'本を読む。',provenance:{license:'CC-BY-4.0'}},additionalExamples:[{text:'新聞を読む。'}],exampleStatus:'editorial-draft'};
  args.core.entries.push(published);
@@ -147,4 +165,16 @@ test('the preview builder refuses incomplete review before writing any output',a
  const directory=await mkdtemp(join(tmpdir(),'lingonberry-reviewed-incomplete-')),output=join(directory,'unpublished');
  try{const completion=fixture();completion.reviews=[];await assert.rejects(buildReviewedExampleEdition({completion,version:'4.4.0',output}),/unreviewed/);await assert.rejects(access(output),{code:'ENOENT'});}
  finally{await rm(directory,{recursive:true,force:true});}
+});
+test('English preview artifacts carry the correct language and retain review evidence',async()=>{
+ const output=await mkdtemp(join(tmpdir(),'lingonberry-english-preview-'));
+ try{
+  const completion=englishFixture();completion.pairs[1].license={...completion.pairs[1].license,identifier:'CC-BY-SA-4.0 AND CC-BY-4.0',notice:'Newer Korean meaning adaptation credit.\n'+completion.core.license.notice,links:[{title:'Korean translation source',url:'https://example.org/korean-source'}]};completion.catalog=[completion.core,...completion.pairs].map(pack=>({id:pack.id,kind:pack.kind,targetLanguage:'en',version:pack.version,url:`/language-packages/${pack.id}-${pack.version}.json`,bytes:1,sha256:'0'.repeat(64)}));completion.manifest={sourceSha256:Object.fromEntries(completion.catalog.map(row=>[row.id,row.sha256]))};
+  const result=await buildReviewedExampleEdition({completion,version:'5.0.0',output});assert.equal(result.fullCoverage,true);
+  const base=join(output,'language-packages/sources/examples/editions/5.0.0');
+  assert.equal(JSON.parse(await readFile(join(base,'en-completion-report.json'),'utf8')).targetLanguage,'en');
+  assert.deepEqual(JSON.parse((await readFile(join(base,'en-completion-authored.jsonl'),'utf8')).trim()),completion.authored[0]);
+  const korean=JSON.parse(await readFile(join(output,'language-packages/en-ko-5.0.0.json'),'utf8'));assert.match(korean.license.notice,/Newer Korean meaning adaptation credit/);assert.match(korean.license.identifier,/CC-BY-4.0/);assert.ok(korean.license.links.some(link=>link.url==='https://example.org/korean-source'));
+  await assert.rejects(access(join(base,'ja-completion-authored.jsonl')),{code:'ENOENT'});
+ }finally{await rm(output,{recursive:true,force:true});}
 });

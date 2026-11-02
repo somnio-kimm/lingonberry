@@ -49,7 +49,7 @@ function resolveReviewGroup(rows){
 }
 /** Structural checks verify review evidence, not linguistic correctness itself. */
 export function auditReviewedExamples({core,pairs,inputs,ownership,authored,reviews}){
- if(core.targetLanguage!=='ja')throw new Error('This completion gate expects Japanese content');
+ if(!['ja','en'].includes(core.targetLanguage))throw new Error('This completion gate expects Japanese or English content');
  const entries=unique(core.entries,'entry'),source=unique(inputs,'input'),records=unique(authored,'example');
  const translations=Object.fromEntries(['en','ko'].map(locale=>{
   const pair=pairs.find(row=>row.explanationLanguage===locale);
@@ -67,7 +67,8 @@ export function auditReviewedExamples({core,pairs,inputs,ownership,authored,revi
  const hashes=new Map();
  for(const record of authored){
   if(!source.has(record.id))throw new Error('Example outside completion scope: '+record.id);
-  validateExampleRecord(record,entries.get(record.id),'ja');
+  validateExampleRecord(record,entries.get(record.id),core.targetLanguage);
+  if(core.targetLanguage==='en'&&record.en!==record.text)throw new Error('English self-translation must equal its native example: '+record.id);
   headwordCorrection(record,entries.get(record.id));
   for(const locale of ['en','ko'])if(typeof record[locale]!=='string'||!record[locale].trim())throw new Error(`Missing ${locale} translation: ${record.id}`);
   if(!record.focus||!Number.isInteger(record.focus.start))throw new Error('Explicit focus offset required: '+record.id);

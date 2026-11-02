@@ -9,17 +9,19 @@ const json=async path=>JSON.parse(await readFile(path,'utf8'));
 const rows=async path=>(await readFile(path,'utf8')).split('\n').filter(line=>line.trim()).map(line=>JSON.parse(line));
 export async function loadExampleDirectory(directory){
  const manifest=await json(join(directory,'manifest.json')),catalog=await json(join(root,'language-packages/catalog.json'));
+ const language=manifest.targetLanguage||'ja',shards=manifest.shards||['lower','upper-a','upper-b'];
+ if(!['ja','en'].includes(language)||!Array.isArray(shards)||!shards.length||shards.some(name=>!/^[-a-z]+$/u.test(name))||new Set(shards).size!==shards.length)throw new Error('Invalid completion language or shards');
  const packages=[];
- for(const id of ['ja-core','ja-en','ja-ko']){
+ for(const id of [language+'-core',language+'-en',language+'-ko']){
   const descriptor=catalog.find(row=>row.id===id);if(!descriptor)throw new Error('Missing package: '+id);
   const bytes=await readFile(join(root,descriptor.url));
   const digest=createHash('sha256').update(bytes).digest('hex');
   if(digest!==descriptor.sha256||digest!==manifest.sourceSha256[id])throw new Error('Source package changed: '+id);
   packages.push(JSON.parse(bytes));
  }
- const inputs=(await Promise.all(['lower','upper-a','upper-b'].map(name=>rows(join(directory,name+'-input.jsonl'))))).flat();
+ const inputs=(await Promise.all(shards.map(name=>rows(join(directory,name+'-input.jsonl'))))).flat();
  const ownership=await json(join(directory,'ownership.json')),authored=[],reviews=[];
- for(const shard of ['lower','lower-extra','upper-a','upper-b','root']){
+ for(const shard of [...shards,...(language==='ja'?['lower-extra']:[]),'root']){
   let files;try{files=await readdir(join(directory,shard));}catch(error){if(error.code==='ENOENT')continue;throw error;}
   for(const name of files.sort()){
    if(/^(?:batch-)?\d+(?:-\d+)?\.jsonl$/u.test(name)){
