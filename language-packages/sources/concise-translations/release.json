@@ -1,0 +1,86 @@
+{
+  "policy": "Concise equivalents for cross-language pairs; dictionary definitions retained for English-to-English. Brief sense/register qualifiers remain where needed.",
+  "inputs": [
+    {
+      "path": "language-packages/en-core-4.8.0.json",
+      "sha256": "94a86776161a25560a031dfce7edfd487c6f7499acd800685702eb6022184939"
+    },
+    {
+      "path": "language-packages/en-en-4.8.0.json",
+      "sha256": "cd1ed8712268ec1869842bf6ad67d144b4b073d4f95fb8d803fe14e374ced015"
+    },
+    {
+      "path": "language-packages/en-ko-4.8.0.json",
+      "sha256": "bd04c9875f54db76d6adaf9f170ec996758047341d1714c1e51ebe1576c470b6"
+    },
+    {
+      "path": "language-packages/es-core-3.1.0.json",
+      "sha256": "f536b511b039e8122011336ecc452fe02187c142e1efeb1d11e33935aa7affca"
+    },
+    {
+      "path": "language-packages/es-en-3.1.0.json",
+      "sha256": "016a6622e005dd7abc0ec0c22210b720d2c19e391265c7a8ccf38347975cc350"
+    },
+    {
+      "path": "language-packages/es-ko-3.1.0.json",
+      "sha256": "1b92abf04086c083c932db73f45aaa5e149e81225c53f23faa9382e75f098985"
+    },
+    {
+      "path": "language-packages/fr-core-3.1.0.json",
+      "sha256": "bb28f6b9a073c0aa256f6080a5b049e4f3331d8060dc0e4a3655ed7144f1ebb8"
+    },
+    {
+      "path": "language-packages/fr-en-3.1.0.json",
+      "sha256": "19016de7864388887cfca7917ac0ed2b76ac1264c7b8f6a562371f1b6c4f9485"
+    },
+    {
+      "path": "language-packages/fr-ko-3.1.0.json",
+      "sha256": "4a6e6ba6f04d58e1663b2c6229e986568c806f1a2e4adb8f5c87ab9ba5beda82"
+    },
+    {
+      "path": "language-packages/ja-core-4.4.0.json",
+      "sha256": "11ea3e74ffea80dc0ba1ff0fe8acdbda98457a6e0e9d4084d71b3833fcf2a6b5"
+    },
+    {
+      "path": "language-packages/ja-en-4.4.0.json",
+      "sha256": "5e1f7a84b5aa0389b7758fa39c3fc66af869b04e1382f0d4421952d335145751"
+    },
+    {
+      "path": "language-packages/ja-ko-4.4.0.json",
+      "sha256": "b9d2bdd5270b80712723b28e44c948ee57c7f67aefc84965422c396420b49f2d"
+    },
+    {
+      "path": "language-packages/ko-core-3.1.0.json",
+      "sha256": "472bc600d5c6f250761d8d8652e33a8df7791a4cb7494e9244d634f23544e5eb"
+    },
+    {
+      "path": "language-packages/ko-en-3.1.0.json",
+      "sha256": "fbfe7e930bc0a098cbbf9fae9785487057aa7a16149b3827e9c1372d5a82c7a0"
+    }
+  ],
+  "sourceSnapshots": [
+    {
+      "path": "language-packages/sources/multilingual/broad-source-manifest.json",
+      "sha256": "73944936b1751fdcd266eed41a6fc7bf1f901fb7a091b4e41d7b85b32c3cb7b7"
+    },
+    {
+      "path": "language-packages/sources/concise-translations/nikl-equivalents.jsonl",
+      "sha256": "c94c018fd64ea70ffb5153510f617099b5d647f28509c8c251d30e54a18f38ff"
+    },
+    {
+      "path": "language-packages/sources/concise-translations/ja-editorial.jsonl",
+      "sha256": "c04a4200db864e716b2518974535647a209e723d4bfefdee438115704f1e32e7"
+    }
+  ],
+  "outputs": {
+    "en-ko": "4.9.0",
+    "es-en": "3.2.0",
+    "es-ko": "3.2.0",
+    "fr-en": "3.2.0",
+    "fr-ko": "3.2.0",
+    "ja-en": "4.5.0",
+    "ja-ko": "4.5.0",
+    "ko-en": "3.2.0"
+  },
+  "nativeSpeakerReview": "pending"
+}
