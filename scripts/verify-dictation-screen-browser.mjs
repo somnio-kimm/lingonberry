@@ -13,7 +13,7 @@ async function front(page){return page.evaluate(()=>{
  });}
 try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
- await page.addInitScript(()=>{Object.defineProperty(window,'SpeechSynthesisUtterance',{value:class{constructor(text){this.text=text;}},configurable:true});Object.defineProperty(window,'speechSynthesis',{value:{getVoices:()=>['de-DE','zh-CN','en-GB','ja-JP','ko-KR','es-ES','fr-FR'].map(lang=>({lang,localService:true})),cancel(){},speak(utterance){setTimeout(()=>utterance.onend?.(),0);}},configurable:true});});
+ await page.addInitScript(()=>{Object.defineProperty(window,'SpeechSynthesisUtterance',{value:class{constructor(text){this.text=text;}},configurable:true});Object.defineProperty(window,'speechSynthesis',{value:{getVoices:()=>['de-DE','zh-CN','en-GB','ja-JP','ko-KR','es-ES','fr-FR'].map(lang=>({lang,localService:true})),cancel(){},speak(utterance){window.dictationSpokenText=utterance.text;setTimeout(()=>utterance.onend?.(),0);}},configurable:true});});
  await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/dictation-screen',{recursive:true});const references=new Map();let checks=0;
  for(const language of ['de','zh','en','ja','ko','es','fr']){
   await tab(page,'settings');await page.locator('#manage-packages').click();await page.locator(`[data-language=${language}]`).click();await page.locator(`[data-available="${language}-en"] .download-package`).click();await page.locator(`[data-package="${language}-en"] .remove-package`).waitFor();
@@ -24,13 +24,18 @@ try{
     await page.locator(`button[data-listening-mode=${mode}]`).click();await page.locator('.listening-question').waitFor();const geometry=await front(page),key=[locale,width,theme,mode].join('-');
     if(['de','zh'].includes(language))references.set(language+'-'+key,geometry);else assert.deepEqual(geometry,references.get((language==='ja'?'zh':'de')+'-'+key),language+' full Dictation '+key);
     assert.equal(await page.locator('.listening-transcript ruby,.listening-transcript rt').count(),0);assert.equal(await page.locator('#listening-answer').getAttribute('placeholder'),null);
+    assert.equal(await page.locator('.listening-user-answer,.wrong-answer-label').count(),0,'No answer feedback before submission');assert.equal(await page.locator('#listening-answer').getAttribute('aria-label'),locale==='ko'?'답변':'Your answer');
     await page.locator('#listening-hint').click();assert.ok((await page.locator('.listening-hint-text').innerText()).trim(),JSON.stringify({language,locale,mode}));assert.ok(!(await page.locator('.listening-hint-text').innerText()).includes('Translation not available'));assert.equal(await page.locator('.listening-hint-text').getAttribute('lang'),'en',JSON.stringify({language,locale,mode}));await page.locator('#listening-hint').click();
     if(locale==='en')await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});if(locale==='en')await page.screenshot({path:`/private/tmp/dictation-screen/${language}-${width}-${theme}-${mode}.png`,fullPage:true});
     await page.locator('#listening-answer').fill('definitely incorrect');assert.equal(await page.locator('#listening-submit').isEnabled(),false);await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-submit').disabled);await page.locator('#listening-submit').click();await page.locator('.vocab-answer-cell.wrong').waitFor();
-    assert.equal(await page.locator('.listening-user-answer del').innerText(),'definitely incorrect');assert.equal(await page.locator('#listening-submit').count(),0);assert.equal(await page.locator('#listening-next').count(),1);assert.ok((await page.locator('.listening-transcript').innerText()).trim());
+    assert.equal(await page.locator('.listening-user-answer del').innerText(),'definitely incorrect');assert.deepEqual(await page.locator('.wrong-answer-label').allTextContents(),locale==='ko'?['정답','오답']:['Correct answer','Wrong answer']);assert.equal(await page.locator('#listening-submit').count(),0);assert.equal(await page.locator('#listening-next').count(),1);assert.ok((await page.locator('.listening-transcript').innerText()).trim());
     if(language==='en'&&mode==='listensentence')assert.equal(await page.locator('.listening-translation').count(),0);
     if(locale==='en'&&width===390&&theme==='dark'){await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:`/private/tmp/dictation-screen/${language}-${mode}-checked.png`,fullPage:true});}
-    await page.locator('#listening-next').click();assert.equal(await page.locator('#listening-answer').inputValue(),'');assert.equal(await page.locator('#listening-submit').isEnabled(),false);checks++;
+    await page.locator('#listening-next').click();assert.equal(await page.locator('#listening-answer').inputValue(),'');assert.equal(await page.locator('#listening-submit').isEnabled(),false);assert.equal(await page.locator('.listening-user-answer,.wrong-answer-label').count(),0,'Next clears feedback');
+    await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-play').hasAttribute('disabled'));await page.locator('#listening-answer').fill(await page.evaluate(()=>window.dictationSpokenText));await page.locator('#listening-submit').click();await page.locator('.vocab-answer-cell.correct').waitFor();
+    assert.equal(await page.locator('.listening-transcript').count(),1);assert.equal(await page.locator('.listening-user-answer,del,.wrong-answer-value--wrong').count(),0,'Correct answer never shows wrong-answer feedback');assert.deepEqual(await page.locator('.wrong-answer-label').allTextContents(),[locale==='ko'?'정답':'Correct answer']);assert.equal(await page.locator('#listening-next').count(),1);assert.equal(await page.locator('#listening-submit').count(),0);
+    if(locale==='ko'&&width===390&&theme==='dark'){await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:`/private/tmp/dictation-screen/${language}-${mode}-correct.png`,fullPage:true});}
+    await page.locator('#listening-next').click();assert.equal(await page.locator('.listening-user-answer,.wrong-answer-label').count(),0);checks++;
    }
   }
   if(['en','ja','ko','es','fr'].includes(language)){
@@ -38,7 +43,7 @@ try{
 
    await tab(page,'wrong');await page.locator('.wrong-filter-panel').evaluate(node=>{node.open=true;});await page.locator(`[data-review-filter=mode][data-value=${'listenword'}]`).click();await page.locator('[data-retest]').click();await page.locator('#listening-answer').waitFor();assert.equal(await page.locator('.listening-mode-controls').count(),0);
    const id=await page.locator('.listening-test').getAttribute('data-question-id'),saved=await page.evaluate(({language,id})=>Object.values(JSON.parse(localStorage.getItem(`learn-language.${language}.lexicon.v1`)).wrongs).find(row=>row.question.id===id),{language,id});
-   await page.locator('#listening-answer').fill(saved.question.answer);await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-submit').disabled);await page.locator('#listening-submit').click();await page.locator('.vocab-answer-cell.correct').waitFor();
+   await page.locator('#listening-answer').fill(saved.question.answer);await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-submit').disabled);await page.locator('#listening-submit').click();await page.locator('.vocab-answer-cell.correct').waitFor();assert.equal(await page.locator('.listening-user-answer,del,.wrong-answer-value--wrong').count(),0,'Correct retest hides wrong-answer feedback');
    const count=await page.evaluate(({language,key})=>JSON.parse(localStorage.getItem(`learn-language.${language}.lexicon.v1`)).wrongs[key]?.count,{language,key:saved.id});assert.equal(count,saved.count-1);await tab(page,'home');
   }
  }
@@ -53,5 +58,5 @@ try{
   await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:`/private/tmp/dictation-screen/ja-known-${mode}-feedback.png`,fullPage:true});
  }
  await page.evaluate(()=>window.stopFuriganaFixture());
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} full Dictation screens: English/German and Japanese/Chinese card/speaker/textarea/hint/action geometry; both modes, EN/KO, phone/tablet, themes, feedback, audio gating, five-language Review/retest balances and cleanup.`);
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} full Dictation screens: English/German and Japanese/Chinese card/speaker/textarea/hint/action geometry; both modes, EN/KO, phone/tablet, themes, unchecked/wrong/correct feedback, audio gating, five-language Review/retest balances and cleanup.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
