@@ -81,6 +81,7 @@ Do not style a nested word list through a broad descendant selector: the outer r
 - Word-choice answers check on tap and then show Next. Do not add Submit to selection questions. Typing uses Submit and the device keyboard; Chinese pinyin input retains its dedicated keyboard.
 - Submit, Skip and Next stay at the end of content, above the navigation by normal page flow. Do not make them floating overlays.
 - Meaning Quiz and Word Input remain vocabulary-only. Put specialist features in their own Study sections unless the user explicitly asks to merge them.
+- German/Chinese Collocations is retired: omit the Study route, fresh questions and Word List/detail/search references through the shared capability policy and presentation projection. Retain stored question snapshots and the standard vocabulary feedback path for historical retests.
 - Use a single underline for a missing answer, never an empty bracket pair. Chinese readings remain aligned above characters; do not add pinyin space to other languages unnecessarily.
 - Reuse existing localisation keys, button labels and icons. Search says only Search / 검색. Display language and explanation language remain independent. Never show another explanation language as a fabricated fallback.
 - Reuse standard Review hierarchy and stored question snapshots; do not invent feature-specific Review cards or erase existing progress.
