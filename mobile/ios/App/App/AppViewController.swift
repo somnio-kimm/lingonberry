@@ -85,6 +85,18 @@ class AppViewController: CAPBridgeViewController {
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (okurigana || readingTarget) {
+                  const {renderExerciseReview}=await import('./js/shared/exercise-review-view.js'),{createExerciseQuestions}=await import('./js/shared/language-exercises.js'),{lexiconText}=await import('./js/shared/lexicon-text.js');
+                  const checkReview=(row,word,display,explanation,words)=>{
+                    const question=createExerciseQuestions([row],words,row.route,row.category,explanation,()=>.3)[0],input=question.options?question.options.find(option=>option.id!==question.correctOption).id:'久い',record={question,input},before=JSON.stringify(record),host=document.createElement('div');
+                    host.className='lexicon-view';host.style.cssText='position:absolute;left:-10000px;top:0;width:300px';host.innerHTML='<section class="panel wrong-card"><div class="review-answer-details">'+renderExerciseReview(record,{word,headword:word.lemma,language:'ja',displayLanguage:display,t:value=>lexiconText(display,value)})+'</div></section>';document.body.append(host);
+                    try{
+                      const wrong=host.querySelector('.wrong-answer-value--wrong'),expected=question.options?question.options.find(option=>option.id===input).text:input;
+                      if(!wrong||wrong.textContent!==expected||getComputedStyle(wrong).fontSize!=='16px'||host.querySelector('.vocab-instruction,.vocab-prompt,.wrong-correct-line,.exercise-explanation p'))throw new Error('Specialist Review differs from compact baseline');
+                      const segments=host.querySelectorAll('.reading-segments');if((row.category==='okurigana'&&segments.length!==1)||(row.category==='reading'&&segments.length))throw new Error('Review reading breakdown differs');
+                      if(JSON.stringify(record)!==before)throw new Error('Review rewrote its original snapshot');
+                      return {wrong:expected,font:getComputedStyle(wrong).fontSize,segments:segments.length,snapshotPreserved:true};
+                    }finally{host.remove();}
+                  };
                   const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{prepareLanguageExercises}=await import('./js/shared/exercise-pools.js'),{exerciseAnswerCorrect,exerciseLabel,exerciseModes}=await import('./js/shared/language-exercises.js'),{renderExercisePrompt}=await import('./js/shared/exercise-view.js');
                   const storage=createPackageStorage(),pairs=installedPairs(await storage.list()).filter(row=>row.targetLanguage==='ja'&&['en','ko'].includes(row.explanationLanguage)),checks=[];
                   if(!pairs.length)throw new Error('A Japanese explanation package must be installed');
@@ -106,7 +118,7 @@ class AppViewController: CAPBridgeViewController {
                           const target=host.querySelector('.study-reading-target'),instruction=host.querySelector('.vocab-instruction'),text=host.querySelector('.vocab-prompt').textContent,style=target&&getComputedStyle(target);
                           const expected=display==='ko'?'밑줄 친 단어의 읽기를 선택하세요.':'Choose the reading of the underlined word.';
                           if(target?.textContent!=='学校'||text.split('学校').length!==2||instruction.textContent!==expected||!style.textDecorationLine.includes('underline')||style.textDecorationColor!==getComputedStyle(instruction).color||host.querySelector('rt'))throw new Error('Reading target UI/locale differs');
-                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected,sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options)});
+                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected,sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
                         }finally{host.remove();}
                       }
                       continue;
@@ -118,7 +130,7 @@ class AppViewController: CAPBridgeViewController {
                       const instruction=host.querySelector('.vocab-instruction'),prompt=host.querySelector('.vocab-prompt')?.textContent,meaning=host.querySelector('.exercise-context')?.textContent;
                       const expected=row.options?(display==='ko'?'올바른 오쿠리가나를 사용한 단어 전체를 선택하세요.':'Choose the complete word with the correct okurigana.'):(display==='ko'?'한자와 올바른 오쿠리가나를 사용해 단어 전체를 입력하세요.':'Write the complete word using kanji and the correct okurigana.');
                       if(instruction?.textContent!==expected||instruction.lang!==(display==='ko'?'ko':'en-GB')||prompt!=='ひさしい'||host.querySelector('rt')||meaning!==word.studyMeaning)throw new Error('Display-language instruction or explanation-language meaning differs');
-                      checks.push({explanation:pair.explanationLanguage,display,mode:row.options?'choice':'input',instruction:expected,prompt,meaning});
+                      checks.push({explanation:pair.explanationLanguage,display,mode:row.options?'choice':'input',instruction:expected,prompt,meaning,review:checkReview(row,word,display,pair.explanationLanguage,words)});
                     }
                     const act=words.find(row=>row.lemma==='行う'),variant=rows.find(row=>row.entryId===act?.id&&row.category==='okurigana'&&row.route==='vocabinput');
                     if(!variant||!exerciseAnswerCorrect(variant,'行なう'))throw new Error('Dictionary-authorised alternative spelling was rejected');
