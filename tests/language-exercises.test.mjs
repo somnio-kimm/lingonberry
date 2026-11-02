@@ -23,7 +23,7 @@ test('Okurigana keeps the coloured kanji/kana row without explanation prose',()=
  assert.match(html,/<span class="reading-segment kana">べる<\/span>/);
  assert.doesNotMatch(html,/<p>|Additional explanation/);
  assert.equal(renderExerciseExplanation({...q,segments:[]}), '');
- assert.match(renderExerciseExplanation({...q,category:'forms'}),/<p>Additional explanation should not appear\.<\/p>/,'Other exercise explanations remain available');
+ assert.match(renderExerciseExplanation({...q,category:'forms'}),/<p[^>]*>Additional explanation should not appear\.<\/p>/,'Other exercise explanations remain available');
 });
 test('custom exercise mistakes participate in mixed retests and auto removal',()=>{const data=new Map(),storage={getItem:k=>data.get(k),setItem:(k,v)=>data.set(k,v)},store=createLexiconStore(storage,{id:'ja',levels:['N5']});const q={...exercise,exercise:true,mode:'vocabinput',locale:'ko',word:{id:entry.id}};store.record(q,'たべ',false);assert.equal(Object.values(store.state.wrongs)[0].question.segments[0].reading,'た');store.preference('autoRemoveResolvedWrongs',true);store.record(q,'た',true,true);assert.equal(Object.keys(store.state.wrongs).length,0);});
 test('form metadata cannot introduce unsupported or cross-language exercise modes',()=>{const p=core();p.exercises[0]={...exercise,route:'forms',category:'forms',formKind:'potential'};validateExercises(p);p.exercises[0].formKind='politeness';assert.throws(()=>validateExercises(p),/form kind/);});

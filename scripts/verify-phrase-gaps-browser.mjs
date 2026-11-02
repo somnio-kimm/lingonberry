@@ -13,7 +13,7 @@ try{
    const catalog=await fetch('/catalog.json').then(r=>r.json()),read=id=>fetch(catalog.find(row=>row.id===id).url).then(r=>r.json());
    const study=assembleStudy(await read('en-core'),await read('en-'+locale));
    localStorage.removeItem('learn-language.en.lexicon.v1');let route='home',app;const host=document.querySelector('main'),refresh=()=>app.render(route,host);
-   const create=()=>createPresentation({language:'en',navigate:value=>{route=value;refresh();},refresh,onPreferences(){}});app=create();app.setPreferences({theme:'system',uiLanguage:locale});
+   const create=()=>createPresentation({language:'en',navigate:value=>{route=value;refresh();},refresh,onPreferences(){}});app=create();app.setPreferences({theme:'system',uiLanguage:locale==='en'?'ko':'en'});
    window.gapRoute=value=>{if(value==='wrong'){route=value;refresh();return;}route='home';refresh();host.querySelector(`[data-route=${value}]`).click();};
    window.gapReloadHistory=()=>{app.stop();const saved=JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1'));for(const [id,row]of Object.entries(saved.wrongs))if(row.question.category==='phrasal'){delete saved.wrongs[id];row.question.mode='phrasal';row.id=id.replace(/^collocations:/u,'phrasal:');saved.wrongs[row.id]=row;}localStorage.setItem('learn-language.en.lexicon.v1',JSON.stringify(saved));app=create();app.setStudy(study);route='wrong';refresh();};
    window.gapScenario=category=>{
@@ -26,7 +26,7 @@ try{
    await page.setViewportSize({width,height:900});await page.evaluate(theme=>{document.documentElement.dataset.theme=theme;},theme);
    const gap=await page.evaluate(category=>window.gapScenario(category),category);assert.equal(await page.locator('[data-route=phrasal]').count(),0);assert.equal(await page.locator('[data-phrase-category]').inputValue(),category);
    await page.selectOption('[data-question-type]','gaps');await page.locator('[data-answer-mode=input]').click();
-   const fields=page.locator('[data-phrase-gap]');assert.equal(await fields.count(),2);assert.equal(await page.locator('#vocab-answer').count(),0);assert.ok(await page.locator('[data-submit]').isDisabled());
+   const fields=page.locator('[data-phrase-gap]');assert.equal(await fields.count(),2);assert.equal(await page.locator('.vocab-instruction').innerText(),locale==='en'?'각 빈칸에 표현의 빠진 부분을 입력하세요.':'Fill each blank with the missing part of the expression.');assert.equal(await fields.first().getAttribute('aria-label'),locale==='en'?'빈칸 1':'Blank 1');assert.equal(await page.locator('#vocab-answer').count(),0);assert.ok(await page.locator('[data-submit]').isDisabled());
    await fields.nth(0).fill(gap.answers[0]);assert.ok(await page.locator('[data-submit]').isDisabled());await fields.nth(0).press('Enter');assert.equal(await fields.nth(1).evaluate(node=>document.activeElement===node),true);
    await fields.nth(1).fill('wrong');assert.ok(await page.locator('[data-submit]').isEnabled());
    const baseline=await page.locator('.lexicon-question').evaluate(node=>{const s=getComputedStyle(node);return {padding:s.padding,radius:s.borderRadius};});assert.deepEqual(baseline,{padding:'16px',radius:'16px'});
@@ -43,5 +43,5 @@ try{
   const before=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1')).wrongs).find(row=>row.question.mode==='phrasal').count);await page.locator('[data-retest]').click();assert.equal(await page.locator('[data-phrase-gap]').count(),2);await page.locator('[data-phrase-gap="0"]').fill('write');await page.locator('[data-phrase-gap="1"]').fill('down');await page.locator('[data-submit]').click();await page.locator('.lexicon-question.correct').waitFor();assert.equal(await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1')).wrongs).find(row=>row.question.mode==='phrasal').count),before-1);
   for(const route of ['vocabmeaning','vocabinput']){await page.evaluate(route=>window.gapRoute(route),route);assert.equal(await page.locator('[data-phrase-gap],[data-question-type]').count(),0);assert.equal(await page.locator('[data-exercise-id]').getAttribute('data-exercise-id'),'');}
  }
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} real-package gap design/interaction paths: EN/KO, phone/tablet, light/dark, separate inputs, IME binder, instant selection, alternatives, corrections, Review/retest and isolated defaults.`);
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} real-package gap design/interaction paths: independent EN/KO display/explanation, phone/tablet, light/dark, separate inputs, IME binder, instant selection, alternatives, corrections, Review/retest and isolated defaults.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

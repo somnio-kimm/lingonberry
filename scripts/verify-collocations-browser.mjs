@@ -29,7 +29,7 @@ try{
      const ctx={words:[word],store:{state:{preferences:{studyLevel:word.cefr}},recordQuizAnswer(){}},haptic(){},updateStatus(){}};
      window.legacyCollocationCleanup=()=>{cleanup();host.remove();};const cleanup=language==='de'?view.renderVocabularyTest(host,ctx,mode,session):view.renderVocabularyTest(host,mode,session);return {answer:question.answer,wordId:word.id};
     },{language,core,pair:await read(catalog.find(row=>row.id===language+'-en').url.slice(1)),seedId:seed.id,mode});
-    const host=page.locator('#legacy-collocation');if(mode==='vocabinput'){await host.locator('#vocab-answer').fill(answer.answer);await host.locator('#vocab-submit').click();}else await host.locator(`[data-vocab-option="${answer.wordId}"]`).click();await host.locator('#vocab-next').waitFor();assert.equal(await page.evaluate(()=>window.legacyCollocationResult),true);await page.evaluate(()=>window.legacyCollocationCleanup());
+    const host=page.locator('#legacy-collocation');assert.equal(await host.locator('.vocab-instruction').innerText(),mode==='vocabinput'?'괄호 안 단어를 사용하여 학습한 연어를 기본형으로 입력하세요.':'연어의 뜻을 선택하세요.');if(mode==='vocabinput'){await host.locator('#vocab-answer').fill(answer.answer);await host.locator('#vocab-submit').click();}else await host.locator(`[data-vocab-option="${answer.wordId}"]`).click();await host.locator('#vocab-next').waitFor();assert.equal(await page.evaluate(()=>window.legacyCollocationResult),true);await page.evaluate(()=>window.legacyCollocationCleanup());
    }
    continue;
   }
