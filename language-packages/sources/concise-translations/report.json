@@ -1,0 +1,103 @@
+{
+  "policy": "Concise equivalents for cross-language pairs; dictionary definitions retained for English-to-English. Brief sense/register qualifiers remain where needed.",
+  "packages": [
+    {
+      "id": "en-ko",
+      "from": "4.8.0",
+      "to": "4.9.0",
+      "studyVersion": "4.8.0",
+      "entries": 12745,
+      "changed": 7666,
+      "methods": {
+        "nikl-equivalent": 7666
+      }
+    },
+    {
+      "id": "es-en",
+      "from": "3.1.0",
+      "to": "3.2.0",
+      "studyVersion": "3.1.0",
+      "entries": 9092,
+      "changed": 8878,
+      "methods": {
+        "nikl-equivalent": 8878
+      }
+    },
+    {
+      "id": "es-ko",
+      "from": "3.1.0",
+      "to": "3.2.0",
+      "studyVersion": "3.1.0",
+      "entries": 9092,
+      "changed": 8878,
+      "methods": {
+        "nikl-equivalent": 8878
+      }
+    },
+    {
+      "id": "fr-en",
+      "from": "3.1.0",
+      "to": "3.2.0",
+      "studyVersion": "3.1.0",
+      "entries": 8936,
+      "changed": 8628,
+      "methods": {
+        "nikl-equivalent": 8628
+      }
+    },
+    {
+      "id": "fr-ko",
+      "from": "3.1.0",
+      "to": "3.2.0",
+      "studyVersion": "3.1.0",
+      "entries": 8936,
+      "changed": 8629,
+      "methods": {
+        "nikl-equivalent": 8629
+      }
+    },
+    {
+      "id": "ja-en",
+      "from": "4.4.0",
+      "to": "4.5.0",
+      "studyVersion": "4.4.0",
+      "entries": 12027,
+      "changed": 11333,
+      "methods": {
+        "editorial-equivalent": 1154,
+        "nikl-equivalent": 8946,
+        "explicit-equivalent-prefix": 138,
+        "selected-english-gloss": 1095
+      }
+    },
+    {
+      "id": "ja-ko",
+      "from": "4.4.0",
+      "to": "4.5.0",
+      "studyVersion": "4.4.0",
+      "entries": 12027,
+      "changed": 11391,
+      "methods": {
+        "editorial-equivalent": 1157,
+        "nikl-equivalent": 8952,
+        "explicit-equivalent-prefix": 1282
+      }
+    },
+    {
+      "id": "ko-en",
+      "from": "3.1.0",
+      "to": "3.2.0",
+      "studyVersion": "3.1.0",
+      "entries": 12026,
+      "changed": 11964,
+      "methods": {
+        "nikl-equivalent": 11964
+      }
+    }
+  ],
+  "changed": 77367,
+  "englishSelfDefinitions": "unchanged",
+  "studyCores": "unchanged",
+  "examples": "unchanged",
+  "nativeSpeakerReview": "pending"
+}
