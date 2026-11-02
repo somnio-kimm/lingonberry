@@ -1,0 +1,46 @@
+{
+  "version": "4.6.0",
+  "sourceVersion": "4.5.0",
+  "studyVersion": "4.4.0",
+  "target": 12027,
+  "assessed": 12027,
+  "reviewed": 2530,
+  "screenedRetained": 9497,
+  "retained": 11256,
+  "changed": 771,
+  "independentReviewRequired": false,
+  "independentlyReviewedChanges": 0,
+  "staleReviews": 0,
+  "missingIds": [],
+  "uncertainIds": [],
+  "unreviewedIds": [],
+  "findings": [],
+  "completeDecisionCoverage": true,
+  "files": [
+    {
+      "path": "language-packages/sources/meaning-style/ja-ko-4.6.0/inputs.jsonl",
+      "bytes": 5313582,
+      "sha256": "7d148b7b55a0e7bd879e7bf75b6ce11ad800623e1f4bca43073bac962de24277"
+    },
+    {
+      "path": "language-packages/sources/meaning-style/ja-ko-4.6.0/decisions.jsonl",
+      "bytes": 2206640,
+      "sha256": "f73e09124625c4e75987a8fe6d7acf04cdf61a682a494953aa4b6b0c9ad3e678"
+    },
+    {
+      "path": "language-packages/sources/meaning-style/ja-ko-4.6.0/reviews.jsonl",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "language-packages/sources/meaning-style/ja-ko-4.6.0/manifest.json",
+      "bytes": 1783,
+      "sha256": "cf964ad458311377983b60d17469368f5af0f476020ab80ee3eb0a78d319d078"
+    },
+    {
+      "path": "language-packages/sources/meaning-style/ja-ko-4.6.0/NOTICE.txt",
+      "bytes": 17690,
+      "sha256": "a665b6a80ec7daaefc435a05227dc8d5c6ee54caf7b3f26dfc0ad5eceb37f6e2"
+    }
+  ]
+}
