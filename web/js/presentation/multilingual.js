@@ -11,6 +11,7 @@ import {collocationSearchTerms} from '../shared/collocations.js';
 import {renderCollocations,bindCollocationAudio,collocationPreview} from '../shared/collocation-view.js';
 import {learnerOriginLabel} from '../shared/root-references.js';
 import {prepareLanguageExercises,selectExerciseRow} from '../shared/exercise-pools.js';
+import {createReadingChoiceSampler} from '../shared/reading-choices.js';
 import {exerciseLabel,exerciseModes,exerciseSectionCategories,createExerciseQuestions,exerciseAnswerCorrect,formKindLabel} from '../shared/language-exercises.js';
 import {renderExerciseExplanation,renderExercisePrompt} from '../shared/exercise-view.js';
 import {selectWordExample} from '../shared/word-example.js';
@@ -36,7 +37,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families','🌱','green']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile),engine=createLexiconQuestions(profile);
- let morphemeModel,typing,listeningCleanup,japaneseFurigana;
+ let morphemeModel,typing,listeningCleanup,japaneseFurigana,sampleReadingChoice;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,card=0,flipped=false,order=[],chosenTokens=[],closeSheet=()=>{};
  const filters=new Map(),scores=new Map();
  const score=route=>{if(!scores.has(route))scores.set(route,{correct:0,total:0});return scores.get(route);};
@@ -96,7 +97,8 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  function chooseFeatureQuestion(feature){
   const f=state(feature),list=pool(feature),rows=featureRows(feature);
   const available=['choice','input'].filter(mode=>rows.some(row=>(row.options?'choice':'input')===mode));if(!available.includes(f.answerMode))f.answerMode=available.includes('choice')?'choice':available[0];
-  const row=selectExerciseRow(rows.filter(row=>(row.options?'choice':'input')===f.answerMode),list,{previousId:previousQuestionId});
+  let row=selectExerciseRow(rows.filter(row=>(row.options?'choice':'input')===f.answerMode),list,{previousId:previousQuestionId});
+  if(language==='ja'&&row?.category==='reading'&&row.options)row=sampleReadingChoice(row);
   const q=row&&createExerciseQuestions([row],list,row.route,row.category,study.explanationLanguage)[0];return reviewContent.prepare(q?{...q,answerMode:f.answerMode,mode:feature}:undefined);
  }
 
@@ -236,6 +238,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
   }
   words.sort((left,right)=>left.lemma.localeCompare(right.lemma,language));
   exercises=prepareLanguageExercises(value,words);
+  sampleReadingChoice=language==='ja'?createReadingChoiceSampler(exercises,words):undefined;
   byId=new Map(words.map(word=>[word.id,word]));
   japaneseFurigana=language==='ja'?createJapaneseFurigana(words,value?.practiceData,value?.readingPractice):undefined;
   morphemeModel=value?.morphemes?.length?createMorphemeModel(value.morphemes,words):undefined;

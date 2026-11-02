@@ -94,6 +94,11 @@ class AppViewController: CAPBridgeViewController {
                       if(exerciseModes('ja').onyomi||exerciseModes('ja').kunyomi||rows.some(row=>['onyomi','kunyomi'].includes(row.category)))throw new Error('Removed character-reading sections are active');
                       const school=words.find(row=>row.lemma==='学校'),question=rows.find(row=>row.entryId===school?.id&&row.category==='reading'&&row.route==='vocabmeaning');
                       if(!question||question.answer!=='がっこう'||question.prompt.split('学校').length!==2||question.prompt.startsWith('学校'+String.fromCharCode(10)))throw new Error('Reading target repeats the headword');
+                      const {createReadingChoiceSampler}=await import('./js/shared/reading-choices.js'),{normaliseKana}=await import('./js/shared/japanese-reading.js');
+                      const byId=new Map(words.map(row=>[row.id,row])),allowed=new Set(rows.filter(row=>row.category==='reading'&&row.route==='vocabinput'&&byId.get(row.entryId)?.pos===school.pos).map(row=>normaliseKana(row.answer))),sample=createReadingChoiceSampler(rows,words),samples=[sample(question,()=>0),sample(question,()=>.5)];
+                      if(allowed.size<=128||samples.some(row=>!row||row.options.length!==4||new Set(row.options.map(normaliseKana)).size!==4||row.options.some(value=>!allowed.has(normaliseKana(value)))))throw new Error('Reading choices do not use the full verified same-POS pool');
+                      if(samples[0].options.slice().sort().join('|')===samples[1].options.slice().sort().join('|'))throw new Error('Reading distractors are fixed');
+
                       if(exerciseLabel('reading','ko')!=='한자 읽기'||exerciseLabel('okurigana','ko')!=='오쿠리가나')throw new Error('Korean reading labels differ');
                       for(const display of ['en','ko']) {
                         const host=document.createElement('div');host.className='lexicon-view';host.style.cssText='position:absolute;left:-10000px;top:0;width:300px';host.innerHTML=renderExercisePrompt({...question,word:school},{uiLanguage:display});document.body.append(host);
@@ -101,7 +106,7 @@ class AppViewController: CAPBridgeViewController {
                           const target=host.querySelector('.study-reading-target'),instruction=host.querySelector('.vocab-instruction'),text=host.querySelector('.vocab-prompt').textContent,style=target&&getComputedStyle(target);
                           const expected=display==='ko'?'밑줄 친 단어의 읽기를 선택하세요.':'Choose the reading of the underlined word.';
                           if(target?.textContent!=='学校'||text.split('学校').length!==2||instruction.textContent!==expected||!style.textDecorationLine.includes('underline')||style.textDecorationColor!==getComputedStyle(instruction).color||host.querySelector('rt'))throw new Error('Reading target UI/locale differs');
-                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected,sections:Object.keys(exerciseModes('ja'))});
+                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected,sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options)});
                         }finally{host.remove();}
                       }
                       continue;
