@@ -393,3 +393,9 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 
 /* Reading targets share the standard blue single-underline treatment. */
 .study-reading-target{text-decoration-line:underline;text-decoration-color:var(--blue);text-decoration-thickness:2px;text-underline-offset:.18em;text-decoration-skip-ink:none}
+
+/* Specialist Review uses the same detail scale; keep Okurigana's requested compact reading row. */
+.review-answer-details .exercise-explanation{border-top:0}
+.review-answer-details .reading-segments{justify-content:flex-start;gap:6px;margin:12px 0 0;font-size:16px;line-height:1.6}
+.review-answer-details .reading-segment{padding:6px 8px}
+.review-answer-details .reading-segment rt{font-size:11px}
