@@ -4,6 +4,8 @@ The table and original expansion counts below record edition 3.0.0. Later correc
 
 [Japanese 4.4.0](japanese-example-completion.md) now provides complete primary examples and English/Korean translations for all 12,027 Japanese entries. The table below remains the historical 3.0.0 snapshot.
 
+[English 5.0.0](english-example-completion.md) provides primary examples and Korean sentence translations for all 12,745 English entries, with unchanged English self-definitions. The earlier missing-example counts below are historical.
+
 Version 2.0.0 established the broad dictionaries; version 3.0.0 adds original examples and explicit sense/reading corrections. Eligible English/Korean explanation packages are available; Korean study offers English explanations only. Study-level selectors remain populated; English now uses four grouped IELTS ranges instead of individual half-band targets. A headword can have different entries for different parts of speech; entry totals and distinct headwords are reported separately.
 
 | Language | Entries | Distinct Headwords | Complete Bilingual Examples | Source Sentences |

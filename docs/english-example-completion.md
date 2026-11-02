@@ -1,5 +1,13 @@
 # English primary-example completion
 
+English 5.0.0 provides primary examples and Korean sentence translations for **all 12,745 study entries**. It fills all 11,838 missing entries after independent AI editorial review; the original 907 examples and every word, meaning, level and grammatical tag remain unchanged. English self-explanation keeps its definitions and hides the redundant English sentence translation. No native-speaker certification is claimed.
+
+The [completion report](../language-packages/sources/examples/editions/5.0.0/en-completion-report.json), original authoring records, current and historical review decisions, exact source bindings and attribution notice accompany the immutable packages. The full gate reports 11,838 current independent passes, zero missing/unreviewed entries and zero unresolved findings. Historical stale reviews remain as evidence and do not count as approvals.
+
+Pre-existing Korean **word-gloss** mismatches discovered during this work are tracked separately in [issue #142](https://github.com/somnio-kimm/lingonberry/issues/142). The example sentences translate the selected English senses; this example edition preserves the original word meanings.
+
+A standalone English-only SQLite snapshot is saved locally inside the Google Drive project at `local-data/generation/english-examples-completed-5.0.0.sqlite`. It includes all 12,745 current vocabulary records, both explanations, source package hashes, authoring records and review evidence; its SQLite integrity check passed. The historical multilingual generation queue is separate.
+
 The source English core 4.8.0 has 12,745 entries, with 907 primary examples and 11,838 missing. The matching source explanations are English 4.8.0 and Korean 4.9.0. A source-reference fallback exists for only 2,018 entries and does not establish complete bilingual sentence coverage. The previous meaning and vocabulary expansions did not complete these missing examples.
 
 The completion workspace is `local-data/english-example-completion/2026-11-02`. Its manifest pins all three package hashes, identifies English as the target and assigns every missing stable entry to exactly one author shard. Reused contributor examples and existing app-authored English/Korean sentences are candidates until checked against the current English sense and grammatical role. Source concept IDs and matching spellings are retrieval aids, not semantic approval. Unsuitable examples are replaced with concrete original British English usage sentences and faithful Korean translations.

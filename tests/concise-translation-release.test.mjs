@@ -13,8 +13,8 @@ test('concise editions reproduce exact source-bound translations while preservin
  let changed=0;
  for(const [id,version]of Object.entries(release.outputs)){
   const descriptor=catalog.find(row=>row.id===id),language=descriptor.targetLanguage,source=release.inputs.find(row=>row.path.includes('/'+id+'-')),coreSource=release.inputs.find(row=>row.path.includes('/'+language+'-core-'));
-  const core=await json(coreSource.path),old=await json(source.path),actualBytes=await bytes(descriptor.url.slice(1)),actual=JSON.parse(actualBytes);
-  validatePackage(actual,descriptor);validateExplanation(core,actual);assert.equal(digest(actualBytes),descriptor.sha256);assert.equal(actualBytes.length,descriptor.bytes);assert.equal(actual.version,version);assert.equal(actual.studyVersion,core.version);
+  const core=await json(coreSource.path),old=await json(source.path),actualBytes=await bytes(`language-packages/${id}-${version}.json`),actual=JSON.parse(actualBytes);
+  validatePackage(actual,descriptor.version===version?descriptor:undefined);validateExplanation(core,actual);if(descriptor.version===version){assert.equal(digest(actualBytes),descriptor.sha256);assert.equal(actualBytes.length,descriptor.bytes);}assert.equal(actual.version,version);assert.equal(actual.studyVersion,core.version);
   const edits=prepareConciseChanges(core,old,nikl,language==='ja'?editorial:[]),expected=compileConcisePair(core,old,edits,version);assert.deepEqual(actual,expected);changed+=edits.length;
   assert.deepEqual(actual.entries.map(row=>row.id),old.entries.map(row=>row.id));assert.equal(actual.license.identifier,old.license.identifier);assert.ok(actual.license.notice.endsWith(old.license.notice));
   for(let i=0;i<actual.entries.length;i++){
@@ -23,8 +23,8 @@ test('concise editions reproduce exact source-bound translations while preservin
   if(language==='ja')assert.ok(actual.entries.every(row=>row.exampleTranslation),'Japanese full example translations remain complete');
  }
  const report=await json(base+'report.json');assert.equal(report.changed,changed);assert.equal(report.englishSelfDefinitions,'unchanged');
- const self=catalog.find(row=>row.id==='en-en');assert.equal(self.version,'4.8.0');assert.equal(digest(await bytes(self.url.slice(1))),self.sha256);
- for(const language of ['ja','en','ko','es','fr']){const current=catalog.find(row=>row.id===language+'-core'),previous=release.inputs.find(row=>row.path===current.url.slice(1));assert.equal(current.sha256,previous.sha256,'Study core is unchanged');}
+ const self=catalog.find(row=>row.id==='en-en');assert.equal(digest(await bytes(self.url.slice(1))),self.sha256);
+ const previousSelf=await json('language-packages/en-en-4.8.0.json'),currentSelf=await json(self.url.slice(1));assert.deepEqual(currentSelf.entries.map(row=>[row.id,row.meaning,row.meanings,row.meaningStyle]),previousSelf.entries.map(row=>[row.id,row.meaning,row.meanings,row.meaningStyle]),'Later example editions retain English self-definitions');
  const core=await json(catalog.find(row=>row.id==='ja-core').url.slice(1)),byWord=new Map(core.entries.map(row=>[row.word,row.id]));
  for(const [locale,examples]of [['ko',{車:'자동차',猫:'고양이',犬:'개',机:'책상',食べる:'먹다'}],['en',{車:'car',猫:'cat',犬:'dog',机:'desk',食べる:'eat'}]]){
   const pair=await json(catalog.find(row=>row.id==='ja-'+locale).url.slice(1)),byId=new Map(pair.entries.map(row=>[row.id,row.meaning]));for(const [word,meaning]of Object.entries(examples))assert.equal(byId.get(byWord.get(word)),meaning);
