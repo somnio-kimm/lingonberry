@@ -24,9 +24,6 @@ export function renderMorphemeInventory(host,{
 
  function renderRelatedWord(text) {
   const matches = model.matchingWords(text);
-  if (!matches.length) {
-   return `<div class="wl-row root-member"><div class="wl-main"><span class="wl-headword">${e(text)}</span></div></div>`;
-  }
   return matches.map(word=>`<div class="wl-row root-member" data-root-entry="${e(word.id)}">
    <div class="wl-main">
     <button class="wl-headword root-member-trigger" data-root-word="${e(word.id)}">${e(text)}</button>
