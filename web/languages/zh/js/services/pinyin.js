@@ -62,7 +62,7 @@ export const Pinyin = {
     const st = this._syllableGridVars(syls);
     return `<span class="py-per-char" style="${st}">${syls.map(s => this._col(this.marked(s.base, s.tone), s.hanzi)).join('')}</span>`;
   },
-  /** Align reviewed sentence tokens, including punctuation and joined erhua. */
+  /** Align spoken tokens; punctuation may be explicit or absent in the reading. */
   sentenceColumns(sentence) {
     const chars = [...(sentence.hanzi || '')];
     const tokens = (sentence.pinyin || '').trim().split(/\s+/).filter(Boolean);
@@ -71,6 +71,9 @@ export const Pinyin = {
     for (const token of tokens) {
       const syllable = token.match(/^([a-zü:v]+)([0-5])$/i);
       if (syllable) {
+        while (chars[i] && /\p{P}/u.test(chars[i])) {
+          columns.push({ hanzi: chars[i++], pinyin: '' });
+        }
         if (!chars[i] || !/\p{Script=Han}/u.test(chars[i])) return null;
         let hanzi = chars[i++];
         const base = syllable[1].toLowerCase();
@@ -82,6 +85,9 @@ export const Pinyin = {
         columns.push({ hanzi: chars[i++], pinyin: '' });
       }
     }
+    while (chars[i] && /\p{P}/u.test(chars[i])) {
+      columns.push({ hanzi: chars[i++], pinyin: '' });
+    }
     return i === chars.length ? columns : null;
   },
 
@@ -92,10 +98,15 @@ export const Pinyin = {
     let columns = this.sentenceColumns(sentence);
     // Preserve readable text rather than show incorrect pairings for future
     // content whose transcription does not follow the reviewed token format.
-    const fallback = () => `<div class="example-pinyin">${escape(this.convertLive(sentence.pinyin || '').replace(/\p{P}/gu, ''))}</div><div class="example-sentence">${escape(blank ? (sentence.hanzi || '').replace(blank, '______') : sentence.hanzi || '')}</div>`;
-    if (!columns) return fallback();
     const target = blank || highlight;
-    const offset = target ? sentence.hanzi.indexOf(target) : -1;
+    const offset = target ? (sentence.hanzi || '').indexOf(target) : -1;
+    const fallback = () => {
+      const text = sentence.hanzi || '';
+      const slot = blank ? '<span class="cloze-blank">______</span>' : `<mark class="cloze-answer">${escape(highlight)}</mark>`;
+      const display = offset < 0 ? escape(text) : escape(text.slice(0, offset)) + slot + escape(text.slice(offset + target.length));
+      return `<div class="example-pinyin">${escape(this.convertLive(sentence.pinyin || '').replace(/\p{P}/gu, ''))}</div><div class="example-sentence">${display}</div>`;
+    };
+    if (!columns) return fallback();
     if (offset >= 0) {
       const boundaries = [0];
       for (const column of columns) boundaries.push(boundaries[boundaries.length - 1] + column.hanzi.length);
