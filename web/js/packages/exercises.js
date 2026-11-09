@@ -18,7 +18,7 @@ export function validateExercises(pack){
   if(row.acceptedAnswers!==undefined){check(Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length<=20,'accepted exercise answers');row.acceptedAnswers.forEach(value=>text(value,'accepted exercise answer'));}
   if(row.gapFill!==undefined){
    const gap=row.gapFill;
-   check(['collocations','phrasal'].includes(row.category)&&['vocabinput','vocabmeaning'].includes(row.route),'phrase gap category');
+   check(['collocations','phrasal','idioms'].includes(row.category)&&['vocabinput','vocabmeaning'].includes(row.route),'phrase gap category');
    check(gap&&Object.keys(gap).every(key=>['parts','answers','alternatives'].includes(key)),'phrase gap fields');
    check(Array.isArray(gap.answers)&&gap.answers.length>=1&&gap.answers.length<=4,'phrase gap answers');
    check(Array.isArray(gap.parts)&&gap.parts.length===gap.answers.length+1&&gap.parts.every(part=>typeof part==='string'&&part.length<=1000),'phrase gap parts');

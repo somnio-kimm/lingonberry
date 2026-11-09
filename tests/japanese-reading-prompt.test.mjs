@@ -26,5 +26,5 @@ test('reading instructions follow Display Language independently of Explanation 
 });
 test('reading text stays escaped and both Korean section labels are consistent',()=>{
  const html=renderExercisePrompt({category:'reading',word,prompt:'<img src=x>学校。',options:[{}]},{uiLanguage:'en'});assert.ok(!html.includes('<img'));assert.match(html,/&lt;img src=x&gt;/);
- assert.equal(exerciseLabel('reading','ko'),'한자 읽기');assert.equal(lexiconText('ko','Word Reading'),'한자 읽기');assert.equal(exerciseLabel('okurigana','ko'),'오쿠리가나');assert.equal(lexiconText('ko','Kanji and Okurigana'),'오쿠리가나');
+ assert.equal(exerciseLabel('reading','ko'),'한자 읽기');assert.equal(lexiconText('ko','Word Reading'),'한자 읽기');assert.equal(exerciseLabel('okurigana','ko'),'오쿠리가나');assert.equal(lexiconText('ko','Okurigana'),'오쿠리가나');
 });

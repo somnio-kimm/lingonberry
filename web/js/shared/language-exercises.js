@@ -2,24 +2,25 @@ import {gradePhraseGaps} from './phrase-gaps.js';
 import {shuffle} from './vocabulary.js';
 /** Bundled exercise rules; prompts and answers arrive only as validated package data. */
 const EXERCISE_CATEGORIES=Object.freeze({
- reading:['Word Reading','한자 읽기'],onyomi:['On’yomi','음독'],kunyomi:['Kun’yomi','훈독'],okurigana:['Kanji and Okurigana','오쿠리가나'],
+ cloze:['Cloze','빈칸 채우기'],
+ reading:['Word Reading','한자 읽기'],onyomi:['On’yomi','음독'],kunyomi:['Kun’yomi','훈독'],okurigana:['Okurigana','오쿠리가나'],
  forms:['Form Input','형태 입력'],particles:['Particles','조사'],counters:['Counters','조수사'],transitivity:['Transitive and Intransitive Verbs','타동사와 자동사'],kanji:['Confusable Kanji','헷갈리는 한자'],
- collocations:['Collocations','연어'],phrasal:['Phrasal Verbs','구동사'],patterns:['Verb Patterns','동사 구문'],articles:['Articles and Countability','관사와 가산성'],confusables:['Confusable Words','헷갈리는 단어'],roots:['Root Families','어근 모음'],
+ collocations:['Collocations','연어'],phrasal:['Phrasal Verbs','구동사'],idioms:['Idioms','관용 표현'],patterns:['Verb Patterns','동사 구문'],articles:['Articles and Countability','관사와 가산성'],confusables:['Confusable Words','헷갈리는 단어'],roots:['Root Families','어근 모음'],
 });
 export const EXERCISE_ROUTES=Object.freeze({
  ja:{reading:['vocabmeaning','vocabinput'],onyomi:['vocabmeaning','vocabinput'],kunyomi:['vocabmeaning','vocabinput'],okurigana:['vocabmeaning','vocabinput'],kanji:['vocabmeaning','vocabinput'],transitivity:['vocabmeaning','vocabinput'],forms:['forms'],particles:['particles'],counters:['counters']},
- en:{collocations:['vocabmeaning','vocabinput'],phrasal:['vocabmeaning','vocabinput'],confusables:['vocabmeaning','vocabinput'],roots:['vocabmeaning','vocabinput'],patterns:['patterns'],articles:['articles']},
+ en:{collocations:['vocabmeaning','vocabinput'],phrasal:['vocabmeaning','vocabinput'],idioms:['vocabmeaning','vocabinput'],confusables:['vocabmeaning','vocabinput'],roots:['vocabmeaning','vocabinput'],patterns:['patterns'],articles:['articles']},
 });
 export const exerciseLabel=(id,locale='en')=>EXERCISE_CATEGORIES[id]?.[locale==='ko'?1:0]||id;
 /** Sections may combine content categories without rewriting stored exercise identities. */
-export const exerciseSectionCategories=(language,section)=>language==='en'&&section==='collocations'?['collocations','phrasal']:[section];
+export const exerciseSectionCategories=(language,section)=>language==='en'&&section==='collocations'?['collocations','phrasal','idioms']:[section];
 const removedCategories=Object.freeze({de:['collocations'],zh:['collocations'],en:['articles','confusables','patterns'],ja:['collocations','transitivity','forms','particles','counters','kanji','onyomi','kunyomi']});
 export const isActiveExerciseCategory=(language,category)=>!removedCategories[language]?.includes(category);
 export function exerciseModes(language){
  // Keep the package schema registry above readable for existing downloads and Review history.
- const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])].filter(id=>isActiveExerciseCategory(language,id)&&!(language==='en'&&id==='phrasal'));
+ const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])].filter(id=>isActiveExerciseCategory(language,id)&&!(language==='en'&&['phrasal','idioms'].includes(id)));
  const icons={reading:'📚',onyomi:'音',kunyomi:'訓',okurigana:'✍️',kanji:'🔎',transitivity:'🔄',forms:'⌨️',particles:'📝',counters:'🔢',collocations:'🔗',phrasal:'🧩',confusables:'🔍',roots:'🌱',patterns:'📝',articles:'🔠'};
- return Object.fromEntries(categories.map(id=>[id,[language==='en'&&id==='collocations'?'Collocations & Phrasal Verbs':exerciseLabel(id),icons[id]||'📝','teal']]));
+ return Object.fromEntries(categories.map(id=>[id,[language==='en'&&id==='collocations'?'Expressions':exerciseLabel(id),icons[id]||'📝','teal']]));
 }
 
 export function createExerciseQuestions(exercises,words,route,category,locale,random=Math.random){
