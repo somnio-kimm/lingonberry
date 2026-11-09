@@ -1,12 +1,12 @@
 # Collocations
 
-Collocations practice is active for English, Korean, Spanish and French. English combines it with Phrasal Verbs. German and Chinese no longer expose its Study route, fresh questions, Word List previews, word-detail sections or phrase-only search terms. Existing saved collocation mistakes remain available in Review and retests; source packages and learner history are preserved. Japanese Collocations practice was retired earlier.
+Collocations practice is active for English, Korean, Spanish and French. English expression headwords use Meaning Quiz, and authored expression sentence gaps use Cloze with Selection and Typing. German and Chinese no longer expose its Study route, fresh questions, Word List previews, word-detail sections or phrase-only search terms. Existing saved collocation mistakes remain available in Review and retests; source packages and learner history are preserved. Japanese Collocations practice was retired earlier.
 
 The historical first shared edition contains 66 original collocations: English 9, German 10, Spanish 10, French 10, Japanese 8, Korean 9 and Chinese 10. Every current study-level filter has at least one linked example. Levels follow the existing headword IDs; they do not certify the grammar or sentence difficulty. This is a starter set of verbal collocations, not full dictionary coverage.
 
 ## Where to find them
 
-The following applies to languages with active Collocations support.
+The following standalone Collocations routes apply to Korean, Spanish and French. English uses the default sections described above.
 
 - Word List shows a phrase preview below the word meaning. Search matches the phrase and its explanation as well as the headword.
 - Open the word block to see Collocations / 연어: phrase, its own meaning, an original usage example and the example translation. Both phrase and example can be spoken using the existing device voice.
