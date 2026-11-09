@@ -5,10 +5,10 @@ import {createJapaneseReadingExercises} from '../web/js/shared/japanese-reading.
 import {renderExercisePrompt} from '../web/js/shared/exercise-view.js';
 import {exerciseLabel} from '../web/js/shared/language-exercises.js';
 import {lexiconText} from '../web/js/shared/lexicon-text.js';
-const word={id:'school',lemma:'学校',pronunciation:'がっこう',language:'ja',studyMeaning:'school',examples:[{text:'弟は学校へ歩いて行く。'}]};
+const word={id:'school',lemma:'学校',pronunciation:'がっこう',language:'ja',studyMeaning:'school',examples:[{text:'弟は学校へ歩いて行く。',studyTranslation:'My younger brother walks to school.'}]};
 test('new reading questions show the sentence once and locate its complete target',()=>{
  const question=createJapaneseReadingExercises([word],'en',{version:1,excludedSpellings:[],variants:[]}).find(row=>row.category==='reading');
- assert.equal(question.prompt,'弟は学校へ歩いて行く。');assert.deepEqual(question.readingFocus,{start:2,text:'学校'});assert.equal(question.answer,'がっこう');assert.equal(question.prompt.split('学校').length-1,1);
+ assert.equal(question.prompt,'弟は学校へ歩いて行く。');assert.deepEqual(question.readingFocus,{start:2,text:'学校'});assert.equal(question.answer,'がっこう');assert.equal(question.context,'My younger brother walks to school.');assert.equal(question.prompt.split('学校').length-1,1);
 });
 for(const prompt of ['学校\n弟は学校へ歩いて行く。','弟は［学校］へ歩いて行く。','弟は【学校】へ歩いて行く。','弟は[学校]へ歩いて行く。'])test(`legacy reading prompt normalises safely: ${prompt}`,()=>{
  assert.deepEqual(japaneseReadingPrompt(word,prompt),{prompt:'弟は学校へ歩いて行く。',readingFocus:{start:2,text:'学校'}});
