@@ -1,56 +1,44 @@
 # Lingonberry
 
-One offline-first language-learning app with downloadable study-language packages.
+One offline language-learning app with separately downloadable study content and explanation packs.
 
-Choose a **study language** (Chinese, German, Japanese, Korean, English, Spanish or French) and an independent **explanation language** (English or Korean initially). Study cores and explanation pairs are separate downloads: for example, German core + German → Korean. Download German → English separately to switch explanations. Chinese works the same way, and installed pairs remain available offline.
+Choose a Study Language and Explanation Language in Settings. Download or remove explanations through Language Packages; shared study content is reused automatically. Installed content works offline. The interface follows the selected explanation language, with English as the fallback. Package updates are managed in Settings; automatic Wi-Fi-only update scheduling remains pending.
 
-Use this folder as the sole active project. Retired source and history are preserved only in ignored recovery backups; see [workspace layout and generation data](docs/workspace.md). Chinese and German content and exercises have been migrated. Every language offers Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble and Dictation (Word and Sentence), in that order. [Collocations](docs/collocations.md) practice is available for English, Korean, Spanish and French; English combines it with Phrasal Verbs. German and Chinese no longer expose collocation practice or word references. Language-specific exercises follow these shared defaults. English [Root Families](docs/learner-root-families.md) browses the full readable source inventory with 5,863 entries and complete English/Korean meanings; Confusable Words is no longer offered as a Study section. See [shared study modes](docs/shared-sentence-practice.md).
+Chinese, German, Japanese, Korean, English, Spanish and French are available. English/Korean explanation coverage varies by study language; only complete offered pairs appear in the package manager. English also offers English self-explanations. The other same-language explanation pairs are omitted.
 
-English [5.0.0](docs/english-example-completion.md) includes primary examples and Korean sentence translations for all 12,745 study entries. Japanese also has complete English/Korean example coverage. Update installed explanations in Settings → Language Packages to receive new content; stable IDs preserve study progress. Remaining language coverage is documented in the [content reports](docs/multilingual-broad-dictionaries.md).
+## Study
+
+The shared sections are Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble and Dictation, in that order. Dictation has Word and Sentence modes and uses device speech. Search stays inside the selected level.
+
+English expressions are dictionary entries and participate in Meaning Quiz and Cloze. Authored discontinuous phrases use one input per blank, preserving intervening objects. Root Families shows only related words available in the installed Word List. Chinese has one Pronunciation section with Pinyin Input and Tone Selection. German offers Article Selection and Form Input; Japanese offers Word Reading and Okurigana. Language-specific exercises retain the shared German/Chinese design.
+
+## Current Content
+
+The English 7.0.0 edition contains **40,710 sense entries**, covering **20,603 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Different useful meanings can therefore appear as separate Word List rows and Flashcards at different levels.
+
+The four English groups are editorial IELTS-style difficulty bands: 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0. They are not official IELTS/SAT/GRE vocabulary lists. The inventory favours useful everyday, professional, academic and literary uses through GRE-level usage; minor obsolete branches and duplicate cards were excluded or consolidated. See the [release report](language-packages/sources/english-reviewed/7.0.0/report.json) and [review process](docs/english-content-review.md).
+
+German 3.2.0 has 11,293 entries, Chinese 2.2.0 has 11,003 and Japanese 4.5.0 has 12,032, with compatible English/Korean explanation packs. Their full entry-by-entry review is ongoing; the current release does not include its unfinished proposals. German A1–B1 uses matched Goethe material, with editorial B2–C2 groups. Chinese retains official syllabus identities/levels. Japanese JLPT placements are editorial. Reviews are AI-assisted; native-speaker certification remains pending. See [multilingual review](docs/multilingual-content-review.md), [meaning style](docs/meaning-style.md) and [source migration](docs/vocabulary-migration.md).
 
 ## Development
 
-Use Node.js 26.11.1 or newer and npm 12.2.0 or newer:
+Use Node.js 26.11.1+ and npm 12.2.0+:
 
-```bash
+```sh
 npm ci
 npm run check
 npm test
 npm start
 ```
 
-See [architecture](docs/architecture.md) and [contribution rules](CONTRIBUTING.md). Changes are reviewed through small issue-linked PRs; `main` is the integration branch.
+The local preview opens at http://127.0.0.1:4188. For browser verification, install Chromium with `npx playwright install chromium`, then run `npm run verify:browser`. Verify the published English payloads with `node scripts/verify-reviewed-english-browser.mjs --published`.
 
-The local preview opens at `http://127.0.0.1:4188`. In **Settings → Language Packages**, open a study language and use Download or Remove for explanations; the required study content is managed automatically. Choose a downloaded study/explanation pair in the same Settings card, then return to Study. Selection and app restart never download missing packages. The archived study screens are restored; German 3.0.0 contains 11,288 entries (11,283 distinct headwords); Chinese 2.0.0 retains 11,000 entries. Both have separate English/Korean explanations and translated examples. German A1–B1 follows matched official Goethe adult headwords; B2–C2 uses provisional editorial frequency tiers. See [German expansion](docs/german-vocabulary-expansion.md) and [the archived migration](docs/vocabulary-migration.md) for provenance, counts and pending native-speaker review. Automatic Wi-Fi update scheduling remains pending. See [package management](docs/downloaded-packages.md). An iPhone simulator wrapper is documented in [mobile/README.md](mobile/README.md).
+After changing bundled files, run `npm run shell:sync`. See [contribution rules](CONTRIBUTING.md), [runtime structure](docs/code-structure.md), [shared design](docs/study-design.md) and [iOS wrapper](mobile/README.md). The repository builds one app; language packages contain validated data rather than executable feature code.
 
-For browser checks, run `npx playwright install chromium` and `npm run verify:browser`.
+Learner progress is namespaced by study language and stable IDs. Genuine equivalent identities can migrate; corrected or incompatible saved questions are invalidated without erasing unrelated study data. Downloads validate identity, schema, byte length and SHA-256 before atomic installation. Failed downloads preserve usable installed content.
 
-## Code Structure
+## Sources and Licensing
 
-Shared runtime, Settings and exercise engines live in `web/js/shared/`. Language adapters in `web/js/presentation/` connect those services to the Chinese and German exercise policies and existing progress stores. Downloadable package storage stays in `web/js/packages/`. See [code ownership and design](docs/code-architecture.md) for the boundaries and extension guide.
+Code is MIT-licensed. Imported definitions, examples and adaptations retain their own per-record licences and credits; the app's Licence view combines study and explanation notices. Original editorial text, Wiktionary adaptations, NIKL sources and other datasets are distinguished. Private research quotation caches and unfinished drafts are excluded from the public release. See [licensing](LICENSE), [source reports](docs/multilingual-broad-dictionaries.md) and [example authoring](docs/example-authoring.md).
 
-After editing bundled files, run `npm run shell:sync`, then `npm run check`, `npm test` and `npm run verify:browser`. The checks catch stale offline-cache inventories, broken imports and unreachable modules.
-
-## Additional Language Dictionaries
-
-The 3.0.0 editorial preview contains 54,097 entries across Japanese JLPT N5–N1, Korean TOPIK 1–6, English IELTS study groups (1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0), Spanish DELE A1–C2 and French DELF/DALF A1–C2. The eligible English/Korean explanation pairs are available, with English explanations only for Korean study. English uses four discrete editorial study groups and ordinary topic filters, with no exam filters; see [English level assignments](docs/english-study-levels.md). The 281 original examples plus 5,786 newly authored examples provide 6,067 entries with complete usage examples; 48,030 entries still need one. Native-speaker review remains pending. Source sentences without translations are labelled separately and do not enter sentence quizzes. See [counts, sources, licences and remaining work](docs/multilingual-broad-dictionaries.md). Run `node scripts/verify-multilingual-browser.mjs` for browser checks.
-
-[English 4.0.0](docs/english-meaning-corrections.md) resolves all 4,347 findings from the earlier linguistic review and provides 11,977 active entries with English/Korean meanings. Source evidence, retired/replacement identities and original versions are preserved. This is AI-assisted source adjudication; native-speaker certification remains pending.
-
-[English 4.8.0](docs/english-common-coverage.md) provides 12,745 entries after adding 389 original bilingual common-word/sense entries. All 2,809 NGSL 1.2 headwords and 52 supplementary day/month/number items map to actual entries in the first two study groups, with source attribution retained. It reviews 332 prior upper-band senses, moves 249 general senses, and retains over 1,000 distinct precision headwords. Existing IDs, definitions and progress remain intact. Root Families now links every matching dictionary sense, including both address entries.
-
-[Japanese 4.0.0](docs/japanese-meaning-corrections.md) reviews all 12,027 entries and their English/Korean meanings, applies 2,891 corrections and 66 explicit concept replacements, and repairs seven of the 2,027 existing bilingual examples. JLPT levels and learner history are preserved; native-speaker certification remains pending.
-
-[Concise cross-language meanings](docs/meaning-style.md) now use short equivalents such as 車 → 자동차 / car across the English/Korean translation packages. English → English keeps dictionary definitions. This explanation-only edition preserves study cores, lexical IDs and all example translations.
-
-[Japanese 4.4.0](docs/japanese-example-completion.md) fills the remaining 10,000 primary examples. All 12,027 entries now have Japanese examples with English/Korean translations. Every new triplet has a current independent AI editorial review; six explicitly recorded headword corrections preserve the original concepts and progress IDs. Original-content and Wiktionary attribution/licences are retained. Native-speaker certification remains pending.
-
-Japanese 4.2 extends source-backed character readings to all 2,575 kanji in the dictionary and plain-form practice to all 1,402 verbs/adjectives. English 4.3 adds broad noun countability and searchable historical-source families. Both include additional original exercises across every study level, while contextual grammar and collocation banks remain curated. See [dictionary-backed practice, licensing and coverage](docs/dictionary-practice.md) for the distinction between supported entries and remaining editorial gaps.
-
-The requested [explanation matrix](docs/explanation-matrix.md) has 43 pairs: every other supported language, plus English → English. Thirteen pairs currently have complete downloadable packages; the other 30 require further translation work. Partial extra-language texts are retained in authoring records without being offered as complete downloads. See [example authoring and coverage](docs/example-authoring.md).
-
-UI development follows the [shared German/Chinese design reference](docs/study-design.md), reusable components and browser parity checks.
-
-The [runtime structure guide](docs/code-structure.md) explains model, presentation, view and localisation responsibilities.
-
-The [whole-source code audit](docs/runtime-audit.md) records shared logic, retired-code removal, verification and remaining maintainability work.
+Support development through [PayPal](https://paypal.me/somnio97). Use Send Bug Report in Settings for reproducible reports and device/app information.
