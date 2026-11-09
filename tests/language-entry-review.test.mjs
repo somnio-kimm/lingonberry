@@ -1,0 +1,91 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {auditLanguageEntryReviews,resolveLanguageEntryDecision} from '../scripts/content/language-entry-review.mjs';
+import {exampleDigest} from '../scripts/content/reviewed-examples.mjs';
+const input={id:'school',studyLanguage:'ja',sourceDigest:'bound-source',
+ coreEntry:{id:'school',word:'学校',pronunciation:'がっこう',partOfSpeech:'noun',level:'N5',provenance:{license:'CC-BY-SA-4.0'},example:{text:'学校へ行きます。'}},
+ englishExplanation:{id:'school',meaning:'school',exampleTranslation:'I go to school.'},
+ koreanExplanation:{id:'school',meaning:'학교',meanings:['학교'],exampleTranslation:'학교에 가요.'}};
+const fields={word:'学校',pronunciation:'がっこう',partOfSpeech:'noun',level:'N5',meaningEn:'school',meaningKo:'학교',exampleText:'学校へ行きます。',exampleTranslationEn:'I go to school.',exampleTranslationKo:'학교에 가요.'};
+const pass={id:input.id,sourceDigest:input.sourceDigest,reviewer:'primary',verdict:'pass',reason:'Examined the reading, school sense and matching example/translations.',reviewedFields:fields};
+const run=(decisions,crossReviews=[],extra={})=>auditLanguageEntryReviews({language:'ja',inputs:[input],decisions,crossReviews,...extra});
+const approve=decision=>({id:decision.id,decisionDigest:exampleDigest(decision),reviewer:'independent',verdict:'approve',reason:'Personally checked the exact correction.'});
+
+test('an individually retained complete entry is covered without inventing a revision',()=>{
+ const result=run([pass]);assert.equal(result.report.complete,true);assert.equal(result.report.changed,0);
+ assert.deepEqual(result.finalized[0].core.provenance,input.coreEntry.provenance);
+});
+test('missing, stale and duplicate reviews cannot count as full coverage',()=>{
+ assert.deepEqual(run([]).report.remaining,['school']);
+ assert.equal(run([{...pass,sourceDigest:'old'}]).report.complete,false);
+ assert.equal(run([pass,pass]).report.errors.length,1);
+});
+test('real corrections require a second person and exact current decision binding',()=>{
+ const correction={...pass,verdict:'revise',reviewedFields:{...fields,meaningKo:'학교; 교육 기관'}};
+ assert.deepEqual(run([correction]).report.pendingIndependent,['school']);
+ assert.equal(run([correction],[approve(correction)]).report.complete,true);
+ assert.equal(run([correction],[{...approve(correction),reviewer:'primary'}]).report.complete,false);
+ assert.equal(run([correction],[{...approve(correction),decisionDigest:'old'}]).report.complete,false);
+ assert.deepEqual(resolveLanguageEntryDecision(input,correction).korean.meanings,['학교; 교육 기관']);
+});
+test('a pass cannot silently change the meaning or example',()=>{
+ assert.equal(run([{...pass,reviewedFields:{...fields,exampleText:'これは病院です。'}}]).report.errors.length,1);
+});
+
+test('an independent rejection or source finding blocks even an unchanged primary pass',()=>{
+ for(const verdict of ['reject','needs-source']){
+  const result=run([pass],[{...approve(pass),verdict}]);
+  assert.equal(result.report.complete,false);
+  assert.deepEqual(result.report.pendingIndependent,['school']);
+  if(verdict==='needs-source')assert.deepEqual(result.report.pendingSource,['school']);
+  assert.equal(result.finalized.length,0);
+ }
+});
+test('legacy reviewer-less decisions are accepted only by exact frozen decision digest',()=>{
+ const legacy={...pass};delete legacy.reviewer;
+ assert.equal(run([legacy]).report.complete,false);
+ assert.equal(run([legacy],[],{legacyDecisions:[legacy]}).report.complete,true);
+ assert.equal(run([{...legacy,reason:'Changed metadata'}],[],{legacyDecisions:[legacy]}).report.complete,false);
+});
+test('Chinese full-object proposals preserve grammar and official level evidence',()=>{
+ const zh={...input,studyLanguage:'zh',coreEntry:{...input.coreEntry,word:'学校',pronunciation:'xuéxiào',level:'1',grammar:{officialNumber:42}}};
+ const correction={id:zh.id,sourceDigest:zh.sourceDigest,reviewer:'primary',verdict:'corrected',reason:'Checked exact example tone notation.',
+  proposedCoreEntry:{...zh.coreEntry,example:{text:'我去学校。',pronunciation:'wo3 qu4 xue2 xiao4'}},
+  proposedEnglishExplanation:{...zh.englishExplanation,exampleTranslation:'I go to school.'},
+  proposedKoreanExplanation:zh.koreanExplanation};
+ const result=auditLanguageEntryReviews({language:'zh',inputs:[zh],decisions:[correction],crossReviews:[approve(correction)]});
+ assert.equal(result.report.complete,true);assert.equal(result.finalized[0].core.grammar.officialNumber,42);
+ const changed={...correction,proposedCoreEntry:{...correction.proposedCoreEntry,level:'2'}};
+ assert.equal(auditLanguageEntryReviews({language:'zh',inputs:[zh],decisions:[changed]}).report.errors.length,1);
+});
+test('a source uncertainty remains pending without an evidenced independent closure',()=>{
+ const uncertain={...pass,verdict:'needs-source',sourceIssues:['Reading needs verification.']};
+ assert.deepEqual(run([uncertain],[approve(uncertain)]).report.pendingSource,['school']);
+ const closure={...approve(uncertain),sourceResolution:{status:'resolved',reason:'Verified the exact reading in the primary source.',evidenceUrls:['https://example.org/source']}};
+ assert.equal(run([uncertain],[closure]).report.complete,true);
+});
+test('additional example coverage cannot be inferred from reviewing the primary sentence',()=>{
+ const expanded={...input,coreEntry:{...input.coreEntry,additionalExamples:[{text:'学校で会いました。'}]}};
+ assert.equal(run([pass],[],{inputs:[expanded]}).report.errors.length,1);
+ assert.equal(run([{...pass,additionalExamplesReviewed:true}],[],{inputs:[expanded]}).report.complete,true);
+});
+
+test('a newly recorded source finding cannot disappear behind an older approval',()=>{
+ const finding={id:input.id,sourceDigest:input.sourceDigest,reason:'Borrowed example has no verified authorship binding.'};
+ const closure={...approve(pass),sourceResolution:{status:'resolved',reason:'Verified the exact source example.',
+  evidenceUrls:['https://example.org/credit'],findingDigests:[exampleDigest(finding)]}};
+ assert.equal(run([pass],[approve(pass)],{sourceFindings:[finding]}).report.complete,false);
+ assert.equal(run([pass],[closure],{sourceFindings:[finding]}).report.complete,true);
+ const newFinding={...finding,reason:'A second quotation claim requires a fresh review.'};
+ assert.equal(run([pass],[closure],{sourceFindings:[finding,newFinding]}).report.complete,false);
+ assert.throws(()=>run([pass],[],{sourceFindings:[{...finding,sourceDigest:'old'}]}),/stale/);
+});
+
+test('verified dictionary content with unresolved teaching scope is distinct from a source problem',()=>{
+ const flagged={...pass,usageIssues:['A second official POS has a different learning level.']};
+ const pending=run([flagged],[approve(flagged)]);
+ assert.deepEqual(pending.report.pendingUsage,['school']);assert.deepEqual(pending.report.pendingSource,[]);
+ assert.equal(pending.report.complete,false);
+ const closed={...approve(flagged),usageResolution:{status:'resolved',reason:'Both official usages retained with their separate POS and level scope.'}};
+ assert.equal(run([flagged],[closed]).report.complete,true);
+});
