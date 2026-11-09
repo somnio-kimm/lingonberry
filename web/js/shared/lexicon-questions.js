@@ -14,7 +14,7 @@ export function createLexiconQuestions(profile){
  const listening=createListeningEngine({language:profile.speech,spokenWord:word=>studySpokenWord(word,profile),
   wordAnswers:(words,word)=>{
    const equivalents=equivalentsFor(words,word);
-   return [...new Set(equivalents.flatMap(other=>[other.lemma,...(other.aliases||[]),displayStudyWord(other)]))];
+   return [...new Set(equivalents.flatMap(other=>[other.lemma,...(other.listeningAliases??other.aliases??[]),displayStudyWord(other)]))];
   },
   normalize:text=>normaliseStudyAnswer(text).replace(/[.,!?;:…。，！？；：]/gu,'').replace(/\s+/gu,' ').toLocaleLowerCase(profile.id),
  });

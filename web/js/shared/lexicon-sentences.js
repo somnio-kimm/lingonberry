@@ -34,9 +34,10 @@ export function createSentenceEngine(profile){
  function createSentencePool(mode,words,locale='en'){
   if(!['cloze','scramble'].includes(mode))return {all:()=>[],choose:()=>undefined};
   const rows=words.flatMap(word=>(word.examples||[]).flatMap((example,i)=>{
-   if(!example.text?.trim()||!example.studyTranslation?.trim())return [];
+   if(example.practiceEligible===false||!example.text?.trim()||!example.studyTranslation?.trim())return [];
    const sentence=example.text.normalize('NFC'),id=word.id+':'+i+':'+locale;
    if(mode==='cloze'){
+    if(example.clozeEligible===false)return [];
     const focus=findSentenceFocus(word,example,profile.id);if(!focus)return [];
     return [{mode,id,word,locale,example,sentence,focus,answer:focus.text,type:vocabularyType(word)}];
    }
