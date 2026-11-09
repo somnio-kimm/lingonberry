@@ -24,7 +24,11 @@ test('concise editions reproduce exact source-bound translations while preservin
  }
  const report=await json(base+'report.json');assert.equal(report.changed,changed);assert.equal(report.englishSelfDefinitions,'unchanged');
  const self=catalog.find(row=>row.id==='en-en');assert.equal(digest(await bytes(self.url.slice(1))),self.sha256);
- const previousSelf=await json('language-packages/en-en-4.8.0.json'),currentSelf=await json(self.url.slice(1)),previousIds=new Set(previousSelf.entries.map(row=>row.id));assert.deepEqual(currentSelf.entries.filter(row=>previousIds.has(row.id)).map(row=>[row.id,row.meaning,row.meanings,row.meaningStyle]),previousSelf.entries.map(row=>[row.id,row.meaning,row.meanings,row.meaningStyle]),'Later example editions retain English self-definitions');
+ const previousSelf=await json('language-packages/en-en-4.8.0.json'),currentSelf=await json(self.url.slice(1)),previousIds=new Set(previousSelf.entries.map(row=>row.id));
+ const selfCore=await json(catalog.find(row=>row.id==='en-core'&&row.version===currentSelf.studyVersion).url.slice(1));
+ if(selfCore.contentReview?.sourceAndSenseReviewComplete){
+  assert.equal(selfCore.contentReview.perSenseLevels,true);assert.equal(selfCore.contentReview.bilingualExamples,currentSelf.entries.length);
+ }else assert.deepEqual(currentSelf.entries.filter(row=>previousIds.has(row.id)).map(row=>[row.id,row.meaning,row.meanings,row.meaningStyle]),previousSelf.entries.map(row=>[row.id,row.meaning,row.meanings,row.meaningStyle]),'Example-only editions retain English self-definitions; explicit later sense-review editions use their own bound review');
  const core=await json(catalog.find(row=>row.id==='ja-core').url.slice(1)),byWord=new Map(core.entries.map(row=>[row.word,row.id]));
  for(const [locale,examples]of [['ko',{車:'자동차',猫:'고양이',犬:'개',机:'책상',食べる:'먹다'}],['en',{車:'car',猫:'cat',犬:'dog',机:'desk',食べる:'eat'}]]){
   const pair=await json(catalog.find(row=>row.id==='ja-'+locale).url.slice(1)),byId=new Map(pair.entries.map(row=>[row.id,row.meaning]));for(const [word,meaning]of Object.entries(examples))assert.equal(byId.get(byWord.get(word)),meaning);

@@ -1,0 +1,159 @@
+{
+  "version": "7.0.0",
+  "reviewSnapshotSha256": "17166b84e56023546c6dc8c7ed4378d889c3d8348edbc55d608bcb9705dfc15d",
+  "entries": 40710,
+  "englishEntries": 40710,
+  "koreanEntries": 40710,
+  "uniqueSinglewordHeads": 20603,
+  "uniqueMultiwordHeads": 10247,
+  "uniqueAdvancedSinglewordHeads": 2765,
+  "levels": {
+    "IELTS 7.0–8.0": 18040,
+    "IELTS 4.0–6.5": 15520,
+    "IELTS 8.5–9.0": 3723,
+    "IELTS 1.0–3.5": 3427
+  },
+  "packageBytes": {
+    "en-core": 64237185,
+    "en-en": 47355576,
+    "en-ko": 48747492
+  },
+  "complete": true,
+  "errors": [],
+  "scope": "Reviewed English study/explanation data; other-language full reviews remain in progress.",
+  "policyId": "english-useful-through-gre-2026-11-08",
+  "primaryRecordsReviewed": 35377,
+  "additionalCandidatesReviewed": 10931,
+  "allRecordedReviewGatesComplete": true,
+  "sourceAudit": {
+    "originalResolutions": 269,
+    "laterFindings": {
+      "expected": 105,
+      "resolved": 105,
+      "remaining": [],
+      "errors": [],
+      "complete": true
+    },
+    "quotationFollowups": {
+      "expected": 19,
+      "recorded": 19,
+      "uniqueResolvedFlags": 19,
+      "missingFlags": [],
+      "counts": {
+        "retire-unsupported": 14,
+        "corrected": 5
+      },
+      "errors": [],
+      "structuralComplete": true,
+      "independentlyPassed": 19,
+      "finalAdjudications": 4,
+      "remainingIndependentChecks": [],
+      "complete": true
+    },
+    "definitionSourceCorrections": {
+      "expected": 223,
+      "resolved": 223,
+      "errors": [],
+      "complete": true
+    },
+    "exampleSourceCorrections": {
+      "expected": 75,
+      "resolved": 75,
+      "errors": [],
+      "complete": true
+    }
+  },
+  "exampleOverlap": {
+    "reviewSnapshotSha256": "17166b84e56023546c6dc8c7ed4378d889c3d8348edbc55d608bcb9705dfc15d",
+    "sourceEvidenceSha256": "f372c0193a419712df5a36fb314ab735542a1a5ed6e07a2ce36e0f3b9a2ffa50",
+    "reviewedEntries": 40710,
+    "sourceRowsScanned": 48388,
+    "sourceExamplesCompared": 185068,
+    "exactNormalisedMatches": 2093,
+    "quotationOrUnclassifiedMatches": [],
+    "complete": true,
+    "notice": "Exact normalised overlap screening of the verified English source-evidence cache, not copyright clearance for every possible external publication. New independently reviewed source-example bindings retain their own precise type, source and translation licence."
+  },
+  "practice": {
+    "counts": {
+      "resolved": 38306,
+      "missing": 2374,
+      "ambiguous": 30,
+      "invalid": 0
+    },
+    "structuredGaps": 6,
+    "unresolvedSpans": 2404,
+    "note": "Unresolved spans remain dictionary examples without guessed cloze gaps."
+  },
+  "rootReferences": {
+    "exercise": {
+      "dropped": 380
+    },
+    "family-member": {
+      "dropped": 1
+    },
+    "morpheme-example": {
+      "dropped": 25046
+    },
+    "morpheme": {
+      "dropped": 4371
+    },
+    "countability": {
+      "dropped": 7612
+    },
+    "exercises": {
+      "input": 386,
+      "retained": 6,
+      "dropped": 380
+    },
+    "families": {
+      "input": 27,
+      "retained": 27,
+      "dropped": 0
+    },
+    "morphemes": {
+      "input": 5863,
+      "retained": 1492,
+      "dropped": 4371
+    }
+  },
+  "payloads": [
+    {
+      "id": "en-core",
+      "kind": "study",
+      "targetLanguage": "en",
+      "version": "7.0.0",
+      "url": "/language-packages/en-core-7.0.0.json",
+      "bytes": 64237185,
+      "sha256": "fb4b45ddd1237fe888cb50b3404ce977c5bd2fe9b22b885d5a938da81d866dcf"
+    },
+    {
+      "id": "en-en",
+      "kind": "explanation",
+      "targetLanguage": "en",
+      "version": "7.0.0",
+      "explanationLanguage": "en",
+      "studyVersion": "7.0.0",
+      "url": "/language-packages/en-en-7.0.0.json",
+      "bytes": 47355576,
+      "sha256": "932fb89d46775c8e4ce41c7d49c1b2abfe011ed9d0f9985e1360038916896698"
+    },
+    {
+      "id": "en-ko",
+      "kind": "explanation",
+      "targetLanguage": "en",
+      "version": "7.0.0",
+      "explanationLanguage": "ko",
+      "studyVersion": "7.0.0",
+      "url": "/language-packages/en-ko-7.0.0.json",
+      "bytes": 48747492,
+      "sha256": "bdcf440bc5cb94e9feb6247c323e4e5964566bcbfdbc2c0c2da682ba55a1a984"
+    }
+  ],
+  "authoringValidation": {
+    "testsPassed": 603,
+    "browserChecksPassed": 77
+  },
+  "licenceNotice": "Original editorial material and licensed adaptations retain the per-record licences and creator/source credits in the immutable payloads. Raw research quotation caches are not distributed in this report; exact overlap screening is not blanket copyright clearance for all external publications.",
+  "levelNotice": "Editorial IELTS/SAT/GRE-style difficulty groups, not official exam vocabulary-list membership."
+}

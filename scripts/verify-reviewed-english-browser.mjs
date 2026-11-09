@@ -9,11 +9,13 @@ import {validateExplanation} from '../web/js/packages/schema.js';
 
 // Isolated browser storage and request routes exercise staged bytes only. This
 // script neither publishes packages nor changes a real browser/app installation.
-const stage=resolve(fileURLToPath(new URL('../local-data/coverage/reviewed-english-release/',import.meta.url)));
+const published=process.argv.includes('--published');
+const stage=resolve(fileURLToPath(new URL(published?'../':'../local-data/coverage/reviewed-english-release/',import.meta.url)));
+const reportPath=published?'language-packages/sources/english-reviewed/7.0.0/report.json':'release-report.json';
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 let report,catalog,catalogBytes;
 try{
- [report,catalogBytes]=await Promise.all([json(resolve(stage,'release-report.json')),readFile(resolve(stage,'language-packages/catalog.json'))]);
+ [report,catalogBytes]=await Promise.all([json(resolve(stage,reportPath)),readFile(resolve(stage,'language-packages/catalog.json'))]);
  catalog=JSON.parse(catalogBytes);
 }catch(error){
  if(error.code==='ENOENT')throw new Error('Reviewed English stage is not ready. Wait for the approved build-reviewed-english.mjs --write stage before running this browser check. No browser was opened.');
