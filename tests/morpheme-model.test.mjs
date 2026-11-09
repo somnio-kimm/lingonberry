@@ -7,13 +7,16 @@ const rows=[
  {id:'ling',form:'-ling',variants:[],kind:'suffix',senses:[{meaning:'small'}],examples:['duckling']},
  {id:'aud',form:'aud-',variants:[],kind:'root',senses:[{meaning:'듣다'}],examples:['audience']},
 ];
-test('search covers variants, explanation meanings and external examples independently of study words',()=>{
- const before=structuredClone(rows),model=createMorphemeModel(rows,[]);
- for(const query of ['ABS-','ＡＢＳ－','away from','abnormal'])assert.deepEqual(model.find({query}).map(r=>r.id),['ab']);
+test('search retains mixed families and excludes families without a Word List match',()=>{
+ const before=structuredClone(rows),model=createMorphemeModel([...rows,{...rows[0],id:'empty',form:'empty-',examples:[]}],[{id:'a',lemma:'absent'},{id:'b',lemma:'listener',aliases:['audience']}]);
+ assert.deepEqual(model.find({query:'empty-'}),[]);
+ for(const query of ['ABS-','ＡＢＳ－','away from','absent'])assert.deepEqual(model.find({query}).map(r=>r.id),['ab']);
+ assert.deepEqual(model.find({query:'abnormal'}),[]);
+ assert.deepEqual(model.relatedWords('ab').words,['absent']);
  assert.deepEqual(model.find({query:'듣다'}).map(r=>r.id),['aud']);
- assert.deepEqual(model.find({kind:'suffix'}).map(r=>r.id),['ling']);
+ assert.deepEqual(model.find({kind:'suffix'}),[]);assert.deepEqual(model.find({query:'duckling'}),[]);
  assert.deepEqual(model.find({kind:'prefix',query:'duckling'}),[]);
- assert.equal(model.total,3);assert.deepEqual(rows,before);
+ assert.equal(model.total,2);assert.deepEqual(rows,before);
 });
 test('dictionary links retain every headword sense and explicit alias without duplicate entries',()=>{
  const model=createMorphemeModel(rows,[{id:'a',lemma:'absent'},{id:'b',lemma:'address',aliases:['address']},{id:'c',lemma:'address'},{id:'d',lemma:'colour',aliases:['color']}]);
@@ -21,7 +24,7 @@ test('dictionary links retain every headword sense and explicit alias without du
  const copy=model.matchingWords('address');copy.pop();assert.equal(model.matchingWords('address').length,2);
 });
 test('related words page predictably to the end without duplicates or unbounded batches',()=>{
- const examples=Array.from({length:47},(_,i)=>'word '+i),model=createMorphemeModel([{...rows[0],examples}],[]);
+ const examples=Array.from({length:47},(_,i)=>'word '+i),model=createMorphemeModel([{...rows[0],examples:[...examples,'reference only']}],examples.map(lemma=>({id:lemma,lemma})));
  const first=model.relatedWords('ab',0,MORPHEME_PAGING.initialWords),second=model.relatedWords('ab',first.next),last=model.relatedWords('ab',second.next);
  assert.equal(first.words.length,12);assert.equal(second.words.length,20);assert.equal(last.words.length,15);assert.equal(last.hasMore,false);
  assert.deepEqual([...first.words,...second.words,...last.words],examples);

@@ -4,8 +4,7 @@ export const MORPHEME_PAGING = Object.freeze({cards:8, initialWords:12, moreWord
 const normalise = value => String(value).normalize('NFKC').trim().toLowerCase();
 
 /** Prepare immutable source-derived indexes once per installed explanation set. */
-export function createMorphemeModel(rows, words) {
- const byId = new Map(rows.map(row => [row.id, row]));
+export function createMorphemeModel(inventory, words) {
  const byWord = new Map();
  for (const word of words) {
   for(const key of new Set([word.lemma,...(word.aliases||[])].map(normalise))){
@@ -14,6 +13,11 @@ export function createMorphemeModel(rows, words) {
    byWord.set(key, matches);
   }
  }
+ const rows = inventory.map(row => ({
+  ...row,
+  examples:row.examples.filter(example => byWord.has(normalise(example))),
+ })).filter(row => row.examples.length);
+ const byId = new Map(rows.map(row => [row.id, row]));
  const search = new Map(rows.map(row => [row.id, normalise([
   row.form, ...row.variants, ...row.senses.map(sense => sense.meaning), ...row.examples,
  ].join(' '))]));
