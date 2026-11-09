@@ -79,21 +79,21 @@ export function renderScrambleQuiz(el,session={}) {
       </div>
       ${filters.markup()}
       <div class="quiz-after-filter">
-      <div class="card sentence-question" style="text-align:center">
+      <div class="card sentence-question scramble-question" style="text-align:center">
         <div class="cloze-tools">
-          <button type="button" class="speak-btn">🔊</button>
           <div class="cloze-pinyin-control">
             <span id="scramble-pinyin-label">${t('showPinyin')}</span>
             <button type="button" id="scramble-show-pinyin" class="toggle-switch toggle-compact${Store.scrambleShowPinyin ? ' on' : ''}"
               role="switch" aria-checked="${Store.scrambleShowPinyin}" aria-labelledby="scramble-pinyin-label"></button>
           </div>
+          <button type="button" class="speak-btn" aria-label="${t('listenSentence')}">🔊</button>
         </div>
         ${feedback ? `<div class="scramble-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5;color:var(--green)">${Store.scrambleShowPinyin ? Pinyin.htmlSentence(sentence) : escape(sentence.hanzi)}</div>` : ''}
         <div style="font-size:14px;color:var(--text2);${feedback ? 'margin-top:8px' : ''}">${sentenceMeaning(sentence)}</div>
       </div>
       <div class="card">
         <div style="font-size:13px;color:var(--text3);margin-bottom:8px">${t('yourAnswer')}:</div>
-        <div class="flow-row">${chosen.map((c, i) => `<button class="flow-chip scramble-chip chosen" data-i="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('') || `<span style="color:var(--text3)">${t('buildSentence')}</span>`}</div>
+        <div class="flow-row">${chosen.map((c, i) => `<button class="flow-chip scramble-chip chosen" data-i="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('')}</div>
       </div>
       <div class="card">
         <div class="flow-row">${pool.map((c, i) => `<button class="flow-chip scramble-chip" data-pi="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('')}</div>

@@ -52,14 +52,16 @@ export function renderClozeQuiz(el,session={}) {
   function draw() {
     const displayed=session.score?.()||{correct:score,total};
     if(!word){el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div></div>${filters.markup()}<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;filters.bind(el);return;}
-    const masked = sentence.hanzi.replace(blank, '______');
     const offset = sentence.hanzi.indexOf(blank);
     const escape = text => text.replace(/[&<>"']/g, ch => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[ch]));
-    const question = feedback && offset >= 0
-      ? `${escape(sentence.hanzi.slice(0, offset))}<mark class="cloze-answer">${escape(blank)}</mark>${escape(sentence.hanzi.slice(offset + blank.length))}`
-      : escape(feedback ? sentence.hanzi : masked);
+    const blankMarkup = feedback
+      ? `<mark class="cloze-answer">${escape(blank)}</mark>`
+      : '<span class="cloze-blank">______</span>';
+    const question = offset >= 0
+      ? escape(sentence.hanzi.slice(0, offset)) + blankMarkup + escape(sentence.hanzi.slice(offset + blank.length))
+      : escape(sentence.hanzi);
     const review = option => `<span class="cloze-option-word">${Pinyin.htmlMarkedColumns(option.syllables)}</span><span class="cloze-option-meaning">${escape(wordMeaning(option))}</span>`;
     el.innerHTML = `
       <div class="sentence-quiz-header">
@@ -68,14 +70,14 @@ export function renderClozeQuiz(el,session={}) {
       </div>
       ${filters.markup()}
       <div class="quiz-after-filter">
-      <div class="card sentence-question" style="text-align:center">
+      <div class="card sentence-question cloze-question" style="text-align:center">
         <div class="cloze-tools">
-          <button type="button" class="speak-btn">🔊</button>
           <div class="cloze-pinyin-control">
             <span id="cloze-pinyin-label">${t('showPinyin')}</span>
             <button type="button" id="cloze-show-pinyin" class="toggle-switch toggle-compact${Store.clozeShowPinyin ? ' on' : ''}"
               role="switch" aria-checked="${Store.clozeShowPinyin}" aria-labelledby="cloze-pinyin-label"></button>
           </div>
+          <button type="button" class="speak-btn" aria-label="${t('listenSentence')}">🔊</button>
         </div>
         <div class="cloze-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5">${Store.clozeShowPinyin
           ? Pinyin.htmlSentence(sentence, { blank: feedback ? '' : blank, highlight: feedback ? blank : '' })

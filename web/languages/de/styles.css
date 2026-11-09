@@ -514,8 +514,6 @@ html[data-theme="dark"] .wl-list.wl-list--wordlist .wl-row:active{background:rgb
 
 .cloze-tools .speak-btn{border:0;background:transparent;}
 .grammar-question{text-align:center;position:relative;padding-top:20px;}
-.grammar-card-tools{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
-.grammar-card-tools .speak-btn{border:0;background:none;color:var(--accent);font-size:20px;}
 .grammar-prompt{font-size:14px;color:var(--muted);line-height:1.5;}
 .simple-form-note{display:block;font-size:12px;margin-top:4px;}
 .grammar-target{display:flex;align-items:center;justify-content:center;gap:12px;margin:16px 0 8px;flex-wrap:wrap;}
@@ -618,7 +616,7 @@ main:has(.quiz-next-bar){padding-bottom:calc(140px + var(--safe-b));}
 .nominal-question-wrap .grammar-question{scroll-margin-top:72px}
 
 /* German noun articles use the requested light pastel palette in every theme. */
-:root{--article-der:#acd6bd;--article-die:#e5c099;--article-das:#a1bfe3}
+:root{--article-der:#a1bfe3;--article-die:#e5c099;--article-das:#acd6bd}
 :root .noun-article.masculine{color:var(--article-der)}
 :root .noun-article.feminine,:root .noun-article.plural{color:var(--article-die)}
 :root .noun-article.neuter{color:var(--article-das)}

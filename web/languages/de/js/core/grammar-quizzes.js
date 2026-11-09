@@ -2,6 +2,22 @@ import {formAlternatives,finiteVerbAlternatives} from './form-alternatives.js';
 import {nounArticles} from './vocabulary-tests.js';
 export const PERSONS=['ich','du','er','wir','ihr','sie'];
 export const personLabel=person=>person==='er'?'er / sie / es':person==='sie'?'sie / Sie':person;
+const koreanPersons={
+ ich:'1인칭 단수',
+ du:'2인칭 단수',
+ er:'3인칭 단수',
+ wir:'1인칭 복수',
+ ihr:'2인칭 복수',
+ sie:'3인칭 복수 / 존칭',
+};
+export function localizedPersonLabel(person,locale,withPronoun=false){
+ const pronoun=personLabel(person);
+ const label=koreanPersons[person];
+ if(locale!=='ko'||!label)return pronoun;
+ if(!withPronoun)return label;
+ if(person==='sie')return '3인칭 복수 (sie) / 존칭 (Sie)';
+ return label+' ('+pronoun+')';
+}
 export const VERB_FORMS=['praesens','praeteritum','perfekt','plusquamperfekt','futur_i','futur_ii','konjunktiv_ii'];
 export const tenseLabel=tense=>({praesens:'Präsens',praeteritum:'Präteritum',perfekt:'Perfekt',plusquamperfekt:'Plusquamperfekt',futur_i:'Futur I',futur_ii:'Futur II',konjunktiv_ii:'Konjunktiv II'}[tense]);
 const futureAuxiliary={ich:'werde',du:'wirst',er:'wird',wir:'werden',ihr:'werdet',sie:'werden'};

@@ -4,7 +4,7 @@ import { LISTENING_MODES } from './quiz-modes.js';
 import { wordType } from './dictionary.js';
 export const wrongMode=row=>row.quizMode||row.stage;
 export { wrongAnswerCount } from './wrong-count.js';
-export const filterWrongEntries=(rows,{level='all',pos='all',mode='all'}={})=>rows.filter(row=>(level==='all'||row.unit.level===level)&&(pos==='all'||row.type===pos)&&(mode==='all'||wrongMode(row)===mode));
+export const filterWrongEntries=(rows,{level='all',pos='all',mode='all',status='all'}={})=>rows.filter(row=>(level==='all'||row.unit.level===level)&&(pos==='all'||row.type===pos)&&(mode==='all'||wrongMode(row)===mode)&&(status==='all'||row.studyStatus===status));
 export function wrongEntries(units, state, words=[]) {
   const byId=new Map(words.map(w=>[w.id,w]));
   const rows = [];

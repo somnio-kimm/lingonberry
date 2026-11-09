@@ -1,5 +1,5 @@
 import { studyLevelLabel } from '../app-definition.js';
-import { personLabel,tenseLabel } from '../core/grammar-quizzes.js';
+import { personLabel,localizedPersonLabel,tenseLabel } from '../core/grammar-quizzes.js';
 import { NOMINAL_MODES,caseLabel,patternLabel } from '../core/nominal-grammar.js';
 import { LISTENING_MODES } from '../core/listening-tests.js';
 import { stopMedia } from '../core/media.js';
@@ -11,14 +11,14 @@ import { reviewCatalog,reviewItems,createRetestSession,modeLabels } from '../cor
 import { tokenDifferences,clozeStart } from '../core/wrong-detail.js';
 import { wordHeading } from '../core/words.js';
 import { types } from '../core/word-types.js';
-import { createStudyControls, typeLabel } from './study-components.js';
+import { createStudyControls, statusLabel, typeLabel } from './study-components.js';
 function vocabReview(row){
  return vocabularyReview({mode:row.quizMode,question:row.questionSnapshot,word:row.word,locale:getLocale(),prompt:row.grammarPrompt,example:row.example,questionLocale:row.question.id.match(/:(en|ko)$/)?.[1],correctAnswer:row.question.answer,userAnswer:row.attempt.input});
 }
 function formDetails(row) {
  const original=row.questionSnapshot||{},context={...row.questionContext,...original},word=original.word||row.word;
  const verb=row.quizMode==='verbforms';
- const conditions=verb?[tenseLabel(context.tense),context.person?personLabel(context.person):'']:[context.case?t(caseLabel(context.case)):'',context.number?t(context.number==='plural'?'Plural':'Singular'):'',context.pattern?t(patternLabel(context.pattern)):''];
+ const conditions=verb?[context.tense?t(tenseLabel(context.tense)):'',context.person?localizedPersonLabel(context.person,getLocale()):'']:[context.case?t(caseLabel(context.case)):'',context.number?t(context.number==='plural'?'Plural':'Singular'):'',context.pattern?t(patternLabel(context.pattern)):''];
  const condition=e(conditions.filter(Boolean).join(' · ')||row.grammarPrompt||t('Original question not available.'));
  const base=row.quizMode==='adjendings'&&original.noun?wordHeading({...original.noun,pos:'noun'}):row.quizMode==='cases'?e(original.base)||(word?wordHeading(word):'—'):e(word?.infinitive||word?.lemma||'—');
  const blank=`<span class='wrong-test-slot wrong-test-blank' role='img' aria-label='${t('Missing word')}'></span>`;
@@ -42,7 +42,7 @@ function details(row,wordsById) {
   const sentence=row.example.de,start=clozeStart(row);
   condition=`<div class='wrong-question' lang='de'>${start>=0?`${e(sentence.slice(0,start))}<span class='wrong-test-slot wrong-test-blank' role='img' aria-label='${t('Missing word')}'></span>${e(sentence.slice(start+q.answer.length))}`:e(sentence)}</div>`;
  }else if(mode==='scramble'){correct=marked(diff.expected);input=marked(diff.actual,true)||'—';}
- else if(mode==='articles'){condition=`<div class='wrong-question' lang='de'><span class='wrong-test-slot'>der / die / das</span> ${e(row.word?.lemma||row.example.de)}</div>`;correct=marked(diff.expected);input=marked(diff.actual,true)||'—';}
+ else if(mode==='articles'){condition=`<div class='wrong-question' lang='de'><span class='wrong-test-slot wrong-test-blank' role='img' aria-label='${t('Missing word')}'></span> ${e(row.word?.lemma||row.example.de)}</div>`;correct=marked(diff.expected);input=marked(diff.actual,true)||'—';}
  else if(mode==='vocabmeaning'||mode==='vocabinput'){
   if(mode==='vocabmeaning'){const selected=localizedReviewAnswer(vocabReview(row),getLocale(),id=>wordsById.get(id));input=`<del class='wrong-token'>${e(selected.text)||'—'}</del>`;answerLang=selected.locale||getLocale();}
   return `<p class='wrong-user-line wrong-answer-row wrong-only'><span class='wrong-answer-label'>${t('Wrong answer')}:</span> <span class='wrong-answer-value--wrong' lang='${answerLang}'>${input}</span></p>`;
@@ -57,13 +57,13 @@ export function renderWrong(el,ctx) {
  const nounWord=row=>row.quizMode==='adjendings'&&row.questionSnapshot?.noun?{...wordsById.get(row.questionSnapshot.noun.id),...row.questionSnapshot.noun,pos:'noun'}:null;
  const nounMarkup=(row,index)=>{const noun=nounWord(row);return noun?`<button type='button' class='wrong-word-block wrong-noun-block' data-open-noun='${index}' aria-label='${t('Word details')}: ${e(noun.lemma)}'><span class='wrong-main-word' lang='de'>${wordHeading(noun)}</span><span class='wrong-word-meaning' lang='${getLocale()}'>${e(wordMeaning(noun))}</span></button>`:'';};
 
- const filters=ctx.wrongFilters||={level:ctx.store.state.preferences.studyLevel,pos:'all',mode:'all',open:false};
+ const filters=ctx.wrongFilters||={level:ctx.store.state.preferences.studyLevel,pos:'all',mode:'all',status:'all',open:false};
  if(!ctx.catalog.levels.some(row=>row.id===filters.level))filters.level=ctx.store.state.preferences.studyLevel;
  let catalog;
  function draw(){
-  stopMedia();const all=wrongEntries(ctx.units,ctx.store.state,ctx.words),rows=filterWrongEntries(all,filters),review=reviewItems(rows,catalog||(catalog=reviewCatalog(ctx.words,all)));
-  const groups=[['level',t('Study level'),ctx.catalog.levels.map(l=>l.id)],['pos',t('Part of speech'),['all',...new Set(all.map(r=>r.type))]],['mode',t('Exercise type'),['all',...Object.keys(modeLabels).filter(mode=>mode===filters.mode||all.some(r=>wrongMode(r)===mode))]]];
-  const label=(key,id)=>id==='all'?t('All'):key==='level'?studyLevelLabel(id):key==='mode'?t(modeLabels[id]):t(types[id]||{saved:'Saved exercise',other:'Other'}[id]||id);
+  stopMedia();const all=wrongEntries(ctx.units,ctx.store.state,ctx.words).map(row=>({...row,studyStatus:ctx.store.wordStatus(row.word?.id||row.wordId)})),rows=filterWrongEntries(all,filters),review=reviewItems(rows,catalog||(catalog=reviewCatalog(ctx.words,all)));
+  const groups=[['level',t('Study level'),ctx.catalog.levels.map(l=>l.id)],['pos',t('Part of speech'),['all',...new Set(all.map(r=>r.type))]],['mode',t('Exercise type'),['all',...Object.keys(modeLabels).filter(mode=>mode===filters.mode||all.some(r=>wrongMode(r)===mode))]],['status',t('Study status'),['all','new','learning','mastered']]];
+  const label=(key,id)=>id==='all'?t('All'):key==='level'?studyLevelLabel(id):key==='mode'?t(modeLabels[id]):key==='status'?statusLabel(id):t(types[id]||{saved:'Saved exercise',other:'Other'}[id]||id);
   const counts=(key,id)=>filterWrongEntries(all,{...filters,[key]:id}).length;
   const filterMarkup=all.length?`<details class='filter-fold filter-fold--combined wrong-filter-panel' ${filters.open?'open':''}><summary class='filter-fold-sum filter-fold-sum--combined'><div class='filter-fold-sum-head'><span class='filter-fold-k filter-fold-k--panel'>${t('Filters')}</span></div><div class='filter-fold-sum-picks'>${groups.map(([key,title])=>`<span class='filter-fold-pick-l'>${title}</span><span class='filter-fold-pick-v'>${e(label(key,filters[key]))} (${counts(key,filters[key])})</span>`).join('')}</div></summary><div class='filter-fold-body filter-fold-split'>${groups.map(([key,title,ids],i)=>`${i?`<div class='filter-split-divider'></div>`:''}<div class='filter-split-head'>${title}</div><div class='wl-filter-row'>${ids.map(id=>`<button class='wl-filter ${filters[key]===id?'active':''}' data-wrong-filter='${key}' data-value='${e(id)}' aria-pressed='${filters[key]===id}'>${e(label(key,id))} (${counts(key,id)})</button>`).join('')}</div>`).join('')}</div></details>`:'';
   el.innerHTML=`<div class='wrong-heading'><h2>${t('Review')} (${rows.length}${rows.length!==all.length?' / '+all.length:''})</h2>${all.length?`<button class='text-button danger wrong-clear' id='clear-wrong'>${t('Clear all')}</button>`:''}</div>${filterMarkup}${all.length?`<button class='primary wrong-retest' id='retest-filtered' ${review.items.length?'':'disabled'}>${t('Re-test')} (${review.items.length})</button>${review.unavailable.length?`<p class='muted'>${review.unavailable.length} · ${t('Saved questions no longer available for re-test.')}</p>`:''}`:''}<div class='wrong-results'>${!rows.length?`<section class='panel empty-wrong'><div aria-hidden='true'>${all.length?'🔎':'🎉'}</div><h2>${t(all.length?'No mistakes match these filters.':'No wrong answers yet')}</h2><p>${t(all.length?'Choose different filters to see your saved mistakes.':'Your quiz mistakes appear here for review.')}</p></section>`:rows.map((row,i)=>`<section class='panel wrong-entry' data-wrong-id='${e(row.question.id)}' ${detailWord(row)?`data-open-word='${i}' tabindex='0' role='button'`:''}><div class='wrong-card-heading'><div class='wrong-card-tags'><span class='badge wrong-mode'>${t(modeLabels[wrongMode(row)])}</span>${row.word?`<span class='badge wrong-pos'>${e(typeLabel(row.word))}</span>`:''}<span class='badge wrong-level'>${e(studyLevelLabel(row.unit.level))}</span></div><div class='wrong-card-actions'><span class='wrong-count'>${t('Wrong attempts')}: ${row.wrongCount??1}</span><button class='text-button danger dismiss-wrong' data-dismiss='${i}' aria-label='${t('Remove this mistake')}'>×</button></div></div>${row.word?`<div class='wrong-word-block'><h2 class='wrong-main-word' lang='de'>${wordHeading(row.word)}</h2><p class='wrong-word-meaning' lang='${getLocale()}'>${e((['vocabinput','vocabmeaning'].includes(row.quizMode)?vocabReview(row).meaning:wordMeaning(row.word))||t('Translation not available.'))}</p></div>`:['vocabinput','vocabmeaning'].includes(row.quizMode)?`<h2 class='wrong-main-word' lang='de'>${e(vocabReview(row).word||t(row.question.prompt))}</h2><p class='wrong-word-meaning' lang='${getLocale()}'>${e(vocabReview(row).meaning||t('Translation not available.'))}</p>`:`<h2 class='wrong-main-word'>${e(row.quizMode?t(row.question.prompt):row.question.prompt)}</h2>`}${nounMarkup(row,i)}<div class="review-answer-details">${details(row,wordsById)}</div></section>`).join('')}</div>`;
