@@ -19,7 +19,7 @@ export function renderVocabularyTest(el, mode, session = {}) {
   function next() {
     if (!alive) return;
     if(session.question)question=session.question;
-    else {const filtered=filterByStudyStatus(filterByPosTag(pool,pos),status),signature=Store.uiLang+':'+filtered.map(w=>w.id).join('|');if(signature!==poolSignature){preparedPool=createVocabularyPool(mode,filtered,Store.uiLang);poolSignature=signature;}question=preparedPool.choose(question?.id);}
+    else {const filtered=filterByStudyStatus(filterByPosTag(pool,pos),status),signature=Store.uiLang+':'+filtered.map(w=>w.id).join('|');if(signature!==poolSignature){preparedPool=createVocabularyPool(mode,filtered,Store.uiLang,'vocabulary',{meaningWords:Store.words});poolSignature=signature;}question=preparedPool.choose(question?.id);}
     input = ''; feedback = ''; draw();
   }
   function submit(value = input) {

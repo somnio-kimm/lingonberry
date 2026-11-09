@@ -66,6 +66,7 @@ export function validatePackage(value, expected) {
       if(entry.level!==undefined)text(entry.level,'level',40);
       const strings=(values,name)=>{requireValue(Array.isArray(values)&&values.length<=100,name);values.forEach(value=>text(value,name,200));};
       if(entry.aliases!==undefined)strings(entry.aliases,'aliases');
+      if(entry.listeningAliases!==undefined){strings(entry.listeningAliases,'listening aliases');requireValue(new Set(entry.listeningAliases).size===entry.listeningAliases.length&&entry.listeningAliases.every(alias=>entry.aliases?.includes(alias)),'listening aliases must be unique search aliases');}
       if(entry.tags!==undefined)strings(entry.tags,'tags');
       if(entry.grammar!==undefined){object(entry.grammar,'grammar');if(entry.grammar.acceptedArticles!==undefined)strings(entry.grammar.acceptedArticles,'accepted articles');if(entry.grammar.studyTier!==undefined)text(entry.grammar.studyTier,'study tier',80);}
       for (const name of ['article', 'pronunciation']) {
@@ -75,6 +76,8 @@ export function validatePackage(value, expected) {
       if (entry.example !== undefined) {
         object(entry.example, 'example');
         text(entry.example.text, 'example text');
+        if(entry.example.practiceEligible!==undefined)requireValue(typeof entry.example.practiceEligible==='boolean','example practice eligibility');
+        if(entry.example.clozeEligible!==undefined)requireValue(typeof entry.example.clozeEligible==='boolean','example cloze eligibility');
         requireValue(entry.example.translations === undefined, 'example translations belong in explanation packs');
       }
     }

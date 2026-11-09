@@ -11,7 +11,7 @@ export function createListeningEngine({language,spokenWord=vocabularyWord,wordAn
     prompt:'Listen and type the word.',spokenText:spokenWord(word),answer:lemma,acceptedAnswers:wordAnswers(allWords,word),
     example:{de:spokenWord(word),en:vocabularyMeaning(word,'en'),ko:vocabularyMeaning(word,'ko')}}];
    return (word.sentences||word.examples||[]).flatMap((sentence,i)=>{
-    const text=sentence.hanzi||sentence.de;if(!text?.trim())return [];
+    const text=sentence.hanzi||sentence.de;if(sentence.practiceEligible===false||!text?.trim())return [];
     return [{mode,id:word.id+':sentence:'+i+':'+locale,word,locale,language,kind:'sentence',
      prompt:'Listen and type the sentence.',spokenText:text,answer:text,acceptedAnswers:[text],sentence:{...sentence},
      example:{de:text,en:sentence.meaningEn||sentence.en||'',ko:sentence.meaningKo||sentence.ko||''}}];
