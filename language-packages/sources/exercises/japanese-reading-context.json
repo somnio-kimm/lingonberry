@@ -1,0 +1,22 @@
+{
+  "ja-ex-reading-school": {
+    "prompt": "弟は［学校］へ歩いて行く。",
+    "en": "My younger brother walks to school.",
+    "ko": "남동생은 학교에 걸어서 간다."
+  },
+  "ja-ex-reading-train": {
+    "prompt": "次の［電車］を待とう。",
+    "en": "Let's wait for the next train.",
+    "ko": "다음 전철을 기다리자."
+  },
+  "ja-ex-reading-adult": {
+    "prompt": "子供ではなく、もう［大人］だ。",
+    "en": "I'm no longer a child. I'm an adult now.",
+    "ko": "이제 아이가 아니라 어른이다."
+  },
+  "ja-ex-reading-milk": {
+    "prompt": "冷たい［牛乳］をコップに注ぐ。",
+    "en": "Pour the cold milk into a glass.",
+    "ko": "차가운 우유를 컵에 붓는다."
+  }
+}

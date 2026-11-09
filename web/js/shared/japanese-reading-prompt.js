@@ -11,3 +11,12 @@ export function japaneseReadingPrompt(word,prompt){
  const focus=lemma&&text?findSentenceFocus({...word,lemma},{text},'ja'):null;
  return focus?.text===lemma?{prompt:text,readingFocus:focus}:{prompt:lemma,readingFocus:{start:0,text:lemma}};
 }
+
+/** Use a translation only when it belongs to the sentence being displayed. */
+export function japaneseReadingContext(word,prompt,curatedContext=''){
+ const lemma=(word.lemma||word.word||'').normalize('NFC');
+ if (prompt===lemma) return word.studyMeaning||'';
+ const example=word.examples?.find(item=>item.text?.normalize('NFC').trim()===prompt);
+ if (example?.studyTranslation?.trim()) return example.studyTranslation;
+ return curatedContext===word.studyMeaning?'':curatedContext;
+}
