@@ -14,16 +14,17 @@ const $=id=>document.getElementById(id),root=$('shell'),main=$('app'),tabs=$('ma
 const settingsKey='learn-language.preferences.v1';
 let saved={};try{saved=JSON.parse(localStorage.getItem(settingsKey)||'{}')||{};}catch{}
 let target=typeof saved.target==='string'?saved.target:'',explanation=typeof saved.explanation==='string'?saved.explanation:'';
-let {theme,uiLanguage:explicitUi,hapticEnabled,autoRemoveResolvedWrongs}=readAppSettings(localStorage,saved);
-const sharedSettings=()=>({theme,uiLanguage:explicitUi,hapticEnabled,autoRemoveResolvedWrongs});
-const uiLanguage=()=>explicitUi,label=()=>interfaceText(uiLanguage());
+let {theme,hapticEnabled,autoRemoveResolvedWrongs}=readAppSettings(localStorage,saved);
+const uiLanguage=()=>explanation==='ko'?'ko':'en';
+const sharedSettings=()=>({theme,uiLanguage:uiLanguage(),hapticEnabled,autoRemoveResolvedWrongs});
+const label=()=>interfaceText(uiLanguage());
 function languageName(id,bilingual=false){const locale=uiLanguage()==='en'?'en-GB':uiLanguage(),name=new Intl.DisplayNames([bilingual?'en-GB':locale],{type:'language'}).of(id);if(!bilingual)return name;const native=id==='fr'?'Français':new Intl.DisplayNames([id],{type:'language'}).of(id);return native===name?name:`${name} · ${native}`;}
 function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,explanation,...sharedSettings()}));}catch{}}
 const manager=createPackageManager({storage:createPackageStorage(),baseUrl:location.href}),presentations=new Map();
 let catalog=[],records=[],current=null,phase='idle',route='home',adapter,cleanup=()=>{},operation=0,drawToken=0;
 let packageTarget='',packageController=null,packageProgress=null,packageMessage='',selectionMessage='';
 const usablePairs=()=>installedPairs(records).filter(item=>presentationDefinitions[item.targetLanguage]&&allowsExplanation(item.targetLanguage,item.explanationLanguage));
-function preferences(value){({theme,uiLanguage:explicitUi,hapticEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
+function preferences(value){({theme,hapticEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
 async function presentation(id){if(!presentations.has(id)){const definition=presentationDefinitions[id];if(!definition)throw new Error('Unsupported study language.');const module=await definition.load();presentations.set(id,module.createPresentation({language:id,navigate,refresh:()=>draw(),onPreferences:preferences}));}return presentations.get(id);}
 function navigate(next){if(next!=='packages'&&!adapter?.screens[next])return;if(!current&&!['home','wrong','settings','packages'].includes(next))return;route=next;main.scrollTop=0;draw();window.scrollTo(0,0);}
 function updateChrome(){
