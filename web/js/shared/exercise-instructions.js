@@ -525,6 +525,10 @@ export const EXERCISE_INSTRUCTIONS = [
     "ko": "빈칸에 들어갈 표현을 순서대로 선택하세요."
   },
   {
+    "en": "Complete the expression.",
+    "ko": "표현을 완성하세요."
+  },
+  {
     "en": "Te Form",
     "ko": "て형"
   },

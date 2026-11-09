@@ -24,9 +24,15 @@ test('current English downloads bind each explanation to its own core and preser
   const core=await json(coreDescriptor.url.slice(1)),pair=await json(descriptor.url.slice(1));
   validateExplanation(core,pair);
   const primary=core.entries.filter(row=>row.example),byId=new Map(pair.entries.map(row=>[row.id,row]));
-  assert.equal(core.entries.length,core.contentReview.entries);
-  assert.equal(core.entries.length-primary.length,core.contentReview.examplesPending);
-  assert.equal(core.contentReview.completionReview.fullCoverage,true);
+  if(core.contentReview.sourceAndSenseReviewComplete){
+   assert.equal(core.contentReview.bilingualExamples,core.entries.length);
+   assert.equal(core.contentReview.perSenseLevels,true);
+   assert.equal(primary.length,core.entries.length);
+  }else{
+   assert.equal(core.entries.length,core.contentReview.entries);
+   assert.equal(core.entries.length-primary.length,core.contentReview.examplesPending);
+   assert.equal(core.contentReview.completionReview.fullCoverage,true);
+  }
   if(core.contentReview.vocabularyExpansion){
    assert.equal(locale,'en');
    assert.equal(new Set(core.entries.map(row=>row.word.normalize('NFKC').trim().toLowerCase())).size,20000+(core.contentReview.phraseExpansion?.entries||0));
@@ -57,7 +63,7 @@ test('current English downloads bind each explanation to its own core and preser
    }
   }else assert.equal(primary.length,core.entries.length);
   const words=studyWords(assembleStudy(core,pair)).filter(word=>word.examples.length),engine=createSentenceEngine(studyProfiles.en);
-  assert.equal(new Set(engine.createSentencePool('scramble',words,locale).all(()=>.3).map(row=>row.word.id)).size,primary.length);
+  assert.equal(new Set(engine.createSentencePool('scramble',words,locale).all(()=>.3).map(row=>row.word.id)).size,words.filter(word=>word.examples.some(example=>example.practiceEligible!==false)).length);
   for(const word of words){const example=selectWordExample(word,'en');assert.ok(example?.text?.trim(),word.id);assert.equal(example.text,word.examples[0].text);assert.ok(byId.get(word.id).exampleTranslation?.trim());if(locale==='en'){assert.equal(byId.get(word.id).exampleTranslation,example.text);assert.equal(example.studyTranslation,undefined);}else assert.equal(example.studyTranslation,byId.get(word.id).exampleTranslation);}
  }
 });

@@ -10,7 +10,8 @@ const json=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
 async function records(path){try{return (await readFile(new URL(path,root),'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse);}catch(error){if(error.code==='ENOENT')return [];throw error;}}
 const catalogue=await json('language-packages/catalog.json');
 for(const language of STUDY_LANGUAGES)test(`${language}: mutable authoring records retain valid IDs, focus and source attribution`,async()=>{
- const descriptor=catalogue.find(row=>row.id===language+'-core');
+ // English7 deliberately retires/consolidates old senses; these legacy authoring assets belong to the completed5.0 source edition.
+ const descriptor=language==='en'?catalogue.find(row=>row.id==='en-core'&&row.version==='5.0.0'):catalogue.find(row=>row.id===language+'-core');
  const core=await json(descriptor.url.slice(1)),entries=new Map(core.entries.map(row=>[row.id,row])),ids=new Set();
  const folder='language-packages/sources/examples/';
  async function resolveAuthoringEntry(row,kind){
