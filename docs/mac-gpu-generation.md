@@ -1,5 +1,9 @@
 # Full-corpus Mac GPU generation
 
+This workflow is retired. Current authoring and linguistic review use agents in the conversation. The local generation service has been stopped and removed, and the Qwen and TranslateGemma weights have been deleted. The agent worklist and progress files are under `local-data/coverage/english-agent-review/`. Earlier drafts remain candidate material.
+
+The following records the historical setup and must not be used to resume local inference.
+
 The target is every current entry and all 43 allowed explanation pairs. Work is queued for all seven languages together; batch size is a memory/throughput setting, not a content milestone.
 
 The verified host is an Apple M1 MacBook Pro with an 8-core GPU and 16 GB of unified memory. The local runtime is MLX 0.32.4 / MLX-LM 0.31.3. Model weights stay in `~/Library/Caches/LearnLanguage/models`, outside Git and Google Drive. Qwen3.5-9B-4bit is pinned to `8b2b98c00a6b4d291155e4890773ca8f769aee53` (Apache-2.0). The optional TranslateGemma 4B pilot is pinned to `5788ec08c047f3f2e17808101b8d9566ac930d58` under the Gemma terms; its observed quality was insufficient as a universal replacement, so it is disabled by default.

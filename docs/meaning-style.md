@@ -4,7 +4,29 @@ Use concise, sense-appropriate equivalents when Study Language differs from Expl
 
 English → English uses dictionary-style definitions. Do not replace an English word's English definition with that same word. Other same-language explanation packs are not currently offered.
 
-This rule applies to the shared meaning field, so Word List, word details, Flashcards, Meaning Quiz, Word Input, Review meanings and sense clues use the same content. Example sentences and their translations remain complete sentences. Display Language remains independent of Explanation Language.
+This rule applies to the shared meaning field, so Word List, word details, Flashcards, Meaning Quiz, Word Input, Review meanings and sense clues use the same content. Example sentences and their translations remain complete sentences. The interface follows Explanation Language where a matching interface translation is available. English is the fallback.
+
+## Separate senses and learning levels
+
+Each distinct meaning has its own stable entry ID, sense-appropriate learning level, part of speech, meaning and matching example. The same spelling can therefore have an everyday entry at a lower level and a specialist entry at an advanced level. Assess frequency, context and difficulty for each meaning, including the primary senses of existing entries. Preserve bundled meanings as separate records when splitting an entry.
+
+For English, include useful, established meanings through GRE-level usage. General academic, professional and literary vocabulary can be advanced and still useful. Do not add every historical, obsolete, one-off, family-specific or narrowly technical dictionary branch. A quotation proves occurrence; it does not by itself justify a study card. Exclude low-relevance minor senses explicitly while preserving their source/history records, and distinguish this decision from an unsupported-source finding. Recheck earlier additions against this scope before release.
+
+The English groups follow the user’s editorial difficulty convention: `IELTS 1.0–3.5` for foundations, `IELTS 4.0–6.5` for generally useful intermediate vocabulary, `IELTS 7.0–8.0` for SAT-style academic vocabulary, and `IELTS 8.5–9.0` for GRE-level precision and challenging advanced words. Standard advanced meanings such as corollary, obsequious, recalcitrant and perfunctory belong in the highest group rather than being displaced by obscure minor senses of easy words. Check the final highest group contains at least 1,000 distinct useful advanced headwords; do not meet the target by counting duplicate senses, inflections or low-relevance technical names. These groups do not claim official IELTS/SAT/GRE list membership or guaranteed exam scores.
+
+Prioritise useful modern collocations, phrasal verbs and expressions across the study levels, including conversational and academic usage. Check existing headwords and equivalent senses before adding a new record. Prefer a smaller useful inventory over inflated counts from rare variants, object substitutions or freely invented combinations. Every included expression needs a concise meaning and a natural, sense-specific example with its translation.
+
+A collocation need not have an opaque or idiomatic meaning. Established word partnerships such as **strong evidence**, **firm commitment** and **widespread concern** can be useful learning entries even when their meaning is predictable. Judge their established usage and value to a learner; do not reject them merely because an adjective modifies a noun. An arbitrary extra adjective or object does not create a new collocation. Inflection, article, pronoun and spelling variants should remain searchable under the existing expression. Distinct established lexical constructions can retain separate learning value even when their meanings are similar; do not merge all synonyms merely to reduce the inventory.
+
+Sense consolidation must preserve conventional common differences, not erase them with a vague abstraction. Closed-lips humming of a tune and a machine’s steady hum remain separate useful uses; educational and medical courses remain separate. Atomic and cell nuclei, literal metal welding and figurative social unity, or biologically restricted endemic range and ordinary persistent prevalence also need precise treatment. Consolidate only genuine paraphrases, forms and ordinary scenarios within one coherent meaning. A shared word, metaphor, generic label such as “set/process”, or equal difficulty does not by itself justify merging.
+
+Word List and Flashcards use these individual IDs and levels. Each meaning has its own card and learning progress. English self-explanations and Korean explanations cover the same sense IDs, with translations bound to that sense's example. Common-word spelling does not establish that every specialised meaning is easy. The independent level review must cover both existing primary senses and additional senses.
+
+Meaning Quiz distractors must be checked against all installed meanings of the prompt, including spelling aliases and senses outside the chosen level or study status. The shared vocabulary pool accepts the full inventory as `meaningWords`; only the filtered `words` supply questions and choices. This prevents another known meaning from being treated as a wrong answer without expanding the selected study pool. The index is cached by immutable inventory array and explanation language; replace the array when installing new content.
+
+Run `node --test tests/english-sense-entries.test.mjs` and `node scripts/verify-sense-cards-browser.mjs` to check separate rows, cards, examples and progress for a shared spelling at different levels.
+
+Search aliases may include inflections such as days for day. Reviewed packages use `listeningAliases` to list only independently verified spellings suitable for the same spoken prompt; an explicit empty list prevents search aliases from becoming Dictation answers. Older packages without that field keep their existing answer policy. Do not infer pronunciation equivalence from spelling or a suffix.
 
 ## Source and release process
 

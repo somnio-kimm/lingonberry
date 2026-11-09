@@ -1,6 +1,6 @@
 # One project folder
 
-Use `avocavocado` as the only active checkout. It is connected to
+Use `lingonberry` as the only active checkout. It is connected to
 `git@github.com:somnio-kimm/lingonberry.git`.
 
 The app is named Lingonberry and keeps its existing app ID and learner
