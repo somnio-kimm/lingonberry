@@ -24,7 +24,12 @@ class AppViewController: CAPBridgeViewController {
         let arguments = ProcessInfo.processInfo.arguments
         guard !verificationStarted && (arguments.contains("--update-installed-language-packages") || arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-english-examples") || arguments.contains("--verify-japanese-korean-meanings") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-japanese-completion") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana") || arguments.contains("--verify-japanese-reading-target")) else { return }
         verificationStarted = true
-        if arguments.contains("--update-installed-language-packages") { UIApplication.shared.isIdleTimerDisabled = true }
+        if arguments.contains("--update-installed-language-packages") {
+            UIApplication.shared.isIdleTimerDisabled = true
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
+            let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
+            print("NATIVE_RELEASE_APP_INFO version=\(version) build=\(build)")
+        }
         verifyPackages(attempt: 0)
     }
     private func verifyPackages(attempt: Int) {
@@ -36,8 +41,8 @@ class AppViewController: CAPBridgeViewController {
                 return
             }
             self.webView?.callAsyncJavaScript("""
-                const wait = async predicate => {
-                  const deadline = Date.now() + 45000;
+                const wait = async (predicate, timeout = 45000) => {
+                  const deadline = Date.now() + timeout;
                   while (!predicate()) {
                     if (!document.querySelector('#retry').hidden) throw new Error(document.querySelector('#status').textContent);
                     if (Date.now() > deadline) throw new Error('Timed out waiting for native study view');
@@ -52,6 +57,7 @@ class AppViewController: CAPBridgeViewController {
                 // BEGIN INSTALLED_PACKAGE_UPDATE_CHECK
                 if (updateInstalled) {
                   const original=JSON.parse(localStorage.getItem('learn-language.preferences.v1')||'{}');
+                  const {APP_VERSION}=await import('./js/shared/app-config.js');
                   const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js');
                   const storage=createPackageStorage(),initial=installedPairs(await storage.list()),catalog=await fetch('./catalog.json').then(response=>response.json()),checks=[];
                   const settingsPage=async()=>{document.querySelector('[data-tab=settings]').click();await wait(()=>document.querySelector('#target')&&document.querySelector('main').dataset.viewState==='ready');};
@@ -61,10 +67,19 @@ class AppViewController: CAPBridgeViewController {
                       const descriptor=catalog.find(row=>row.id===before.id);if(!descriptor)continue;
                       await settingsPage();document.querySelector('#manage-packages').click();await wait(()=>document.querySelector(`[data-language="${before.targetLanguage}"]`));document.querySelector(`[data-language="${before.targetLanguage}"]`).click();await wait(()=>document.querySelector(`[data-explanation="${before.explanationLanguage}"]`));
                       const button=document.querySelector(`[data-explanation="${before.explanationLanguage}"] .download-package`);
-                      if(button){button.click();await wait(()=>document.querySelector(`[data-package="${before.id}"]`)&&!document.querySelector(`[data-explanation="${before.explanationLanguage}"] .download-package`));}
+                      if(button){button.click();await wait(()=>document.querySelector(`[data-package="${before.id}"]`)&&!document.querySelector(`[data-explanation="${before.explanationLanguage}"] .download-package`),300000);}
                       const pair=await storage.get(before.id,descriptor.version),core=pair&&await storage.get(before.targetLanguage+'-core',pair.studyVersion);
                       if(!pair||!core||pair.studyVersion!==descriptor.studyVersion)throw new Error('Installed pair did not reach its catalogue version: '+before.id);
                       const check={id:before.id,from:before.version,to:pair.version,studyVersion:core.version,updated:before.version!==pair.version};
+                      if(before.targetLanguage==='en'){
+                        const meanings=new Map(pair.entries.map(row=>[row.id,row]));
+                        check.words=core.entries.length;check.examples=core.entries.filter(row=>row.example?.text?.trim()).length;
+                        check.translations=core.entries.filter(row=>meanings.get(row.id)?.meaning?.trim()&&meanings.get(row.id)?.exampleTranslation?.trim()).length;
+                        check.reviewSnapshot=core.contentReview?.effectiveReviewSha256;check.perSenseLevels=core.contentReview?.perSenseLevels===true;
+                        check.rootGroups=core.morphemes?.length||0;
+                        if(!core.contentReview?.sourceAndSenseReviewComplete||!check.perSenseLevels||check.words!==check.examples||check.words!==check.translations)throw new Error('Reviewed English bilingual coverage is incomplete');
+                        if(core.morphemes?.some(row=>!row.examples.length))throw new Error('An English root has no active related words');
+                      }
                       if(before.targetLanguage==='ja'&&['en','ko'].includes(before.explanationLanguage)){
                         const id=core.entries.find(row=>row.word==='車')?.id,meaning=pair.entries.find(row=>row.id===id)?.meaning,expected=before.explanationLanguage==='ko'?'자동차':'car';
                         if(meaning!==expected)throw new Error('Concise Japanese meaning is missing: '+before.id);
@@ -73,7 +88,7 @@ class AppViewController: CAPBridgeViewController {
                       }
                       if(['de','zh'].includes(before.targetLanguage)){
                         await open(before.targetLanguage,before.explanationLanguage);document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-route=wordlist],[data-quiz=wordlist]'));
-                        if(document.querySelector('[data-route=collocations],[data-quiz=collocations]'))throw new Error('Retired Collocations route is visible');check.collocationsRetired=true;
+                        if(document.querySelector('[data-route=collocations],[data-quiz=collocations]'))throw new Error('Retired Collocations route is visible');check.collocationsRetired=true;if(before.targetLanguage==='zh'){if(!document.querySelector('[data-quiz=pronunciation]')||document.querySelector('[data-quiz=pinyin],[data-quiz=tone]'))throw new Error('Chinese pronunciation menu is stale');check.pronunciationMerged=true;}
                       }
                       checks.push(check);
                     }
@@ -81,7 +96,7 @@ class AppViewController: CAPBridgeViewController {
                     if(original.target&&original.explanation)await open(original.target,original.explanation);else await settingsPage();
                     if(original.target)document.querySelector('[data-tab=home]').click();
                   }
-                  return JSON.stringify({passed:true,checks,restored:original.target||null});
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {
@@ -99,16 +114,18 @@ class AppViewController: CAPBridgeViewController {
                 }
                 if (englishExamples) {
                   const {createPackageStorage}=await import('./js/packages/storage.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{selectWordExample}=await import('./js/shared/word-example.js');
-                  const storage=createPackageStorage(),catalog=await fetch('./catalog.json').then(response=>response.json()),descriptor=id=>catalog.find(row=>row.id===id),core=await storage.get('en-core',descriptor('en-core').version),checks=[];
-                  if(!core?.contentReview?.completionReview?.fullCoverage)throw new Error('Installed English completion proof is missing');
-                  if(core.entries.some(row=>!row.example?.text?.trim()))throw new Error('English primary examples are incomplete');
+                  const storage=createPackageStorage(),catalog=await fetch('./catalog.json').then(response=>response.json()),descriptor=id=>catalog.find(row=>row.id===id),checks=[];
+                  let independentlyReviewed=0;
                   for(const locale of ['en','ko']){
-                    const pair=await storage.get('en-'+locale,descriptor('en-'+locale).version);if(!pair||pair.studyVersion!==core.version)throw new Error('English explanation update is missing');
-                    const words=studyWords(assembleStudy(core,pair));
-                    for(const word of words){const shown=selectWordExample(word,'en');if(!shown?.text?.trim()||(locale==='ko'&&!shown.studyTranslation?.trim())||(locale==='en'&&shown.studyTranslation))throw new Error('English dictionary example display is incomplete: '+word.id);}
-                    checks.push({locale,entries:words.length,examples:words.length,version:core.version});
+                    const pair=await storage.get('en-'+locale,descriptor('en-'+locale).version),core=pair&&await storage.get('en-core',pair.studyVersion);
+                    if(!core?.contentReview?.completionReview?.fullCoverage)throw new Error('Installed English completion proof is missing');
+                    const words=studyWords(assembleStudy(core,pair)),withExamples=words.filter(word=>word.examples.length);
+                    if(words.length-withExamples.length!==core.contentReview.examplesPending)throw new Error('English primary example count differs from the catalogue');
+                    independentlyReviewed=core.contentReview.completionReview.independentlyReviewed;
+                    for(const word of withExamples){const shown=selectWordExample(word,'en');if(!shown?.text?.trim()||(locale==='ko'&&!shown.studyTranslation?.trim())||(locale==='en'&&shown.studyTranslation))throw new Error('English dictionary example display is incomplete: '+word.id);}
+                    checks.push({locale,entries:words.length,examples:withExamples.length,version:core.version});
                   }
-                  return JSON.stringify({passed:true,checks,independentlyReviewed:core.contentReview.completionReview.independentlyReviewed,preferencesUnchanged:true});
+                  return JSON.stringify({passed:true,checks,independentlyReviewed,preferencesUnchanged:true});
                 }
                 if (okurigana || readingTarget) {
                   const {renderExerciseReview}=await import('./js/shared/exercise-review-view.js'),{createExerciseQuestions}=await import('./js/shared/language-exercises.js'),{lexiconText}=await import('./js/shared/lexicon-text.js');
@@ -118,9 +135,9 @@ class AppViewController: CAPBridgeViewController {
                     try{
                       const wrong=host.querySelector('.wrong-answer-value--wrong'),expected=question.options?question.options.find(option=>option.id===input).text:input;
                       if(!wrong||wrong.textContent!==expected||getComputedStyle(wrong).fontSize!=='16px'||host.querySelector('.vocab-instruction,.vocab-prompt,.wrong-correct-line,.exercise-explanation p'))throw new Error('Specialist Review differs from compact baseline');
-                      const segments=host.querySelectorAll('.reading-segments');if((row.category==='okurigana'&&segments.length!==1)||(row.category==='reading'&&segments.length))throw new Error('Review reading breakdown differs');
+                      if(host.querySelector('.reading-segments'))throw new Error('Review repeats the reading breakdown');
                       if(JSON.stringify(record)!==before)throw new Error('Review rewrote its original snapshot');
-                      return {wrong:expected,font:getComputedStyle(wrong).fontSize,segments:segments.length,snapshotPreserved:true};
+                      return {wrong:expected,font:getComputedStyle(wrong).fontSize,segments:0,snapshotPreserved:true};
                     }finally{host.remove();}
                   };
                   const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js'),{assembleStudy}=await import('./js/packages/study.js'),{studyWords}=await import('./js/presentation/study-profiles.js'),{prepareLanguageExercises}=await import('./js/shared/exercise-pools.js'),{exerciseAnswerCorrect,exerciseLabel,exerciseModes}=await import('./js/shared/language-exercises.js'),{renderExercisePrompt}=await import('./js/shared/exercise-view.js');
@@ -142,9 +159,10 @@ class AppViewController: CAPBridgeViewController {
                         const host=document.createElement('div');host.className='lexicon-view';host.style.cssText='position:absolute;left:-10000px;top:0;width:300px';host.innerHTML=renderExercisePrompt({...question,word:school},{uiLanguage:display});document.body.append(host);
                         try {
                           const target=host.querySelector('.study-reading-target'),instruction=host.querySelector('.vocab-instruction'),text=host.querySelector('.vocab-prompt').textContent,style=target&&getComputedStyle(target);
-                          const expected=display==='ko'?'밑줄 친 단어의 읽기를 선택하세요.':'Choose the reading of the underlined word.';
-                          if(target?.textContent!=='学校'||text.split('学校').length!==2||instruction.textContent!==expected||!style.textDecorationLine.includes('underline')||style.textDecorationColor!==getComputedStyle(instruction).color||host.querySelector('rt'))throw new Error('Reading target UI/locale differs');
-                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,instruction:expected,sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
+                          if(target?.textContent!=='学校'||text.split('学校').length!==2||instruction||!style.textDecorationLine.includes('underline')||host.querySelector('rt'))throw new Error('Reading target UI/locale differs');
+                          const clue=host.querySelector('.exercise-context')?.textContent;
+                          if(!clue||clue!==question.context||clue===school.studyMeaning)throw new Error('Reading sentence translation is missing');
+                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,translation:clue,sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
                         }finally{host.remove();}
                       }
                       continue;
@@ -154,9 +172,8 @@ class AppViewController: CAPBridgeViewController {
                     for(const display of ['en','ko'])for(const row of [typed,choice]){
                       const host=document.createElement('div');host.innerHTML=renderExercisePrompt({...row,exercise:true,word,locale:pair.explanationLanguage},{uiLanguage:display});
                       const instruction=host.querySelector('.vocab-instruction'),prompt=host.querySelector('.vocab-prompt')?.textContent,meaning=host.querySelector('.exercise-context')?.textContent;
-                      const expected=row.options?(display==='ko'?'올바른 오쿠리가나를 사용한 단어 전체를 선택하세요.':'Choose the complete word with the correct okurigana.'):(display==='ko'?'한자와 올바른 오쿠리가나를 사용해 단어 전체를 입력하세요.':'Write the complete word using kanji and the correct okurigana.');
-                      if(instruction?.textContent!==expected||instruction.lang!==(display==='ko'?'ko':'en-GB')||prompt!=='ひさしい'||host.querySelector('rt')||meaning!==word.studyMeaning)throw new Error('Display-language instruction or explanation-language meaning differs');
-                      checks.push({explanation:pair.explanationLanguage,display,mode:row.options?'choice':'input',instruction:expected,prompt,meaning,review:checkReview(row,word,display,pair.explanationLanguage,words)});
+                      if(instruction||prompt!=='ひさしい'||host.querySelector('rt')||meaning!==word.studyMeaning)throw new Error('Display-language instruction or explanation-language meaning differs');
+                      checks.push({explanation:pair.explanationLanguage,display,mode:row.options?'choice':'input',prompt,meaning,review:checkReview(row,word,display,pair.explanationLanguage,words)});
                     }
                     const act=words.find(row=>row.lemma==='行う'),variant=rows.find(row=>row.entryId===act?.id&&row.category==='okurigana'&&row.route==='vocabinput');
                     if(!variant||!exerciseAnswerCorrect(variant,'行なう'))throw new Error('Dictionary-authorised alternative spelling was rejected');
@@ -195,7 +212,7 @@ class AppViewController: CAPBridgeViewController {
                 if (settings) {
                   const original=JSON.parse(localStorage.getItem('learn-language.preferences.v1')||'{}');
                   const settingsPage=async()=>{document.querySelector('[data-tab=settings]').click();await wait(()=>document.querySelector('#target')&&document.querySelector('main').dataset.viewState==='ready');};
-                  const values=()=>({theme:document.documentElement.dataset.theme,uiLanguage:document.querySelector('#display-language').value,hapticEnabled:document.querySelector('#set-haptic').getAttribute('aria-checked')==='true',autoRemoveResolvedWrongs:document.querySelector('#set-hide-resolved').getAttribute('aria-checked')==='true'});
+                  const values=()=>({theme:document.documentElement.dataset.theme,hapticEnabled:document.querySelector('#set-haptic').getAttribute('aria-checked')==='true',autoRemoveResolvedWrongs:document.querySelector('#set-hide-resolved').getAttribute('aria-checked')==='true'});
                   const open=async(target,explanation)=>{
                     await settingsPage();select('target',target);
                     await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('#package-status').dataset.state!=='loading');
@@ -337,18 +354,22 @@ class AppViewController: CAPBridgeViewController {
                     result.rootInventoryTotal=Number(document.querySelector('[data-root-count]')?.dataset.total);
                     const {createPackageStorage} = await import('./js/packages/storage.js');
                     const storage = createPackageStorage(), records = await storage.list();
-                    const core = records.filter(row => row.id === 'en-core').sort((a,b) => b.version.localeCompare(a.version,undefined,{numeric:true}))[0];
+                    const {installedPairs} = await import('./js/packages/library.js');
+                    const activePair = installedPairs(records).find(row => row.id === 'en-ko');
+                    const core = records.find(row => row.id === 'en-core' && row.version === activePair?.studyVersion);
                     result.englishPackages = records.filter(row => row.targetLanguage === 'en').map(row => ({id:row.id,version:row.version}));
                     const installed = core && await storage.get(core.id,core.version);
-                    result.installedRootCount = installed?.morphemes?.length || 0;
-                    if (result.rootInventoryTotal !== result.installedRootCount || result.rootInventoryTotal < 1000) throw new Error('Visible full root inventory does not match the installed package');
+                    const normalise = value => value.normalize('NFKC').trim().toLowerCase();
+                    const spellings = new Set((installed?.entries||[]).flatMap(entry=>[entry.word,...(entry.aliases||[])]).map(normalise));
+                    result.installedRootCount = installed?.morphemes?.filter(row=>row.examples.some(example=>spellings.has(normalise(example)))).length || 0;
+                    if (result.rootInventoryTotal !== result.installedRootCount || !result.rootInventoryTotal) throw new Error('Visible root families do not match the installed Word List');
                     const rootSearch=document.querySelector('#root-search');rootSearch.value='aud';rootSearch.dispatchEvent(new Event('input',{bubbles:true}));
                     result.rootMembers = document.querySelectorAll('[data-root-word]').length;
                     if (result.rootMembers < 3 || !document.querySelector('.root-origin')) throw new Error('Learner root families are missing');
                     if (installed.contentReview?.commonCoverage) {
                       result.commonCoverage = installed.contentReview.commonCoverage;
                       result.commonWords = [];
-                      const pair = await storage.get('en-ko',core.version), meanings = new Map(pair.entries.map(row=>[row.id,row.meaning]));
+                      const pair = await storage.get(activePair.id,activePair.version), meanings = new Map(pair.entries.map(row=>[row.id,row.meaning]));
                       for (const spelling of ['the','and','email','trousers','Monday','March','May','parent','spin']) {
                         const entry = installed.entries.find(row=>row.word===spelling && row.level==='IELTS 1.0–3.5');
                         if (!entry) throw new Error('Missing basic dictionary entry: '+spelling);

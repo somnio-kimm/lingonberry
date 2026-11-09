@@ -5,6 +5,9 @@ import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
 const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8'),swift=await read('mobile/ios/App/App/AppViewController.swift');
 const script=swift.split('// BEGIN INSTALLED_PACKAGE_UPDATE_CHECK')[1].split('// END INSTALLED_PACKAGE_UPDATE_CHECK')[0];
+const currentCatalog=JSON.parse(await read('language-packages/catalog.json'));
+const currentJaCore=JSON.parse(await read(currentCatalog.find(row=>row.id==='ja-core').url.slice(1)));
+const expectedPairs=new Map(currentCatalog.filter(row=>row.kind==='explanation'&&row.targetLanguage==='ja').map(row=>[row.id,row]));
 const descriptors=[];for(const id of ['ja-core','ja-en','ja-ko']){const url=`/language-packages/${id}-4.4.0.json`,text=await read(url.slice(1)),data=JSON.parse(text);descriptors.push({id,kind:data.kind,targetLanguage:'ja',version:data.version,...(data.kind==='explanation'?{explanationLanguage:data.explanationLanguage,studyVersion:data.studyVersion}:{}),url,bytes:Buffer.byteLength(text),sha256:createHash('sha256').update(text).digest('hex')});}
 const server=await startServer();let browser;
 try{
@@ -20,7 +23,7 @@ try{
   const select=(id,value)=>{const node=document.getElementById(id);node.value=value;node.dispatchEvent(new Event('change',{bubbles:true}));};
   const AsyncFunction=Object.getPrototypeOf(async function(){}).constructor;return JSON.parse(await new AsyncFunction('wait','select','updateInstalled',script)(wait,select,true));
  },script);
- const first=await run();assert.equal(first.passed,true);assert.equal(first.restored,'ja');assert.deepEqual(first.checks.map(row=>row.id).sort(),['ja-en','ja-ko']);assert.ok(first.checks.every(row=>row.to==='4.5.0'&&row.studyVersion==='4.4.0'&&row.updated&&row.words===12027&&row.examples===12027&&row.translations===12027));assert.equal(requests.filter(url=>url.includes('/ja-core-')).length,0);
+ const first=await run();assert.equal(first.webVersion,JSON.parse(await read('package.json')).version);assert.equal(first.passed,true);assert.equal(first.restored,'ja');assert.deepEqual(first.checks.map(row=>row.id).sort(),['ja-en','ja-ko']);assert.ok(first.checks.every(row=>row.to===expectedPairs.get(row.id).version&&row.studyVersion===expectedPairs.get(row.id).studyVersion&&row.updated&&row.words===currentJaCore.entries.length&&row.examples===currentJaCore.entries.length&&row.translations===currentJaCore.entries.length));assert.equal(requests.filter(url=>url.includes('/ja-core-')).length,currentJaCore.version===descriptors[0].version?0:1);
  requests.length=0;const again=await run();assert.ok(again.checks.every(row=>!row.updated));assert.deepEqual(requests,[],'Current pairs are not downloaded again and uninstalled languages are not installed');
  const after=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>key!=='learn-language.preferences.v1')));assert.deepEqual(after,before,'Progress is unchanged');const preferences=await page.evaluate(()=>JSON.parse(localStorage.getItem('learn-language.preferences.v1')));assert.equal(preferences.target,'ja');assert.equal(preferences.explanation,'ko');assert.equal(preferences.uiLanguage,'ko');assert.equal(preferences.theme,'system');assert.deepEqual(errors,[]);
  console.log('Passed real native DEBUG update-script browser checks: installed pairs only, independent explanation/core versions, complete Japanese examples/short meanings, restored selection, intact progress and no repeated downloads.');
