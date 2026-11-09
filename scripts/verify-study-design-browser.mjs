@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {ENGLISH_LEVELS} from '../web/js/shared/english-levels.js';
 import {mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
@@ -23,9 +24,55 @@ try{
   assert.deepEqual(await measure(page,'#feature .study-search .input-field'),await measure(page,'#baseline .study-search .input-field'));
   assert.equal((await measure(page,'.study-reference-heading')).fontSize,'24px');assert.equal((await measure(page,'[data-morpheme]')).padding,'16px');
   assert.equal((await measure(page,'[data-related-list]',['gap'])).gap,'2px');assert.equal((await measure(page,'[data-root-list]>.word-row-window',['gap'])).gap,'16px');
+  assert.equal(await page.locator('[data-related-list] .wl-row').count(),1);
+  assert.match(await page.locator('.study-reference-words summary').innerText(),/\(1\)/u);
   const buttons=await page.locator('[data-answer-mode]').evaluateAll(nodes=>nodes.map(n=>({width:n.getBoundingClientRect().width,height:n.getBoundingClientRect().height,font:getComputedStyle(n).fontSize})));assert.ok(Math.abs(buttons[0].width-buttons[1].width)<=.5);assert.ok(buttons.every(b=>b.height>=44&&b.font==='14px'),JSON.stringify({language,width,theme,buttons}));
   const select=await measure(page,'.grammar-selectors select'),key=width+'-'+theme;if(language==='de'){selectorMeasurements.set(key,select);selectorMeasurements.set(key+'-search',await measure(page,'#feature .study-search .input-field'));}else{assert.deepEqual(select,selectorMeasurements.get(key),'Chinese selectors follow German geometry');assert.deepEqual(await measure(page,'#feature .study-search .input-field'),selectorMeasurements.get(key+'-search'),'Search fields match between languages');}assert.equal((await measure(page,'[data-morpheme]',['marginBottom'])).marginBottom,'0px');
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.locator('main').screenshot({path:`/private/tmp/study-design-contract/${language}-${width}-${theme}.png`,fullPage:true});checks++;
  }
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts against German/Chinese styles: typography, cards, rows, nested gaps, search, equal controls, themes and responsive widths.`);
+ for(const [width,theme,locale] of [[390,'dark','ko'],[1024,'light','en']]){
+  await page.setViewportSize({width,height:1000});
+  await page.evaluate(async({theme,locale,level})=>{
+   const {createPresentation}=await import('/js/presentation/multilingual.js');
+   document.querySelector('#style-de').disabled=false;document.querySelector('#style-zh').disabled=true;
+   document.documentElement.dataset.theme=theme;
+   const host=document.querySelector('main');
+   let cleanup;
+   const refresh=()=>{cleanup?.();cleanup=presentation.render('roots',host);};
+   const presentation=createPresentation({language:'en',refresh,onPreferences(){}});
+   presentation.setPreferences({uiLanguage:locale,studyLevel:level});
+   presentation.setStudy({
+    targetLanguage:'en',explanationLanguage:locale,
+    entries:[{id:'audience',word:'audience',partOfSpeech:'noun',level,meaning:locale==='ko'?'청중':'listeners'},
+     {id:'audition',word:'audition',partOfSpeech:'noun',level,meaning:locale==='ko'?'오디션':'trial performance'}],
+    families:[{id:'aud',root:'aud-',origin:'la',meaning:locale==='ko'?'듣다':'hear',members:[{entryId:'audience'},{entryId:'audition'}]}],
+    morphemes:[{id:'aud',form:'aud-',variants:[],kind:'root',origin:'Latin',examples:['audience','audition','audial'],
+     senses:[{meaning:locale==='ko'?'듣다':'hear'}],source:'https://en.wiktionary.org/wiki/aud-'}],
+   });
+   refresh();
+  },{theme,locale,level:ENGLISH_LEVELS[0]});
+  const search=page.locator('#root-search');
+  await search.fill('audial');
+  assert.equal(await page.locator('[data-morpheme]').count(),0);
+  await search.fill('aud');
+  assert.equal(await page.locator('[data-practice-family]').count(),0);
+  await page.locator('[data-root-view="quiz"]').click();
+  assert.equal(await page.locator('.vocab-choice').count(),2);
+  assert.equal(await page.locator('[data-submit]').count(),0);
+  assert.equal(await page.locator('.vocab-choice').filter({hasText:'audial'}).count(),0);
+  const question=page.locator('[data-question-word]');
+  const first=await question.getAttribute('data-question-word');
+  await page.getByRole('button',{name:first,exact:true}).click();
+  assert.equal(await page.locator('.vocab-choice.correct').innerText(),first);
+  await page.locator('[data-next]').click();
+  assert.notEqual(await question.getAttribute('data-question-word'),first);
+  await page.locator('[data-answer-mode="input"]').click();
+  await page.locator('#vocab-answer').fill(await question.getAttribute('data-question-word'));
+  await page.locator('[data-submit]').click();
+  assert.equal(await page.locator('.vocab-correction').count(),1);
+  await page.locator('main').screenshot({path:`/private/tmp/study-design-contract/root-practice-${width}-${theme}.png`});
+  await page.locator('[data-root-view="browse"]').click();
+  assert.equal(await search.inputValue(),'aud');
+ }
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts and two Root Families browse and practice scenarios.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

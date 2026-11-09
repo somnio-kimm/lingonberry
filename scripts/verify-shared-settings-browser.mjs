@@ -8,7 +8,7 @@ async function settings(page){await page.locator('[data-tab=settings]').click();
 async function select(page,target,explanation='en'){await settings(page);await page.selectOption('#target',target);await page.selectOption('#explanation',explanation);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready'&&document.querySelector('main').dataset.viewState==='ready');}
 async function toggle(page,id,enabled){if(await page.locator(id).getAttribute('aria-checked')!==String(enabled))await page.locator(id).click();await ready(page);}
 async function expectSettings(page,{theme,uiLanguage,hapticEnabled,autoRemoveResolvedWrongs}){
- assert.equal(await page.locator('html').getAttribute('data-theme'),theme);assert.equal(await page.locator('#display-language').inputValue(),uiLanguage);
+ assert.equal(await page.locator('html').getAttribute('data-theme'),theme);assert.equal(await page.locator('html').getAttribute('lang'),uiLanguage==='ko'?'ko':'en-GB');
  assert.equal(await page.locator('#set-haptic').getAttribute('aria-checked'),String(hapticEnabled));assert.equal(await page.locator('#set-hide-resolved').getAttribute('aria-checked'),String(autoRemoveResolvedWrongs));
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('learn-language.preferences.v1')));
  assert.deepEqual({theme:saved.theme,uiLanguage:saved.uiLanguage,hapticEnabled:saved.hapticEnabled,autoRemoveResolvedWrongs:saved.autoRemoveResolvedWrongs},{theme,uiLanguage,hapticEnabled,autoRemoveResolvedWrongs});
@@ -26,10 +26,10 @@ try{
   {width:390,theme:'light',uiLanguage:'en',enabled:false},{width:390,theme:'dark',uiLanguage:'ko',enabled:true},
   {width:1024,theme:'light',uiLanguage:'en',enabled:false},{width:1024,theme:'dark',uiLanguage:'ko',enabled:true},
  ]){
-  await page.setViewportSize({width,height:900});await settings(page);await page.locator(`[data-theme-choice=${theme}]`).click();await page.selectOption('#display-language',uiLanguage);await toggle(page,'#set-haptic',enabled);await toggle(page,'#set-hide-resolved',enabled);
-  const expected={theme,uiLanguage,hapticEnabled:enabled,autoRemoveResolvedWrongs:enabled};
+  await page.setViewportSize({width,height:900});await settings(page);await page.locator(`[data-theme-choice=${theme}]`).click();await toggle(page,'#set-haptic',enabled);await toggle(page,'#set-hide-resolved',enabled);
+  const expected={theme,uiLanguage:'en',hapticEnabled:enabled,autoRemoveResolvedWrongs:enabled};
   for(const language of languages){await select(page,language);await expectSettings(page,expected);assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));cases++;}
-  await select(page,'de','ko');await expectSettings(page,expected);await select(page,'de','en');await expectSettings(page,expected);
+  await select(page,'de','ko');await expectSettings(page,{...expected,uiLanguage:'ko'});await select(page,'de','en');await expectSettings(page,expected);
   const before=await page.evaluate(()=>window.testVibrations.length);await page.locator(`[data-theme-choice=${theme}]`).click();assert.equal((await page.evaluate(()=>window.testVibrations.length))>before,enabled,'actual haptics obey the shared toggle');
   await page.reload();await ready(page);await settings(page);await expectSettings(page,expected);
  }

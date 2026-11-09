@@ -13,7 +13,7 @@ import { resolveWrongQuestion,wrongAnswerCount,expectedSyllables,characterDiffer
 import { reviewState } from './retest.js';
 const levelOf=r=>r.hskLevel||parseHskLevelFromWordId(r.wordId);
 function groupsOf(r){if(r.posGroups?.length)return r.posGroups;const word=Store.words.find(w=>w.id===r.wordId);return word?posGroupIdsForWord(word):[];}
-export function filteredWrongs(rows,{level='all',tag='all',mode='all'}={}){return rows.filter(r=>(level==='all'||levelOf(r)===Number(level))&&(tag==='all'||groupsOf(r).includes(tag))&&(mode==='all'||r.mode===mode));}
+export function filteredWrongs(rows,{level='all',tag='all',mode='all',status='all'}={},statusOf=()=> 'new'){return rows.filter(r=>(level==='all'||levelOf(r)===Number(level))&&(tag==='all'||groupsOf(r).includes(tag))&&(mode==='all'||r.mode===mode)&&(status==='all'||statusOf(r)===status));}
 function vocabReview(record,q){
  return vocabularyReview({mode:record.mode,question:q||record.question,word:Store.words.find(w=>w.id===record.wordId),locale:Store.uiLang,correctAnswer:record.correctAnswer,userAnswer:record.userAnswer});
 }
@@ -46,11 +46,19 @@ export function renderWrong(el){
  const filters=reviewState.filters;if(![1,2,3,4,5,6,7].includes(Number(filters.level)))filters.level=String(Store.hskLevels[0]||1);let alive=true,loading=true,error='';
  function draw(){
   if(!alive)return;TTS.stop();
-  const all=Store.wrongAnswers,rows=filteredWrongs(all,filters),queue=makeReviewQueue(rows,Store.words);
-  const block=all.length?wrongBookCombinedFilterMarkup(filteredWrongs(all,{...filters,level:'all'}),filters.level,filteredWrongs(all,{...filters,tag:'all'}),filters.tag,{levelOf,groupsOf,showMode:true,modeFilter:filters.mode,forModeRow:filteredWrongs(all,{...filters,mode:'all'})}):'';
+  const levels=new Map(Store.words.map(word=>[word.id,word.srs?.level||0]));
+  const statusOf=record=>{const level=levels.get(record.wordId)||0;return level>=5?'mastered':level>0?'learning':'new';};
+  const all=Store.wrongAnswers;
+  const filtered=(overrides={})=>filteredWrongs(all,{...filters,...overrides},statusOf);
+  const rows=filtered(),queue=makeReviewQueue(rows,Store.words);
+  const block=all.length?wrongBookCombinedFilterMarkup(filtered({level:'all'}),filters.level,filtered({tag:'all'}),filters.tag,{
+   levelOf,groupsOf,showMode:true,modeFilter:filters.mode,forModeRow:filtered({mode:'all'}),
+   statusFilter:filters.status,forStatusRow:filtered({status:'all'}),statusOf,
+  }):'';
+
   el.innerHTML=`<div class='wrong-heading'><div class='section-title'>${t('wrongBook')} (${rows.length}${rows.length!==all.length?' / '+all.length:''})</div>${all.length?`<button id='clear-wrong' class='btn-small' style='color:var(--red)'>${t('clearAll')}</button>`:''}</div>${block}${all.length?`<button class='btn-primary wrong-retest' id='retest-filtered' ${loading||!queue.items.length?'disabled':''}>${t('retestFiltered')} (${queue.items.length})</button>${error?`<p class='wrong-details-note'>${e(error)}</p>`:''}${!loading&&queue.unavailable.length?`<p class='wrong-details-note'>${queue.unavailable.length} · ${t('retestUnavailable')}</p>`:''}`:''}<div class='wrong-results'>${!rows.length?`<section class='card empty-wrong'><div aria-hidden='true'>${all.length?'🔎':'🎉'}</div><h2>${t(all.length?'noWrongForFilters':'noWrongYet')}</h2><p>${t(all.length?'wrongFilterHint':'wrongReviewHint')}</p></section>`:rows.map((record,i)=>{const q=resolveWrongQuestion(record,Store.words),word=Store.words.find(w=>w.id===record.wordId)||q?.word||record.question?.word,syllables=expectedSyllables(record,word);return `<section class='card wrong-item' data-id='${e(record.id)}' data-open-word='${i}' role='button' tabindex='0'><div class='wrong-card-heading'><div class='wrong-card-tags'><span class='badge wrong-mode'>${modeTitle(record.mode)}</span>${word?`<span class='badge wrong-pos'>${e(wordPosGroupDisplay(word))}</span>`:''}<span class='badge wrong-level'>${levelOf(record)===7?'HSK 7–9':'HSK '+levelOf(record)}</span></div><div class='wrong-card-actions'><span class='wrong-count'>${t('wrongCount')}: ${wrongAnswerCount(record)}</span><button class='del-wrong' data-dismiss='${i}' aria-label='${t('deleteAria')}'>×</button></div></div><div class='wrong-main-word wrong-hanzi-word'>${syllables.length?`${Pinyin.htmlMarkedColumns(syllables)}`:e(record.wordHanzi||word?.hanzi||'')}</div><p class='wrong-word-meaning' lang='${Store.uiLang}'>${e((['vocabinput','vocabmeaning'].includes(record.mode)?vocabReview(record,q).meaning:wordMeaning(q?.word||Store.words.find(w=>w.id===record.wordId)))||t('wordTranslationMissing'))}</p><div class="review-answer-details">${details(record,q)}</div></section>`;}).join('')}</div>`;
   const fold=el.querySelector('.filter-fold');if(fold){fold.open=filters.open;fold.ontoggle=()=>{filters.open=fold.open;};}
-  for(const [attr,key] of [['data-wlv','level'],['data-wtag','tag'],['data-wmode','mode']])el.querySelectorAll('['+attr+']').forEach(b=>b.onclick=()=>{filters[key]=decodeURIComponent(b.getAttribute(attr));Haptic.light();draw();});
+  for(const [attr,key] of [['data-wlv','level'],['data-wtag','tag'],['data-wmode','mode'],['data-wstatus','status']])el.querySelectorAll('['+attr+']').forEach(b=>b.onclick=()=>{filters[key]=decodeURIComponent(b.getAttribute(attr));Haptic.light();draw();});
   el.querySelector('#clear-wrong')?.addEventListener('click',()=>{if(!confirm(t('confirmClearWrong')))return;Store.clearWrong();draw();});
   el.querySelectorAll('[data-dismiss]').forEach(b=>b.onclick=()=>{Store.deleteWrong(rows[Number(b.dataset.dismiss)].id);draw();});
   el.querySelectorAll('[data-open-word]').forEach(card=>{const open=()=>{const r=rows[Number(card.dataset.openWord)],q=resolveWrongQuestion(r,Store.words),word=Store.words.find(w=>w.id===r.wordId)||Store.words.find(w=>w.hanzi===r.wordHanzi)||q?.word;if(word){card.focus({preventScroll:true});Haptic.light();showStatusSheet(word.id,undefined,word);}};card.onclick=event=>{if(!event.target.closest('button,a,input,select,summary'))open();};card.onkeydown=event=>{if(event.target===card&&['Enter',' '].includes(event.key)){event.preventDefault();open();}};});

@@ -14,16 +14,18 @@ for(const language of Object.keys(packageProfiles)){
  contents[language]=core;
  for(const locale of ['en','ko'].filter(locale=>allowsExplanation(language,locale)))test(`${language}-${locale}: complete meanings, validated available examples and intact downloads`,async()=>{
   const pair=await read(catalog.find(row=>row.id===language+'-'+locale).url.slice(1));
-  validateExplanation(core,pair);
+  const compatible=core.version===pair.studyVersion?core:await read(catalog.find(row=>row.id===language+'-core'&&row.version===pair.studyVersion).url.slice(1));
+  validateExplanation(compatible,pair);
   assert.ok(core.entries.length>=8000);
-  for(const data of [core,pair]){
-   const descriptor=catalog.find(row=>row.id===data.id),raw=await readFile(new URL('..'+descriptor.url,import.meta.url));
+  for(const data of [compatible,pair]){
+   const descriptor=catalog.find(row=>row.id===data.id&&row.version===data.version),raw=await readFile(new URL('..'+descriptor.url,import.meta.url));
    assert.equal(descriptor.bytes,raw.length);assert.equal(descriptor.sha256,createHash('sha256').update(raw).digest('hex'));
    assert.ok(data.license.identifier.includes('CC-BY-SA-4.0'));
   }
   assert.ok(new Set(core.entries.map(row=>row.word)).size>=7500);
   for(const level of (language==='en'?studyProfiles.en.levels:packageProfiles[language].levels))assert.ok(core.entries.some(row=>row.level===level));
-  for(const entry of pair.entries){assert.ok(entry.meaning.trim());if(core.entries.find(word=>word.id===entry.id).example)assert.ok(entry.exampleTranslation.trim());else assert.equal(entry.exampleTranslation,undefined);if(language===locale)assert.notEqual(entry.meaning,core.entries.find(word=>word.id===entry.id).word);}
+  const byId=new Map(compatible.entries.map(word=>[word.id,word]));
+  for(const entry of pair.entries){assert.ok(entry.meaning.trim());if(byId.get(entry.id).example)assert.ok(entry.exampleTranslation.trim());else assert.equal(entry.exampleTranslation,undefined);if(language===locale)assert.notEqual(entry.meaning,byId.get(entry.id).word);}
  });
 }
 test('English uses four editorial groups while original starter-band metadata stays archived',()=>{

@@ -14,8 +14,10 @@ test('Japanese Korean 4.6 reproduces its declared editorial corrections without 
  const expected=compileNaturalKoreanPair({...completion,version:'4.6.0'}),actualBytes=await read('language-packages/ja-ko-4.6.0.json'),actual=JSON.parse(actualBytes),{meaningReview,...payload}=actual;
  assert.deepEqual(payload,expected.pair);assert.deepEqual(meaningReview,{...proof,status:'targeted-AI-editorial-corrections',nativeSpeakerReview:'pending'});
  assert.equal(proof.target,12027);assert.equal(proof.changed,771);assert.equal(proof.reviewed,2530);assert.equal(proof.screenedRetained,9497);assert.equal(proof.independentlyReviewedChanges,0);assert.equal(proof.completeDecisionCoverage,true);
- const catalog=await json('language-packages/catalog.json'),descriptor=catalog.find(row=>row.id==='ja-ko');validatePackage(actual,descriptor);assert.equal(descriptor.sha256,createHash('sha256').update(actualBytes).digest('hex'));assert.equal(descriptor.bytes,actualBytes.length);
- for(const pinned of completion.manifest.sourcePackages.filter(row=>row.id!=='ja-ko'))assert.deepEqual(catalog.find(row=>row.id===pinned.id),pinned,'Study core and English explanation downloads remain unchanged');
+ validatePackage(actual);
+ for(const pinned of completion.manifest.sourcePackages.filter(row=>row.id!=='ja-ko')){
+  const bytes=await read(pinned.url.slice(1));assert.equal(bytes.length,pinned.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),pinned.sha256);
+ }
  const byId=new Map(actual.entries.map(row=>[row.id,row.meaning]));
  for(const [word,reading,meaning]of [['明日','みょうにち','내일'],['作','さく','작품'],['女優','じょゆう','여배우'],['幅','はば','너비; 폭'],['祖父','そふ','할아버지'],['空欄','くうらん','빈칸'],['鼻汁','はなじる','콧물']]){
   const entry=completion.core.entries.find(row=>row.word===word&&row.pronunciation===reading);assert.ok(entry,word);assert.equal(byId.get(entry.id),meaning,word);

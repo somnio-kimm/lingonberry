@@ -16,21 +16,20 @@ test('bundled exercise UI copy covers every supported display language and trans
   assert.ok(EXERCISE_INSTRUCTIONS.some(copy=>copy.en===localizeExerciseText(row.ko,'en')));
  }
 });
-test('Okurigana Selection and Typing instructions follow Display Language independently of meanings',()=>{
+test('Okurigana keeps the reading and meaning without a visible instruction in either display language',()=>{
  for(const source of ['en','ko']){
   const word={id:'long',lemma:'久しい',pronunciation:'ひさしい',pos:'adjective',studyLanguage:'ja',studyExplanationLanguage:source,studyMeaning:source==='en'?'long-standing':'오래되다'},typed=createOkuriganaSpellingQuestion(word,source),choice=createReadingChoices([typed],[word],source)[0];
   for(const display of ['en','ko'])for(const row of [typed,choice]){
    const question={...row,word,locale:source,exercise:true},before=structuredClone(question),html=renderExercisePrompt(question,{uiLanguage:display});
-   const expected=row.options?(display==='ko'?'올바른 오쿠리가나를 사용한 단어 전체를 선택하세요.':'Choose the complete word with the correct okurigana.'):(display==='ko'?'한자와 올바른 오쿠리가나를 사용해 단어 전체를 입력하세요.':'Write the complete word using kanji and the correct okurigana.');
-   assert.equal(instruction(html),expected);assert.ok(html.includes(word.studyMeaning));assert.ok(html.includes('ひさしい'));assert.deepEqual(question,before);
+   assert.equal(instruction(html),undefined);assert.ok(html.includes(word.studyMeaning));assert.ok(html.includes('ひさしい'));assert.deepEqual(question,before);
   }
  }
 });
-test('phrase-gap instructions and accessible blanks follow UI locale without translating study text',()=>{
+test('phrase gaps omit the instruction line and keep localised accessible blank labels',()=>{
  const pairs={en:'Fill each blank with the missing part of the expression.',ko:'각 빈칸에 표현의 빠진 부분을 입력하세요.'};
  for(const source of ['en','ko'])for(const display of ['en','ko']){
   const q={locale:source,word:{studyLanguage:'en'},instruction:pairs[source],gapFill:{parts:['Please ',' it ','.'],answers:['write','down']},context:source==='ko'?'적다':'record'},html=renderExercisePrompt(q,{uiLanguage:display,editable:true});
-  assert.equal(instruction(html),pairs[display]);assert.match(html,display==='ko'?/aria-label="빈칸 1"/:/aria-label="Blank 1"/);assert.ok(html.includes('Please '));assert.ok(html.includes(q.context));assert.match(html,/lang="en"/);
+  assert.equal(instruction(html),undefined);assert.match(html,display==='ko'?/aria-label="빈칸 1"/:/aria-label="Blank 1"/);assert.ok(html.includes('Please '));assert.ok(html.includes(q.context));assert.match(html,/lang="en"/);
  }
 });
 test('question-specific instructions retain letter and length constraints when display language changes',()=>{
@@ -48,8 +47,8 @@ test('retired form conditions and their blank names use UI language without alte
 test('every current generated/curated specialist instruction resolves in either supported display language',async()=>{
  const {assembleStudy}=await import('../web/js/packages/study.js'),{studyWords}=await import('../web/js/presentation/study-profiles.js'),{prepareLanguageExercises}=await import('../web/js/shared/exercise-pools.js'),json=async path=>JSON.parse(await readFile(new URL('../'+path,import.meta.url))),catalog=await json('web/catalog.json'),known={en:new Set(EXERCISE_INSTRUCTIONS.map(row=>row.en)),ko:new Set(EXERCISE_INSTRUCTIONS.map(row=>row.ko))};
  for(const language of ['ja','en','ko','es','fr']){
-  const core=await json(catalog.find(row=>row.id===language+'-core').url.slice(1));
   for(const descriptor of catalog.filter(row=>row.kind==='explanation'&&row.targetLanguage===language)){
+   const core=await json(catalog.find(row=>row.id===language+'-core'&&row.version===descriptor.studyVersion).url.slice(1));
    const study=assembleStudy(core,await json(descriptor.url.slice(1))),rows=prepareLanguageExercises(study,studyWords(study));
    for(const text of new Set(rows.map(row=>row.instruction).filter(Boolean)))for(const display of ['en','ko'])assert.ok(known[display].has(localizeExerciseText(text,display)),language+' '+descriptor.explanationLanguage+' '+text);
   }

@@ -11,12 +11,12 @@ async function question(page){return page.locator('.vocab-question,.sentence-que
 try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
  await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/study-screen-parity',{recursive:true});
- for(const language of ['de','zh','en','ja']){await tab(page,'settings');await page.locator('#manage-packages').click();await page.locator(`[data-language=${language}]`).click();await page.locator(`[data-available="${language}-en"] .download-package`).click();await page.locator(`[data-package="${language}-en"] .remove-package`).waitFor();}
+ for(const language of ['de','zh','en','ja']){await tab(page,'settings');await page.locator('#manage-packages').click();await page.locator(`[data-language=${language}]`).click();for(const explanation of ['en','ko']){await page.locator(`[data-available="${language}-${explanation}"] .download-package`).click();await page.locator(`[data-package="${language}-${explanation}"] .remove-package`).waitFor();}}
  const results={};let checks=0;
  for(const width of [390,1024])for(const theme of ['light','dark'])for(const locale of ['en','ko']){
   await page.setViewportSize({width,height:900});const group={};results[`${width}-${theme}-${locale}`]=group;
   for(const language of ['de','zh','en','ja']){
-   await tab(page,'settings');await page.selectOption('#display-language',locale);await page.locator(`[data-theme-choice=${theme}]`).click();await page.selectOption('#target',language);await page.selectOption('#explanation','en');await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');const value={};group[language]=value;
+   await tab(page,'settings');await page.locator(`[data-theme-choice=${theme}]`).click();await page.selectOption('#target',language);await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');const value={};group[language]=value;
    for(const mode of ['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble']){
     await route(page,language,mode);
     if(mode==='wordlist'){

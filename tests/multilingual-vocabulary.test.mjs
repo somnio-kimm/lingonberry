@@ -7,9 +7,9 @@ import {createLexiconStore} from '../web/js/shared/lexicon-store.js';
 const read=async path=>JSON.parse(await readFile(new URL('../'+path,import.meta.url),'utf8'));
 const catalog=await read('web/catalog.json');
 for(const language of Object.keys(studyProfiles)){
- const core=await read(catalog.find(row=>row.id===language+'-core').url.slice(1));
  test(`${language}: typed recall and meaning choices preserve the selected sense and part of speech`,async()=>{
   const pair=await read(catalog.find(row=>row.id===language+(language==='ko'?'-en':'-ko')).url.slice(1));
+  const core=await read(catalog.find(row=>row.id===language+'-core'&&row.version===pair.studyVersion).url.slice(1));
   const rows=new Map(pair.entries.map(row=>[row.id,row]));
   const words=studyWords({...core,explanationLanguage:'ko',entries:core.entries.map(row=>({...row,...rows.get(row.id)}))});
   const engine=createLexiconQuestions(studyProfiles[language]);
