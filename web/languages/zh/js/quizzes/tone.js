@@ -6,15 +6,14 @@ import { TTS } from '../services/tts.js';
 import { Haptic } from '../services/haptic.js';
 import { recordAnswer } from '../services/srs.js';
 import {
-  pick, scorePill, showStatusSheet, posGroupIdsForWord,
+  pick, scorePill, posGroupIdsForWord,
   wordlistCombinedFilterMarkup, filterByStudyStatus, filterByPosTag,
   quizPinyinFeedback,
 } from '../components.js';
 import { t, wordMeaning } from '../services/i18n.js';
 
 export function renderToneQuiz(el,session={}) {
-  let srsFilter = 'all';
-  let tagFilter = 'all';
+  const filters = session.filters || {status:'all', pos:'all', open:false};
   let score = 0, total = 0, word = null;
   /** @type {(number|null)[]} */
   let picks = [];
@@ -24,9 +23,9 @@ export function renderToneQuiz(el,session={}) {
 
   function buildRows() {
     const aw = session.question?[session.question.word]:Store.activeWords;
-    const forStatusRow = filterByPosTag(aw, tagFilter);
-    const forTagRow = filterByStudyStatus(aw, srsFilter);
-    const pool = filterByPosTag(forTagRow, tagFilter);
+    const forStatusRow = filterByPosTag(aw, filters.pos);
+    const forTagRow = filterByStudyStatus(aw, filters.status);
+    const pool = filterByPosTag(forTagRow, filters.pos);
     return { aw, forStatusRow, forTagRow, pool };
   }
 
@@ -57,15 +56,17 @@ export function renderToneQuiz(el,session={}) {
   }
 
   function bindFilters() {
+    const fold = el.querySelector('.study-filter-panel');
+    if (fold) fold.ontoggle = () => { if (fold.isConnected) filters.open = fold.open; };
     el.querySelectorAll('.wl-filter[data-f]').forEach(b => b.onclick = () => {
-      srsFilter = b.dataset.f;
+      filters.status = b.dataset.f;
       Haptic.light();
       syncWord();
       if (word) initPicks();
       draw();
     });
     el.querySelectorAll('.wl-filter[data-tag]').forEach(b => b.onclick = () => {
-      tagFilter = decodeURIComponent(b.getAttribute('data-tag') || 'all');
+      filters.pos = decodeURIComponent(b.getAttribute('data-tag') || 'all');
       Haptic.light();
       syncWord();
       if (word) initPicks();
@@ -178,10 +179,11 @@ export function renderToneQuiz(el,session={}) {
     if (!pool.length) {
       el.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div class="section-title" style="margin:0">${t('mode_tone')}</div>
+          <div class="section-title" style="margin:0">${session.title ?? t('mode_tone')}</div>
           ${scorePill(displayed.correct, displayed.total)}
         </div>
-        ${session.question?'':wordlistCombinedFilterMarkup(forStatusRow, srsFilter, forTagRow, tagFilter)}
+        ${session.modeTabs || ''}
+      ${session.question?'':wordlistCombinedFilterMarkup(forStatusRow, filters.status, forTagRow, filters.pos, forTagRow, filters.open)}
         <div class="quiz-after-filter card" style="text-align:center;padding:28px">
           <div style="font-size:40px;margin-bottom:8px">📭</div>
           <div style="font-weight:600">${t('noWordsFilter')}</div>
@@ -198,17 +200,16 @@ export function renderToneQuiz(el,session={}) {
 
     el.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-        <div class="section-title" style="margin:0">${t('mode_tone')}</div>
+        <div class="section-title" style="margin:0">${session.title ?? t('mode_tone')}</div>
         ${scorePill(displayed.correct, displayed.total)}
       </div>
-      ${session.question?'':wordlistCombinedFilterMarkup(forStatusRow, srsFilter, forTagRow, tagFilter)}
+      ${session.modeTabs || ''}
+      ${session.question?'':wordlistCombinedFilterMarkup(forStatusRow, filters.status, forTagRow, filters.pos, forTagRow, filters.open)}
       <div class="quiz-after-filter">
-      <div class="card tone-quiz-card" style="position:relative;padding-top:44px">
-        <div style="position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;gap:8px">
-          <button type="button" class="quiz-status-btn">${t('studyStatusBtn')}</button>
-          <button type="button" class="speak-btn tone-quiz-speak" style="font-size:20px;color:var(--blue)">🔊</button>
+      <div class="card tone-quiz-card">
+        <div class="vocab-question-top vocab-question-top--audio">
+          <button type="button" class="word-listen tone-quiz-speak" aria-label="${t('listenWord')}">🔊</button>
         </div>
-        <p class="tone-quiz-hint">${feedback ? '' : t('toneSelectChar')}</p>
         <div class="tone-word-full" style="${Pinyin.syllableRowStyle(word.syllables)}" role="group" aria-label="word">
           ${word.syllables.map((syl, i) => `
             <button type="button" class="${cellClass(i)}" data-ci="${i}" ${feedback ? 'disabled' : ''}>
@@ -234,10 +235,6 @@ export function renderToneQuiz(el,session={}) {
       </div>`;
 
     bindFilters();
-    el.querySelector('.quiz-status-btn')?.addEventListener('click', () => {
-      Haptic.light();
-      showStatusSheet(word.id, draw);
-    });
     el.querySelector('.tone-quiz-speak')?.addEventListener('click', () => TTS.speak(word.hanzi));
 
     if (!feedback) {

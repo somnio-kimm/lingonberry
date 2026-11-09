@@ -1,3 +1,4 @@
+import {renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
@@ -95,18 +96,20 @@ export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagR
     const n = filterByPosTag(forTagRow, tg).length;
     tagRows.push([tg, posGroupLabel(tg), n]);
   }
-  const sCur = statusFilters.find(([k]) => k === statusFilter) || statusFilters[0];
-  const tCur = tagRows.find(([k]) => k === tagFilter) || tagRows[0];
-  const statusPick = `${sCur[1]} (${sCur[2]})`;
-  const tagPick = `${tCur[1]} (${tCur[2]})`;
-  return `<details class="filter-fold filter-fold--combined study-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${t('filterPanel')}</span></div><div class="filter-fold-sum-picks"><span class="filter-fold-pick-l">${t('filterStatus')}</span><span class="filter-fold-pick-v">${statusPick}</span><span class="filter-fold-pick-l">${t('filterTags')}</span><span class="filter-fold-pick-v">${tagPick}</span></div></summary><div class="filter-fold-body filter-fold-split"><div class="filter-split-head">${t('filterStatus')}</div><div class="wl-filter-row">${statusFilters.map(([key,label,count])=>`<button type="button" class="wl-filter ${statusFilter===key?'active':''}" data-f="${key}" aria-pressed="${statusFilter===key}">${label} (${count})</button>`).join('')}</div><div class="filter-split-divider"></div><div class="filter-split-head">${t('filterTags')}</div><div class="wl-filter-row wl-tag-filter-row">${tagRows.map(([key,label,count])=>`<button type="button" class="wl-filter ${tagFilter===key?'active':''}" data-tag="${encodeURIComponent(key)}" aria-pressed="${tagFilter===key}">${label} (${count})</button>`).join('')}</div></div></details>`;
+  const group=(title,selected,rows,encode=value=>value)=>({
+    title:t(title),selected:encode(selected),options:rows.map(([value,label,count])=>({value:encode(value),label,count})),
+  });
+  return renderStudyFilters({
+    title:t('filterPanel'),open,status:group('filterStatus',statusFilter,statusFilters),
+    pos:group('filterTags',tagFilter,tagRows,encodeURIComponent),
+  });
 }
 
 /** Wrong-answer book: HSK level + POS group filters (counts cross-filter like word list). */
 export function wrongBookCombinedFilterMarkup(
   forLevelRow, levelFilter,
   forTagRow, tagFilter,
-  { levelOf, groupsOf, showMode=false, modeFilter='all', forModeRow=[] },
+  { levelOf, groupsOf, showMode=false, modeFilter='all', forModeRow=[], statusFilter='all', forStatusRow=[], statusOf },
 ) {
   const levelFilters = [
     ...[1, 2, 3, 4, 5, 6, 7].map((lv) => {
@@ -124,10 +127,14 @@ export function wrongBookCombinedFilterMarkup(
   const mCur=modeRows.find(([id])=>id===modeFilter)||modeRows[0];
   const lCur = levelFilters.find(([k]) => k === levelFilter) || levelFilters[0];
   const tCur = tagRows.find(([k]) => k === tagFilter) || tagRows[0];
+  const statusRows=[['all',t('filterAll'),forStatusRow.length],...['new','learning','mastered'].map(status=>[
+    status,t('status'+status[0].toUpperCase()+status.slice(1)),forStatusRow.filter(row=>statusOf(row)===status).length,
+  ])];
+  const sCur=statusRows.find(([id])=>id===statusFilter)||statusRows[0];
   const levelPick = `${lCur[1]} (${lCur[2]})`;
   const tagPick = `${tCur[1]} (${tCur[2]})`;
   const group = (title, rows, selected, attribute) => `<div class="filter-split-head">${title}</div><div class="wl-filter-row">${rows.map(([id,label,count])=>`<button type="button" class="wl-filter ${selected===id?'active':''}" ${attribute}="${encodeURIComponent(id)}" aria-pressed="${selected===id}">${label} (${count})</button>`).join('')}</div>`;
-  return `<details class="filter-fold filter-fold--combined wrong-filter-panel"><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${t('filterPanel')}</span></div><div class="filter-fold-sum-picks"><span class="filter-fold-pick-l">${t('wrongFilterHsk')}</span><span class="filter-fold-pick-v">${levelPick}</span><span class="filter-fold-pick-l">${t('filterTags')}</span><span class="filter-fold-pick-v">${tagPick}</span>${showMode?`<span class="filter-fold-pick-l">${t('wrongFilterMode')}</span><span class="filter-fold-pick-v">${mCur[1]} (${mCur[2]})</span>`:''}</div></summary><div class="filter-fold-body filter-fold-split">${group(t('wrongFilterHsk'),levelFilters,levelFilter,'data-wlv')}<div class="filter-split-divider"></div>${group(t('filterTags'),tagRows,tagFilter,'data-wtag')}${showMode?`<div class="filter-split-divider"></div>${group(t('wrongFilterMode'),modeRows,modeFilter,'data-wmode')}`:''}</div></details>`;
+  return `<details class="filter-fold filter-fold--combined wrong-filter-panel"><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${t('filterPanel')}</span></div><div class="filter-fold-sum-picks"><span class="filter-fold-pick-l">${t('wrongFilterHsk')}</span><span class="filter-fold-pick-v">${levelPick}</span><span class="filter-fold-pick-l">${t('filterTags')}</span><span class="filter-fold-pick-v">${tagPick}</span>${showMode?`<span class="filter-fold-pick-l">${t('wrongFilterMode')}</span><span class="filter-fold-pick-v">${mCur[1]} (${mCur[2]})</span>`:''}<span class="filter-fold-pick-l">${t('filterStatus')}</span><span class="filter-fold-pick-v">${sCur[1]} (${sCur[2]})</span></div></summary><div class="filter-fold-body filter-fold-split">${group(t('wrongFilterHsk'),levelFilters,levelFilter,'data-wlv')}<div class="filter-split-divider"></div>${group(t('filterTags'),tagRows,tagFilter,'data-wtag')}${showMode?`<div class="filter-split-divider"></div>${group(t('wrongFilterMode'),modeRows,modeFilter,'data-wmode')}`:''}<div class="filter-split-divider"></div>${group(t('filterStatus'),statusRows,statusFilter,'data-wstatus')}</div></details>`;
 }
 
 export function showStatusSheet(wordId, onDone, fallbackWord) {
