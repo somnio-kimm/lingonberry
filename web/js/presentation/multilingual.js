@@ -132,7 +132,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
   const list=pool(mode);let selected;
   if(!Object.hasOwn(commonModes,mode))return chooseFeatureQuestion(mode);
   if(['cloze','scramble'].includes(mode))selected=engine.createSentencePool(mode,list,study.explanationLanguage).choose(previousQuestionId);
-  else selected=engine.createVocabularyPool(mode,list,study.explanationLanguage).choose(previousQuestionId);
+  else selected=engine.createVocabularyPool(mode,list,study.explanationLanguage,'vocabulary',{meaningWords:words}).choose(previousQuestionId);
   return reviewContent.prepare(selected);
  }
  function drawSentenceQuiz(host,route,mode){

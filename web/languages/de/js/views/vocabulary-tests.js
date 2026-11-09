@@ -15,7 +15,7 @@ export function renderVocabularyTest(el, ctx, mode, session = {}) {
   function next() {
     if (!alive) return;
     if(session.question)question=session.question;
-    else {const filtered=filterStudyStatus(studyWords(pool,level,{pos}),ctx.store,status),signature=getLocale()+':'+filtered.map(w=>w.id).join('|');if(signature!==poolSignature){preparedPool=createVocabularyPool(mode,filtered,getLocale());poolSignature=signature;}question=preparedPool.choose(question?.id);}
+    else {const filtered=filterStudyStatus(studyWords(pool,level,{pos}),ctx.store,status),signature=getLocale()+':'+filtered.map(w=>w.id).join('|');if(signature!==poolSignature){preparedPool=createVocabularyPool(mode,filtered,getLocale(),'vocabulary',{meaningWords:ctx.words});poolSignature=signature;}question=preparedPool.choose(question?.id);}
     input = ''; feedback = ''; draw();
   }
   function submit(value = input) {

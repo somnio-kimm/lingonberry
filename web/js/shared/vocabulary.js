@@ -5,7 +5,9 @@ import {collocationQuestions,collocationAnswerCorrect} from './collocations.js';
 export const VOCABULARY_MODES = Object.freeze(['vocabinput','vocabmeaning']);
 export const vocabularyWord = word => word.lemma ?? word.hanzi ?? '';
 export const normalize = value => String(value ?? '').normalize('NFC').trim().replace(/\s+/gu, ' ');
-const glossKey = value => normalize(value).toLocaleLowerCase().replace(/^to\s+/u, '').replace(/[.!。]+$/u, '');
+export const vocabularyGlossKey = value => normalize(value).toLocaleLowerCase().replace(/^to\s+/u, '').replace(/[.!。]+$/u, '');
+const glossKeys = text => [...new Set(text.split(/[;；]/u).map(vocabularyGlossKey).filter(Boolean))];
+const spellings = word => [...new Set([vocabularyWord(word),...(word.aliases || [])].map(normalize).filter(Boolean))];
 export function vocabularyType(word) {
   if (word.pos) return word.pos === 'functional' ? word.subtype || '' : word.pos;
   const aliases = { n: 'noun', v: 'verb', a: 'adjective', d: 'adverb', q: 'classifier', m: 'numeral', r: 'pronoun', p: 'preposition', c: 'conjunction', u: 'particle', phrase: 'expression', idiom: 'expression' };
@@ -21,22 +23,40 @@ export function vocabularyMeaning(word, locale) {
 /** Shared pool algorithm; input spelling and grading are language policies. */
 export function createVocabularyEngine({inputAnswer=vocabularyWord,gradeInput=(question,input)=>
   (question.acceptedAnswers||[question.answer]).some(answer=>normalize(input)===normalize(answer))}={}) {
-function createVocabularyPool(mode, words, locale = 'en', category='vocabulary') {
+ const meaningIndexes = new WeakMap();
+ function indexMeanings(inventory,locale) {
+  let locales=meaningIndexes.get(inventory);
+  if(!locales){locales=new Map();meaningIndexes.set(inventory,locales);}
+  if(!locales.has(locale)){
+   const index=new Map();
+   for(const word of inventory){
+    const keys=glossKeys(vocabularyMeaning(word,locale));
+    for(const spelling of spellings(word)){
+     if(!index.has(spelling))index.set(spelling,new Set());
+     for(const key of keys)index.get(spelling).add(key);
+    }
+   }
+   locales.set(locale,index);
+  }
+  return locales.get(locale);
+ }
+// Package inventories are immutable arrays; replacing a package replaces its cache key.
+// Filters apply to `words`. `meaningWords` only prevents other known meanings becoming wrong choices.
+function createVocabularyPool(mode, words, locale = 'en', category='vocabulary', {meaningWords=words}={}) {
   if(category==='collocations'){const questions=collocationQuestions(mode,words,words.find(word=>word.studyExplanationLanguage)?.studyExplanationLanguage||locale);return {all:()=>questions,choose(excludeId,random=Math.random){const pool=questions.length>1?questions.filter(q=>q.id!==excludeId):questions;const q=pool[Math.floor(random()*pool.length)];return q?.options?{...q,options:shuffle(q.options,random)}:q;}};}
   locale = words.find(word => word.studyExplanationLanguage)?.studyExplanationLanguage || locale;
   if (!VOCABULARY_MODES.includes(mode) || !/^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(locale)) return {all:()=>[],choose:()=>undefined};
   const rows = words.map(word => {
     const text = vocabularyMeaning(word, locale), type = vocabularyType(word);
-    const keys = [...new Set(text.split(/[;；]/u).map(glossKey).filter(Boolean))];
+    const keys = glossKeys(text);
     return { word, text, type, keys, signature: keys.slice().sort().join('\u0001') };
   }).filter(row => row.word.id && vocabularyWord(row.word) && row.text && row.type);
-  const groups = new Map(), synonyms = new Map(), homographs = new Map();
+  const groups = new Map(), synonyms = new Map();
+  const meanings=mode==='vocabmeaning'?indexMeanings(meaningWords,locale):null;
   for (const row of rows) {
-    const synonymKey = row.type + '\u0000' + row.signature, homographKey = row.type + '\u0000' + vocabularyWord(row.word);
+    const synonymKey = row.type + '\u0000' + row.signature;
     if (!groups.has(row.type)) groups.set(row.type, []); groups.get(row.type).push(row);
     if (!synonyms.has(synonymKey)) synonyms.set(synonymKey, []); synonyms.get(synonymKey).push(row);
-    if (!homographs.has(homographKey)) homographs.set(homographKey, new Set());
-    for (const key of row.keys) homographs.get(homographKey).add(key);
   }
   function build(row,random) {
     const word = row.word, lemma = vocabularyWord(word);
@@ -51,11 +71,12 @@ function createVocabularyPool(mode, words, locale = 'en', category='vocabulary')
       return question;
     }
     const options = [{ id: word.id, text: row.text, type: row.type, meanings:{en:vocabularyMeaning(word,'en'),ko:vocabularyMeaning(word,'ko')} }];
-    const blocked = new Set(homographs.get(row.type + '\u0000' + lemma));
+    const blocked = new Set(row.keys), questionSpellings=new Set(spellings(word));
+    for(const spelling of questionSpellings)for(const key of meanings.get(spelling)||[])blocked.add(key);
     const group = groups.get(row.type), start = Math.floor(random() * group.length);
     for (let i = 0; i < group.length && options.length < 4; i++) {
       const other = group[(start + i) % group.length];
-      if (vocabularyWord(other.word) === lemma || other.keys.some(key => blocked.has(key))) continue;
+      if (spellings(other.word).some(spelling=>questionSpellings.has(spelling)) || other.keys.some(key => blocked.has(key))) continue;
       options.push({ id: other.word.id, text: other.text, type: other.type, meanings:{en:vocabularyMeaning(other.word,'en'),ko:vocabularyMeaning(other.word,'ko')} });
       for (const key of other.keys) blocked.add(key);
     }
