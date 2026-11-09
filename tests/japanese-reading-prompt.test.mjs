@@ -18,11 +18,11 @@ test('missing, inflected and embedded-compound targets use a standalone word wit
  assert.deepEqual(japaneseReadingPrompt({...word,lemma:'食べる'},'毎日食べます。'),{prompt:'食べる',readingFocus:{start:0,text:'食べる'}});
  assert.deepEqual(japaneseReadingPrompt(word),{prompt:'学校',readingFocus:{start:0,text:'学校'}});
 });
-test('reading instructions follow Display Language independently of Explanation Language',()=>{
+test('reading prompt omits the instruction line in both display languages',()=>{
  const q={category:'reading',word,prompt:'学校\n弟は［学校］へ歩いて行く。',locale:'en',instruction:'An older instruction.',options:[{id:'0',text:'がっこう'}]};
- const korean=renderExercisePrompt(q,{uiLanguage:'ko'});assert.match(korean,/밑줄 친 단어의 읽기를 선택하세요\./);assert.match(korean,/<span class="study-reading-target">学校<\/span>/);assert.equal(korean.split('学校').length-1,1);assert.ok(!korean.includes('［'));assert.ok(!korean.includes('<rt>'));
- const english=renderExercisePrompt({...q,locale:'ko'},{uiLanguage:'en'});assert.match(english,/Choose the reading of the underlined word\./);assert.ok(!english.includes('선택하세요'));
- const typing=renderExercisePrompt({...q,options:undefined},{uiLanguage:'ko'});assert.match(typing,/밑줄 친 단어의 읽기를 히라가나로 입력하세요\./);assert.equal(q.prompt,'学校\n弟は［学校］へ歩いて行く。');
+ const korean=renderExercisePrompt(q,{uiLanguage:'ko'});assert.doesNotMatch(korean,/vocab-instruction/);assert.match(korean,/<span class="study-reading-target">学校<\/span>/);assert.equal(korean.split('学校').length-1,1);assert.ok(!korean.includes('［'));assert.ok(!korean.includes('<rt>'));
+ const english=renderExercisePrompt({...q,locale:'ko'},{uiLanguage:'en'});assert.doesNotMatch(english,/vocab-instruction/);assert.match(english,/My younger brother walks to school\./);assert.doesNotMatch(english,/>school<\/p>/);assert.ok(!english.includes('선택하세요'));
+ const typing=renderExercisePrompt({...q,options:undefined},{uiLanguage:'ko'});assert.doesNotMatch(typing,/vocab-instruction/);assert.equal(q.prompt,'学校\n弟は［学校］へ歩いて行く。');
 });
 test('reading text stays escaped and both Korean section labels are consistent',()=>{
  const html=renderExercisePrompt({category:'reading',word,prompt:'<img src=x>学校。',options:[{}]},{uiLanguage:'en'});assert.ok(!html.includes('<img'));assert.match(html,/&lt;img src=x&gt;/);

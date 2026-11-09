@@ -17,6 +17,7 @@ for (const [name, mutate] of [
   ['bundled translations', data => {data.entries[0].translations = {ko:'집'};}],
   ['missing license', data => {delete data.license;}],
   ['empty content', data => {data.entries = [];}],
+  ['invalid example eligibility', data => {data.entries[0].example.practiceEligible='false';}],
   ['invalid language code', data => {data.targetLanguage = '../secret';}],
 ]) {
   test(`rejects ${name}`, () => {const {data} = fixture();mutate(data);assert.throws(() => validatePackage(data), /Invalid language package/);});

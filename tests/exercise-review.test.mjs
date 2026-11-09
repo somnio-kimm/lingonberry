@@ -7,16 +7,26 @@ function render(question,input,{display='en',language='ja',word=question.word}={
  return renderExerciseReview({question,input},{word,headword:word.article?word.article+' '+word.lemma:word.lemma,language,displayLanguage:display,t:text=>lexiconText(display,text)});
 }
 const school={id:'school',lemma:'学校',pronunciation:'がっこう',studyMeaning:'school'};
-test('Word Reading matches Pinyin Review: correct reading in heading, stored wrong reading only',()=>{
- const question={exercise:true,category:'reading',word:school,answer:'がっこう',prompt:'弟は学校へ行く。',options:[{id:'0',text:'がっこう'},{id:'1',text:'がこう'}],explanation:'Extra teaching text.'},before=structuredClone(question),html=render(question,'1',{display:'ko'});
- assert.match(html,/오답:/);assert.match(html,/<del>がこう<\/del>/);assert.doesNotMatch(html,/Correct Answer|정답:|弟は|vocab-instruction|vocab-prompt|Extra teaching/);assert.deepEqual(question,before);
+test('Word Reading Review retains its question sentence, translation and stored wrong reading',()=>{
+ const question={exercise:true,category:'reading',word:school,locale:'en',answer:'がっこう',prompt:'弟は学校へ行く。',context:'My younger brother goes to school.',options:[{id:'0',text:'がっこう'},{id:'1',text:'がこう'}],explanation:'Extra teaching text.'},before=structuredClone(question),html=render(question,'1',{display:'ko'});
+ assert.match(html,/오답:/);assert.match(html,/<del>がこう<\/del>/);assert.match(html,/弟は<span class="study-reading-target">学校<\/span>へ行く。/);assert.match(html,/lang="en">My younger brother goes to school\./);
+ assert.ok(html.indexOf('wrong-question-block')<html.indexOf('wrong-user-line'));
+ assert.doesNotMatch(html,/Correct Answer|정답:|vocab-instruction|vocab-prompt|Extra teaching/);assert.deepEqual(question,before);
+});
+test('reading Review uses the saved sentence and translation when current dictionary content differs',()=>{
+ const saved={...school,examples:[{text:'学校へ行く。',studyTranslation:'Go to school.'}]};
+ const question={exercise:true,category:'reading',word:saved,locale:'en',answer:'がっこう',prompt:'学校\n［学校］へ行く。'};
+ const html=render(question,'がこう',{word:{...school,examples:[{text:'学校は休みです。',studyTranslation:'School is closed.'}]}});
+ assert.match(html,/>学校<\/span>へ行く。/);assert.match(html,/Go to school\./);assert.doesNotMatch(html,/School is closed/);
+ const standalone=render({...question,prompt:'学校'},'がこう');
+ assert.doesNotMatch(standalone,/wrong-question-block|Go to school/);
 });
 test('a missing heading reading does not suppress the only available correct reading',()=>{
  const word={...school,pronunciation:undefined},html=render({exercise:true,category:'reading',word,answer:'がっこう'},'がこう');assert.match(html,/Correct Answer:/);assert.match(html,/がっこう/);
 });
-test('Okurigana retains its blue/green breakdown without a duplicate question, answer or explanation',()=>{
+test('Okurigana shows the wrong spelling without duplicating the answer or reading breakdown',()=>{
  const word={id:'long',lemma:'久しい',pronunciation:'ひさしい',studyMeaning:'long-standing'},question={...createOkuriganaSpellingQuestion(word,'en'),word,exercise:true,locale:'en'},html=render(question,'久い');
- assert.match(html,/reading-segment kanji/);assert.match(html,/reading-segment kana/);assert.match(html,/<del>久い<\/del>/);assert.doesNotMatch(html,/Correct Answer:|wrong-question|vocab-instruction|<p lang=/);
+ assert.doesNotMatch(html,/reading-segment/);assert.match(html,/<del>久い<\/del>/);assert.doesNotMatch(html,/Correct Answer:|wrong-question|vocab-instruction|<p lang=/);
 });
 test('Root Review keeps a compact origin clue, once-only meaning and the wrong written word',()=>{
  const word={id:'audience',lemma:'audience',studyMeaning:'listeners'},question={exercise:true,category:'roots',rootFamilyId:'aud',word,locale:'en',answer:'audience',prompt:'Latin · aud — hear\nlisteners',context:'listeners',instruction:'Type the word.',explanation:'Long list of related words.'},before=structuredClone(question),html=render(question,'audition',{display:'ko',language:'en'});

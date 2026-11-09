@@ -27,27 +27,28 @@ try{
   const core=await read(catalog.find(row=>row.id===language+'-core').url.slice(1)),pairs=Object.fromEntries(await Promise.all(['en','ko'].filter(locale=>allowsExplanation(language,locale)).map(async locale=>[locale,await read(catalog.find(row=>row.id===language+'-'+locale).url.slice(1))])));
   await packages(page,language);const before=downloads.length;for(const locale of Object.keys(pairs))await download(page,language+'-'+locale);assert.equal(downloads.length-before,1+Object.keys(pairs).length,'core downloaded once');
   for(const explanation of Object.keys(pairs)){
-   await choose(page,language,explanation);await tab(page,'home');assert.deepEqual(await page.locator('.menu-grid [data-route]').evaluateAll(nodes=>nodes.map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening',...Object.keys(exerciseModes(language)).filter(route=>route!=='articles'&&(route==='roots'?core.families?.length:route==='collocations'||core.exercises?.some(row=>row.category===route)||language==='ja'&&['reading','onyomi','kunyomi','okurigana'].includes(route)))],language+' shared menu order');await route(page,'wordlist');if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]',core.entries[0].level);await page.locator('#search-input').fill(core.entries[0].word);
+   await choose(page,language,explanation);await tab(page,'home');assert.deepEqual(await page.locator('.menu-grid [data-route]').evaluateAll(nodes=>nodes.map(node=>node.dataset.route)),['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening',...Object.keys(exerciseModes(language)).filter(route=>route!=='articles'&&(route==='roots'?core.families?.length:route==='collocations'||core.exercises?.some(row=>row.category===route)||language==='ja'&&['reading','onyomi','kunyomi','okurigana'].includes(route)))],language+' shared menu order');await tab(page,'home');await page.locator(`[data-level="${core.entries[0].level}"]`).click();await route(page,'wordlist');await page.locator('#search-input').fill(core.entries[0].word);
    const row=page.locator(`[data-word="${core.entries[0].id}"]`);await row.waitFor();assert.equal(await row.locator('.wl-meaning').innerText(),pairs[explanation].entries[0].meaning);
    await row.click();await page.locator('[role=dialog]').waitFor();if(language==='ja'&&explanation==='en'){await mkdir('/private/tmp/learn-language-multilingual-shots',{recursive:true});await page.screenshot({path:'/private/tmp/learn-language-multilingual-shots/japanese-detail-light.png'});}assert.ok((await page.locator('[role=dialog]').evaluate(node=>{const copy=node.cloneNode(true);copy.querySelectorAll('rt').forEach(rt=>rt.remove());return copy.textContent;})).includes(core.entries[0].example.text));
    await page.locator('[data-example="0"]').click();await page.waitForFunction(text=>window.testSpokenText===text,core.entries[0].example.text);await page.keyboard.press('Escape');assert.equal(await page.locator('[role=dialog]').count(),0);await page.locator('#search-input').fill('');
   }
   const authored=core.entries.find(row=>row.example?.provenance?.kind==='app-authored');
   if(authored){
-   await route(page,'wordlist');if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]',authored.level);await page.locator('#search-input').fill(authored.word);await page.locator(`[data-word="${authored.id}"]`).click();assert.ok((await page.locator('[role=dialog]').evaluate(node=>{const copy=node.cloneNode(true);copy.querySelectorAll('rt').forEach(rt=>rt.remove());return copy.textContent;})).includes(authored.example.text));await page.locator('[data-example="0"]').click();await page.waitForFunction(text=>window.testSpokenText===text,authored.example.text);await page.keyboard.press('Escape');await page.locator('#search-input').fill('');
+   await tab(page,'home');await page.locator(`[data-level="${authored.level}"]`).click();await route(page,'wordlist');await page.locator('#search-input').fill(authored.word);await page.locator(`[data-word="${authored.id}"]`).click();assert.ok((await page.locator('[role=dialog]').evaluate(node=>{const copy=node.cloneNode(true);copy.querySelectorAll('rt').forEach(rt=>rt.remove());return copy.textContent;})).includes(authored.example.text));await page.locator('[data-example="0"]').click();await page.waitForFunction(text=>window.testSpokenText===text,authored.example.text);await page.keyboard.press('Escape');await page.locator('#search-input').fill('');
   }
   const pending=core.entries.find(row=>!row.example&&row.referenceExamples?.length);
   if(pending){
-   await route(page,'wordlist');if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]',pending.level);await page.locator('#search-input').fill(pending.word);const firstResult=await page.locator('[data-word]').first().getAttribute('data-word');assert.equal(core.entries.find(row=>row.id===firstResult)?.word,pending.word);await page.locator(`[data-word="${pending.id}"]`).click();
+   await tab(page,'home');await page.locator(`[data-level="${pending.level}"]`).click();await route(page,'wordlist');await page.locator('#search-input').fill(pending.word);const firstResult=await page.locator('[data-word]').first().getAttribute('data-word');assert.equal(core.entries.find(row=>row.id===firstResult)?.word,pending.word);await page.locator(`[data-word="${pending.id}"]`).click();
    assert.equal(await page.locator('[role=dialog] h3').innerText(),'Examples');assert.equal(await page.locator('[role=dialog] .study-example').count(),1);assert.equal(await page.locator('[data-reference]').count(),0);const selected=await page.locator('[role=dialog] .study-example p[lang]').evaluate(node=>{const copy=node.cloneNode(true);copy.querySelectorAll('rt,button').forEach(child=>child.remove());return copy.textContent.trim();});assert.ok(pending.referenceExamples.some(example=>example.text===selected));await page.locator('[data-example="0"]').click();await page.waitForFunction(text=>window.testSpokenText===text,selected);await page.keyboard.press('Escape');await page.locator('#search-input').fill('');
   }
   if(language==='en'){
-   await route(page,'wordlist');if(!await page.locator('[data-level-filter]').isVisible())await page.locator('summary').click();await page.selectOption('[data-level-filter]',core.entries.find(row=>row.tags?.includes('topic:research')).level);
-   assert.equal(await page.locator('[data-focus]').count(),0);assert.deepEqual(await page.locator('[data-level-filter] option').evaluateAll(nodes=>nodes.map(node=>node.value)),['IELTS 1.0–3.5','IELTS 4.0–6.5','IELTS 7.0–8.0','IELTS 8.5–9.0']);await page.selectOption('[data-topic]','research');assert.equal(await page.locator('.filter-fold').evaluate(node=>node.open),true);await page.locator('.wl-row').first().waitFor();
-   const visible=await page.locator('[data-word]').evaluateAll(nodes=>nodes.map(node=>node.dataset.word));
-   assert.ok(visible.every(id=>{const tags=core.entries.find(row=>row.id===id).tags;return tags.includes('topic:research');}));
-   await page.locator('[data-word]').first().click();await page.locator('.lexicon-topic-tags').waitFor();await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await mkdir('/private/tmp/learn-language-broad-shots',{recursive:true});await page.screenshot({path:'/private/tmp/learn-language-broad-shots/english-topic-detail.png'});await page.keyboard.press('Escape');
-   await page.selectOption('[data-topic]','all');
+   const topicWord=core.entries.find(row=>row.tags?.includes('topic:research'));
+   await tab(page,'home');await page.locator(`[data-level="${topicWord.level}"]`).click();await route(page,'wordlist');
+   assert.equal(await page.locator('[data-level-filter],[data-topic],[data-focus]').count(),0);
+   await page.locator('#search-input').fill(topicWord.word);
+   await page.locator(`[data-word="${topicWord.id}"]`).click();
+   await page.locator('.lexicon-topic-tags').waitFor();await page.keyboard.press('Escape');
+   await page.locator('#search-input').fill('');
   }
   await tab(page,'home');await page.locator(`[data-level="${studyProfiles[language].levels[0]}"]`).click();assert.equal(await page.locator('[data-level=all]').count(),0);
   await route(page,'flashcards');await page.locator('[data-flip]').click();await page.locator('[data-next-card]').click();await page.locator('[data-shuffle]').click();
@@ -85,12 +86,12 @@ try{
   await tab(page,'home');for(const level of studyProfiles[language].levels){await page.locator(`[data-level="${level}"]`).click();await page.locator('[data-route=wordlist]').click();await page.locator('.wl-row').first().waitFor();if(language==='en'){const expected=new Set(studyWords(core).filter(word=>word.level===level).map(word=>word.id));const visible=await page.locator('[data-word]').evaluateAll(nodes=>nodes.map(node=>node.dataset.word));assert.ok(visible.every(id=>expected.has(id)),level);assert.ok((await page.locator('.wl-hsk').allTextContents()).every(text=>text===level));}await tab(page,'home');}
   if(language==='en'){
    for(const [locale,label] of [['ko','학습 레벨'],['en','Study Level']]){
-    await tab(page,'settings');await page.selectOption('#display-language',locale);await tab(page,'home');
+    await choose(page,language,locale);await tab(page,'home');
     assert.equal(await page.locator('.study-level-card h2').innerText(),label);
     assert.ok(await page.locator('.english-level-options button').evaluateAll(nodes=>nodes.every(node=>node.scrollWidth<=node.clientWidth)), 'range labels fit phone chips');
     for(const mode of ['wordlist','flashcards','vocabmeaning','vocabinput','cloze','scramble','listening']){
      await route(page,mode);assert.equal(await page.locator('[data-focus]').count(),0);
-     assert.deepEqual(await page.locator('[data-level-filter] option').evaluateAll(nodes=>nodes.map(node=>node.value)),['IELTS 1.0–3.5','IELTS 4.0–6.5','IELTS 7.0–8.0','IELTS 8.5–9.0']);
+     assert.equal(await page.locator('[data-level-filter],[data-topic]').count(),0);
     }
     await tab(page,'wrong');assert.equal(await page.locator('[data-focus]').count(),0);
    }
@@ -102,7 +103,7 @@ try{
   }
   console.log('Verified '+language);checks.push(`${language}: independent ${Object.keys(pairs).join('/').toUpperCase()} explanation downloads, meanings, examples, keyboard inputs, retest, same-POS quiz, dictation, Cloze/Scramble, Review/retest and every target level`);
  }
- await tab(page,'settings');await page.selectOption('#display-language','ko');await page.waitForFunction(()=>document.documentElement.lang==='ko');await route(page,'wordlist');assert.equal(await page.locator('h2').innerText(),'단어 목록');
+ await tab(page,'settings');await page.selectOption('#explanation','ko');await page.waitForFunction(()=>document.documentElement.lang==='ko');await route(page,'wordlist');assert.equal(await page.locator('h2').innerText(),'단어 목록');
  await tab(page,'settings');await page.locator('[data-theme-choice=dark]').click();await route(page,'wordlist');
  const shots='/private/tmp/learn-language-multilingual-shots';await mkdir(shots,{recursive:true});await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:shots+'/french-dark.png',fullPage:true});
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await page.waitForFunction(()=>navigator.serviceWorker.controller!==null);await context.setOffline(true);await page.reload();await ready(page);

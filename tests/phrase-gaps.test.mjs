@@ -25,7 +25,7 @@ test('inline inputs hide answers before checking and show per-slot corrections a
  const html=renderExercisePrompt(q,{editable:true});
  assert.equal((html.match(/data-phrase-gap=/g)||[]).length,2);assert.ok(!html.includes('value="write"'));assert.match(html,/enterkeyhint="next"/);assert.match(html,/enterkeyhint="done"/);
  const checked=renderExercisePrompt(q,{checked:true,input:'write … off'});
- assert.ok(!checked.includes('<input'));assert.match(checked,/phrase-gap-result correct/);assert.match(checked,/phrase-gap-result wrong/);assert.match(checked,/>down<\/span><del class="input-wrong">off<\/del>/);
+ assert.ok(!checked.includes('<input'));assert.match(checked,/<mark class="cloze-answer">write<\/mark>/);assert.match(checked,/<mark class="cloze-answer">down<\/mark>/);assert.doesNotMatch(checked,/<del|>off</);
  const review=renderExercisePrompt(q);assert.equal((review.match(/form-question-blank/g)||[]).length,2);assert.ok(!review.includes('data-phrase-gap'));
  const hostile=renderExercisePrompt({...q,gapFill:{parts:['<script>','',''],answers:['x','y']}},{editable:true,input:'\" onfocus=bad … <b>'});assert.ok(!hostile.includes('<script>'));assert.ok(!hostile.includes('value="" onfocus'));
 });

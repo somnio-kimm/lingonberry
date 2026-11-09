@@ -7,18 +7,57 @@ import {assembleStudy} from '../web/js/packages/study.js';
 import {studyWords,studyProfiles} from '../web/js/presentation/study-profiles.js';
 import {selectWordExample} from '../web/js/shared/word-example.js';
 import {createSentenceEngine,findSentenceFocus} from '../web/js/shared/lexicon-sentences.js';
+import {createPhrasePractice} from '../web/js/shared/phrase-practice.js';
 import {auditReviewedExamples} from '../scripts/content/reviewed-examples.mjs';
 
 const bytes=path=>readFile(new URL('../'+path,import.meta.url)),json=async path=>JSON.parse(await bytes(path)),rows=async path=>(await bytes(path)).toString().trim().split('\n').map(JSON.parse),hash=data=>createHash('sha256').update(data).digest('hex');
 const edition='language-packages/sources/examples/editions/5.0.0/',corePath='language-packages/en-core-5.0.0.json';
-test('all 12,745 English entries have primary examples and complete Korean translations in valid current downloads',async()=>{
- const catalog=await json('language-packages/catalog.json'),core=await json(corePath);
- assert.equal(core.entries.length,12745);assert.equal(core.contentReview.examplesPending,0);assert.equal(core.contentReview.completionReview.fullCoverage,true);
- for(const id of ['en-core','en-en','en-ko']){const descriptor=catalog.find(row=>row.id===id),data=await bytes(descriptor.url.slice(1));assert.equal(descriptor.version,'5.0.0');assert.equal(data.length,descriptor.bytes);assert.equal(hash(data),descriptor.sha256);validatePackage(JSON.parse(data),descriptor);}
+test('current English downloads bind each explanation to its own core and preserve all primary examples',async()=>{
+ const catalog=await json('language-packages/catalog.json');
  for(const locale of ['en','ko']){
-  const pair=await json(`language-packages/en-${locale}-5.0.0.json`);validateExplanation(core,pair);const byId=new Map(pair.entries.map(row=>[row.id,row]));
-  const words=studyWords(assembleStudy(core,pair)),engine=createSentenceEngine(studyProfiles.en);
-  assert.equal(new Set(engine.createSentencePool('scramble',words,locale).all(()=>.3).map(row=>row.word.id)).size,core.entries.length);
+  const descriptor=catalog.find(row=>row.id==='en-'+locale);
+  const coreDescriptor=catalog.find(row=>row.id==='en-core'&&row.version===descriptor.studyVersion);
+  for(const item of [descriptor,coreDescriptor]){
+   const data=await bytes(item.url.slice(1));
+   assert.equal(data.length,item.bytes);assert.equal(hash(data),item.sha256);validatePackage(JSON.parse(data),item);
+  }
+  const core=await json(coreDescriptor.url.slice(1)),pair=await json(descriptor.url.slice(1));
+  validateExplanation(core,pair);
+  const primary=core.entries.filter(row=>row.example),byId=new Map(pair.entries.map(row=>[row.id,row]));
+  assert.equal(core.entries.length,core.contentReview.entries);
+  assert.equal(core.entries.length-primary.length,core.contentReview.examplesPending);
+  assert.equal(core.contentReview.completionReview.fullCoverage,true);
+  if(core.contentReview.vocabularyExpansion){
+   assert.equal(locale,'en');
+   assert.equal(new Set(core.entries.map(row=>row.word.normalize('NFKC').trim().toLowerCase())).size,20000+(core.contentReview.phraseExpansion?.entries||0));
+   const baseline=await json('language-packages/en-core-5.2.0.json');
+   assert.deepEqual(primary.slice(0,baseline.entries.length),baseline.entries);
+   if(core.contentReview.phraseExpansion?.legacyDictionarySourcePath){
+    const dictionary=new Set(core.entries.map(row=>row.word.toLowerCase()));
+    for(const phrase of 'make a decision|pay attention|heavy rain|strong coffee|take responsibility|break the silence|catch a cold|give advice|do homework|keep a promise|make progress|look up|turn off|put off|find out|pick up|turn on|give up|run out of|take off|carry on|make a mistake|make the bed|make an effort|bring to a conclusion|conduct research|reach a consensus|draw an inference|test a hypothesis|carry out an analysis|come under scrutiny|set a precedent|financial probity|resolve ambiguity|put on|get up|put up with|root out|do away with|rule out|write down|make every effort|subject to scrutiny|take a photo'.split('|'))assert.ok(dictionary.has(phrase),phrase);
+   }
+   const inventory=core.contentReview.phraseExpansion?.inventory;
+   if(inventory){
+    const study=assembleStudy(core,pair),practice=createPhrasePractice(study,studyWords(study));
+    assert.equal(new Set(practice.map(row=>row.entryId)).size,inventory.added);
+    assert.equal(practice.length,inventory.added*2);
+    assert.equal(practice.filter(row=>row.gapFill).length,(inventory.sourceExamples+inventory.authoredExamples)*2);
+    assert.ok(practice.every(row=>!row.options||row.options.includes(row.answer)));
+    assert.ok(core.contentReview.phraseExpansion.entries>10000);
+   }
+   if(core.contentReview.phraseExpansion?.sourcePath.endsWith('/usage-by-band.tsv')){
+    const byId=new Map(core.entries.map(entry=>[entry.id,entry]));
+    for(const category of ['idioms','phrasal','collocations']){
+     for(const level of studyProfiles.en.levels){
+      const questions=core.exercises.filter(row=>row.category===category&&byId.get(row.entryId).level===level&&byId.get(row.entryId).provenance?.sourcePath===core.contentReview.phraseExpansion.sourcePath);
+      assert.equal(questions.filter(row=>row.route==='vocabmeaning').length,3);
+      assert.equal(questions.filter(row=>row.route==='vocabinput').length,3);
+     }
+    }
+   }
+  }else assert.equal(primary.length,core.entries.length);
+  const words=studyWords(assembleStudy(core,pair)).filter(word=>word.examples.length),engine=createSentenceEngine(studyProfiles.en);
+  assert.equal(new Set(engine.createSentencePool('scramble',words,locale).all(()=>.3).map(row=>row.word.id)).size,primary.length);
   for(const word of words){const example=selectWordExample(word,'en');assert.ok(example?.text?.trim(),word.id);assert.equal(example.text,word.examples[0].text);assert.ok(byId.get(word.id).exampleTranslation?.trim());if(locale==='en'){assert.equal(byId.get(word.id).exampleTranslation,example.text);assert.equal(example.studyTranslation,undefined);}else assert.equal(example.studyTranslation,byId.get(word.id).exampleTranslation);}
  }
 });

@@ -4,6 +4,7 @@ import {EXERCISE_ROUTES,JAPANESE_FORM_KINDS} from '../web/js/shared/language-exe
 import {createJapaneseReadingExercises} from '../web/js/shared/japanese-reading.js';
 import {createReadingChoices} from '../web/js/shared/reading-choices.js';
 import {createRootPractice} from '../web/js/shared/root-practice.js';
+import {phraseRecallUiPairs} from '../web/js/shared/phrase-practice.js';
 import {collocationInstruction} from '../web/js/shared/collocations.js';
 const root=new URL('../',import.meta.url);
 const compare=(a,b)=>{const x=a.version.split('.').map(Number),y=b.version.split('.').map(Number);return x[0]-y[0]||x[1]-y[1]||x[2]-y[2];};
@@ -28,7 +29,7 @@ export async function exerciseUiPairs(){
   const familyWords=[{id:'include',lemma:'include',pos:'verb',studyMeaning:'contain'},{id:'exclude',lemma:'exclude',pos:'verb',studyMeaning:'leave out'}],familyStudy={targetLanguage:'en',explanationLanguage:locale,families:[{id:'clude',root:'clude',origin:'la',members:familyWords.map(word=>({entryId:word.id}))}]};
   return [...rows,...createReadingChoices([...rows,...legacy],words,locale),...createRootPractice(familyStudy,familyWords),...['vocabinput','vocabmeaning'].map(mode=>({id:mode,instruction:collocationInstruction(mode,locale)}))];
  };
- pairs.push(...Object.values(JAPANESE_FORM_KINDS));
+ pairs.push(...Object.values(JAPANESE_FORM_KINDS),...phraseRecallUiPairs);
  const en=generated('en'),ko=new Map(generated('ko').map(row=>[row.id,row]));for(const row of en)if(ko.has(row.id))pairs.push([row.instruction,ko.get(row.id).instruction]);
  return [...new Map(pairs.map(pair=>[JSON.stringify(pair),pair])).values()];
 }
