@@ -3,16 +3,18 @@ import {joinGapAnswers} from '../../web/js/shared/phrase-gaps.js';
 import {exampleDigest} from './reviewed-examples.mjs';
 import {englishExistingReviewDigest} from './english-review-identity.mjs';
 
-export function englishGapPracticeDigest(review){
- return exampleDigest({reviewDigest:englishExistingReviewDigest(review),gapFill:review.gapFill,
+export function englishGapPracticeDigest(review,gapFill=review.gapFill){
+ return exampleDigest({reviewDigest:englishExistingReviewDigest(review),gapFill,
   practiceEligible:review.practiceEligible!==false});
 }
 
 /** Compile verified surface forms and explicitly reviewed discontinuous gaps. */
-export function compileReviewedEnglishPractice({entries,reviews,formIndex,focusDecisions=[],gapPracticeApprovals=[]}) {
+export function compileReviewedEnglishPractice({entries,reviews,formIndex,focusDecisions=[],gapDecisions=[],gapPracticeApprovals=[]}) {
  const byId=new Map(reviews.map(row=>[row.id,row]));
  const decisions=new Map(focusDecisions.map(row=>[row.id,row]));
  if(decisions.size!==focusDecisions.length)throw new Error('Duplicate focus decision');
+ const gapById=new Map(gapDecisions.map(row=>[row.id,row]));
+ if(gapById.size!==gapDecisions.length)throw new Error('Duplicate gap decision');
  const approvals=new Map(gapPracticeApprovals.map(row=>[row.id,row]));
  if(approvals.size!==gapPracticeApprovals.length)throw new Error('Duplicate gap practice approval');
  const exercises=[],englishExercises=[],koreanExercises=[],unresolved=[],focusEvidence=[];
@@ -23,7 +25,17 @@ export function compileReviewedEnglishPractice({entries,reviews,formIndex,focusD
   const decision=decisions.get(entry.id);
   if(decision&&(decision.exampleTextDigest!==exampleDigest(entry.example.text)||
      !decision.reviewer?.trim()||!decision.reason?.trim()))throw new Error('Unbound focus decision: '+entry.id);
-  const gapFill=review.gapFill;
+  const gapDecision=gapById.get(entry.id);
+  if(gapDecision&&(gapDecision.exampleTextDigest!==exampleDigest(entry.example.text)||
+     !gapDecision.reviewer?.trim()||!gapDecision.reason?.trim()))throw new Error('Unbound gap decision: '+entry.id);
+  if(gapDecision){
+   const checked=validateEnglishGapFill({sentence:entry.example.text,gapFill:gapDecision.gapFill});
+   if(checked.status!=='resolved')throw new Error('Invalid reviewed gaps: '+entry.id+' '+checked.reason);
+   if(review.gapFill&&exampleDigest(review.gapFill)!==exampleDigest(gapDecision.gapFill)){
+    throw new Error('Conflicting gap decisions: '+entry.id);
+   }
+  }
+  const gapFill=gapDecision?.gapFill||review.gapFill;
   const result=resolveEnglishExampleFocus({entry,sentence:entry.example.text,formIndex,
    reviewedFocus:decision?.focus||entry.example.focus,approvedAliases:entry.aliases||[],gapFill});
   counts[result.status]++;
@@ -38,8 +50,9 @@ export function compileReviewedEnglishPractice({entries,reviews,formIndex,focusD
    // The entire phrase is not contiguous; only its approved exercise may blank it.
    entry.example.clozeEligible=false;
    const approval=approvals.get(entry.id);
+   if(gapDecision&&!approval)throw new Error('Unapproved gap practice: '+entry.id);
    if(approval){
-    if(approval.reviewDigest!==englishGapPracticeDigest(review)||!approval.reviewer?.trim()||
+    if(approval.reviewDigest!==englishGapPracticeDigest(review,gapFill)||!approval.reviewer?.trim()||
        !approval.reason?.trim())throw new Error('Unbound gap practice approval: '+entry.id);
     delete entry.example.practiceEligible;
    }
@@ -56,6 +69,7 @@ export function compileReviewedEnglishPractice({entries,reviews,formIndex,focusD
   return entry;
  });
  for(const id of decisions.keys())if(!byId.has(id)||!entries.some(row=>row.id===id))throw new Error('Unknown focus decision: '+id);
+ for(const id of gapById.keys())if(!byId.has(id)||!entries.some(row=>row.id===id))throw new Error('Unknown gap decision: '+id);
  for(const id of approvals.keys())if(!exercises.some(row=>row.entryId===id))throw new Error('Unknown gap practice approval: '+id);
  return {entries:compiled,exercises,englishExercises,koreanExercises,focusEvidence,
   report:{entries:compiled.length,counts,structuredGaps:exercises.length,unresolved,
