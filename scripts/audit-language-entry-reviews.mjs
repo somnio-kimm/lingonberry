@@ -21,7 +21,7 @@ for(const language of ['de','zh','ja']){
  Object.assign(report,{inputSha256:sha(input.raw),decisionSha256:sha(decisions.raw),crossReviewSha256:sha(cross.raw),finalizedSha256:sha(finalText)});
  await writeTextAtomic(new URL(language+'-review-audit.json',folder),JSON.stringify(report,null,2)+'\n');
  await writeTextAtomic(new URL(language+'-review-finalized.jsonl',folder),finalText);
- reports.push({...report,remaining:report.remaining.length,pendingIndependent:report.pendingIndependent.length,pendingSource:report.pendingSource.length,pendingUsage:report.pendingUsage.length,pendingScopeClassification:report.pendingScopeClassification.length,unexaminedSourceFindings:report.unexaminedSourceFindings.length,errors:report.errors.length});
+ reports.push({...report,remaining:report.remaining.length,pendingIndependent:report.pendingIndependent.length,pendingSource:report.pendingSource.length,pendingUsage:report.pendingUsage.length,pendingExampleQuality:report.pendingExampleQuality.length,pendingScopeClassification:report.pendingScopeClassification.length,unexaminedSourceFindings:report.unexaminedSourceFindings.length,errors:report.errors.length});
 }
 const summary={scope:'Full entry review for German, Chinese and Japanese',languages:reports,
  complete:reports.every(row=>row.complete),notice:'Structural checks establish coverage and bound approvals, not native-speaker certification.'};
