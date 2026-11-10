@@ -124,7 +124,13 @@ class AppViewController: CAPBridgeViewController {
                     if(!question||!verbFormCorrect(question,answer)||verbFormCorrect(question,answer.replace('mich','sich')))throw new Error('Reflexive person grading differs');
                     reflexiveChecks.push({tense,accepted:question.acceptedAnswers});
                   }
-                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,restored:original.target||null});
+                  const {clozeQuestions,clozeOptions}=await import('./languages/de/js/core/sentence-quizzes.js');
+                  const focusText='Gut zu wissen: Das ist eine gute Idee.',focusStart=focusText.indexOf('gute');
+                  const focusQuestion=clozeQuestions([{id:'native-qa-focus',lemma:'gut',pos:'adjective',examples:[{de:focusText,focus:{start:focusStart,text:'gute'}}]}])[0];
+                  if(focusQuestion?.start!==focusStart||focusQuestion.answer!=='gute')throw new Error('Explicit German Cloze focus differs');
+                  const focusChoices=clozeOptions(focusQuestion,[focusQuestion.word,{id:'native-qa-modern',lemma:'modern',pos:'adjective'}]).map(option=>option.text);
+                  if(!focusChoices.includes('moderne')||focusChoices.includes('modern'))throw new Error('Inflected German Cloze distractor differs');
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,focusCheck:{start:focusQuestion.start,answer:focusQuestion.answer,choices:focusChoices},restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {

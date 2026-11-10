@@ -1,3 +1,5 @@
+import {findAdjectiveFocusPatterns,pickAdjectiveFocusOption} from './adjective-forms.js';
+import {findSentenceFocus} from '../../../../js/shared/lexicon-sentences.js';
 import {nounPhraseAlternatives,formAlternatives} from './form-alternatives.js';
 import { wordType } from './dictionary.js';
 import { shuffleWords } from './words.js';
@@ -50,8 +52,15 @@ function findSpan(sentence,form) {
 }
 export function clozeQuestions(words) {
  return words.flatMap(word=>(word.examples||[]).flatMap((example,i)=>{
-  const sentence=normalizeSentence(example.de);
-  for(const form of forms(word)){
+  const sentence=normalizeSentence(example.de),declared=forms(word);
+  if(example.focus!==undefined){
+   if(typeof example.focus?.text!=='string'||!example.focus.text.trim())return [];
+   const focus=findSentenceFocus(word,{text:sentence,focus:example.focus},'de');if(!focus)return [];
+   let form=declared.find(form=>form.text===focus.text)||{text:focus.text,kind:'focus',path:[]};
+   if(word.pos==='adjective')form={...form,adjectivePatterns:findAdjectiveFocusPatterns(word,focus.text)};
+   return [{id:word.id+':'+i+':'+focus.start,word,example:{...example,de:sentence},answer:focus.text,start:focus.start,form}];
+  }
+  for(const form of declared){
    const span=findSpan(sentence,form.text);
    if(span)return [{id:word.id+':'+i+':'+span.start,word,example:{...example,de:sentence},answer:span.text,start:span.start,form}];
   }
@@ -63,6 +72,11 @@ export function scrambleQuestions(words) {
 }
 function optionForm(word,question) {
  const form=question.form;let text;
+ if(form.adjectivePatterns){
+  text=pickAdjectiveFocusOption(word,form.adjectivePatterns);if(!text)return null;
+  const initial=question.start===0||question.answer[0]!==question.answer[0].toLocaleLowerCase('de')&&question.word.lemma[0]===question.word.lemma[0].toLocaleLowerCase('de');
+  return initial?text[0].toLocaleUpperCase('de')+text.slice(1):text;
+ }
  if(form.kind==='lemma')text=word.lemma;
  else if(form.kind==='plural')text=word.plural;
  else{let value=word[form.kind];for(const part of form.path)value=value?.[part];if(typeof value==='string')text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);}

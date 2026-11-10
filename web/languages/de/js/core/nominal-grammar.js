@@ -1,3 +1,5 @@
+import {adjectiveEndings,nominalGenders as genders,generateAdjectiveForms as adjectiveForms} from './adjective-forms.js';
+export {generateAdjectiveForms as adjectiveForms} from './adjective-forms.js';
 import {nounPhraseAlternatives} from './form-alternatives.js';
 import { snapshotQuestion } from '../../../../js/shared/question-snapshot.js';
 import { NOMINAL_MODES } from './quiz-modes.js';
@@ -8,20 +10,7 @@ export const patternLabel = value => ({strong:'Strong · no article',weak:'Weak 
 export const genderLabel = value => ({masculine:'Masculine',feminine:'Feminine',neuter:'Neuter',plural:'Plural'}[value]);
 const capitalize = value => value[0].toLocaleUpperCase('de')+value.slice(1);
 const normalize = value => String(value).normalize('NFC').trim().replace(/\s+/gu,' ');
-const adjectiveEndings = {
- strong:{nom:['er','e','es','e'],acc:['en','e','es','e'],dat:['em','er','em','en'],gen:['en','er','en','er']},
- weak:{nom:['e','e','e','en'],acc:['en','e','e','en'],dat:['en','en','en','en'],gen:['en','en','en','en']},
- mixed:{nom:['er','e','es','en'],acc:['en','e','es','en'],dat:['en','en','en','en'],gen:['en','en','en','en']},
-};
 const indefinite = {nom:['ein','eine','ein','keine'],acc:['einen','eine','ein','keine'],dat:['einem','einer','einem','keinen'],gen:['eines','einer','eines','keiner']};
-const genders=['masculine','feminine','neuter','plural'];
-export function adjectiveForms(lemma,grammaticalCase,gender,pattern) {
- const ending=adjectiveEndings[pattern]?.[grammaticalCase]?.[genders.indexOf(gender)];
- if(ending===undefined||lemma==='allein')return [];
- if(['rosa','lila'].includes(lemma))return [lemma];
- const stems=lemma==='hoch'?['hoh']:lemma==='teuer'?['teur','teuer']:/el$/u.test(lemma)?[lemma.slice(0,-2)+'l']:/e$/u.test(lemma)?[lemma.slice(0,-1)]:[lemma];
- return stems.map(stem=>stem+ending);
-}
 function nounPhrases(noun,grammaticalCase,number,allowBare=false) {
  if(number==='singular'&&noun.number_restriction==='plural'||number==='plural'&&noun.number_restriction==='singular')return [];
  const gender=number==='plural'?'plural':noun.gender;
