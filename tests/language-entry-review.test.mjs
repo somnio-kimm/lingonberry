@@ -255,3 +255,21 @@ test('example-quality observations cannot waive actual issue lists or malformed 
  }
  assert.match(run([{...pass,exampleQualityIssues:'not-a-list'}]).report.errors[0].error,/Example quality/);
 });
+
+test('retired records preserve historical examples while independent/source/migration gates still apply',()=>{
+ const inherited={...input,coreEntry:{...input.coreEntry,example:{text:fields.exampleText,source:{generation:'original-neutral-context-frame-v1'}}}};
+ const retirement={...pass,verdict:'retire',reason:'Retire a duplicate learner card while preserving its exact original history.',exampleQualityIssues:['Historical example was a generic frame.']};
+ const cross={...approve(retirement),exampleQualityResolution:{required:true,status:'unresolved',reason:'Historical example remains unchanged.'}};
+ const result=run([retirement],[cross],{inputs:[inherited]});
+ assert.equal(result.report.complete,true);assert.deepEqual(result.report.pendingExampleQuality,[]);
+ assert.equal(result.finalized[0].verdict,'retire');assert.deepEqual(result.finalized[0].core.example,inherited.coreEntry.example);
+ assert.deepEqual(run([retirement],[],{inputs:[inherited]}).report.pendingIndependent,['school']);
+ assert.equal(run([retirement],[{...cross,decisionDigest:'previous'}],{inputs:[inherited]}).report.complete,false);
+ for(const kind of ['source','usage']){
+  const held={...retirement,[kind+'Issues']:['Retirement source or migration scope remains unresolved.']};
+  const pending=run([held],[{...cross,decisionDigest:exampleDigest(held)}],{inputs:[inherited]});
+  assert.deepEqual(pending.report[kind==='source'?'pendingSource':'pendingUsage'],['school']);
+  assert.equal(pending.report.complete,false);assert.equal(pending.finalized.length,0);
+ }
+ assert.equal(run([retirement],[{...cross,exampleQualityResolution:null}],{inputs:[inherited]}).report.complete,false);
+});
