@@ -105,7 +105,15 @@ class AppViewController: CAPBridgeViewController {
                     if(!question||expected.some(answer=>!verbFormCorrect(question,answer))||verbFormCorrect(question,'bin hat geschwommen'))throw new Error('Mixed perfect auxiliary grading differs');
                     compoundChecks.push({tense,accepted:question.acceptedAnswers});
                   }
-                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,restored:original.target||null});
+                  const {germanWords}=await import('./js/presentation/words.js');
+                  const {vocabularyQuestions,vocabularyAnswerCorrect}=await import('./languages/de/js/core/vocabulary-tests.js'),aliasChecks=[];
+                  for(const locale of ['en','ko']){
+                    const word=germanWords({targetLanguage:'de',explanationLanguage:locale,entries:[{id:'native-qa-yoghurt',word:'Joghurt',aliases:['Jogurt'],article:'der',partOfSpeech:'noun',meaning:locale==='en'?'yoghurt':'요구르트'}]})[0];
+                    const question=vocabularyQuestions('vocabinput',[word],locale)[0];
+                    if(!vocabularyAnswerCorrect(question,'der Jogurt')||vocabularyAnswerCorrect(question,'Jogurt'))throw new Error('Declared spelling alias grading differs');
+                    aliasChecks.push({locale,accepted:question.acceptedAnswers});
+                  }
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {

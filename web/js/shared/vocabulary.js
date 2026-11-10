@@ -21,7 +21,7 @@ export function vocabularyMeaning(word, locale) {
   return normalize(Array.isArray(value) ? value.join('; ') : value);
 }
 /** Shared pool algorithm; input spelling and grading are language policies. */
-export function createVocabularyEngine({inputAnswer=vocabularyWord,gradeInput=(question,input)=>
+export function createVocabularyEngine({inputAnswer=vocabularyWord,inputAnswers=word=>[inputAnswer(word)],gradeInput=(question,input)=>
   (question.acceptedAnswers||[question.answer]).some(answer=>normalize(input)===normalize(answer))}={}) {
  const meaningIndexes = new WeakMap();
  function indexMeanings(inventory,locale) {
@@ -66,7 +66,7 @@ function createVocabularyPool(mode, words, locale = 'en', category='vocabulary',
       example: { de: lemma, en: vocabularyMeaning(word, 'en'), ko: vocabularyMeaning(word, 'ko') } };
     if (mode === 'vocabinput') {
       question.acceptedAnswers = [...new Set(synonyms.get(row.type + '\u0000' + row.signature).flatMap(({ word: w }) => {
-        return [inputAnswer(w)];
+        return inputAnswers(w);
       }))];
       return question;
     }
