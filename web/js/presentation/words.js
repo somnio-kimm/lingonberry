@@ -43,10 +43,16 @@ function cleanGermanArticleNotation(entry){
  return {...entry,word:stripArticleNotes(entry.word),grammar,example:cleanExample(entry.example),
   ...(entry.additionalExamples?{additionalExamples:entry.additionalExamples.map(cleanExample)}:{})};
 }
+function resolveGermanGender(entry){
+ const grammar=entry.grammar||{};
+ if(grammar.gender!==undefined)return grammar.gender;
+ if(grammar.number_restriction==='plural')return null;
+ return {der:'masculine',die:'feminine',das:'neuter'}[entry.article];
+}
 export function germanWords(study) {
  return study.entries.map(source=>{const entry=cleanGermanArticleNotation(source);return {
   ...entry.grammar,id:entry.id,lemma:entry.word,sense_id:entry.grammar?.sense_id||entry.id,cefr:entry.level||'A1',pos:entry.partOfSpeech,
-  article:entry.article,aliases:entry.aliases||[],gender:entry.grammar?.gender||({der:'masculine',die:'feminine',das:'neuter'}[entry.article]),
+  article:entry.article,aliases:entry.aliases||[],gender:resolveGermanGender(entry),
   meaning_en:study.explanationLanguage==='en'?(entry.meanings||[entry.meaning]):[],meaning_ko:study.explanationLanguage==='ko'?(entry.meanings||[entry.meaning]):[],
   studyLanguage:study.targetLanguage,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:activeCollocations('de',entry),
   examples:[...(entry.example?[entry.example]:[]),...(entry.additionalExamples||[])].map(example=>({...example,de:example.text,studyTranslation:example.translation,[study.explanationLanguage]:example.translation})),
