@@ -12,6 +12,7 @@ import { renderScrambleQuiz } from '../quizzes/scramble.js';
 const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const reviewState={session:null,filters:{level:null,tag:'all',mode:'all',status:'all',open:false}};
 export function renderRetest(el){
+ if(reviewState.session?.items.some(item=>!Store.isReviewQuestionCurrent(item.question)))reviewState.session=null;
  const session=reviewState.session;let childCleanup=()=>{};
  const back=()=>navigate('wrong',{title:t('wrongBook')});
  const advance=()=>{if(!session.results[session.index])return;session.index++;draw();window.scrollTo(0,0);};

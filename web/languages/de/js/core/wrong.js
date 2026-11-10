@@ -5,7 +5,7 @@ import { wordType } from './dictionary.js';
 export const wrongMode=row=>row.quizMode||row.stage;
 export { wrongAnswerCount } from './wrong-count.js';
 export const filterWrongEntries=(rows,{level='all',pos='all',mode='all',status='all'}={})=>rows.filter(row=>(level==='all'||row.unit.level===level)&&(pos==='all'||row.type===pos)&&(mode==='all'||wrongMode(row)===mode)&&(status==='all'||row.studyStatus===status));
-export function wrongEntries(units, state, words=[]) {
+export function wrongEntries(units, state, words=[],reviewContent) {
   const byId=new Map(words.map(w=>[w.id,w]));
   const rows = [];
   for (const unit of units) {
@@ -24,6 +24,7 @@ export function wrongEntries(units, state, words=[]) {
   }
   for(const mode of ['cloze','scramble','articles','verbforms','vocabinput','vocabmeaning',...LISTENING_MODES,'cases','adjendings']){
     for(const [id,record] of Object.entries(state.quizAnswers?.[mode]||{})){
+      if(reviewContent&&!reviewContent.isCurrent(record.questionSnapshot||{word:{id:record.wordId},contentVersion:record.contentVersion}))continue;
       const attempts=record.attempts||[];let index=-1;
       for(let i=0;i<attempts.length;i++)if(attempts[i].correct===false)index=i;
       const wrongCount=wrongAnswerCount(attempts,record.dismissedThrough??-1);

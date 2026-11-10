@@ -20,7 +20,7 @@ export function createPresentation({navigate}) {
    reportContext:()=>({app:APP_NAME,studyLanguage:'zh',studyLevel:Store.hskLevels}),
    reset:async()=>{TTS.stop();for(const key of ['srsById','words','wordsDataVersion','wrong','streak'])localStorage.removeItem('learn-language.zh.'+key);lastStudy=undefined;return false;},
   },
-  setStudy(study){if(study===lastStudy)return;lastStudy=study;setPackageWords(study?chineseWords(study):[]);},
+  setStudy(study){if(study===lastStudy)return;lastStudy=study;Store.setReviewContent(study);setPackageWords(study?chineseWords(study):[]);},
   setPreferences(values){for(const key of APP_SETTING_KEYS){const local=key==='uiLanguage'?'uiLang':key;if(Object.hasOwn(values,key)&&Store[local]!==values[key])Store[local]=values[key];}},
   preferences(){return {theme:Store.theme,uiLanguage:Store.uiLang,hapticEnabled:Store.hapticEnabled,autoRemoveResolvedWrongs:Store.autoRemoveResolvedWrongs};},
   title(route){return route==='home'?APP_NAME:t(SCREENS[route]?.title||'tabHome');},

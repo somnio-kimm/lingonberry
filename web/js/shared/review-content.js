@@ -6,7 +6,7 @@ export function compareContentVersions(left,right){
 export function createReviewContentPolicy(study){
  const retired=new Set((study?.retiredEntries||[]).map(row=>row.id));
  const revisions=new Map((study?.reviewInvalidations||[]).map(row=>[row.id,row.minimumVersion]));
- const ids=question=>[question?.word?.id,...(question?.options||[]).map(option=>option.id)].filter(Boolean);
+ const ids=question=>[question?.word?.id,question?.noun?.id,...(question?.options||[]).map(option=>option.id)].filter(Boolean);
  function revisionFor(question){let revision;for(const id of ids(question)){const next=revisions.get(id);if(next&&(!revision||compareContentVersions(next,revision)>0))revision=next;}return revision;}
  return {
   isCurrent(question){
