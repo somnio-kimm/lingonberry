@@ -201,3 +201,57 @@ test('stale independent material holds remain pending and malformed scope declar
   const result=run([pass],[{...approve(pass),...changes}]);assert.equal(result.report.complete,false);assert.equal(result.finalized.length,0);assert.match(result.report.errors[0].error,/Malformed/);
  }
 });
+
+test('inherited neutral and topic generators remain an example-quality backlog despite approvals',()=>{
+ for(const generation of ['original-neutral-context-frame-v1','original-topic-context-v1']){
+  const inherited={...input,coreEntry:{...input.coreEntry,example:{text:fields.exampleText,source:{generation}}}};
+  const cross={...approve(pass),exampleQualityResolution:{required:false,status:'resolved',reason:'Grammar and translation match.'}};
+  const result=run([pass],[cross],{inputs:[inherited]});
+  assert.equal(result.report.reviewed,1);assert.deepEqual(result.report.remaining,[]);
+  assert.deepEqual(result.report.pendingExampleQuality,['school']);
+  assert.deepEqual(result.report.pendingSource,[]);assert.equal(result.report.complete,false);assert.equal(result.finalized.length,0);
+ }
+});
+test('a neutral additional example cannot hide behind a useful primary example',()=>{
+ const inherited={...input,coreEntry:{...input.coreEntry,additionalExamples:[{text:'今日の話題は学校です。',source:{generation:'original-topic-context-v1'}}]},
+  englishExplanation:{...input.englishExplanation,additionalExampleTranslations:["Today's topic is school."]},
+  koreanExplanation:{...input.koreanExplanation,additionalExampleTranslations:['오늘의 주제는 학교입니다.']}};
+ const primary={...pass,additionalExamplesReviewed:true};
+ const result=run([primary],[approve(primary)],{inputs:[inherited]});
+ assert.deepEqual(result.report.pendingExampleQuality,['school']);assert.equal(result.finalized.length,0);
+});
+test('a useful replacement with truthful original-context provenance still needs its fresh independent approval',()=>{
+ const inherited={...input,coreEntry:{...input.coreEntry,example:{text:'今日の話題は学校です。',source:{generation:'original-neutral-context-frame-v1'}}},
+  englishExplanation:{...input.englishExplanation,exampleTranslation:"Today's topic is school."},
+  koreanExplanation:{...input.koreanExplanation,exampleTranslation:'오늘의 주제는 학교입니다.'}};
+ const correction={...pass,verdict:'revise',proposedCoreEntry:{...input.coreEntry,example:{text:fields.exampleText,source:{kind:'app-authored',generation:'original-authored-context-v1'}}}};
+ assert.deepEqual(run([correction],[],{inputs:[inherited]}).report.pendingIndependent,['school']);
+ const result=run([correction],[approve(correction)],{inputs:[inherited]});
+ assert.deepEqual(result.report.pendingExampleQuality,[]);assert.equal(result.report.complete,true);
+});
+test('explicit primary and independent example-quality findings require their own valid closure',()=>{
+ for(const primary of [pass,{...pass,exampleQualityIssues:['The target sense is not demonstrated.']}]){
+  const cross={...approve(primary),exampleQualityResolution:{required:true,status:'unresolved',reason:'The example does not demonstrate the selected sense.'}};
+  const pending=run([primary],[cross]);
+  assert.deepEqual(pending.report.pendingExampleQuality,['school']);assert.deepEqual(pending.report.pendingSource,[]);assert.equal(pending.finalized.length,0);
+  cross.exampleQualityResolution={required:true,status:'resolved',reason:'Independently checked that the actual example demonstrates the selected school sense.'};
+  assert.equal(run([primary],[cross]).report.complete,true);
+  const stale={...cross,decisionDigest:'previous'};
+  assert.deepEqual(run([primary],[stale]).report.pendingExampleQuality,['school']);
+  assert.equal(run([primary],[{...cross,reviewer:'primary'}]).report.complete,false);
+ }
+});
+test('example-quality observations cannot waive actual issue lists or malformed declarations',()=>{
+ const note={required:false,status:'unresolved',reason:'Simple short examples can still be useful.'};
+ const primary={...pass,exampleQualityIssues:['Actual missing target-sense context.']};
+ assert.deepEqual(run([primary],[{...approve(primary),exampleQualityResolution:note}]).report.pendingExampleQuality,['school']);
+ const independent={...approve(pass),exampleQualityIssues:['Actual missing target-sense context.'],exampleQualityResolution:note};
+ assert.deepEqual(run([pass],[independent]).report.pendingExampleQuality,['school']);
+ assert.equal(run([pass],[{...approve(pass),exampleQualityResolution:note}]).report.complete,true);
+ const unclassified={...approve(pass),exampleQualityResolution:{status:'unresolved',reason:'Needs classification.'}};
+ assert.deepEqual(run([pass],[unclassified]).report.pendingScopeClassification,[{id:'school',kind:'exampleQuality'}]);
+ for(const changes of [{exampleQualityIssues:'not-a-list'},{exampleQualityResolution:null},{exampleQualityResolution:{required:'false',status:'resolved',reason:'Malformed.'}}]){
+  assert.equal(run([pass],[{...approve(pass),...changes}]).report.complete,false);
+ }
+ assert.match(run([{...pass,exampleQualityIssues:'not-a-list'}]).report.errors[0].error,/Example quality/);
+});

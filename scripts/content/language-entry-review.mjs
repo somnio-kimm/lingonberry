@@ -7,6 +7,9 @@ const text=value=>typeof value==='string'&&!!value.trim();
 const copy=value=>structuredClone(value);
 const equal=(a,b)=>exampleDigest(a)===exampleDigest(b);
 const required=['word','partOfSpeech','level','meaningEn','meaningKo','exampleText','exampleTranslationEn','exampleTranslationKo'];
+const reviewScopes=['source','usage','exampleQuality'];
+const placeholderGenerators=new Set(['original-neutral-context-frame-v1','original-topic-context-v1']);
+const hasPlaceholderExample=core=>[core.example,...(core.additionalExamples||[])].some(example=>placeholderGenerators.has(example?.source?.generation));
 
 /** Read the two existing journal formats without losing source or grammar data. */
 export function resolveLanguageEntryDecision(input,decision){
@@ -78,7 +81,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   if(!findings.has(finding.id))findings.set(finding.id,[]);
   findings.get(finding.id).push(exampleDigest(finding));
  }
- const errors=[],seen=new Set(),valid=new Map(),pendingSource=[],pendingUsage=[],counts={};
+ const errors=[],seen=new Set(),valid=new Map(),pendingSource=[],pendingUsage=[],pendingExampleQuality=[],counts={};
  for(const decision of decisions){
   const input=byId.get(decision.id);
   if(!input||seen.has(decision.id)){errors.push({id:decision.id,error:'Unknown or duplicate review decision'});continue;}
@@ -92,6 +95,9 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   if(decision.usageIssues!==undefined&&!Array.isArray(decision.usageIssues)){
    errors.push({id:decision.id,error:'Usage issues must remain an explicit list'});continue;
   }
+  if(decision.exampleQualityIssues!==undefined&&!Array.isArray(decision.exampleQualityIssues)){
+   errors.push({id:decision.id,error:'Example quality issues must remain an explicit list'});continue;
+  }
   try{
    const resolved=resolveLanguageEntryDecision(input,decision);
    if(['pass','approved'].includes(decision.verdict)&&resolved.changed)throw new Error('A pass decision changes learner content');
@@ -99,7 +105,8 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
     throw new Error('Additional examples also need an explicit review');
    }
    const needsSource=decision.verdict==='needs-source'||!!decision.sourceIssues?.length||findings.has(decision.id);
-   valid.set(decision.id,{input,decision,resolved,needsSource,needsUsage:!!decision.usageIssues?.length,isLegacy});
+   valid.set(decision.id,{input,decision,resolved,needsSource,needsUsage:!!decision.usageIssues?.length,
+    needsExampleQuality:!!decision.exampleQualityIssues?.length||hasPlaceholderExample(resolved.core),isLegacy});
    counts[decision.verdict]=(counts[decision.verdict]||0)+1;
   }catch(error){errors.push({id:decision.id,error:error.message});}
  }
@@ -111,16 +118,18 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
  const approved=[],pendingIndependent=[],pendingScopeClassification=[],finalized=[];
  for(const [id,row] of valid){
   const {input,decision,resolved}=row,declaredCross=approvals.get(id);
-  const sourceScope=classifyIndependentResolution(declaredCross,'source'),usageScope=classifyIndependentResolution(declaredCross,'usage');
-  const needsSource=row.needsSource||sourceScope==='required',needsUsage=row.needsUsage||usageScope==='required';
-  const unclassified=[...(!needsSource&&sourceScope==='unclassified'?['source']:[]),...(!needsUsage&&usageScope==='unclassified'?['usage']:[])];
+  const scopes=Object.fromEntries(reviewScopes.map(kind=>[kind,classifyIndependentResolution(declaredCross,kind)]));
+  const needsSource=row.needsSource||scopes.source==='required',needsUsage=row.needsUsage||scopes.usage==='required';
+  const needsExampleQuality=row.needsExampleQuality||scopes.exampleQuality==='required';
+  const needs={source:needsSource,usage:needsUsage,exampleQuality:needsExampleQuality};
+  const unclassified=reviewScopes.filter(kind=>!needs[kind]&&scopes[kind]==='unclassified');
   for(const kind of unclassified)pendingScopeClassification.push({id,kind});
-  const needsApproval=resolved.changed||needsSource||needsUsage||unclassified.length>0||decision.verdict==='retire';
+  const needsApproval=resolved.changed||needsSource||needsUsage||needsExampleQuality||unclassified.length>0||decision.verdict==='retire';
   let cross=declaredCross,invalidCross=false;
   if(cross){
    const reviewer=decision.reviewer||'legacy-'+language+'-first-pass';
-   const malformedIssues=['source','usage'].some(kind=>cross[kind+'Issues']!==undefined&&!Array.isArray(cross[kind+'Issues']));
-   const malformedResolution=['source','usage'].some(kind=>{const value=cross[kind+'Resolution'];return value!==undefined&&(!value||typeof value!=='object'||Array.isArray(value)||value.required!==undefined&&typeof value.required!=='boolean');});
+   const malformedIssues=reviewScopes.some(kind=>cross[kind+'Issues']!==undefined&&!Array.isArray(cross[kind+'Issues']));
+   const malformedResolution=reviewScopes.some(kind=>{const value=cross[kind+'Resolution'];return value!==undefined&&(!value||typeof value!=='object'||Array.isArray(value)||value.required!==undefined&&typeof value.required!=='boolean');});
    if(cross.decisionDigest!==exampleDigest(decision)||!text(cross.reviewer)||cross.reviewer===reviewer||
       !text(cross.reason)||!['approve','needs-source','reject'].includes(cross.verdict)||malformedIssues||malformedResolution){
     errors.push({id,error:malformedIssues||malformedResolution?'Malformed independent issue or resolution scope':'Stale, incomplete or non-independent cross-review'});invalidCross=true;cross=undefined;
@@ -134,10 +143,14 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   const usageClosed=!needsUsage||(cross?.verdict==='approve'&&cross.usageResolution?.status==='resolved'&&
    text(cross.usageResolution.reason));
   if(!usageClosed)pendingUsage.push(id);
+  // A generic topic frame must be replaced, not waived by an unrelated approval.
+  const exampleQualityClosed=!hasPlaceholderExample(resolved.core)&&(!needsExampleQuality||
+   (cross?.verdict==='approve'&&cross.exampleQualityResolution?.status==='resolved'&&text(cross.exampleQualityResolution.reason)));
+  if(!exampleQualityClosed)pendingExampleQuality.push(id);
   if(invalidCross){pendingIndependent.push(id);continue;}
   if(cross&&cross.verdict!=='approve'){pendingIndependent.push(id);continue;}
   if(needsApproval&&cross?.verdict!=='approve'){pendingIndependent.push(id);continue;}
-  if(!sourceClosed||!usageClosed||unclassified.length)continue;
+  if(!sourceClosed||!usageClosed||!exampleQualityClosed||unclassified.length)continue;
   approved.push(id);finalized.push({id,sourceDigest:input.sourceDigest,decisionDigest:exampleDigest(decision),
    verdict:decision.verdict,reviewer:decision.reviewer||'legacy-'+language+'-first-pass',
    changed:resolved.changed,...(cross?{independentReviewer:cross.reviewer}:{}),...resolved});
@@ -147,5 +160,5 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   changed:[...valid.values()].filter(row=>row.resolved.changed).length,
   externalSourceFindings:sourceFindings.length,unexaminedSourceFindings:[...findings.keys()].filter(id=>!valid.has(id)),
   independentlyApproved:crossReviews.filter(row=>row.verdict==='approve'&&approved.includes(row.id)).length,
-  pendingIndependent,pendingSource,pendingUsage,pendingScopeClassification,counts,errors,complete:!remaining.length&&!pendingIndependent.length&&!pendingSource.length&&!pendingUsage.length&&!pendingScopeClassification.length&&!errors.length}};
+  pendingIndependent,pendingSource,pendingUsage,pendingExampleQuality,pendingScopeClassification,counts,errors,complete:!remaining.length&&!pendingIndependent.length&&!pendingSource.length&&!pendingUsage.length&&!pendingExampleQuality.length&&!pendingScopeClassification.length&&!errors.length}};
 }
