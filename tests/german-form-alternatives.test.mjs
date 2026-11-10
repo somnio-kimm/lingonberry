@@ -110,10 +110,10 @@ test('dative reflexives use mir and dir while keeping explicit objects and infin
  assert.equal(verbFormCorrect(questions.find(q=>q.person==='ich'&&q.tense==='perfekt'),'habe mich etwas gemerkt'),false);
 });
 test('explicit abbreviated source cases retain person-correct reflexive answers',()=>{
- for(const [grammaticalCase,lemma,participle,pronoun]of [['acc','irren','geirrt','mich'],['dat','merken','gemerkt','mir']]){
-  const word={...reflexiveIr,lemma,infinitive:'sich '+lemma,reflexive_case:grammaticalCase,forms:{perfekt:'hat sich '+participle}};
+ for(const [grammaticalCase,lemma,participle,pronoun,object]of [['acc','irren','geirrt','mich',''],['dat','merken','gemerkt','mir','etwas ']]){
+  const word={...reflexiveIr,lemma,infinitive:'sich '+object+lemma,reflexive_case:grammaticalCase,forms:{perfekt:'hat sich '+object+participle}};
   const q=verbFormQuestions([word],[word,...auxiliaries]).find(q=>q.person==='ich'&&q.tense==='perfekt');
-  assert.ok(q.acceptedAnswers.includes('habe '+pronoun+' '+participle));
+  assert.ok(q.acceptedAnswers.includes('habe '+pronoun+' '+object+participle));
  }
  assert.equal(inflectReflexiveComplement('sich geirrt','ich','unknown'),null);
 });
