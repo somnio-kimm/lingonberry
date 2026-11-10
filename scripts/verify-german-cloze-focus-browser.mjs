@@ -27,6 +27,24 @@ try{
   await page.locator('.wrong-entry').waitFor();assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.de.progress.v1')),history);
   await page.locator('#retest-filtered').click();assert.equal(await page.locator('.sentence-quiz-text').innerText(),'Gut zu wissen: Das ist eine ______ Idee.');
   await page.locator('.opt-btn').filter({hasText:'gute'}).click();assert.equal(await page.locator('.cloze-answer').innerText(),'gute');checks++;
+  await page.reload();await page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready'&&document.querySelector('main').dataset.viewState==='ready');
+  await page.evaluate(async({locale,theme})=>{
+   localStorage.clear();document.documentElement.dataset.theme=theme;document.getElementById('style-de').disabled=false;
+   const {createPresentation}=await import('/js/presentation/german.js');const host=document.createElement('section');document.querySelector('main').replaceChildren(host);
+   let app;app=createPresentation({navigate:route=>app.render(route,host),refresh(){},onPreferences(){}});app.setPreferences({uiLanguage:locale});
+   app.setStudy({targetLanguage:'de',explanationLanguage:locale,studyVersion:'4.0.0',entries:[
+    {id:'plural-cactus',word:'Kaktus',article:'der',partOfSpeech:'noun',level:'A1',meaning:locale==='en'?'cactus':'선인장',grammar:{plural:'Kakteen / Kaktusse'},example:{text:'Am Fenster stehen drei Kaktusse.',translation:locale==='en'?'Three cacti stand by the window.':'창가에 선인장 세 개가 있다.'}},
+    {id:'plural-pizza',word:'Pizza',article:'die',partOfSpeech:'noun',level:'A1',meaning:locale==='en'?'pizza':'피자',grammar:{plural:'Pizzen / Pizzas'}},
+    {id:'plural-book',word:'Buch',article:'das',partOfSpeech:'noun',level:'A1',meaning:locale==='en'?'book':'책',grammar:{plural:'Bücher'}},
+    {id:'plural-mass',word:'Wasser',article:'das',partOfSpeech:'noun',level:'A1',meaning:locale==='en'?'water':'물'},
+   ]});app.render('cloze',host);window.focusApp=app;window.focusHost=host;
+  },{locale,theme});
+  await page.locator('.sentence-quiz-text').waitFor();
+  assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),['Bücher','Kaktusse','Pizzas']);
+  await page.locator('.opt-btn').filter({hasText:'Pizzas'}).click();assert.equal(await page.locator('.cloze-answer').innerText(),'Kaktusse');
+  await page.evaluate(()=>window.focusApp.render('wrong',window.focusHost));await page.locator('#retest-filtered').click();await page.locator('.cloze-option-word').first().waitFor();
+  assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),['Bücher','Kaktusse','Pizzas']);
+  await page.locator('.opt-btn').filter({hasText:'Kaktusse'}).click();assert.equal(await page.locator('.sentence-quiz-text').innerText(),'Am Fenster stehen drei Kaktusse.');checks++;
  }
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} actual German explicit-focus checks: EN/KO, phone/tablet, light/dark, inflected question/feedback/saved-context/Review/retest; original history preserved.`);
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} actual German focus/standalone-form checks: EN/KO, phone/tablet, light/dark, inflected targets, individual plural choices without singular substitutes, feedback/saved-context/Review/retest; original history preserved.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
