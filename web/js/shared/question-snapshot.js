@@ -1,7 +1,7 @@
 // Archived shared-runtime module; provenance is recorded in docs/archived-ui-source.json.
 /** Stable review snapshots: persistence does not depend on question generators. */
 const WORD_FIELDS = Object.freeze([
-  'id', 'lemma', 'hanzi', 'cefr', 'hskLevel', 'pos', 'subtype', 'article', 'gender', 'accepted_articles', 'article_optional',
+  'id', 'lemma', 'hanzi', 'cefr', 'hskLevel', 'pos', 'subtype', 'article', 'gender', 'accepted_articles', 'article_optional', 'number_restriction',
   'partOfSpeech', 'meaning_en', 'meaning_ko', 'meaningEn', 'meaningKo', 'syllables',
   'alternateSyllables', 'studyMeaning', 'studyExplanationLanguage',
 ]);

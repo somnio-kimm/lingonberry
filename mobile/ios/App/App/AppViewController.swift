@@ -130,7 +130,11 @@ class AppViewController: CAPBridgeViewController {
                   if(focusQuestion?.start!==focusStart||focusQuestion.answer!=='gute')throw new Error('Explicit German Cloze focus differs');
                   const focusChoices=clozeOptions(focusQuestion,[focusQuestion.word,{id:'native-qa-modern',lemma:'modern',pos:'adjective'}]).map(option=>option.text);
                   if(!focusChoices.includes('moderne')||focusChoices.includes('modern'))throw new Error('Inflected German Cloze distractor differs');
-                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,focusCheck:{start:focusQuestion.start,answer:focusQuestion.answer,choices:focusChoices},restored:original.target||null});
+                  const {wordHeading}=await import('./languages/de/js/core/words.js');
+                  const pluralWord=germanWords({targetLanguage:'de',explanationLanguage:'en',entries:[{id:'native-qa-plural',word:'Ferien',article:'die',partOfSpeech:'noun',meaning:'holidays',grammar:{gender:null,genders:[],number_restriction:'plural'}}]})[0];
+                  const pluralSaved=snapshotVocabularyQuestion(vocabularyQuestions('vocabinput',[pluralWord],'en')[0]).word;
+                  if(pluralWord.gender!==null||pluralSaved.gender!==null||pluralSaved.number_restriction!=='plural'||!wordHeading(pluralSaved).includes('noun-article plural'))throw new Error('Plural-only gender classification differs');
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,focusCheck:{start:focusQuestion.start,answer:focusQuestion.answer,choices:focusChoices},pluralGenderCheck:{gender:pluralSaved.gender,number:pluralSaved.number_restriction},restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {
