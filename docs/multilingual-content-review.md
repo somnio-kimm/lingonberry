@@ -28,6 +28,8 @@ External source findings stay in `*-source-findings.jsonl`. An independent closu
 
 Usage-representation findings stay separate from source uncertainties. For example, some official Chinese entries attach different parts of speech to different HSK levels. Preserve every verified official branch and its qualifiers; do not discard a valid meaning merely because the primary example uses another branch. An independent `usageResolution` is required before declaring the representation settled.
 
+Known inherited `original-neutral-context-frame-v1` and `original-topic-context-v1` examples remain under `pendingExampleQuality`, including additional examples. Merely discussing or mentioning a headword does not demonstrate its selected meaning. Replace these frames with useful reviewed contexts and truthful component provenance; a source, grammar or generic approval cannot waive the frame. Original text and credits stay in private history. Explicit primary/independent `exampleQualityIssues` and scoped `exampleQualityResolution` use their own gate, separate from source and usage findings, with the same fresh independent binding and classification requirements. This check recognises known generators; it does not certify the quality of other sentences or reject all short examples.
+
 The audit verifies coverage and evidence integrity. It cannot itself establish linguistic correctness or native-speaker certification. Do not mark a language complete or publish its revised package until all required entries, correction approvals, source closures and package checks are complete.
 
 ## Language-specific checks
