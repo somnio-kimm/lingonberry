@@ -18,16 +18,18 @@ const stage=new URL('local-data/coverage/reviewed-english-release/',root);
 const read=path=>readFile(new URL(path,root),'utf8');
 const json=async path=>JSON.parse(await read(path));
 const rows=async path=>(await read(path)).split('\n').filter(line=>line.trim()).map(JSON.parse);
+const readOptionalRows=async path=>rows(path).catch(error=>{if(error.code==='ENOENT')return [];throw error;});
 const sha=text=>createHash('sha256').update(text).digest('hex');
 const {audit,reviews}=await loadReviewedEnglishSnapshot(new URL(folder+'independent-audit.json',root),
  new URL(folder+'independent-effective-finalized.jsonl',root));
-const [inputs,baselineCore,baselineEnglish,baselineKorean,bindings,source,sourceClosures,formsText,focusDecisions,gapPracticeApprovals]=await Promise.all([
+const [inputs,baselineCore,baselineEnglish,baselineKorean,bindings,source,sourceClosures,formsText,focusDecisions,gapPracticeApprovals,gapDecisions]=await Promise.all([
  Promise.all([1,2,3].map(n=>rows(folder+`independent-${n}-input.jsonl`))).then(parts=>parts.flat()),
  json('language-packages/en-core-6.6.0.json'),json('language-packages/en-en-6.6.0.json'),
  json('language-packages/en-ko-5.3.0.json'),rows(folder+'source-example-attribution-bindings.jsonl'),
  rows('local-data/coverage/four-language-review/en-source-effective-finalized.jsonl'),
  rows(folder+'supplemental-source-finalized.jsonl'),read(folder+'source-forms.jsonl'),rows(folder+'example-focus-decisions.jsonl'),
  rows(folder+'gap-practice-approvals.jsonl'),
+ readOptionalRows(folder+'gap-fill-decisions.jsonl'),
 ]);
 if(sha(formsText)!=='a2c2b218394351110e87cece4822fd09760759cfc13e1f559d1bf3e6d2dbd2b8'){
  throw new Error('English source form cache differs from its verified extraction');
@@ -44,7 +46,7 @@ if(!overlapAudit.complete||overlapAudit.reviewSnapshotSha256!==audit.effectiveRe
  throw new Error('Run the retained-example overlap audit against this exact completed snapshot before building');
 }
 const practice=compileReviewedEnglishPractice({entries:assembled.entries,reviews,
- formIndex:buildEnglishFormIndex(formsText.split('\n').filter(Boolean).map(JSON.parse)),focusDecisions,gapPracticeApprovals});
+ formIndex:buildEnglishFormIndex(formsText.split('\n').filter(Boolean).map(JSON.parse)),focusDecisions,gapDecisions,gapPracticeApprovals});
 const references=rebuildReviewedEnglishReferences({baselineCore,baselineEnglish,baselineKorean,
  entries:practice.entries,englishEntries:assembled.englishEntries,koreanEntries:assembled.koreanEntries,reviews,invalidConceptIds});
 const license=baseline=>({...baseline.license,notice:[

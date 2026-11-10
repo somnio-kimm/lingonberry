@@ -57,3 +57,43 @@ test('a bound integration approval enables Scramble while reserving Cloze for th
  const changedReview={...review,gapFill:{parts:['The teacher told ',' off.'],answers:['him']}};
  assert.throws(()=>compileReviewedEnglishPractice({...args,reviews:[changedReview],gapPracticeApprovals:[approval]}),/Unbound gap practice/);
 });
+
+const semanticReview={id:entry.id,reviewedFields:fields};
+const gapDecision={id:entry.id,exampleTextDigest:exampleDigest(fields.exampleText),gapFill:review.gapFill,
+ reviewer:'gap-editor',reason:'Keep him visible between the attested past verb and particle.'};
+const separateApproval={id:entry.id,reviewDigest:englishGapPracticeDigest(review),
+ reviewer:'practice-reviewer',reason:'Checked the exact gaps against the unchanged sense and sentence.'};
+
+test('separate reviewed gaps compile bilingual exercises without rewriting the completed sense record',()=>{
+ const original=structuredClone(semanticReview);
+ assert.equal(englishGapPracticeDigest(semanticReview,gapDecision.gapFill),separateApproval.reviewDigest);
+ const result=compileReviewedEnglishPractice({entries:[entry],reviews:[semanticReview],
+  gapDecisions:[gapDecision],gapPracticeApprovals:[separateApproval]});
+ assert.deepEqual(semanticReview,original);
+ assert.equal(result.entries[0].example.text,'The teacher told him off.');
+ assert.equal(result.entries[0].example.clozeEligible,false);
+ assert.equal(result.exercises[0].prompt,'The teacher ___ him ___.');
+ assert.deepEqual(result.exercises[0].gapFill.answers,['told','off']);
+ assert.equal(result.englishExercises[0].context,'To scold someone.');
+ assert.equal(result.koreanExercises[0].context,'꾸짖다');
+ validateExercises({kind:'study',targetLanguage:'en',entries:result.entries,exercises:result.exercises});
+});
+
+test('separate gap decisions require exact sentence binding, valid gaps and a current practice approval',()=>{
+ const args={entries:[entry],reviews:[semanticReview],gapDecisions:[gapDecision],gapPracticeApprovals:[separateApproval]};
+ assert.throws(()=>compileReviewedEnglishPractice({...args,gapPracticeApprovals:[]}),/Unapproved gap practice/);
+ assert.throws(()=>compileReviewedEnglishPractice({...args,gapDecisions:[{...gapDecision,exampleTextDigest:'old'}]}),/Unbound gap decision/);
+ assert.throws(()=>compileReviewedEnglishPractice({...args,gapDecisions:[{...gapDecision,gapFill:{...review.gapFill,answers:['tell','off']}}]}),/Invalid reviewed gaps/);
+ const different={parts:['The teacher told ',' off.'],answers:['him']};
+ assert.throws(()=>compileReviewedEnglishPractice({...args,gapDecisions:[{...gapDecision,gapFill:different}]}),/Unbound gap practice/);
+ const changedSense={...semanticReview,reviewedFields:{...fields,meaningKo:'꾸짖어 바로잡다'}};
+ assert.throws(()=>compileReviewedEnglishPractice({...args,reviews:[changedSense]}),/Unbound gap practice/);
+});
+
+test('separate gap decisions reject duplicate, unknown and conflicting embedded records',()=>{
+ const args={entries:[entry],reviews:[semanticReview],gapDecisions:[gapDecision],gapPracticeApprovals:[separateApproval]};
+ assert.throws(()=>compileReviewedEnglishPractice({...args,gapDecisions:[gapDecision,gapDecision]}),/Duplicate gap decision/);
+ assert.throws(()=>compileReviewedEnglishPractice({...args,gapDecisions:[{...gapDecision,id:'unknown'}],gapPracticeApprovals:[]}),/Unknown gap decision/);
+ const conflict={...semanticReview,gapFill:{parts:['The teacher told ',' off.'],answers:['him']}};
+ assert.throws(()=>compileReviewedEnglishPractice({...args,reviews:[conflict]}),/Conflicting gap decisions/);
+});
