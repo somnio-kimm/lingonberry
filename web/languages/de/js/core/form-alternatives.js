@@ -41,8 +41,9 @@ export function deriveInfinitiveAlternatives(word,perfect=perfectVerbAlternative
  }
  return [word.reflexive===true?'sich '+word.lemma:word.lemma];
 }
-export function nounPhraseAlternatives(value){
- const parts=formAlternatives(value),article=/^(der|die|das|den|dem|des) /u.exec(parts[0]||'')?.[1];
+export function nounPhraseAlternatives(value,{allowBare=false}={}){
+ const parts=formAlternatives(value);if(allowBare)return parts;
+ const article=/^(der|die|das|den|dem|des) /u.exec(parts[0]||'')?.[1];
  if(!article)return [];
  return parts.map(part=>/^(der|die|das|den|dem|des) /u.test(part)?part:article+' '+part);
 }

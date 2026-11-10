@@ -22,12 +22,15 @@ export function adjectiveForms(lemma,grammaticalCase,gender,pattern) {
  const stems=lemma==='hoch'?['hoh']:lemma==='teuer'?['teur','teuer']:/el$/u.test(lemma)?[lemma.slice(0,-2)+'l']:/e$/u.test(lemma)?[lemma.slice(0,-1)]:[lemma];
  return stems.map(stem=>stem+ending);
 }
-function nounForms(noun,grammaticalCase,number) {
- if(number==='singular'&&noun.number_restriction==='plural'||number==='plural'&&noun.number_restriction==='singular')return null;
+function nounPhrases(noun,grammaticalCase,number,allowBare=false) {
+ if(number==='singular'&&noun.number_restriction==='plural'||number==='plural'&&noun.number_restriction==='singular')return [];
  const gender=number==='plural'?'plural':noun.gender;
  const definite={nom:['der','die','das','die'],acc:['den','die','das','die'],dat:['dem','der','dem','den'],gen:['des','der','des','der']};
  const expected=definite[grammaticalCase]?.[genders.indexOf(gender)];
- const phrases=nounPhraseAlternatives(noun.declension?.[grammaticalCase]?.[number==='plural'?1:0]).filter(phrase=>!expected||phrase.startsWith(expected+' ')),phrase=phrases[0];
+ return nounPhraseAlternatives(noun.declension?.[grammaticalCase]?.[number==='plural'?1:0],{allowBare}).filter(phrase=>!expected||phrase.startsWith(expected+' ')||allowBare&&!/^(der|die|das|den|dem|des) /u.test(phrase));
+}
+function nounForms(noun,grammaticalCase,number) {
+ const phrases=nounPhrases(noun,grammaticalCase,number),phrase=phrases[0];
  if(typeof phrase!=='string'||!phrase.trim()||!['der','die','das','den','dem','des'].includes(phrase.split(' ')[0]))return null;
  const [article,...rest]=phrase.split(' ');return {phrase,phrases,article,noun:rest.join(' ')};
 }
@@ -35,14 +38,14 @@ const people=new Set(['Mann','Frau','Kind','Lehrer','Lehrerin','Student','Junge'
 const frames={nom:plural=>`___ ${plural?'sind':'ist'} wichtig.`,acc:()=> 'Wir denken an ___.',dat:()=> 'Wir sprechen von ___.',gen:()=> 'Wir besprechen die Rolle ___.'};
 export function caseQuestions(words) {
  return words.filter(w=>w.pos==='noun').flatMap(word=>['singular','plural'].flatMap(number=>CASES.flatMap(grammaticalCase=>{
-  const form=nounForms(word,grammaticalCase,number),base=nounForms(word,'nom',number)?.phrase;
-  if(!form||!base)return [];
-  const sentence=grammaticalCase==='dat'&&people.has(word.lemma)?'Ich helfe ___.':frames[grammaticalCase](number==='plural'),answer=grammaticalCase==='nom'?capitalize(form.phrase):form.phrase;
+  const phrases=nounPhrases(word,grammaticalCase,number,word.article_optional===true),base=nounPhrases(word,'nom',number,word.article_optional===true)[0];
+  if(!phrases.length||!base)return [];
+  const sentence=grammaticalCase==='dat'&&people.has(word.lemma)?'Ich helfe ___.':frames[grammaticalCase](number==='plural'),answer=grammaticalCase==='nom'?capitalize(phrases[0]):phrases[0];
   return [{mode:'cases',id:word.id+':case:'+grammaticalCase+':'+number,word,case:grammaticalCase,number,base,
-   sentence,answer,acceptedAnswers:[...new Set(form.phrases.flatMap(phrase=>grammaticalCase==='nom'?[capitalize(phrase),phrase]:[phrase]))],example:{de:sentence.replace('___',answer)},
+   sentence,answer,acceptedAnswers:[...new Set(phrases.flatMap(phrase=>grammaticalCase==='nom'?[capitalize(phrase),phrase]:[phrase]))],example:{de:sentence.replace('___',answer)},
    prompt:'Complete the noun phrase.',explanation:{
-    en:({nom:'The subject uses the nominative.',acc:'denken an takes an accusative noun phrase.',dat:sentence.startsWith('Ich helfe')?'helfen takes a dative noun phrase.':'von takes a dative noun phrase.',gen:'The phrase after Rolle expresses whose role and uses the genitive.'}[grammaticalCase])+' Match both the article and noun form.',
-    ko:({nom:'주어는 주격으로 써요.',acc:'denken an 뒤에는 목적격 명사구가 와요.',dat:sentence.startsWith('Ich helfe')?'helfen 뒤에는 여격 명사구가 와요.':'von 뒤에는 여격 명사구가 와요.',gen:'Rolle 뒤에서 누구의 역할인지 나타내는 명사구는 소유격으로 써요.'}[grammaticalCase])+' 관사와 명사의 형태를 함께 맞추세요.'},
+    en:({nom:'The subject uses the nominative.',acc:'denken an takes an accusative noun phrase.',dat:sentence.startsWith('Ich helfe')?'helfen takes a dative noun phrase.':'von takes a dative noun phrase.',gen:'The phrase after Rolle expresses whose role and uses the genitive.'}[grammaticalCase])+(word.article_optional===true?'':' Match both the article and noun form.'),
+    ko:({nom:'주어는 주격으로 써요.',acc:'denken an 뒤에는 목적격 명사구가 와요.',dat:sentence.startsWith('Ich helfe')?'helfen 뒤에는 여격 명사구가 와요.':'von 뒤에는 여격 명사구가 와요.',gen:'Rolle 뒤에서 누구의 역할인지 나타내는 명사구는 소유격으로 써요.'}[grammaticalCase])+(word.article_optional===true?'':' 관사와 명사의 형태를 함께 맞추세요.')},
   }];
  })));
 }
