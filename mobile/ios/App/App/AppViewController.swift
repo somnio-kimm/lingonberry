@@ -106,12 +106,16 @@ class AppViewController: CAPBridgeViewController {
                     compoundChecks.push({tense,accepted:question.acceptedAnswers});
                   }
                   const {germanWords}=await import('./js/presentation/words.js');
-                  const {vocabularyQuestions,vocabularyAnswerCorrect}=await import('./languages/de/js/core/vocabulary-tests.js'),aliasChecks=[];
+                  const {vocabularyQuestions,vocabularyAnswerCorrect,snapshotVocabularyQuestion}=await import('./languages/de/js/core/vocabulary-tests.js'),aliasChecks=[],optionalArticleChecks=[];
                   for(const locale of ['en','ko']){
                     const word=germanWords({targetLanguage:'de',explanationLanguage:locale,entries:[{id:'native-qa-yoghurt',word:'Joghurt',aliases:['Jogurt'],article:'der',partOfSpeech:'noun',meaning:locale==='en'?'yoghurt':'요구르트'}]})[0];
                     const question=vocabularyQuestions('vocabinput',[word],locale)[0];
                     if(!vocabularyAnswerCorrect(question,'der Jogurt')||vocabularyAnswerCorrect(question,'Jogurt'))throw new Error('Declared spelling alias grading differs');
                     aliasChecks.push({locale,accepted:question.acceptedAnswers});
+                    const name={id:'native-qa-language',lemma:'Deutsch',pos:'noun',article:'das',article_optional:true,declension:{nom:['Deutsch / das Deutsche',null]},meaning_en:['German (language)'],meaning_ko:['독일어']};
+                    const optional=vocabularyQuestions('vocabinput',[name],locale)[0],saved=snapshotVocabularyQuestion(optional);
+                    if(optional.answer!=='Deutsch'||!saved.word.article_optional||!vocabularyAnswerCorrect(saved,'Deutsch')||!vocabularyAnswerCorrect(saved,'das Deutsche')||vocabularyAnswerCorrect(saved,'die Deutsch'))throw new Error('Optional article grading or snapshot differs');
+                    optionalArticleChecks.push({locale,accepted:saved.acceptedAnswers});
                   }
                   const reflexive={id:'native-qa-recover',lemma:'erholen',pos:'verb',reflexive_case:'accusative',infinitive:'sich erholen',meaning_en:['recover'],meaning_ko:['회복하다'],forms:{perfekt:'hat sich erholt'}},reflexiveChecks=[];
                   const reflexiveQuestions=verbFormQuestions([reflexive],grammarWords);
@@ -120,7 +124,7 @@ class AppViewController: CAPBridgeViewController {
                     if(!question||!verbFormCorrect(question,answer)||verbFormCorrect(question,answer.replace('mich','sich')))throw new Error('Reflexive person grading differs');
                     reflexiveChecks.push({tense,accepted:question.acceptedAnswers});
                   }
-                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,restored:original.target||null});
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {
