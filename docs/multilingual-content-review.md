@@ -37,4 +37,6 @@ The audit verifies coverage and evidence integrity. It cannot itself establish l
 
 Primary examples are learner content; unreviewed `referenceExamples` remain research evidence. Review any additional examples and their aligned translations explicitly. Staging, publication and native installation are separate steps and must be reported accurately.
 
+All presentations honour validated `retiredEntries` and `reviewInvalidations` package policies through the shared Review policy. German and Chinese record the study version on new questions and exclude invalidated targets, meaning choices and adjective-question nouns from active Review. Historical records remain stored; German archives a superseded record before recording a fresh corrected attempt, so old failures do not become the new question's wrong count. These policies do not approve any sense equivalence or transfer mastery to a new concept. Test baseline integration with `node scripts/verify-baseline-review-policy-browser.mjs`.
+
 Run `node scripts/verify-chinese-reading-review-browser.mjs` to check reviewed punctuation-free and joined-erhua examples in phone/tablet layouts and both themes. It uses isolated browser storage and does not install draft packages into the user's app.
