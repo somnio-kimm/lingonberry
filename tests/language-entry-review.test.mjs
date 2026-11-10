@@ -160,3 +160,44 @@ test('a stale approval cannot hide an external source finding on an unchanged en
  assert.equal(result.report.complete,false);
  assert.equal(result.finalized.length,0);
 });
+
+test('independent material source and usage holds block an otherwise complete primary pass',()=>{
+ for(const kind of ['source','usage']){
+  const cross={...approve(pass),[kind+'Resolution']:{status:'unresolved',required:true,reason:'A material teaching or source scope remains open.'}};
+  const result=run([pass],[cross]);
+  assert.deepEqual(result.report[kind==='source'?'pendingSource':'pendingUsage'],['school']);
+  assert.deepEqual(result.report.pendingScopeClassification,[]);assert.equal(result.report.complete,false);assert.equal(result.finalized.length,0);
+  cross[kind+'Resolution']={status:'resolved',required:true,reason:'Independently established the exact bounded scope.',...(kind==='source'?{evidenceUrls:['https://example.org/primary-source']}:{})};
+  assert.equal(run([pass],[cross]).report.complete,true);
+ }
+});
+
+test('independent observations need explicit classification and cannot silently finalise as material holds',()=>{
+ for(const kind of ['source','usage']){
+  const cross={...approve(pass),[kind+'Resolution']:{status:'unresolved',reason:'Baseline not runtime-certified; no concrete content uncertainty was found.'}};
+  const result=run([pass],[cross]);
+  assert.deepEqual(result.report.pendingScopeClassification,[{id:'school',kind}]);
+  assert.equal(result.report.complete,false);assert.equal(result.finalized.length,0);
+  const observation={...cross,[kind+'Resolution']:{...cross[kind+'Resolution'],required:false}};
+  assert.equal(run([pass],[observation]).report.complete,true);
+  observation[kind+'Resolution'].reason='';assert.equal(run([pass],[observation]).report.complete,false);
+ }
+});
+
+test('observation labels cannot waive primary issues or explicit independent issue lists',()=>{
+ for(const kind of ['source','usage']){
+  const note={status:'unresolved',required:false,reason:'A non-material observation only.'};
+  const primary={...pass,[kind+'Issues']:['Actual unresolved content scope.']};
+  assert.deepEqual(run([primary],[{...approve(primary),[kind+'Resolution']:note}]).report[kind==='source'?'pendingSource':'pendingUsage'],['school']);
+  const independent={...approve(pass),[kind+'Issues']:['Actual independent content uncertainty.'],[kind+'Resolution']:note};
+  assert.deepEqual(run([pass],[independent]).report[kind==='source'?'pendingSource':'pendingUsage'],['school']);
+ }
+});
+
+test('stale independent material holds remain pending and malformed scope declarations cannot pass',()=>{
+ const cross={...approve(pass),decisionDigest:'old',sourceResolution:{status:'unresolved',required:true,reason:'Exact source unresolved.'},usageResolution:{status:'unresolved',required:true,reason:'Exact practice scope unresolved.'}};
+ const stale=run([pass],[cross]);assert.deepEqual(stale.report.pendingSource,['school']);assert.deepEqual(stale.report.pendingUsage,['school']);assert.deepEqual(stale.report.pendingIndependent,['school']);assert.equal(stale.report.complete,false);
+ for(const changes of [{usageIssues:'not-a-list'},{usageResolution:null},{sourceResolution:{status:'unresolved',required:'false'}}]){
+  const result=run([pass],[{...approve(pass),...changes}]);assert.equal(result.report.complete,false);assert.equal(result.finalized.length,0);assert.match(result.report.errors[0].error,/Malformed/);
+ }
+});

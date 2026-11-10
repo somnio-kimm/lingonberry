@@ -57,6 +57,14 @@ const validUrls=urls=>Array.isArray(urls)&&urls.length>0&&urls.every(value=>{
 });
 
 /** Coverage and approval integrity are necessary, not proof of linguistic accuracy. */
+function classifyIndependentResolution(cross,kind){
+ if(cross?.[kind+'Issues']?.length||kind==='source'&&cross?.verdict==='needs-source')return 'required';
+ const resolution=cross?.[kind+'Resolution'];
+ if(resolution?.required===true)return 'required';
+ if(resolution?.required===false)return text(resolution.reason)?'observation':'unclassified';
+ return resolution?.status&&resolution.status!=='resolved'?'unclassified':'none';
+}
+
 export function auditLanguageEntryReviews({language,inputs,decisions,crossReviews=[],legacyDecisions=[],sourceFindings=[]}){
  if(!languages.has(language))throw new Error('Unsupported full-review language');
  const byId=new Map(inputs.map(row=>[row.id,row]));
@@ -100,16 +108,22 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   if(!valid.has(cross.id)||approvals.has(cross.id)){errors.push({id:cross.id,error:'Unknown or duplicate independent review'});continue;}
   approvals.set(cross.id,cross);
  }
- const approved=[],pendingIndependent=[],finalized=[];
+ const approved=[],pendingIndependent=[],pendingScopeClassification=[],finalized=[];
  for(const [id,row] of valid){
-  const {input,decision,resolved,needsSource,needsUsage}=row;
-  const needsApproval=resolved.changed||needsSource||needsUsage||decision.verdict==='retire';
-  let cross=approvals.get(id),invalidCross=false;
+  const {input,decision,resolved}=row,declaredCross=approvals.get(id);
+  const sourceScope=classifyIndependentResolution(declaredCross,'source'),usageScope=classifyIndependentResolution(declaredCross,'usage');
+  const needsSource=row.needsSource||sourceScope==='required',needsUsage=row.needsUsage||usageScope==='required';
+  const unclassified=[...(!needsSource&&sourceScope==='unclassified'?['source']:[]),...(!needsUsage&&usageScope==='unclassified'?['usage']:[])];
+  for(const kind of unclassified)pendingScopeClassification.push({id,kind});
+  const needsApproval=resolved.changed||needsSource||needsUsage||unclassified.length>0||decision.verdict==='retire';
+  let cross=declaredCross,invalidCross=false;
   if(cross){
    const reviewer=decision.reviewer||'legacy-'+language+'-first-pass';
+   const malformedIssues=['source','usage'].some(kind=>cross[kind+'Issues']!==undefined&&!Array.isArray(cross[kind+'Issues']));
+   const malformedResolution=['source','usage'].some(kind=>{const value=cross[kind+'Resolution'];return value!==undefined&&(!value||typeof value!=='object'||Array.isArray(value)||value.required!==undefined&&typeof value.required!=='boolean');});
    if(cross.decisionDigest!==exampleDigest(decision)||!text(cross.reviewer)||cross.reviewer===reviewer||
-      !text(cross.reason)||!['approve','needs-source','reject'].includes(cross.verdict)){
-    errors.push({id,error:'Stale, incomplete or non-independent cross-review'});invalidCross=true;cross=undefined;
+      !text(cross.reason)||!['approve','needs-source','reject'].includes(cross.verdict)||malformedIssues||malformedResolution){
+    errors.push({id,error:malformedIssues||malformedResolution?'Malformed independent issue or resolution scope':'Stale, incomplete or non-independent cross-review'});invalidCross=true;cross=undefined;
    }
   }
   const findingBindings=!findings.has(id)||equal([...(cross?.sourceResolution?.findingDigests||[])].sort(),[...findings.get(id)].sort());
@@ -123,7 +137,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   if(invalidCross){pendingIndependent.push(id);continue;}
   if(cross&&cross.verdict!=='approve'){pendingIndependent.push(id);continue;}
   if(needsApproval&&cross?.verdict!=='approve'){pendingIndependent.push(id);continue;}
-  if(!sourceClosed||!usageClosed)continue;
+  if(!sourceClosed||!usageClosed||unclassified.length)continue;
   approved.push(id);finalized.push({id,sourceDigest:input.sourceDigest,decisionDigest:exampleDigest(decision),
    verdict:decision.verdict,reviewer:decision.reviewer||'legacy-'+language+'-first-pass',
    changed:resolved.changed,...(cross?{independentReviewer:cross.reviewer}:{}),...resolved});
@@ -133,5 +147,5 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   changed:[...valid.values()].filter(row=>row.resolved.changed).length,
   externalSourceFindings:sourceFindings.length,unexaminedSourceFindings:[...findings.keys()].filter(id=>!valid.has(id)),
   independentlyApproved:crossReviews.filter(row=>row.verdict==='approve'&&approved.includes(row.id)).length,
-  pendingIndependent,pendingSource,pendingUsage,counts,errors,complete:!remaining.length&&!pendingIndependent.length&&!pendingSource.length&&!pendingUsage.length&&!errors.length}};
+  pendingIndependent,pendingSource,pendingUsage,pendingScopeClassification,counts,errors,complete:!remaining.length&&!pendingIndependent.length&&!pendingSource.length&&!pendingUsage.length&&!pendingScopeClassification.length&&!errors.length}};
 }
