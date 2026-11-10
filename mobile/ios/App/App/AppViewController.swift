@@ -24,8 +24,8 @@ class AppViewController: CAPBridgeViewController {
         let arguments = ProcessInfo.processInfo.arguments
         guard !verificationStarted && (arguments.contains("--update-installed-language-packages") || arguments.contains("--verify-language-packages") || arguments.contains("--verify-offline-packages") || arguments.contains("--verify-english-corrections") || arguments.contains("--verify-english-examples") || arguments.contains("--verify-japanese-korean-meanings") || arguments.contains("--verify-japanese-corrections") || arguments.contains("--verify-japanese-completion") || arguments.contains("--verify-dictation-design") || arguments.contains("--verify-shared-settings") || arguments.contains("--verify-japanese-furigana") || arguments.contains("--verify-japanese-okurigana") || arguments.contains("--verify-japanese-reading-target")) else { return }
         verificationStarted = true
+        UIApplication.shared.isIdleTimerDisabled = true
         if arguments.contains("--update-installed-language-packages") {
-            UIApplication.shared.isIdleTimerDisabled = true
             let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
             let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "unknown"
             print("NATIVE_RELEASE_APP_INFO version=\(version) build=\(build)")
@@ -149,6 +149,8 @@ class AppViewController: CAPBridgeViewController {
                       if(exerciseModes('ja').onyomi||exerciseModes('ja').kunyomi||rows.some(row=>['onyomi','kunyomi'].includes(row.category)))throw new Error('Removed character-reading sections are active');
                       const school=words.find(row=>row.lemma==='学校'),question=rows.find(row=>row.entryId===school?.id&&row.category==='reading'&&row.route==='vocabmeaning');
                       if(!question||question.answer!=='がっこう'||question.prompt.split('学校').length!==2||question.prompt.startsWith('学校'+String.fromCharCode(10)))throw new Error('Reading target repeats the headword');
+                      const reviewedWord=words.find(row=>row.lemma==='体中'),reviewedQuestion=rows.find(row=>row.entryId===reviewedWord?.id&&row.category==='reading'&&row.route==='vocabinput');
+                      if(!reviewedQuestion||reviewedQuestion.prompt!==reviewedWord.examples[0].text||reviewedQuestion.readingFocus?.start!==4)throw new Error('Reviewed reading span lost its sentence');
                       const {createReadingChoiceSampler}=await import('./js/shared/reading-choices.js'),{normaliseKana}=await import('./js/shared/japanese-reading.js');
                       const byId=new Map(words.map(row=>[row.id,row])),allowed=new Set(rows.filter(row=>row.category==='reading'&&row.route==='vocabinput'&&byId.get(row.entryId)?.pos===school.pos).map(row=>normaliseKana(row.answer))),sample=createReadingChoiceSampler(rows,words),samples=[sample(question,()=>0),sample(question,()=>.5)];
                       if(allowed.size<=128||samples.some(row=>!row||row.options.length!==4||new Set(row.options.map(normaliseKana)).size!==4||row.options.some(value=>!allowed.has(normaliseKana(value)))))throw new Error('Reading choices do not use the full verified same-POS pool');
@@ -162,7 +164,10 @@ class AppViewController: CAPBridgeViewController {
                           if(target?.textContent!=='学校'||text.split('学校').length!==2||instruction||!style.textDecorationLine.includes('underline')||host.querySelector('rt'))throw new Error('Reading target UI/locale differs');
                           const clue=host.querySelector('.exercise-context')?.textContent;
                           if(!clue||clue!==question.context||clue===school.studyMeaning)throw new Error('Reading sentence translation is missing');
-                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,translation:clue,sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
+                          const spanHost=document.createElement('div');spanHost.innerHTML=renderExercisePrompt({...reviewedQuestion,word:reviewedWord},{uiLanguage:display});
+                          const spanTarget=spanHost.querySelector('.study-reading-target')?.textContent,spanPrompt=spanHost.querySelector('.vocab-prompt')?.textContent,spanTranslation=spanHost.querySelector('.exercise-context')?.textContent;
+                          if(spanTarget!=='体中'||spanPrompt!==reviewedWord.examples[0].text||spanTranslation!==reviewedQuestion.context||spanHost.querySelector('.vocab-instruction'))throw new Error('Reviewed span UI lost its sentence or translation');
+                          checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,translation:clue,reviewedSpan:{target:spanTarget,prompt:spanPrompt,translation:spanTranslation},sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
                         }finally{host.remove();}
                       }
                       continue;
