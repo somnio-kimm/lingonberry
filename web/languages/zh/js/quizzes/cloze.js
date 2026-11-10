@@ -1,3 +1,4 @@
+import {findSentenceTarget} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { clozeWordOptions,clozeStudyWords } from '../services/vocabulary-tests.js';
 import { showQuizBurst } from '../components.js';
@@ -21,7 +22,7 @@ export function renderClozeQuiz(el,session={}) {
     if(session.onNext&&word){session.onNext();return;}
     word = session.question?.word||pick(filters.pool());
     if(!word){feedback='';draw();return;}
-    sentence = session.question?.sentence||pick(word.sentences.filter(s=>s.hanzi.includes(word.hanzi)));
+    sentence = session.question?.sentence||pick(word.sentences.filter(s=>findSentenceTarget(s,word.hanzi)));
     blank = word.hanzi;
     options = clozeWordOptions(word, words);
     feedback = ''; userAnswer = '';
@@ -52,7 +53,7 @@ export function renderClozeQuiz(el,session={}) {
   function draw() {
     const displayed=session.score?.()||{correct:score,total};
     if(!word){el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div></div>${filters.markup()}<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;filters.bind(el);return;}
-    const offset = sentence.hanzi.indexOf(blank);
+    const offset = findSentenceTarget(sentence,blank)?.start??-1;
     const escape = text => text.replace(/[&<>"']/g, ch => ({
       '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
     }[ch]));

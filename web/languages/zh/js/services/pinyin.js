@@ -1,3 +1,4 @@
+import {findSentenceTarget} from './sentence-focus.js';
 const TONE_MAP = {
   a: ['ā','á','ǎ','à'], e: ['ē','é','ě','è'], i: ['ī','í','ǐ','ì'],
   o: ['ō','ó','ǒ','ò'], u: ['ū','ú','ǔ','ù'], 'ü': ['ǖ','ǘ','ǚ','ǜ']
@@ -99,7 +100,7 @@ export const Pinyin = {
     // Preserve readable text rather than show incorrect pairings for future
     // content whose transcription does not follow the reviewed token format.
     const target = blank || highlight;
-    const offset = target ? (sentence.hanzi || '').indexOf(target) : -1;
+    const offset = findSentenceTarget(sentence,target)?.start??-1;
     const fallback = () => {
       const text = sentence.hanzi || '';
       const slot = blank ? '<span class="cloze-blank">______</span>' : `<mark class="cloze-answer">${escape(highlight)}</mark>`;
