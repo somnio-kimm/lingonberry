@@ -20,7 +20,7 @@ function forms(word) {
  for(const kind of ['plural','comparative','superlative'])if(word[kind])result.push({text:word[kind],kind,path:[]});
  for(const kind of ['forms','declension','pronoun_forms','article_forms','attested_forms']){
   for(const form of values(word[kind])){
-   const alternatives=kind==='declension'?nounPhraseAlternatives(form.text):formAlternatives(form.text);
+   const alternatives=kind==='declension'?nounPhraseAlternatives(form.text,{allowBare:word.article_optional===true}):formAlternatives(form.text);
    alternatives.forEach((value,alternativeIndex)=>{
     const text=formText(value,kind);result.push({...form,text,kind,alternativeIndex});
     if(kind==='forms'&&text.includes(' '))result.push({...form,text:text.split(' ')[0],kind,alternativeIndex,firstToken:true});
@@ -65,7 +65,7 @@ function optionForm(word,question) {
  const form=question.form;let text;
  if(form.kind==='lemma')text=word.lemma;
  else if(form.kind==='plural')text=word.plural;
- else{let value=word[form.kind];for(const part of form.path)value=value?.[part];if(typeof value==='string')text=formText(form.kind==='declension'?(nounPhraseAlternatives(value)[form.alternativeIndex||0]||nounPhraseAlternatives(value)[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);}
+ else{let value=word[form.kind];for(const part of form.path)value=value?.[part];if(typeof value==='string')text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);}
  text||=word.lemma;
  if(form.firstToken)text=text.split(' ')[0];
  if(text&&(question.start===0||question.answer!==form.text&&question.answer===form.text[0]?.toLocaleUpperCase('de')+form.text.slice(1)))text=text[0].toLocaleUpperCase('de')+text.slice(1);
