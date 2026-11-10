@@ -20,6 +20,27 @@ export function perfectVerbAlternatives(value){
  }
  return rows;
 }
+const reflexivePronouns={
+ accusative:{ich:'mich',du:'dich',er:'sich',wir:'uns',ihr:'euch',sie:'sich'},
+ dative:{ich:'mir',du:'dir',er:'sich',wir:'uns',ihr:'euch',sie:'sich'},
+};
+/** Adapt only a leading subject-reflexive citation, never an embedded/quoted token. */
+export function inflectReflexiveComplement(value,person,grammaticalCase){
+ if(value==='sich')return null;
+ if(!/^sich\s/u.test(value))return value;
+ const caseName=({acc:'accusative',dat:'dative'})[grammaticalCase]||grammaticalCase;
+ const pronoun=reflexivePronouns[caseName]?.[person];
+ return pronoun?value.replace(/^sich/u,pronoun):null;
+}
+export function deriveInfinitiveAlternatives(word,perfect=perfectVerbAlternatives(word.forms?.perfekt)){
+ if(word.infinitive||/^sich\s/u.test(word.lemma))return formAlternatives(word.infinitive||word.lemma);
+ if(perfect.some(row=>/^sich\s/u.test(row.participle))){
+  // Inferring omitted objects/adverbs would change the construction; require its infinitive.
+  if(perfect.some(row=>/^sich\s/u.test(row.participle)&&!/^sich\s+\S+$/u.test(row.participle)))return [];
+  return [...new Set(perfect.map(row=>(/^sich\s/u.test(row.participle)?'sich ':'')+word.lemma))];
+ }
+ return [word.reflexive===true?'sich '+word.lemma:word.lemma];
+}
 export function nounPhraseAlternatives(value){
  const parts=formAlternatives(value),article=/^(der|die|das|den|dem|des) /u.exec(parts[0]||'')?.[1];
  if(!article)return [];

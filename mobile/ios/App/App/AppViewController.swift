@@ -113,7 +113,14 @@ class AppViewController: CAPBridgeViewController {
                     if(!vocabularyAnswerCorrect(question,'der Jogurt')||vocabularyAnswerCorrect(question,'Jogurt'))throw new Error('Declared spelling alias grading differs');
                     aliasChecks.push({locale,accepted:question.acceptedAnswers});
                   }
-                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,restored:original.target||null});
+                  const reflexive={id:'native-qa-recover',lemma:'erholen',pos:'verb',reflexive_case:'accusative',infinitive:'sich erholen',meaning_en:['recover'],meaning_ko:['회복하다'],forms:{perfekt:'hat sich erholt'}},reflexiveChecks=[];
+                  const reflexiveQuestions=verbFormQuestions([reflexive],grammarWords);
+                  for(const [tense,answer]of [['perfekt','habe mich erholt'],['plusquamperfekt','hatte mich erholt'],['futur_i','werde mich erholen'],['futur_ii','werde mich erholt haben']]){
+                    const question=reflexiveQuestions.find(row=>row.tense===tense&&row.person==='ich');
+                    if(!question||!verbFormCorrect(question,answer)||verbFormCorrect(question,answer.replace('mich','sich')))throw new Error('Reflexive person grading differs');
+                    reflexiveChecks.push({tense,accepted:question.acceptedAnswers});
+                  }
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,aliasChecks,reflexiveChecks,restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {

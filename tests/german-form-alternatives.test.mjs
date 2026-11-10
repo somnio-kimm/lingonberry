@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {caseQuestions,nominalAnswerCorrect} from '../web/languages/de/js/core/nominal-grammar.js';
 import {verbFormQuestions,verbFormCorrect} from '../web/languages/de/js/core/grammar-quizzes.js';
 import {clozeQuestions} from '../web/languages/de/js/core/sentence-quizzes.js';
-import {perfectVerbAlternatives} from '../web/languages/de/js/core/form-alternatives.js';
+import {perfectVerbAlternatives,inflectReflexiveComplement} from '../web/languages/de/js/core/form-alternatives.js';
 const book={id:'book',lemma:'Buch',pos:'noun',gender:'neuter',article:'das',declension:{nom:['das Buch','die Bücher'],gen:['des Buches / Buchs','der Bücher']},examples:[{de:'Der Titel des Buchs ist kurz.'}]};
 test('case input accepts either complete genitive instead of requiring the slash notation',()=>{
  const q=caseQuestions([book]).find(q=>q.case==='gen'&&q.number==='singular');
@@ -67,6 +67,71 @@ test('compound forms skip malformed citations and missing finite auxiliary data 
  const questions=verbFormQuestions([swim],[swim]);
  assert.ok(!questions.some(q=>['perfekt','plusquamperfekt'].includes(q.tense)));
  assert.deepEqual(questions.find(q=>q.tense==='futur_ii'&&q.person==='ich').acceptedAnswers,['werde geschwommen haben','werde geschwommen sein']);
+});
+
+const reflexiveIr={id:'err',lemma:'irren',pos:'verb',meaning_en:['be mistaken; wander'],meaning_ko:['착각하다; 헤매다'],reflexive_case:'accusative',infinitive:'irren / sich irren',forms:{perfekt:'ist geirrt / hat geirrt / hat sich geirrt'}};
+test('each person keeps bare and accusative-reflexive alternatives with their own perfect auxiliaries',()=>{
+ const questions=verbFormQuestions([reflexiveIr],[reflexiveIr,...auxiliaries]);
+ const people=[
+  ['ich','bin','habe','war','hatte','werde','mich'],['du','bist','hast','warst','hattest','wirst','dich'],
+  ['er','ist','hat','war','hatte','wird','sich'],['wir','sind','haben','waren','hatten','werden','uns'],
+  ['ihr','seid','habt','wart','hattet','werdet','euch'],['sie','sind','haben','waren','hatten','werden','sich'],
+ ];
+ for(const [person,be,have,was,had,future,pronoun]of people){
+  for(const [tense,expected]of [
+   ['perfekt',[be+' geirrt',have+' geirrt',have+' '+pronoun+' geirrt']],
+   ['plusquamperfekt',[was+' geirrt',had+' geirrt',had+' '+pronoun+' geirrt']],
+   ['futur_ii',[future+' geirrt sein',future+' geirrt haben',future+' '+pronoun+' geirrt haben']],
+   ['futur_i',[future+' irren',future+' '+pronoun+' irren']],
+  ]){
+   const q=questions.find(q=>q.person===person&&q.tense===tense);assert.deepEqual(q.acceptedAnswers,expected);
+   for(const answer of expected)assert.equal(verbFormCorrect(q,answer),true);
+  }
+ }
+ const q=questions.find(q=>q.person==='ich'&&q.tense==='perfekt');
+ for(const wrong of ['habe sich geirrt','habe mir geirrt','bin mich geirrt','bin hat sich geirrt'])assert.equal(verbFormCorrect(q,wrong),false);
+});
+test('simple reflexive perfect citations infer a reflexive FutureI without adding a bare recovery form',()=>{
+ const word={...reflexiveIr,id:'recover',lemma:'erholen',infinitive:undefined,forms:{perfekt:'hat sich erholt',praesens:{ich:'erhole mich'}}};
+ const questions=verbFormQuestions([word],[word,...auxiliaries]);
+ for(const [tense,expected]of [['perfekt','habe mich erholt'],['plusquamperfekt','hatte mich erholt'],['futur_i','werde mich erholen'],['futur_ii','werde mich erholt haben']]){
+  const q=questions.find(q=>q.person==='ich'&&q.tense===tense);assert.deepEqual(q.acceptedAnswers,[expected]);assert.equal(verbFormCorrect(q,expected),true);
+  assert.equal(verbFormCorrect(q,expected.replace('mich ','sich ')),false);
+ }
+ assert.equal(verbFormCorrect(questions.find(q=>q.person==='ich'&&q.tense==='futur_i'),'werde erholen'),false);
+ assert.equal(questions.find(q=>q.tense==='praesens').answer,'erhole mich');
+});
+test('dative reflexives use mir and dir while keeping explicit objects and infinitives',()=>{
+ const word={...reflexiveIr,id:'remember',lemma:'merken',reflexive_case:'dative',infinitive:'sich etwas merken',forms:{perfekt:'hat sich etwas gemerkt'}};
+ const questions=verbFormQuestions([word],[word,...auxiliaries]);
+ for(const [person,have,had,future,pronoun]of [['ich','habe','hatte','werde','mir'],['du','hast','hattest','wirst','dir'],['er','hat','hatte','wird','sich'],['wir','haben','hatten','werden','uns'],['ihr','habt','hattet','werdet','euch'],['sie','haben','hatten','werden','sich']]){
+  for(const [tense,expected]of [['perfekt',have+' '+pronoun+' etwas gemerkt'],['plusquamperfekt',had+' '+pronoun+' etwas gemerkt'],['futur_i',future+' '+pronoun+' etwas merken'],['futur_ii',future+' '+pronoun+' etwas gemerkt haben']])assert.deepEqual(questions.find(q=>q.person===person&&q.tense===tense).acceptedAnswers,[expected]);
+ }
+ assert.equal(verbFormCorrect(questions.find(q=>q.person==='ich'&&q.tense==='perfekt'),'habe mich etwas gemerkt'),false);
+});
+test('explicit abbreviated source cases retain person-correct reflexive answers',()=>{
+ for(const [grammaticalCase,lemma,participle,pronoun]of [['acc','irren','geirrt','mich'],['dat','merken','gemerkt','mir']]){
+  const word={...reflexiveIr,lemma,infinitive:'sich '+lemma,reflexive_case:grammaticalCase,forms:{perfekt:'hat sich '+participle}};
+  const q=verbFormQuestions([word],[word,...auxiliaries]).find(q=>q.person==='ich'&&q.tense==='perfekt');
+  assert.ok(q.acceptedAnswers.includes('habe '+pronoun+' '+participle));
+ }
+ assert.equal(inflectReflexiveComplement('sich geirrt','ich','unknown'),null);
+});
+test('missing case or an unspecified complex infinitive withholds incomplete answer inventories',()=>{
+ const noCase={...reflexiveIr,reflexive_case:undefined,forms:{...reflexiveIr.forms,praesens:{ich:'irre / irre mich'}}};
+ const questions=verbFormQuestions([noCase],[noCase,...auxiliaries]);
+ assert.ok(!questions.some(q=>['perfekt','plusquamperfekt','futur_i','futur_ii'].includes(q.tense)));
+ assert.deepEqual(questions.find(q=>q.tense==='praesens').acceptedAnswers,['irre','irre mich']);
+ const complex={...reflexiveIr,lemma:'merken',infinitive:undefined,reflexive_case:'dative',forms:{perfekt:'hat sich etwas gemerkt'}};
+ assert.ok(!verbFormQuestions([complex],[complex,...auxiliaries]).some(q=>q.tense==='futur_i'));
+ const missingBe=verbFormQuestions([reflexiveIr],[reflexiveIr,auxiliaries[0]]);
+ assert.ok(!missingBe.some(q=>['perfekt','plusquamperfekt'].includes(q.tense)));
+ assert.equal(missingBe.filter(q=>q.tense==='futur_ii').length,6);
+});
+test('embedded or quoted sich is not rewritten as a subject reflexive pronoun',()=>{
+ assert.equal(inflectReflexiveComplement('„sich“ zitiert','ich','accusative'),'„sich“ zitiert');
+ assert.equal(inflectReflexiveComplement('ihn sich vorstellen lassen','ich','accusative'),'ihn sich vorstellen lassen');
+ assert.equal(inflectReflexiveComplement('sich','ich','accusative'),null);
 });
 
 test('cloze recognises an alternative finite verb form',()=>{
