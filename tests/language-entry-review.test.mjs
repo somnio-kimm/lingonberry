@@ -89,3 +89,34 @@ test('verified dictionary content with unresolved teaching scope is distinct fro
  const closed={...approve(flagged),usageResolution:{status:'resolved',reason:'Both official usages retained with their separate POS and level scope.'}};
  assert.equal(run([flagged],[closed]).report.complete,true);
 });
+
+test('invalid cross-review closures cannot hide pending source or usage issues',()=>{
+ const flagged={...pass,verdict:'needs-source',sourceIssues:['Conflicting reading sources.'],usageIssues:['Selected reading needs a matching teaching context.']};
+ const closure={...approve(flagged),
+  sourceResolution:{status:'resolved',reason:'Checked the old example and source.',evidenceUrls:['https://example.org/source']},
+  usageResolution:{status:'resolved',reason:'Checked the old teaching context.'}};
+ for(const invalid of [
+  {...closure,decisionDigest:'previous-decision'},
+  {...closure,reviewer:flagged.reviewer},
+  {...closure,reason:''},
+ ]){
+  const result=run([flagged],[invalid]);
+  assert.deepEqual(result.report.pendingSource,['school']);
+  assert.deepEqual(result.report.pendingUsage,['school']);
+  assert.deepEqual(result.report.pendingIndependent,['school']);
+  assert.equal(result.report.errors.length,1);
+  assert.equal(result.report.complete,false);
+  assert.equal(result.finalized.length,0);
+ }
+});
+
+test('a stale approval cannot hide an external source finding on an unchanged entry',()=>{
+ const finding={id:input.id,sourceDigest:input.sourceDigest,reason:'New evidence needs an independent source check.'};
+ const stale={...approve(pass),decisionDigest:'previous-decision',sourceResolution:{status:'resolved',
+  reason:'Checked a previous decision.',evidenceUrls:['https://example.org/source'],findingDigests:[exampleDigest(finding)]}};
+ const result=run([pass],[stale],{sourceFindings:[finding]});
+ assert.deepEqual(result.report.pendingSource,['school']);
+ assert.deepEqual(result.report.pendingIndependent,['school']);
+ assert.equal(result.report.complete,false);
+ assert.equal(result.finalized.length,0);
+});
