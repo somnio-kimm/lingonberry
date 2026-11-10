@@ -30,6 +30,10 @@ The verified English form cache can locate an unambiguous attested inflection. A
 
 Discontinuous expressions use reviewer-approved `gapFill` descriptors with one input per blank. Intervening objects remain visible. Their examples set `clozeEligible:false` to prevent an ordinary contiguous Cloze question; their explicit gap exercises remain available. A previous practice restriction can be lifted only by a separate approval bound to the current sense, exact gaps and original eligibility, allowing the full sentence in Scramble.
 
+Additional gap reviews can use the optional `gap-fill-decisions.jsonl` beside the existing `example-focus-decisions.jsonl`. Each record contains `id`, `exampleTextDigest`, `gapFill`, `reviewer` and `reason`. For example, the sentence “The teacher told him off.” uses `parts:["The teacher "," him ","."]` and `answers:["told","off"]`. The descriptor must reconstruct the unchanged sentence exactly; it does not create a spelling alias or require editing the completed meaning, level or source review.
+
+Every separate gap decision also needs a record in `gap-practice-approvals.jsonl`, bound with `englishGapPracticeDigest(review, decision.gapFill)`. Missing approval, stale sentence or sense bindings, duplicate IDs, invalid gaps and conflicts with embedded review gaps fail the build. An absent optional decision file means no additional decisions; malformed files still fail. Existing embedded gap reviews retain their original binding.
+
 Root-family references contain only active word-list words or explicitly verified search aliases. Empty root groups and retired English countability metadata are removed. Review commentary and source evidence stay in the editorial journals rather than inflating learner downloads.
 
 The authoring and full-source audit commands require the retained local review workspace; private research snapshots and superseded drafts are deliberately excluded from the public repository. Public payloads retain their individual source credits and the release report records the exact reviewed snapshot hash. The downloaded release can be verified independently with the public package/schema checks.
