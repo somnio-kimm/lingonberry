@@ -1,3 +1,4 @@
+import {findSentenceTarget} from './sentence-focus.js';
 import {shuffle} from '../../../../js/shared/random.js';
 import { LISTENING_MODES, validListeningQuestion } from './listening-tests.js';
 import { validVocabularyQuestion } from './vocabulary-tests.js';
@@ -5,18 +6,26 @@ import { Pinyin } from './pinyin.js';
 export const REVIEW_MODES=['pinyin','tone','cloze','scramble','vocabinput','vocabmeaning',...LISTENING_MODES];
 export function snapshotQuestion(mode,word,sentence=null){
  const {id,hanzi,hskLevel,syllables,alternateSyllables,meaningEn,meaningKo,partOfSpeech,studyMeaning,studyExplanationLanguage}=word;
- return {mode,word:{id,hanzi,hskLevel,syllables,alternateSyllables,meaningEn,meaningKo,partOfSpeech,studyMeaning,studyExplanationLanguage},sentence:sentence?{...sentence}:null,blankStart:mode==='cloze'?sentence?.hanzi.indexOf(hanzi):null};
+ return {mode,word:{id,hanzi,hskLevel,syllables,alternateSyllables,meaningEn,meaningKo,partOfSpeech,studyMeaning,studyExplanationLanguage},sentence:sentence?{...sentence}:null,blankStart:mode==='cloze'?findSentenceTarget(sentence,hanzi)?.start??-1:null};
+}
+function resolveClozeSnapshot(question){
+ const {sentence,word}=question,target=word.hanzi,focus=findSentenceTarget(sentence,target);
+ const start=Object.hasOwn(question,'blankStart')?question.blankStart:focus?.start;
+ const valid=typeof target==='string'&&typeof sentence?.hanzi==='string'&&Number.isInteger(start)&&start>=0&&sentence.hanzi.slice(start,start+target.length)===target;
+ // An old incorrectly targeted question remains readable, but cannot silently change on retest.
+ const retestEligible=!!(valid&&(sentence.focus===undefined||focus?.start===start));
+ return {...question,retestEligible,...(retestEligible?{blankStart:start,sentence:{...sentence,focus:{start,text:target}}}:{})};
 }
 export function resolveWrongQuestion(record,words){
  if(!REVIEW_MODES.includes(record.mode))return null;
  const live=words.find(w=>w.id===record.wordId)||(!record.wordId?words.find(w=>w.hanzi===record.wordHanzi):null);
  if(LISTENING_MODES.includes(record.mode))return validListeningQuestion(record.question)?{...record.question,word:{...live,...record.question.word},reconstructed:false}:null;
  if(['vocabinput','vocabmeaning'].includes(record.mode)){return validVocabularyQuestion(record.question)?{...record.question,word:{...live,...record.question.word},reconstructed:false}:null;}
- if(record.question?.word?.syllables?.length){const q=record.question;return {...q,word:{...live,...q.word},reconstructed:false};}
+ if(record.question?.word?.syllables?.length){const q=record.question,resolved={...q,word:{...live,...q.word},reconstructed:false};return record.mode==='cloze'?resolveClozeSnapshot(resolved):resolved;}
  if(!live)return null;
  if(record.mode==='pinyin'||record.mode==='tone')return {mode:record.mode,word:live,sentence:null,reconstructed:true};
  const candidates=live.sentences||[];
- const sentence=record.mode==='scramble'?candidates.find(s=>s.hanzi===record.correctAnswer):candidates.find(s=>s.hanzi.includes(live.hanzi));
+ const sentence=record.mode==='scramble'?candidates.find(s=>s.hanzi===record.correctAnswer):candidates.find(s=>findSentenceTarget(s,live.hanzi));
  if(!sentence)return null;
  return {...snapshotQuestion(record.mode,live,sentence),reconstructed:true,originalMissing:record.mode==='cloze'};
 }
@@ -41,7 +50,7 @@ export function characterDifferences(expected,actual){
 }
 export function makeReviewQueue(rows,words,random=Math.random){
  const items=[],unavailable=[];
- for(const record of rows){const question=resolveWrongQuestion(record,words);if(question)items.push({recordId:record.id,mode:record.mode,question});else unavailable.push(record);}
+ for(const record of rows){const question=resolveWrongQuestion(record,words);if(question&&question.retestEligible!==false)items.push({recordId:record.id,mode:record.mode,question});else unavailable.push(record);}
  const ordered=shuffle(items,random);
  return {items:ordered,unavailable,index:0,results:ordered.map(()=>null)};
 }

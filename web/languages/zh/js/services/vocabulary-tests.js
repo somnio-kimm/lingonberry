@@ -1,3 +1,4 @@
+import {findSentenceTarget} from './sentence-focus.js';
 import {createVocabularyEngine,vocabularyWord,vocabularyType,shuffle} from '../../../../js/shared/vocabulary.js';
 export {VOCABULARY_MODES,vocabularyWord,vocabularyType,vocabularyMeaning,snapshotVocabularyQuestion,validVocabularyQuestion} from '../../../../js/shared/vocabulary.js';
 export const {createVocabularyPool,vocabularyQuestions,vocabularyAnswerCorrect}=createVocabularyEngine();
@@ -15,5 +16,5 @@ export function clozeWordOptions(word,words,random=Math.random) {
 export function clozeStudyWords(words) {
  const types=new Map();
  for(const word of words){const type=vocabularyType(word);if(!type)continue;if(!types.has(type))types.set(type,new Set());types.get(type).add(vocabularyWord(word));}
- return words.filter(word=>types.get(vocabularyType(word))?.size>1&&word.sentences?.some(s=>s.hanzi.includes(word.hanzi)));
+ return words.filter(word=>types.get(vocabularyType(word))?.size>1&&word.sentences?.some(s=>findSentenceTarget(s,word.hanzi)));
 }
