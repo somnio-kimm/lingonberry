@@ -8,7 +8,8 @@ export function japaneseReadingPrompt(word,prompt){
   const token=left+lemma+right,start=text.indexOf(token);
   if(lemma&&start>=0)return {prompt:text.split(token).join(lemma),readingFocus:{start,text:lemma}};
  }
- const focus=lemma&&text?findSentenceFocus({...word,lemma},{text},'ja'):null;
+ const example=word.examples?.find(item=>item.text?.normalize('NFC').trim()===text);
+ const focus=lemma&&text?findSentenceFocus({...word,lemma},{...example,text},'ja'):null;
  return focus?.text===lemma?{prompt:text,readingFocus:focus}:{prompt:lemma,readingFocus:{start:0,text:lemma}};
 }
 
