@@ -46,7 +46,7 @@ function cleanGermanArticleNotation(entry){
 export function germanWords(study) {
  return study.entries.map(source=>{const entry=cleanGermanArticleNotation(source);return {
   ...entry.grammar,id:entry.id,lemma:entry.word,sense_id:entry.grammar?.sense_id||entry.id,cefr:entry.level||'A1',pos:entry.partOfSpeech,
-  article:entry.article,gender:entry.grammar?.gender||({der:'masculine',die:'feminine',das:'neuter'}[entry.article]),
+  article:entry.article,aliases:entry.aliases||[],gender:entry.grammar?.gender||({der:'masculine',die:'feminine',das:'neuter'}[entry.article]),
   meaning_en:study.explanationLanguage==='en'?(entry.meanings||[entry.meaning]):[],meaning_ko:study.explanationLanguage==='ko'?(entry.meanings||[entry.meaning]):[],
   studyLanguage:study.targetLanguage,studyMeaning:entry.meaning,studyExplanationLanguage:study.explanationLanguage,collocations:activeCollocations('de',entry),
   examples:[...(entry.example?[entry.example]:[]),...(entry.additionalExamples||[])].map(example=>({...example,de:example.text,studyTranslation:example.translation,[study.explanationLanguage]:example.translation})),
