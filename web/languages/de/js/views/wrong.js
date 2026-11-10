@@ -61,7 +61,7 @@ export function renderWrong(el,ctx) {
  if(!ctx.catalog.levels.some(row=>row.id===filters.level))filters.level=ctx.store.state.preferences.studyLevel;
  let catalog;
  function draw(){
-  stopMedia();const all=wrongEntries(ctx.units,ctx.store.state,ctx.words).map(row=>({...row,studyStatus:ctx.store.wordStatus(row.word?.id||row.wordId)})),rows=filterWrongEntries(all,filters),review=reviewItems(rows,catalog||(catalog=reviewCatalog(ctx.words,all)));
+  stopMedia();const all=wrongEntries(ctx.units,ctx.store.state,ctx.words,ctx.store.reviewContent).map(row=>({...row,studyStatus:ctx.store.wordStatus(row.word?.id||row.wordId)})),rows=filterWrongEntries(all,filters),review=reviewItems(rows,catalog||(catalog=reviewCatalog(ctx.words,all)));
   const groups=[['level',t('Study level'),ctx.catalog.levels.map(l=>l.id)],['pos',t('Part of speech'),['all',...new Set(all.map(r=>r.type))]],['mode',t('Exercise type'),['all',...Object.keys(modeLabels).filter(mode=>mode===filters.mode||all.some(r=>wrongMode(r)===mode))]],['status',t('Study status'),['all','new','learning','mastered']]];
   const label=(key,id)=>id==='all'?t('All'):key==='level'?studyLevelLabel(id):key==='mode'?t(modeLabels[id]):key==='status'?statusLabel(id):t(types[id]||{saved:'Saved exercise',other:'Other'}[id]||id);
   const counts=(key,id)=>filterWrongEntries(all,{...filters,[key]:id}).length;

@@ -19,7 +19,7 @@ export function createPresentation({navigate,refresh,onPreferences}) {
    reportContext:()=>({app:APP_NAME,studyLanguage:'de',studyLevel:store.state.preferences.studyLevel}),
    reset:async()=>{stopMedia();if(!store.resetStudy())throw new Error('Could not reset study progress');context.libraryState=undefined;try{await eraseRecordings();return false;}catch{return true;}},
   },
-  setStudy(study){if(study===lastStudy)return;lastStudy=study;context.words=study?germanWords(study):[];context.dictionaryCount=context.words.length;},
+  setStudy(study){if(study===lastStudy)return;lastStudy=study;store.setReviewContent(study);context.words=study?germanWords(study):[];context.dictionaryCount=context.words.length;context.quizReview=null;context.retestSession=null;},
   setPreferences(values){for(const key of APP_SETTING_KEYS){const local=key==='uiLanguage'?'uiLang':key;if(Object.hasOwn(values,key)&&store.state.preferences[local]!==values[key])store.preference(local,values[key]);}setLocale(store.state.preferences.uiLang);},
   preferences,
   title(route){return route==='home'?APP_NAME:t(SCREENS[route]?.title||'Study');},

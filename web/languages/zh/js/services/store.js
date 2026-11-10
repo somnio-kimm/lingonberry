@@ -1,5 +1,7 @@
 import { wrongAnswerCount } from './wrong-count.js';
 import * as Vocab from './vocabulary.js';
+import {createReviewContentPolicy} from '../../../../js/shared/review-content.js';
+let reviewContent=createReviewContentPolicy();
 
 function _get(k, d) {
   try { const v = localStorage.getItem('learn-language.zh.'+k); return v ? JSON.parse(v) : d; }
@@ -8,6 +10,8 @@ function _get(k, d) {
 function _set(k, v) { localStorage.setItem('learn-language.zh.'+k, JSON.stringify(v)); }
 
 export const Store = {
+  setReviewContent(study){reviewContent=createReviewContentPolicy(study);},
+  isReviewQuestionCurrent(question){return reviewContent.isCurrent(question);},
   get uiLang() { return _get('uiLang', 'ko'); },
   set uiLang(v) { _set('uiLang', v === 'en' ? 'en' : 'ko'); },
 
@@ -43,15 +47,18 @@ export const Store = {
     _set('autoRemoveResolvedWrongs', !!value);
     if(value)_set('wrong', _get('wrong', []).filter(row=>wrongAnswerCount(row)>0));
   },
-  get wrongAnswers() { return _get('wrong', []); },
+  get wrongAnswers() { return _get('wrong', []).filter(row=>reviewContent.isCurrent(row.question||{word:{id:row.wordId}})); },
   addWrong(w) {
+    if(w.question?.contentVersion&&!reviewContent.isCurrent(w.question))return false;
     const arr = _get('wrong', []);
-    arr.unshift({ ...w, id: crypto.randomUUID(), timestamp: Date.now() });
+    const question=reviewContent.prepare(w.question||{mode:w.mode,word:{id:w.wordId}});
+    if(!reviewContent.isCurrent(question))return false;
+    arr.unshift({ ...w,question, id: crypto.randomUUID(), timestamp: Date.now() });
     _set('wrong', arr);
   },
   recordWrongRetest(id,input,correct,parts=[],expected=null,metadata={}) {
     const rows=_get('wrong', []);
-    const row=rows.find(r=>r.id===id);if(!row)return;
+    const row=rows.find(r=>r.id===id);if(!row||!reviewContent.isCurrent(row.question||{word:{id:row.wordId}}))return;
     row.retests=[...(row.retests||[]),{input,correct,expected,at:Date.now(),...(metadata.listening?{listening:metadata.listening}:{})}];row.corrected=correct;
     if(!correct){if(expected){row.initialCorrectAnswer??=row.correctAnswer;row.correctAnswer=expected;}row.initialUserAnswer??=row.userAnswer;row.userAnswer=input;if(parts.length)row.wrongParts=parts;}
     _set('wrong',this.autoRemoveResolvedWrongs?rows.filter(record=>wrongAnswerCount(record)>0):rows);

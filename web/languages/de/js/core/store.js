@@ -3,11 +3,12 @@ import { QUIZ_MODES, SNAPSHOT_MODES, LISTENING_MODES, emptyQuizAnswers } from '.
 import { snapshotQuestion } from '../../../../js/shared/question-snapshot.js';
 import { wrongAnswerCount } from './wrong-count.js';
 import { reviewSchedule } from './assessment.js';
+import {createReviewContentPolicy} from '../../../../js/shared/review-content.js';
 const KEY = 'learn-language.de.progress.v1';
 const STUDY_LEVEL_IDS = STUDY_LEVELS.map(level => level.id);
 const empty = () => ({ version: 1, units: {}, concepts: {}, skills: {}, lastUnit: null });
 export function createStore(storage) {
-  let state;
+  let state,reviewContent=createReviewContentPolicy();
   try { state = JSON.parse(storage.getItem(KEY)); } catch {}
   if (!state || state.version !== 1 || !state.units || !state.concepts) state = empty();
   state.skills ||= {};
@@ -41,6 +42,8 @@ export function createStore(storage) {
 
   return {
     get state() { return state; }, get warning() { return warning; }, unit,
+    get reviewContent(){return reviewContent;},
+    setReviewContent(study){reviewContent=createReviewContentPolicy(study);},
     wordStatus(id) { return ['learning','mastered'].includes(state.wordStatus[id])?state.wordStatus[id]:'new'; },
     setWordStatus(id,status) {
       if(!id||!['new','learning','mastered'].includes(status))throw new Error('Invalid word status');
@@ -65,7 +68,15 @@ export function createStore(storage) {
     },
     recordQuizAnswer(mode,question,input,correct,metadata={}) {
       if(!QUIZ_MODES.includes(mode))throw new Error('Invalid quiz mode');
-      const previous=state.quizAnswers[mode][question.id];
+      if(question.contentVersion&&!reviewContent.isCurrent(question))return false;
+      question=reviewContent.prepare(question);
+      if(!reviewContent.isCurrent(question))return false;
+      const old=state.quizAnswers[mode][question.id];
+      const previous=old&&reviewContent.isCurrent(old.questionSnapshot||{word:{id:old.wordId},contentVersion:old.contentVersion})?old:undefined;
+      if(old&&!previous){
+        if(!Array.isArray(state.quizAnswerHistory))state.quizAnswerHistory=[];
+        state.quizAnswerHistory.push({mode,questionId:question.id,record:structuredClone(old)});
+      }
       const attempt={input,correct,review:metadata.review===true,at:Date.now(),...(LISTENING_MODES.includes(mode)?{listening:{heard:metadata.heard===true,hintUsed:metadata.hintUsed===true,plays:metadata.plays||0}}:{})};
       // Keep the last failed prompt/options when later correct answers use new distractors.
       const snapshot = SNAPSHOT_MODES.includes(mode)
@@ -74,7 +85,7 @@ export function createStore(storage) {
           : snapshotQuestion(question)
         : null;
       const saved=snapshot||question;
-      state.quizAnswers[mode][question.id]={wordId:saved.word.id,level:saved.word.cefr,example:saved.example,answer:mode==='scramble'?saved.example.de:saved.displayAnswer||saved.answer,prompt:saved.prompt||'',questionSnapshot:snapshot,questionContext:{start:question.start??null,tense:question.tense||null,person:question.person||null,case:question.case||null,number:question.number||null,pattern:question.pattern||null},correct,dismissedThrough:previous?.dismissedThrough??-1,attempts:[...(previous?.attempts||[]),attempt]};removeResolvedWrongs();save();
+      state.quizAnswers[mode][question.id]={wordId:saved.word.id,level:saved.word.cefr,example:saved.example,answer:mode==='scramble'?saved.example.de:saved.displayAnswer||saved.answer,prompt:saved.prompt||'',questionSnapshot:snapshot,...(question.contentVersion?{contentVersion:question.contentVersion}:{}),questionContext:{start:question.start??null,tense:question.tense||null,person:question.person||null,case:question.case||null,number:question.number||null,pattern:question.pattern||null},correct,dismissedThrough:previous?.dismissedThrough??-1,attempts:[...(previous?.attempts||[]),attempt]};removeResolvedWrongs();save();
     },
     dismissQuizWrong(mode,id) {
       const record=state.quizAnswers[mode]?.[id];if(!record)return;
