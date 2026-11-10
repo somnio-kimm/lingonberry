@@ -65,9 +65,49 @@ test('a source uncertainty remains pending without an evidenced independent clos
  assert.equal(run([uncertain],[closure]).report.complete,true);
 });
 test('additional example coverage cannot be inferred from reviewing the primary sentence',()=>{
- const expanded={...input,coreEntry:{...input.coreEntry,additionalExamples:[{text:'学校で会いました。'}]}};
+ const expanded={...input,coreEntry:{...input.coreEntry,additionalExamples:[{text:'学校で会いました。'}]},
+  englishExplanation:{...input.englishExplanation,additionalExampleTranslations:['We met at school.']},
+  koreanExplanation:{...input.koreanExplanation,additionalExampleTranslations:['학교에서 만났어요.']}};
  assert.equal(run([pass],[],{inputs:[expanded]}).report.errors.length,1);
  assert.equal(run([{...pass,additionalExamplesReviewed:true}],[],{inputs:[expanded]}).report.complete,true);
+});
+
+test('newly introduced additional examples require their own review acknowledgement',()=>{
+ const correction={...pass,verdict:'revise',proposedCoreEntry:{...input.coreEntry,additionalExamples:[{text:'学校で会いました。'}]},
+  proposedEnglishExplanation:{...input.englishExplanation,additionalExampleTranslations:['We met at school.']},
+  proposedKoreanExplanation:{...input.koreanExplanation,additionalExampleTranslations:['학교에서 만났어요.']}};
+ const missing=run([correction],[approve(correction)]);
+ assert.equal(missing.report.complete,false);assert.match(missing.report.errors[0].error,/explicit review/);
+ const reviewed={...correction,additionalExamplesReviewed:true};
+ const valid=run([reviewed],[approve(reviewed)]);
+ assert.equal(valid.report.complete,true);
+ assert.deepEqual(valid.finalized[0].english.additionalExampleTranslations,['We met at school.']);
+ assert.deepEqual(valid.finalized[0].korean.additionalExampleTranslations,['학교에서 만났어요.']);
+});
+
+test('additional translations must be complete arrays in both explanation proposals',()=>{
+ const correction={...pass,verdict:'revise',additionalExamplesReviewed:true,
+  proposedCoreEntry:{...input.coreEntry,additionalExamples:[{text:'学校で会いました。'}]},
+  proposedEnglishExplanation:{...input.englishExplanation,additionalExampleTranslations:['We met at school.']},
+  proposedKoreanExplanation:{...input.koreanExplanation,additionalExampleTranslations:['학교에서 만났어요.']}};
+ for(const field of ['proposedEnglishExplanation','proposedKoreanExplanation'])for(const translations of [undefined,[],[''],['one','two'],{en:['We met at school.'],ko:['학교에서 만났어요.']}]){
+  const broken={...correction,[field]:{...correction[field],additionalExampleTranslations:translations},
+   additionalExampleTranslations:{en:['We met at school.'],ko:['학교에서 만났어요.']}};
+  if(translations===undefined)delete broken[field].additionalExampleTranslations;
+  const result=run([broken],[approve(broken)]);
+  assert.equal(result.report.complete,false);assert.equal(result.report.reviewed,0);assert.equal(result.finalized.length,0);
+  assert.match(result.report.errors[0].error,/additional example translations/);
+ }
+});
+
+test('blank additional sentences and orphaned translations cannot be finalized',()=>{
+ for(const examples of [null,{},[{text:' '}],[{}]]){
+  const broken={...pass,verdict:'revise',additionalExamplesReviewed:true,
+   proposedCoreEntry:{...input.coreEntry,additionalExamples:examples}};
+  assert.throws(()=>resolveLanguageEntryDecision(input,broken),/additional examples/);
+ }
+ const orphan={...pass,proposedKoreanExplanation:{...input.koreanExplanation,additionalExampleTranslations:['학교에서 만났어요.']}};
+ assert.throws(()=>resolveLanguageEntryDecision(input,orphan),/Korean additional example translations/);
 });
 
 test('a newly recorded source finding cannot disappear behind an older approval',()=>{

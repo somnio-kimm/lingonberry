@@ -33,6 +33,16 @@ export function resolveLanguageEntryDecision(input,decision){
   meaningEn:english.meaning,meaningKo:korean.meaning,exampleText:core.example?.text,
   exampleTranslationEn:english.exampleTranslation,exampleTranslationKo:korean.exampleTranslation};
  if(!required.every(key=>text(fields[key])))throw new Error('Incomplete reviewed lexical or bilingual example fields');
+ const additional=core.additionalExamples===undefined?[]:core.additionalExamples;
+ if(!Array.isArray(additional)||additional.some(example=>!text(example?.text))){
+  throw new Error('Incomplete reviewed additional examples');
+ }
+ for(const [pair,locale] of [[english,'English'],[korean,'Korean']]){
+  const translations=pair.additionalExampleTranslations===undefined?[]:pair.additionalExampleTranslations;
+  if(!Array.isArray(translations)||translations.length!==additional.length||!translations.every(text)){
+   throw new Error(`Incomplete reviewed ${locale} additional example translations`);
+  }
+ }
  if(!levels[input.studyLanguage]?.includes(core.level))throw new Error('Invalid study level');
  if(input.studyLanguage==='ja'&&!text(core.pronunciation))throw new Error('Missing Japanese reading');
  if(input.studyLanguage==='zh'&&['word','level','pronunciation'].some(key=>core[key]!==input.coreEntry[key])){
@@ -77,7 +87,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   try{
    const resolved=resolveLanguageEntryDecision(input,decision);
    if(['pass','approved'].includes(decision.verdict)&&resolved.changed)throw new Error('A pass decision changes learner content');
-   if(input.coreEntry.additionalExamples?.length&&decision.additionalExamplesReviewed!==true){
+   if(resolved.core.additionalExamples?.length&&decision.additionalExamplesReviewed!==true){
     throw new Error('Additional examples also need an explicit review');
    }
    const needsSource=decision.verdict==='needs-source'||!!decision.sourceIssues?.length||findings.has(decision.id);

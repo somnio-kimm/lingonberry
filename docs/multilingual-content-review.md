@@ -18,6 +18,8 @@ node --test tests/language-entry-review.test.mjs
 
 Each primary decision binds the exact input, records the fields examined and explains retention or correction. Save atomically and calculate the actual missing-ID set on resumption. Preserve original source metadata and prior decisions. Never fill the journal with heuristic approvals based on field presence.
 
+Every added or inherited additional example needs an explicit `additionalExamplesReviewed` acknowledgement and a matching, nonempty translation in each explanation's `additionalExampleTranslations` array. Put newly authored translations in `proposedEnglishExplanation` and `proposedKoreanExplanation`; a locale-keyed map on the decision itself is not consumed by package assembly.
+
 The shared audit accepts the existing Chinese full-object proposal format and the German/Japanese field-review format. It separates primary review coverage from independently approved corrections and unresolved sources. Changed records require an independent `*-cross-review.jsonl` approval bound to the exact decision digest. Rejections and source findings block completion even when the primary reviewer retained an entry.
 
 External source findings stay in `*-source-findings.jsonl`. An independent closure must cite the exact finding digests and supporting evidence; old approvals cannot hide a new source problem. Unclassified example metadata is an uncertainty, not proof of infringement. Contributor examples, publisher quotations and original new sentences must remain distinguished. Retained ShareAlike material and its translations keep compatible licences, source links and attribution.
