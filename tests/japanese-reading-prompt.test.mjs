@@ -18,6 +18,23 @@ test('missing, inflected and embedded-compound targets use a standalone word wit
  assert.deepEqual(japaneseReadingPrompt({...word,lemma:'食べる'},'毎日食べます。'),{prompt:'食べる',readingFocus:{start:0,text:'食べる'}});
  assert.deepEqual(japaneseReadingPrompt(word),{prompt:'学校',readingFocus:{start:0,text:'学校'}});
 });
+test('reviewed example spans retain a sentence even when tokenisation differs',()=>{
+ const body={id:'body',lemma:'体中',pronunciation:'たいちゅう',studyMeaning:'inside the body',examples:[{
+  text:'医師は、体中に残った異物の位置を確かめました。',focus:{start:4,text:'体中'},studyTranslation:'The doctor confirmed the location of the object remaining inside the body.'}]};
+ const question=createJapaneseReadingExercises([body],'en',{version:1,excludedSpellings:[],variants:[]}).find(row=>row.category==='reading');
+ assert.equal(question.prompt,body.examples[0].text);assert.deepEqual(question.readingFocus,{start:4,text:'体中'});
+ assert.equal(question.context,body.examples[0].studyTranslation);
+});
+test('an explicit reviewed span disambiguates repeated targets without guessing',()=>{
+ const tree={lemma:'木',examples:[{text:'この木とあの木は同じ種類です。',focus:{start:6,text:'木'}}]};
+ assert.deepEqual(japaneseReadingPrompt(tree,tree.examples[0].text),{prompt:tree.examples[0].text,readingFocus:{start:6,text:'木'}});
+});
+test('invalid or unrelated example spans are never applied to a reading prompt',()=>{
+ const invalid={...word,examples:[{text:'学校へ行く。',focus:{start:99,text:'学校'}}]};
+ assert.deepEqual(japaneseReadingPrompt(invalid,'学校へ行く。'),{prompt:'学校',readingFocus:{start:0,text:'学校'}});
+ const unrelated={...word,examples:[{text:'別の学校へ行く。',focus:{start:2,text:'学校'}}]};
+ assert.deepEqual(japaneseReadingPrompt(unrelated,'学校へ行く。'),{prompt:'学校へ行く。',readingFocus:{start:0,text:'学校'}});
+});
 test('reading prompt omits the instruction line in both display languages',()=>{
  const q={category:'reading',word,prompt:'学校\n弟は［学校］へ歩いて行く。',locale:'en',instruction:'An older instruction.',options:[{id:'0',text:'がっこう'}]};
  const korean=renderExercisePrompt(q,{uiLanguage:'ko'});assert.doesNotMatch(korean,/vocab-instruction/);assert.match(korean,/<span class="study-reading-target">学校<\/span>/);assert.equal(korean.split('学校').length-1,1);assert.ok(!korean.includes('［'));assert.ok(!korean.includes('<rt>'));
