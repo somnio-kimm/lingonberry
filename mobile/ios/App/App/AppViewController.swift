@@ -96,7 +96,16 @@ class AppViewController: CAPBridgeViewController {
                     if(original.target&&original.explanation)await open(original.target,original.explanation);else await settingsPage();
                     if(original.target)document.querySelector('[data-tab=home]').click();
                   }
-                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,restored:original.target||null});
+                  const {verbFormQuestions,verbFormCorrect}=await import('./languages/de/js/core/grammar-quizzes.js');
+                  const fixture={id:'native-qa-swim',lemma:'schwimmen',pos:'verb',auxiliary:'haben / sein',meaning_en:['swim'],meaning_ko:['수영하다'],forms:{perfekt:'hat geschwommen / ist geschwommen'}};
+                  const grammarWords=[fixture,{lemma:'haben',pos:'verb',forms:{praesens:{ich:'habe'},praeteritum:{ich:'hatte'}}},{lemma:'sein',pos:'verb',forms:{praesens:{ich:'bin'},praeteritum:{ich:'war'}}}];
+                  const grammarQuestions=verbFormQuestions([fixture],grammarWords),compoundChecks=[];
+                  for(const [tense,expected]of [['perfekt',['habe geschwommen','bin geschwommen']],['plusquamperfekt',['hatte geschwommen','war geschwommen']],['futur_ii',['werde geschwommen haben','werde geschwommen sein']]]){
+                    const question=grammarQuestions.find(row=>row.tense===tense&&row.person==='ich');
+                    if(!question||expected.some(answer=>!verbFormCorrect(question,answer))||verbFormCorrect(question,'bin hat geschwommen'))throw new Error('Mixed perfect auxiliary grading differs');
+                    compoundChecks.push({tense,accepted:question.acceptedAnswers});
+                  }
+                  return JSON.stringify({passed:true,webVersion:APP_VERSION,checks,compoundChecks,restored:original.target||null});
                 }
                 // END INSTALLED_PACKAGE_UPDATE_CHECK
                 if (japaneseKoreanMeanings) {

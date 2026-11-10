@@ -1,4 +1,4 @@
-import {formAlternatives,finiteVerbAlternatives} from './form-alternatives.js';
+import {formAlternatives,finiteVerbAlternatives,perfectVerbAlternatives} from './form-alternatives.js';
 import {nounArticles} from './vocabulary-tests.js';
 export const PERSONS=['ich','du','er','wir','ihr','sie'];
 export const personLabel=person=>person==='er'?'er / sie / es':person==='sie'?'sie / Sie':person;
@@ -29,19 +29,16 @@ export function articleQuestions(words) {
 export function verbFormQuestions(words,allWords=words) {
  const auxiliaries=new Map(allWords.filter(w=>w.pos==='verb'&&['haben','sein'].includes(w.lemma)).map(w=>[w.lemma,w]));
  return words.filter(w=>w.pos==='verb'&&w.forms).flatMap(word=>VERB_FORMS.flatMap(tense=>PERSONS.flatMap(person=>{
-  let answer;
+  let answer,acceptedAnswers;
   if(['perfekt','plusquamperfekt','futur_ii'].includes(tense)){
-   const match=/^(hat|ist) (.+)$/u.exec(word.forms.perfekt||'');
-   const auxiliary=word.auxiliary;
-   if(match&&(auxiliary==='haben'&&match[1]==='hat'||auxiliary==='sein'&&match[1]==='ist')){
+   acceptedAnswers=perfectVerbAlternatives(word.forms.perfekt).flatMap(({auxiliary,participle})=>{
+    if(tense==='futur_ii')return [futureAuxiliary[person]+' '+participle+' '+auxiliary];
     const conjugated=auxiliaries.get(auxiliary)?.forms?.[tense==='plusquamperfekt'?'praeteritum':'praesens']?.[person];
-    if(tense==='futur_ii')answer=futureAuxiliary[person]+' '+match[2]+' '+auxiliary;
-    else if(conjugated)answer=conjugated+' '+match[2];
-   }
+    return formAlternatives(conjugated).map(form=>form+' '+participle);
+   });
   }else if(tense==='futur_i')answer=futureAuxiliary[person]+' '+(word.infinitive||word.lemma);
   else answer=word.forms[tense]?.[person];
-  if(typeof answer!=='string'||!answer.trim())return [];
-  const acceptedAnswers=['perfekt','plusquamperfekt','futur_ii'].includes(tense)?formAlternatives(word.forms.perfekt?.replace(/^(hat|ist) /u,'')).map(participle=>tense==='futur_ii'?futureAuxiliary[person]+' '+participle+' '+word.auxiliary:answer.split(' ')[0]+' '+participle):finiteVerbAlternatives(answer,word);
+  acceptedAnswers=[...new Set(acceptedAnswers||finiteVerbAlternatives(answer,word))];
   answer=acceptedAnswers[0];if(!answer)return [];
   return [{mode:'verbforms',id:word.id+':'+tense+':'+person,word,tense,person,answer,acceptedAnswers,example:gloss(word),prompt:tenseLabel(tense)+' · '+personLabel(person)+' · '+word.lemma}];
  })));
