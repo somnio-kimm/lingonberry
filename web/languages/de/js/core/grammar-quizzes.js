@@ -1,4 +1,4 @@
-import {formAlternatives,finiteVerbAlternatives,perfectVerbAlternatives} from './form-alternatives.js';
+import {formAlternatives,finiteVerbAlternatives,perfectVerbAlternatives,deriveInfinitiveAlternatives,inflectReflexiveComplement} from './form-alternatives.js';
 import {nounArticles} from './vocabulary-tests.js';
 export const PERSONS=['ich','du','er','wir','ihr','sie'];
 export const personLabel=person=>person==='er'?'er / sie / es':person==='sie'?'sie / Sie':person;
@@ -28,20 +28,32 @@ export function articleQuestions(words) {
 }
 export function verbFormQuestions(words,allWords=words) {
  const auxiliaries=new Map(allWords.filter(w=>w.pos==='verb'&&['haben','sein'].includes(w.lemma)).map(w=>[w.lemma,w]));
- return words.filter(w=>w.pos==='verb'&&w.forms).flatMap(word=>VERB_FORMS.flatMap(tense=>PERSONS.flatMap(person=>{
+ return words.filter(w=>w.pos==='verb'&&w.forms).flatMap(word=>{
+  const perfect=perfectVerbAlternatives(word.forms.perfekt),infinitives=deriveInfinitiveAlternatives(word,perfect);
+  return VERB_FORMS.flatMap(tense=>PERSONS.flatMap(person=>{
   let answer,acceptedAnswers;
   if(['perfekt','plusquamperfekt','futur_ii'].includes(tense)){
-   acceptedAnswers=perfectVerbAlternatives(word.forms.perfekt).flatMap(({auxiliary,participle})=>{
+   const complements=perfect.map(row=>inflectReflexiveComplement(row.participle,person,word.reflexive_case));
+   if(complements.includes(null))return [];
+   const variants=perfect.map(({auxiliary},index)=>{
+    const participle=complements[index];
     if(tense==='futur_ii')return [futureAuxiliary[person]+' '+participle+' '+auxiliary];
     const conjugated=auxiliaries.get(auxiliary)?.forms?.[tense==='plusquamperfekt'?'praeteritum':'praesens']?.[person];
     return formAlternatives(conjugated).map(form=>form+' '+participle);
    });
-  }else if(tense==='futur_i')answer=futureAuxiliary[person]+' '+(word.infinitive||word.lemma);
+   if(variants.some(answers=>!answers.length))return [];
+   acceptedAnswers=variants.flat();
+  }else if(tense==='futur_i'){
+   const complements=infinitives.map(value=>inflectReflexiveComplement(value,person,word.reflexive_case));
+   if(complements.includes(null))return [];
+   acceptedAnswers=complements.map(value=>futureAuxiliary[person]+' '+value);
+  }
   else answer=word.forms[tense]?.[person];
   acceptedAnswers=[...new Set(acceptedAnswers||finiteVerbAlternatives(answer,word))];
   answer=acceptedAnswers[0];if(!answer)return [];
   return [{mode:'verbforms',id:word.id+':'+tense+':'+person,word,tense,person,answer,acceptedAnswers,example:gloss(word),prompt:tenseLabel(tense)+' · '+personLabel(person)+' · '+word.lemma}];
- })));
+  }));
+ });
 }
 export const normalizeVerbForm=value=>String(value).normalize('NFC').trim().replace(/\s+/gu,' ');
 export const verbFormCorrect=(question,input)=>(question.acceptedAnswers||[question.answer]).some(answer=>normalizeVerbForm(input)===normalizeVerbForm(answer));
