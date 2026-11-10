@@ -106,7 +106,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
    }
    const needsSource=decision.verdict==='needs-source'||!!decision.sourceIssues?.length||findings.has(decision.id);
    valid.set(decision.id,{input,decision,resolved,needsSource,needsUsage:!!decision.usageIssues?.length,
-    needsExampleQuality:!!decision.exampleQualityIssues?.length||hasPlaceholderExample(resolved.core),isLegacy});
+    needsExampleQuality:decision.verdict!=='retire'&&(!!decision.exampleQualityIssues?.length||hasPlaceholderExample(resolved.core)),isLegacy});
    counts[decision.verdict]=(counts[decision.verdict]||0)+1;
   }catch(error){errors.push({id:decision.id,error:error.message});}
  }
@@ -119,6 +119,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
  for(const [id,row] of valid){
   const {input,decision,resolved}=row,declaredCross=approvals.get(id);
   const scopes=Object.fromEntries(reviewScopes.map(kind=>[kind,classifyIndependentResolution(declaredCross,kind)]));
+  if(decision.verdict==='retire')scopes.exampleQuality='none'; // Its example survives as history, not learner content.
   const needsSource=row.needsSource||scopes.source==='required',needsUsage=row.needsUsage||scopes.usage==='required';
   const needsExampleQuality=row.needsExampleQuality||scopes.exampleQuality==='required';
   const needs={source:needsSource,usage:needsUsage,exampleQuality:needsExampleQuality};
@@ -144,7 +145,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
    text(cross.usageResolution.reason));
   if(!usageClosed)pendingUsage.push(id);
   // A generic topic frame must be replaced, not waived by an unrelated approval.
-  const exampleQualityClosed=!hasPlaceholderExample(resolved.core)&&(!needsExampleQuality||
+  const exampleQualityClosed=decision.verdict==='retire'||!hasPlaceholderExample(resolved.core)&&(!needsExampleQuality||
    (cross?.verdict==='approve'&&cross.exampleQualityResolution?.status==='resolved'&&text(cross.exampleQualityResolution.reason)));
   if(!exampleQualityClosed)pendingExampleQuality.push(id);
   if(invalidCross){pendingIndependent.push(id);continue;}
