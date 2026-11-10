@@ -94,12 +94,12 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
  for(const [id,row] of valid){
   const {input,decision,resolved,needsSource,needsUsage}=row;
   const needsApproval=resolved.changed||needsSource||needsUsage||decision.verdict==='retire';
-  const cross=approvals.get(id);
+  let cross=approvals.get(id),invalidCross=false;
   if(cross){
    const reviewer=decision.reviewer||'legacy-'+language+'-first-pass';
    if(cross.decisionDigest!==exampleDigest(decision)||!text(cross.reviewer)||cross.reviewer===reviewer||
       !text(cross.reason)||!['approve','needs-source','reject'].includes(cross.verdict)){
-    errors.push({id,error:'Stale, incomplete or non-independent cross-review'});pendingIndependent.push(id);continue;
+    errors.push({id,error:'Stale, incomplete or non-independent cross-review'});invalidCross=true;cross=undefined;
    }
   }
   const findingBindings=!findings.has(id)||equal([...(cross?.sourceResolution?.findingDigests||[])].sort(),[...findings.get(id)].sort());
@@ -110,6 +110,7 @@ export function auditLanguageEntryReviews({language,inputs,decisions,crossReview
   const usageClosed=!needsUsage||(cross?.verdict==='approve'&&cross.usageResolution?.status==='resolved'&&
    text(cross.usageResolution.reason));
   if(!usageClosed)pendingUsage.push(id);
+  if(invalidCross){pendingIndependent.push(id);continue;}
   if(cross&&cross.verdict!=='approve'){pendingIndependent.push(id);continue;}
   if(needsApproval&&cross?.verdict!=='approve'){pendingIndependent.push(id);continue;}
   if(!sourceClosed||!usageClosed)continue;
