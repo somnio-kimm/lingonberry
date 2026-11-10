@@ -40,3 +40,28 @@ test('explicit unsupported inflection does not manufacture an uninflected adject
  const options=clozeOptions(clozeQuestions([unknown])[0],[unknown,{id:'modern',lemma:'modern',pos:'adjective'}]);
  assert.equal(options.length,1);
 });
+
+test('legacy Cloze recognises each standalone plural citation separately',()=>{
+ const cactus={id:'cactus',lemma:'Kaktus',pos:'noun',plural:'Kakteen / Kaktusse',examples:[{de:'Am Fenster stehen drei Kaktusse.'}]};
+ const q=clozeQuestions([cactus])[0];assert.equal(q.answer,'Kaktusse');assert.equal(q.form.kind,'plural');assert.equal(q.form.alternativeIndex,1);
+ const pizza={id:'pizza',lemma:'Pizza',pos:'noun',plural:'Pizzen / Pizzas'};
+ const options=clozeOptions(q,[cactus,pizza],()=>0);assert.deepEqual(options.map(r=>r.text).sort(),['Kaktusse','Pizzas']);
+ const saved=snapshotQuestion(q),before=JSON.stringify(saved);clozeOptions(saved,[cactus,pizza]);assert.equal(JSON.stringify(saved),before);
+});
+test('plural distractors omit missing forms and fall back to a supported alternative',()=>{
+ const book={id:'books',lemma:'Buch',pos:'noun',plural:'Bücher',examples:[{de:'Dort liegen die Bücher.'}]};
+ const cactus={id:'cactus',lemma:'Kaktus',pos:'noun',plural:'Kakteen / Kaktusse'};
+ const mass={id:'water',lemma:'Wasser',pos:'noun'},unknown={id:'unknown',lemma:'Hoffnung',pos:'noun',plural:'—'};
+ const q=clozeQuestions([book])[0],options=clozeOptions(q,[book,cactus,mass,unknown],()=>0);
+ assert.deepEqual(options.map(r=>r.text).sort(),['Bücher','Kakteen']);assert.ok(options.every(r=>!r.text.includes('/')));
+ const alternate=clozeQuestions([{...cactus,examples:[{de:'Dort stehen Kaktusse.'}]}])[0];assert.deepEqual(clozeOptions(alternate,[alternate.word,book],()=>0).map(r=>r.text).sort(),['Bücher','Kaktusse']);
+});
+for(const [kind,forms,sentence,answer,other] of [
+ ['comparative','schmaler / schmäler','Dieser Weg ist schmäler.','schmäler','dünner'],
+ ['superlative','am schmalsten / am schmälsten','Dieser Weg ist am schmälsten.','am schmälsten','am dünnsten'],
+])test(`standalone ${kind} alternatives use the same parser without uninflected substitutes`,()=>{
+ const narrow={id:'narrow',lemma:'schmal',pos:'adjective',[kind]:forms,examples:[{de:sentence}]};
+ const thin={id:'thin',lemma:'dünn',pos:'adjective',[kind]:other},missing={id:'small',lemma:'klein',pos:'adjective'};
+ const q=clozeQuestions([narrow])[0];assert.equal(q.answer,answer);assert.equal(q.form.kind,kind);assert.equal(q.form.alternativeIndex,1);
+ assert.deepEqual(clozeOptions(q,[narrow,thin,missing],()=>0).map(r=>r.text).sort(),[answer,other].sort());
+});

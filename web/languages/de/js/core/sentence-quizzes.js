@@ -6,6 +6,7 @@ import { shuffleWords } from './words.js';
 export const normalizeSentence=text=>String(text).normalize('NFC').trim().replace(/\s+/gu,' ');
 export const sentenceTokens=text=>normalizeSentence(text).match(/[^\s.,，。]+|[.,，。]/gu)||[];
 const wordCharacter=/[\p{L}\p{M}\p{N}]/u;
+const standaloneInflections=['plural','comparative','superlative'];
 function values(value,path=[]) {
  if(typeof value==='string')return [{text:value,path}];
  if(Array.isArray(value))return value.flatMap((v,i)=>values(v,[...path,i]));
@@ -19,7 +20,7 @@ function formText(value,kind) {
 }
 function forms(word) {
  const result=[{text:word.lemma,kind:'lemma',path:[]}];
- for(const kind of ['plural','comparative','superlative'])if(word[kind])result.push({text:word[kind],kind,path:[]});
+ for(const kind of standaloneInflections)formAlternatives(word[kind]).forEach((text,alternativeIndex)=>result.push({text,kind,path:[],alternativeIndex}));
  for(const kind of ['forms','declension','pronoun_forms','article_forms','attested_forms']){
   for(const form of values(word[kind])){
    const alternatives=kind==='declension'?nounPhraseAlternatives(form.text,{allowBare:word.article_optional===true}):formAlternatives(form.text);
@@ -78,7 +79,10 @@ function optionForm(word,question) {
   return initial?text[0].toLocaleUpperCase('de')+text.slice(1):text;
  }
  if(form.kind==='lemma')text=word.lemma;
- else if(form.kind==='plural')text=word.plural;
+ else if(standaloneInflections.includes(form.kind)){
+  const alternatives=formAlternatives(word[form.kind]).filter(text=>text!=='—');
+  text=alternatives[form.alternativeIndex||0]||alternatives[0];if(!text)return null;
+ }
  else{let value=word[form.kind];for(const part of form.path)value=value?.[part];if(typeof value==='string')text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);}
  text||=word.lemma;
  if(form.firstToken)text=text.split(' ')[0];
