@@ -27,3 +27,18 @@ test('missing or extra spoken syllables still fail instead of shifting readings'
  assert.equal(Pinyin.sentenceColumns({hanzi:'你好。',pinyin:'ni3'}),null);
  assert.equal(Pinyin.sentenceColumns({hanzi:'你。',pinyin:'ni3 hao3'}),null);
 });
+
+test('German low quotations close against punctuation and keep the next sentence separate',()=>{
+ const text='Im Stück sagt sie: „Ja, ich komme.“ Dann geht sie.';
+ const tokens=sentenceTokens(text),before=structuredClone(tokens);
+ assert.equal(joinSentenceTokens(tokens),text);
+ assert.equal(scrambleCorrect({example:{de:text}},tokens),true);
+ assert.equal(joinSentenceTokens(['Im','Stück','sagt','sie:','„Ja,','ich','komme.“','Dann','geht','sie.']),text);
+ assert.deepEqual(tokens,before);
+});
+test('German single low quotations and brackets preserve their boundaries',()=>{
+ for(const text of ['Er schreibt: ‚Komm, bitte.‘ Danach wartet er.','Sie sagt (ganz leise): „Ja.“']){
+  assert.equal(joinSentenceTokens(sentenceTokens(text)),text);
+  assert.equal(scrambleCorrect({example:{de:text}},sentenceTokens(text)),true);
+ }
+});

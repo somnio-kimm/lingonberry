@@ -10,8 +10,13 @@ export function sentenceTiles(text,language){
 }
 export function joinSentenceTiles(tiles,language){
  if(['ja','zh'].includes(language))return tiles.join('');
+ // German low opening quotes pair with high closing quotes; English high
+ // opening quotes remain supported when that typography is used instead.
+ const lowQuotes=language==='de'&&tiles.some(tile=>/[„‚]/u.test(tile));
+ const closing=lowQuotes?/^[.,!?;:%)\]}»”’“‘，。]$/u:/^[.,!?;:%)\]}»”’，。]$/u;
+ const opening=lowQuotes?/[([{«„‚]$/u:/[([{«“‘]$/u;
  let result='';
- for(const tile of tiles){const tight=/^[.,!?;:%)\]}»”’]$/u.test(tile)||/[([{«“‘]$/u.test(result);result+=(result&&!tight?' ':'')+tile;}
+ for(const tile of tiles){const tight=closing.test(tile)||opening.test(result);result+=(result&&!tight?' ':'')+tile;}
  return result;
 }
 export function findSentenceFocus(word,example,language){

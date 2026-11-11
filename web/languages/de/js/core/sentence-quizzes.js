@@ -1,5 +1,5 @@
 import {findAdjectiveFocusPatterns,pickAdjectiveFocusOption} from './adjective-forms.js';
-import {findSentenceFocus} from '../../../../js/shared/lexicon-sentences.js';
+import {findSentenceFocus,joinSentenceTiles} from '../../../../js/shared/lexicon-sentences.js';
 import {nounPhraseAlternatives,formAlternatives} from './form-alternatives.js';
 import { wordType } from './dictionary.js';
 import { shuffleWords } from './words.js';
@@ -98,7 +98,7 @@ export function clozeOptions(question,words,random=Math.random) {
  }
  return shuffleWords(options,random);
 }
-export const joinSentenceTokens=tokens=>normalizeSentence(tokens.join(' ')).replace(/\s+([.,，。])/gu,'$1');
+export const joinSentenceTokens=tokens=>normalizeSentence(joinSentenceTiles(tokens,'de'));
 export const scrambleCorrect=(question,tokens)=>{
  const expected=sentenceTokens(question.example.de),actual=tokens.flatMap(sentenceTokens);
  return actual.length===expected.length&&actual.every((token,index)=>token===expected[index]);
