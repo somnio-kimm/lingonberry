@@ -54,3 +54,5 @@ Run `node scripts/verify-german-optional-articles-browser.mjs` for actual option
 Run `node scripts/verify-german-cloze-focus-browser.mjs` for actual inflected-focus questions, feedback, saved Review and retests across EN/KO, phone/tablet and both themes.
 
 Run `node scripts/verify-german-plural-gender-browser.mjs` for plural-only metadata through actual Word List, details, saved words and Review across EN/KO, phone/tablet and both themes.
+
+Chinese dictionary examples marked `practiceEligible: false` remain visible with their translations, but are excluded from Cloze, Sentence Scramble and Dictation. `clozeEligible: false` excludes only Cloze. Both flags must be booleans on primary and additional examples. Saved explicitly excluded sentences remain readable in Review without entering retests; raw records and word progress are preserved. Unflagged legacy examples retain their existing behaviour. Run `node scripts/verify-chinese-reference-examples-browser.mjs` for English/Korean phone/tablet and light/dark checks.
