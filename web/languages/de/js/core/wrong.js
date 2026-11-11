@@ -29,7 +29,9 @@ export function wrongEntries(units, state, words=[],reviewContent) {
       for(let i=0;i<attempts.length;i++)if(attempts[i].correct===false)index=i;
       const wrongCount=wrongAnswerCount(attempts,record.dismissedThrough??-1);
       if(index<0||index<=(record.dismissedThrough??-1))continue;
-      const word=record.questionSnapshot?.word||byId.get(record.wordId||id.split(':')[0]);
+      const live=byId.get(record.wordId||id.split(':')[0]),savedWord=record.questionSnapshot?.word;
+      // Sentence headings follow the active explanation; the original question stays in its snapshot.
+      const word=['cloze','scramble'].includes(mode)?live||savedWord:savedWord||live;
       rows.push({unit:{id:'vocabulary-quizzes',level:record.level},question:{id,prompt:{cloze:'Cloze',scramble:'Sentence scramble',articles:'Article',verbforms:'Verb',cases:'Case',adjendings:'Adjective',vocabinput:'Word input',vocabmeaning:'Meaning quiz',listenword:'Dictation · Word',listensentence:'Dictation · Sentence'}[mode],sentence:record.example.de,answer:record.answer,explanation:'The correct answer is shown in the sentence.'},stage:mode,attempt:attempts[index],corrected:record.correct===true,wrongCount,quizMode:mode,example:record.example,grammarPrompt:record.prompt,questionContext:record.questionContext,questionSnapshot:record.questionSnapshot,word,wordId:record.wordId,type:word?wordType(word):'other'});
     }
   }

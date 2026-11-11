@@ -19,6 +19,13 @@ export function joinSentenceTiles(tiles,language){
  for(const tile of tiles){const tight=closing.test(tile)||opening.test(result);result+=(result&&!tight?' ':'')+tile;}
  return result;
 }
+/** Content-scoped identity, not a package integrity hash. */
+export function createSentenceQuestionId(wordId,index,text){
+ let left=2166136261,right=0x9e3779b9;
+ for(const character of text){const code=character.codePointAt(0);left=Math.imul(left^code,16777619);right=Math.imul(right^code,2246822519);}
+ const hex=value=>(value>>>0).toString(16).padStart(8,'0');
+ return wordId+':'+index+':'+hex(left)+hex(right);
+}
 export function findSentenceFocus(word,example,language){
  const text=example.text.normalize('NFC'),explicit=example.focus?.text;
  if(explicit){const start=example.focus.start??text.indexOf(explicit);if(example.focus.start===undefined&&text.indexOf(explicit,start+explicit.length)>=0)return null;return Number.isInteger(start)&&start>=0&&text.slice(start,start+explicit.length)===explicit?{start,text:explicit}:null;}

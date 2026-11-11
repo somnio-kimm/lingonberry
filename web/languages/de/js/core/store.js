@@ -82,7 +82,7 @@ export function createStore(storage) {
       const snapshot = SNAPSHOT_MODES.includes(mode)
         ? correct && previous?.questionSnapshot
           ? previous.questionSnapshot
-          : snapshotQuestion(question)
+          : snapshotQuestion({...question,mode})
         : null;
       const saved=snapshot||question;
       state.quizAnswers[mode][question.id]={wordId:saved.word.id,level:saved.word.cefr,example:saved.example,answer:mode==='scramble'?saved.example.de:saved.displayAnswer||saved.answer,prompt:saved.prompt||'',questionSnapshot:snapshot,...(question.contentVersion?{contentVersion:question.contentVersion}:{}),questionContext:{start:question.start??null,tense:question.tense||null,person:question.person||null,case:question.case||null,number:question.number||null,pattern:question.pattern||null},correct,dismissedThrough:previous?.dismissedThrough??-1,attempts:[...(previous?.attempts||[]),attempt]};removeResolvedWrongs();save();

@@ -1,5 +1,5 @@
 import {findAdjectiveFocusPatterns,pickAdjectiveFocusOption} from './adjective-forms.js';
-import {findSentenceFocus,joinSentenceTiles} from '../../../../js/shared/lexicon-sentences.js';
+import {findSentenceFocus,joinSentenceTiles,createSentenceQuestionId} from '../../../../js/shared/lexicon-sentences.js';
 import {nounPhraseAlternatives,formAlternatives} from './form-alternatives.js';
 import { wordType } from './dictionary.js';
 import { shuffleWords } from './words.js';
@@ -59,17 +59,17 @@ export function clozeQuestions(words) {
    const focus=findSentenceFocus(word,{text:sentence,focus:example.focus},'de');if(!focus)return [];
    let form=declared.find(form=>form.text===focus.text)||{text:focus.text,kind:'focus',path:[]};
    if(word.pos==='adjective')form={...form,adjectivePatterns:findAdjectiveFocusPatterns(word,focus.text)};
-   return [{id:word.id+':'+i+':'+focus.start,word,example:{...example,de:sentence},answer:focus.text,start:focus.start,form}];
+   return [{id:createSentenceQuestionId(word.id,i,sentence)+':'+focus.start,word,example:{...example,de:sentence},answer:focus.text,start:focus.start,form}];
   }
   for(const form of declared){
    const span=findSpan(sentence,form.text);
-   if(span)return [{id:word.id+':'+i+':'+span.start,word,example:{...example,de:sentence},answer:span.text,start:span.start,form}];
+   if(span)return [{id:createSentenceQuestionId(word.id,i,sentence)+':'+span.start,word,example:{...example,de:sentence},answer:span.text,start:span.start,form}];
   }
   return [];
  }));
 }
 export function scrambleQuestions(words) {
- return words.flatMap(word=>(word.examples||[]).map((example,i)=>({id:word.id+':'+i,word,example:{...example,de:normalizeSentence(example.de)},tokens:sentenceTokens(example.de)}))).filter(q=>q.tokens.length>1);
+ return words.flatMap(word=>(word.examples||[]).map((example,i)=>{const sentence=normalizeSentence(example.de);return {id:createSentenceQuestionId(word.id,i,sentence),word,example:{...example,de:sentence},tokens:sentenceTokens(sentence)};})).filter(q=>q.tokens.length>1);
 }
 function optionForm(word,question) {
  const form=question.form;let text;
