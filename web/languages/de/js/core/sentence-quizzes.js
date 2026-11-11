@@ -83,7 +83,12 @@ function optionForm(word,question) {
   const alternatives=formAlternatives(word[form.kind]).filter(text=>text!=='—');
   text=alternatives[form.alternativeIndex||0]||alternatives[0];if(!text)return null;
  }
- else{let value=word[form.kind];for(const part of form.path)value=value?.[part];if(typeof value==='string')text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);}
+ else if(form.kind!=='focus'){
+  let value=word[form.kind];for(const part of form.path)value=value?.[part];
+  if(typeof value!=='string'||!value.trim())return null;
+  text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);
+  if(!text||text.trim()==='—')return null;
+ }
  text||=word.lemma;
  if(form.firstToken)text=text.split(' ')[0];
  if(text&&(question.start===0||question.answer!==form.text&&question.answer===form.text[0]?.toLocaleUpperCase('de')+form.text.slice(1)))text=text[0].toLocaleUpperCase('de')+text.slice(1);
