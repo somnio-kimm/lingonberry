@@ -26,10 +26,10 @@ test('German corrections exclude outdated questions but preserve history, master
  assert.deepEqual(reopened.state.quizAnswerHistory,store.state.quizAnswerHistory);
  assert.deepEqual(new Set(wrongEntries([],reopened.state,[],reopened.reviewContent).map(r=>r.wordId)),new Set(['changed','unrelated']));
 });
-test('German sentence records without full snapshots also honour versioned corrections',()=>{
+test('German sentence snapshots also honour versioned corrections',()=>{
  const store=createStore(memory()),q={...question('changed'),mode:'cloze',id:'changed:cloze'};
  store.setReviewContent({studyVersion:'3.2.0'});store.recordQuizAnswer('cloze',q,'wrong',false);
- assert.equal(store.state.quizAnswers.cloze[q.id].questionSnapshot,null);
+ assert.equal(store.state.quizAnswers.cloze[q.id].questionSnapshot.contentVersion,'3.2.0');
  store.setReviewContent(revised);assert.equal(wrongEntries([],store.state,[],store.reviewContent).length,0);
  store.recordQuizAnswer('cloze',q,'new wrong',false);
  assert.equal(wrongEntries([],store.state,[],store.reviewContent).length,1);
