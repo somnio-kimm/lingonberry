@@ -1,5 +1,6 @@
 import {gradePhraseGaps} from './phrase-gaps.js';
 import {shuffle} from './vocabulary.js';
+import {isValidJapaneseReadingFocus} from './japanese-reading-prompt.js';
 /** Bundled exercise rules; prompts and answers arrive only as validated package data. */
 const EXERCISE_CATEGORIES=Object.freeze({
  cloze:['Cloze','빈칸 채우기'],
@@ -23,15 +24,20 @@ export function exerciseModes(language){
  return Object.fromEntries(categories.map(id=>[id,[language==='en'&&id==='collocations'?'Expressions':exerciseLabel(id),icons[id]||'📝','teal']]));
 }
 
+/** Do not retest a malformed saved target or silently attach its answer to a fallback lemma. */
+export function isValidExerciseQuestion(question){
+ return question.category!=='reading'||question.readingFocus===undefined||isValidJapaneseReadingFocus(question.prompt,question.readingFocus);
+}
 export function createExerciseQuestions(exercises,words,route,category,locale,random=Math.random){
  const byId=new Map(words.map(word=>[word.id,word]));
- return exercises.filter(row=>row.route===route&&(category==='all'||row.category===category)&&byId.has(row.entryId)).map(row=>({
+ return exercises.filter(row=>row.route===route&&(category==='all'||row.category===category)&&byId.has(row.entryId)&&isValidExerciseQuestion(row)).map(row=>({
   ...row,id:row.id,exercise:true,mode:route,locale,word:byId.get(row.entryId),
   options:row.options?shuffle(row.options.map((text,index)=>({id:String(index),text})),random):undefined,
   correctOption:row.options?String(row.options.indexOf(row.answer)):undefined,
  }));
 }
 export function exerciseAnswerCorrect(question,input){
+ if(!isValidExerciseQuestion(question))return false;
  if(question.options)return input===question.correctOption;
  if(question.gapFill)return gradePhraseGaps(question.gapFill,input).correct;
  // Kana input methods may produce full-width Latin or katakana. Never strip kana endings.

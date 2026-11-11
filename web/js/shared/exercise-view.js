@@ -28,7 +28,9 @@ export function renderExercisePrompt(question,options={}){
  const display=options.uiLanguage||question.locale||'en',uiLang=display==='ko'?'ko':'en-GB';
  const renderContext=clue=>clue?`<p class="grammar-meaning exercise-context" lang="${e(question.word.studyExplanationLanguage||question.locale||'')}">${e(clue)}</p>`:'';
  if(question.category==='reading'){
-  const {prompt,readingFocus:focus}=japaneseReadingPrompt(question.word,question.prompt);
+  const target=japaneseReadingPrompt(question.word,question.prompt,question.readingFocus);
+  if(!target)return '';
+  const {prompt,readingFocus:focus}=target;
   const marked=e(prompt.slice(0,focus.start))+`<span class="study-reading-target">${e(focus.text)}</span>`+e(prompt.slice(focus.start+focus.text.length));
   const clue=question.context===''?'':japaneseReadingContext(question.word,prompt,question.context);
   return `<div class="vocab-prompt lexicon-prompt" lang="ja">${marked}</div>${renderContext(clue)}`;

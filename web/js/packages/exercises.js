@@ -1,6 +1,7 @@
 import {joinGapAnswers} from '../shared/phrase-gaps.js';
 import {validatePracticeData} from './practice-data.js';
 import {EXERCISE_ROUTES,JAPANESE_FORM_KINDS} from '../shared/language-exercises.js';
+import {isValidJapaneseReadingFocus} from '../shared/japanese-reading-prompt.js';
 const fail=message=>{throw new Error(`Invalid language package: ${message}`);};
 const check=(condition,message)=>{if(!condition)fail(message);};
 const text=(value,name)=>check(typeof value==='string'&&value.trim().length>0&&value.length<=4000,name);
@@ -16,6 +17,7 @@ export function validateExercises(pack){
   check(entries.has(row.entryId),'exercise entry');check(EXERCISE_ROUTES[pack.targetLanguage]?.[row.category]?.includes(row.route),'exercise route');text(row.prompt,'exercise prompt');text(row.answer,'exercise answer');
   check(row.instruction===undefined&&row.explanation===undefined&&row.context===undefined,'exercise translations belong in explanation packs');
   if(row.acceptedAnswers!==undefined){check(Array.isArray(row.acceptedAnswers)&&row.acceptedAnswers.length<=20,'accepted exercise answers');row.acceptedAnswers.forEach(value=>text(value,'accepted exercise answer'));}
+  if(row.readingFocus!==undefined)check(pack.targetLanguage==='ja'&&row.category==='reading'&&isValidJapaneseReadingFocus(row.prompt,row.readingFocus),'reading focus');
   if(row.gapFill!==undefined){
    const gap=row.gapFill;
    check(['collocations','phrasal','idioms'].includes(row.category)&&['vocabinput','vocabmeaning'].includes(row.route),'phrase gap category');

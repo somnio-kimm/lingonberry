@@ -9,18 +9,21 @@ import {createJapaneseReadingExercises,createOkuriganaSpellingQuestion,indexJapa
 export function prepareLanguageExercises(study,words){
  const active=row=>isActiveExerciseCategory(study?.targetLanguage,row.category);
  const japanese=study?.targetLanguage==='ja',spellingData=japanese?{kanji:new Map((study?.practiceData?.kanji||[]).map(row=>[row.literal,row])),spellings:indexJapaneseSpellings(words)}:undefined,byId=japanese?new Map(words.map(word=>[word.id,word])):undefined;
- const curated=[],converted=new Set();
+ const curated=[],converted=new Set(),invalidReadings=new Set();
  for(const row of (study?.exercises||[]).filter(active)){
   if(japanese&&row.category==='okurigana'&&row.boundaryKind!=='spelling'){
    if(converted.has(row.entryId))continue;converted.add(row.entryId);const word=byId.get(row.entryId);
    const replacement=word&&createOkuriganaSpellingQuestion(word,study.explanationLanguage,spellingData);if(replacement)curated.push(replacement);
-  }else if(japanese&&row.category==='reading'&&byId.has(row.entryId))curated.push({...row,...japaneseReadingPrompt(byId.get(row.entryId),row.prompt)});
+  }else if(japanese&&row.category==='reading'&&byId.has(row.entryId)){
+   const prompt=japaneseReadingPrompt(byId.get(row.entryId),row.prompt,row.readingFocus);
+   if(prompt)curated.push({...row,...prompt});else invalidReadings.add(row.entryId);
+  }
   else curated.push(row);
  }
  const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.collocationId||'',row.rootFamilyId||'',row.boundaryKind||'reading'].join(':');
  const covered=new Set(curated.map(key));
  const generated=[...createPhrasePractice(study,words),...(isActiveExerciseCategory(study?.targetLanguage,'collocations')?collocationExercises(words,study?.explanationLanguage):[]),...createRootPractice(study,words),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice,spellingData):[])];
- const rows=[...curated,...generated.filter(row=>active(row)&&!covered.has(key(row)))];
+ const rows=[...curated,...generated.filter(row=>active(row)&&!covered.has(key(row))&&!(row.category==='reading'&&invalidReadings.has(row.entryId)))];
  return study?.targetLanguage==='ja'?[...rows,...createReadingChoices(rows,words,study.explanationLanguage,spellingData.spellings)]:rows;
 }
 /** Pick within one specialist feature after its form/answer-mode filters are applied. */
