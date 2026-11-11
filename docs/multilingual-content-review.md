@@ -62,3 +62,5 @@ German Cloze and Sentence Scramble use content-scoped question IDs and preserve 
 German dictionary search includes active abbreviations, declared spelling aliases and canonical dictionary lemmas. These lookup terms stay separate from accepted typing answers and archived source forms; selected-level and part-of-speech filters still apply.
 
 German Cloze distractors require the declared form slot when a blank targets a grammatical table. Missing plural, person or tense forms are omitted instead of replaced by a bare lemma; ordinary lemma and saved explicit-focus questions retain their existing options.
+
+German Word Input accepts declared definite nominative citation variants and explicit verb infinitives alongside the canonical answer. Other case forms, historical references and dictionary labels stay outside that answer inventory; Dictation continues to grade the heard token. Shared noun-phrase parsing preserves complete indefinite phrases instead of adding a second article. Legacy stored answer lists require the release content-version policy when their accepted inventory changes.
