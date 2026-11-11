@@ -1,10 +1,10 @@
 import {shuffle} from './random.js';
 export {shuffle} from './random.js';
 import {collocationQuestions,collocationAnswerCorrect} from './collocations.js';
+import {readVocabularyWord as vocabularyWord,normalizeVocabularySpelling as normalize,collectVocabularySpellings as spellings} from './vocabulary-spellings.js';
+export {vocabularyWord,normalize};
 // Vocabulary-only questions: no external definitions or sentence text is added.
 export const VOCABULARY_MODES = Object.freeze(['vocabinput','vocabmeaning']);
-export const vocabularyWord = word => word.lemma ?? word.hanzi ?? '';
-export const normalize = value => String(value ?? '').normalize('NFC').trim().replace(/\s+/gu, ' ');
 export const vocabularyGlossKey = value => normalize(value).toLocaleLowerCase().replace(/^to\s+/u, '').replace(/[.!。]+$/u, '');
 const glossKeys = text => [...new Set(text.split(/[;；]/u).map(vocabularyGlossKey).filter(Boolean))];
 // Conservative keys for wrong-choice exclusion only; displayed/graded senses stay exact.
@@ -13,7 +13,6 @@ function collectChoiceGlossKeys(text) {
  do{previous=unqualified;unqualified=unqualified.replace(/\([^()]*\)|（[^（）]*）/gu,'');}while(unqualified!==previous);
  return [...new Set([...glossKeys(text),...glossKeys(unqualified)])];
 }
-const spellings = word => [...new Set([vocabularyWord(word),...(word.aliases || [])].map(normalize).filter(Boolean))];
 export function vocabularyType(word) {
   if (word.pos) return word.pos === 'functional' ? word.subtype || '' : word.pos;
   const aliases = { n: 'noun', v: 'verb', a: 'adjective', d: 'adverb', q: 'classifier', m: 'numeral', r: 'pronoun', p: 'preposition', c: 'conjunction', u: 'particle', phrase: 'expression', idiom: 'expression' };
