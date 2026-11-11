@@ -4,13 +4,16 @@ export {VOCABULARY_MODES,vocabularyWord,vocabularyType,vocabularyMeaning,snapsho
 const hasNounArticle=word=>word?.pos==='noun'&&['der','die','das'].includes(word.article);
 export const requiresNounArticle=word=>hasNounArticle(word)&&word.article_optional!==true;
 export const nounArticles=word=>[...new Set([word?.article,...(word?.accepted_articles||[])])].filter(article=>['der','die','das'].includes(article));
+const collectDefiniteNominatives=word=>nounPhraseAlternatives(word.declension?.nom?.[word.number_restriction==='plural'?1:0])
+ .filter(phrase=>nounArticles(word).some(article=>phrase.startsWith(article+' ')));
 export const vocabularyInputAnswer=word=>requiresNounArticle(word)?word.article+' '+vocabularyWord(word):vocabularyWord(word);
 const inputAnswers=word=>{
  const spellings=[...new Set([vocabularyWord(word),...(word.aliases||[])].map(normalize).filter(Boolean))];
  const withArticles=nounArticles(word).flatMap(article=>spellings.map(spelling=>article+' '+spelling));
- if(word.pos==='noun'&&word.article_optional===true)return [...new Set([...spellings,...withArticles,...formAlternatives(word.declension?.nom?.[0])])];
+ if(word.pos==='noun'&&word.article_optional===true)return [...new Set([...spellings,...withArticles,...formAlternatives(word.declension?.nom?.[0]),...collectDefiniteNominatives(word)])];
  if(word.pos==='noun'&&word.number_restriction==='plural')return [...new Set([...spellings,...nounPhraseAlternatives(word.declension?.nom?.[1]).filter(phrase=>phrase.startsWith('die '))])];
- return requiresNounArticle(word)?withArticles:spellings;
+ if(requiresNounArticle(word))return [...new Set([...withArticles,...collectDefiniteNominatives(word)])];
+ return word.pos==='verb'?[...new Set([...spellings,...formAlternatives(word.infinitive)])]:spellings;
 };
 export const vocabularyExpectedAnswer=question=>question.mode==='vocabinput'&&!question.collocationId&&requiresNounArticle(question.word)?vocabularyInputAnswer(question.word):question.answer;
 function gradeInput(question,input) {
