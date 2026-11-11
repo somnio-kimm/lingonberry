@@ -27,4 +27,5 @@ jobs:
       - run: node scripts/verify-chinese-cloze-focus-browser.mjs
       - run: node scripts/verify-german-optional-articles-browser.mjs
       - run: node scripts/verify-german-cloze-focus-browser.mjs
+      - run: node scripts/verify-german-cloze-aliases-browser.mjs
       - run: node scripts/verify-german-plural-gender-browser.mjs

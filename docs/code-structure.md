@@ -13,6 +13,7 @@ The app uses plain modules with data/model functions separated from view/event c
 - `typing-answer.js`: one device-keyboard/IME lifecycle with explicit readiness and active-view gates.
 - `mistake-balance.js`: outstanding-mistake arithmetic; adapters retain their own history formats.
 - `random.js`: one nonmutating shuffle and random selection implementation.
+- `vocabulary-spellings.js`: one normalised lemma/hanzi and curated-alias identity for vocabulary questions and German Cloze; reference forms remain separate.
 
 The [whole-source audit](runtime-audit.md) records concrete removals, intentional language boundaries and remaining coupling hotspots.
 
