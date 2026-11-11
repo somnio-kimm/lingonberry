@@ -2,6 +2,7 @@ import {validateMorphemes,validateMorphemeTranslations} from './morphemes.js';
 import {validateCollocations,validateCollocationTranslations} from './collocations.js';
 import {validateExercises,validateExerciseTranslations} from './exercises.js';
 import {compareContentVersions} from '../shared/review-content.js';
+import {isValidVerbPersons} from '../../languages/de/js/core/verb-persons.js';
 export const MAX_PACKAGE_BYTES = 64 * 1024 * 1024;
 const locale = /^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/;
 const identifier = /^[a-z0-9][a-z0-9._-]{0,99}$/;
@@ -71,7 +72,7 @@ export function validatePackage(value, expected) {
       if(entry.aliases!==undefined)strings(entry.aliases,'aliases');
       if(entry.listeningAliases!==undefined){strings(entry.listeningAliases,'listening aliases');requireValue(new Set(entry.listeningAliases).size===entry.listeningAliases.length&&entry.listeningAliases.every(alias=>entry.aliases?.includes(alias)),'listening aliases must be unique search aliases');}
       if(entry.tags!==undefined)strings(entry.tags,'tags');
-      if(entry.grammar!==undefined){object(entry.grammar,'grammar');if(entry.grammar.acceptedArticles!==undefined)strings(entry.grammar.acceptedArticles,'accepted articles');if(entry.grammar.studyTier!==undefined)text(entry.grammar.studyTier,'study tier',80);}
+      if(entry.grammar!==undefined){object(entry.grammar,'grammar');if(entry.grammar.acceptedArticles!==undefined)strings(entry.grammar.acceptedArticles,'accepted articles');if(entry.grammar.studyTier!==undefined)text(entry.grammar.studyTier,'study tier',80);if(value.targetLanguage==='de'&&entry.grammar.verb_persons!==undefined)requireValue(entry.partOfSpeech==='verb'&&isValidVerbPersons(entry.grammar.verb_persons),'German verb persons');}
       for (const name of ['article', 'pronunciation']) {
         if (entry[name] !== undefined) text(entry[name], name, 200);
       }

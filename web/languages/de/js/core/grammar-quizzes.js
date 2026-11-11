@@ -1,6 +1,7 @@
 import {formAlternatives,finiteVerbAlternatives,perfectVerbAlternatives,deriveInfinitiveAlternatives,inflectReflexiveComplement} from './form-alternatives.js';
 import {nounArticles} from './vocabulary-tests.js';
-export const PERSONS=['ich','du','er','wir','ihr','sie'];
+import {PERSONS,getVerbPersons} from './verb-persons.js';
+export {PERSONS};
 export const personLabel=person=>person==='er'?'er / sie / es':person==='sie'?'sie / Sie':person;
 const koreanPersons={
  ich:'1인칭 단수',
@@ -30,7 +31,7 @@ export function verbFormQuestions(words,allWords=words) {
  const auxiliaries=new Map(allWords.filter(w=>w.pos==='verb'&&['haben','sein'].includes(w.lemma)).map(w=>[w.lemma,w]));
  return words.filter(w=>w.pos==='verb'&&w.forms).flatMap(word=>{
   const perfect=perfectVerbAlternatives(word.forms.perfekt),infinitives=deriveInfinitiveAlternatives(word,perfect);
-  return VERB_FORMS.flatMap(tense=>PERSONS.flatMap(person=>{
+  return VERB_FORMS.flatMap(tense=>getVerbPersons(word).flatMap(person=>{
   let answer,acceptedAnswers;
   if(['perfekt','plusquamperfekt','futur_ii'].includes(tense)){
    const complements=perfect.map(row=>inflectReflexiveComplement(row.participle,person,word.reflexive_case));
@@ -65,5 +66,5 @@ export function validGrammarQuestion(q) {
  if(NOMINAL_MODES.includes(q?.mode))return validNominalQuestion(q);
  if(!q?.word?.id||typeof q.answer!=='string'||!q.answer.trim())return false;
  return q.mode==='articles'?['der','die','das'].includes(q.answer)&&q.displayAnswer===q.answer+' '+q.word.lemma&&q.example?.de===q.word.lemma
-  :q.mode==='verbforms'&&VERB_FORMS.includes(q.tense)&&PERSONS.includes(q.person)&&q.example?.de===q.word.lemma;
+  :q.mode==='verbforms'&&VERB_FORMS.includes(q.tense)&&getVerbPersons(q.word).includes(q.person)&&q.example?.de===q.word.lemma;
 }
