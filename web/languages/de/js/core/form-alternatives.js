@@ -45,7 +45,8 @@ export function nounPhraseAlternatives(value,{allowBare=false}={}){
  const parts=formAlternatives(value);if(allowBare)return parts;
  const article=/^(der|die|das|den|dem|des) /u.exec(parts[0]||'')?.[1];
  if(!article)return [];
- return parts.map(part=>/^(der|die|das|den|dem|des) /u.test(part)?part:article+' '+part);
+ // An explicit indefinite/negative article starts its own complete phrase.
+ return parts.map(part=>/^(der|die|das|den|dem|des|ein|eine|einen|einem|einer|eines|kein|keine|keinen|keinem|keiner|keines) /u.test(part)?part:article+' '+part);
 }
 export function finiteVerbAlternatives(value,word){
  const parts=formAlternatives(value);
