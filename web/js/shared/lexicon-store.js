@@ -1,4 +1,5 @@
 import {advanceMistakeBalance} from './mistake-balance.js';
+import {migrateEquivalentWordStatuses} from './word-status-migration.js';
 /** Small language-neutral progress store for the additional vocabulary presentations. */
 export function createLexiconStore(storage,profile){
  const key=`learn-language.${profile.id}.lexicon.v1`;
@@ -25,9 +26,7 @@ export function createLexiconStore(storage,profile){
   wordStatus(id){return state.wordStatus[id]||'new';},
   setWordStatus(id,status){if(!id||!['new','learning','mastered'].includes(status))throw new Error('Invalid word status');state.wordStatus[id]=status;save();},
   migrateEquivalentEntries(rows=[]){
-   const rank=['new','learning','mastered'];let changed=false;
-   for(const row of rows){if(!row.sameConcept||!row.replacementId||Object.hasOwn(state.contentMigrations,row.id)||!Object.hasOwn(state.wordStatus,row.id))continue;const old=state.wordStatus[row.id]||'new',current=state.wordStatus[row.replacementId]||'new';if(rank.indexOf(old)>rank.indexOf(current))state.wordStatus[row.replacementId]=old;state.contentMigrations[row.id]=row.replacementId;changed=true;}
-   if(changed)save();
+   if(migrateEquivalentWordStatuses(state,rows))save();
   },
   record(question,input,correct,retest=false){
    const id=[question.mode,question.id,question.locale,...(question.reviewRevision?[question.reviewRevision]:[])].join(':');

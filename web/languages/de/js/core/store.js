@@ -4,6 +4,7 @@ import { snapshotQuestion } from '../../../../js/shared/question-snapshot.js';
 import { wrongAnswerCount } from './wrong-count.js';
 import { reviewSchedule } from './assessment.js';
 import {createReviewContentPolicy} from '../../../../js/shared/review-content.js';
+import {migrateEquivalentWordStatuses} from '../../../../js/shared/word-status-migration.js';
 const KEY = 'learn-language.de.progress.v1';
 const STUDY_LEVEL_IDS = STUDY_LEVELS.map(level => level.id);
 const empty = () => ({ version: 1, units: {}, concepts: {}, skills: {}, lastUnit: null });
@@ -43,7 +44,7 @@ export function createStore(storage) {
   return {
     get state() { return state; }, get warning() { return warning; }, unit,
     get reviewContent(){return reviewContent;},
-    setReviewContent(study){reviewContent=createReviewContentPolicy(study);},
+    setReviewContent(study){reviewContent=createReviewContentPolicy(study);if(migrateEquivalentWordStatuses(state,study?.retiredEntries))save();},
     wordStatus(id) { return ['learning','mastered'].includes(state.wordStatus[id])?state.wordStatus[id]:'new'; },
     setWordStatus(id,status) {
       if(!id||!['new','learning','mastered'].includes(status))throw new Error('Invalid word status');
