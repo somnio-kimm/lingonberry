@@ -3,6 +3,7 @@ import {findSentenceFocus,joinSentenceTiles,createSentenceQuestionId} from '../.
 import {nounPhraseAlternatives,formAlternatives} from './form-alternatives.js';
 import { wordType } from './dictionary.js';
 import { shuffleWords } from './words.js';
+import {collectVocabularySpellings} from '../../../../js/shared/vocabulary-spellings.js';
 export const normalizeSentence=text=>String(text).normalize('NFC').trim().replace(/\s+/gu,' ');
 export const sentenceTokens=text=>normalizeSentence(text).match(/[^\s.,，。]+|[.,，。]/gu)||[];
 const wordCharacter=/[\p{L}\p{M}\p{N}]/u;
@@ -96,9 +97,13 @@ function optionForm(word,question) {
 }
 export function clozeOptions(question,words,random=Math.random) {
  const options=[{word:question.word,text:question.answer}],seen=new Set([question.answer]);
+ const knownSpellings=new Set(collectVocabularySpellings(question.word));
+ // Older review snapshots omit aliases; recover them from installed content.
+ const currentWord=words.find(word=>word.id===question.word.id);
+ if(currentWord)for(const spelling of collectVocabularySpellings(currentWord))knownSpellings.add(spelling);
  const type=wordType(question.word),similar=words.filter(w=>type&&wordType(w)===type);
  for(const word of shuffleWords(similar,random)){
-  if(word.lemma===question.word.lemma)continue;
+  if(collectVocabularySpellings(word).some(spelling=>knownSpellings.has(spelling)))continue;
   const text=optionForm(word,question);if(!text||seen.has(text))continue;seen.add(text);options.push({word,text});if(options.length===4)break;
  }
  return shuffleWords(options,random);
