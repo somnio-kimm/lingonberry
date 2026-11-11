@@ -24,7 +24,9 @@ export function renderExerciseReview(record,{word,headword,language,displayLangu
  const correct=covered||readingCovered?'':field('Correct Answer',e(expected),true),wrong=field('Wrong Answer',wrongHtml,false,{strike,only:!correct});
  if(q.category==='reading'){
   const snapshot=q.word||word;
-  const {prompt,readingFocus:focus}=japaneseReadingPrompt(snapshot,q.prompt);
+  const target=japaneseReadingPrompt(snapshot,q.prompt,q.readingFocus);
+  if(!target)return correct+wrong;
+  const {prompt,readingFocus:focus}=target;
   if(prompt===(snapshot.lemma||snapshot.word))return correct+wrong;
   const sentence=e(prompt.slice(0,focus.start))+`<span class="study-reading-target">${e(focus.text)}</span>`+e(prompt.slice(focus.start+focus.text.length));
   const translation=q.context===''?'':japaneseReadingContext(snapshot,prompt,q.context);

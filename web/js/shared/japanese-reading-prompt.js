@@ -1,6 +1,13 @@
 import {findSentenceFocus} from './lexicon-sentences.js';
+/** Curated offsets bind to the original sentence, before any legacy display normalisation. */
+export function isValidJapaneseReadingFocus(prompt,focus){
+ return typeof prompt==='string'&&focus!==null&&typeof focus==='object'&&Number.isInteger(focus.start)&&focus.start>=0&&
+  typeof focus.text==='string'&&!!focus.text.trim()&&focus.text===focus.text.trim()&&!/[\uD800-\uDFFF]/u.test(focus.text)&&
+  prompt.slice(focus.start,focus.start+focus.text.length)===focus.text;
+}
 /** One reading target; normalise legacy headings/markers without changing the saved question. */
-export function japaneseReadingPrompt(word,prompt){
+export function japaneseReadingPrompt(word,prompt,readingFocus){
+ if(readingFocus!==undefined)return isValidJapaneseReadingFocus(prompt,readingFocus)?{prompt,readingFocus:{start:readingFocus.start,text:readingFocus.text}}:undefined;
  const lemma=String(word.lemma||word.word||'').normalize('NFC');
  let text=String(prompt||lemma).normalize('NFC').trim();
  if(text.startsWith(lemma+'\n'))text=text.slice(lemma.length+1).trim();

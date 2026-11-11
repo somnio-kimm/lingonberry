@@ -13,7 +13,7 @@ import {renderCollocations,bindCollocationAudio,collocationPreview} from '../sha
 import {learnerOriginLabel} from '../shared/root-references.js';
 import {prepareLanguageExercises,selectExerciseRow} from '../shared/exercise-pools.js';
 import {createReadingChoiceSampler} from '../shared/reading-choices.js';
-import {exerciseLabel,exerciseModes,exerciseSectionCategories,createExerciseQuestions,exerciseAnswerCorrect,formKindLabel} from '../shared/language-exercises.js';
+import {exerciseLabel,exerciseModes,exerciseSectionCategories,createExerciseQuestions,exerciseAnswerCorrect,isValidExerciseQuestion,formKindLabel} from '../shared/language-exercises.js';
 import {renderExerciseExplanation,renderExercisePrompt} from '../shared/exercise-view.js';
 import {renderExerciseReview} from '../shared/exercise-review-view.js';
 import {selectWordExample} from '../shared/word-example.js';
@@ -41,6 +41,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile),engine=createLexiconQuestions(profile);
  let morphemeModel,typing,listeningCleanup,japaneseFurigana,sampleReadingChoice;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,card=0,flipped=false,order=[],chosenTokens=[],closeSheet=()=>{};
+ const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
  const filters=new Map(),scores=new Map();
  const score=route=>{if(!scores.has(route))scores.set(route,{correct:0,total:0});return scores.get(route);};
  const recordScore=(route,correct)=>{score(route).total++;if(correct)score(route).correct++;};
@@ -226,7 +227,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
   function checkAnswer(){if(feedback||typing?.isComposing||!input.trim())return;field?.blur();gapFields.forEach(input=>input.blur());const correct=q.exercise?exerciseAnswerCorrect(q,input):engine.vocabularyAnswerCorrect(q,input);feedback=correct?'correct':'wrong';store.record(q,input,correct,retest);recordScore(route,correct);if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();}
  }
  function drawReview(host){
-  const f=state('wrong'),all=Object.values(store.state.wrongs).filter(row=>reviewContent.isCurrent(row.question));
+  const f=state('wrong'),all=Object.values(store.state.wrongs).filter(row=>isCurrentQuestion(row.question));
   const wordFor=row=>byId.get(row.question.word.id)||row.question.word;
   const questionType=q=>q.mode==='cloze'?'cloze':q.exercise&&q.category?q.category:q.mode;
   const matches=(row,filters)=>{
@@ -282,7 +283,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
   study=value;
   store.migrateEquivalentEntries(value?.retiredEntries);
   reviewContent=createReviewContentPolicy(value);
-  if (reviewQueue) reviewQueue=reviewQueue.filter(row=>reviewContent.isCurrent(row.question));
+  if (reviewQueue) reviewQueue=reviewQueue.filter(row=>isCurrentQuestion(row.question));
 
   words=studyWords(value);
   for (const word of words) {
