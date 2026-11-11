@@ -15,6 +15,9 @@ function object(value, name) {
 function text(value, name, limit = 4000) {
   requireValue(typeof value === 'string' && value.trim().length > 0 && value.length <= limit, name);
 }
+function validateExampleEligibility(example){
+  for(const name of ['practiceEligible','clozeEligible'])if(example[name]!==undefined)requireValue(typeof example[name]==='boolean','example '+(name==='practiceEligible'?'practice':'cloze')+' eligibility');
+}
 function checkVersion(value) {
   requireValue(typeof value === 'string' && value.length < 40 && version.test(value), 'version');
 }
@@ -72,12 +75,11 @@ export function validatePackage(value, expected) {
       for (const name of ['article', 'pronunciation']) {
         if (entry[name] !== undefined) text(entry[name], name, 200);
       }
-      if(entry.additionalExamples!==undefined){requireValue(Array.isArray(entry.additionalExamples)&&entry.additionalExamples.length<=49,'additional examples');for(const example of entry.additionalExamples){object(example,'additional example');text(example.text,'additional example text');requireValue(example.translations===undefined,'example translations belong in explanation packs');}}
+      if(entry.additionalExamples!==undefined){requireValue(Array.isArray(entry.additionalExamples)&&entry.additionalExamples.length<=49,'additional examples');for(const example of entry.additionalExamples){object(example,'additional example');text(example.text,'additional example text');validateExampleEligibility(example);requireValue(example.translations===undefined,'example translations belong in explanation packs');}}
       if (entry.example !== undefined) {
         object(entry.example, 'example');
         text(entry.example.text, 'example text');
-        if(entry.example.practiceEligible!==undefined)requireValue(typeof entry.example.practiceEligible==='boolean','example practice eligibility');
-        if(entry.example.clozeEligible!==undefined)requireValue(typeof entry.example.clozeEligible==='boolean','example cloze eligibility');
+        validateExampleEligibility(entry.example);
         requireValue(entry.example.translations === undefined, 'example translations belong in explanation packs');
       }
     }
