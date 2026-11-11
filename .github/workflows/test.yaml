@@ -24,6 +24,7 @@ jobs:
       - run: npm run verify:browser
       - run: node scripts/verify-baseline-review-policy-browser.mjs
       - run: node scripts/verify-german-input-aliases-browser.mjs
+      - run: node scripts/verify-meaning-qualifiers-browser.mjs
       - run: node scripts/verify-chinese-cloze-focus-browser.mjs
       - run: node scripts/verify-german-optional-articles-browser.mjs
       - run: node scripts/verify-german-cloze-focus-browser.mjs
