@@ -10,3 +10,9 @@ export function findSentenceTarget(sentence,target){
  const start=sentence.hanzi.indexOf(target);
  return start>=0?{start,text:target}:null;
 }
+
+/** Dictionary/reference examples stay visible without becoming graded questions. */
+export function practiceSentences(word,{cloze=false}={}){
+ return (word.sentences||[]).filter(sentence=>sentence.practiceEligible!==false&&typeof sentence.hanzi==='string'&&sentence.hanzi.trim()&&
+  (!cloze||sentence.clozeEligible!==false&&findSentenceTarget(sentence,word.hanzi)));
+}

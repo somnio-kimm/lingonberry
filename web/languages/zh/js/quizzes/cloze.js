@@ -1,4 +1,4 @@
-import {findSentenceTarget} from '../services/sentence-focus.js';
+import {findSentenceTarget,practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { clozeWordOptions,clozeStudyWords } from '../services/vocabulary-tests.js';
 import { showQuizBurst } from '../components.js';
@@ -22,7 +22,7 @@ export function renderClozeQuiz(el,session={}) {
     if(session.onNext&&word){session.onNext();return;}
     word = session.question?.word||pick(filters.pool());
     if(!word){feedback='';draw();return;}
-    sentence = session.question?.sentence||pick(word.sentences.filter(s=>findSentenceTarget(s,word.hanzi)));
+    sentence = session.question?.sentence||pick(practiceSentences(word,{cloze:true}));
     blank = word.hanzi;
     options = clozeWordOptions(word, words);
     feedback = ''; userAnswer = '';

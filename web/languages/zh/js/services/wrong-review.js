@@ -1,4 +1,4 @@
-import {findSentenceTarget} from './sentence-focus.js';
+import {findSentenceTarget,practiceSentences} from './sentence-focus.js';
 import {shuffle} from '../../../../js/shared/random.js';
 import { LISTENING_MODES, validListeningQuestion } from './listening-tests.js';
 import { validVocabularyQuestion } from './vocabulary-tests.js';
@@ -13,18 +13,21 @@ function resolveClozeSnapshot(question){
  const start=Object.hasOwn(question,'blankStart')?question.blankStart:focus?.start;
  const valid=typeof target==='string'&&typeof sentence?.hanzi==='string'&&Number.isInteger(start)&&start>=0&&sentence.hanzi.slice(start,start+target.length)===target;
  // An old incorrectly targeted question remains readable, but cannot silently change on retest.
- const retestEligible=!!(valid&&(sentence.focus===undefined||focus?.start===start));
+ const retestEligible=!!(valid&&sentence.practiceEligible!==false&&sentence.clozeEligible!==false&&(sentence.focus===undefined||focus?.start===start));
  return {...question,retestEligible,...(retestEligible?{blankStart:start,sentence:{...sentence,focus:{start,text:target}}}:{})};
+}
+function preserveSentenceEligibility(question){
+ return question.sentence?.practiceEligible===false?{...question,retestEligible:false}:question;
 }
 export function resolveWrongQuestion(record,words){
  if(!REVIEW_MODES.includes(record.mode))return null;
  const live=words.find(w=>w.id===record.wordId)||(!record.wordId?words.find(w=>w.hanzi===record.wordHanzi):null);
- if(LISTENING_MODES.includes(record.mode))return validListeningQuestion(record.question)?{...record.question,word:{...live,...record.question.word},reconstructed:false}:null;
+ if(LISTENING_MODES.includes(record.mode))return validListeningQuestion(record.question)?preserveSentenceEligibility({...record.question,word:{...live,...record.question.word},reconstructed:false}):null;
  if(['vocabinput','vocabmeaning'].includes(record.mode)){return validVocabularyQuestion(record.question)?{...record.question,word:{...live,...record.question.word},reconstructed:false}:null;}
- if(record.question?.word?.syllables?.length){const q=record.question,resolved={...q,word:{...live,...q.word},reconstructed:false};return record.mode==='cloze'?resolveClozeSnapshot(resolved):resolved;}
+ if(record.question?.word?.syllables?.length){const q=record.question,resolved={...q,word:{...live,...q.word},reconstructed:false};return record.mode==='cloze'?resolveClozeSnapshot(resolved):preserveSentenceEligibility(resolved);}
  if(!live)return null;
  if(record.mode==='pinyin'||record.mode==='tone')return {mode:record.mode,word:live,sentence:null,reconstructed:true};
- const candidates=live.sentences||[];
+ const candidates=practiceSentences(live,{cloze:record.mode==='cloze'});
  const sentence=record.mode==='scramble'?candidates.find(s=>s.hanzi===record.correctAnswer):candidates.find(s=>findSentenceTarget(s,live.hanzi));
  if(!sentence)return null;
  return {...snapshotQuestion(record.mode,live,sentence),reconstructed:true,originalMissing:record.mode==='cloze'};
