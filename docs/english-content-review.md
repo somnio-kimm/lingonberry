@@ -22,6 +22,26 @@ The builder requires a complete audit and the exact SHA-256-bound effective revi
 
 `--write` stages immutable study and explanation payloads plus an integrity-checked SQLite export in `local-data/coverage/reviewed-english-release/`, inside the Google Drive checkout. It does not change installed or hosted catalogues. The export records the release version and review snapshot hash. Keep staging, publication and device installation as separate verified steps.
 
+For a separately reviewed follow-up, preserve the previous finalized snapshot and audit. Prepare a new complete audit, exact snapshot, overlap audit and current practice approvals, then select them with a private JSON build configuration:
+
+```json
+{
+  "schemaVersion": 1,
+  "version": "7.0.1",
+  "audit": "local-data/coverage/four-language-review/english-sense-plan/followup-20261111-01/independent-audit.json",
+  "snapshot": "local-data/coverage/four-language-review/english-sense-plan/followup-20261111-01/independent-effective-finalized.jsonl",
+  "overlapAudit": "local-data/coverage/four-language-review/english-sense-plan/followup-20261111-01/retained-example-overlap-audit.json",
+  "focusDecisions": "local-data/coverage/four-language-review/english-sense-plan/followup-20261111-01/example-focus-decisions.jsonl",
+  "gapDecisions": "local-data/coverage/four-language-review/english-sense-plan/followup-20261111-01/gap-fill-decisions.jsonl",
+  "gapApprovals": "local-data/coverage/four-language-review/english-sense-plan/followup-20261111-01/gap-practice-approvals.jsonl",
+  "stage": "local-data/coverage/reviewed-english-7.0.1/"
+}
+```
+
+All paths resolve from the repository root; absolute local file paths also work. Save this example as `local-data/english-build.json`, preview with `node scripts/build-reviewed-english.mjs --config local-data/english-build.json`, and add `--write` to stage packages and the database. Configuration alone never enables writes. Output must remain under `local-data/`; public staging paths, unknown fields, malformed values and remote URLs are rejected. An explicitly selected gap-decision file must exist; only the default optional gap file may be absent.
+
+Input selection grants no review approval. The existing snapshot hash, overlap, source-licence, sense, practice-binding and package-size checks still run. Do not rerun a writer that overwrites the old finalized journal to prepare a follow-up; retain the old records and bind the new decisions independently.
+
 ## Examples and practice
 
 Preserve exact source attribution for licensed usage examples and the corresponding translation licence. New original examples use CC BY 4.0. Unknown source declarations, unreviewed quotations and incompatible licences fail the build; they are never relabelled as original content. Wiktionary adaptations retain their contributor credit, source URL, change notices and ShareAlike licence.
