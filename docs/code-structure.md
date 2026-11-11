@@ -34,3 +34,5 @@ The multilingual presentation still coordinates several established screens and 
 Dictation has one shared screen renderer (`listening-view.js`) and common display copy (`listening-text.js`) for all study languages. The generic presentation supplies filtering, progress and retest hooks rather than its own listening markup. `japanese-furigana.js` owns the installed reading/form index and escaped ruby projection; it does not alter question answers, packages or learner IDs. Listening cleanup is idempotent and owned by the mounted screen.
 
 `shared/word-status-migration.js` owns one-time manual marker transfer for explicitly equivalent content IDs. German applies it when setting installed Review content; the additional-language store reuses it through its existing migration method. Each store retains its own persistence and answer history.
+
+German `core/verb-persons.js` is the small data-policy boundary for person eligibility, shared by package validation and grammar-question generation/validation. No view owns or infers lexical restrictions. Run `verify-german-verb-persons-browser.mjs` for fresh and persisted questions across all seven tenses.
