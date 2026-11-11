@@ -7,6 +7,12 @@ export const vocabularyWord = word => word.lemma ?? word.hanzi ?? '';
 export const normalize = value => String(value ?? '').normalize('NFC').trim().replace(/\s+/gu, ' ');
 export const vocabularyGlossKey = value => normalize(value).toLocaleLowerCase().replace(/^to\s+/u, '').replace(/[.!。]+$/u, '');
 const glossKeys = text => [...new Set(text.split(/[;；]/u).map(vocabularyGlossKey).filter(Boolean))];
+// Conservative keys for wrong-choice exclusion only; displayed/graded senses stay exact.
+function collectChoiceGlossKeys(text) {
+ let unqualified=text,previous;
+ do{previous=unqualified;unqualified=unqualified.replace(/\([^()]*\)|（[^（）]*）/gu,'');}while(unqualified!==previous);
+ return [...new Set([...glossKeys(text),...glossKeys(unqualified)])];
+}
 const spellings = word => [...new Set([vocabularyWord(word),...(word.aliases || [])].map(normalize).filter(Boolean))];
 export function vocabularyType(word) {
   if (word.pos) return word.pos === 'functional' ? word.subtype || '' : word.pos;
@@ -30,7 +36,7 @@ export function createVocabularyEngine({inputAnswer=vocabularyWord,inputAnswers=
   if(!locales.has(locale)){
    const index=new Map();
    for(const word of inventory){
-    const keys=glossKeys(vocabularyMeaning(word,locale));
+    const keys=collectChoiceGlossKeys(vocabularyMeaning(word,locale));
     for(const spelling of spellings(word)){
      if(!index.has(spelling))index.set(spelling,new Set());
      for(const key of keys)index.get(spelling).add(key);
@@ -49,7 +55,7 @@ function createVocabularyPool(mode, words, locale = 'en', category='vocabulary',
   const rows = words.map(word => {
     const text = vocabularyMeaning(word, locale), type = vocabularyType(word);
     const keys = glossKeys(text);
-    return { word, text, type, keys, signature: keys.slice().sort().join('\u0001') };
+    return { word, text, type, keys, choiceKeys:mode==='vocabmeaning'?collectChoiceGlossKeys(text):keys, signature: keys.slice().sort().join('\u0001') };
   }).filter(row => row.word.id && vocabularyWord(row.word) && row.text && row.type);
   const groups = new Map(), synonyms = new Map();
   const meanings=mode==='vocabmeaning'?indexMeanings(meaningWords,locale):null;
@@ -71,14 +77,14 @@ function createVocabularyPool(mode, words, locale = 'en', category='vocabulary',
       return question;
     }
     const options = [{ id: word.id, text: row.text, type: row.type, meanings:{en:vocabularyMeaning(word,'en'),ko:vocabularyMeaning(word,'ko')} }];
-    const blocked = new Set(row.keys), questionSpellings=new Set(spellings(word));
+    const blocked = new Set(row.choiceKeys), questionSpellings=new Set(spellings(word));
     for(const spelling of questionSpellings)for(const key of meanings.get(spelling)||[])blocked.add(key);
     const group = groups.get(row.type), start = Math.floor(random() * group.length);
     for (let i = 0; i < group.length && options.length < 4; i++) {
       const other = group[(start + i) % group.length];
-      if (spellings(other.word).some(spelling=>questionSpellings.has(spelling)) || other.keys.some(key => blocked.has(key))) continue;
+      if (spellings(other.word).some(spelling=>questionSpellings.has(spelling)) || other.choiceKeys.some(key => blocked.has(key))) continue;
       options.push({ id: other.word.id, text: other.text, type: other.type, meanings:{en:vocabularyMeaning(other.word,'en'),ko:vocabularyMeaning(other.word,'ko')} });
-      for (const key of other.keys) blocked.add(key);
+      for (const key of other.choiceKeys) blocked.add(key);
     }
     if (options.length < 2) return null;
     question.options = shuffle(options, random);
