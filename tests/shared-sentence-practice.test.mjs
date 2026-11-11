@@ -81,3 +81,11 @@ test('ambiguous repeated forms require an explicit location rather than blanking
  assert.deepEqual(findSentenceFocus({lemma:'will'},{text:'She will show her will.',focus:{text:'will',start:18}},'en'),{start:18,text:'will'});
  assert.deepEqual(findSentenceFocus({lemma:'la'},{text:'La cantante canta un la.'},'es'),{start:21,text:'la'});
 });
+
+test('shared joining distinguishes German low and English high quote boundaries',()=>{
+ for(const [language,text]of [['de','Sie sagt: „Ja, ich komme.“ Danach geht sie.'],['en','She says: “Yes, I am coming.” Then she leaves.'],['de','Sie sagt: “Ja, ich komme.” Danach geht sie.']]){
+  assert.equal(joinSentenceTiles(sentenceTiles(text,language),language),text);
+ }
+ assert.equal(joinSentenceTiles(['「','好','。','」'],'zh'),'「好。」');
+ assert.equal(joinSentenceTiles(['「','本','です','。','」'],'ja'),'「本です。」');
+});
