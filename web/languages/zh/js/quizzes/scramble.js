@@ -1,3 +1,4 @@
+import {practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { showQuizBurst } from '../components.js';
 import { snapshotQuestion } from '../services/wrong-review.js';
@@ -11,7 +12,7 @@ import { t, sentenceMeaning } from '../services/i18n.js';
 
 export function renderScrambleQuiz(el,session={}) {
   const words = session.question?Store.words.filter(w=>w.hskLevel===session.question.word.hskLevel):Store.activeWords;
-  const withSentences = session.question?[session.question.word]:words.filter(w => w.sentences?.length);
+  const withSentences = session.question?[session.question.word]:words.filter(w => practiceSentences(w).length);
   let score = 0, total = 0, word, sentence, pool = [], chosen = [], feedback = '';
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
@@ -20,7 +21,7 @@ export function renderScrambleQuiz(el,session={}) {
     if(session.onNext&&word){session.onNext();return;}
     word = session.question?.word||pick(filters.pool());
     if(!word){feedback='';draw();return;}
-    sentence = session.question?.sentence||pick(word.sentences);
+    sentence = session.question?.sentence||pick(practiceSentences(word));
     const chars = Pinyin.sentenceColumns(sentence) || [...sentence.hanzi].map(hanzi => ({ hanzi, pinyin: '' }));
     pool = shuffle(chars);
     chosen = [];
