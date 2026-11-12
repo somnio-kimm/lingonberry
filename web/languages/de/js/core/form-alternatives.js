@@ -50,12 +50,13 @@ export function deriveInfinitiveAlternatives(word,perfect=perfectVerbAlternative
  }
  return [word.reflexive===true?'sich '+word.lemma:word.lemma];
 }
+export const hasNounPhraseArticle=value=>typeof value==='string'&&/^(der|die|das|den|dem|des|ein|eine|einen|einem|einer|eines|kein|keine|keinen|keinem|keiner|keines) /u.test(value);
 export function nounPhraseAlternatives(value,{allowBare=false}={}){
  const parts=formAlternatives(value);if(allowBare)return parts;
  const article=/^(der|die|das|den|dem|des) /u.exec(parts[0]||'')?.[1];
  if(!article)return [];
  // An explicit indefinite/negative article starts its own complete phrase.
- return parts.map(part=>/^(der|die|das|den|dem|des|ein|eine|einen|einem|einer|eines|kein|keine|keinen|keinem|keiner|keines) /u.test(part)?part:article+' '+part);
+ return parts.map(part=>hasNounPhraseArticle(part)?part:article+' '+part);
 }
 export function finiteVerbAlternatives(value,word){
  const parts=formAlternatives(value);
