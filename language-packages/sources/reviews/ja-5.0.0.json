@@ -1,0 +1,53 @@
+{
+  "edition": "5.0.0",
+  "studyLanguage": "ja",
+  "explanationLanguages": [
+    "en",
+    "ko"
+  ],
+  "entryCountEach": 12031,
+  "uniqueAlignedEntryIds": true,
+  "primaryExamples": 12031,
+  "allCurrentMeaningsAndExampleTranslationsPresent": true,
+  "review": {
+    "method": "Conversation-agent editorial review with independent source, meaning, example and translation checks",
+    "nativeSpeakerCertification": false,
+    "sourceAndSenseReviewComplete": true
+  },
+  "runtimeProjection": {
+    "removedOnlyUnusedHistoryAndLocalFileMetadata": true,
+    "activeLearnerStringsFormsQualificationsPreserved": true,
+    "sourceCreatorsLicencesAndArticleHistoryUrlsRetained": true,
+    "currentLicenceLinksAndPackageCreditsVerified": true,
+    "referenceOmissions": {
+      "shadowedEntries": 1736,
+      "unusedReferences": 1999,
+      "currentDisplayedExamplesUnchanged": true,
+      "sourceCreditRecordsRetained": true
+    }
+  },
+  "validation": {
+    "schemaAndIntegrity": true,
+    "actualCurrentCode": "932995b0fb921a8337aa3689579b2ec2651a4ec9",
+    "browser": "Real isolated package installation, exact payload/hash checks, current and saved Review, EN/KO, phone/tablet/light/dark and offline reloads",
+    "browserProofSha256": "eefc1f77230e4221c0db8036a06f9196fd205bf7b188a5729dbb73838c8e868d",
+    "nativeUpdate": "Separate in-place release step; not claimed by this data edition"
+  },
+  "payloads": [
+    {
+      "file": "language-packages/ja-core-5.0.0.json",
+      "bytes": 25880706,
+      "sha256": "1d177cb0f43ed26289169078ed80d7cfb938e4b59f74f908fde1bb846b3ae780"
+    },
+    {
+      "file": "language-packages/ja-en-5.0.0.json",
+      "bytes": 13729672,
+      "sha256": "d5a123d393a5c84ed56c77c6c5a22c1f6883debb700942846c188d135391d492"
+    },
+    {
+      "file": "language-packages/ja-ko-5.0.0.json",
+      "bytes": 13656098,
+      "sha256": "4d986000e72d8b20aefee4ad8be92ec59f9d101c86da58503eaaf86a516ddcb6"
+    }
+  ]
+}
