@@ -20,7 +20,7 @@ try{
     const study=window.reviewStudies.get(key),host=document.querySelector('main'),definition=presentationDefinitions[language];host.parentElement.id=definition.layout.root;host.id=definition.layout.main;document.querySelector('nav').id=definition.layout.tabs;document.documentElement.dataset.theme=theme;document.documentElement.lang=ui==='ko'?'ko':'en-GB';document.querySelector('#style-de').disabled=language==='zh';document.querySelector('#style-zh').disabled=language!=='zh';
     let app,result=[];
     if(language==='de'){
-     const [{createPresentation},{createStore},{createVocabularyPool}]=await Promise.all([import('/js/presentation/german.js'),import('/languages/de/js/core/store.js'),import('/languages/de/js/core/vocabulary-tests.js')]);localStorage.removeItem('learn-language.de.progress.v1');const store=createStore(localStorage),words=germanWords(study),q=createVocabularyPool('vocabinput',words.filter(w=>w.cefr==='A1'),explanation).choose(undefined,()=>0);q.contentVersion=study.studyVersion;store.recordQuizAnswer('vocabinput',q,'wrong-review-answer',false);store.setWordStatus(q.word.id,'learning');app=createPresentation({navigate(){},refresh(){},onPreferences(){}});app.setStudy(study);app.setPreferences({uiLanguage:ui,theme});result=[{name:'baseline',level:'A1'}];
+     const [{createPresentation},{createStore},{createVocabularyPool}]=await Promise.all([import('/js/presentation/german.js'),import('/languages/de/js/core/store.js'),import('/languages/de/js/core/vocabulary-tests.js')]);localStorage.removeItem('learn-language.de.progress.v1');const store=createStore(localStorage),words=germanWords(study),q=createVocabularyPool('vocabinput',words.filter(w=>w.cefr==='A1'),explanation).choose(undefined,()=>0);store.setReviewContent(study);q.contentVersion=study.studyVersion;store.recordQuizAnswer('vocabinput',q,'wrong-review-answer',false);store.setWordStatus(q.word.id,'learning');app=createPresentation({navigate(){},refresh(){},onPreferences(){}});app.setStudy(study);app.setPreferences({uiLanguage:ui,theme});result=[{name:'baseline',level:'A1'}];
     }else if(language==='zh'){
      const [{createPresentation},{Store},{createVocabularyPool,snapshotVocabularyQuestion}]=await Promise.all([import('/js/presentation/chinese.js'),import('/languages/zh/js/services/store.js'),import('/languages/zh/js/services/vocabulary-tests.js')]);Store.clearWrong();Store.hskLevels=[1];app=createPresentation({navigate(){}});app.setStudy(study);app.setPreferences({uiLanguage:ui,theme});const q=createVocabularyPool('vocabinput',Store.activeWords,explanation).choose(undefined,()=>0);Store.words.find(word=>word.id===q.word.id).srs.level=1;Store.addWrong({mode:'vocabinput',wordId:q.word.id,wordHanzi:q.word.hanzi,hskLevel:q.word.hskLevel,userAnswer:'wrong-review-answer',correctAnswer:q.answer,question:snapshotVocabularyQuestion(q)});result=[{name:'baseline',level:'1'}];
     }else{
@@ -32,7 +32,7 @@ try{
       // A saved pre-retirement root question remains readable in Review.
       const family=study.families.find(row=>row.members.some(member=>byId.has(member.entryId))),member=family.members.find(row=>byId.has(row.entryId)),rootWord=byId.get(member.entryId);
       pick('roots',{id:'saved-root-'+family.id+'-'+rootWord.id,entryId:rootWord.id,category:'roots',route:'vocabinput',rootFamilyId:family.id,prompt:family.root+'\n'+rootWord.studyMeaning,answer:rootWord.lemma,acceptedAnswers:[rootWord.lemma]});
-      pick('phrase-choice',prepared.find(r=>r.category==='collocations'&&r.options&&!r.gapFill&&!r.collocationId&&r.answer!==byId.get(r.entryId).lemma));
+      pick('phrase-choice',prepared.find(r=>['collocations','phrasal','idioms'].includes(r.category)&&r.options&&!r.gapFill&&r.answer!==byId.get(r.entryId).lemma));
       pick('separated-gaps',prepared.find(r=>r.gapFill&&r.route==='vocabinput'));
      }
      for(const item of result){const q=item.question;let input=q.options?q.options.find(option=>option.id!==q.correctOption).id:q.category==='okurigana'?'久い':q.category==='forms'?'食べた':'incorrect-written-answer';
@@ -63,7 +63,13 @@ try{
     }else assert.deepEqual(measured,reference,`${language} ${item.name} shares baseline Review typography, answer rows, separator and card geometry`);
     assert.equal(await card.locator('.wrong-main-word,.wrong-word-meaning').count(),2);if(item.question.category==='phrasal')assert.equal(await card.locator('.wrong-mode').innerText(),ui==='ko'?'구동사':'Phrasal Verbs');assert.equal(await card.locator('.vocab-instruction,.vocab-prompt,.form-original-word,.grammar-word,.exercise-explanation p,input').count(),0,'Review must not contain quiz blocks or duplicate explanations');
     if(item.name==='reading'||item.name==='okurigana'||item.name==='roots')assert.equal(await card.locator('.wrong-correct-line').count(),0,'Correct answer already supplied by the heading');
-    if(item.name==='reading')assert.equal(await card.locator('.wrong-question-block,.reading-segments').count(),0);
+    if(item.name==='reading'){
+     assert.equal(await card.locator('.wrong-question-block').count(),1);assert.equal(await card.locator('.reading-segments').count(),0);
+     assert.equal(await card.locator('.wrong-question').innerText(),item.question.prompt);
+     assert.equal(await card.locator('.study-reading-target').innerText(),item.question.readingFocus?.text||item.question.word.lemma);
+     assert.equal(await card.locator('.wrong-translation').innerText(),item.question.context);
+     assert.equal(await card.locator('.wrong-translation').getAttribute('lang'),item.question.locale);
+    }
     if(item.name==='okurigana')assert.equal(await card.locator('.reading-segments').count(),0);
     if(item.name==='roots')assert.equal(await card.locator('.wrong-question').evaluate(node=>getComputedStyle(node).fontSize),'16px');
     if(item.name==='phrase-choice')assert.equal(await card.locator('.wrong-user-line del').innerText(),item.wrong);
