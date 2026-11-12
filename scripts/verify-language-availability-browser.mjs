@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {chromium} from 'playwright';
 import {fixture,explanationFixture} from '../tests/package-fixture.js';
 import {startServer} from './dev-server.mjs';
 
-const targets=['de','en','es','fr','ja','ko','zh'],visible=['de','en','ja','zh'];
+const targets=['de','en','es','fr','ja','ko','zh'],visible=['de','en','ja','zh'],screenshots=join(tmpdir(),'lingonberry-language-availability');
 const files=targets.flatMap(language=>{
  const core=fixture({id:language+'-core',targetLanguage:language,entries:[{id:language+'-word',word:'word',level:language==='ja'?'N5':language==='en'?'IELTS 1.0–3.5':'A1',partOfSpeech:'noun',example:{text:'An original fixture sentence.'}}]});
  return [core,...['en','ko'].filter(explanation=>language!==explanation||language==='en').map(explanation=>explanationFixture(core.data,explanation))];
@@ -14,7 +16,7 @@ const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.cata
 async function settings(page){await page.locator('[data-tab=settings]').click();await ready(page);}
 async function packages(page){await settings(page);await page.locator('#manage-packages').click();await ready(page);assert.deepEqual((await page.locator('[data-language]').evaluateAll(rows=>rows.map(row=>row.dataset.language))).sort(),visible);}
 try{
- browser=await chromium.launch({headless:true});await mkdir('/private/tmp/lingonberry-language-availability',{recursive:true});let checks=0;
+ browser=await chromium.launch({headless:true});await mkdir(screenshots,{recursive:true});let checks=0;
  for(const width of [390,1024])for(const theme of ['light','dark'])for(const locale of ['en','ko']){
   const context=await browser.newContext({viewport:{width,height:1000}}),page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
   await context.route('**/catalog.json',route=>route.fulfill({json:catalog}));
@@ -41,7 +43,7 @@ try{
    for(const target of ['fr','es','ko'])assert.equal(await page.evaluate(target=>JSON.parse(localStorage.getItem(`learn-language.${target}.lexicon.v1`)).preservedProgress,target),target);
    checks++;
   }
-  await page.locator('main').screenshot({path:`/private/tmp/lingonberry-language-availability/${width}-${theme}-${locale}.png`,fullPage:true});
+  await page.locator('main').screenshot({path:join(screenshots,`${width}-${theme}-${locale}.png`),fullPage:true});
   await page.context().setOffline(true);await page.reload();await ready(page);await packages(page);assert.deepEqual(errors,[]);await context.close();
  }
  console.log(`Passed ${checks} saved-preview visibility cases, fresh downloads, Korean explanations, preserved packages/progress and offline reloads across phone/tablet, themes and English/Korean.`);
