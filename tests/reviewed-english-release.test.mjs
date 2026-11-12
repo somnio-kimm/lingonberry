@@ -9,11 +9,11 @@ import {assembleStudy} from '../web/js/packages/study.js';
 const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
 const json=async path=>JSON.parse(await read(path));
 test('reviewed English release has identical bilingual sense coverage and exact immutable descriptors',async()=>{
- const [catalog,report]=await Promise.all([json('language-packages/catalog.json'),json('language-packages/sources/english-reviewed/7.0.0/report.json')]);
- validateCatalog(catalog);assert.equal(report.complete,true);assert.equal(report.allRecordedReviewGatesComplete,true);
+ const [catalog,report]=await Promise.all([json('language-packages/catalog.json'),json('language-packages/sources/reviews/en-7.0.3.json')]);
+ validateCatalog(catalog);assert.equal(report.review.sourceAndSenseReviewComplete,true);assert.equal(report.uniqueAlignedEntryIds,true);
  const packs=[];
  for(const id of ['en-core','en-en','en-ko']){
-  const descriptor=catalog.find(row=>row.id===id&&row.version==='7.0.0');assert.ok(descriptor);
+  const descriptor=catalog.find(row=>row.id===id&&row.version===report.edition);assert.ok(descriptor);
   const raw=await read(descriptor.url.slice(1));assert.equal(Buffer.byteLength(raw),descriptor.bytes);
   assert.equal(createHash('sha256').update(raw).digest('hex'),descriptor.sha256);packs.push(JSON.parse(raw));
  }
@@ -22,7 +22,7 @@ test('reviewed English release has identical bilingual sense coverage and exact 
  const activeIds=new Set(core.entries.map(row=>row.id)),retired=new Map(core.retiredEntries.map(row=>[row.id,row]));
  for(const row of [...previous.entries,...(previous.retiredEntries||[])])assert.ok(activeIds.has(row.id)||retired.has(row.id),'Old identity missing from active content and history: '+row.id);
  for(const row of retired.values())if(row.sameConcept)assert.ok(activeIds.has(row.replacementId));
-assert.equal(core.entries.length,report.entries);assert.equal(core.contentReview.effectiveReviewSha256,report.reviewSnapshotSha256);
+assert.equal(core.entries.length,report.entryCountEach);assert.equal(core.contentReview.effectiveReviewSha256,report.review.effectiveReviewSha256);
  for(const pair of pairs){validateExplanation(core,pair);assert.deepEqual(pair.entries.map(row=>row.id),core.entries.map(row=>row.id));
   const audit=auditEnglishSenseExamples(assembleStudy(core,pair));assert.deepEqual(audit.missingExamples,[]);assert.deepEqual(audit.repeatedExamples,[]);assert.deepEqual(audit.combinedMeanings,[]);
  }
