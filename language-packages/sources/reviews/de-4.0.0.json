@@ -1,0 +1,62 @@
+{
+  "edition": "4.0.0",
+  "studyLanguage": "de",
+  "explanationLanguages": [
+    "en",
+    "ko"
+  ],
+  "entryCountEach": 11286,
+  "uniqueAlignedEntryIds": true,
+  "primaryExamples": 11286,
+  "allCurrentMeaningsAndExampleTranslationsPresent": true,
+  "review": {
+    "method": "Conversation-agent editorial review with independent source, meaning, example and translation checks",
+    "nativeSpeakerCertification": false,
+    "sourceAndSenseReviewComplete": true,
+    "effectiveReviewSha256": "c98903b8f8a584599527eb1b7c8ded277548811a28c3316d4ad036b0e2b78f5b"
+  },
+  "runtimeProjection": {
+    "removedOnlyUnusedHistoryAndLocalFileMetadata": true,
+    "activeLearnerStringsFormsQualificationsPreserved": true,
+    "sourceCreatorsLicencesAndArticleHistoryUrlsRetained": true,
+    "currentLicenceLinksAndPackageCreditsVerified": true
+  },
+  "validation": {
+    "schemaAndIntegrity": true,
+    "actualCurrentCode": "932995b0fb921a8337aa3689579b2ec2651a4ec9",
+    "browser": "Real isolated package installation, exact payload/hash checks, current and saved Review, EN/KO, phone/tablet/light/dark and offline reloads",
+    "browserProofSha256": "daaa2843c51adb94b6dc180c450948d09aec55a8376012019cfe19d2a2ea6b38",
+    "nativeUpdate": "Separate in-place release step; not claimed by this data edition"
+  },
+  "payloads": [
+    {
+      "file": "language-packages/de-core-4.0.0.json",
+      "bytes": 19116692,
+      "sha256": "d87d1d9ecbe154ab4a77344d346fb6c7817cd95c9efd23c42f6db910131f9d17"
+    },
+    {
+      "file": "language-packages/de-en-4.0.0.json",
+      "bytes": 17398674,
+      "sha256": "289a28e8f11a78eaa0d02829f5025463a09c8869e29f8331e7108c5ba71818b2"
+    },
+    {
+      "file": "language-packages/de-ko-4.0.0.json",
+      "bytes": 17120086,
+      "sha256": "891e77716f05a9d712017193d73fe84a7a0bba119bc5ad9900401c8ba2d11017"
+    }
+  ],
+  "additionalExamples": 7,
+  "progressPolicy": {
+    "retiredEntries": 20,
+    "materiallyDifferentTargetsStartFresh": 12,
+    "sameConceptManualMarkersOnlyOnce": 6,
+    "quarantinesWithoutReplacement": 2,
+    "realWordReviewMinima": 9894,
+    "version": "4.0.0",
+    "sourceOnlyChangesRetainEligibleHistory": true,
+    "newPluralMatchesEntryStartsFresh": true,
+    "rawQuizUnitConceptSkillHistoryPreserved": true,
+    "independentProductionStoreProofSha256": "9191c3a077bbda3ec21c9bed4f09000883e234f446ca02ed88a0a80a27ac23d6",
+    "independentMechanicalHandoffSha256": "ca3838f1b70e8ad0a3a49aee450625481851dbeb42d3f27001a9cc2a6c459d35"
+  }
+}
