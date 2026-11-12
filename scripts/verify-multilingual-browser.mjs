@@ -1,6 +1,6 @@
 import {exerciseModes} from '../web/js/shared/language-exercises.js';
 import {studyProfiles,studyWords} from '../web/js/presentation/study-profiles.js';
-import {allowsExplanation} from '../web/js/shared/language-pairs.js';
+import {allowsExplanation,isStudyLanguageAvailable} from '../web/js/shared/language-pairs.js';
 import assert from 'node:assert/strict';
 import {readFile,mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -8,7 +8,7 @@ import {startServer} from './dev-server.mjs';
 const server=await startServer(),origin=`http://127.0.0.1:${server.address().port}`;
 let browser;const checks=[];
 const read=async file=>JSON.parse(await readFile(new URL('../'+file,import.meta.url),'utf8'));
-const catalog=await read('web/catalog.json');
+const catalog=await read('web/catalog.json'),languages=['ja','en'].filter(isStudyLanguageAvailable);
 const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready'&&document.querySelector('main').dataset.viewState==='ready');
 async function tab(page,name){await page.locator(`[data-tab=${name}]`).click();await ready(page);}
 async function choose(page,language,explanation){await tab(page,'settings');await page.selectOption('#target',language);await page.selectOption('#explanation',explanation);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');}
@@ -23,7 +23,7 @@ try{
  });
  page.on('pageerror',error=>errors.push(error.message));page.on('request',request=>{if(request.url().includes('/language-packages/')&&!request.url().endsWith('/catalog.json'))downloads.push(new URL(request.url()).pathname);});
  await page.goto(origin);await ready(page);
- for(const language of ['ja','ko','en','es','fr']){
+ for(const language of languages){
   const core=await read(catalog.find(row=>row.id===language+'-core').url.slice(1)),pairs=Object.fromEntries(await Promise.all(['en','ko'].filter(locale=>allowsExplanation(language,locale)).map(async locale=>[locale,await read(catalog.find(row=>row.id===language+'-'+locale).url.slice(1))])));
   await packages(page,language);const before=downloads.length;for(const locale of Object.keys(pairs))await download(page,language+'-'+locale);assert.equal(downloads.length-before,1+Object.keys(pairs).length,'core downloaded once');
   for(const explanation of Object.keys(pairs)){
@@ -105,12 +105,13 @@ try{
  }
  await tab(page,'settings');await page.selectOption('#explanation','ko');await page.waitForFunction(()=>document.documentElement.lang==='ko');await route(page,'wordlist');assert.equal(await page.locator('h2').innerText(),'단어 목록');
  await tab(page,'settings');await page.locator('[data-theme-choice=dark]').click();await route(page,'wordlist');
- const shots='/private/tmp/learn-language-multilingual-shots';await mkdir(shots,{recursive:true});await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:shots+'/french-dark.png',fullPage:true});
+ const shots='/private/tmp/learn-language-multilingual-shots';await mkdir(shots,{recursive:true});await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:shots+'/english-dark.png',fullPage:true});
+ const downloadsBeforeOffline=downloads.length;
  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await page.waitForFunction(()=>navigator.serviceWorker.controller!==null);await context.setOffline(true);await page.reload();await ready(page);
- for(const language of ['ja','ko','en','es','fr']){await choose(page,language,'en');await route(page,'wordlist');await page.locator('.wl-row').first().waitFor();}
- assert.equal(downloads.length,14);checks.push('All five installed languages and their offered explanation sets remain available offline; no repeated package downloads.');
- const saved=await page.evaluate(()=>localStorage.getItem('learn-language.fr.lexicon.v1'));await packages(page,'fr');page.once('dialog',dialog=>dialog.accept());await page.locator('#remove-language').click();await page.locator('#target').waitFor();assert.equal(await page.locator('#target option[value=fr]').count(),0);assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.fr.lexicon.v1')),saved);
- await context.setOffline(false);await packages(page,'fr');await download(page,'fr-en');assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.fr.lexicon.v1')),saved);assert.deepEqual(errors,[]);
+ for(const language of languages){await choose(page,language,'en');await route(page,'wordlist');await page.locator('.wl-row').first().waitFor();}
+ assert.equal(downloads.length,downloadsBeforeOffline);checks.push('All available multilingual study languages and their offered explanation sets remain available offline; no repeated package downloads.');
+ await choose(page,'ja','en');const saved=await page.evaluate(()=>localStorage.getItem('learn-language.ja.lexicon.v1'));await packages(page,'ja');page.once('dialog',dialog=>dialog.accept());await page.locator('#remove-language').click();await page.locator('#target').waitFor();assert.equal(await page.locator('#target option[value=ja]').count(),0);assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.ja.lexicon.v1')),saved);
+ await context.setOffline(false);await packages(page,'ja');await download(page,'ja-en');assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.ja.lexicon.v1')),saved);assert.deepEqual(errors,[]);
  checks.push('Confirmed language removal hides the installed pair, preserves progress, and allows reinstallation.');
  console.log(JSON.stringify({passed:checks.length,checks},null,2));
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

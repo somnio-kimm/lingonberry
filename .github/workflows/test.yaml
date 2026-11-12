@@ -22,6 +22,7 @@ jobs:
       - run: npm test
       - run: npx playwright install --with-deps chromium
       - run: npm run verify:browser
+      - run: node scripts/verify-language-availability-browser.mjs
       - run: node scripts/verify-baseline-review-policy-browser.mjs
       - run: node scripts/verify-german-input-aliases-browser.mjs
       - run: node scripts/verify-german-verb-persons-browser.mjs

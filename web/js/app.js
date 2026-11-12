@@ -1,6 +1,6 @@
 import {normaliseAppSettings,readAppSettings} from './shared/app-settings.js';
 import {APP_NAME} from './shared/app-config.js';
-import {allowsExplanation} from './shared/language-pairs.js';
+import {allowsExplanation,isStudyLanguageAvailable} from './shared/language-pairs.js';
 import {createPackageManager} from './packages/manager.js';
 import {createPackageStorage} from './packages/storage.js';
 import {loadCatalog} from './packages/catalog.js';
@@ -13,7 +13,7 @@ import {presentationDefinitions} from './presentation/index.js';
 const $=id=>document.getElementById(id),root=$('shell'),main=$('app'),tabs=$('main-nav');
 const settingsKey='learn-language.preferences.v1';
 let saved={};try{saved=JSON.parse(localStorage.getItem(settingsKey)||'{}')||{};}catch{}
-let target=typeof saved.target==='string'?saved.target:'',explanation=typeof saved.explanation==='string'?saved.explanation:'';
+let target=isStudyLanguageAvailable(saved.target)?saved.target:'',explanation=typeof saved.explanation==='string'?saved.explanation:'';
 let {theme,hapticEnabled,autoRemoveResolvedWrongs}=readAppSettings(localStorage,saved);
 const uiLanguage=()=>explanation==='ko'?'ko':'en';
 const sharedSettings=()=>({theme,uiLanguage:uiLanguage(),hapticEnabled,autoRemoveResolvedWrongs});
@@ -23,9 +23,9 @@ function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,expl
 const manager=createPackageManager({storage:createPackageStorage(),baseUrl:location.href}),presentations=new Map();
 let catalog=[],records=[],current=null,phase='idle',route='home',adapter,cleanup=()=>{},operation=0,drawToken=0;
 let packageTarget='',packageController=null,packageProgress=null,packageMessage='',selectionMessage='';
-const usablePairs=()=>installedPairs(records).filter(item=>presentationDefinitions[item.targetLanguage]&&allowsExplanation(item.targetLanguage,item.explanationLanguage));
+const usablePairs=()=>installedPairs(records).filter(item=>isStudyLanguageAvailable(item.targetLanguage)&&presentationDefinitions[item.targetLanguage]&&allowsExplanation(item.targetLanguage,item.explanationLanguage));
 function preferences(value){({theme,hapticEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
-async function presentation(id){if(!presentations.has(id)){const definition=presentationDefinitions[id];if(!definition)throw new Error('Unsupported study language.');const module=await definition.load();presentations.set(id,module.createPresentation({language:id,navigate,refresh:()=>draw(),onPreferences:preferences}));}return presentations.get(id);}
+async function presentation(id){if(!presentations.has(id)){const definition=presentationDefinitions[id];if(!definition||!isStudyLanguageAvailable(id))throw new Error('Unsupported study language.');const module=await definition.load();presentations.set(id,module.createPresentation({language:id,navigate,refresh:()=>draw(),onPreferences:preferences}));}return presentations.get(id);}
 function navigate(next){if(next!=='packages'&&!adapter?.screens[next])return;if(!current&&!['home','wrong','settings','packages'].includes(next))return;route=next;main.scrollTop=0;draw();window.scrollTo(0,0);}
 function updateChrome(){
  const t=label();document.documentElement.lang=uiLanguage()==='en'?'en-GB':'ko';document.documentElement.dataset.theme=theme;
@@ -55,7 +55,7 @@ async function draw(){
    onPackages:()=>{packageTarget='';packageMessage='';navigate('packages');},onLicence:()=>{closeLicence();closeLicence=openLicenceSheet({labels:label(),licenses:current?.licenses});},
    onReset:async()=>{const warning=await adapter.settings.reset();adapter.setStudy(current);return warning;},
   });cleanup=()=>{closeLicence();dispose();};
- }else if(route==='packages')renderPackageLibrary(main,{languages:languageLibrary(catalog,records).filter(item=>presentationDefinitions[item.target]),target:packageTarget,labels:label(),languageName,
+ }else if(route==='packages')renderPackageLibrary(main,{languages:languageLibrary(catalog,records).filter(item=>isStudyLanguageAvailable(item.target)&&presentationDefinitions[item.target]),target:packageTarget,labels:label(),languageName,
   onOpen:id=>{packageTarget=id;packageMessage='';draw();},onDownload:downloadExplanation,onRemove:removeLanguage,onCancel:()=>packageController?.abort(),busy:!!packageController,progress:packageProgress,message:packageMessage});
  else cleanup=adapter.render(route,main)||(()=>{});
 }
