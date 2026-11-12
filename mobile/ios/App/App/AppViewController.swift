@@ -79,6 +79,25 @@ class AppViewController: CAPBridgeViewController {
                         check.rootGroups=core.morphemes?.length||0;
                         if(!core.contentReview?.sourceAndSenseReviewComplete||!check.perSenseLevels||check.words!==check.examples||check.words!==check.translations)throw new Error('Reviewed English bilingual coverage is incomplete');
                         if(core.morphemes?.some(row=>!row.examples.length))throw new Error('An English root has no active related words');
+                        if(core.contentReview.rootSuffixSupplement){
+                          await open('en',before.explanationLanguage);document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-route=roots]'));document.querySelector('[data-route=roots]').click();await wait(()=>document.querySelector('#root-search'));
+                          if(document.querySelector('[data-root-view],[data-answer-mode],[data-submit],.vocab-question'))throw new Error('Root Families still contains practice controls');
+                          const search=document.querySelector('#root-search');check.suffixForms=[];check.newVerbs=[];
+                          for(const form of ['-ify','-ise','-ize','-tion','-sion','-ment']){
+                            const row=core.morphemes.find(row=>row.form===form);if(!row)throw new Error('Restored suffix is missing: '+form);
+                            search.value=form;search.dispatchEvent(new Event('input',{bubbles:true}));await wait(()=>document.querySelector(`[data-morpheme="${row.id}"]`));check.suffixForms.push(form);
+                          }
+                          for(const spelling of ['beautify','nationalise','privatise']){
+                            const entry=core.entries.find(row=>row.word===spelling),translation=entry&&meanings.get(entry.id);if(!entry||!translation)throw new Error('New verb is missing: '+spelling);
+                            search.value=spelling;search.dispatchEvent(new Event('input',{bubbles:true}));
+                            const selector=`[data-root-entry="${entry.id}"]`;
+                            for(let page=0;!document.querySelector(selector)&&page<5;page++){const more=[...document.querySelectorAll('[data-more-related]')].find(button=>!button.hidden);if(!more)break;more.click();}
+                            await wait(()=>document.querySelector(selector));document.querySelector(selector+' .wl-meaning').click();await wait(()=>document.querySelector('[role=dialog]'));
+                            if(document.querySelector('.study-sheet-meaning')?.textContent!==translation.meaning||!document.querySelector('.example-sentence')?.textContent.includes(entry.example.text))throw new Error('New verb detail differs: '+spelling);
+                            document.querySelector('[data-close]').click();await wait(()=>!document.querySelector('[role=dialog]'));check.newVerbs.push(spelling);
+                          }
+                          search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));check.rootReferenceOnly=true;
+                        }
                       }
                       if(before.targetLanguage==='ja'&&['en','ko'].includes(before.explanationLanguage)){
                         const id=core.entries.find(row=>row.word==='車')?.id,meaning=pair.entries.find(row=>row.id===id)?.meaning,expected=before.explanationLanguage==='ko'?'자동차':'car';
