@@ -14,11 +14,24 @@ English expressions are dictionary entries and participate in Meaning Quiz and C
 
 ## Current Content
 
-The English 7.0.0 edition contains **40,710 sense entries**, covering **20,603 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Different useful meanings can therefore appear as separate Word List rows and Flashcards at different levels.
+The English 7.0.3 edition contains **40,710 sense entries**, covering **20,603 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Different useful meanings can therefore appear as separate Word List rows and Flashcards at different levels.
 
-The four English groups are editorial IELTS-style difficulty bands: 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0. They are not official IELTS/SAT/GRE vocabulary lists. The inventory favours useful everyday, professional, academic and literary uses through GRE-level usage; minor obsolete branches and duplicate cards were excluded or consolidated. See the [release report](language-packages/sources/english-reviewed/7.0.0/report.json) and [review process](docs/english-content-review.md).
+The four English groups are editorial IELTS-style difficulty bands: 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0. They are not official IELTS/SAT/GRE vocabulary lists. The inventory favours useful everyday, professional, academic and literary uses through GRE-level usage; minor obsolete branches and duplicate cards were excluded or consolidated. See the [release report](language-packages/sources/reviews/en-7.0.3.json) and [review process](docs/english-content-review.md).
 
-German 3.2.0 has 11,293 entries, Chinese 2.2.0 has 11,003 and Japanese 4.5.0 has 12,032, with compatible English/Korean explanation packs. Their full entry-by-entry review is ongoing; the current release does not include its unfinished proposals. German A1–B1 uses matched Goethe material, with editorial B2–C2 groups. Chinese retains official syllabus identities/levels. Japanese JLPT placements are editorial. Reviews are AI-assisted; native-speaker certification remains pending. See [multilingual review](docs/multilingual-content-review.md), [meaning style](docs/meaning-style.md) and [source migration](docs/vocabulary-migration.md).
+The completed reviewed editions provide the same active IDs in each study core and its English/Korean explanation packs:
+
+| Study Language | Edition | Active Entries |
+|---|---|---:|
+| German | 4.0.0 | 11,286 |
+| Chinese | 2.3.0 | 11,003 |
+| Japanese | 5.0.0 | 12,031 |
+| English | 7.0.3 | 40,710 |
+
+Every active entry has a current example and both explanations; additional examples retain matching translations. The review distinguishes source facts, original/adapted examples and component licences. Unused reference/history text is omitted from runtime downloads while attribution and immutable private research records remain preserved. These are AI editorial reviews, not native-speaker certification.
+
+German A1–B1 uses reviewed Goethe headword/sense allocations; B2–C2 are editorial study bands. Chinese retains official syllabus identities/levels; Japanese JLPT placements are editorial. Corrected materially different German targets use fresh IDs; same-concept duplicates may carry only manual word markers once. Incompatible saved questions are versioned without erasing their original records. French, Spanish and Korean remain separate preview editions and are not included in this four-language review claim.
+
+See the [current catalogue](language-packages/catalog.json), [edition records](language-packages/sources/reviews), [multilingual review](docs/multilingual-content-review.md), [meaning style](docs/meaning-style.md) and [source migration](docs/vocabulary-migration.md).
 
 ## Development
 
