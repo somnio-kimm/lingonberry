@@ -18,6 +18,12 @@ function text(value, name, limit = 4000) {
 }
 function validateExampleEligibility(example){
   for(const name of ['practiceEligible','clozeEligible'])if(example[name]!==undefined)requireValue(typeof example[name]==='boolean','example '+(name==='practiceEligible'?'practice':'cloze')+' eligibility');
+  if(example.listeningAlternatives!==undefined){
+    const alternatives=example.listeningAlternatives;
+    requireValue(Array.isArray(alternatives)&&alternatives.length<=10,'sentence listening alternatives');
+    alternatives.forEach(value=>text(value,'sentence listening alternative'));
+    requireValue(new Set(alternatives).size===alternatives.length,'unique sentence listening alternatives');
+  }
 }
 function checkVersion(value) {
   requireValue(typeof value === 'string' && value.length < 40 && version.test(value), 'version');

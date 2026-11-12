@@ -13,7 +13,7 @@ export function createListeningEngine({language,spokenWord=vocabularyWord,wordAn
    return (word.sentences||word.examples||[]).flatMap((sentence,i)=>{
     const text=sentence.hanzi||sentence.de;if(sentence.practiceEligible===false||!text?.trim())return [];
     return [{mode,id:word.id+':sentence:'+i+':'+locale,word,locale,language,kind:'sentence',
-     prompt:'Listen and type the sentence.',spokenText:text,answer:text,acceptedAnswers:[text],sentence:{...sentence},
+     prompt:'Listen and type the sentence.',spokenText:text,answer:text,acceptedAnswers:[...new Set([text,...(sentence.listeningAlternatives||[])])],sentence:{...sentence},
      example:{de:text,en:sentence.meaningEn||sentence.en||'',ko:sentence.meaningKo||sentence.ko||''}}];
    });
   });
