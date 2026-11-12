@@ -1,0 +1,30 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {validatePackage,validateExplanation} from '../web/js/packages/schema.js';
+const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
+const json=async path=>JSON.parse(await read(path));
+test('reviewed Japanese release preserves identities and complete bilingual primary examples',async()=>{
+ const catalog=await json('language-packages/catalog.json'),report=await json('language-packages/sources/reviews/ja-5.0.0.json'),packs=[];
+ for(const id of ['ja-core','ja-en','ja-ko']){
+  const descriptor=catalog.find(row=>row.id===id&&row.version===report.edition);assert.ok(descriptor);
+  const raw=await read(descriptor.url.slice(1));assert.equal(Buffer.byteLength(raw),descriptor.bytes);
+  assert.equal(createHash('sha256').update(raw).digest('hex'),descriptor.sha256);
+  const pack=JSON.parse(raw);validatePackage(pack);packs.push(pack);
+ }
+ const [core,...pairs]=packs,ids=new Set(core.entries.map(row=>row.id)),retired=new Map(core.retiredEntries.map(row=>[row.id,row]));
+ assert.equal(ids.size,12031);assert.equal(core.entries.length,report.entryCountEach);
+ const previous=await json('language-packages/ja-core-4.5.0.json');
+ for(const row of [...previous.entries,...(previous.retiredEntries||[])])assert.ok(ids.has(row.id)||retired.has(row.id),'Missing original identity: '+row.id);
+ for(const row of retired.values())if(row.replacementId)assert.ok(ids.has(row.replacementId));
+ assert.ok(core.entries.every(row=>row.example?.text?.trim()&&!row.referenceExamples?.length));
+ for(const pair of pairs){
+  validateExplanation(core,pair);assert.deepEqual(pair.entries.map(row=>row.id),core.entries.map(row=>row.id));
+  for(const [i,row] of pair.entries.entries()){
+   assert.ok(row.meaning?.trim()&&row.exampleTranslation?.trim());
+   assert.equal(row.additionalExampleTranslations?.length||0,core.entries[i].additionalExamples?.length||0);
+  }
+ }
+ assert.equal(report.review.nativeSpeakerCertification,false);
+});
