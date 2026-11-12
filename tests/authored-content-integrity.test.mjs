@@ -11,7 +11,7 @@ async function records(path){try{return (await readFile(new URL(path,root),'utf8
 const catalogue=await json('language-packages/catalog.json');
 for(const language of STUDY_LANGUAGES)test(`${language}: mutable authoring records retain valid IDs, focus and source attribution`,async()=>{
  // Legacy authoring rows stay bound to their pre-review source editions, not newly corrected/consolidated identities.
- const sourceEditions={en:'5.0.0',ja:'4.5.0'};
+ const sourceEditions={en:'5.0.0',ja:'4.5.0',de:'3.2.0'};
  const descriptor=sourceEditions[language]?{url:`/language-packages/${language}-core-${sourceEditions[language]}.json`}:catalogue.find(row=>row.id===language+'-core');
  const core=await json(descriptor.url.slice(1)),entries=new Map(core.entries.map(row=>[row.id,row])),ids=new Set();
  const folder='language-packages/sources/examples/';
