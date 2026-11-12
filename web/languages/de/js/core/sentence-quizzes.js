@@ -1,6 +1,6 @@
 import {findAdjectiveFocusPatterns,pickAdjectiveFocusOption} from './adjective-forms.js';
 import {findSentenceFocus,joinSentenceTiles,createSentenceQuestionId} from '../../../../js/shared/lexicon-sentences.js';
-import {nounPhraseAlternatives,formAlternatives} from './form-alternatives.js';
+import {nounPhraseAlternatives,hasNounPhraseArticle,formAlternatives} from './form-alternatives.js';
 import { wordType } from './dictionary.js';
 import { shuffleWords } from './words.js';
 import {collectVocabularySpellings} from '../../../../js/shared/vocabulary-spellings.js';
@@ -8,14 +8,15 @@ export const normalizeSentence=text=>String(text).normalize('NFC').trim().replac
 export const sentenceTokens=text=>normalizeSentence(text).match(/[^\s.,，。]+|[.,，。]/gu)||[];
 const wordCharacter=/[\p{L}\p{M}\p{N}]/u;
 const standaloneInflections=['plural','comparative','superlative'];
+const isSentenceInitial=(sentence,start)=>start===0||/[.!?]["'»”]?$/u.test(sentence.slice(0,start).trimEnd());
 function values(value,path=[]) {
  if(typeof value==='string')return [{text:value,path}];
  if(Array.isArray(value))return value.flatMap((v,i)=>values(v,[...path,i]));
  if(value&&typeof value==='object')return Object.entries(value).flatMap(([key,v])=>values(v,[...path,key]));
  return [];
 }
-function formText(value,kind) {
- if(kind==='declension')return value.replace(/^(der|die|das|den|dem|des)\s+/u,'');
+function formText(value,kind,withArticle=false) {
+ if(kind==='declension'&&!withArticle)return value.replace(/^(der|die|das|den|dem|des)\s+/u,'');
  if(kind==='forms')return value.replace(/^(hat|ist)\s+/u,'');
  return value;
 }
@@ -26,7 +27,8 @@ function forms(word) {
   for(const form of values(word[kind])){
    const alternatives=kind==='declension'?nounPhraseAlternatives(form.text,{allowBare:word.article_optional===true}):formAlternatives(form.text);
    alternatives.forEach((value,alternativeIndex)=>{
-    const text=formText(value,kind);result.push({...form,text,kind,alternativeIndex});
+    const text=formText(value,kind);result.push({...form,text,kind,alternativeIndex,...(kind==='declension'&&hasNounPhraseArticle(text)?{withArticle:true}:{})});
+    if(kind==='declension'&&text!==value)result.push({...form,text:value,kind,alternativeIndex,withArticle:true});
     if(kind==='forms'&&text.includes(' '))result.push({...form,text:text.split(' ')[0],kind,alternativeIndex,firstToken:true});
    });
   }
@@ -39,7 +41,7 @@ function findSpan(sentence,form) {
   for(let start=sentence.indexOf(text);start>=0;start=sentence.indexOf(text,start+1)){
    const before=start?[...sentence.slice(0,start)].at(-1):'',after=String.fromCodePoint(sentence.codePointAt(start+text.length)||0);
    if(wordCharacter.test(before)||wordCharacter.test(after))continue;
-   if(initialOnly&&start!==0&&!/[.!?]["'»”]?$/u.test(sentence.slice(0,start).trimEnd()))continue;
+   if(initialOnly&&!isSentenceInitial(sentence,start))continue;
    return {start,text};
   }
   return null;
@@ -58,7 +60,9 @@ export function clozeQuestions(words) {
   if(example.focus!==undefined){
    if(typeof example.focus?.text!=='string'||!example.focus.text.trim())return [];
    const focus=findSentenceFocus(word,{text:sentence,focus:example.focus},'de');if(!focus)return [];
-   let form=declared.find(form=>form.text===focus.text)||{text:focus.text,kind:'focus',path:[]};
+   let form=declared.find(form=>form.text===focus.text)
+    ||(isSentenceInitial(sentence,focus.start)?declared.find(form=>form.text[0]?.toLocaleUpperCase('de')+form.text.slice(1)===focus.text):null)
+    ||{text:focus.text,kind:'focus',path:[]};
    if(word.pos==='adjective')form={...form,adjectivePatterns:findAdjectiveFocusPatterns(word,focus.text)};
    return [{id:createSentenceQuestionId(word.id,i,sentence)+':'+focus.start,word,example:{...example,de:sentence},answer:focus.text,start:focus.start,form}];
   }
@@ -87,7 +91,7 @@ function optionForm(word,question) {
  else if(form.kind!=='focus'){
   let value=word[form.kind];for(const part of form.path)value=value?.[part];
   if(typeof value!=='string'||!value.trim())return null;
-  text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind);
+  text=formText(form.kind==='declension'?(nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[form.alternativeIndex||0]||nounPhraseAlternatives(value,{allowBare:word.article_optional===true})[0]||value):(formAlternatives(value)[form.alternativeIndex||0]||formAlternatives(value)[0]||value),form.kind,form.withArticle);
   if(!text||text.trim()==='—')return null;
  }
  text||=word.lemma;
