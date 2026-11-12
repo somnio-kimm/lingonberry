@@ -15,7 +15,8 @@ try{
    const [{renderMorphemeInventory},{renderStudyTabs}]=await Promise.all([import('/js/shared/morpheme-view.js'),import('/js/shared/study-components.js')]);
    const host=document.querySelector('main');host.innerHTML='<div id="baseline"><section class="panel"><h2 class="section-title">Reference</h2></section><div class="card study-search"><input class="input-field" type="search" placeholder="Search"></div><div class="wl-list wl-list--wordlist"><div class="word-row-window"><div class="wl-row"><div class="wl-main"><span class="wl-headword">audience</span><div class="wl-meaning">listeners</div></div></div></div></div></div><div id="feature"></div>';
    const words=[{id:'audience',lemma:'audience',studyMeaning:'listeners'}],rows=[{id:'aud',form:'aud-',variants:[],kind:'root',origin:'Latin',examples:['audience','audition'],senses:[{id:'aud-0',meaning:'hear',tags:[]}],source:'https://en.wiktionary.org/wiki/aud-'}];
-   renderMorphemeInventory(document.querySelector('#feature'),{rows,words,state:{},t:x=>x,locale:'en',tabs:renderStudyTabs({label:'Answer Mode',options:[{value:'choice',label:'Selection'},{value:'input',label:'Typing'}],selected:'choice',attribute:'data-answer-mode'}),bindTabs(){},openWord(){},tags:()=>''});
+   renderMorphemeInventory(document.querySelector('#feature'),{rows,words,state:{},t:x=>x,locale:'en',openWord(){},tags:()=>''});
+   host.insertAdjacentHTML('beforeend',renderStudyTabs({label:'Answer Mode',options:[{value:'choice',label:'Selection'},{value:'input',label:'Typing'}],selected:'choice',attribute:'data-answer-mode'}));
   },{language,theme});
   assert.deepEqual(await measure(page,'[data-morpheme]', ['padding','borderRadius','borderWidth','backgroundColor']),await measure(page,'#baseline .panel',['padding','borderRadius','borderWidth','backgroundColor']));
   assert.deepEqual(await measure(page,'.study-reference-heading',['fontSize','fontWeight','color']),await measure(page,'#baseline .wl-headword',['fontSize','fontWeight','color']));
@@ -56,23 +57,9 @@ try{
   assert.equal(await page.locator('[data-morpheme]').count(),0);
   await search.fill('aud');
   assert.equal(await page.locator('[data-practice-family]').count(),0);
-  await page.locator('[data-root-view="quiz"]').click();
-  assert.equal(await page.locator('.vocab-choice').count(),2);
-  assert.equal(await page.locator('[data-submit]').count(),0);
-  assert.equal(await page.locator('.vocab-choice').filter({hasText:'audial'}).count(),0);
-  const question=page.locator('[data-question-word]');
-  const first=await question.getAttribute('data-question-word');
-  await page.getByRole('button',{name:first,exact:true}).click();
-  assert.equal(await page.locator('.vocab-choice.correct').innerText(),first);
-  await page.locator('[data-next]').click();
-  assert.notEqual(await question.getAttribute('data-question-word'),first);
-  await page.locator('[data-answer-mode="input"]').click();
-  await page.locator('#vocab-answer').fill(await question.getAttribute('data-question-word'));
-  await page.locator('[data-submit]').click();
-  assert.equal(await page.locator('.vocab-correction').count(),1);
-  await page.locator('main').screenshot({path:`/private/tmp/study-design-contract/root-practice-${width}-${theme}.png`});
-  await page.locator('[data-root-view="browse"]').click();
+  assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
+  await page.locator('main').screenshot({path:`/private/tmp/study-design-contract/root-reference-${width}-${theme}.png`});
   assert.equal(await search.inputValue(),'aud');
  }
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts and two Root Families browse and practice scenarios.`);
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts and two reference-only Root Families scenarios.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

@@ -13,7 +13,7 @@ export function renderMorphemeSense(sense,locale) {
 
 /** The model owns data lookup; this view owns markup, user events and their cleanup. */
 export function renderMorphemeInventory(host,{
- rows,words,model=createMorphemeModel(rows,words),state,t,locale,tabs,bindTabs,openWord,tags,
+ rows,words,model=createMorphemeModel(rows,words),state,t,locale,openWord,tags,
 }) {
  function renderKindOptions() {
   return model.kinds.map(kind => {
@@ -60,7 +60,6 @@ export function renderMorphemeInventory(host,{
 
  host.innerHTML = `<div class="lexicon-view">
   <h2 class="section-title study-list-title">${e(t('Root Families'))}</h2>
-  ${tabs}
   <p class="muted" data-root-count></p>
   <div class="grammar-selectors"><label>${e(t('Type'))}<select data-root-kind>${renderKindOptions()}</select></label></div>
   ${renderStudySearch({id:'root-search',value:state.rootQuery||'',label:t('Search')})}
@@ -106,7 +105,6 @@ export function renderMorphemeInventory(host,{
  }
 
  renderResults();
- bindTabs(host);
  kind.onchange = () => {
   state.rootKind = kind.value;
   renderResults();

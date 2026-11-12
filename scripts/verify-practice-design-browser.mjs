@@ -26,9 +26,9 @@ try{
    await page.screenshot({path:`/private/tmp/practice-design-shots/${language}-${width}-${theme}.png`,fullPage:true});checks++;
   }
   if(language==='en'){
-   await page.evaluate(()=>window.designRoute('roots'));await page.locator('[data-root-view=browse]').click();await page.locator('#root-search').fill('aud');const row=page.locator('.root-member.wl-row[data-root-entry]').first();
+   await page.evaluate(()=>window.designRoute('roots'));await page.locator('#root-search').fill('aud');const row=page.locator('.root-member.wl-row[data-root-entry]').first();
    assert.ok(await row.evaluate(node=>parseFloat(getComputedStyle(node.querySelector('.wl-headword')).fontSize)>parseFloat(getComputedStyle(node.querySelector('.wl-meaning')).fontSize)));
-   await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();await page.keyboard.press('Escape');checks++;await page.locator('[data-root-view=quiz]').click();assert.equal(await page.locator('.vocab-instruction').count(),0);assert.doesNotMatch(await page.locator('.vocab-prompt').innerText(),/^(라틴어|그리스어|고대 영어) ·/u);
+   await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();await page.keyboard.press('Escape');checks++;assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
   }
   if(language==='ja'){
    await page.evaluate(()=>window.designRoute('home'));assert.deepEqual(await page.locator('.level-chip').allTextContents(),['JLPT N5','JLPT N4','JLPT N3','JLPT N2','JLPT N1']);

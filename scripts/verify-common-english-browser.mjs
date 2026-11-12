@@ -48,7 +48,7 @@ try{
     checks++;
    }
   }
-  await tab(page,'home');await page.locator('[data-route=roots]').click();await page.locator('[data-root-view=browse]').click();await page.locator('#root-search').fill('address');
+  await tab(page,'home');await page.locator('[data-route=roots]').click();await page.locator('#root-search').fill('address');
   await page.locator('#root-search').fill('megaphone');await page.locator('[data-root-entry=en-coverage-megaphone]').first().waitFor();await page.locator('#root-search').fill('address');
   for(const entry of core.entries.filter(row=>row.word==='address')){await page.locator(`[data-root-entry="${entry.id}"]`).first().waitFor();}
   await tab(page,'settings');await page.locator('#set-license').click();await page.locator('.lic-sheet').waitFor();assert.ok((await page.locator('.lic-scroll').innerText()).includes('Browne, C., Culligan, B., and Phillips, J.'));assert.ok(await page.locator('.lic-scroll a[href="https://charliebrownecompany.squarespace.com/new-general-service-list"]').count());await page.locator('.lic-x').click();

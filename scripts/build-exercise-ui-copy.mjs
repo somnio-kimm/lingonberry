@@ -1,9 +1,9 @@
-import {readFile,readdir,writeFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {readFile,writeFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {EXERCISE_ROUTES,JAPANESE_FORM_KINDS} from '../web/js/shared/language-exercises.js';
 import {createJapaneseReadingExercises} from '../web/js/shared/japanese-reading.js';
 import {createReadingChoices} from '../web/js/shared/reading-choices.js';
-import {createRootPractice} from '../web/js/shared/root-practice.js';
 import {phraseRecallUiPairs} from '../web/js/shared/phrase-practice.js';
 import {collocationInstruction} from '../web/js/shared/collocations.js';
 const root=new URL('../',import.meta.url);
@@ -11,7 +11,9 @@ const compare=(a,b)=>{const x=a.version.split('.').map(Number),y=b.version.split
 /** Only original exercise UI copy is bundled; meanings, explanations and study prompts remain in packages. */
 export async function exerciseUiPairs(){
  const records=[];
- for(const name of (await readdir(new URL('language-packages/',root))).sort()){
+ // Private draft packages are not part of the reproducible published UI catalogue.
+ const names=execFileSync('git',['ls-files','--','language-packages/*.json'],{cwd:root,encoding:'utf8'}).trim().split('\n').map(path=>path.slice('language-packages/'.length));
+ for(const name of names.sort()){
   const match=/^([a-z]{2,3})-(en|ko)-(\d+\.\d+\.\d+)\.json$/u.exec(name);if(!match||!Object.hasOwn(EXERCISE_ROUTES,match[1]))continue;
   const pack=JSON.parse(await readFile(new URL('language-packages/'+name,root),'utf8'));
   records.push({targetLanguage:pack.targetLanguage,explanationLanguage:pack.explanationLanguage,version:pack.version,studyVersion:pack.studyVersion,exercises:pack.exercises||[]});
@@ -26,8 +28,7 @@ export async function exerciseUiPairs(){
  const generated=locale=>{
   const rows=createJapaneseReadingExercises(words,locale,{version:1,excludedSpellings:[]});
   const legacy=['onyomi','kunyomi','okurigana'].flatMap(category=>words.slice(0,3).map(word=>({id:category+word.id,entryId:word.id,category,route:'vocabinput',answer:word.pronunciation})));
-  const familyWords=[{id:'include',lemma:'include',pos:'verb',studyMeaning:'contain'},{id:'exclude',lemma:'exclude',pos:'verb',studyMeaning:'leave out'}],familyStudy={targetLanguage:'en',explanationLanguage:locale,families:[{id:'clude',root:'clude',origin:'la',members:familyWords.map(word=>({entryId:word.id}))}]};
-  return [...rows,...createReadingChoices([...rows,...legacy],words,locale),...createRootPractice(familyStudy,familyWords),...['vocabinput','vocabmeaning'].map(mode=>({id:mode,instruction:collocationInstruction(mode,locale)}))];
+  return [...rows,...createReadingChoices([...rows,...legacy],words,locale),...['vocabinput','vocabmeaning'].map(mode=>({id:mode,instruction:collocationInstruction(mode,locale)}))];
  };
  pairs.push(...Object.values(JAPANESE_FORM_KINDS),...phraseRecallUiPairs);
  const en=generated('en'),ko=new Map(generated('ko').map(row=>[row.id,row]));for(const row of en)if(ko.has(row.id))pairs.push([row.instruction,ko.get(row.id).instruction]);

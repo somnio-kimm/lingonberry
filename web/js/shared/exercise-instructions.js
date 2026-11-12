@@ -605,14 +605,6 @@ export const EXERCISE_INSTRUCTIONS = [
     "ko": "표시된 빈칸이나 단어에 해당하는 읽기를 선택하세요."
   },
   {
-    "en": "Type the word matching the meaning, using the root or affix clue.",
-    "ko": "어근·접사와 표시된 뜻에 맞는 단어를 입력하세요."
-  },
-  {
-    "en": "Choose the word in this family that matches the displayed meaning.",
-    "ko": "같은 어원 계열에서 표시된 뜻에 맞는 단어를 선택하세요."
-  },
-  {
     "en": "Type the studied collocation in dictionary form, using the word in brackets.",
     "ko": "괄호 안 단어를 사용하여 학습한 연어를 기본형으로 입력하세요."
   },
