@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/bc1a456e7adfe02d976646378f31430d2bbcdb7d/",
-  "description": "Immutable reviewed English 7.0.0 with 40,710 aligned English/Korean senses, plus completed existing language editions. Unfinished full-review proposals are excluded."
+  "baseUrl": "https://raw.githubusercontent.com/somnio-kimm/lingonberry/25842d70cf4176a98ee3e437dea163484e4bd9f9/",
+  "description": "Immutable package payloads matching the bundled integrity-checked catalogue; content licences and reviews are retained per edition."
 }

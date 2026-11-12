@@ -1,0 +1,48 @@
+{
+  "edition": "7.0.3",
+  "studyLanguage": "en",
+  "explanationLanguages": [
+    "en",
+    "ko"
+  ],
+  "entryCountEach": 40710,
+  "uniqueAlignedEntryIds": true,
+  "primaryExamples": 40710,
+  "allCurrentMeaningsAndExampleTranslationsPresent": true,
+  "review": {
+    "method": "Conversation-agent editorial review with independent source, meaning, example and translation checks",
+    "nativeSpeakerCertification": false,
+    "sourceAndSenseReviewComplete": true,
+    "perSenseLevels": true,
+    "effectiveReviewSha256": "937cc3382cd5c43cbaf49fe4a4ef22d9b423a122bdd51bc4379b6b9660bfbfc5"
+  },
+  "runtimeProjection": {
+    "removedOnlyUnusedHistoryAndLocalFileMetadata": true,
+    "activeLearnerStringsFormsQualificationsPreserved": true,
+    "sourceCreatorsLicencesAndArticleHistoryUrlsRetained": true
+  },
+  "validation": {
+    "schemaAndIntegrity": true,
+    "actualCurrentCode": "932995b0fb921a8337aa3689579b2ec2651a4ec9",
+    "browser": "Real isolated package installation, exact payload/hash checks, current and saved Review, EN/KO, phone/tablet/light/dark and offline reloads",
+    "browserProofSha256": "eefc1f77230e4221c0db8036a06f9196fd205bf7b188a5729dbb73838c8e868d",
+    "nativeUpdate": "Separate in-place release step; not claimed by this data edition"
+  },
+  "payloads": [
+    {
+      "file": "language-packages/en-core-7.0.3.json",
+      "bytes": 63444682,
+      "sha256": "64c621092cb47b00ab8a7d0ebd5d7bd6487baf11f4f61b33ab5d70c61a52370e"
+    },
+    {
+      "file": "language-packages/en-en-7.0.3.json",
+      "bytes": 46541130,
+      "sha256": "b02f447086688b18b7da89a2cbef820dcc71755027ae7e0ddf5ead342655da5b"
+    },
+    {
+      "file": "language-packages/en-ko-7.0.3.json",
+      "bytes": 47929478,
+      "sha256": "9798d1f65862aa4667b9bb44c153221b200effb1643e91c9826212893c2ea8d9"
+    }
+  ]
+}
