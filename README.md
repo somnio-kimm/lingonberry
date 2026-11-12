@@ -14,9 +14,9 @@ English expressions are dictionary entries and participate in Meaning Quiz and C
 
 ## Current Content
 
-The English 7.0.3 edition contains **40,710 sense entries**, covering **20,603 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Different useful meanings can therefore appear as separate Word List rows and Flashcards at different levels.
+The English 7.0.4 edition contains **40,713 sense entries**, covering **20,606 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Different useful meanings can therefore appear as separate Word List rows and Flashcards at different levels.
 
-The four English groups are editorial IELTS-style difficulty bands: 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0. They are not official IELTS/SAT/GRE vocabulary lists. The inventory favours useful everyday, professional, academic and literary uses through GRE-level usage; minor obsolete branches and duplicate cards were excluded or consolidated. See the [release report](language-packages/sources/reviews/en-7.0.3.json) and [review process](docs/english-content-review.md).
+The four English groups are editorial IELTS-style difficulty bands: 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0. They are not official IELTS/SAT/GRE vocabulary lists. The inventory favours useful everyday, professional, academic and literary uses through GRE-level usage; minor obsolete branches and duplicate cards were excluded or consolidated. See the [release report](language-packages/sources/reviews/en-7.0.4.json) and [review process](docs/english-content-review.md).
 
 The completed reviewed editions provide the same active IDs in each study core and its English/Korean explanation packs:
 
@@ -25,7 +25,7 @@ The completed reviewed editions provide the same active IDs in each study core a
 | German | 4.0.0 | 11,286 |
 | Chinese | 2.3.0 | 11,003 |
 | Japanese | 5.0.0 | 12,031 |
-| English | 7.0.3 | 40,710 |
+| English | 7.0.4 | 40,713 |
 
 Every active entry has a current example and both explanations; additional examples retain matching translations. The review distinguishes source facts, original/adapted examples and component licences. Unused reference/history text is omitted from runtime downloads while attribution and immutable private research records remain preserved. These are AI editorial reviews, not native-speaker certification.
 
