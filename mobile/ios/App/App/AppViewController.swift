@@ -390,8 +390,8 @@ class AppViewController: CAPBridgeViewController {
                     result.readingPractice = !!document.querySelector('.vocab-question')?.dataset.exerciseId;
                     if (!result.readingPractice) throw new Error('Japanese reading practice is missing');
                   } else {
-                    await wait(() => document.querySelector('[data-root-view=browse]'));
-                    document.querySelector('[data-root-view=browse]').click();
+                    await wait(() => document.querySelector('#root-search'));
+                    if(document.querySelector('[data-root-view]'))throw new Error('Retired root practice tab is visible');
                     await wait(() => document.querySelector('[data-root-kind]'));
                     result.rootInventory=document.querySelector('[data-root-count]')?.textContent;
                     result.rootInventoryTotal=Number(document.querySelector('[data-root-count]')?.dataset.total);
@@ -435,8 +435,8 @@ class AppViewController: CAPBridgeViewController {
                     const original = [...document.querySelectorAll('[data-level]')].find(node => node.dataset.level === originalEnglishLevel);
                     original?.click();
                     document.querySelector('[data-route=roots]').click();
-                    await wait(() => document.querySelector('[data-root-view=browse]'));
-                    document.querySelector('[data-root-view=browse]').click();
+                    await wait(() => document.querySelector('#root-search'));
+                    if(document.querySelector('[data-root-view]'))throw new Error('Retired root practice tab is visible');
                     const search = document.querySelector('#root-search');search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));
                   }
                   return JSON.stringify(result);

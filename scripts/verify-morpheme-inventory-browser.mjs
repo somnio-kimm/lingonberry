@@ -7,9 +7,9 @@ try{
  for(const locale of ['en','ko']){
   await page.evaluate(async locale=>{
    const {renderMorphemeInventory}=await import('/js/shared/morpheme-view.js');
-   const host=document.createElement('main');document.body.replaceChildren(host);const words=[{id:'absent',lemma:'absent',studyMeaning:locale==='ko'?'자리에 없는':'not present'},{id:'audience',lemma:'audience'},{id:'duckling',lemma:'duckling'}];
+   const host=document.createElement('main');document.body.replaceChildren(host);const words=[{id:'absent',lemma:'absent',studyMeaning:locale==='ko'?'자리에 없는':'not present'},{id:'audience',lemma:'audience'},{id:'duckling',lemma:'duckling'},...Array.from({length:45},(_,i)=>({id:'word-'+i,lemma:'word '+i}))];
    const make=(id,form,kind,examples)=>({id,form,variants:[],kind,origin:kind==='suffix'?'Old English':'Latin',examples,senses:[{id:id+'-0',meaning:locale==='ko'?'~에서 떨어져':'away from'}],source:'https://en.wiktionary.org/wiki/'+form});
-   window.cleanupInventory=renderMorphemeInventory(host,{rows:[make('ab','ab-','prefix',['absent',...Array.from({length:45},(_,i)=>'word '+i)]),make('ad','ad-','prefix',['adapt']),make('ling','-ling','suffix',['duckling']),...Array.from({length:1000},(_,i)=>make('root-'+i,'aud','root',['audience']))],words,state:{},t:x=>x,locale,tabs:'',bindTabs(){},openWord:id=>{window.openedMorphemeWord=id;},tags:()=>''});
+   window.cleanupInventory=renderMorphemeInventory(host,{rows:[make('ab','ab-','prefix',['absent',...Array.from({length:45},(_,i)=>'word '+i)]),make('ad','ad-','prefix',['adapt']),make('ling','-ling','suffix',['duckling']),...Array.from({length:1000},(_,i)=>make('root-'+i,'aud','root',['audience']))],words,state:{},t:x=>x,locale,openWord:id=>{window.openedMorphemeWord=id;},tags:()=>''});
   },locale);
   assert.ok((await page.locator('[data-root-count]').innerText()).includes('1,002'));assert.equal(await page.locator('[data-root-count]').getAttribute('data-total'),'1002');assert.ok(await page.locator('[data-morpheme]').count()<1002);
   assert.equal(await page.locator('[data-morpheme=ab] .root-member').count(),12);await page.locator('[data-more-related=ab]').click();assert.equal(await page.locator('[data-morpheme=ab] .root-member').count(),32);
@@ -30,7 +30,7 @@ try{
    const pair=await read('en-'+locale),study=assembleStudy(await read('en-core',pair.studyVersion),pair),host=document.querySelector('main');
    const words=studyWords(study),normalise=value=>value.normalize('NFKC').trim().toLowerCase();
    const spellings=new Set(words.flatMap(word=>[word.lemma,...word.aliases]).map(normalise));
-   window.cleanupInventory=renderMorphemeInventory(host,{rows:study.morphemes,words,state:{},t:value=>lexiconText(locale,value),locale,tabs:'',bindTabs(){},openWord(){},tags:()=>''});
+   window.cleanupInventory=renderMorphemeInventory(host,{rows:study.morphemes,words,state:{},t:value=>lexiconText(locale,value),locale,openWord(){},tags:()=>''});
    return study.morphemes.filter(row=>row.examples.some(example=>spellings.has(normalise(example)))).length;
   },locale);
   assert.ok(expected>1000);assert.equal(Number(await page.locator('[data-root-count]').getAttribute('data-total')),expected);

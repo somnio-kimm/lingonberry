@@ -1,7 +1,6 @@
 import {createPhrasePractice} from './phrase-practice.js';
 import {japaneseReadingPrompt} from './japanese-reading-prompt.js';
 import {isActiveExerciseCategory} from './language-exercises.js';
-import {createRootPractice} from './root-practice.js';
 import {collocationExercises} from './collocations.js';
 import {createReadingChoices} from './reading-choices.js';
 import {createJapaneseReadingExercises,createOkuriganaSpellingQuestion,indexJapaneseSpellings} from './japanese-reading.js';
@@ -22,7 +21,7 @@ export function prepareLanguageExercises(study,words){
  }
  const key=row=>[row.route,row.category,row.entryId,row.kanji||'',row.formKind||'',row.subKind||'',row.collocationId||'',row.rootFamilyId||'',row.boundaryKind||'reading'].join(':');
  const covered=new Set(curated.map(key));
- const generated=[...createPhrasePractice(study,words),...(isActiveExerciseCategory(study?.targetLanguage,'collocations')?collocationExercises(words,study?.explanationLanguage):[]),...createRootPractice(study,words),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice,spellingData):[])];
+ const generated=[...createPhrasePractice(study,words),...(isActiveExerciseCategory(study?.targetLanguage,'collocations')?collocationExercises(words,study?.explanationLanguage):[]),...(study?.targetLanguage==='ja'?createJapaneseReadingExercises(words,study.explanationLanguage,study.readingPractice,spellingData):[])];
  const rows=[...curated,...generated.filter(row=>active(row)&&!covered.has(key(row))&&!(row.category==='reading'&&invalidReadings.has(row.entryId)))];
  return study?.targetLanguage==='ja'?[...rows,...createReadingChoices(rows,words,study.explanationLanguage,spellingData.spellings)]:rows;
 }
