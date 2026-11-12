@@ -10,6 +10,12 @@ Obsolete, archaic, rare, offensive, derogatory, vulgar, nonstandard and other me
 
 Root Families is a reference only: there is no Practice tab, answer input or new scored root question. Default Meaning Quiz and Word Input remain ordinary vocabulary tests; Confusable Words is removed from Study and new question generation. Existing Review history is preserved.
 
+## Useful verb and noun suffixes
+
+English 7.0.5 restores eleven suffix entries and extends three existing entries, with 345 checked Word List references across fourteen groups. These include verb-forming -ate, -en, -ify/-fy and -ise/-ize, and noun-forming -tion/-sion, -ment and their checked variants. Noun-forming and verb-forming homonyms stay separate; a word is not linked just because its spelling ends in the same letters.
+
+Three missing verbs, beautify, nationalise and privatise, now have separate Word List entries with English/Korean meanings and original examples. All 40,710 existing sense records, levels, examples and identities are unchanged. The current installed reference has 1,503 groups with dictionary matches. See the [source-backed supplement](../language-packages/sources/exercises/english-suffix-supplement-7.0.5.json). These are reviewed useful relationships, not every possible productive English derivative.
+
 ## Coverage and sources
 
 The Wiktionary scan reads the entire fixed cached English-edition snapshot (10,913,997 source rows), selecting English affix records with letter/hyphen/apostrophe labels and definitions. It is not restricted to current study words. The root reference imports all defined readable rows from the Greek/Latin A–G, H–O and P–Z tables. Five blank table rows received independently checked bilingual supplements; three other blank rows already occur as variants in defined groups and are not duplicated. The complete source hashes, fixed Wikipedia revision URLs, source-line evidence, coverage totals and editorial corrections are stored in `language-packages/sources/exercises/english-morpheme-inventory.json`.

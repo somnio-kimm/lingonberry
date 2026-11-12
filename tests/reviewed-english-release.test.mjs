@@ -9,7 +9,7 @@ import {assembleStudy} from '../web/js/packages/study.js';
 const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
 const json=async path=>JSON.parse(await read(path));
 test('reviewed English release has identical bilingual sense coverage and exact immutable descriptors',async()=>{
- const [catalog,report]=await Promise.all([json('language-packages/catalog.json'),json('language-packages/sources/reviews/en-7.0.3.json')]);
+ const [catalog,report]=await Promise.all([json('language-packages/catalog.json'),json('language-packages/sources/reviews/en-7.0.5.json')]);
  validateCatalog(catalog);assert.equal(report.review.sourceAndSenseReviewComplete,true);assert.equal(report.uniqueAlignedEntryIds,true);
  const packs=[];
  for(const id of ['en-core','en-en','en-ko']){

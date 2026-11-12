@@ -50,7 +50,24 @@ try{
   },locale);
   assert.ok(addresses.length>=2);await page.locator('#root-search').fill('address');
   for(const entry of addresses){const row=page.locator(`[data-root-entry="${entry.id}"]`).first();await row.waitFor();assert.ok((await row.innerText()).includes(entry.meaning));assert.ok((await row.innerText()).includes(entry.level));await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),entry.meaning);await page.keyboard.press('Escape');}
-  await page.evaluate(()=>window.cleanupRootPresentation());console.log('Verified real address noun/verb dictionary links, meanings and levels:',locale);
+  assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
+  const supplement=await page.evaluate(()=>fetch('/language-packages/sources/exercises/english-suffix-supplement-7.0.5.json').then(r=>r.json()));
+  for(const {morpheme} of supplement.morphemeUpdates){
+   await page.locator('#root-search').fill(morpheme.form);
+   await page.locator(`[data-morpheme="${morpheme.id}"]`).waitFor();
+  }
+  for(const expected of supplement.newDictionaryEntries){
+   await page.locator('#root-search').fill(expected.word);
+   const member=page.locator(`[data-root-entry="${expected.id}"]`).first();
+   while(!await member.count()&&await page.locator('[data-more-related]:visible').count())await page.locator('[data-more-related]:visible').first().click();
+   await member.waitFor();await member.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();
+   assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='ko'?expected.meaningKo:expected.meaningEn);
+   assert.ok((await page.locator('.example-sentence').first().innerText()).includes(expected.sentence));
+   await page.keyboard.press('Escape');
+  }
+  await page.locator('#root-search').fill('-ify');
+  assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
+  await page.evaluate(()=>window.cleanupRootPresentation());console.log('Verified real noun/verb sense links, all fourteen suffix groups and new bilingual verb details:',locale);
  }
  assert.deepEqual(errors,[]);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
