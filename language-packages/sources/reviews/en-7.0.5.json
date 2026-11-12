@@ -1,5 +1,5 @@
 {
-  "edition": "7.0.4",
+  "edition": "7.0.5",
   "studyLanguage": "en",
   "explanationLanguages": [
     "en",
@@ -64,19 +64,19 @@
   },
   "payloads": [
     {
-      "file": "language-packages/en-core-7.0.4.json",
+      "file": "language-packages/en-core-7.0.5.json",
       "bytes": 63456168,
-      "sha256": "00030d867270bba1c6b441456fe231521b4eb80568997a942991006cb18b8a94"
+      "sha256": "2c1c9ce4ddb57ae1b8df4c41bd9b19e23e8863e9c7e7c98a3e40b0f4a3af32d0"
     },
     {
-      "file": "language-packages/en-en-7.0.4.json",
+      "file": "language-packages/en-en-7.0.5.json",
       "bytes": 46544583,
-      "sha256": "9f07aa496072ff089299d4ebe7aa8f35ba6f9c4875551ef33e6416d5158bc9d0"
+      "sha256": "28bc646a4991e8f31c3eefb9df8269e4523463be2150b36278a4fc33ab80f9a5"
     },
     {
-      "file": "language-packages/en-ko-7.0.4.json",
+      "file": "language-packages/en-ko-7.0.5.json",
       "bytes": 47932753,
-      "sha256": "13ba7e4fbd0f70e1af9c56be83c46d28942fdc891d62b59d5a2c51031e14ceb0"
+      "sha256": "a4fb247af2276a6744a9ea9ffe80e82e7eec7d42ffeea27c5e9d1e1947f24487"
     }
   ],
   "baselineEdition": "7.0.3"

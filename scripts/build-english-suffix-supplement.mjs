@@ -5,13 +5,13 @@ import {pathToFileURL} from 'node:url';
 import {writePackageRelease} from './content/package-writer.mjs';
 const root=new URL('../',import.meta.url);
 const read=async path=>JSON.parse(await readFile(new URL(path,root),'utf8'));
-const sourcePath='language-packages/sources/exercises/english-suffix-supplement-7.0.4.json';
+const sourcePath='language-packages/sources/exercises/english-suffix-supplement-7.0.5.json';
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 
 /** Restore only independently checked source relationships; never derive them from spelling. */
 export async function englishSuffixSupplement(){
  const raw=await readFile(new URL(sourcePath,root)),source=JSON.parse(raw);
- assert.equal(sha(raw),'5b5241bdff3081dec537143f0bb39083c864805c93a7a54f7c818cd9ce5615a0');
+ assert.equal(sha(raw),'0fa8b75662b9481e108083eb341ed31b1c6bff6eea211ab03fef7baa9231b2df');
  assert.equal(source.independentReview.mechanicalPassed,true);
  const inventoryRaw=await readFile(new URL(source.sourceInventory,root));
  assert.equal(sha(inventoryRaw),source.sourceInventorySha256);
@@ -46,11 +46,12 @@ export async function englishSuffixSupplement(){
   for(const pair of pairs)pair.entries.push({id:row.id,meaning:pair.explanationLanguage==='ko'?row.meaningKo:row.meaningEn,
    exampleTranslation:pair.explanationLanguage==='ko'?row.translationKo:row.sentence});
  }
+ core.contentReview.bilingualExamples=core.entries.length;
  core.contentReview.rootSuffixSupplement={source:sourcePath,sourceSha256:sha(raw),independentReviewSha256:source.independentReview.sha256,
   baselineReviewedEntries:40710,newReviewedEntries:3,suffixGroups:14,relatedWordReferences:345,nativeSpeakerCertification:false};
  for(const pack of packs){
   pack.version=source.edition;if(pack.kind==='explanation')pack.studyVersion=source.edition;
-  pack.license.notice='English 7.0.4 suffix supplement: fourteen source-backed affix groups and three independently reviewed verb senses. Affix explanations and word definitions/adaptations: English Wiktionary contributors and Lingonberry contributors, CC BY-SA 4.0; original new examples and Korean translations: Lingonberry contributors, CC BY 4.0. Exact sources and changes: '+sourcePath+'.\n\n'+pack.license.notice;
+  pack.license.notice='English 7.0.5 suffix supplement: fourteen source-backed affix groups and three independently reviewed verb senses. Affix explanations and word definitions/adaptations: English Wiktionary contributors and Lingonberry contributors, CC BY-SA 4.0; original new examples and Korean translations: Lingonberry contributors, CC BY 4.0. Exact sources and changes: '+sourcePath+'.\n\n'+pack.license.notice;
  }
  return {core,pairs,source};
 }

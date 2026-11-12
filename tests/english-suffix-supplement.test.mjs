@@ -8,15 +8,15 @@ const json=async path=>JSON.parse(await readFile(new URL('../'+path,import.meta.
 
 test('suffix supplement preserves all existing senses and restores independently checked related words in both explanations',async()=>{
  const [core,before,source]=await Promise.all([
-  json('language-packages/en-core-7.0.4.json'),json('language-packages/en-core-7.0.3.json'),
-  json('language-packages/sources/exercises/english-suffix-supplement-7.0.4.json'),
+  json('language-packages/en-core-7.0.5.json'),json('language-packages/en-core-7.0.3.json'),
+  json('language-packages/sources/exercises/english-suffix-supplement-7.0.5.json'),
  ]);
  assert.equal(core.entries.length,40713);assert.deepEqual(core.entries.slice(0,before.entries.length),before.entries);
  for(const key of ['families','exercises','retiredEntries','reviewInvalidations','practiceData'])assert.deepEqual(core[key],before[key]);
  const updated=new Set(source.morphemeUpdates.map(row=>row.morpheme.id));
  assert.deepEqual(core.morphemes.filter(row=>!updated.has(row.id)),before.morphemes.filter(row=>!updated.has(row.id)));
  for(const locale of ['en','ko']){
-  const pair=await json(`language-packages/en-${locale}-7.0.4.json`),previous=await json(`language-packages/en-${locale}-7.0.3.json`);
+  const pair=await json(`language-packages/en-${locale}-7.0.5.json`),previous=await json(`language-packages/en-${locale}-7.0.3.json`);
   assert.deepEqual(pair.entries.slice(0,previous.entries.length),previous.entries);
   const study=assembleStudy(core,pair),words=studyWords(study),model=createMorphemeModel(study.morphemes,words);
   assert.equal(model.total,1503);assert.equal(source.morphemeUpdates.length,14);

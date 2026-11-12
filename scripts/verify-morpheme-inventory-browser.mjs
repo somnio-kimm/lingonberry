@@ -51,7 +51,7 @@ try{
   assert.ok(addresses.length>=2);await page.locator('#root-search').fill('address');
   for(const entry of addresses){const row=page.locator(`[data-root-entry="${entry.id}"]`).first();await row.waitFor();assert.ok((await row.innerText()).includes(entry.meaning));assert.ok((await row.innerText()).includes(entry.level));await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),entry.meaning);await page.keyboard.press('Escape');}
   assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
-  const supplement=await page.evaluate(()=>fetch('/language-packages/sources/exercises/english-suffix-supplement-7.0.4.json').then(r=>r.json()));
+  const supplement=await page.evaluate(()=>fetch('/language-packages/sources/exercises/english-suffix-supplement-7.0.5.json').then(r=>r.json()));
   for(const {morpheme} of supplement.morphemeUpdates){
    await page.locator('#root-search').fill(morpheme.form);
    await page.locator(`[data-morpheme="${morpheme.id}"]`).waitFor();
