@@ -525,6 +525,10 @@ export const EXERCISE_INSTRUCTIONS = [
     "ko": "빈칸에 들어갈 표현을 순서대로 선택하세요."
   },
   {
+    "en": "Type the reading of the underlined word in hiragana.",
+    "ko": "밑줄 친 단어의 읽기를 히라가나로 입력하세요."
+  },
+  {
     "en": "Complete the expression.",
     "ko": "표현을 완성하세요."
   },
@@ -575,10 +579,6 @@ export const EXERCISE_INSTRUCTIONS = [
   {
     "en": "Type the expression that matches the meaning.",
     "ko": "뜻에 맞는 표현을 입력하세요."
-  },
-  {
-    "en": "Type the reading of the underlined word in hiragana.",
-    "ko": "밑줄 친 단어의 읽기를 히라가나로 입력하세요."
   },
   {
     "en": "Write the complete word using kanji and the correct okurigana.",
