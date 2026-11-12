@@ -31,3 +31,7 @@ The app fetches the hosted catalog with a timeout, preserves the last validated 
 The storage adapter implements async `get(id, version)` and atomic `put(package)`. IndexedDB stores independent immutable-version records so a newer core cannot overwrite a version another pair still needs. The old preview's package store is preserved during the database upgrade; its combined bilingual packages are not used as the new independent packs. Learner progress must remain separate and keyed by study language plus stable entry ID, not explanation language.
 
 Browser storage may be evicted by the OS. Native durable storage, explicit package removal and Wi-Fi-only automatic updates are separate work. Selection currently installs missing catalog versions; no background updating runs. Full dataset provenance still needs review: a license field alone does not establish distribution rights.
+
+### Reviewed Sentence Dictation Alternatives
+
+A primary or additional example may declare `listeningAlternatives`, a unique list of up to ten reviewed complete sentences. Dictation accepts the canonical example and these alternatives; it still speaks and displays the canonical example. Retain source and component credits for alternatives under the example provenance. Word/search aliases never generate sentence answers automatically, because joining or substituting a word can change sentence grammar. Saved Review questions retain their original accepted sentences.
