@@ -1,0 +1,48 @@
+{
+  "edition": "2.3.0",
+  "studyLanguage": "zh",
+  "explanationLanguages": [
+    "en",
+    "ko"
+  ],
+  "entryCountEach": 11003,
+  "uniqueAlignedEntryIds": true,
+  "primaryExamples": 11003,
+  "allCurrentMeaningsAndExampleTranslationsPresent": true,
+  "review": {
+    "method": "Conversation-agent editorial review with independent source, meaning, example and translation checks",
+    "nativeSpeakerCertification": false,
+    "sourceAndSenseReviewComplete": true
+  },
+  "runtimeProjection": {
+    "removedOnlyUnusedHistoryAndLocalFileMetadata": true,
+    "activeLearnerStringsFormsQualificationsPreserved": true,
+    "sourceCreatorsLicencesAndArticleHistoryUrlsRetained": true,
+    "currentLicenceLinksAndPackageCreditsVerified": true
+  },
+  "validation": {
+    "schemaAndIntegrity": true,
+    "actualCurrentCode": "932995b0fb921a8337aa3689579b2ec2651a4ec9",
+    "browser": "Real isolated package installation, exact payload/hash checks, current and saved Review, EN/KO, phone/tablet/light/dark and offline reloads",
+    "browserProofSha256": "eefc1f77230e4221c0db8036a06f9196fd205bf7b188a5729dbb73838c8e868d",
+    "productionHeaderFollowupProofSha256": "c31e072f40257df26063e9800cfa4d1972b31e15375f3acca14a7edcc6df6929",
+    "nativeUpdate": "Separate in-place release step; not claimed by this data edition"
+  },
+  "payloads": [
+    {
+      "file": "language-packages/zh-core-2.3.0.json",
+      "bytes": 9988094,
+      "sha256": "b2de8067ecc057ba9db170e65c33f378057a5a00ff74075563619d3704ee8ef1"
+    },
+    {
+      "file": "language-packages/zh-en-2.3.0.json",
+      "bytes": 2522729,
+      "sha256": "1dbb64dd889ba302d76cf273349405118875c3bd3286b29a40289f1a014c3ff0"
+    },
+    {
+      "file": "language-packages/zh-ko-2.3.0.json",
+      "bytes": 2273557,
+      "sha256": "6eb7e37f47f18cdcab08ac390f94c64e6582abe0a4a6f46b29619a56495b07e0"
+    }
+  ]
+}

@@ -187,31 +187,31 @@
     "id": "zh-core",
     "kind": "study",
     "targetLanguage": "zh",
-    "version": "2.2.0",
-    "url": "/language-packages/zh-core-2.2.0.json",
-    "bytes": 13273577,
-    "sha256": "561fb11fc6abb055b0ec41703b18309a1b24684d0799c774237d8817fe813a48"
+    "version": "2.3.0",
+    "url": "/language-packages/zh-core-2.3.0.json",
+    "bytes": 9988094,
+    "sha256": "b2de8067ecc057ba9db170e65c33f378057a5a00ff74075563619d3704ee8ef1"
   },
   {
     "id": "zh-en",
     "kind": "explanation",
     "targetLanguage": "zh",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "explanationLanguage": "en",
-    "studyVersion": "2.2.0",
-    "url": "/language-packages/zh-en-2.2.0.json",
-    "bytes": 2659374,
-    "sha256": "5d5af013e5ffaa0f81a34a9c3dac2e5474ba24ccc1dc187959df3bc03d410d8b"
+    "studyVersion": "2.3.0",
+    "url": "/language-packages/zh-en-2.3.0.json",
+    "bytes": 2522729,
+    "sha256": "1dbb64dd889ba302d76cf273349405118875c3bd3286b29a40289f1a014c3ff0"
   },
   {
     "id": "zh-ko",
     "kind": "explanation",
     "targetLanguage": "zh",
-    "version": "2.2.0",
+    "version": "2.3.0",
     "explanationLanguage": "ko",
-    "studyVersion": "2.2.0",
-    "url": "/language-packages/zh-ko-2.2.0.json",
-    "bytes": 2710413,
-    "sha256": "e4f2fb43d60d4d2244d52d53f6bae4e9ddbb0ac5e9a11dda16f93b8c5decf55c"
+    "studyVersion": "2.3.0",
+    "url": "/language-packages/zh-ko-2.3.0.json",
+    "bytes": 2273557,
+    "sha256": "6eb7e37f47f18cdcab08ac390f94c64e6582abe0a4a6f46b29619a56495b07e0"
   }
 ]
