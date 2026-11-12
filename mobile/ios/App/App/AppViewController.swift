@@ -59,7 +59,8 @@ class AppViewController: CAPBridgeViewController {
                   const original=JSON.parse(localStorage.getItem('learn-language.preferences.v1')||'{}');
                   const {APP_VERSION}=await import('./js/shared/app-config.js');
                   const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js');
-                  const storage=createPackageStorage(),initial=installedPairs(await storage.list()),catalog=await fetch('./catalog.json').then(response=>response.json()),checks=[];
+                  const {isStudyLanguageAvailable}=await import('./js/shared/language-pairs.js');
+                  const storage=createPackageStorage(),initial=installedPairs(await storage.list()).filter(row=>isStudyLanguageAvailable(row.targetLanguage)),catalog=await fetch('./catalog.json').then(response=>response.json()),checks=[];
                   const settingsPage=async()=>{document.querySelector('[data-tab=settings]').click();await wait(()=>document.querySelector('#target')&&document.querySelector('main').dataset.viewState==='ready');};
                   const open=async(target,explanation)=>{await settingsPage();select('target',target);await wait(()=>document.querySelector(`#explanation option[value="${explanation}"]`));select('explanation',explanation);await wait(()=>document.querySelector('#package-status').dataset.state==='ready');};
                   try {
