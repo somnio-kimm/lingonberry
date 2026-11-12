@@ -1,4 +1,4 @@
-import {formAlternatives,finiteVerbAlternatives,perfectVerbAlternatives,deriveInfinitiveAlternatives,inflectReflexiveComplement} from './form-alternatives.js';
+import {formAlternatives,finiteVerbAlternatives,perfectVerbAlternatives,deriveInfinitiveAlternatives,inflectReflexiveComplements} from './form-alternatives.js';
 import {nounArticles} from './vocabulary-tests.js';
 import {PERSONS,getVerbPersons} from './verb-persons.js';
 export {PERSONS};
@@ -34,20 +34,20 @@ export function verbFormQuestions(words,allWords=words) {
   return VERB_FORMS.flatMap(tense=>getVerbPersons(word).flatMap(person=>{
   let answer,acceptedAnswers;
   if(['perfekt','plusquamperfekt','futur_ii'].includes(tense)){
-   const complements=perfect.map(row=>inflectReflexiveComplement(row.participle,person,word.reflexive_case));
-   if(complements.includes(null))return [];
+   const complements=perfect.map(row=>inflectReflexiveComplements(row.participle,person,word.reflexive_case));
+   if(complements.some(values=>!values.length))return [];
    const variants=perfect.map(({auxiliary},index)=>{
-    const participle=complements[index];
-    if(tense==='futur_ii')return [futureAuxiliary[person]+' '+participle+' '+auxiliary];
+    const participles=complements[index];
+    if(tense==='futur_ii')return participles.map(participle=>futureAuxiliary[person]+' '+participle+' '+auxiliary);
     const conjugated=auxiliaries.get(auxiliary)?.forms?.[tense==='plusquamperfekt'?'praeteritum':'praesens']?.[person];
-    return formAlternatives(conjugated).map(form=>form+' '+participle);
+    return formAlternatives(conjugated).flatMap(form=>participles.map(participle=>form+' '+participle));
    });
    if(variants.some(answers=>!answers.length))return [];
    acceptedAnswers=variants.flat();
   }else if(tense==='futur_i'){
-   const complements=infinitives.map(value=>inflectReflexiveComplement(value,person,word.reflexive_case));
-   if(complements.includes(null))return [];
-   acceptedAnswers=complements.map(value=>futureAuxiliary[person]+' '+value);
+   const complements=infinitives.map(value=>inflectReflexiveComplements(value,person,word.reflexive_case));
+   if(complements.some(values=>!values.length))return [];
+   acceptedAnswers=complements.flat().map(value=>futureAuxiliary[person]+' '+value);
   }
   else answer=word.forms[tense]?.[person];
   acceptedAnswers=[...new Set(acceptedAnswers||finiteVerbAlternatives(answer,word))];

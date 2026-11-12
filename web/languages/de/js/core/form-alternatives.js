@@ -32,6 +32,15 @@ export function inflectReflexiveComplement(value,person,grammaticalCase){
  const pronoun=reflexivePronouns[caseName]?.[person];
  return pronoun?value.replace(/^sich/u,pronoun):null;
 }
+/** All declared cases apply to the same leading subject-reflexive citation. */
+export function inflectReflexiveComplements(value,person,grammaticalCases){
+ if(value==='sich')return [];
+ if(!/^sich\s/u.test(value))return [value];
+ const cases=formAlternatives(grammaticalCases);
+ if(!cases.length)return [];
+ const variants=cases.map(grammaticalCase=>inflectReflexiveComplement(value,person,grammaticalCase));
+ return variants.includes(null)?[]:[...new Set(variants)];
+}
 export function deriveInfinitiveAlternatives(word,perfect=perfectVerbAlternatives(word.forms?.perfekt)){
  if(word.infinitive||/^sich\s/u.test(word.lemma))return formAlternatives(word.infinitive||word.lemma);
  if(perfect.some(row=>/^sich\s/u.test(row.participle))){
