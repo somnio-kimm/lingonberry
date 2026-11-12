@@ -3,6 +3,10 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {validatePackage,validateExplanation} from '../web/js/packages/schema.js';
+import {assembleStudy} from '../web/js/packages/study.js';
+import {studyWords} from '../web/js/presentation/study-profiles.js';
+import {prepareLanguageExercises} from '../web/js/shared/exercise-pools.js';
+import {renderExercisePrompt} from '../web/js/shared/exercise-view.js';
 const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
 const json=async path=>JSON.parse(await read(path));
 test('reviewed Japanese release preserves identities and complete bilingual primary examples',async()=>{
@@ -27,4 +31,17 @@ test('reviewed Japanese release preserves identities and complete bilingual prim
   }
  }
  assert.equal(report.review.nativeSpeakerCertification,false);
+});
+
+test('reviewed reading spans preserve their source sentence in both explanation packs without enabling ambiguous readings',async()=>{
+ const core=await json('language-packages/ja-core-5.0.0.json');
+ const source=core.exercises.find(row=>row.category==='reading'&&row.route==='vocabinput'&&row.readingFocus?.start>0);
+ assert.ok(source);assert.equal(source.prompt.slice(source.readingFocus.start,source.readingFocus.start+source.readingFocus.text.length),source.readingFocus.text);
+ for(const locale of ['en','ko']){
+  const study=assembleStudy(core,await json(`language-packages/ja-${locale}-5.0.0.json`)),words=studyWords(study),rows=prepareLanguageExercises(study,words),word=words.find(row=>row.id===source.entryId),question=rows.find(row=>row.id===source.id);
+  assert.ok(question);assert.equal(question.prompt,source.prompt);assert.deepEqual(question.readingFocus,source.readingFocus);assert.ok(question.context?.trim());
+  const html=renderExercisePrompt({...question,word},{uiLanguage:locale});
+  assert.ok(html.includes(`<span class="study-reading-target">${source.readingFocus.text}</span>`));
+  assert.equal(rows.some(row=>row.category==='reading'&&words.find(word=>word.id===row.entryId)?.lemma==='体中'),false);
+ }
 });
