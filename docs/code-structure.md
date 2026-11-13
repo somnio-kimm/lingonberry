@@ -58,3 +58,5 @@ Package database version3 stores small metadata rows beside immutable payloads. 
 Progress load failures keep Settings available for retry or another language, but erasure is bound to the selected hydrated runtime, never the fallback renderer. Unknown/unreadable legacy state cannot initialise an empty canonical profile; an existing canonical profile remains recoverable even if its old marker is damaged.
 
 `lexicon-review-view.js` owns Review markup, row actions, deletion confirmation and event cleanup. The presenter supplies filtered row models and keeps eligibility, historical-answer projection, filters and retest queues. Returning the view cleanup prevents stale handlers after navigation.
+
+Native DEBUG checks live in `NativePackageVerification.swift`; the app controller only manages WebView injection, readiness and completion. Release excludes the verification helper. See `native-verification.md` for the opt-in checks and migration evidence.
