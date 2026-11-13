@@ -97,8 +97,6 @@ export function createStore(storage) {
       const attempt={input,correct:result.correct,hinted:true,review:true,run:previous.run||1,at:Date.now()};
       u.answers[question.id]={...previous,input,...result,attempts:[...(previous.attempts||[]),attempt]};removeResolvedWrongs();save();
     },
-    stage(id, stage) { unit(id).stage = stage; state.lastUnit = id; save(); },
-    hint(id, question) { const u = unit(id); u.hints ||= {}; u.hints[question] = true; save(); },
     answer(id, question, input, result, { listening = false } = {}) {
       const u = unit(id), previous = u.answers[question.id];
       if (previous?.locked) return;
@@ -114,12 +112,5 @@ export function createStore(storage) {
       records[key] = reviewSchedule(records[key], result.correct, hinted || priorInRun.length > 0);
       state.lastUnit = id; save();
     },
-    retry(id, question) { const a = unit(id).answers[question]; if (a && !a.correct) { a.locked = false; a.input = ''; save(); } },
-    draft(id, kind, text) { unit(id).drafts[kind] = text.slice(0, 5000); save(); },
-    check(id, kind, i, value) { unit(id).checks[kind] ||= {}; unit(id).checks[kind][i] = value; save(); },
-    listened(id) { unit(id).listened = true; save(); },
-    transcript(id) { unit(id).transcriptShown = true; save(); },
-    recording(id, metadata) { unit(id).recording = metadata; save(); },
-    beginRun(id, questions, { listening = false } = {}) { const u = unit(id); if (listening) { u.listened = false; u.transcriptShown = false; } for (const q of questions) { const old = u.answers[q.id]; u.answers[q.id] = { attempts: old?.attempts || [], run: (old?.run || 1) + 1, input: '', locked: false }; if (u.hints) delete u.hints[q.id]; } save(); },
   };
 }

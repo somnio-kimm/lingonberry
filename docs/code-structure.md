@@ -60,3 +60,5 @@ Progress load failures keep Settings available for retry or another language, bu
 `lexicon-review-view.js` owns Review markup, row actions, deletion confirmation and event cleanup. The presenter supplies filtered row models and keeps eligibility, historical-answer projection, filters and retest queues. Returning the view cleanup prevents stale handlers after navigation.
 
 Native DEBUG checks live in `NativePackageVerification.swift`; the app controller only manages WebView injection, readiness and completion. Release excludes the verification helper. See `native-verification.md` for the opt-in checks and migration evidence.
+
+The German progress store retains historical course records and retest readers, but no longer exposes the unused course-only stage, draft, hint, check, listened, transcript, recording, beginRun and retry writers. Runtime call-site and dynamic-access audits found no consumers. This removes obsolete write paths, not learner data.
