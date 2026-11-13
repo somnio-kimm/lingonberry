@@ -162,7 +162,7 @@ try{
      const {createPresentation}=await import('/js/presentation/multilingual.js');
      const state=JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1')||'null')||
       {version:1,wordStatus:{},wrongs:{},preferences:{}};
-     state.wordStatus={[sample.id]:'learning'};state.preferences.studyLevel=sample.level;
+     state.version=1;state.wrongs||={};state.wordStatus={[sample.id]:'learning'};state.preferences.studyLevel=sample.level;
      localStorage.setItem('learn-language.en.lexicon.v1',JSON.stringify(state));
      const host=document.querySelector('main');let current='wordlist';
      const app=createPresentation({language:'en',navigate:next=>{current=next;refresh();},refresh,onPreferences(){}});
@@ -243,7 +243,7 @@ try{
     window.reviewedCleanup?.();window.reviewedApp?.stop();
     const {createPresentation}=await import('/js/presentation/multilingual.js');
     const state=JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1'));
-    state.wordStatus={[id]:'learning'};state.preferences.studyLevel=level;
+    state.version=1;state.wrongs||={};state.wordStatus={[id]:'learning'};state.preferences.studyLevel=level;
     localStorage.setItem('learn-language.en.lexicon.v1',JSON.stringify(state));
     const host=document.querySelector('main');let current='home';
     const app=createPresentation({language:'en',navigate:next=>{current=next;refresh();},refresh,onPreferences(){}});

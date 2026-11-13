@@ -95,10 +95,10 @@ try{
     }
     await tab(page,'wrong');assert.equal(await page.locator('[data-focus]').count(),0);
    }
-   const previous=await page.evaluate(()=>{const key='learn-language.en.lexicon.v1',saved=JSON.parse(localStorage.getItem(key));saved.preferences.studyLevel='6.5';localStorage.setItem(key,JSON.stringify(saved));return saved;});
+   const previous=await page.evaluate(async()=>{const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');const backend=createLexiconStorage(),saved=await backend.load('en');saved.preferences.studyLevel='6.5';const {wordStatus,wrongs,...base}=saved;await backend.apply('en',{base:{revision:1,value:base},statuses:{},wrongs:{}});return saved;});
    await page.reload();await ready(page);await tab(page,'home');assert.equal(await page.locator('[data-level="IELTS 4.0–6.5"]').getAttribute('aria-pressed'),'true');
    await page.locator('[data-level="IELTS 4.0–6.5"]').click();
-   const migrated=await page.evaluate(()=>JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1')));
+   const migrated=await page.evaluate(async()=>{const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');return createLexiconStorage().load('en');});
    assert.deepEqual(migrated.wrongs,previous.wrongs);assert.deepEqual(migrated.wordStatus,previous.wordStatus);assert.equal(migrated.preferences.studyLevel,'IELTS 4.0–6.5');
   }
   console.log('Verified '+language);checks.push(`${language}: independent ${Object.keys(pairs).join('/').toUpperCase()} explanation downloads, meanings, examples, keyboard inputs, retest, same-POS quiz, dictation, Cloze/Scramble, Review/retest and every target level`);
