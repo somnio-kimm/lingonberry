@@ -278,6 +278,7 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
  }
  function setStudy(value) {
   if (study===value) return;
+  engine.clearSentencePools();
   study=value;
   store.migrateEquivalentEntries(value?.retiredEntries);
   reviewContent=createReviewContentPolicy(value);
