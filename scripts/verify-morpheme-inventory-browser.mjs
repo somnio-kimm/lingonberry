@@ -49,7 +49,7 @@ try{
    return study.entries.filter(row=>row.word==='address').map(row=>({id:row.id,meaning:row.meaning,level:row.level}));
   },locale);
   assert.ok(addresses.length>=2);await page.locator('#root-search').fill('address');
-  for(const entry of addresses){const row=page.locator(`[data-root-entry="${entry.id}"]`).first();await row.waitFor();assert.ok((await row.innerText()).includes(entry.meaning));assert.ok((await row.innerText()).includes(entry.level));await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),entry.meaning);await page.keyboard.press('Escape');}
+  for(const entry of addresses){const row=page.locator(`[data-sense-ids~="${entry.id}"]`).first();await row.waitFor();assert.ok((await row.innerText()).includes(entry.meaning));assert.ok((await row.innerText()).includes(entry.level));await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.ok((await page.locator('.study-sheet-meaning').innerText()).includes(entry.meaning));await page.keyboard.press('Escape');}
   assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
   const supplement=await page.evaluate(()=>fetch('/language-packages/sources/exercises/english-suffix-supplement-7.0.5.json').then(r=>r.json()));
   for(const {morpheme} of supplement.morphemeUpdates){

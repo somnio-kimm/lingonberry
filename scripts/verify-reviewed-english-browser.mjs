@@ -172,30 +172,30 @@ try{
      window.reviewedRoute=next=>{current=next;refresh();};refresh();
     },{locale,theme,sample});
     await page.locator('#search-input').fill(sample.word);
-    const row=page.locator(`[data-word="${sample.id}"]`);await row.waitFor();
-    assert.equal(await row.locator('.wl-meaning').innerText(),sample.meanings[locale]);
+    const row=page.locator(`[data-sense-ids~="${sample.id}"]`);await row.waitFor();
+    assert.ok((await row.locator('.wl-meaning').innerText()).includes(sample.meanings[locale]));
     assert.equal(await row.locator('.wl-hsk').innerText(),sample.level);
     for(const peer of sample.peers.filter(row=>row.level!==sample.level))assert.equal(await page.locator(`[data-word="${peer.id}"]`).count(),0,'Search escaped the selected level');
     assert.ok((await page.locator('.wl-hsk').allTextContents()).every(level=>level===sample.level));
     await row.locator('.wl-main').click();const dialog=page.getByRole('dialog');await dialog.waitFor();
-    assert.equal(await dialog.locator('.study-sheet-meaning').innerText(),sample.meanings[locale]);
-    assert.equal(await dialog.locator('.example-sentence').innerText(),sample.text);
-    assert.equal(await dialog.locator('.study-example .muted').count(),locale==='ko'?1:0);
-    if(locale==='ko')assert.equal(await dialog.locator('.study-example .muted').innerText(),sample.translations.ko);
+    assert.ok((await dialog.locator('.study-sheet-meaning').innerText()).includes(sample.meanings[locale]));
+    assert.equal(await dialog.locator(`[data-sense-id="${sample.id}"] .example-sentence`).innerText(),sample.text);
+    assert.equal(await dialog.locator(`[data-sense-id="${sample.id}"] .muted`).count(),locale==='ko'?1:0);
+    if(locale==='ko')assert.equal(await dialog.locator(`[data-sense-id="${sample.id}"] .muted`).innerText(),sample.translations.ko);
     assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth+1));
     await dialog.locator('[data-close]').click();
 
     await page.evaluate(()=>window.reviewedRoute('flashcards'));
     await page.locator('.study-filter-panel summary').click();
     await page.locator('[data-f=learning]').click();
-    assert.equal(await page.locator('.flashcard').getAttribute('data-word-id'),sample.id);
+    assert.ok((await page.locator('.flashcard').getAttribute('data-sense-ids')).split(' ').includes(sample.id));
     assert.match(await page.locator('#flashcard-count').innerText(),/^1 /u);
     if(await page.locator('.flashcard-front').getAttribute('aria-hidden')==='false')await page.locator('[data-flip]').click();
-    assert.equal(await page.locator('.flashcard-back .fc-meaning').innerText(),sample.meanings[locale]);
+    assert.ok((await page.locator('.flashcard-back').innerText()).includes(sample.meanings[locale]));
     assert.equal(await page.locator('.flashcard-back .wl-hsk').innerText(),sample.level);
-    assert.equal(await page.locator('.flashcard-back .example-sentence').innerText(),sample.text);
-    assert.equal(await page.locator('.flashcard-back .example-translation').count(),locale==='ko'?1:0);
-    if(locale==='ko')assert.equal(await page.locator('.flashcard-back .example-translation').innerText(),sample.translations.ko);
+    assert.equal(await page.locator(`.flashcard-back [data-sense-id="${sample.id}"] .example-sentence`).innerText(),sample.text);
+    assert.equal(await page.locator(`.flashcard-back [data-sense-id="${sample.id}"] .example-translation`).count(),locale==='ko'?1:0);
+    if(locale==='ko')assert.equal(await page.locator(`.flashcard-back [data-sense-id="${sample.id}"] .example-translation`).innerText(),sample.translations.ko);
 
     await page.evaluate(({locale,sample})=>{
      const words=window.reviewedStudies.get(locale).words.slice().sort((a,b)=>a.lemma.localeCompare(b.lemma,'en')).filter(row=>row.level===sample.level);
@@ -297,7 +297,7 @@ try{
    await page.reload();await ready(page);await tab(page,'home');
    const sample=selected[0];await page.locator(`[data-level="${sample.level}"]`).click();
    await page.locator('[data-route=wordlist]').click();await page.locator('#search-input').fill(sample.word);
-   assert.equal(await page.locator(`[data-word="${sample.id}"] .wl-meaning`).innerText(),sample.meanings[locale]);
+   assert.ok((await page.locator(`[data-sense-ids~="${sample.id}"] .wl-meaning`).innerText()).includes(sample.meanings[locale]));
    assert.equal(downloads.length,downloadCount,'Offline reload attempted another package download');
    checks.push({case:'real-shell-offline-reload',locale,id:sample.id});
   }finally{offline=false;await context.setOffline(false);}
