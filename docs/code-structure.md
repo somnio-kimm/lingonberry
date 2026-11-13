@@ -36,3 +36,7 @@ Dictation has one shared screen renderer (`listening-view.js`) and common displa
 `shared/word-status-migration.js` owns one-time manual marker transfer for explicitly equivalent content IDs. German applies it when setting installed Review content; the additional-language store reuses it through its existing migration method. Each store retains its own persistence and answer history.
 
 German `core/verb-persons.js` is the small data-policy boundary for person eligibility, shared by package validation and grammar-question generation/validation. No view owns or infers lexical restrictions. Run `verify-german-verb-persons-browser.mjs` for fresh and persisted questions across all seven tenses.
+
+## Sentence preparation cache
+
+The shared sentence engine keeps only the most recent immutable word set for each of Cloze and Scramble. It compares ordered word-object identities and explanation language, so fresh filtered arrays can reuse preparation while changed filters, order or installed content rebuild safely. Draws still create new choices, focus objects, token arrays and shuffled pools. The presentation clears both caches when replacing or releasing installed study content; caches never own progress or persisted question snapshots.

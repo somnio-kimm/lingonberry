@@ -1,7 +1,9 @@
 import {shuffle,vocabularyType} from './vocabulary.js';
 const letter=/[\p{L}\p{M}\p{N}]/u;
+const segmenters=new Map();
+function wordSegmenter(language){if(!segmenters.has(language))segmenters.set(language,new Intl.Segmenter(language,{granularity:'word'}));return segmenters.get(language);}
 export function sentenceTiles(text,language){
- const segmenter=new Intl.Segmenter(language,{granularity:'word'}),tiles=[];
+ const segmenter=wordSegmenter(language),tiles=[];
  for(const part of segmenter.segment(text.normalize('NFC'))){
   if(part.isWordLike)tiles.push(part.segment);
   else for(const character of part.segment)if(!/\s/u.test(character))tiles.push(character);
@@ -31,7 +33,7 @@ export function findSentenceFocus(word,example,language){
  if(explicit){const start=example.focus.start??text.indexOf(explicit);if(example.focus.start===undefined&&text.indexOf(explicit,start+explicit.length)>=0)return null;return Number.isInteger(start)&&start>=0&&text.slice(start,start+explicit.length)===explicit?{start,text:explicit}:null;}
  const lemma=word.lemma.normalize('NFC');
  if(['ja','zh'].includes(language)){
-  const matches=[...new Intl.Segmenter(language,{granularity:'word'}).segment(text)].filter(part=>part.segment===lemma);
+  const matches=[...wordSegmenter(language).segment(text)].filter(part=>part.segment===lemma);
   return matches.length===1?{start:matches[0].index,text:matches[0].segment}:null;
  }
  const folded=text.toLocaleLowerCase(language),wanted=lemma.toLocaleLowerCase(language),matches=[];
@@ -43,7 +45,8 @@ export function findSentenceFocus(word,example,language){
  const exact=matches.filter(match=>match.text===lemma);return exact.length===1?exact[0]:matches.length===1?matches[0]:null;
 }
 export function createSentenceEngine(profile){
- function createSentencePool(mode,words,locale='en'){
+ const prepared=new Map();
+ function prepareSentencePool(mode,words,locale='en'){
   if(!['cloze','scramble'].includes(mode))return {all:()=>[],choose:()=>undefined};
   const rows=words.flatMap(word=>(word.examples||[]).flatMap((example,i)=>{
    if(example.practiceEligible===false||!example.text?.trim()||!example.studyTranslation?.trim())return [];
@@ -60,7 +63,7 @@ export function createSentenceEngine(profile){
    if(mode==='scramble'){
     let pool=shuffle(row.tokens.map((_,index)=>index),random);
     if(pool.every((id,index)=>row.tokens[id]===row.tokens[index]))pool=[...pool.slice(1),pool[0]];
-    return {...row,pool};
+    return {...row,tokens:row.tokens.slice(),pool};
    }
    const literal=row.answer.toLocaleLowerCase(profile.id)===row.word.lemma.toLocaleLowerCase(profile.id);
    const group=literal?wordGroups.get(row.type):(groups.get(row.type)||[]);
@@ -69,16 +72,25 @@ export function createSentenceEngine(profile){
     const other=group[(start+i)%group.length],word=literal?other:other.word;let answer=literal?word.lemma:other.answer;if(literal&&row.focus.start===0&&row.answer[0]===row.answer[0].toLocaleUpperCase(profile.id))answer=answer[0].toLocaleUpperCase(profile.id)+answer.slice(1);if(word.id===row.word.id||word.lemma===row.word.lemma||seen.has(answer))continue;
     options.push({id:word.id,text:answer,meaning:word.studyMeaning,type:row.type});seen.add(answer);
    }
-   return options.length>1?{...row,options:shuffle(options,random)}:null;
+   return options.length>1?{...row,focus:{...row.focus},options:shuffle(options,random)}:null;
   }
   return {
    all(random=Math.random){return rows.map(row=>build(row,random)).filter(Boolean);},
    choose(previous,random=Math.random){const start=Math.floor(random()*rows.length);let old;for(let i=0;i<rows.length;i++){const row=rows[(start+i)%rows.length];if(row.id===previous){old=row;continue;}const question=build(row,random);if(question)return question;}return old?build(old,random)||undefined:undefined;},
   };
  }
+ /** Cache preparation only; each draw still builds fresh answers and shuffled choices. */
+ function createSentencePool(mode,words,locale='en'){
+  if(!['cloze','scramble'].includes(mode))return prepareSentencePool(mode,words,locale);
+  const cached=prepared.get(mode);
+  if(cached?.locale===locale&&cached.words.length===words.length&&words.every((word,index)=>word===cached.words[index]))return cached.pool;
+  const pool=prepareSentencePool(mode,words,locale);
+  // At most one word set per mode. Arrays and their source word objects are immutable.
+  prepared.set(mode,{locale,words:words.slice(),pool});return pool;
+ }
  function sentenceAnswerCorrect(question,answer){
   if(question.mode==='cloze')return answer===question.word.id;
   return Array.isArray(answer)&&answer.length===question.tokens.length&&new Set(answer).size===answer.length&&answer.every((id,index)=>Number.isInteger(id)&&id>=0&&id<question.tokens.length&&question.tokens[id]===question.tokens[index]);
  }
- return {createSentencePool,sentenceQuestions:(mode,words,locale)=>createSentencePool(mode,words,locale).all(),sentenceAnswerCorrect};
+ return {createSentencePool,clearSentencePools:()=>prepared.clear(),sentenceQuestions:(mode,words,locale)=>createSentencePool(mode,words,locale).all(),sentenceAnswerCorrect};
 }
