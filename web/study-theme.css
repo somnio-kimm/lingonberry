@@ -344,8 +344,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .study-reference-origin.root-origin{font-size:var(--study-meaning-size);font-weight:400;line-height:1.4;color:var(--secondary);margin:6px 0 0}
 .study-reference-meanings{font-size:var(--study-meaning-size);color:var(--secondary);padding-left:1.35em;line-height:1.65;margin:0 0 var(--study-section-gap)}
 .study-reference-words{margin:var(--study-section-gap) 0 0}
-.study-reference-words summary{font-size:var(--study-small-size);font-weight:600;color:var(--blue);margin-bottom:var(--study-control-gap);cursor:pointer}
-.study-reference-source{display:inline-block;font-size:var(--study-small-size);color:var(--blue);margin-top:var(--study-section-gap)}
+.study-reference-words-title{font-size:var(--study-small-size);font-weight:600;color:var(--blue);margin:0 0 var(--study-control-gap)}
 .study-reference-card [data-more-related]{margin-top:var(--study-control-gap)}
 
 .study-reference-list>.word-row-window{display:grid;gap:var(--study-section-gap)}

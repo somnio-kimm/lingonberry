@@ -1,23 +1,25 @@
 import assert from 'node:assert/strict';
 import {ENGLISH_LEVELS} from '../web/js/shared/english-levels.js';
 import {mkdir} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
-const server=await startServer();let browser;
+const server=await startServer(),directory=join(tmpdir(),'study-design-contract');let browser;
 const properties=['fontSize','fontWeight','color','backgroundColor','padding','borderRadius','borderWidth'];
 const measure=(page,selector,keys=properties)=>page.locator(selector).first().evaluate((node,keys)=>{const style=getComputedStyle(node);return Object.fromEntries(keys.map(key=>[key,style[key]]));},keys);
 try{
- browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));await page.goto(`http://127.0.0.1:${server.address().port}`);await page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready');await mkdir('/private/tmp/study-design-contract',{recursive:true});let checks=0;const selectorMeasurements=new Map();
- for(const language of ['de','zh'])for(const width of [390,1024])for(const theme of ['light','dark']){
+ browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));await page.goto(`http://127.0.0.1:${server.address().port}`);await page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready');await mkdir(directory,{recursive:true});let checks=0;const selectorMeasurements=new Map();
+ for(const language of ['de','zh'])for(const width of [390,1024])for(const theme of ['light','dark'])for(const locale of ['en','ko']){
   await page.setViewportSize({width,height:1000});
-  await page.evaluate(async({language,theme})=>{
+  await page.evaluate(async({language,theme,locale})=>{
    document.querySelector('#style-de').disabled=language!=='de';document.querySelector('#style-zh').disabled=language!=='zh';document.documentElement.dataset.theme=theme;
-   const [{renderMorphemeInventory},{renderStudyTabs}]=await Promise.all([import('/js/shared/morpheme-view.js'),import('/js/shared/study-components.js')]);
+   const [{renderMorphemeInventory},{renderStudyTabs},{lexiconText}]=await Promise.all([import('/js/shared/morpheme-view.js'),import('/js/shared/study-components.js'),import('/js/shared/lexicon-text.js')]);
    const host=document.querySelector('main');host.innerHTML='<div id="baseline"><section class="panel"><h2 class="section-title">Reference</h2></section><div class="card study-search"><input class="input-field" type="search" placeholder="Search"></div><div class="wl-list wl-list--wordlist"><div class="word-row-window"><div class="wl-row"><div class="wl-main"><span class="wl-headword">audience</span><div class="wl-meaning">listeners</div></div></div></div></div></div><div id="feature"></div>';
    const words=[{id:'audience',lemma:'audience',studyMeaning:'listeners'}],rows=[{id:'aud',form:'aud-',variants:[],kind:'root',origin:'Latin',examples:['audience','audition'],senses:[{id:'aud-0',meaning:'hear',tags:[]}],source:'https://en.wiktionary.org/wiki/aud-'}];
-   renderMorphemeInventory(document.querySelector('#feature'),{rows,words,state:{},t:x=>x,locale:'en',openWord(){},tags:()=>''});
+   renderMorphemeInventory(document.querySelector('#feature'),{rows,words,state:{},t:x=>lexiconText(locale,x),locale,openWord:id=>{window.openedRootWord=id;},tags:()=>''});
    host.insertAdjacentHTML('beforeend',renderStudyTabs({label:'Answer Mode',options:[{value:'choice',label:'Selection'},{value:'input',label:'Typing'}],selected:'choice',attribute:'data-answer-mode'}));
-  },{language,theme});
+  },{language,theme,locale});
   assert.deepEqual(await measure(page,'[data-morpheme]', ['padding','borderRadius','borderWidth','backgroundColor']),await measure(page,'#baseline .panel',['padding','borderRadius','borderWidth','backgroundColor']));
   assert.deepEqual(await measure(page,'.study-reference-heading',['fontSize','fontWeight','color']),await measure(page,'#baseline .wl-headword',['fontSize','fontWeight','color']));
   assert.deepEqual(await measure(page,'.study-reference-origin',['fontSize','color']),await measure(page,'#baseline .wl-meaning',['fontSize','color']));
@@ -26,14 +28,14 @@ try{
   assert.equal((await measure(page,'.study-reference-heading')).fontSize,'24px');assert.equal((await measure(page,'[data-morpheme]')).padding,'16px');
   assert.equal((await measure(page,'[data-related-list]',['gap'])).gap,'2px');assert.equal((await measure(page,'[data-root-list]>.word-row-window',['gap'])).gap,'16px');
   assert.equal(await page.locator('[data-related-list] .wl-row').count(),1);
-  assert.match(await page.locator('.study-reference-words summary').innerText(),/\(1\)/u);
+  assert.equal(await page.locator('#feature details,#feature summary,#feature a').count(),0);await page.locator('[data-related-list] .wl-row').waitFor({state:'visible'});assert.match(await page.locator('.study-reference-words-title').innerText(),locale==='ko'?/^관련 단어 \(1\)/u:/^Related Words \(1\)/u);await page.locator('[data-root-word=audience]').click();assert.equal(await page.evaluate(()=>window.openedRootWord),'audience');
   const buttons=await page.locator('[data-answer-mode]').evaluateAll(nodes=>nodes.map(n=>({width:n.getBoundingClientRect().width,height:n.getBoundingClientRect().height,font:getComputedStyle(n).fontSize})));assert.ok(Math.abs(buttons[0].width-buttons[1].width)<=.5);assert.ok(buttons.every(b=>b.height>=44&&b.font==='14px'),JSON.stringify({language,width,theme,buttons}));
-  const select=await measure(page,'.grammar-selectors select'),key=width+'-'+theme;if(language==='de'){selectorMeasurements.set(key,select);selectorMeasurements.set(key+'-search',await measure(page,'#feature .study-search .input-field'));}else{assert.deepEqual(select,selectorMeasurements.get(key),'Chinese selectors follow German geometry');assert.deepEqual(await measure(page,'#feature .study-search .input-field'),selectorMeasurements.get(key+'-search'),'Search fields match between languages');}assert.equal((await measure(page,'[data-morpheme]',['marginBottom'])).marginBottom,'0px');
-  assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.locator('main').screenshot({path:`/private/tmp/study-design-contract/${language}-${width}-${theme}.png`,fullPage:true});checks++;
+  const select=await measure(page,'.grammar-selectors select'),key=locale+'-'+width+'-'+theme;if(language==='de'){selectorMeasurements.set(key,select);selectorMeasurements.set(key+'-search',await measure(page,'#feature .study-search .input-field'));}else{assert.deepEqual(select,selectorMeasurements.get(key),'Chinese selectors follow German geometry');assert.deepEqual(await measure(page,'#feature .study-search .input-field'),selectorMeasurements.get(key+'-search'),'Search fields match between languages');}assert.equal((await measure(page,'[data-morpheme]',['marginBottom'])).marginBottom,'0px');
+  assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}.png`),fullPage:true});checks++;
  }
- for(const [width,theme,locale] of [[390,'dark','ko'],[1024,'light','en']]){
+ for(const [width,theme,locale] of [[390,'dark','ko'],[1024,'light','en']])for(const legacy of [false,true]){
   await page.setViewportSize({width,height:1000});
-  await page.evaluate(async({theme,locale,level})=>{
+  await page.evaluate(async({theme,locale,level,legacy})=>{
    const {createPresentation}=await import('/js/presentation/multilingual.js');
    document.querySelector('#style-de').disabled=false;document.querySelector('#style-zh').disabled=true;
    document.documentElement.dataset.theme=theme;
@@ -46,20 +48,20 @@ try{
     targetLanguage:'en',explanationLanguage:locale,
     entries:[{id:'audience',word:'audience',partOfSpeech:'noun',level,meaning:locale==='ko'?'청중':'listeners'},
      {id:'audition',word:'audition',partOfSpeech:'noun',level,meaning:locale==='ko'?'오디션':'trial performance'}],
-    families:[{id:'aud',root:'aud-',origin:'la',meaning:locale==='ko'?'듣다':'hear',members:[{entryId:'audience'},{entryId:'audition'}]}],
-    morphemes:[{id:'aud',form:'aud-',variants:[],kind:'root',origin:'Latin',examples:['audience','audition','audial'],
+    families:[{id:'aud',root:'aud-',origin:'la',meaning:locale==='ko'?'듣다':'hear',members:[{entryId:'audience',word:'audience',references:['https://en.wiktionary.org/wiki/audience']},{entryId:'audition',word:'audition'}]}],
+    morphemes:legacy?[]:[{id:'aud',form:'aud-',variants:[],kind:'root',origin:'Latin',examples:['audience','audition','audial'],
      senses:[{meaning:locale==='ko'?'듣다':'hear'}],source:'https://en.wiktionary.org/wiki/aud-'}],
    });
    refresh();
-  },{theme,locale,level:ENGLISH_LEVELS[0]});
+  },{theme,locale,legacy,level:ENGLISH_LEVELS[0]});
   const search=page.locator('#root-search');
   await search.fill('audial');
   assert.equal(await page.locator('[data-morpheme]').count(),0);
   await search.fill('aud');
   assert.equal(await page.locator('[data-practice-family]').count(),0);
   assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
-  await page.locator('main').screenshot({path:`/private/tmp/study-design-contract/root-reference-${width}-${theme}.png`});
-  assert.equal(await search.inputValue(),'aud');
+  await page.locator('main').screenshot({path:join(directory,`root-reference-${legacy?'legacy':'current'}-${width}-${theme}.png`)});
+  assert.equal(await search.inputValue(),'aud');assert.equal(await page.locator('[data-root-list] details,[data-root-list] summary,[data-root-list] a').count(),0);assert.equal(await page.locator('[data-root-entry]').count(),2);await page.locator('[data-root-entry=audience]').waitFor({state:'visible'});await page.locator('[data-root-entry=audience] .wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='ko'?'청중':'listeners');await page.locator('[data-close]').click();
  }
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts and two reference-only Root Families scenarios.`);
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts and four current/legacy Root Families scenarios: directly visible words, dictionary opening and no source links.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
