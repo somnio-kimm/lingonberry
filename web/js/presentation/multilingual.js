@@ -34,10 +34,10 @@ import {DeviceSpeech} from '../shared/device-speech.js';
 import {createLexiconStore} from '../shared/lexicon-store.js';
 import {lexiconText} from '../shared/lexicon-text.js';
 import {createLexiconQuestions} from '../shared/lexicon-questions.js';
-import {studyProfiles,studyWords,matchesStudyLevel,displayStudyWord,studySpokenWord} from './study-profiles.js';
+import {studyProfiles,studyWords,matchesStudyLevel,displayStudyWord,studySpokenWord,normaliseStudyPartOfSpeech} from './study-profiles.js';
 const commonModes={wordlist:['Word List','📖','blue'],flashcards:['Flashcards','🗂️','purple'],cloze:['Cloze','📝','green'],scramble:['Sentence Scramble','🧩','orange'],vocabinput:['Word Input','✍️','blue'],vocabmeaning:['Meaning Quiz','🎯','purple'],listening:['Dictation','🎧','teal']};
 
-const typeName=word=>{const type=word.pos==='functional'?word.subtype:word.pos;return type?type[0].toUpperCase()+type.slice(1):'Expression';};
+const typeName=word=>{const type=word.pos==='functional'?word.subtype:normaliseStudyPartOfSpeech(word.pos);return type?type[0].toUpperCase()+type.slice(1):'Expression';};
 export function createPresentation({language,navigate,refresh,onPreferences,progressStorage}){
  const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families','🌱','green']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
@@ -227,7 +227,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  }
  function drawReview(host){
   const f=state('wrong'),all=Object.values(store.state.wrongs).filter(row=>isCurrentQuestion(row.question));
-  const wordFor=row=>byId.get(row.question.word.id)||row.question.word;
+  const wordFor=row=>{const word=byId.get(row.question.word.id)||row.question.word;return normaliseStudyPartOfSpeech(word.pos)===word.pos?word:{...word,pos:normaliseStudyPartOfSpeech(word.pos)};};
   const questionType=q=>q.mode==='cloze'?'cloze':q.exercise&&q.category?q.category:q.mode;
   const matches=(row,filters)=>{
    const word=wordFor(row);
