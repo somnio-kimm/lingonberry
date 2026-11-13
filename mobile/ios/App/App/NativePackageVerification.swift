@@ -78,7 +78,24 @@ enum NativePackageVerification {
           const check={id:before.id,from:before.version,to:pair.version,studyVersion:core.version,updated:before.version!==pair.version};
           if(before.targetLanguage==='en'){
             const meanings=new Map(pair.entries.map(row=>[row.id,row]));
-            check.words=core.entries.length;check.examples=core.entries.filter(row=>row.example?.text?.trim()).length;
+            const {ENGLISH_LEVELS}=await import('./js/shared/english-levels.js');
+              await open('en',before.explanationLanguage);document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-level]'));
+              const savedLevel=document.querySelector('[data-level][aria-pressed=true]')?.dataset.level;check.groupedHeadwords=[];
+              try{
+                for(const level of [ENGLISH_LEVELS[1],ENGLISH_LEVELS[2]]){
+                  document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-level]'));[...document.querySelectorAll('[data-level]')].find(node=>node.dataset.level===level).click();
+                  document.querySelector('[data-route=wordlist]').click();await wait(()=>document.querySelector('#search-input'));
+                  const search=document.querySelector('#search-input');search.value='appeal';search.dispatchEvent(new Event('input',{bubbles:true}));
+                  const expected=core.entries.filter(row=>row.word==='appeal'&&row.level===level),rows=[...document.querySelectorAll('#wordlist-results [data-word]')].filter(row=>row.querySelector('.lexicon-word')?.textContent==='appeal');
+                  if(rows.length!==1||Number(rows[0].dataset.senseCount)!==expected.length)throw new Error('English headwords are not grouped within level');
+                  if(document.querySelector('[data-tag="plural noun"],[data-tag="proper noun"]'))throw new Error('Noun categories were not simplified');
+                  rows[0].querySelector('.wl-main').click();await wait(()=>document.querySelector('[role=dialog]'));
+                  if(document.querySelectorAll('.study-example[data-sense-id]').length!==expected.length)throw new Error('Grouped word examples are missing');
+                  for(const sense of expected){const node=[...document.querySelectorAll('.study-example[data-sense-id]')].find(node=>node.dataset.senseId===sense.id);if(node?.querySelector('.example-sentence')?.textContent!==sense.example.text)throw new Error('An example belongs to the wrong sense');}
+                  document.querySelector('[data-close]').click();check.groupedHeadwords.push({word:'appeal',level,senses:expected.length});
+                }
+              }finally{document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-level]'));[...document.querySelectorAll('[data-level]')].find(node=>node.dataset.level===savedLevel)?.click();}
+              check.words=core.entries.length;check.examples=core.entries.filter(row=>row.example?.text?.trim()).length;
             check.translations=core.entries.filter(row=>meanings.get(row.id)?.meaning?.trim()&&meanings.get(row.id)?.exampleTranslation?.trim()).length;
             check.reviewSnapshot=core.contentReview?.effectiveReviewSha256;check.perSenseLevels=core.contentReview?.perSenseLevels===true;
             check.rootGroups=core.morphemes?.length||0;

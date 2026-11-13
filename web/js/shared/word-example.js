@@ -9,3 +9,6 @@ export function selectWordExample(word,language){
  const rank=example=>(findSentenceFocus(word,example,language)?2:0)+(example.studyTranslation?.trim()?1:0);
  return display(candidates.reduce((best,example)=>!best||rank(example)>rank(best)?example:best,undefined));
 }
+
+/** Keep every grouped meaning attached to its own display example. */
+export function selectSenseExamples(word,language){return (word.senses||[word]).map(sense=>({word:sense,example:selectWordExample(sense,language)}));}

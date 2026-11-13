@@ -403,3 +403,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .review-answer-details .reading-segments{justify-content:flex-start;gap:6px;margin:12px 0 0;font-size:16px;line-height:1.6}
 .review-answer-details .reading-segment{padding:6px 8px}
 .review-answer-details .reading-segment rt{font-size:11px}
+
+/* Each grouped dictionary meaning keeps its own example inside the standard card. */
+.study-sense-label{font-size:var(--study-meaning-size);line-height:1.4;color:var(--secondary);margin:12px 0 6px}
+.fc-example-block>.study-sense-label{margin-top:0}
