@@ -7,10 +7,11 @@ export function createLexiconStorage(indexedDB=globalThis.indexedDB,name='learn-
  });
  const transact=(mode,action)=>database.runTransaction(['profiles','statuses','wrongs'],mode,action);
  return {
-  initialise:(language,legacy)=>transact('readwrite',tx=>{
+  initialise:(language,legacy,{allowImport=true}={})=>transact('readwrite',tx=>{
    const profiles=tx.objectStore('profiles'),request=profiles.get(language);
    request.onsuccess=()=>{
     if(request.result)return;
+    if(!allowImport){tx.abort();return;}
     const {wordStatus,wrongs,...base}=legacy;profiles.put({language,state:base});
     for(const [id,value]of Object.entries(wordStatus||{}))tx.objectStore('statuses').put({language,id,value});
     for(const [id,value]of Object.entries(wrongs||{}))tx.objectStore('wrongs').put({language,id,value});

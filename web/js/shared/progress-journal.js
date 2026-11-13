@@ -18,10 +18,10 @@ export function createProgressJournal({storage,key,language,backend}){
  }
  function checkpoint(value){try{storage.setItem(journalKey,JSON.stringify(value));storageWarning=false;}catch{storageWarning=true;}}
  function marker(preferences){try{storage.setItem(key,JSON.stringify({version:2,storage:'indexeddb',preferences}));}catch{storageWarning=true;}}
- async function load(legacy){
+ async function load(legacy,{allowImport=true}={}){
   if(loaded)return backend.load(language);
   if(!loading)loading=(async()=>{
-   readJournal();await backend.initialise(language,legacy);
+   readJournal();await backend.initialise(language,legacy,{allowImport});
    if(hasChanges(pending))await backend.apply(language,pending);
    const state=await backend.load(language);if(state?.version!==1||!object(state.preferences)||!object(state.wordStatus)||!object(state.wrongs))throw new Error('Saved progress format is not supported.');loaded=true;backendWarning=false;
    pending=empty(pending.sequence);checkpoint(pending);marker(state.preferences);return state;

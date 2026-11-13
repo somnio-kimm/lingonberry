@@ -5,7 +5,7 @@ import {migrateEquivalentWordStatuses} from './word-status-migration.js';
 /** Small language-neutral progress store for the additional vocabulary presentations. */
 export function createLexiconStore(storage,profile,{progressStorage}={}){
  const key=`learn-language.${profile.id}.lexicon.v1`;
- let saved;try{saved=JSON.parse(storage.getItem(key));}catch{}
+ let saved,rawLegacy,legacyReadFailed=false;try{rawLegacy=storage.getItem(key);if(rawLegacy!=null&&rawLegacy!=='')saved=JSON.parse(rawLegacy);}catch{legacyReadFailed=true;}
  const fresh=()=>({version:1,wordStatus:{},wrongs:{},contentMigrations:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:false,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true,clozeShowReading:true,scrambleShowReading:true}});
  const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
  function restore(value){
@@ -16,6 +16,7 @@ export function createLexiconStore(storage,profile,{progressStorage}={}){
   return next;
  }
  const validSaved=saved?.version===1&&object(saved.wordStatus)&&object(saved.wrongs)&&object(saved.preferences),previousLevel=validSaved?{...fresh().preferences,...saved.preferences}.studyLevel:profile.levels[0];
+ const allowImport=!!(!legacyReadFailed&&(rawLegacy==null||rawLegacy===''||saved===null||validSaved));
  let state=restore(saved),warning=false,hydrated=!progressStorage,loading;
  const journal=progressStorage?createProgressJournal({storage,key,language:profile.id,backend:progressStorage}):null;
  const base=()=>{const {wordStatus,wrongs,...value}=state;return value;};
@@ -24,7 +25,7 @@ export function createLexiconStore(storage,profile,{progressStorage}={}){
  const requireReady=()=>{if(!hydrated)throw new Error('Study progress is still loading.');};
  function ready(){
   if(hydrated)return Promise.resolve();
-  if(!loading)loading=journal.load(state).then(value=>{const previous=value.preferences?.studyLevel;state=restore(value);hydrated=true;if(previous!==state.preferences.studyLevel)persist({base:base()});}).catch(error=>{loading=undefined;throw error;});
+  if(!loading)loading=journal.load(state,{allowImport}).then(value=>{const previous=value.preferences?.studyLevel;state=restore(value);hydrated=true;if(previous!==state.preferences.studyLevel)persist({base:base()});}).catch(error=>{loading=undefined;throw error;});
   return loading;
  }
  if(!journal&&previousLevel!==state.preferences.studyLevel)save();

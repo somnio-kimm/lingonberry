@@ -6,7 +6,7 @@ function storage(){const data=new Map(),writes=[];return {data,writes,getItem:ke
 function backend(){
  const states=new Map();let failure=false,hook,operations=0;
  return {states,get operations(){return operations;},fail:value=>{failure=value;},onApply:fn=>{hook=fn;},
-  async initialise(language,legacy){if(failure)throw new Error('Unavailable');if(!states.has(language))states.set(language,structuredClone(legacy));},
+  async initialise(language,legacy,{allowImport=true}={}){if(failure)throw new Error('Unavailable');if(!states.has(language)){if(!allowImport)throw new Error('Unreadable legacy progress');states.set(language,structuredClone(legacy));}},
   async load(language){if(failure)throw new Error('Unavailable');return structuredClone(states.get(language));},
   async apply(language,patch){operations++;if(failure)throw new Error('Unavailable');if(hook)await hook();let value=states.get(language);if(patch.resetRevision)value={...patch.base.value,wordStatus:{},wrongs:{}};else if(patch.base)value={...patch.base.value,wordStatus:value.wordStatus,wrongs:value.wrongs};
    for(const [key,target]of [['statuses','wordStatus'],['wrongs','wrongs']])for(const [id,change]of Object.entries(patch[key])){if(change.value===null)delete value[target][id];else value[target][id]=structuredClone(change.value);}states.set(language,value);
@@ -52,4 +52,12 @@ test('fresh synchronous state is read-only until an actual progress change',()=>
 test('an unsupported backend state cannot silently become empty progress',async()=>{
  const disk=storage(),db=backend(),legacy=createLexiconStore(disk,studyProfiles.en);legacy.record(q,'bad',false);const raw=disk.getItem('learn-language.en.lexicon.v1');db.states.set('en',{...structuredClone(legacy.state),version:99});
  const store=createLexiconStore(disk,studyProfiles.en,{progressStorage:db});await assert.rejects(store.ready(),/not supported/);assert.equal(db.states.get('en').version,99);assert.equal(disk.getItem('learn-language.en.lexicon.v1'),raw);
+});
+test('unreadable first-import legacy data is retained rather than replaced by an empty profile',async()=>{
+ for(const raw of ['{broken','{"version":1,"wrongs":{"old":{"input":"wrong"}}}','{"version":99,"wrongs":{}}','{"version":2,"storage":"indexeddb","preferences":{}}']){
+  const disk=storage(),db=backend();disk.setItem('learn-language.en.lexicon.v1',raw);const store=createLexiconStore(disk,studyProfiles.en,{progressStorage:db});await assert.rejects(store.ready());assert.equal(disk.getItem('learn-language.en.lexicon.v1'),raw);assert.equal(db.states.size,0);
+ }
+});
+test('an existing canonical profile recovers even when its old marker is unreadable',async()=>{
+ const disk=storage(),db=backend(),old=createLexiconStore(disk,studyProfiles.en,{progressStorage:db});await old.ready();old.setWordStatus('write','mastered');await old.flush();disk.setItem('learn-language.en.lexicon.v1','{broken');const store=createLexiconStore(disk,studyProfiles.en,{progressStorage:db});await store.ready();assert.equal(store.wordStatus('write'),'mastered');assert.equal(JSON.parse(disk.getItem('learn-language.en.lexicon.v1')).version,2);
 });

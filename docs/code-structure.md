@@ -54,3 +54,5 @@ Package database version3 stores small metadata rows beside immutable payloads. 
 `lexicon-wordlist-view.js` owns Word List markup, delegated row/speaker keyboard actions, search-field events and pager cleanup. The presentation still owns query/filter state and supplies dictionary/reading projection callbacks. Only results are rerendered while typing, keeping the search input and device-keyboard focus stable.
 
 `lexicon-flashcard-view.js` owns the two card faces, controls and event cleanup. Card order, index and flip state remain in the presentation. The derived order is reconciled when the eligible set grows or shrinks, including status changes made from another section.
+
+Progress load failures keep Settings available for retry or another language, but erasure is bound to the selected hydrated runtime, never the fallback renderer. Unknown/unreadable legacy state cannot initialise an empty canonical profile; an existing canonical profile remains recoverable even if its old marker is damaged.
