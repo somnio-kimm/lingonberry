@@ -57,7 +57,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const fold=value=>{const s=String(value||'').normalize('NFKC').toLocaleLowerCase(language);return ['en','fr','es'].includes(language)?s.normalize('NFD').replace(/\p{M}/gu,''):s;};
  function resetQuestion(){if(question)previousQuestionId=question.id;question=undefined;feedback=undefined;input='';chosenTokens=[];}
  function heading(word){if(language==='ja')return `<span class="lexicon-word" lang="ja">${renderJapaneseRuby(displayStudyWord(word),word.pronunciation)}</span>`;return `<span class="lexicon-word" lang="${language}">${word.pronunciation&&word.pronunciation!==word.lemma?`<ruby>${e(displayStudyWord(word))}<rt>${e(word.pronunciation)}</rt></ruby>`:e(displayStudyWord(word))}</span>`;}
- const groupedRoute=route=>language==='en'&&['wordlist','flashcards'].includes(route);
+ const isGroupedRoute=route=>language==='en'&&['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
  const levelLabel=level=>language==='ja'&&profile.levels.includes(level)?profile.exam+' '+level:level;
  function tags(word){return `<span class="wl-tag wl-hsk">${e(levelLabel(language==='en'?assignEnglishLevel(word):word.level))}</span>${[...new Set(readWordSenses(word).map(typeName))].map(type=>`<span class="wl-tag wl-pos">${e(t(type))}</span>`).join('')}`;}
@@ -79,7 +79,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function pool(route){
   const f=state(route),query=fold(f.query);
   const candidates=words.filter(word=>matchesStudyLevel(word,store.state.preferences.studyLevel,profile)&&(f.pos==='all'||word.pos===f.pos));
-  const list=(groupedRoute(route)?headwords.group(candidates):candidates).filter(word=>(f.status==='all'||readStatus(word)===f.status)&&(!query||word.search.includes(query)));
+  const list=(isGroupedRoute(route)?headwords.group(candidates):candidates).filter(word=>(f.status==='all'||readStatus(word)===f.status)&&(!query||word.search.includes(query)));
   if(query){const rank=word=>word.searchLemma===query?0:word.searchAliases.includes(query)?1:word.searchLemma.startsWith(query)?2:3;list.sort((a,b)=>rank(a)-rank(b));}
   return list;
  }
@@ -121,7 +121,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   if(!parts.includes(f.pos))parts.push(f.pos);
   const label=value=>t(value==='all'?'All':value==='functional'?'Expression':value[0].toUpperCase()+value.slice(1));
   const statusCounts={all:0,new:0,learning:0,mastered:0},posCounts=new Map([['all',0]]);
-  const cards=groupedRoute(route)?headwords.group(levelWords):levelWords;
+  const cards=isGroupedRoute(route)?headwords.group(levelWords):levelWords;
   for(const word of cards){
    const senses=readWordSenses(word),selected=senses.filter(sense=>f.pos==='all'||sense.pos===f.pos);
    if(selected.length){const status=readStatus({senses:selected});statusCounts.all++;statusCounts[status]++;}
