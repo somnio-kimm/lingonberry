@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD846BB4CF324E46A3DB7291 /* NativePackageVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823C4B541394F27AE00F139 /* NativePackageVerification.swift */; };
 		ECB799032D8F4763891A3423 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EF0CA190044A5E80827747 /* SceneDelegate.swift */; };
 		10DEBCCAE779473990AB0A8E /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CE67CF7BA9464A89BF8FEA /* AppViewController.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2823C4B541394F27AE00F139 /* NativePackageVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativePackageVerification.swift; sourceTree = "<group>"; };
 		D5EF0CA190044A5E80827747 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		25CE67CF7BA9464A89BF8FEA /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				D5EF0CA190044A5E80827747 /* SceneDelegate.swift */,
 				25CE67CF7BA9464A89BF8FEA /* AppViewController.swift */,
+				2823C4B541394F27AE00F139 /* NativePackageVerification.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -164,6 +167,7 @@
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				ECB799032D8F4763891A3423 /* SceneDelegate.swift in Sources */,
 				10DEBCCAE779473990AB0A8E /* AppViewController.swift in Sources */,
+				BD846BB4CF324E46A3DB7291 /* NativePackageVerification.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
