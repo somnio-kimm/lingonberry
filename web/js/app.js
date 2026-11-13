@@ -58,11 +58,12 @@ async function draw(){
  if(route==='settings'){
   let closeLicence=()=>{};const pairs=usablePairs(),targets=[...new Set(pairs.map(item=>item.targetLanguage))];
   const dispose=renderSettings(main,{values:adapter.settings.values(),labels:label(),haptic:adapter.settings.haptic,reportContext:adapter.settings.reportContext,
+   canReset:targets.includes(target)&&presentations.has(target)&&!progressFailed&&phase!=='loading',
    selection:{target,explanation,targets:targets.map(id=>({id,name:languageName(id,true)})),explanations:pairs.filter(item=>item.targetLanguage===target).map(item=>({id:item.explanationLanguage,name:languageName(item.explanationLanguage,true)})),message:selectionMessage?label().chooseExplanation:''},
    onSelect:async(key,value)=>{if(key==='target'){target=value;const pairs=usablePairs().filter(item=>item.targetLanguage===target);if(!pairs.some(item=>item.explanationLanguage===explanation))explanation=pairs.length===1?pairs[0].explanationLanguage:'';}else explanation=value;selectionMessage='';await resolveSelection();},
    onChange:(key,value)=>{adapter.settings.change(key,value);preferences(adapter.preferences());draw();},
    onPackages:()=>{packageTarget='';packageMessage='';navigate('packages');},onLicence:()=>{closeLicence();closeLicence=openLicenceSheet({labels:label(),licenses:current?.licenses});},
-   onReset:async()=>{const warning=await adapter.settings.reset();adapter.setStudy(current);return warning;},
+   onReset:async()=>{const selectedTarget=target,selected=presentations.get(selectedTarget);if(!selected||!usablePairs().some(row=>row.targetLanguage===selectedTarget)||progressFailed||phase==='loading')throw new Error(label().resetFailed);const warning=await selected.settings.reset();selected.setStudy(current?.targetLanguage===selectedTarget?current:null);return warning;},
   });cleanup=()=>{closeLicence();dispose();};
  }else if(route==='packages')renderPackageLibrary(main,{languages:languageLibrary(catalog,records).filter(item=>isStudyLanguageAvailable(item.target)&&presentationDefinitions[item.target]),target:packageTarget,labels:label(),languageName,
   onOpen:id=>{packageTarget=id;packageMessage='';draw();},onDownload:downloadExplanation,onRemove:removeLanguage,onCancel:()=>packageController?.abort(),busy:!!packageController,progress:packageProgress,message:packageMessage});
