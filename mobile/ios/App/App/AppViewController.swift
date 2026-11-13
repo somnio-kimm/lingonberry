@@ -98,6 +98,25 @@ class AppViewController: CAPBridgeViewController {
                             document.querySelector('[data-close]').click();await wait(()=>!document.querySelector('[role=dialog]'));check.newVerbs.push(spelling);
                           }
                           search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));check.rootReferenceOnly=true;
+                          const [{assembleStudy},{studyWords,studyProfiles},{createLexiconQuestions},{chooseCombinedCloze},{renderLexiconSentence}]=await Promise.all([import('./js/packages/study.js'),import('./js/presentation/study-profiles.js'),import('./js/shared/lexicon-questions.js'),import('./js/shared/combined-cloze.js'),import('./js/shared/lexicon-sentence-view.js')]);
+                          const clozeStudy=assembleStudy(core,pair),clozeWords=studyWords(clozeStudy),cases=[clozeStudy.exercises.find(row=>row.id==='en-ex-collocations-homework'),clozeStudy.exercises.find(row=>row.route==='vocabinput'&&row.gapFill?.answers.length===2)];check.clozeChecks=[];
+                          for(const row of cases){
+                            if(!row)throw new Error('A Cloze verification source is missing');
+                            const question=chooseCombinedCloze({engine:createLexiconQuestions(studyProfiles.en),words:clozeWords,exercises:[row],locale:pair.explanationLanguage,answerMode:'input',random:()=>0});if(!question)throw new Error('Translated Cloze source is not eligible');
+                            const host=document.createElement('div');host.className='lexicon-view';host.setAttribute('aria-hidden','true');host.style.cssText='position:absolute;left:-10000px;top:0;width:300px';document.body.append(host);
+                            try{
+                              renderLexiconSentence(host,{question,chosenTokens:[],showTranslation:true,t:key=>key},{language:'en',uiLanguage:pair.explanationLanguage,submit(){}});
+                              const hint=host.querySelector('.sentence-translation')?.textContent,expected=pair.explanationLanguage==='en'?question.word.studyMeaning:question.context;
+                              if(!expected||hint!==expected||pair.explanationLanguage==='ko'&&hint===question.word.studyMeaning)throw new Error('Cloze hint is not the requested meaning or sentence translation');
+                              const metrics=[...host.querySelectorAll('[data-phrase-gap]')].map(input=>{
+                                const field=input.closest('.phrase-gap-field'),marker=document.createElement('span');marker.style.cssText='display:inline-block;width:0;height:0;padding:0;margin:0;vertical-align:baseline';input.before(marker);
+                                const rect=input.getBoundingClientRect(),style=getComputedStyle(input),font=parseFloat(style.fontSize),offset=rect.bottom-parseFloat(style.borderBottomWidth)-marker.getBoundingClientRect().top;
+                                if(!field||field.getBoundingClientRect().height<44||rect.height>font*1.3||offset<0||offset>8)throw new Error('Cloze underline or tap geometry differs');
+                                return {font,inputHeight:rect.height,tapHeight:field.getBoundingClientRect().height,underlineOffset:offset};
+                              });
+                              if(metrics.length!==question.gapFill.answers.length)throw new Error('Cloze blank count differs');check.clozeChecks.push({id:row.id,hint,metrics});
+                            }finally{host.remove();}
+                          }
                         }
                       }
                       if(before.targetLanguage==='ja'&&['en','ko'].includes(before.explanationLanguage)){
