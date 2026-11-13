@@ -17,6 +17,7 @@ const words=[
 const gaps=['vocabinput','vocabmeaning'].map(route=>({
  id:'write-down-'+route,entryId:'write',category:'phrasal',route,prompt:'Please ___ it ___.',
  answer:'write … down',gapFill:{parts:['Please ',' it ','.'],answers:['write','down']},
+ context:'그것을 적어 주세요.',
  ...(route==='vocabmeaning'?{options:['write … down','cross … out']}:{}),
 }));
 
