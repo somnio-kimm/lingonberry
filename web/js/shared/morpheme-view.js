@@ -36,13 +36,13 @@ export function renderMorphemeInventory(host,{
  function renderRelatedWords(row) {
   if (!row.examples.length) return '';
   const page = model.relatedWords(row.id,0,MORPHEME_PAGING.initialWords);
-  return `<details class="morpheme-words study-reference-words" open>
-   <summary>${e(morphemeRelatedLabel(locale,row.examples.length))}</summary>
+  return `<div class="morpheme-words study-reference-words">
+   <h3 class="study-reference-words-title">${e(morphemeRelatedLabel(locale,row.examples.length))}</h3>
    <div class="wl-list wl-list--wordlist">
     <div data-related-list class="word-row-window">${page.words.map(renderRelatedWord).join('')}</div>
    </div>
    ${page.hasMore?`<button class="btn-small text-button" data-more-related="${e(row.id)}" data-shown="${page.next}">${e(t('Show More Words'))}</button>`:''}
-  </details>`;
+  </div>`;
  }
 
  function renderCard(row) {
@@ -54,7 +54,6 @@ export function renderMorphemeInventory(host,{
    ${heading}
    <ol class="morpheme-meanings study-reference-meanings">${row.senses.map(sense=>`<li>${renderMorphemeSense(sense,locale)}</li>`).join('')}</ol>
    ${renderRelatedWords(row)}
-   <a class="morpheme-source study-reference-source" href="${e(row.source)}" target="_blank" rel="noopener noreferrer">${e(t('Source'))}</a>
   </section>`;
  }
 

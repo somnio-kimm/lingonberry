@@ -61,15 +61,16 @@ Reference-card structure:
 <section class="panel study-reference-card">
   <!-- renderStudyReferenceHeading(...) -->
   <ol class="study-reference-meanings"><li>Meaning</li></ol>
-  <details class="study-reference-words" open>
-    <summary>Related Words</summary>
+  <div class="study-reference-words">
+    <h3 class="study-reference-words-title">Related Words</h3>
     <div class="wl-list wl-list--wordlist">
       <div class="word-row-window"><!-- normal .wl-row elements --></div>
     </div>
-  </details>
-  <a class="study-reference-source">Source</a>
+  </div>
 </section>
 ```
+
+Root Families shows related words directly, without a disclosure control. Keep bounded Show More paging for long lists. Omit per-card/member source links from this study screen; retain the installed provenance and Settings Licence credits.
 
 For a paged collection of reference cards, give the pager host `.study-reference-list` and use `mountWordRows`. This removes per-card bottom margins inside the grid so spacing does not double.
 

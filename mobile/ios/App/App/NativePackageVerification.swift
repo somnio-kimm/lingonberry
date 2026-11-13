@@ -87,6 +87,8 @@ enum NativePackageVerification {
             if(core.contentReview.rootSuffixSupplement){
               await open('en',before.explanationLanguage);document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-route=roots]'));document.querySelector('[data-route=roots]').click();await wait(()=>document.querySelector('#root-search'));
               if(document.querySelector('[data-root-view],[data-answer-mode],[data-submit],.vocab-question'))throw new Error('Root Families still contains practice controls');
+              if(document.querySelector('[data-root-list] details,[data-root-list] summary,[data-root-list] a'))throw new Error('Root Families still contains a word disclosure or source link');
+              if(!document.querySelector('[data-root-entry]'))throw new Error('Root Families words are not visible');
               const search=document.querySelector('#root-search');check.suffixForms=[];check.newVerbs=[];
               for(const form of ['-ify','-ise','-ize','-tion','-sion','-ment']){
                 const row=core.morphemes.find(row=>row.form===form);if(!row)throw new Error('Restored suffix is missing: '+form);
