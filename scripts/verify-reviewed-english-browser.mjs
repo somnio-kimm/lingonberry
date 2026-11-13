@@ -265,8 +265,8 @@ try{
    await page.locator('[data-sentence-submit]').click();
    assert.equal(await page.locator('.cloze-question.correct').count(),1);
    assert.equal(await page.locator('.phrase-gap-sentence').innerText(),entry.example.text);
-   assert.equal(await page.locator('.sentence-translation').count(),locale==='ko'?1:0);
-   if(locale==='ko')assert.equal(await page.locator('.sentence-translation').innerText(),pairs.ko.exercises.find(row=>row.id===gap.id).context);
+   assert.equal(await page.locator('.sentence-translation').count(),1);
+   assert.equal(await page.locator('.sentence-translation').innerText(),locale==='ko'?pairs.ko.entries.find(row=>row.id===entry.id).exampleTranslation:pairs.en.entries.find(row=>row.id===entry.id).meaning);
    assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth+1));
    checks.push({case:'combined-cloze-structured-gaps',locale,id:gap.entryId,exerciseId:gap.id,independentInputs:gap.gapFill.answers.length});
    if(['tell off','hold accountable'].includes(entry.word)){

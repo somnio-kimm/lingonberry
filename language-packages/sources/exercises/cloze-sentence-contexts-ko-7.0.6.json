@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "version": "7.0.6",
+  "studyVersion": "7.0.5",
+  "license": "CC-BY-4.0",
+  "creator": "Lingonberry contributors",
+  "method": "Original Korean sentence translations authored in the current conversation; no external example bank or dictionary prose copied.",
+  "authorSha256": "ac0b3e9fbcf63b1a67eb821b31599a9323bef3753197f37fa22aac995d1ac9e3",
+  "independentReviewSha256": "5436e57e34aad56a34602ac947c35cc3e641e3ea165286ec05055c677cd2d3bc",
+  "nativeSpeakerCertification": false,
+  "core": {
+    "file": "language-packages/en-core-7.0.5.json",
+    "sha256": "2c1c9ce4ddb57ae1b8df4c41bd9b19e23e8863e9c7e7c98a3e40b0f4a3af32d0"
+  },
+  "baseline": {
+    "file": "language-packages/en-ko-7.0.5.json",
+    "sha256": "a4fb247af2276a6744a9ea9ffe80e82e7eec7d42ffeea27c5e9d1e1947f24487"
+  },
+  "entries": [
+    {
+      "exerciseId": "en-ex-collocations-homework",
+      "sentence": "I usually do my homework before dinner.",
+      "translation": "나는 보통 저녁을 먹기 전에 숙제를 한다."
+    },
+    {
+      "exerciseId": "en-ex-expand-collocations-003",
+      "sentence": "After getting up, I make my bed by straightening the sheets.",
+      "translation": "나는 일어난 뒤 시트를 반듯하게 펴서 침대를 정돈한다."
+    },
+    {
+      "exerciseId": "en-ex-expand-collocations-007",
+      "sentence": "Please bring the speech to a conclusion; we have only a minute left.",
+      "translation": "연설을 마무리해 주세요. 남은 시간은 1분뿐이에요."
+    },
+    {
+      "exerciseId": "en-ex-expand-collocations-012",
+      "sentence": "The team will carry out an analysis of the recorded interviews.",
+      "translation": "그 팀은 인터뷰 기록을 분석할 것이다."
+    },
+    {
+      "exerciseId": "en-ex-expand-phrasal-020",
+      "sentence": "Get up and leave your bed; it is time for breakfast.",
+      "translation": "일어나서 침대에서 나오세요. 아침 먹을 시간이에요."
+    },
+    {
+      "exerciseId": "en-ex-expand-phrasal-018",
+      "sentence": "It is morning. Get up and leave your bed; breakfast is ready.",
+      "translation": "아침이에요. 일어나서 침대에서 나오세요. 아침 식사가 준비됐어요."
+    }
+  ]
+}

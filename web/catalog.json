@@ -54,12 +54,12 @@
     "id": "en-ko",
     "kind": "explanation",
     "targetLanguage": "en",
-    "version": "7.0.5",
+    "version": "7.0.6",
     "explanationLanguage": "ko",
     "studyVersion": "7.0.5",
-    "url": "/language-packages/en-ko-7.0.5.json",
-    "bytes": 47932753,
-    "sha256": "a4fb247af2276a6744a9ea9ffe80e82e7eec7d42ffeea27c5e9d1e1947f24487"
+    "url": "/language-packages/en-ko-7.0.6.json",
+    "bytes": 47939825,
+    "sha256": "09e1fd505df6f6a55ca458989232614a2b1e3ec384848d8fd7d255d0d4238c7d"
   },
   {
     "id": "en-core",

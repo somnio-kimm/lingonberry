@@ -1,0 +1,96 @@
+{
+  "edition": "7.0.6",
+  "studyLanguage": "en",
+  "explanationLanguages": [
+    "en",
+    "ko"
+  ],
+  "entryCountEach": 40713,
+  "uniqueAlignedEntryIds": true,
+  "primaryExamples": 40713,
+  "allCurrentMeaningsAndExampleTranslationsPresent": true,
+  "review": {
+    "method": "Unchanged English7.0.3 reviewed baseline plus independently reviewed source-backed suffix and three-sense supplement",
+    "nativeSpeakerCertification": false,
+    "sourceAndSenseReviewComplete": true,
+    "perSenseLevels": true,
+    "effectiveReviewSha256": "937cc3382cd5c43cbaf49fe4a4ef22d9b423a122bdd51bc4379b6b9660bfbfc5",
+    "rootSuffixSupplement": {
+      "sha256": "bad310c47ded82ced53ef359d3f2ff8baf0302a261c5f5a1563797769ba5da60",
+      "scope": "Independent review of exact14 source-affix entries, all345 related-word references and three new word senses. Original source senses/origins/homonyms/licences compared; source snapshot row hashes/templates and dictionaryPOS independently checked. Manual semantic and bilingual review supplement mechanical checks. Not a full dictionary re-review or native-speaker certification.",
+      "mechanicalPassed": true,
+      "manualLexicalVerdict": "passed",
+      "nativeSpeakerCertification": false,
+      "newEntryReview": [
+        {
+          "word": "beautify",
+          "meaningEnglish": "passed: common selected sense, other rare senses intentionally excluded",
+          "meaningKorean": "passed: concise natural lexical translation",
+          "example": "passed: natural original contextual use of selected sense",
+          "exampleKorean": "passed: natural and faithful complete translation",
+          "pronunciation": "passed: accepted British pronunciation",
+          "level": "passed: editorial difficulty band, no official IELTS-list claim"
+        },
+        {
+          "word": "nationalise",
+          "meaningEnglish": "passed: common selected sense, other rare senses intentionally excluded",
+          "meaningKorean": "passed: concise natural lexical translation",
+          "example": "passed: natural original contextual use of selected sense",
+          "exampleKorean": "passed: natural and faithful complete translation",
+          "pronunciation": "passed: accepted British pronunciation",
+          "level": "passed: editorial difficulty band, no official IELTS-list claim"
+        },
+        {
+          "word": "privatise",
+          "meaningEnglish": "passed: common selected sense, other rare senses intentionally excluded",
+          "meaningKorean": "passed: concise natural lexical translation",
+          "example": "passed: natural original contextual use of selected sense",
+          "exampleKorean": "passed: natural and faithful complete translation",
+          "pronunciation": "passed: accepted British pronunciation",
+          "level": "passed: editorial difficulty band, no official IELTS-list claim"
+        }
+      ]
+    },
+    "clozeSentenceContexts": {
+      "existingExactExampleTranslationsReused": 187,
+      "newOriginalKoreanContexts": 6,
+      "independentReviewSha256": "5436e57e34aad56a34602ac947c35cc3e641e3ea165286ec05055c677cd2d3bc",
+      "wordMeaningsAndExamplesUnchanged": true
+    }
+  },
+  "runtimeProjection": {
+    "removedOnlyUnusedHistoryAndLocalFileMetadata": true,
+    "activeLearnerStringsFormsQualificationsPreserved": true,
+    "sourceCreatorsLicencesAndArticleHistoryUrlsRetained": true
+  },
+  "validation": {
+    "schemaAndIntegrity": true,
+    "unchangedBaselineEntries": 40710,
+    "independentlyReviewedNewEntries": 3,
+    "correctedClozeContexts": 193
+  },
+  "payloads": [
+    {
+      "file": "language-packages/en-core-7.0.5.json",
+      "bytes": 63456168,
+      "sha256": "2c1c9ce4ddb57ae1b8df4c41bd9b19e23e8863e9c7e7c98a3e40b0f4a3af32d0"
+    },
+    {
+      "file": "language-packages/en-en-7.0.5.json",
+      "bytes": 46544583,
+      "sha256": "28bc646a4991e8f31c3eefb9df8269e4523463be2150b36278a4fc33ab80f9a5"
+    },
+    {
+      "file": "language-packages/en-ko-7.0.6.json",
+      "bytes": 47939825,
+      "sha256": "09e1fd505df6f6a55ca458989232614a2b1e3ec384848d8fd7d255d0d4238c7d"
+    }
+  ],
+  "baselineEdition": "7.0.3",
+  "studyEdition": "7.0.5",
+  "packageVersions": {
+    "en-core": "7.0.5",
+    "en-en": "7.0.5",
+    "en-ko": "7.0.6"
+  }
+}

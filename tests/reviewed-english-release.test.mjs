@@ -9,11 +9,11 @@ import {assembleStudy} from '../web/js/packages/study.js';
 const read=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
 const json=async path=>JSON.parse(await read(path));
 test('reviewed English release has identical bilingual sense coverage and exact immutable descriptors',async()=>{
- const [catalog,report]=await Promise.all([json('language-packages/catalog.json'),json('language-packages/sources/reviews/en-7.0.5.json')]);
+ const [catalog,report]=await Promise.all([json('language-packages/catalog.json'),json('language-packages/sources/reviews/en-7.0.6.json')]);
  validateCatalog(catalog);assert.equal(report.review.sourceAndSenseReviewComplete,true);assert.equal(report.uniqueAlignedEntryIds,true);
  const packs=[];
  for(const id of ['en-core','en-en','en-ko']){
-  const descriptor=catalog.find(row=>row.id===id&&row.version===report.edition);assert.ok(descriptor);
+  const descriptor=catalog.find(row=>row.id===id&&row.version===(report.packageVersions?.[id]||report.edition));assert.ok(descriptor);
   const raw=await read(descriptor.url.slice(1));assert.equal(Buffer.byteLength(raw),descriptor.bytes);
   assert.equal(createHash('sha256').update(raw).digest('hex'),descriptor.sha256);packs.push(JSON.parse(raw));
  }
