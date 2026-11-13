@@ -1,3 +1,4 @@
+import {renderLexiconFlashcards} from '../shared/lexicon-flashcard-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
 import {APP_SETTING_KEYS} from '../shared/app-settings.js';
 import {renderListeningView} from '../shared/listening-view.js';
@@ -153,13 +154,12 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    bindFilters:host=>bindControls(host,route),setQuery:value=>{f.query=value;},openWord:id=>{const word=byId.get(id);if(word)details(word);},speakWord:id=>{const word=byId.get(id);if(word)speak(studySpokenWord(word,profile),host);},
   });
  }
- function drawCards(host,route){const list=pool(route),allowed=new Set(list.map(word=>word.id));if(!order.length||order.some(id=>!allowed.has(id)))order=list.map(word=>word.id);card%=Math.max(1,order.length);const word=byId.get(order[card]),example=word&&selectWordExample(word,language);
-  const face=back=>`<div class="flashcard-${back?'back':'front'}" aria-hidden="${back!==flipped}" ${back!==flipped?'inert':''}><div class="fc-card-head"><button class="quiz-status-btn fc-card-status" data-card-status>${t('Study Status')}</button><div class="fc-head-center"><div class="fc-head-badges ${back?'':'fc-head-badges--mirror'}">${tags(word)}</div></div><button class="detail-sheet-icon detail-sheet-speak" data-card-speak aria-label="${t('Speak Word')}">🔊</button></div><div class="fc-card-main ${back?'fc-card-main-back':''}" role="button" tabindex="${back===flipped?'0':'-1'}" ${back===flipped?'data-flip':''} aria-label="${t('Tap to Flip')}"><div class="fc-core ${back?'':'fc-core--front'}"><div class="flashcard-word">${heading(word)}</div><div class="fc-meaning">${e(word.studyMeaning)}</div></div>${back&&example?`<div class="fc-examples"><div class="fc-example-block"><div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,word):e(example.text)}</div>${example.studyTranslation?`<div class="example-translation">${e(example.studyTranslation)}</div>`:''}</div></div>`:''}</div></div>`;
-  host.innerHTML=`<div class="lexicon-view"><div class="fc-toolbar"><h2 class="section-title">${t('Flashcards')}</h2><div class="fc-tools"><button class="btn-small" data-shuffle>🔀 ${t('Shuffle')}</button><span id="flashcard-count">${order.length} ${t('Cards')}</span></div></div>${controls(route)}<div class="quiz-after-filter">${word?`<div class="flashcard-wrapper"><div class="flashcard ${flipped?'flipped':''}" data-word-id="${e(word.id)}">${face(false)}${face(true)}</div></div><div class="fc-navigation"><button class="fc-nav" data-prev-card aria-label="${t('Previous Word')}" ${order.length<=1?'disabled':''}>‹</button><button class="fc-nav" data-next-card aria-label="${t('Next Word')}" ${order.length<=1?'disabled':''}>›</button></div>`:`<section class="panel empty-wrong"><p>${t('No Matching Words')}</p></section>`}</div><p class="lexicon-audio-status muted" role="status" hidden></p></div>`;
-  bindControls(host,route);host.querySelector('[data-shuffle]').onclick=()=>{order=shuffle(order,Math.random);card=0;flipped=false;refresh();};if(!word)return;
-  const flip=()=>{flipped=!flipped;haptic();refresh();};host.querySelector('[data-flip]').onclick=flip;host.querySelector('[data-flip]').onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();flip();}};
-  const move=direction=>{card=(card+direction+order.length)%order.length;flipped=false;refresh();};host.querySelector('[data-prev-card]').onclick=()=>move(-1);host.querySelector('[data-next-card]').onclick=()=>move(1);
-  host.querySelectorAll('[data-card-status]').forEach(button=>button.onclick=()=>details(word));host.querySelectorAll('[data-card-speak]').forEach(button=>button.onclick=()=>speak(studySpokenWord(word,profile),host));
+ function drawCards(host,route){
+  const list=pool(route),allowed=new Set(list.map(word=>word.id));if(order.length!==list.length||order.some(id=>!allowed.has(id)))order=list.map(word=>word.id);card%=Math.max(1,order.length);
+  const word=byId.get(order[card]),example=word&&selectWordExample(word,language);
+  return renderLexiconFlashcards(host,{t,language,word,example,flipped,total:order.length,filters:controls(route),renderHeading:heading,renderTags:tags,renderExample:(example,word)=>language==='ja'?japaneseFurigana.renderSentence(example.text,word):e(example.text)},{
+   bindFilters:host=>bindControls(host,route),shuffle:()=>{order=shuffle(order,Math.random);card=0;flipped=false;refresh();},flip:()=>{flipped=!flipped;haptic();refresh();},move:direction=>{card=(card+direction+order.length)%order.length;flipped=false;refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),
+  });
  }
  function chooseQuestion(mode){
   const list=pool(mode);let selected;
@@ -303,7 +303,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
-  render(route,host){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')drawCards(host,route);else if(route==='wrong')drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
+  render(route,host){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
   stop(){void store.flush().catch(()=>{});listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
  };
 }
