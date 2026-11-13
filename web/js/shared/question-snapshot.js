@@ -4,6 +4,7 @@ const WORD_FIELDS = Object.freeze([
   'id', 'lemma', 'hanzi', 'aliases', 'cefr', 'hskLevel', 'pos', 'subtype', 'article', 'gender', 'accepted_articles', 'article_optional', 'number_restriction', 'verb_persons',
   'partOfSpeech', 'meaning_en', 'meaning_ko', 'meaningEn', 'meaningKo', 'syllables',
   'alternateSyllables', 'studyMeaning', 'studyExplanationLanguage',
+  'level', 'pronunciation', 'studyLanguage', 'listeningAliases', 'acceptedArticles', 'studyTier', 'tags',
 ]);
 
 export function snapshotQuestion(question) {

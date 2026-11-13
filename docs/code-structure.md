@@ -40,3 +40,9 @@ German `core/verb-persons.js` is the small data-policy boundary for person eligi
 ## Sentence preparation cache
 
 The shared sentence engine keeps only the most recent immutable word set for each of Cloze and Scramble. It compares ordered word-object identities and explanation language, so fresh filtered arrays can reuse preparation while changed filters, order or installed content rebuild safely. Draws still create new choices, focus objects, token arrays and shuffled pools. The presentation clears both caches when replacing or releasing installed study content; caches never own progress or persisted question snapshots.
+
+## Additional-language progress persistence
+
+The production shell injects `lexicon-storage.js` into the additional-language presentation and waits for its `ready()` barrier. IndexedDB keeps profile metadata, word markers and wrong-answer records separately. `progress-journal.js` durably records small pending operations in localStorage before asynchronous commits; revisions protect updates that arrive during a write. Startup replays unfinished operations before showing history. Legacy records are imported without rewriting their snapshots, then their old storage key becomes a small preference marker. New records use the shared compact question snapshot; selected examples, readings, sense IDs, levels and grading fields remain self-contained.
+
+The store owns in-memory state and mistake arithmetic; the journal owns recovery/queueing; the backend owns atomic IndexedDB operations. Correct answers that change no progress cause no write. Reset clears the profile markers and history atomically while retaining preferences. The synchronous injected-storage mode remains available for isolated tests and legacy fixtures, rather than introducing a second live production state owner.

@@ -3,6 +3,7 @@ import {APP_NAME} from './shared/app-config.js';
 import {allowsExplanation,isStudyLanguageAvailable} from './shared/language-pairs.js';
 import {createPackageManager} from './packages/manager.js';
 import {createPackageStorage} from './packages/storage.js';
+import {createLexiconStorage} from './shared/lexicon-storage.js';
 import {loadCatalog} from './packages/catalog.js';
 import {installedPairs,languageLibrary,openInstalledStudy} from './packages/library.js';
 import {interfaceText} from './shared/interface-text.js';
@@ -20,16 +21,24 @@ const sharedSettings=()=>({theme,uiLanguage:uiLanguage(),hapticEnabled,autoRemov
 const label=()=>interfaceText(uiLanguage());
 function languageName(id,bilingual=false){const locale=uiLanguage()==='en'?'en-GB':uiLanguage(),name=new Intl.DisplayNames([bilingual?'en-GB':locale],{type:'language'}).of(id);if(!bilingual)return name;const native=id==='fr'?'Français':new Intl.DisplayNames([id],{type:'language'}).of(id);return native===name?name:`${name} · ${native}`;}
 function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,explanation,...sharedSettings()}));}catch{}}
-const manager=createPackageManager({storage:createPackageStorage(),baseUrl:location.href}),presentations=new Map();
+const manager=createPackageManager({storage:createPackageStorage(),baseUrl:location.href}),progressStorage=createLexiconStorage(),presentations=new Map(),presentationLoads=new Map();
 let catalog=[],records=[],current=null,phase='idle',route='home',adapter,cleanup=()=>{},operation=0,drawToken=0;
-let packageTarget='',packageController=null,packageProgress=null,packageMessage='',selectionMessage='';
+let packageTarget='',packageController=null,packageProgress=null,packageMessage='',selectionMessage='',progressFailed=false;
 const usablePairs=()=>installedPairs(records).filter(item=>isStudyLanguageAvailable(item.targetLanguage)&&presentationDefinitions[item.targetLanguage]&&allowsExplanation(item.targetLanguage,item.explanationLanguage));
 function preferences(value){({theme,hapticEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
-async function presentation(id){if(!presentations.has(id)){const definition=presentationDefinitions[id];if(!definition||!isStudyLanguageAvailable(id))throw new Error('Unsupported study language.');const module=await definition.load();presentations.set(id,module.createPresentation({language:id,navigate,refresh:()=>draw(),onPreferences:preferences}));}return presentations.get(id);}
+async function presentation(id){
+ if(presentations.has(id))return presentations.get(id);
+ if(!presentationLoads.has(id))presentationLoads.set(id,(async()=>{
+  const definition=presentationDefinitions[id];if(!definition||!isStudyLanguageAvailable(id))throw new Error('Unsupported study language.');
+  const module=await definition.load(),runtime=module.createPresentation({language:id,navigate,refresh:()=>draw(),onPreferences:preferences,progressStorage});
+  await runtime.ready?.();presentations.set(id,runtime);return runtime;
+ })().finally(()=>presentationLoads.delete(id)));
+ return presentationLoads.get(id);
+}
 function navigate(next){if(next!=='packages'&&!adapter?.screens[next])return;if(!current&&!['home','wrong','settings','packages'].includes(next))return;route=next;main.scrollTop=0;draw();window.scrollTo(0,0);}
 function updateChrome(){
  const t=label();document.documentElement.lang=uiLanguage()==='en'?'en-GB':'ko';document.documentElement.dataset.theme=theme;
- $('status').textContent=t[phase]||'';$('package-status').dataset.state=phase;$('status').classList.toggle('error',['failed','catalogFailed'].includes(phase));
+ $('status').textContent=progressFailed?t.progressFailed:t[phase]||'';$('package-status').dataset.state=phase;$('status').classList.toggle('error',['failed','catalogFailed'].includes(phase));
  $('retry').textContent=t.retry;$('retry').hidden=phase!=='failed';$('package-status').hidden=route!=='settings'||!['failed','catalogFailed'].includes(phase);
  $('header-title').textContent=route==='packages'?t.downloadedPackages:adapter?.title(route)||APP_NAME;
  $('back-btn').setAttribute('aria-label',route==='packages'?t.settings:t.backToStudy);$('back-btn').hidden=['home','wrong','settings'].includes(route);
@@ -40,7 +49,7 @@ function updateChrome(){
 }
 async function draw(){
  const token=++drawToken;main.dataset.viewState='loading';cleanup();cleanup=()=>{};adapter?.stop();
- const next=await presentation(current?.targetLanguage||target||'de');if(token!==drawToken)return;
+ let next;try{next=await presentation(current?.targetLanguage||target||'de');}catch{if(token!==drawToken)return;progressFailed=true;phase='failed';current=null;route='settings';next=await presentation('de');}if(token!==drawToken)return;
  if(adapter&&adapter!==next)adapter.setStudy(null);
  adapter=next;adapter.setStudy(current?.targetLanguage===adapter.id?current:null);adapter.setPreferences(sharedSettings());
  for(const style of new Set(Object.values(presentationDefinitions).map(definition=>definition.style)))$(style).disabled=style!==presentationDefinitions[adapter.id].style;
@@ -61,7 +70,7 @@ async function draw(){
 }
 async function refreshInstalled(){records=await manager.listInstalled();const pairs=usablePairs();if(!pairs.some(item=>item.targetLanguage===target)){target='';explanation='';}else if(!pairs.some(item=>item.targetLanguage===target&&item.explanationLanguage===explanation))explanation='';}
 async function resolveSelection({render=true}={}){
- const token=++operation;current=null;phase='loading';updateChrome();save();
+ const token=++operation;progressFailed=false;current=null;phase='loading';updateChrome();save();
  try{const data=target&&explanation?await openInstalledStudy(manager,target,explanation):null;if(token!==operation)return;current=data;phase=current?'ready':'idle';}
  catch{if(token!==operation)return;phase='failed';}
  if(render)await draw();

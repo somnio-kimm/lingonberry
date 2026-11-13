@@ -35,10 +35,10 @@ import {studyProfiles,studyWords,matchesStudyLevel,displayStudyWord,studySpokenW
 const commonModes={wordlist:['Word List','📖','blue'],flashcards:['Flashcards','🗂️','purple'],cloze:['Cloze','📝','green'],scramble:['Sentence Scramble','🧩','orange'],vocabinput:['Word Input','✍️','blue'],vocabmeaning:['Meaning Quiz','🎯','purple'],listening:['Dictation','🎧','teal']};
 
 const typeName=word=>{const type=word.pos==='functional'?word.subtype:word.pos;return type?type[0].toUpperCase()+type.slice(1):'Expression';};
-export function createPresentation({language,navigate,refresh,onPreferences}){
+export function createPresentation({language,navigate,refresh,onPreferences,progressStorage}){
  const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families','🌱','green']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
- const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile),engine=createLexiconQuestions(profile);
+ const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile,{progressStorage}),engine=createLexiconQuestions(profile);
  let morphemeModel,typing,listeningCleanup,japaneseFurigana,sampleReadingChoice;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,card=0,flipped=false,order=[],chosenTokens=[],closeSheet=()=>{};
  const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
@@ -299,11 +299,11 @@ export function createPresentation({language,navigate,refresh,onPreferences}){
   order=[];
   resetQuestion();
  }
- return {id:language,screens,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();resetQuestion();return false;}},
+ return {id:language,screens,ready:store.ready,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();await store.flush();resetQuestion();return store.warning;}},
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
   render(route,host){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')drawCards(host,route);else if(route==='wrong')drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
-  stop(){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
+  stop(){void store.flush().catch(()=>{});listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
  };
 }
