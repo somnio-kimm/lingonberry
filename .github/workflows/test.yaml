@@ -24,6 +24,7 @@ jobs:
       - run: npm run verify:browser
       - run: node scripts/verify-language-availability-browser.mjs
       - run: node scripts/verify-progress-storage-browser.mjs
+      - run: node scripts/verify-package-metadata-browser.mjs
       - run: node scripts/verify-cloze-alignment-browser.mjs
       - run: node scripts/verify-merged-expressions-browser.mjs
       - run: node scripts/verify-baseline-review-policy-browser.mjs

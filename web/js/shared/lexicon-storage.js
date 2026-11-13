@@ -1,29 +1,13 @@
+import {createIndexedDatabase} from './indexed-database.js';
 /** Incremental progress persistence; package removal never touches this database. */
 export function createLexiconStorage(indexedDB=globalThis.indexedDB,name='learn-language.progress.v2'){
- let connection;
- function open(){
-  if(!connection)connection=new Promise((resolve,reject)=>{
-   const request=indexedDB.open(name,1);let abandoned=false;
-   request.onupgradeneeded=()=>{
-    const db=request.result;db.createObjectStore('profiles',{keyPath:'language'});
-    for(const key of ['statuses','wrongs'])db.createObjectStore(key,{keyPath:['language','id']}).createIndex('language','language');
-   };
-   request.onerror=()=>reject(request.error);
-   request.onblocked=()=>{abandoned=true;reject(new Error('Close other app windows and retry.'));};
-   request.onsuccess=()=>{const db=request.result;if(abandoned){db.close();return;}db.onversionchange=()=>{db.close();connection=undefined;};resolve(db);};
-  }).catch(error=>{connection=undefined;throw error;});
-  return connection;
- }
- async function transaction(mode,action){
-  const db=await open();return new Promise((resolve,reject)=>{
-   const tx=db.transaction(['profiles','statuses','wrongs'],mode);let result;
-   tx.oncomplete=()=>{try{resolve(typeof result==='function'?result():result?.result);}catch(error){reject(error);}};
-   tx.onabort=()=>reject(tx.error||new Error('Progress transaction aborted.'));tx.onerror=()=>reject(tx.error||new Error('Progress storage failed.'));
-   try{result=action(tx);}catch(error){tx.abort();reject(error);}
-  });
- }
+ const database=createIndexedDatabase(indexedDB,name,1,db=>{
+  db.createObjectStore('profiles',{keyPath:'language'});
+  for(const key of ['statuses','wrongs'])db.createObjectStore(key,{keyPath:['language','id']}).createIndex('language','language');
+ });
+ const transact=(mode,action)=>database.runTransaction(['profiles','statuses','wrongs'],mode,action);
  return {
-  initialise:(language,legacy)=>transaction('readwrite',tx=>{
+  initialise:(language,legacy)=>transact('readwrite',tx=>{
    const profiles=tx.objectStore('profiles'),request=profiles.get(language);
    request.onsuccess=()=>{
     if(request.result)return;
@@ -32,11 +16,11 @@ export function createLexiconStorage(indexedDB=globalThis.indexedDB,name='learn-
     for(const [id,value]of Object.entries(wrongs||{}))tx.objectStore('wrongs').put({language,id,value});
    };
   }),
-  load:language=>transaction('readonly',tx=>{
+  load:language=>transact('readonly',tx=>{
    const profile=tx.objectStore('profiles').get(language),statuses=tx.objectStore('statuses').index('language').getAll(language),wrongs=tx.objectStore('wrongs').index('language').getAll(language);
    return()=>{if(!profile.result)throw new Error('Progress is not initialised.');return {...profile.result.state,wordStatus:Object.fromEntries(statuses.result.map(row=>[row.id,row.value])),wrongs:Object.fromEntries(wrongs.result.map(row=>[row.id,row.value]))};};
   }),
-  apply:(language,patch)=>transaction('readwrite',tx=>{
+  apply:(language,patch)=>transact('readwrite',tx=>{
    const write=()=>{
     if(patch.base)tx.objectStore('profiles').put({language,state:patch.base.value});
     for(const key of ['statuses','wrongs'])for(const [id,change]of Object.entries(patch[key]||{})){
