@@ -62,3 +62,5 @@ Progress load failures keep Settings available for retry or another language, bu
 Native DEBUG checks live in `NativePackageVerification.swift`; the app controller only manages WebView injection, readiness and completion. Release excludes the verification helper. See `native-verification.md` for the opt-in checks and migration evidence.
 
 The German progress store retains historical course records and retest readers, but no longer exposes the unused course-only stage, draft, hint, check, listened, transcript, recording, beginRun and retry writers. Runtime call-site and dynamic-access audits found no consumers. This removes obsolete write paths, not learner data.
+
+The German sentence stylesheet keeps a single global tools/options/tiles block. Exact repeated selectors and declarations were removed only from the earlier copy; later cascade overrides and language-specific reading rules remain in place.
