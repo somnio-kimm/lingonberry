@@ -50,3 +50,5 @@ The store owns in-memory state and mistake arithmetic; the journal owns recovery
 ## Package metadata index
 
 Package database version3 stores small metadata rows beside immutable payloads. The version2 upgrade builds that index once in the upgrade transaction. Installation, replacement and removal update both stores in one transaction; a metadata failure rolls back the payload change as well. Listing installed languages reads only metadata. `shared/indexed-database.js` owns connection retries, blocked upgrades, version-change cleanup and committed result delivery for package and progress backends. Schema upgrades and language policies remain in their owning modules. Transaction callbacks enqueue requests synchronously; asynchronous work happens outside the transaction callback.
+
+`lexicon-wordlist-view.js` owns Word List markup, delegated row/speaker keyboard actions, search-field events and pager cleanup. The presentation still owns query/filter state and supplies dictionary/reading projection callbacks. Only results are rerendered while typing, keeping the search input and device-keyboard focus stable.
