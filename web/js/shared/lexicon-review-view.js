@@ -1,0 +1,15 @@
+import {escapeHtml as e} from './ui.js';
+import {renderStudyReviewFilters} from './study-components.js';
+
+/** The view owns interaction; eligibility, snapshot policy and queues stay outside it. */
+export function renderLexiconReview(host,{t,rows,total,groups,open},actions){
+ const renderRow=row=>`<section class="panel wrong-card wrong-entry" tabindex="0" role="button" data-review-id="${e(row.id)}" data-review-word="${e(row.wordId)}"><div class="wrong-card-heading"><div class="wrong-card-tags"><span class="badge wrong-mode">${e(row.mode)}</span><span class="badge wrong-pos">${e(row.pos)}</span><span class="badge wrong-level">${e(row.level)}</span></div><div class="wrong-card-actions"><span class="wrong-count">${t('Wrong Attempts')}: ${row.count}</span><button class="del-wrong" data-remove="${e(row.id)}" aria-label="${t('Remove')}">×</button></div></div><div class="wrong-word-block"><div class="wrong-main-word">${row.headingHtml}</div><p class="wrong-word-meaning" lang="${e(row.meaningLanguage)}">${e(row.meaning)}</p></div><div class="review-answer-details">${row.answerHtml}</div></section>`;
+ host.innerHTML=`<div class="lexicon-view"><div class="wrong-heading"><h2>${t('Review')} (${rows.length}${rows.length!==total?' / '+total:''})</h2>${total?`<button class="text-button danger wrong-clear" id="clear-wrong" data-clear>${t('Delete All')}</button>`:''}</div>${total?renderStudyReviewFilters({groups,open,title:t('Filters')}):''}${total?`<button class="primary wrong-retest" id="retest-filtered" data-retest ${rows.length?'':'disabled'}>${t('Retest')} (${rows.length})</button>`:''}<div class="wrong-results">${rows.length?rows.map(renderRow).join(''):`<section class="panel empty-wrong"><div aria-hidden="true">${total?'🔎':'🎉'}</div><h2>${t(total?'No Mistakes Match These Filters':'No Wrong Answers')}</h2><p>${t('Keep Practising to Build Your Review List')}</p></section>`}</div></div>`;
+ const fold=host.querySelector('.filter-fold');if(fold)fold.ontoggle=()=>actions.setOpen(fold.open);
+ host.querySelectorAll('[data-review-filter]').forEach(button=>button.onclick=()=>actions.setFilter(button.dataset.reviewFilter,button.dataset.value));
+ const clear=host.querySelector('[data-clear]'),retest=host.querySelector('[data-retest]');
+ const clearAll=()=>{if(confirm(t('Are you sure you want to delete?')))actions.clear();};clear?.addEventListener('click',clearAll);retest?.addEventListener('click',actions.retest);
+ host.querySelectorAll('[data-remove]').forEach(button=>button.onclick=event=>{event.stopPropagation();actions.remove(button.dataset.remove);});
+ host.querySelectorAll('[data-review-word]').forEach(row=>{row.onclick=event=>{if(!event.target.closest('button,a,input,select,summary'))actions.openWord(row.dataset.reviewWord);};row.onkeydown=event=>{if(event.target===row&&['Enter',' '].includes(event.key)){event.preventDefault();row.click();}};});
+ return()=>{if(fold)fold.ontoggle=null;clear?.removeEventListener('click',clearAll);retest?.removeEventListener('click',actions.retest);host.querySelectorAll('[data-review-filter],[data-remove],[data-review-word]').forEach(node=>{node.onclick=null;node.onkeydown=null;});};
+}

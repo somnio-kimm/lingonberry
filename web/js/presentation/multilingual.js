@@ -1,3 +1,4 @@
+import {renderLexiconReview} from '../shared/lexicon-review-view.js';
 import {renderLexiconFlashcards} from '../shared/lexicon-flashcard-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
 import {APP_SETTING_KEYS} from '../shared/app-settings.js';
@@ -8,7 +9,7 @@ import {joinGapAnswers} from '../shared/phrase-gaps.js';
 import {chooseCombinedCloze} from '../shared/combined-cloze.js';
 import {bindTypingAnswer,bindTypingAnswers} from '../shared/typing-answer.js';
 import {createMorphemeModel} from '../shared/morpheme-model.js';
-import {renderStudyFilters,renderStudyTabs,renderStudyReviewFilters,renderStudyReviewAnswer} from '../shared/study-components.js';
+import {renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
 import {renderMorphemeInventory} from '../shared/morpheme-view.js';
 import {collocationSearchTerms} from '../shared/collocations.js';
 import {renderCollocations,bindCollocationAudio,collocationPreview} from '../shared/collocation-view.js';
@@ -257,14 +258,12 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    const correct=['cloze','scramble','listensentence'].includes(q.mode)&&!duplicate?field('Correct Answer',e(q.answer),true):'';
    return prompt+correct+field('Wrong Answer',e(answer));
   };
-  host.innerHTML=`<div class="lexicon-view"><div class="wrong-heading"><h2>${t('Review')} (${rows.length}${rows.length!==all.length?' / '+all.length:''})</h2>${all.length?`<button class="text-button danger wrong-clear" id="clear-wrong" data-clear>${t('Delete All')}</button>`:''}</div>${all.length?renderStudyReviewFilters({groups,open:f.open,title:t('Filters')}):''}${all.length?`<button class="primary wrong-retest" id="retest-filtered" data-retest ${rows.length?'':'disabled'}>${t('Retest')} (${rows.length})</button>`:''}<div class="wrong-results">${rows.length?rows.map(row=>{const q=row.question,word=wordFor(row);return `<section class="panel wrong-card wrong-entry" tabindex="0" role="button" data-review-id="${e(row.id)}" data-review-word="${e(word.id)}"><div class="wrong-card-heading"><div class="wrong-card-tags"><span class="badge wrong-mode">${e(questionLabel(q))}</span><span class="badge wrong-pos">${e(t(typeName(word)))}</span><span class="badge wrong-level">${e(levelLabel(word.level))}</span></div><div class="wrong-card-actions"><span class="wrong-count">${t('Wrong Attempts')}: ${row.count}</span><button class="del-wrong" data-remove="${e(row.id)}" aria-label="${t('Remove')}">×</button></div></div><div class="wrong-word-block"><div class="wrong-main-word">${heading(word)}</div><p class="wrong-word-meaning" lang="${e(study.explanationLanguage)}">${e(word.studyMeaning)}</p></div><div class="review-answer-details">${answerDetails(row)}</div></section>`;}).join(''):`<section class="panel empty-wrong"><div aria-hidden="true">${all.length?'🔎':'🎉'}</div><h2>${t(all.length?'No Mistakes Match These Filters':'No Wrong Answers')}</h2><p>${t('Keep Practising to Build Your Review List')}</p></section>`}</div></div>`;
-  const fold=host.querySelector('.filter-fold');if(fold)fold.ontoggle=()=>{f.open=fold.open;};
-  host.querySelectorAll('[data-review-filter]').forEach(button=>button.onclick=()=>{const key=button.dataset.reviewFilter,value=button.dataset.value;if(key==='level')change('studyLevel',value);else f[key]=value;refresh();});
-  host.querySelector('[data-clear]')?.addEventListener('click',()=>{if(confirm(t('Are you sure you want to delete?'))){store.clearWrongs();refresh();}});
-  host.querySelectorAll('[data-remove]').forEach(button=>button.onclick=event=>{event.stopPropagation();store.removeWrong(button.dataset.remove);refresh();});
-  host.querySelectorAll('[data-review-word]').forEach(row=>{row.onclick=event=>{if(event.target.closest('button,a,input,select,summary'))return;const word=byId.get(row.dataset.reviewWord);if(word)details(word);};row.onkeydown=event=>{if(event.target===row&&['Enter',' '].includes(event.key)){event.preventDefault();row.click();}};});
-  host.querySelector('[data-retest]')?.addEventListener('click',()=>{reviewQueue=JSON.parse(JSON.stringify(rows));reviewResults={correct:0,wrong:0,skipped:0};resetQuestion();navigate('retest');});
+  const cards=rows.map(row=>{const word=wordFor(row);return {id:row.id,wordId:word.id,mode:questionLabel(row.question),pos:t(typeName(word)),level:levelLabel(word.level),count:row.count,headingHtml:heading(word),meaning:word.studyMeaning,meaningLanguage:word.studyExplanationLanguage||study?.explanationLanguage||row.question.locale||locale(),answerHtml:answerDetails(row)};});
+  return renderLexiconReview(host,{t,rows:cards,total:all.length,groups,open:f.open},{
+   setOpen:value=>{f.open=value;},setFilter:(key,value)=>{if(key==='level')change('studyLevel',value);else f[key]=value;refresh();},clear:()=>{store.clearWrongs();refresh();},remove:id=>{store.removeWrong(id);refresh();},openWord:id=>{const word=byId.get(id);if(word)details(word);},retest:()=>{reviewQueue=JSON.parse(JSON.stringify(rows));reviewResults={correct:0,wrong:0,skipped:0};resetQuestion();navigate('retest');},
+  });
  }
+
  function drawRoots(host){
   const f=state('roots');
   if(study.morphemes?.length)return renderMorphemeInventory(host,{model:morphemeModel,state:f,t,locale:locale(),openWord:id=>details(byId.get(id)),tags});
@@ -303,7 +302,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
-  render(route,host){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
+  render(route,host){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')return drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
   stop(){void store.flush().catch(()=>{});listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
  };
 }
