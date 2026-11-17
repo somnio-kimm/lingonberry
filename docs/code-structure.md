@@ -64,3 +64,5 @@ Native DEBUG checks live in `NativePackageVerification.swift`; the app controlle
 The German progress store retains historical course records and retest readers, but no longer exposes the unused course-only stage, draft, hint, check, listened, transcript, recording, beginRun and retry writers. Runtime call-site and dynamic-access audits found no consumers. This removes obsolete write paths, not learner data.
 
 The German sentence stylesheet keeps a single global tools/options/tiles block. Exact repeated selectors and declarations were removed only from the earlier copy; later cascade overrides and language-specific reading rules remain in place.
+
+`meaning-distractors.js` owns bounded random candidate sampling and visible-format balancing for the shared Meaning Quiz. Prepared rows retain exact definitions and spelling/meaning exclusion keys. Sampling visits independent positions without copying the complete pool for every question, prefers comparable lengths and avoids a unique initial against an otherwise matching set. Sparse pools can use fewer choices. No saved snapshot is regenerated.

@@ -35,8 +35,10 @@ test('a filtered pool with no unambiguous wrong choice omits the question',()=>{
 });
 
 test('an installed replacement inventory refreshes known meanings without changing the study filter',()=>{
- const before=questions(selected,[...selected]);
+ // Four balanced choices keep this cache test independent of formatting selection.
+ const study=[...selected,noun('document','document','official record')];
+ const before=questions(study,[...study]);
  assert.ok(before.find(row=>row.word.id===financial.id).options.some(row=>row.id===shore.id));
- const replacement=[...selected,riverside];
- assert.ok(!questions(selected,replacement).find(row=>row.word.id===financial.id).options.some(row=>row.id===shore.id));
+ const replacement=[...study,riverside];
+ assert.ok(!questions(study,replacement).find(row=>row.word.id===financial.id).options.some(row=>row.id===shore.id));
 });

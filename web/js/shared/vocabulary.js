@@ -1,3 +1,4 @@
+import {chooseMeaningDistractors,readChoiceInitial,readChoiceOpening} from './meaning-distractors.js';
 import {shuffle} from './random.js';
 export {shuffle} from './random.js';
 import {collocationQuestions,collocationAnswerCorrect} from './collocations.js';
@@ -54,7 +55,7 @@ function createVocabularyPool(mode, words, locale = 'en', category='vocabulary',
   const rows = words.map(word => {
     const text = vocabularyMeaning(word, locale), type = vocabularyType(word);
     const keys = glossKeys(text);
-    return { word, text, type, keys, choiceKeys:mode==='vocabmeaning'?collectChoiceGlossKeys(text):keys, signature: keys.slice().sort().join('\u0001') };
+    return { word, text, type, keys, choiceKeys:mode==='vocabmeaning'?collectChoiceGlossKeys(text):keys, signature: keys.slice().sort().join('\u0001'),choiceInitial:mode==='vocabmeaning'?readChoiceInitial(text):'',choiceOpening:mode==='vocabmeaning'?readChoiceOpening(text):'',spellingKeys:mode==='vocabmeaning'?spellings(word):[] };
   }).filter(row => row.word.id && vocabularyWord(row.word) && row.text && row.type);
   const groups = new Map(), synonyms = new Map();
   const meanings=mode==='vocabmeaning'?indexMeanings(meaningWords,locale):null;
@@ -76,14 +77,10 @@ function createVocabularyPool(mode, words, locale = 'en', category='vocabulary',
       return question;
     }
     const options = [{ id: word.id, text: row.text, type: row.type, meanings:{en:vocabularyMeaning(word,'en'),ko:vocabularyMeaning(word,'ko')} }];
-    const blocked = new Set(row.choiceKeys), questionSpellings=new Set(spellings(word));
+    const blocked = new Set(row.choiceKeys), questionSpellings=new Set(row.spellingKeys);
     for(const spelling of questionSpellings)for(const key of meanings.get(spelling)||[])blocked.add(key);
-    const group = groups.get(row.type), start = Math.floor(random() * group.length);
-    for (let i = 0; i < group.length && options.length < 4; i++) {
-      const other = group[(start + i) % group.length];
-      if (spellings(other.word).some(spelling=>questionSpellings.has(spelling)) || other.choiceKeys.some(key => blocked.has(key))) continue;
-      options.push({ id: other.word.id, text: other.text, type: other.type, meanings:{en:vocabularyMeaning(other.word,'en'),ko:vocabularyMeaning(other.word,'ko')} });
-      for (const key of other.choiceKeys) blocked.add(key);
+    for(const other of chooseMeaningDistractors(groups.get(row.type),{correct:row,blocked,random})){
+      options.push({id:other.word.id,text:other.text,type:other.type,meanings:{en:vocabularyMeaning(other.word,'en'),ko:vocabularyMeaning(other.word,'ko')}});
     }
     if (options.length < 2) return null;
     question.options = shuffle(options, random);
