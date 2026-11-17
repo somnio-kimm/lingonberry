@@ -35,6 +35,7 @@ jobs:
       - run: node scripts/verify-german-input-aliases-browser.mjs
       - run: node scripts/verify-german-verb-persons-browser.mjs
       - run: node scripts/verify-meaning-qualifiers-browser.mjs
+      - run: node scripts/verify-balanced-meaning-browser.mjs
       - run: node scripts/verify-chinese-cloze-focus-browser.mjs
       - run: node scripts/verify-german-optional-articles-browser.mjs
       - run: node scripts/verify-german-cloze-focus-browser.mjs

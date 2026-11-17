@@ -152,6 +152,15 @@ enum NativePackageVerification {
             await open(before.targetLanguage,before.explanationLanguage);document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-route=wordlist],[data-quiz=wordlist]'));
             if(document.querySelector('[data-route=collocations],[data-quiz=collocations]'))throw new Error('Retired Collocations route is visible');check.collocationsRetired=true;if(before.targetLanguage==='zh'){if(!document.querySelector('[data-quiz=pronunciation]')||document.querySelector('[data-quiz=pinyin],[data-quiz=tone]'))throw new Error('Chinese pronunciation menu is stale');check.pronunciationMerged=true;}
           }
+          const [{assembleStudy:assembleChoices},{germanWords:germanChoiceWords,chineseWords:chineseChoiceWords},{studyWords:genericChoiceWords},{createVocabularyEngine},{readChoiceInitial,readChoiceOpening}]=await Promise.all([import('./js/packages/study.js'),import('./js/presentation/words.js'),import('./js/presentation/study-profiles.js'),import('./js/shared/vocabulary.js'),import('./js/shared/meaning-distractors.js')]);
+          const choiceStudy=assembleChoices(core,pair),choiceWords=(before.targetLanguage==='de'?germanChoiceWords:before.targetLanguage==='zh'?chineseChoiceWords:genericChoiceWords)(choiceStudy),readChoiceLevel=word=>word.level??word.cefr??word.hskLevel,activeChoices=choiceWords.filter(word=>readChoiceLevel(word)===readChoiceLevel(choiceWords[0])),choicePool=createVocabularyEngine().createVocabularyPool('vocabmeaning',activeChoices,before.explanationLanguage,'vocabulary',{meaningWords:choiceWords});let choiceSeed=17,previousChoice;
+          const drawChoiceRandom=()=>{choiceSeed=(Math.imul(choiceSeed,1664525)+1013904223)>>>0;return choiceSeed/2**32;};
+          for(let sample=0;sample<20;sample++){
+            const question=choicePool.choose(previousChoice,drawChoiceRandom);if(!question)throw new Error('Meaning Quiz has no valid question');previousChoice=question.id;const initials=new Map(),openings=new Map();
+            for(const option of question.options){if(option.type!==question.type)throw new Error('Meaning Quiz mixes parts of speech');const initial=readChoiceInitial(option.text);initials.set(initial,(initials.get(initial)||0)+1);const opening=readChoiceOpening(option.text);openings.set(opening,(openings.get(opening)||0)+1);}
+            for(const patterns of [initials,openings])if(question.options.length>=3&&patterns.size>1&&Math.max(...patterns.values())===question.options.length-1)throw new Error('Meaning Quiz has a visible answer outlier');
+          }
+          check.balancedMeaningQuestions=20;
           checks.push(check);
         }
       } finally {
