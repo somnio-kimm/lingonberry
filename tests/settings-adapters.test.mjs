@@ -29,10 +29,10 @@ test('all seven adapters apply the same app settings without changing their stud
  try{
   const {createPresentation}=await import('../web/js/presentation/multilingual.js');
   const adapters=[german(dependencies),chinese(dependencies),...['ja','ko','en','es','fr'].map(language=>createPresentation({...dependencies,language}))];
-  const enabled={theme:'dark',uiLanguage:'ko',hapticEnabled:true,autoRemoveResolvedWrongs:true};
-  const disabled={theme:'light',uiLanguage:'en',hapticEnabled:false,autoRemoveResolvedWrongs:false};
+  const enabled={theme:'dark',uiLanguage:'ko',hapticEnabled:true,soundEnabled:true,autoRemoveResolvedWrongs:true};
+  const disabled={theme:'light',uiLanguage:'en',hapticEnabled:false,soundEnabled:false,autoRemoveResolvedWrongs:false};
   for(const adapter of adapters){
-   assert.equal(adapter.settings.values().hapticEnabled,false,adapter.id+' default');
+   assert.equal(adapter.settings.values().hapticEnabled,false,adapter.id+' default');assert.equal(adapter.settings.values().soundEnabled,false,adapter.id+' sound default');
    const level=adapter.settings.reportContext().studyLevel;
    adapter.setPreferences(enabled);assert.deepEqual(adapter.settings.values(),enabled,adapter.id+' enable');
    adapter.setPreferences(disabled);assert.deepEqual(adapter.preferences(),disabled,adapter.id+' disable');

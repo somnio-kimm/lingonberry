@@ -28,6 +28,7 @@ jobs:
       - run: node scripts/verify-installed-updates-browser.mjs
       - run: node scripts/verify-lexicon-views-browser.mjs
       - run: node scripts/verify-word-initial-browser.mjs
+      - run: node scripts/verify-answer-sounds-browser.mjs
       - run: node scripts/verify-english-headwords-browser.mjs
       - run: node scripts/verify-study-design-browser.mjs
       - run: node scripts/verify-cloze-alignment-browser.mjs

@@ -51,7 +51,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const recordScore=(route,correct)=>{score(route).total++;if(correct)score(route).correct++;};
  const locale=()=>store.state.preferences.uiLanguage,t=value=>lexiconText(locale(),value);
  const screenTitle=mode=>screens[mode]?.title||exerciseLabel(mode,locale());
- const preferences=()=>({theme:store.state.preferences.theme,uiLanguage:locale(),hapticEnabled:store.state.preferences.hapticEnabled,autoRemoveResolvedWrongs:store.state.preferences.autoRemoveResolvedWrongs});
+ const preferences=()=>({theme:store.state.preferences.theme,uiLanguage:locale(),hapticEnabled:store.state.preferences.hapticEnabled,soundEnabled:store.state.preferences.soundEnabled,autoRemoveResolvedWrongs:store.state.preferences.autoRemoveResolvedWrongs});
  const haptic=()=>{if(store.state.preferences.hapticEnabled)navigator.vibrate?.(10);};
  const change=(name,value)=>{store.preference(name,value);onPreferences(preferences());};
  const fold=value=>{const s=String(value||'').normalize('NFKC').toLocaleLowerCase(language);return ['en','fr','es'].includes(language)?s.normalize('NFD').replace(/\p{M}/gu,''):s;};

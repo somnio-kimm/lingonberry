@@ -15,14 +15,14 @@ export function createPresentation({navigate}) {
  return {
   id:'zh',screens:SCREENS,
   settings:{
-   values:()=>({theme:Store.theme,uiLanguage:Store.uiLang,hapticEnabled:Store.hapticEnabled,autoRemoveResolvedWrongs:Store.autoRemoveResolvedWrongs}),
+   values:()=>({theme:Store.theme,uiLanguage:Store.uiLang,hapticEnabled:Store.hapticEnabled,soundEnabled:Store.soundEnabled,autoRemoveResolvedWrongs:Store.autoRemoveResolvedWrongs}),
    change:(key,value)=>{Store[key==='uiLanguage'?'uiLang':key]=value;},haptic:()=>Haptic.light(),
    reportContext:()=>({app:APP_NAME,studyLanguage:'zh',studyLevel:Store.hskLevels}),
    reset:async()=>{TTS.stop();for(const key of ['srsById','words','wordsDataVersion','wrong','streak'])localStorage.removeItem('learn-language.zh.'+key);lastStudy=undefined;return false;},
   },
   setStudy(study){if(study===lastStudy)return;lastStudy=study;Store.setReviewContent(study);setPackageWords(study?chineseWords(study):[]);},
   setPreferences(values){for(const key of APP_SETTING_KEYS){const local=key==='uiLanguage'?'uiLang':key;if(Object.hasOwn(values,key)&&Store[local]!==values[key])Store[local]=values[key];}},
-  preferences(){return {theme:Store.theme,uiLanguage:Store.uiLang,hapticEnabled:Store.hapticEnabled,autoRemoveResolvedWrongs:Store.autoRemoveResolvedWrongs};},
+  preferences(){return {theme:Store.theme,uiLanguage:Store.uiLang,hapticEnabled:Store.hapticEnabled,soundEnabled:Store.soundEnabled,autoRemoveResolvedWrongs:Store.autoRemoveResolvedWrongs};},
   title(route){return route==='home'?APP_NAME:t(SCREENS[route]?.title||'tabHome');},
   tab(route){return t(SCREENS[route].tab);},
   render(route,el){return (renderers[route]||renderers.home)(el);},

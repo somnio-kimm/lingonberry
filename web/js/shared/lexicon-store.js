@@ -6,7 +6,7 @@ import {migrateEquivalentWordStatuses} from './word-status-migration.js';
 export function createLexiconStore(storage,profile,{progressStorage}={}){
  const key=`learn-language.${profile.id}.lexicon.v1`;
  let saved,rawLegacy,legacyReadFailed=false;try{rawLegacy=storage.getItem(key);if(rawLegacy!=null&&rawLegacy!=='')saved=JSON.parse(rawLegacy);}catch{legacyReadFailed=true;}
- const fresh=()=>({version:1,wordStatus:{},wrongs:{},contentMigrations:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:false,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true,clozeShowReading:true,scrambleShowReading:true}});
+ const fresh=()=>({version:1,wordStatus:{},wrongs:{},contentMigrations:{},preferences:{theme:'system',uiLanguage:'en',studyLevel:profile.levels[0],hapticEnabled:false,soundEnabled:false,autoRemoveResolvedWrongs:false,clozeShowTranslation:false,scrambleShowTranslation:true,clozeShowReading:true,scrambleShowReading:true}});
  const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
  function restore(value){
   const next=value?.version===1&&object(value.wordStatus)&&object(value.wrongs)&&object(value.preferences)?{...fresh(),...value,preferences:{...fresh().preferences,...value.preferences}}:fresh();
@@ -33,7 +33,7 @@ export function createLexiconStore(storage,profile,{progressStorage}={}){
   get state(){return state;},get warning(){return warning||journal?.warning||false;},ready,flush:()=>journal?ready().then(()=>journal.flush()):Promise.resolve(!warning),
   preference(name,value){
    requireReady();
-   const allowed={theme:['system','light','dark'],uiLanguage:['en','ko'],studyLevel:profile.levels,hapticEnabled:[true,false],autoRemoveResolvedWrongs:[true,false],clozeShowTranslation:[true,false],scrambleShowTranslation:[true,false],clozeShowReading:[true,false],scrambleShowReading:[true,false]};
+   const allowed={theme:['system','light','dark'],uiLanguage:['en','ko'],studyLevel:profile.levels,hapticEnabled:[true,false],soundEnabled:[true,false],autoRemoveResolvedWrongs:[true,false],clozeShowTranslation:[true,false],scrambleShowTranslation:[true,false],clozeShowReading:[true,false],scrambleShowReading:[true,false]};
    if(!allowed[name]?.includes(value))throw new Error('Invalid preference');
    state.preferences[name]=value;
    const removed={};if(name==='autoRemoveResolvedWrongs'&&value)for(const [id,row]of Object.entries(state.wrongs))if(row.count===0){delete state.wrongs[id];removed[id]=null;}

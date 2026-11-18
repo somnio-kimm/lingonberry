@@ -24,6 +24,9 @@ export const Store = {
   get hapticEnabled() { return _get('hapticEnabled', false) === true; },
   set hapticEnabled(v) { _set('hapticEnabled', !!v); },
 
+  get soundEnabled() { return _get('soundEnabled', false) === true; },
+  set soundEnabled(v) { _set('soundEnabled', !!v); },
+
   get clozeShowPinyin() { return _get('clozeShowPinyin', true) !== false; },
   set clozeShowPinyin(v) { _set('clozeShowPinyin', !!v); },
 
