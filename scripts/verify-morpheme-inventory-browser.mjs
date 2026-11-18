@@ -14,6 +14,7 @@ try{
   assert.ok((await page.locator('[data-root-count]').innerText()).includes('1,002'));assert.equal(await page.locator('[data-root-count]').getAttribute('data-total'),'1002');assert.ok(await page.locator('[data-morpheme]').count()<1002);
   assert.equal(await page.locator('[data-morpheme=ab] .root-member').count(),12);await page.locator('[data-more-related=ab]').click();assert.equal(await page.locator('[data-morpheme=ab] .root-member').count(),32);
   await page.locator('[data-root-word=absent]').click();assert.equal(await page.evaluate(()=>window.openedMorphemeWord),'absent');
+  assert.ok((await page.locator('.study-reference-origin').first().innerText()).startsWith(locale==='ko'?'어원:':'Origin:'));
   await page.locator('#root-search').fill('adapt');assert.equal(await page.locator('[data-morpheme]').count(),0);
   await page.locator('#root-search').fill('duckling');assert.equal(await page.locator('[data-morpheme]').count(),1);assert.equal(await page.locator('[data-morpheme]').getAttribute('data-morpheme'),'ling');
   assert.equal(await page.locator('#root-search').evaluate(node=>node===document.activeElement),true);

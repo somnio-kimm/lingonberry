@@ -2,7 +2,7 @@ import {renderStudySearch,renderStudyReferenceHeading} from './study-components.
 import {escapeHtml as e} from './ui.js';
 import {mountWordRows} from './word-rows.js';
 import {createMorphemeModel,MORPHEME_PAGING} from './morpheme-model.js';
-import {morphemeOriginLabel,morphemeRegisters,morphemeCountLabel,morphemeRelatedLabel} from './morpheme-text.js';
+import {morphemeOriginText,morphemeRegisters,morphemeCountLabel,morphemeRelatedLabel} from './morpheme-text.js';
 
 export function renderMorphemeSense(sense,locale) {
  const badges = morphemeRegisters(sense.tags,locale).map(label =>
@@ -48,7 +48,7 @@ export function renderMorphemeInventory(host,{
  function renderCard(row) {
   const heading = renderStudyReferenceHeading({
    word:[row.form,...row.variants].join(', '),
-   origin:morphemeOriginLabel(row.origin,locale),
+   origin:morphemeOriginText(row.origin,locale),
   });
   return `<section class="panel study-reference-card" data-morpheme="${e(row.id)}">
    ${heading}
