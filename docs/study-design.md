@@ -1,6 +1,6 @@
 # Shared Study Design Reference
 
-Use this reference for every new or changed feature in every study language. The existing German and Chinese screens are the visual and interaction baseline. Language-specific content may differ; card geometry, controls, navigation and feedback follow the shared patterns.
+Use this reference for every new or changed feature in every study language. The shared November2026 refresh is the visual baseline for all four released languages. German article treatment and Chinese/Japanese readings remain language policies; surfaces, typography, controls, navigation and feedback share one design.
 
 ## Source of truth
 
@@ -18,7 +18,7 @@ Use this reference for every new or changed feature in every study language. The
 | --- | --- |
 | Page | Existing host header and bottom navigation; 16px content gutter, maximum content width 920px |
 | Light / dark | Light beige / dark grey, using `--bg`; system theme remains supported |
-| Card | `.panel` / `.card`: 16px padding, 16px radius, 0.5px border, 16px section spacing |
+| Card | `.panel` / `.card`: 16px padding, 12px radius, 0.5px border, 16px section spacing |
 | Section title | `.section-title`: 15px, weight 600, blue |
 | List word / reference form | 24px, weight 700, main text colour; no faded or blue replacement word colour |
 | List meaning / origin | 13px, secondary text colour |
@@ -28,7 +28,7 @@ Use this reference for every new or changed feature in every study language. The
 | Primary action | 14px, at least 44px high, 12px radius; Submit above smaller Skip, in normal content flow |
 | Secondary action | `.btn-small` / `.text-button`: 14px, 32px minimum height, 8px radius |
 | Segmented choices | `renderStudyTabs`: 14px text, equal widths, 44px minimum height; Selection left, Typing right when both are offered |
-| Flashcards / word details | Keep established 36px flashcard words / 48px detail words and existing layout; do not replace with reference-card sizes |
+| Flashcards / word details | Keep established 36px flashcard words / 48px detail words; fixed readable surface with direct actions below; do not replace with reference-card sizes |
 | Badges | Learning level pastel green; part of speech pastel orange; exercise type pastel blue |
 | Feedback | Correct pastel green; wrong pastel red, with the existing correction treatment and animation |
 
@@ -204,8 +204,16 @@ Automatic matching currently covers about two thirds of usable translated Cloze 
 
 ## Focused Flashcard sets
 
-All four languages use one shared Flashcard session/view. Choose10,20,50 or100 cards, default20; the feature preference is shared across languages. To Learn is the default scope. English sessions keep a stable [level, exact spelling] identity while writing only the displayed original sense IDs. Learning and Mastered are directly below the card, keep keyboard focus and advance to the next unclassified card.
+All four languages use one shared Flashcard session/view. Choose 10, 20, 50 or 100 cards, default 20; the feature preference is shared across languages. To Learn is the default scope. English sessions keep a stable [level, exact spelling] identity while writing only the displayed original sense IDs. Learning and Mastered are directly below the card, keep keyboard focus and advance to the next unclassified card.
 
 A completed set offers Shuffle Learning for only that round's unfinished cards and Next Set for unseen eligible words. Completing or previewing a round cannot silently fill it with new words. Existing dictionary details remain under the ellipsis control; example paging keeps each meaning paired to its own example/translation. Other quiz layouts and progress records are unchanged.
 
 The model owns session identity/selection; adapters own existing progress writes. Readings and German article colours remain language policies. Set-size storage failures are nonfatal; reset/removing study content clears the ephemeral round. Run `verify-flashcard-sets-browser.mjs` and `verify-flashcard-focus-browser.mjs` for capped sets, classifications, focus/inert behavior, completion/repeats, language/theme/device parity and stable history.
+
+## Quiet visual language
+
+Use opaque beige/charcoal surfaces, thin borders, restrained blue accents and neutral typographic headings. Avoid decorative gradients, repeated floating shadows and coloured emoji tiles. Home presents consistent single-column menu rows with original monochrome SVG icons; the three existing tabs remain. Settings order is Appearance, Language Packages, practice toggles, report/data actions and support/licence.
+
+Flashcards have a fixed, flat reading surface, visible set progress,44px+ direct Learning/Mastered actions and paged examples. Do not add instructional prose or turn self-classification into a graded quiz. Preserve semantic green/red answer feedback, level/POS/type tag meanings and German article colours. Native selects and visible keyboard focus are required. Japanese examples retain their separate ruby clearance.
+
+The interaction references are [Quizlet's Flashcard sorting](https://help.quizlet.com/hc/en-ca/articles/360030988091-Studying-with-Flashcards) and [Anki's limited study sessions](https://docs.ankiweb.net/filtered-decks.html). Icons, tones and implementation are original; this is not a copy of their branding or assets. Run `verify-quiet-design-browser.mjs` and the existing screen/reading parity suites for both themes, EN/KO and phone/tablet layouts.

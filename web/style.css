@@ -36,11 +36,11 @@
 :root body main:is(#main,#app):has(>.set-page){width:100%;max-width:920px;margin:0 auto;padding:10px 12px calc(var(--tab-h) + var(--safe-b));}
 :root body .set-page{font-family:system-ui,-apple-system,sans-serif;line-height:1.4;gap:8px;padding:0 0 4px;}
 :root body .set-page select{display:block;margin:0;min-height:44px;box-sizing:border-box;}
-:root body .set-line{padding:8px 12px;gap:8px;min-height:40px;}
+:root body .set-line{padding:8px 12px;gap:8px;min-height:44px;}
 :root body .set-line--stack{gap:6px;}
 :root body .set-k{font-size:14px;line-height:1.4;margin:0;}
 :root body .set-seg{margin:0;padding:2px;gap:1px;}
-:root body .set-page .set-action-button{min-height:40px;margin:0;padding:8px 12px;}
+:root body .set-page .set-action-button{min-height:44px;margin:0;padding:8px 12px;}
 :root body .set-page .set-meta{line-height:1.4;}
 
 /* Consistent rhythm around all Study filters and the content they control. */

@@ -33,6 +33,7 @@ jobs:
       - run: node scripts/verify-answer-sounds-browser.mjs
       - run: node scripts/verify-english-headwords-browser.mjs
       - run: node scripts/verify-study-design-browser.mjs
+      - run: node scripts/verify-quiet-design-browser.mjs
       - run: node scripts/verify-cloze-alignment-browser.mjs
       - run: node scripts/verify-translation-focus-browser.mjs
       - run: node scripts/verify-merged-expressions-browser.mjs

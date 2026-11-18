@@ -4,17 +4,17 @@ One offline language-learning app with separately downloadable study content and
 
 Choose a Study Language and Explanation Language in Settings. Download or remove explanations through Language Packages; shared study content is reused automatically. Installed content works offline. The interface follows the selected explanation language, with English as the fallback. Package updates are managed in Settings; automatic Wi-Fi-only update scheduling remains pending.
 
-Chinese, German, Japanese, Korean, English, Spanish and French are available. English/Korean explanation coverage varies by study language; only complete offered pairs appear in the package manager. English also offers English self-explanations. The other same-language explanation pairs are omitted.
+Chinese, German, Japanese and English are currently offered. Korean, Spanish and French study previews are retained but hidden. English/Korean explanation coverage varies by study language; only complete offered pairs appear in the package manager. English also offers English self-explanations. The other same-language explanation pairs are omitted.
 
 ## Study
 
-The shared sections are Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble and Dictation, in that order. Dictation has Word and Sentence modes and uses device speech. Search stays inside the selected level.
+The shared sections are Word List, Flashcards, Meaning Quiz, Word Input, Cloze, Sentence Scramble and Dictation, in that order. Dictation has Word and Sentence modes and uses device speech. Search stays inside the selected level. Word List combines search and status/POS filters with an A–Z index, supplied-pinyin initials or kana-reading rows. Flashcards use small selectable sets (10/20/50/100, default20), direct Learning/Mastered actions and unfinished-only reshuffling. Settings provides optional default-off answer sounds. Cloze translations underline reliable target matches; paraphrases without reviewed alignment stay plain.
 
 English expressions are dictionary entries and participate in Meaning Quiz and Cloze. Authored discontinuous phrases use one input per blank, preserving intervening objects. Root Families shows only related words available in the installed Word List. Chinese has one Pronunciation section with Pinyin Input and Tone Selection. German offers Article Selection and Form Input; Japanese offers Word Reading and Okurigana. Language-specific exercises retain the shared German/Chinese design.
 
 ## Current Content
 
-The English 7.0.5 edition contains **40,713 sense entries**, covering **20,606 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Different useful meanings can therefore appear as separate Word List rows and Flashcards at different levels.
+The English 7.0.5 edition contains **40,713 sense entries**, covering **20,606 single-word headwords** and **10,247 multiword headwords**. Every retained sense has its own level, English definition, concise Korean meaning, example and Korean sentence translation. Word List and Flashcards group exact English spellings once within each selected level; meanings and their examples remain distinct inside the word. Quiz and Review histories retain the original sense IDs.
 
 The four English groups are editorial IELTS-style difficulty bands: 1.0–3.5, 4.0–6.5, 7.0–8.0 and 8.5–9.0. They are not official IELTS/SAT/GRE vocabulary lists. The inventory favours useful everyday, professional, academic and literary uses through GRE-level usage; minor obsolete branches and duplicate cards were excluded or consolidated. See the [release report](language-packages/sources/reviews/en-7.0.6.json) and [review process](docs/english-content-review.md).
 
