@@ -412,3 +412,54 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .word-initial-filter{margin:12px 0 0}
 .word-initial-filter .word-initial-label{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:16px;width:100%;font-size:14px;color:var(--secondary)}
 .word-initial-select{min-height:44px;margin:0!important;font-size:14px!important;border:1px solid var(--card-border);border-radius:8px}
+
+/* A fixed, manageable round with direct classification outside the reading surface. */
+.flashcard-study{max-width:680px;margin-inline:auto}
+.flashcard-study .fc-toolbar{margin-bottom:18px}
+.flashcard-study .fc-toolbar h2{font-size:20px;font-weight:650}
+.flashcard-study #flashcard-count{font-size:14px;color:var(--secondary);font-weight:500}
+.fc-session-controls{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
+.fc-session-controls label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--secondary)}
+.fc-session-controls select{min-height:44px;min-width:122px;max-width:100%;padding:8px 12px;margin:0;border:1px solid var(--card-border);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-size:14px}
+.fc-session-controls .btn-small{min-height:44px;background:transparent;color:var(--text);border:1px solid var(--card-border)}
+.fc-set-progress{display:block;width:100%;height:3px;appearance:none;border:0;border-radius:2px;margin:16px 0;background:var(--line);accent-color:var(--blue)}
+.fc-set-progress::-webkit-progress-bar{background:var(--line);border-radius:2px}
+.fc-set-progress::-webkit-progress-value{background:var(--blue);border-radius:2px}
+.fc-set-progress::-moz-progress-bar{background:var(--blue);border-radius:2px}
+.flashcard-study .flashcard{transform:none;transition:none;height:clamp(320px,42dvh,410px);min-height:320px}
+.flashcard-study .flashcard-front,.flashcard-study .flashcard-back{transform:none;backface-visibility:visible;padding:18px 22px;border-radius:14px;box-shadow:none;border:1px solid var(--card-border)}
+.flashcard-study .flashcard-back{display:block;overflow-y:auto}
+.flashcard-study .fc-card-head{height:auto;min-height:44px;align-items:center}
+.fc-details-button{width:44px;height:44px;flex-shrink:0;border:0;background:transparent;color:var(--secondary);font-size:23px;letter-spacing:2px}
+.flashcard-study .flashcard-word{font-size:36px;line-height:1.2;margin:0;color:var(--text)}
+.flashcard-study .fc-card-main{padding-top:18px;cursor:pointer}
+.flashcard-study .flashcard-front .fc-card-main{justify-content:center}
+.flashcard-study .fc-card-main-back{overflow:visible;flex:none;min-height:auto}
+.flashcard-study .fc-core{gap:10px}
+.flashcard-study .fc-meaning{font-size:15px;line-height:1.55;color:var(--secondary)}
+.flashcard-study .fc-examples{margin-top:20px;padding-top:12px;border-top:1px solid var(--line)}
+.fc-example-toolbar{display:flex;align-items:center;gap:8px;min-height:44px;margin-bottom:6px;font-size:12px;color:var(--secondary)}
+.fc-example-navigation{display:flex;align-items:center;gap:5px;margin-inline-start:auto;font-variant-numeric:tabular-nums}
+.fc-example-nav{width:44px;height:44px;min-width:44px;background:transparent;color:var(--text);font-size:24px}
+.flashcard-study .fc-example-block .example-sentence{font-size:17px;line-height:1.7;padding-top:0}
+.flashcard-study .fc-example-block .example-sentence[lang="ja"]{line-height:2.4;padding-top:4px}
+.flashcard-study .fc-example-block .example-translation{font-size:14px;line-height:1.6;margin-top:6px}
+.flashcard-study .fc-example-block[hidden]{display:none}
+.fc-classify{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:480px;margin:14px auto 0}
+.fc-classify button{min-height:48px;border-radius:10px;font-size:14px;font-weight:600;border:1px solid var(--card-border)}
+.fc-learning{background:var(--card);color:var(--text)}
+.fc-mastered{background:var(--green-soft);border-color:var(--green)!important;color:var(--green)}
+.flashcard-study .fc-navigation{margin-top:8px;gap:24px}
+.flashcard-study .fc-nav{width:44px;height:44px;min-height:44px;background:transparent;border:0;box-shadow:none;color:var(--secondary);font-size:25px}
+.fc-set-complete{text-align:center;padding:32px 20px;max-width:480px;margin-inline:auto}
+.fc-set-complete h2{font-size:23px;color:var(--text);margin:0 0 20px}
+.fc-set-summary{display:flex;justify-content:center;gap:24px;margin-bottom:24px;font-size:14px;color:var(--secondary)}
+.fc-set-summary strong{display:block;font-size:24px;margin-top:6px;color:var(--text)}
+.fc-set-complete>button{display:flex;justify-content:center;min-height:44px;width:100%;margin-top:10px}
+@media(prefers-reduced-motion:reduce){.flashcard{transition:none!important}}
+.flashcard-study [hidden]{display:none!important}
+.flashcard-study .flashcard-wrapper{perspective:none}
+.flashcard-study .flashcard-front[aria-hidden="true"],.flashcard-study .flashcard-back[aria-hidden="true"]{visibility:hidden;pointer-events:none}
+.flashcard-study .flashcard-front[aria-hidden="false"],.flashcard-study .flashcard-back[aria-hidden="false"]{visibility:visible}
+.flashcard-study .wl-tag-filter-row{flex-wrap:wrap}
+.fc-classify button:focus-visible,.fc-nav:focus-visible,.fc-example-nav:focus-visible,.fc-details-button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}

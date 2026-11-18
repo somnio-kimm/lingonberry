@@ -22,7 +22,7 @@ try{
     if(mode==='wordlist'){
      value.row=await measure(page,'.wl-row');value.search=await measure(page,'#search-input');await page.locator('.wl-main').first().click();value.sheet=await measure(page,'.detail-sheet');await page.locator('.detail-sheet-head button').first().click();await page.locator('.detail-overlay').waitFor({state:'detached'});
     }else if(mode==='flashcards'){
-     value.card=await measure(page,'.flashcard');value.shuffle=await measure(page,'.fc-tools .btn-small');value.nav=await measure(page,'.fc-nav');
+     value.card=await measure(page,'.flashcard');value.shuffle=await measure(page,'[data-shuffle]');value.nav=await measure(page,'.fc-nav');
     }else{
      value[mode]={card:await question(page)};
      if(mode==='vocabinput'){value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}

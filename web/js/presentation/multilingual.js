@@ -1,4 +1,6 @@
-import {createEnglishHeadwords,readWordSenses,readHeadwordStatus} from '../shared/english-headwords.js';
+import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../shared/flashcard-session.js';
+import {flashcardText} from '../shared/flashcard-text.js';
+import {createEnglishHeadwords,readWordSenses,readHeadwordStatus,readEnglishHeadwordIdentity} from '../shared/english-headwords.js';
 import {renderLexiconReview} from '../shared/lexicon-review-view.js';
 import {renderLexiconFlashcards} from '../shared/lexicon-flashcard-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
@@ -44,7 +46,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile,{progressStorage}),engine=createLexiconQuestions(profile);
  let headwords=createEnglishHeadwords([]),morphemeModel,typing,listeningCleanup,japaneseFurigana,sampleReadingChoice;
- let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,card=0,flipped=false,order=[],chosenTokens=[],closeSheet=()=>{};
+ let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,flipped=false,chosenTokens=[],closeSheet=()=>{};
  const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
  const filters=new Map(),scores=new Map();let lastRenderedRoute;
  const score=route=>{if(!scores.has(route))scores.set(route,{correct:0,total:0});return scores.get(route);};
@@ -59,6 +61,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function heading(word){if(language==='ja')return `<span class="lexicon-word" lang="ja">${renderJapaneseRuby(displayStudyWord(word),word.pronunciation)}</span>`;return `<span class="lexicon-word" lang="${language}">${word.pronunciation&&word.pronunciation!==word.lemma?`<ruby>${e(displayStudyWord(word))}<rt>${e(word.pronunciation)}</rt></ruby>`:e(displayStudyWord(word))}</span>`;}
  const isGroupedRoute=route=>language==='en'&&['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
+ const matchesStatus=(word,status)=>status==='all'||status==='unfamiliar'&&readStatus(word)!=='mastered'||readStatus(word)===status;
+ let flashcardSetSize=readFlashcardSetSize(),flashcardKey='',exampleIndex=0;const flashcardSession=createFlashcardSession({readStatus,readIdentity:word=>language==='en'?readEnglishHeadwordIdentity(word):word.id});
  const levelLabel=level=>language==='ja'&&profile.levels.includes(level)?profile.exam+' '+level:level;
  function tags(word){return `<span class="wl-tag wl-hsk">${e(levelLabel(language==='en'?assignEnglishLevel(word):word.level))}</span>${[...new Set(readWordSenses(word).map(typeName))].map(type=>`<span class="wl-tag wl-pos">${e(t(type))}</span>`).join('')}`;}
  async function speak(text,host,onEnd){const message=host.querySelector('.lexicon-audio-status');if(message)message.hidden=true;await DeviceSpeech.speak(text,{language:profile.speech,onEnd,onError:()=>{if(message){message.hidden=false;message.textContent=t('Speech Unavailable');}}});}
@@ -75,11 +79,11 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   sheet.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>speak(examples[Number(button.dataset.example)].example.text,sheet));
   sheet.querySelectorAll('[data-status]').forEach(button=>button.onclick=()=>{for(const sense of senses)store.setWordStatus(sense.id,button.dataset.status);closeSheet();refresh();});sheet.querySelector('[data-close]').focus();
  }
- function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:'all',open:false,mode:'all',exercise:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
+ function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:route==='flashcards'?'unfamiliar':'all',open:false,mode:'all',exercise:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
  function pool(route){
   const f=state(route),query=fold(f.query);
-  const candidates=words.filter(word=>matchesStudyLevel(word,store.state.preferences.studyLevel,profile)&&(f.pos==='all'||word.pos===f.pos));
-  const list=(isGroupedRoute(route)?headwords.group(candidates):candidates).filter(word=>(f.status==='all'||readStatus(word)===f.status)&&(!query||word.search.includes(query)));
+  const candidates=words.filter(word=>matchesStudyLevel(word,store.state.preferences.studyLevel,profile)&&(f.pos==='all'||word.pos===f.pos)&&(route!=='flashcards'||matchesStatus(word,f.status)));
+  const list=(isGroupedRoute(route)?headwords.group(candidates):candidates).filter(word=>(route==='flashcards'||matchesStatus(word,f.status))&&(!query||word.search.includes(query)));
   if(query){const rank=word=>word.searchLemma===query?0:word.searchAliases.includes(query)?1:word.searchLemma.startsWith(query)?2:3;list.sort((a,b)=>rank(a)-rank(b));}
   return list;
  }
@@ -119,8 +123,13 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const levelWords=words.filter(word=>matchesStudyLevel(word,level,profile));
   const parts=['all',...new Set(levelWords.map(word=>word.pos))];
   if(!parts.includes(f.pos))parts.push(f.pos);
-  const label=value=>t(value==='all'?'All':value==='functional'?'Expression':value[0].toUpperCase()+value.slice(1));
-  const statusCounts={all:0,new:0,learning:0,mastered:0},posCounts=new Map([['all',0]]);
+  const label=value=>value==='unfamiliar'?flashcardText(locale()).toLearn:t(value==='all'?'All':value==='functional'?'Expression':value[0].toUpperCase()+value.slice(1));
+  const statusCounts=route==='flashcards'?{unfamiliar:0,all:0,new:0,learning:0,mastered:0}:{all:0,new:0,learning:0,mastered:0},posCounts=new Map([['all',0]]);
+  if(route==='flashcards'){
+   const countCards=(selectedPos,selectedStatus)=>{const selected=levelWords.filter(word=>(selectedPos==='all'||word.pos===selectedPos)&&matchesStatus(word,selectedStatus));return (language==='en'?headwords.group(selected):selected).length;};
+   for(const key of Object.keys(statusCounts))statusCounts[key]=countCards(f.pos,key);
+   for(const pos of parts)posCounts.set(pos,countCards(pos,f.status));
+  }else{
   const cards=isGroupedRoute(route)?headwords.group(levelWords):levelWords;
   for(const word of cards){
    const senses=readWordSenses(word),selected=senses.filter(sense=>f.pos==='all'||sense.pos===f.pos);
@@ -129,6 +138,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    for(const pos of new Set(senses.map(sense=>sense.pos))){
     if(f.status==='all'||readStatus({senses:senses.filter(sense=>sense.pos===pos)})===f.status)posCounts.set(pos,(posCounts.get(pos)||0)+1);
    }
+  }
   }
   const options=(values,count)=>values.map(value=>({value,label:label(value),count:count(value)}));
   const extraBody=['en','ja'].includes(language)?'':`<div class="lexicon-filter-row"><label>${t('Study Level')}<select data-level-filter>${profile.levels.map(value=>`<option value="${e(value)}" ${level===value?'selected':''}>${e(value)}</option>`).join('')}</select></label></div>`;
@@ -140,7 +150,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  }
  function bindControls(host,route,onReset=refresh){
   const f=state(route),fold=host.querySelector('.filter-fold');
-  const reset=()=>{f.open=!!fold.open;card=0;order=[];resetQuestion();onReset();};
+  const reset=()=>{f.open=!!fold.open;resetQuestion();onReset();};
   for(const key of ['exercise','form-kind']){
    const select=host.querySelector(`[data-${key}]`);
    if(select)select.onchange=event=>{f[key==='form-kind'?'formKind':key]=event.target.value;reset();};
@@ -154,7 +164,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   }
  }
  function drawHome(host){host.innerHTML=`<section class="panel level-panel study-level-card"><h2>${t('Study Level')}</h2><div class="level-chips study-level-options${language==='en'?' english-level-options':''}">${profile.levels.map(level=>`<button class="level-chip" data-level="${level}" aria-pressed="${level===store.state.preferences.studyLevel}">${e(levelLabel(level))}</button>`).join('')}</div></section><div class="menu-grid">${orderStudyModes(Object.keys(modes).filter(route=>!(language==='en'&&['articles','collocations','phrasal','idioms'].includes(route))&&(Object.hasOwn(commonModes,route)||(route==='roots'?(study?.morphemes?.length||study?.families?.length||study?.practiceData?.rootFamilies?.length):exercises.some(row=>exerciseSectionCategories(language,route).includes(row.category)))))).map(route=>{const [title,icon,color]=modes[route];return`<button class="menu-card" data-route="${route}"><span class="menu-icon ${color}" aria-hidden="true">${icon}</span><span class="menu-label">${t(title)}</span></button>`;}).join('')}</div>`;
-  host.querySelectorAll('[data-route]').forEach(button=>button.onclick=()=>{resetQuestion();navigate(button.dataset.route);});host.querySelectorAll('[data-level]').forEach(button=>button.onclick=()=>{change('studyLevel',button.dataset.level);card=0;order=[];resetQuestion();refresh();});}
+  host.querySelectorAll('[data-route]').forEach(button=>button.onclick=()=>{resetQuestion();navigate(button.dataset.route);});host.querySelectorAll('[data-level]').forEach(button=>button.onclick=()=>{change('studyLevel',button.dataset.level);resetQuestion();refresh();});}
  function drawWords(host,route){
   const f=state(route);if(f.initialLevel!==store.state.preferences.studyLevel){f.initialLevel=store.state.preferences.studyLevel;f.selectedInitial='all';}let visible=new Map();
   return renderLexiconWordList(host,{t,language,locale:locale(),selectedInitial:f.selectedInitial||'all',query:f.query,filters:controls(route),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
@@ -162,10 +172,13 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   });
  }
  function drawCards(host,route){
-  const list=pool(route),allowed=new Set(list.map(word=>word.id));if(order.length!==list.length||order.some(id=>!allowed.has(id)))order=list.map(word=>word.id);card%=Math.max(1,order.length);
-  const word=list.find(word=>word.id===order[card]),examples=word?selectSenseExamples(word,language):[];
-  return renderLexiconFlashcards(host,{t,language,word,examples,flipped,total:order.length,filters:controls(route),renderHeading:heading,renderTags:tags,renderSenseLabel:sense=>e(t(typeName(sense)))+' · '+e(sense.studyMeaning),renderExample:(example,word)=>language==='ja'?japaneseFurigana.renderSentence(example.text,word):e(example.text)},{
-   bindFilters:host=>bindControls(host,route),shuffle:()=>{order=shuffle(order,Math.random);card=0;flipped=false;refresh();},flip:()=>{flipped=!flipped;haptic();refresh();},move:direction=>{card=(card+direction+order.length)%order.length;flipped=false;refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),
+  const f=state(route);flashcardSetSize=readFlashcardSetSize();const list=pool(route),key=JSON.stringify([store.state.preferences.studyLevel,f.pos,f.status,flashcardSetSize]);
+  if(flashcardKey!==key){flashcardKey=key;flashcardSession.begin(list,{size:flashcardSetSize,resetSeen:true});flipped=false;exampleIndex=0;}else flashcardSession.reconcile(list);
+  const word=flashcardSession.current,examples=word?selectSenseExamples(word,language):[];exampleIndex%=Math.max(1,examples.length);
+  const beginNext=()=>{flashcardSession.begin(pool(route),{size:flashcardSetSize});flipped=false;exampleIndex=0;refresh();};
+  const reviewLearning=()=>{flashcardSession.reviewLearning();flipped=false;exampleIndex=0;refresh();};
+  return renderLexiconFlashcards(host,{locale:locale(),language,word,examples,exampleIndex,flipped,total:flashcardSession.total,index:flashcardSession.index,completed:flashcardSession.completed,setSize:flashcardSetSize,phase:flashcardSession.phase,summary:flashcardSession.summary,learningCount:flashcardSession.learningCount,canStartNext:list.length>0,filters:controls(route),renderHeading:heading,renderTags:tags,renderSenseLabel:sense=>e(t(typeName(sense)))+' · '+e(sense.studyMeaning),renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,warning:store.warning?t('Storage Unavailable'):''},{
+   bindFilters:host=>bindControls(host,route),resize:value=>{flashcardSetSize=saveFlashcardSetSize(value);flashcardKey='';refresh();},nextSet:beginNext,reviewLearning,shuffle:()=>{if(f.status==='mastered'||!flashcardSession.learningCount)beginNext();else reviewLearning();},flip:()=>{flipped=!flipped;haptic();return flipped;},move:direction=>{flashcardSession.move(direction);flipped=false;exampleIndex=0;refresh();},moveExample:direction=>{exampleIndex=(exampleIndex+direction+examples.length)%examples.length;return exampleIndex;},mark:status=>{if(!word)return;for(const sense of readWordSenses(word))store.setWordStatus(sense.id,status);flashcardSession.mark(status);flipped=false;exampleIndex=0;haptic();refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),speakExample:()=>speak(examples[exampleIndex].example.text,host),
   });
  }
  function chooseQuestion(mode){
@@ -302,10 +315,10 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   byId=new Map(words.map(word=>[word.id,word]));
   japaneseFurigana=language==='ja'?createJapaneseFurigana(words,value?.practiceData,value?.readingPractice):undefined;
   morphemeModel=value?.morphemes?.length?createMorphemeModel(value.morphemes,language==='en'?headwords.group(words):words):undefined;
-  order=[];
+  flashcardKey='';flashcardSession.begin([],{size:flashcardSetSize,resetSeen:true});
   resetQuestion();
  }
- return {id:language,screens,ready:store.ready,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();await store.flush();resetQuestion();return store.warning;}},
+ return {id:language,screens,ready:store.ready,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();await store.flush();flashcardKey='';flashcardSession.begin([],{size:flashcardSetSize,resetSeen:true});resetQuestion();return store.warning;}},
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),

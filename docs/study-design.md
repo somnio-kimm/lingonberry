@@ -201,3 +201,11 @@ Run `node scripts/verify-answer-sounds-browser.mjs` for default-off, settings/re
 Visible sentence translations underline a reliable matching phrase for the missing word, before and after answering. `translation-focus.js` uses validated explicit spans or conservative selected-language lexical/inflection matches, preserves original UTF-16/grapheme boundaries and rejects ambiguous matches. `translation-target-view.js` escapes all text. Source spelling is not an alignment fallback; English-to-English definition hints remain plain. Saved question strings and translations are never rewritten.
 
 Automatic matching currently covers about two thirds of usable translated Cloze targets across the released pairs. Paraphrases and uncertain lexical homographs require reviewed explicit annotations; absence of an underline does not mean missing translation data. Run `node scripts/audit-translation-focus.mjs` for coverage and `node scripts/verify-translation-focus-browser.mjs` for all four adapters, EN/KO, phone/tablet, themes and single/separated blanks.
+
+## Focused Flashcard sets
+
+All four languages use one shared Flashcard session/view. Choose10,20,50 or100 cards, default20; the feature preference is shared across languages. To Learn is the default scope. English sessions keep a stable [level, exact spelling] identity while writing only the displayed original sense IDs. Learning and Mastered are directly below the card, keep keyboard focus and advance to the next unclassified card.
+
+A completed set offers Shuffle Learning for only that round's unfinished cards and Next Set for unseen eligible words. Completing or previewing a round cannot silently fill it with new words. Existing dictionary details remain under the ellipsis control; example paging keeps each meaning paired to its own example/translation. Other quiz layouts and progress records are unchanged.
+
+The model owns session identity/selection; adapters own existing progress writes. Readings and German article colours remain language policies. Set-size storage failures are nonfatal; reset/removing study content clears the ephemeral round. Run `verify-flashcard-sets-browser.mjs` and `verify-flashcard-focus-browser.mjs` for capped sets, classifications, focus/inert behavior, completion/repeats, language/theme/device parity and stable history.

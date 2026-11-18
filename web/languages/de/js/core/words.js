@@ -8,4 +8,4 @@ export function wordHeading(w) {
 }
 export const studyWords=(words,level,filters={})=>dictionaryEntries(words,{...filters,level});
 export const studyTypes=words=>[...new Set(words.map(wordType))];
-export function filterStudyStatus(words,store,status='all'){return status==='all'?[...words]:words.filter(w=>store.wordStatus(w.id)===status);}
+export function filterStudyStatus(words,store,status='all'){return status==='all'?[...words]:words.filter(w=>status==='unfamiliar'?store.wordStatus(w.id)!=='mastered':store.wordStatus(w.id)===status);}

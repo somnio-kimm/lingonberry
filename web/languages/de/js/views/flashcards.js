@@ -1,31 +1,26 @@
-import { studyLevelLabel } from '../app-definition.js';
-import { escapeHtml as e } from '../../../../js/shared/ui.js';
-import { t, getLocale, wordMeaning } from '../core/i18n.js';
-import { studyWords, shuffleWords, wordHeading, filterStudyStatus } from '../core/words.js';
-import { studyFilterMarkup, typeLabel, exampleMarkup, createStudyControls } from './study-components.js';
-export function renderFlashcards(el,ctx) {
- const level=ctx.store.state.preferences.studyLevel,pool=studyWords(ctx.words,level);
- let pos='all',status='all',deck=[],index=0,flipped=false,filterOpen=false;
- const controls=createStudyControls(el,ctx);
- const currentPool=()=>filterStudyStatus(studyWords(ctx.words,level,{pos}),ctx.store,status);
- function reshuffle(){deck=shuffleWords(currentPool());index=0;flipped=false;}
- function move(){if(deck.length<=1)return;const previous=index;index=Math.floor(Math.random()*(deck.length-1));if(index>=previous)index++;flipped=false;ctx.haptic();draw();}
- function draw() {
-  const available=new Set(currentPool().map(w=>w.id));deck=deck.filter(w=>available.has(w.id));if(!deck.length&&available.size)reshuffle();index=Math.min(index,Math.max(0,deck.length-1));const w=deck[index];
-  function face(back) {
-   const badges=`<span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(w.cefr))}</span><span class="detail-badge detail-badge-pos">${e(typeLabel(w))}</span>`;
-   return `<div class="flashcard-${back?'back':'front'}" aria-hidden="${back!==flipped}" ${back!==flipped?'inert':''}><div class="fc-card-head"><button class="quiz-status-btn fc-card-status">${t('Study status')}</button><div class="fc-head-center"><div class="fc-head-badges ${back?'':'fc-head-badges--mirror'}" ${back?'':'aria-hidden="true"'}>${badges}</div></div><button class="detail-sheet-icon detail-sheet-speak speak-btn" aria-label="${t('Speak word')}">🔊</button></div><div class="fc-card-main ${back?'fc-card-main-back':''}" role="button" tabindex="${back===flipped?'0':'-1'}" aria-label="${t(back?'Show word':'Show meaning')}"><div class="fc-core ${back?'':'fc-core--front'}"><div class="flashcard-word" lang="de">${wordHeading(w)}</div><div class="fc-meaning" lang="${getLocale()}">${e(wordMeaning(w))}</div></div>${back&&w.examples?.length?`<div class="fc-examples">${exampleMarkup(w,2)}</div>`:''}</div></div>`;
-  }
-  el.innerHTML=`<div class="fc-toolbar"><div class="section-title">${t('Flashcards')}</div><div class="fc-tools"><button class="btn-small" id="fc-shuffle">🔀 ${t('Shuffle')}</button><span id="flashcard-count">${deck.length} ${t('cards')}</span></div></div>${studyFilterMarkup(pool,ctx.store,status,pos,filterOpen)}<div class="quiz-after-filter">${w?`<div class="flashcard-wrapper"><div class="flashcard ${flipped?'flipped':''}" id="card" data-word-id="${e(w.id)}">${face(false)}${face(true)}</div></div><div class="fc-navigation"><button class="fc-nav" id="prev-btn" aria-label="${t('Previous word')}" ${deck.length<=1?'disabled':''}>‹</button><button class="fc-nav" id="next-btn" aria-label="${t('Next word')}" ${deck.length<=1?'disabled':''}>›</button></div>`:`<section class="panel empty-wrong"><p>${t('No matching words for these filters.')}</p></section>`}</div><p class="study-audio-status muted" role="status" hidden></p>`;
-  el.querySelector('.filter-fold').ontoggle=ev=>{filterOpen=ev.target.open;};
-  el.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{status=b.dataset.f;ctx.haptic();reshuffle();draw();});
-  el.querySelectorAll('[data-tag]').forEach(b=>b.onclick=()=>{pos=b.dataset.tag;ctx.haptic();reshuffle();draw();});
-  el.querySelector('#fc-shuffle').onclick=()=>{ctx.haptic();reshuffle();draw();};
-  el.querySelector('#card')?.addEventListener('click',ev=>{if(ev.target.closest('.speak-btn,.fc-card-status'))return;flipped=!flipped;ctx.haptic();draw();});
-  el.querySelectorAll('.fc-card-main').forEach(main=>main.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();flipped=!flipped;ctx.haptic();draw();}});
-  el.querySelectorAll('.fc-card-status').forEach(b=>b.onclick=ev=>{ev.stopPropagation();ctx.haptic();controls.open(w,draw);});
-  el.querySelectorAll('.speak-btn').forEach(b=>b.onclick=ev=>{ev.stopPropagation();controls.speak(w);});
-  el.querySelector('#prev-btn')?.addEventListener('click',move);el.querySelector('#next-btn')?.addEventListener('click',move);
+import {studyLevelLabel} from '../app-definition.js';
+import {escapeHtml as e} from '../../../../js/shared/ui.js';
+import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../../../../js/shared/flashcard-session.js';
+import {renderLexiconFlashcards} from '../../../../js/shared/lexicon-flashcard-view.js';
+import {wordMeaning,sentenceMeaning,t,getLocale} from '../core/i18n.js';
+import {studyWords,wordHeading,filterStudyStatus} from '../core/words.js';
+import {studyFilterMarkup,typeLabel,createStudyControls} from './study-components.js';
+import {speakGerman} from '../core/media.js';
+export function renderFlashcards(el,ctx){
+ const level=ctx.store.state.preferences.studyLevel;
+ if(!ctx.flashcardState||ctx.flashcardState.source!==ctx.words||ctx.flashcardState.level!==level)ctx.flashcardState={source:ctx.words,level,pos:'all',status:'unfamiliar',open:false,key:'',flipped:false,exampleIndex:0,session:createFlashcardSession({readStatus:word=>ctx.store.wordStatus(word.id)})};
+ const state=ctx.flashcardState,session=state.session,controls=createStudyControls(el,ctx);let cleanup;
+ const readPool=()=>filterStudyStatus(studyWords(ctx.words,level,{pos:state.pos}),ctx.store,state.status);
+ function draw(){
+  cleanup?.();state.size=readFlashcardSetSize();const pool=readPool(),key=JSON.stringify([state.pos,state.status,state.size]);
+  if(state.key!==key){state.key=key;session.begin(pool,{size:state.size,resetSeen:true});state.flipped=false;state.exampleIndex=0;}else session.reconcile(pool);
+  const word=session.current,examples=(word?.examples||[]).map(example=>({word,example:{...example,text:example.de,studyTranslation:sentenceMeaning(example)}}));state.exampleIndex%=Math.max(1,examples.length);
+  const restart=()=>{session.begin(readPool(),{size:state.size});state.flipped=false;state.exampleIndex=0;draw();};
+  const repeat=()=>{session.reviewLearning();state.flipped=false;state.exampleIndex=0;draw();};
+  cleanup=renderLexiconFlashcards(el,{locale:getLocale(),language:'de',word:word?{...word,studyMeaning:wordMeaning(word)}:undefined,examples,exampleIndex:state.exampleIndex,flipped:state.flipped,total:session.total,index:session.index,completed:session.completed,setSize:state.size,phase:session.phase,summary:session.summary,learningCount:session.learningCount,canStartNext:pool.length>0,filters:studyFilterMarkup(studyWords(ctx.words,level),ctx.store,state.status,state.pos,state.open,'',true),renderHeading:wordHeading,renderTags:word=>`<span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(word.cefr))}</span><span class="detail-badge detail-badge-pos">${e(typeLabel(word))}</span>`,renderExample:example=>`<div class="example-sentence" lang="de">${e(example.de)}</div>`,warning:ctx.store.warning?t(ctx.store.warning):''},{
+   bindFilters:host=>{const fold=host.querySelector('.filter-fold');fold.ontoggle=()=>{state.open=fold.open;};for(const [attr,key]of [['data-f','status'],['data-tag','pos']])host.querySelectorAll(`[${attr}]`).forEach(button=>button.onclick=()=>{state[key]=button.getAttribute(attr);state.key='';ctx.haptic();draw();});},
+   resize:value=>{saveFlashcardSetSize(value);state.key='';draw();},nextSet:restart,reviewLearning:repeat,shuffle:()=>{if(state.status==='mastered'||!session.learningCount)restart();else repeat();},flip:()=>{state.flipped=!state.flipped;ctx.haptic();return state.flipped;},move:direction=>{session.move(direction);state.flipped=false;state.exampleIndex=0;ctx.haptic();draw();},moveExample:direction=>{state.exampleIndex=(state.exampleIndex+direction+examples.length)%examples.length;return state.exampleIndex;},mark:status=>{if(!word)return;ctx.store.setWordStatus(word.id,status);session.mark(status);state.flipped=false;state.exampleIndex=0;ctx.haptic();ctx.updateStatus();draw();},openWord:()=>controls.open(word,draw),speakWord:()=>controls.speak(word),speakExample:()=>speakGerman(examples[state.exampleIndex].example.de),
+  });
  }
- reshuffle();draw();return controls.cleanup;
+ draw();return()=>{cleanup?.();controls.cleanup();};
 }
