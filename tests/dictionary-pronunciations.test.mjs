@@ -20,3 +20,10 @@ test('common short words use supplied British English and standard German transc
 });
 
 test('IPA selection rejects ambiguous, historical and mismatched forms',()=>{const result=spawnSync('python3',['scripts/content/import-dictionary-pronunciations.py','--self-test'],{cwd:new URL('../',import.meta.url),encoding:'utf8'});assert.equal(result.status,0,result.stderr);});
+test('German grammatical words use exact supplied subtypes and retain the prior pronunciation ledger',async()=>{
+ const [core,prior,ledger]=await Promise.all([read('language-packages/de-core-4.1.1.json'),read('language-packages/de-core-4.1.0.json'),read('language-packages/sources/german-functional-pronunciations-20261118.json')]);assert.equal(core.entries.length,prior.entries.length);
+ const added=core.entries.filter(row=>row.pronunciationSource?.supplementRecord!==undefined);assert.equal(added.length,561);for(const row of added){assert.equal(row.partOfSpeech,'functional');const item=ledger.entries[row.pronunciationSource.supplementRecord];assert.equal(item.word,row.word);assert.equal(item.partOfSpeech,row.grammar.subtype==='article'?'determiner':row.grammar.subtype);assert.equal(item.pronunciation,row.pronunciation);}
+ for(const [word,ipa]of [['ab','[ap]'],['ob','[ɔp]'],['ich','[ɪç]'],['das','[das]'],['und','[ʊnt]']])assert.equal(core.entries.find(row=>row.word===word&&row.partOfSpeech==='functional').pronunciation,ipa);
+ for(const old of prior.entries.filter(row=>row.pronunciation)){const current=core.entries.find(row=>row.id===old.id);assert.equal(current.pronunciation,old.pronunciation);assert.deepEqual(current.pronunciationSource,old.pronunciationSource);}
+ for(const locale of ['en','ko']){const pair=await read(`language-packages/de-${locale}-4.1.1.json`),previous=await read(`language-packages/de-${locale}-4.1.0.json`);assert.deepEqual(pair.entries,previous.entries);validateExplanation(core,pair);}
+});

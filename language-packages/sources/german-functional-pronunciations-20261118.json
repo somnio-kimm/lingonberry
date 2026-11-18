@@ -1,0 +1,4476 @@
+{
+  "schemaVersion": 1,
+  "creator": "German Wiktionary contributors",
+  "license": "CC-BY-SA-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "sourceFile": "local-data/sources/legacy-german-dictionary-downloads/de-extract.jsonl.gz",
+  "sourceSha256": "2e66f18a093e94b29b04733d0222625695a3d5ed199e700059193895490dfb19",
+  "snapshotNote": "Existing cached extraction; exact upstream dump date not recorded.",
+  "changes": "Matched German functional entries by their explicitly supplied grammatical subtype (articles map to dictionary determiners), not by the broad functional umbrella. Preferred unqualified over region-qualified supplied IPA and omitted unresolved alternatives; no audio or generated transcription.",
+  "entries": [
+    {
+      "word": "Addis Abeba",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌadɪs‿aˈbeːba]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Addis%20Abeba",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Addis%20Abeba&action=history"
+    },
+    {
+      "word": "Adriatisches Meer",
+      "partOfSpeech": "expression",
+      "pronunciation": "[adʁiˈaːtɪʃəs meːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Adriatisches%20Meer",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Adriatisches%20Meer&action=history"
+    },
+    {
+      "word": "Alte Welt",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈaltə ˈvɛlt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Alte%20Welt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Alte%20Welt&action=history"
+    },
+    {
+      "word": "Altes Ägypten",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌaltəs ɛˈɡʏptn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Altes%20%C3%84gypten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Altes%20%C3%84gypten&action=history"
+    },
+    {
+      "word": "Amerikanischer Bürgerkrieg",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ameʁiˈkaːnɪʃɐ ˈbʏʁɡɐkʁiːk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Amerikanischer%20B%C3%BCrgerkrieg",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Amerikanischer%20B%C3%BCrgerkrieg&action=history"
+    },
+    {
+      "word": "Anonyme Alkoholiker",
+      "partOfSpeech": "expression",
+      "pronunciation": "[anoˌnyːmə alkoˈhoːlɪkɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Anonyme%20Alkoholiker",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Anonyme%20Alkoholiker&action=history"
+    },
+    {
+      "word": "Antigua und Barbuda",
+      "partOfSpeech": "expression",
+      "pronunciation": "[anˈtiːɡwaː ˌʔʊnt baʁˈbuːdaː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Antigua%20und%20Barbuda",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Antigua%20und%20Barbuda&action=history"
+    },
+    {
+      "word": "Atlantischer Nordkaper",
+      "partOfSpeech": "expression",
+      "pronunciation": "[atˌlantɪʃɐ ˈnɔʁtkaːpɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Atlantischer%20Nordkaper",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Atlantischer%20Nordkaper&action=history"
+    },
+    {
+      "word": "Atlantischer Ozean",
+      "partOfSpeech": "expression",
+      "pronunciation": "[atˌlantɪʃə ˈʔoːt͡seaːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Atlantischer%20Ozean",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Atlantischer%20Ozean&action=history"
+    },
+    {
+      "word": "Bank für Internationalen Zahlungsausgleich",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Bank%20f%C3%BCr%20Internationalen%20Zahlungsausgleich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Bank%20f%C3%BCr%20Internationalen%20Zahlungsausgleich&action=history"
+    },
+    {
+      "word": "Bildende Kunst",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈbɪldn̩də ˈkʊnst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Bildende%20Kunst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Bildende%20Kunst&action=history"
+    },
+    {
+      "word": "Blaues Haus",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌblaʊ̯əs ˈhaʊ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Blaues%20Haus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Blaues%20Haus&action=history"
+    },
+    {
+      "word": "Cabo Verde",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌkabo ˈvɛʁdə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Cabo%20Verde",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Cabo%20Verde&action=history"
+    },
+    {
+      "word": "Deutsche Demokratische Republik",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌdɔɪ̯tʃə demoˌkʁaːtɪʃə ʁepuˈblik]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Deutsche%20Demokratische%20Republik",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Deutsche%20Demokratische%20Republik&action=history"
+    },
+    {
+      "word": "Dritter Weltkrieg",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈdʁɪtɐ ˈvɛltkʁiːk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Dritter%20Weltkrieg",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Dritter%20Weltkrieg&action=history"
+    },
+    {
+      "word": "Drittes Reich",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈdʁɪtəs ˈʁaɪ̯ç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Drittes%20Reich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Drittes%20Reich&action=history"
+    },
+    {
+      "word": "Erster Weltkrieg",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈeːɐ̯stɐ ˈvɛltkʁiːk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Erster%20Weltkrieg",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Erster%20Weltkrieg&action=history"
+    },
+    {
+      "word": "Gelbe Karte",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈɡɛlbə ˈkaʁtə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Gelbe%20Karte",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Gelbe%20Karte&action=history"
+    },
+    {
+      "word": "Genfer Konvention",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɡɛnfɐ kɔnvɛnˈt͡si̯oːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Genfer%20Konvention",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Genfer%20Konvention&action=history"
+    },
+    {
+      "word": "Gleichgewicht des Schreckens",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɡlaɪ̯çɡəvɪçt dɛs ˈʃʁɛkn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Gleichgewicht%20des%20Schreckens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Gleichgewicht%20des%20Schreckens&action=history"
+    },
+    {
+      "word": "Gleichheit vor dem Gesetz",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Gleichheit%20vor%20dem%20Gesetz",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Gleichheit%20vor%20dem%20Gesetz&action=history"
+    },
+    {
+      "word": "Golden Retriever",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈɡɔʊ̯ldn̩ ʁiˈtʁiːvɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Golden%20Retriever",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Golden%20Retriever&action=history"
+    },
+    {
+      "word": "Goldenes Kalb",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɡɔldənəs ˈkalp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Goldenes%20Kalb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Goldenes%20Kalb&action=history"
+    },
+    {
+      "word": "Große Seen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɡʁoːsə ˈzeːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Gro%C3%9Fe%20Seen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Gro%C3%9Fe%20Seen&action=history"
+    },
+    {
+      "word": "Heiliger Geist",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈhaɪ̯lɪɡɐ ˈɡaɪ̯st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Heiliger%20Geist",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Heiliger%20Geist&action=history"
+    },
+    {
+      "word": "Internationale Beziehungen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɪntɐnat͡si̯oˈnaːlə bəˈt͡siːʊŋən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Internationale%20Beziehungen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Internationale%20Beziehungen&action=history"
+    },
+    {
+      "word": "Internationaler Seegerichtshof",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪntɐnat͡si̯oˌnaːlɐ ˈzeːɡəʁɪçt͡sˌhoːf]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Internationaler%20Seegerichtshof",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Internationaler%20Seegerichtshof&action=history"
+    },
+    {
+      "word": "Internationaler Währungsfonds",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪntɐnat͡si̯oˌnaːlɐ ˈvɛːʁʊŋsˌfɔ̃ː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Internationaler%20W%C3%A4hrungsfonds",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Internationaler%20W%C3%A4hrungsfonds&action=history"
+    },
+    {
+      "word": "Irische See",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈiːʁɪʃə ˈzeː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Irische%20See",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Irische%20See&action=history"
+    },
+    {
+      "word": "Kap Verde",
+      "partOfSpeech": "expression",
+      "pronunciation": "[kap ˈvɛʁdə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Kap%20Verde",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Kap%20Verde&action=history"
+    },
+    {
+      "word": "Koreanische Halbinsel",
+      "partOfSpeech": "expression",
+      "pronunciation": "[koʁeˈaːnɪʃə ˈhalpˌʔɪnzl̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Koreanische%20Halbinsel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Koreanische%20Halbinsel&action=history"
+    },
+    {
+      "word": "Kreuz des Südens",
+      "partOfSpeech": "expression",
+      "pronunciation": "[kʁɔɪ̯t͡s dəs ˈzyːdn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Kreuz%20des%20S%C3%BCdens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Kreuz%20des%20S%C3%BCdens&action=history"
+    },
+    {
+      "word": "Krieg gegen den Terror",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Krieg%20gegen%20den%20Terror",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Krieg%20gegen%20den%20Terror&action=history"
+    },
+    {
+      "word": "Langer Marsch",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌlaŋɐ ˈmaʁʃ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Langer%20Marsch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Langer%20Marsch&action=history"
+    },
+    {
+      "word": "Meter pro Sekunde",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Meter%20pro%20Sekunde",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Meter%20pro%20Sekunde&action=history"
+    },
+    {
+      "word": "Mongolisches Plateau",
+      "partOfSpeech": "expression",
+      "pronunciation": "[mɔŋˌɡoːlɪʃəs plaˈtoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Mongolisches%20Plateau",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Mongolisches%20Plateau&action=history"
+    },
+    {
+      "word": "Morgenstunde hat Gold im Munde",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌmɔʁɡn̩ʃtʊndə hat ˈɡɔlt ɪm ˌmʊndə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Morgenstunde%20hat%20Gold%20im%20Munde",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Morgenstunde%20hat%20Gold%20im%20Munde&action=history"
+    },
+    {
+      "word": "Nationaler Volkskongress",
+      "partOfSpeech": "expression",
+      "pronunciation": "[nat͡si̯oˌnaːlɐ ˈfɔlkskɔŋɡʁɛs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Nationaler%20Volkskongress",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Nationaler%20Volkskongress&action=history"
+    },
+    {
+      "word": "Neues Jerusalem",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌnɔɪ̯əs jeˈʁuːzalɛm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Neues%20Jerusalem",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Neues%20Jerusalem&action=history"
+    },
+    {
+      "word": "Oberster Gerichtshof",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈoːbɐstɐ ɡəˈʁɪçt͡sˌhoːf]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Oberster%20Gerichtshof",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Oberster%20Gerichtshof&action=history"
+    },
+    {
+      "word": "Oberster Richter",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈoːbɐstɐ ˈʁɪçtɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Oberster%20Richter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Oberster%20Richter&action=history"
+    },
+    {
+      "word": "Olympische Sommerspiele",
+      "partOfSpeech": "expression",
+      "pronunciation": "[oˌlʏmpɪʃə ˈzɔmɐʃpiːlə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Olympische%20Sommerspiele",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Olympische%20Sommerspiele&action=history"
+    },
+    {
+      "word": "Olympische Spiele",
+      "partOfSpeech": "expression",
+      "pronunciation": "[oˌlʏmpɪʃə ˈʃpiːlə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Olympische%20Spiele",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Olympische%20Spiele&action=history"
+    },
+    {
+      "word": "Opium des Volkes",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌoːpi̯ʊm dɛs ˈfɔlkəs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Opium%20des%20Volkes",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Opium%20des%20Volkes&action=history"
+    },
+    {
+      "word": "Rad fahren",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʁaːtˌfaːʁən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Rad%20fahren",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Rad%20fahren&action=history"
+    },
+    {
+      "word": "Rechenschaft ablegen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʁɛçn̩ʃaft ˈapˌleːɡn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Rechenschaft%20ablegen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Rechenschaft%20ablegen&action=history"
+    },
+    {
+      "word": "Recht auf Leben",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Recht%20auf%20Leben",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Recht%20auf%20Leben&action=history"
+    },
+    {
+      "word": "Republik China",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ʁepuˈbliːk ˈçiːnaː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Republik%20China",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Republik%20China&action=history"
+    },
+    {
+      "word": "Republik Korea",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ʁepuˈbliːk koˈʁeːa]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Republik%20Korea",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Republik%20Korea&action=history"
+    },
+    {
+      "word": "Republik Zypern",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʁepuˈbliːk ˈt͡syːpɐn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Republik%20Zypern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Republik%20Zypern&action=history"
+    },
+    {
+      "word": "Republik Österreich",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ʁepuˈbliːk ˈøːstəʁaɪ̯ç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Republik%20%C3%96sterreich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Republik%20%C3%96sterreich&action=history"
+    },
+    {
+      "word": "Rote Garde",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʁoːtə ˈɡaʁdə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Rote%20Garde",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Rote%20Garde&action=history"
+    },
+    {
+      "word": "Rote Khmer",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʁoːtə ˈkmeːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Rote%20Khmer",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Rote%20Khmer&action=history"
+    },
+    {
+      "word": "Roter Platz",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʁoːtɐ ˈplat͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Roter%20Platz",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Roter%20Platz&action=history"
+    },
+    {
+      "word": "Schere Stein Papier",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Schere%20Stein%20Papier",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Schere%20Stein%20Papier&action=history"
+    },
+    {
+      "word": "Schiefer Turm von Pisa",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Schiefer%20Turm%20von%20Pisa",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Schiefer%20Turm%20von%20Pisa&action=history"
+    },
+    {
+      "word": "Schwarze Legende",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaʁt͡sə leˈɡɛndə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Schwarze%20Legende",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Schwarze%20Legende&action=history"
+    },
+    {
+      "word": "Schwarzes Schiff",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaʁt͡səs ˈʃɪf]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Schwarzes%20Schiff",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Schwarzes%20Schiff&action=history"
+    },
+    {
+      "word": "Schweizerische Eidgenossenschaft",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaɪ̯t͡səʁɪʃə ˈaɪ̯tɡəˌnɔsn̩ʃaft]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Schweizerische%20Eidgenossenschaft",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Schweizerische%20Eidgenossenschaft&action=history"
+    },
+    {
+      "word": "Sibirischer Tiger",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ziˈbiːʁɪʃɐ ˈtiːɡɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Sibirischer%20Tiger",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Sibirischer%20Tiger&action=history"
+    },
+    {
+      "word": "Sie",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ziː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Sie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Sie&action=history"
+    },
+    {
+      "word": "Sinn des Lebens",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Sinn%20des%20Lebens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Sinn%20des%20Lebens&action=history"
+    },
+    {
+      "word": "Sixtinische Kapelle",
+      "partOfSpeech": "expression",
+      "pronunciation": "[zɪksˌtiːnɪʃə kaˈpɛlə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Sixtinische%20Kapelle",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Sixtinische%20Kapelle&action=history"
+    },
+    {
+      "word": "Sohn des Himmels",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌzoːn dɛs ˈhɪml̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Sohn%20des%20Himmels",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Sohn%20des%20Himmels&action=history"
+    },
+    {
+      "word": "Ständiger Schiedshof",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃtɛndɪɡɐ ˈʃiːt͡sˌhoːf]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/St%C3%A4ndiger%20Schiedshof",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=St%C3%A4ndiger%20Schiedshof&action=history"
+    },
+    {
+      "word": "Trinidad und Tobago",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈtʁɪniˌdat ʊnt toˈbaːɡo]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Trinidad%20und%20Tobago",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Trinidad%20und%20Tobago&action=history"
+    },
+    {
+      "word": "Union der Sozialistischen Sowjetrepubliken",
+      "partOfSpeech": "expression",
+      "pronunciation": "[uˈni̯oːn deːɐ̯ zot͡si̯aˈlɪstɪʃn̩ zɔvˈjɛtʁepuˌbliːkn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Union%20der%20Sozialistischen%20Sowjetrepubliken",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Union%20der%20Sozialistischen%20Sowjetrepubliken&action=history"
+    },
+    {
+      "word": "Vaterländischer Befreiungskrieg",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈfaːtɐlɛndɪʃɐ bəˈfʁaɪ̯ʊŋskʁiːk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Vaterl%C3%A4ndischer%20Befreiungskrieg",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Vaterl%C3%A4ndischer%20Befreiungskrieg&action=history"
+    },
+    {
+      "word": "Verbotene Stadt",
+      "partOfSpeech": "expression",
+      "pronunciation": "[fɛɐ̯ˌboːtənə ˈʃtat]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Verbotene%20Stadt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Verbotene%20Stadt&action=history"
+    },
+    {
+      "word": "Vereinigte Arabische Republik",
+      "partOfSpeech": "expression",
+      "pronunciation": "[fɛɐ̯ˌʔaɪ̯nɪçtə ʔaˌʁaːbɪʃə ʁepuˈbliːk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Vereinigte%20Arabische%20Republik",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Vereinigte%20Arabische%20Republik&action=history"
+    },
+    {
+      "word": "Vereinte Nationen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[fɛɐ̯ˌʔaɪ̯ntə naˈt͡si̯oːnən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Vereinte%20Nationen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Vereinte%20Nationen&action=history"
+    },
+    {
+      "word": "Volksrepublik China",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌfɔlksʁepubliːk ˈçiːnaː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Volksrepublik%20China",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Volksrepublik%20China&action=history"
+    },
+    {
+      "word": "Volksrepublik Donezk",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Volksrepublik%20Donezk",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Volksrepublik%20Donezk&action=history"
+    },
+    {
+      "word": "Volksrepublik Lugansk",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈfɔlksʁepuˌbliːk luˈɡansk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Volksrepublik%20Lugansk",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Volksrepublik%20Lugansk&action=history"
+    },
+    {
+      "word": "Weißer Terror",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌvaɪ̯sɐ ˈtɛʁoːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Wei%C3%9Fer%20Terror",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Wei%C3%9Fer%20Terror&action=history"
+    },
+    {
+      "word": "Wendekreis des Krebses",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Wendekreis%20des%20Krebses",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Wendekreis%20des%20Krebses&action=history"
+    },
+    {
+      "word": "Wissen ist Macht",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Wissen%20ist%20Macht",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Wissen%20ist%20Macht&action=history"
+    },
+    {
+      "word": "Zeit der Drei Reiche",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Zeit%20der%20Drei%20Reiche",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Zeit%20der%20Drei%20Reiche&action=history"
+    },
+    {
+      "word": "Zeit der Frühlings- und Herbstannalen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Zeit%20der%20Fr%C3%BChlings-%20und%20Herbstannalen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Zeit%20der%20Fr%C3%BChlings-%20und%20Herbstannalen&action=history"
+    },
+    {
+      "word": "Zeit der Streitenden Reiche",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Zeit%20der%20Streitenden%20Reiche",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Zeit%20der%20Streitenden%20Reiche&action=history"
+    },
+    {
+      "word": "Zeit ist Geld",
+      "partOfSpeech": "expression",
+      "pronunciation": "[t͡saɪ̯t ɪst ɡɛlt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Zeit%20ist%20Geld",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Zeit%20ist%20Geld&action=history"
+    },
+    {
+      "word": "Zuckerbrot und Peitsche",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈt͡sʊkɐˌbʁoːt ʊnt ˈpaɪ̯t͡ʃə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/Zuckerbrot%20und%20Peitsche",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=Zuckerbrot%20und%20Peitsche&action=history"
+    },
+    {
+      "word": "a posteriori",
+      "partOfSpeech": "expression",
+      "pronunciation": "[a pɔsteˈʁi̯oːʁi]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/a%20posteriori",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=a%20posteriori&action=history"
+    },
+    {
+      "word": "a priori",
+      "partOfSpeech": "expression",
+      "pronunciation": "[a pʁiˈoːʁi]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/a%20priori",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=a%20priori&action=history"
+    },
+    {
+      "word": "ab",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ap]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ab",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ab&action=history"
+    },
+    {
+      "word": "ab und zu",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ap ʊnt t͡suː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ab%20und%20zu",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ab%20und%20zu&action=history"
+    },
+    {
+      "word": "abends",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaːbn̩t͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/abends",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=abends&action=history"
+    },
+    {
+      "word": "aber",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ˈaːbɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/aber",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=aber&action=history"
+    },
+    {
+      "word": "abstrakte Kunst",
+      "partOfSpeech": "expression",
+      "pronunciation": "[apˈstʁaktə ˈkʊnst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/abstrakte%20Kunst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=abstrakte%20Kunst&action=history"
+    },
+    {
+      "word": "abwärts",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈapvɛʁt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/abw%C3%A4rts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=abw%C3%A4rts&action=history"
+    },
+    {
+      "word": "acht",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[axt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/acht",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=acht&action=history"
+    },
+    {
+      "word": "achtzehn",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈaxt͡seːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/achtzehn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=achtzehn&action=history"
+    },
+    {
+      "word": "aktiver Vulkan",
+      "partOfSpeech": "expression",
+      "pronunciation": "[akˌtiːvɐ vʊlˈkaːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/aktiver%20Vulkan",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=aktiver%20Vulkan&action=history"
+    },
+    {
+      "word": "akustische Gitarre",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aˌkʊstɪʃə ɡiˈtaʁə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/akustische%20Gitarre",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=akustische%20Gitarre&action=history"
+    },
+    {
+      "word": "alles",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈaləs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/alles",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=alles&action=history"
+    },
+    {
+      "word": "als",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[als]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/als",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=als&action=history"
+    },
+    {
+      "word": "als ob",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[als ʔɔp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/als%20ob",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=als%20ob&action=history"
+    },
+    {
+      "word": "also",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈalzo]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/also",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=also&action=history"
+    },
+    {
+      "word": "amerikanisches Englisch",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ameʁiˌkaːnɪʃəs ˈɛŋlɪʃ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/amerikanisches%20Englisch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=amerikanisches%20Englisch&action=history"
+    },
+    {
+      "word": "an",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[an]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/an",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=an&action=history"
+    },
+    {
+      "word": "an sein",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈan zaɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/an%20sein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=an%20sein&action=history"
+    },
+    {
+      "word": "andererseits",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈandəʁɐzaɪ̯t͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/andererseits",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=andererseits&action=history"
+    },
+    {
+      "word": "anders",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈandɐs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/anders",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=anders&action=history"
+    },
+    {
+      "word": "anfangs",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈanfaŋs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/anfangs",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=anfangs&action=history"
+    },
+    {
+      "word": "angesichts",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈanɡəˌzɪçt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/angesichts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=angesichts&action=history"
+    },
+    {
+      "word": "anhand",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[anˈhant]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/anhand",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=anhand&action=history"
+    },
+    {
+      "word": "auch",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[aʊ̯x]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auch&action=history"
+    },
+    {
+      "word": "auf",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[aʊ̯f]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf&action=history"
+    },
+    {
+      "word": "auf Anhieb",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈanˌhiːp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20Anhieb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20Anhieb&action=history"
+    },
+    {
+      "word": "auf Biegen und Brechen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈbiːɡn̩ ʊnt ˈbʁɛçn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20Biegen%20und%20Brechen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20Biegen%20und%20Brechen&action=history"
+    },
+    {
+      "word": "auf Granit beißen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ɡʁaˈniːt ˈbaɪ̯sn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20Granit%20bei%C3%9Fen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20Granit%20bei%C3%9Fen&action=history"
+    },
+    {
+      "word": "auf Nummer sicher gehen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈnʊmɐ ˈzɪçɐ ˈɡeːən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20Nummer%20sicher%20gehen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20Nummer%20sicher%20gehen&action=history"
+    },
+    {
+      "word": "auf Wiedersehen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈviːdɐˌzeːən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20Wiedersehen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20Wiedersehen&action=history"
+    },
+    {
+      "word": "auf der Hand liegen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20der%20Hand%20liegen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20der%20Hand%20liegen&action=history"
+    },
+    {
+      "word": "auf dünnem Eis",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈdʏnəm ˌaɪ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20d%C3%BCnnem%20Eis",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20d%C3%BCnnem%20Eis&action=history"
+    },
+    {
+      "word": "auf eigene Faust",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˌʔaɪ̯ɡənə ˈfaʊ̯st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20eigene%20Faust",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20eigene%20Faust&action=history"
+    },
+    {
+      "word": "auf jeden Fall",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈjeːdn̩ ˈfal]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20jeden%20Fall",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20jeden%20Fall&action=history"
+    },
+    {
+      "word": "auf keinen Fall",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈkaɪ̯nən ˈfal]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20keinen%20Fall",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20keinen%20Fall&action=history"
+    },
+    {
+      "word": "auf keinen grünen Zweig kommen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aʊ̯f ˈkaɪ̯nən ˈɡʁyːnən t͡svaɪ̯k ˈkɔmən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auf%20keinen%20gr%C3%BCnen%20Zweig%20kommen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auf%20keinen%20gr%C3%BCnen%20Zweig%20kommen&action=history"
+    },
+    {
+      "word": "aufgrund",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[aʊ̯fˈɡʁʊnt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/aufgrund",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=aufgrund&action=history"
+    },
+    {
+      "word": "aufwärts",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaʊ̯fvɛʁt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/aufw%C3%A4rts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=aufw%C3%A4rts&action=history"
+    },
+    {
+      "word": "aus",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[aʊ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/aus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=aus&action=history"
+    },
+    {
+      "word": "auseinander",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˌaʊ̯sʔaɪ̯ˈnandɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auseinander",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auseinander&action=history"
+    },
+    {
+      "word": "auserwähltes Volk",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈaʊ̯sʔɛɐ̯ˌvɛːltəs fɔlk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/auserw%C3%A4hltes%20Volk",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=auserw%C3%A4hltes%20Volk&action=history"
+    },
+    {
+      "word": "ausschließlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaʊ̯sʃliːslɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ausschlie%C3%9Flich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ausschlie%C3%9Flich&action=history"
+    },
+    {
+      "word": "außen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaʊ̯sn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/au%C3%9Fen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=au%C3%9Fen&action=history"
+    },
+    {
+      "word": "außer",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈaʊ̯sɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/au%C3%9Fer",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=au%C3%9Fer&action=history"
+    },
+    {
+      "word": "außerhalb",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈaʊ̯sɐhalp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/au%C3%9Ferhalb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=au%C3%9Ferhalb&action=history"
+    },
+    {
+      "word": "außerirdisches Leben",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈaʊ̯sɐʔɪʁdɪʃəs ˈleːbn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/au%C3%9Ferirdisches%20Leben",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=au%C3%9Ferirdisches%20Leben&action=history"
+    },
+    {
+      "word": "bald",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[balt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bald",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bald&action=history"
+    },
+    {
+      "word": "bedingungslose Kapitulation",
+      "partOfSpeech": "expression",
+      "pronunciation": "[bəˈdɪŋʊŋsloːzə kapitulaˈt͡si̯oːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bedingungslose%20Kapitulation",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bedingungslose%20Kapitulation&action=history"
+    },
+    {
+      "word": "bei",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[baɪ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bei",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bei&action=history"
+    },
+    {
+      "word": "bekanntlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[bəˈkantlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bekanntlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bekanntlich&action=history"
+    },
+    {
+      "word": "bereits",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[bəˈʁaɪ̯t͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bereits",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bereits&action=history"
+    },
+    {
+      "word": "besonders",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[bəˈzɔndɐs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/besonders",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=besonders&action=history"
+    },
+    {
+      "word": "besser",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈbɛsɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/besser",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=besser&action=history"
+    },
+    {
+      "word": "bestimmt",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[bəˈʃtɪmt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bestimmt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bestimmt&action=history"
+    },
+    {
+      "word": "bevor",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[bəˈfoːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bevor",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bevor&action=history"
+    },
+    {
+      "word": "beziehungsweise",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[bəˈt͡siːʊŋsˌvaɪ̯zə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/beziehungsweise",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=beziehungsweise&action=history"
+    },
+    {
+      "word": "bezüglich",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[bəˈt͡syːklɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bez%C3%BCglich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bez%C3%BCglich&action=history"
+    },
+    {
+      "word": "binnen",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈbɪnən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/binnen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=binnen&action=history"
+    },
+    {
+      "word": "bis",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[bɪs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bis",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bis&action=history"
+    },
+    {
+      "word": "bis bald",
+      "partOfSpeech": "expression",
+      "pronunciation": "[bɪs ˈbalt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bis%20bald",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bis%20bald&action=history"
+    },
+    {
+      "word": "bisschen",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈbɪsçən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/bisschen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=bisschen&action=history"
+    },
+    {
+      "word": "blinder Fleck",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌblɪndɐ ˈflɛk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/blinder%20Fleck",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=blinder%20Fleck&action=history"
+    },
+    {
+      "word": "brauner Reis",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈbʁaʊ̯nɐ ˈʁaɪ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/brauner%20Reis",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=brauner%20Reis&action=history"
+    },
+    {
+      "word": "böser Blick",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌbøːzɐ ˈblɪk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/b%C3%B6ser%20Blick",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=b%C3%B6ser%20Blick&action=history"
+    },
+    {
+      "word": "chemische Formel",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈçeːmɪʃə ˈfɔʁml̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/chemische%20Formel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=chemische%20Formel&action=history"
+    },
+    {
+      "word": "chemische Reaktion",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈçeːmɪʃə ʁeakˈt͡si̯oːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/chemische%20Reaktion",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=chemische%20Reaktion&action=history"
+    },
+    {
+      "word": "chemische Reinigung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌçeːmɪʃə ˈʁaɪ̯nɪɡʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/chemische%20Reinigung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=chemische%20Reinigung&action=history"
+    },
+    {
+      "word": "chemische Verbindung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈçeːmɪʃə fɛɐ̯ˌbɪndʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/chemische%20Verbindung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=chemische%20Verbindung&action=history"
+    },
+    {
+      "word": "circa",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈt͡sɪʁka]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/circa",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=circa&action=history"
+    },
+    {
+      "word": "da",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[daː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/da",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=da&action=history"
+    },
+    {
+      "word": "dabei",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[daˈbaɪ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dabei",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dabei&action=history"
+    },
+    {
+      "word": "dafür",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[daˈfyːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/daf%C3%BCr",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=daf%C3%BCr&action=history"
+    },
+    {
+      "word": "damals",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdaːmaːls]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/damals",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=damals&action=history"
+    },
+    {
+      "word": "damit",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[daˈmɪt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/damit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=damit&action=history"
+    },
+    {
+      "word": "danach",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[daˈnaːx]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/danach",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=danach&action=history"
+    },
+    {
+      "word": "dann",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[dan]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dann",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dann&action=history"
+    },
+    {
+      "word": "das",
+      "partOfSpeech": "determiner",
+      "pronunciation": "[das]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/das",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=das&action=history"
+    },
+    {
+      "word": "das Eis brechen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[das ˌaɪ̯s ˈbʁɛçn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/das%20Eis%20brechen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=das%20Eis%20brechen&action=history"
+    },
+    {
+      "word": "dass",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[das]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dass",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dass&action=history"
+    },
+    {
+      "word": "demzufolge",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdeːmt͡suˌfɔlɡə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/demzufolge",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=demzufolge&action=history"
+    },
+    {
+      "word": "den Bogen überspannen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[deːn ˈboːɡn̩ yːbɐˌʃpanən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/den%20Bogen%20%C3%BCberspannen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=den%20Bogen%20%C3%BCberspannen&action=history"
+    },
+    {
+      "word": "den Kopf verlieren",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/den%20Kopf%20verlieren",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=den%20Kopf%20verlieren&action=history"
+    },
+    {
+      "word": "den Kürzeren ziehen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[deːn ˈkʏʁt͡səʁən ˈt͡siːən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/den%20K%C3%BCrzeren%20ziehen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=den%20K%C3%BCrzeren%20ziehen&action=history"
+    },
+    {
+      "word": "den Nagel auf den Kopf treffen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[deːn ˈnaːɡl̩ aʊ̯f deːn ˈkɔp͡f ˈtʁɛfn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/den%20Nagel%20auf%20den%20Kopf%20treffen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=den%20Nagel%20auf%20den%20Kopf%20treffen&action=history"
+    },
+    {
+      "word": "den Teufel an die Wand malen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[deːn ˈtɔɪ̯fl̩ an diː vant ˈmaːlən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/den%20Teufel%20an%20die%20Wand%20malen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=den%20Teufel%20an%20die%20Wand%20malen&action=history"
+    },
+    {
+      "word": "denn",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[dɛn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/denn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=denn&action=history"
+    },
+    {
+      "word": "dennoch",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdɛnɔx]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dennoch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dennoch&action=history"
+    },
+    {
+      "word": "der",
+      "partOfSpeech": "determiner",
+      "pronunciation": "[deːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/der",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=der&action=history"
+    },
+    {
+      "word": "des",
+      "partOfSpeech": "determiner",
+      "pronunciation": "[dɛs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/des",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=des&action=history"
+    },
+    {
+      "word": "destilliertes Wasser",
+      "partOfSpeech": "expression",
+      "pronunciation": "[dɛstɪˈliːɐ̯təs ˈvasɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/destilliertes%20Wasser",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=destilliertes%20Wasser&action=history"
+    },
+    {
+      "word": "dich",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[dɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dich&action=history"
+    },
+    {
+      "word": "die",
+      "partOfSpeech": "determiner",
+      "pronunciation": "[diː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/die",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=die&action=history"
+    },
+    {
+      "word": "die Kirche im Dorf lassen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[diː ˌkɪʁçə ɪm ˈdɔʁf ˌlasn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/die%20Kirche%20im%20Dorf%20lassen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=die%20Kirche%20im%20Dorf%20lassen&action=history"
+    },
+    {
+      "word": "die Nase voll haben",
+      "partOfSpeech": "expression",
+      "pronunciation": "[diː ˈnaːzə fɔl ˈhaːbn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/die%20Nase%20voll%20haben",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=die%20Nase%20voll%20haben&action=history"
+    },
+    {
+      "word": "dienstags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdiːnsˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dienstags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dienstags&action=history"
+    },
+    {
+      "word": "diplomatische Beziehungen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[diploˌmaːtɪʃə bəˈt͡siːʊŋən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/diplomatische%20Beziehungen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=diplomatische%20Beziehungen&action=history"
+    },
+    {
+      "word": "dir",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[diːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dir",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dir&action=history"
+    },
+    {
+      "word": "direkte Demokratie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[diˌʁɛktə demokʁaˈtiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/direkte%20Demokratie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=direkte%20Demokratie&action=history"
+    },
+    {
+      "word": "donnerstags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdɔnɐsˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/donnerstags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=donnerstags&action=history"
+    },
+    {
+      "word": "dort",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[dɔʁt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dort",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dort&action=history"
+    },
+    {
+      "word": "draußen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdʁaʊ̯sn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/drau%C3%9Fen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=drau%C3%9Fen&action=history"
+    },
+    {
+      "word": "drei",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[dʁaɪ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/drei",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=drei&action=history"
+    },
+    {
+      "word": "dreizehn",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈdʁaɪ̯t͡seːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dreizehn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dreizehn&action=history"
+    },
+    {
+      "word": "drin",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[dʁɪn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/drin",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=drin&action=history"
+    },
+    {
+      "word": "drinnen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdʁɪnən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/drinnen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=drinnen&action=history"
+    },
+    {
+      "word": "drittens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdʁɪtn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/drittens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=drittens&action=history"
+    },
+    {
+      "word": "drüben",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈdʁyːbn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/dr%C3%BCben",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=dr%C3%BCben&action=history"
+    },
+    {
+      "word": "durch",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[dʊʁç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/durch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=durch&action=history"
+    },
+    {
+      "word": "durcheinander",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[dʊʁçʔaɪ̯ˈnandɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/durcheinander",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=durcheinander&action=history"
+    },
+    {
+      "word": "eben",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈeːbn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/eben",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=eben&action=history"
+    },
+    {
+      "word": "ebenfalls",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈeːbn̩ˌfals]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ebenfalls",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ebenfalls&action=history"
+    },
+    {
+      "word": "ebenso",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈeːbn̩zoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ebenso",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ebenso&action=history"
+    },
+    {
+      "word": "egal",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈeːɡaːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/egal",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=egal&action=history"
+    },
+    {
+      "word": "eher",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈeːɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/eher",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=eher&action=history"
+    },
+    {
+      "word": "ehrenhafte Entlassung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈeːʁənhaftə ɛntˈlasʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ehrenhafte%20Entlassung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ehrenhafte%20Entlassung&action=history"
+    },
+    {
+      "word": "eigentlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaɪ̯ɡn̩tlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/eigentlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=eigentlich&action=history"
+    },
+    {
+      "word": "ein",
+      "partOfSpeech": "determiner",
+      "pronunciation": "[aɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ein&action=history"
+    },
+    {
+      "word": "ein Auge zudrücken",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ein%20Auge%20zudr%C3%BCcken",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ein%20Auge%20zudr%C3%BCcken&action=history"
+    },
+    {
+      "word": "ein Fass ohne Boden sein",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aɪ̯n ˈfas oːnə ˈboːdn̩ zaɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ein%20Fass%20ohne%20Boden%20sein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ein%20Fass%20ohne%20Boden%20sein&action=history"
+    },
+    {
+      "word": "ein Land, zwei Systeme",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ein%20Land%2C%20zwei%20Systeme",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ein%20Land%2C%20zwei%20Systeme&action=history"
+    },
+    {
+      "word": "ein Tropfen auf den heißen Stein",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aɪ̯n ˈtʁɔp͡fn̩ aʊ̯f deːn ˈhaɪ̯sn̩ ˈʃtaɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ein%20Tropfen%20auf%20den%20hei%C3%9Fen%20Stein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ein%20Tropfen%20auf%20den%20hei%C3%9Fen%20Stein&action=history"
+    },
+    {
+      "word": "ein paar",
+      "partOfSpeech": "expression",
+      "pronunciation": "[aɪ̯n ˈpaːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ein%20paar",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ein%20paar&action=history"
+    },
+    {
+      "word": "eine",
+      "partOfSpeech": "determiner",
+      "pronunciation": "[ˈaɪ̯nə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/eine",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=eine&action=history"
+    },
+    {
+      "word": "eine Rolle spielen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈaɪ̯nə ˈʁɔlə ˈʃpiːlən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/eine%20Rolle%20spielen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=eine%20Rolle%20spielen&action=history"
+    },
+    {
+      "word": "einen Stein ins Rollen bringen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[…]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/einen%20Stein%20ins%20Rollen%20bringen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=einen%20Stein%20ins%20Rollen%20bringen&action=history"
+    },
+    {
+      "word": "einerseits",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaɪ̯nɐzaɪ̯t͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/einerseits",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=einerseits&action=history"
+    },
+    {
+      "word": "einmal",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaɪ̯nmaːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/einmal",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=einmal&action=history"
+    },
+    {
+      "word": "eins",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[aɪ̯ns]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/eins",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=eins&action=history"
+    },
+    {
+      "word": "einschließlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈaɪ̯nʃliːslɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/einschlie%C3%9Flich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=einschlie%C3%9Flich&action=history"
+    },
+    {
+      "word": "elektrische Ladung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[eˌlɛktʁɪʃə ˈlaːdʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/elektrische%20Ladung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=elektrische%20Ladung&action=history"
+    },
+    {
+      "word": "elektrisches Potenzial",
+      "partOfSpeech": "expression",
+      "pronunciation": "[eˌlɛktʁɪʃəs potɛnˈt͡si̯aːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/elektrisches%20Potenzial",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=elektrisches%20Potenzial&action=history"
+    },
+    {
+      "word": "elektronische Signatur",
+      "partOfSpeech": "expression",
+      "pronunciation": "[elɛkˈtʁoːnɪʃə zɪɡnaˈtuːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/elektronische%20Signatur",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=elektronische%20Signatur&action=history"
+    },
+    {
+      "word": "elf",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ɛlf]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/elf",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=elf&action=history"
+    },
+    {
+      "word": "endlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɛntlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/endlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=endlich&action=history"
+    },
+    {
+      "word": "entlang",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɛntˈlaŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/entlang",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=entlang&action=history"
+    },
+    {
+      "word": "entmilitarisierte Zone",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɛntmilitaʁiˌziːɐ̯tə ˈt͡soːnə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/entmilitarisierte%20Zone",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=entmilitarisierte%20Zone&action=history"
+    },
+    {
+      "word": "entweder",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ˈɛntˌveːdɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/entweder",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=entweder&action=history"
+    },
+    {
+      "word": "erstens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈeːɐ̯stn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/erstens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=erstens&action=history"
+    },
+    {
+      "word": "erweiterter Suizid",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɛɐ̯ˌvaɪ̯tɐtɐ zuiˈt͡siːt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/erweiterter%20Suizid",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=erweiterter%20Suizid&action=history"
+    },
+    {
+      "word": "es",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ɛs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/es",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=es&action=history"
+    },
+    {
+      "word": "et cetera",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɛt ˈt͡seːteʁa]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/et%20cetera",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=et%20cetera&action=history"
+    },
+    {
+      "word": "ethnische Minderheit",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈeːtnɪʃə ˈmɪndɐhaɪ̯t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ethnische%20Minderheit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ethnische%20Minderheit&action=history"
+    },
+    {
+      "word": "ethnische Säuberung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɛtnɪʃə ˈzɔɪ̯bəʁʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ethnische%20S%C3%A4uberung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ethnische%20S%C3%A4uberung&action=history"
+    },
+    {
+      "word": "etwa",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɛtva]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/etwa",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=etwa&action=history"
+    },
+    {
+      "word": "ewiges Leben",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌeːvɪɡəs ˈleːbn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ewiges%20Leben",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ewiges%20Leben&action=history"
+    },
+    {
+      "word": "extra",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɛkstʁa]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/extra",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=extra&action=history"
+    },
+    {
+      "word": "fahrlässige Tötung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈfaːɐ̯lɛsɪɡə ˈtøːtʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/fahrl%C3%A4ssige%20T%C3%B6tung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=fahrl%C3%A4ssige%20T%C3%B6tung&action=history"
+    },
+    {
+      "word": "falls",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[fals]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/falls",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=falls&action=history"
+    },
+    {
+      "word": "fast",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[fast]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/fast",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=fast&action=history"
+    },
+    {
+      "word": "folglich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfɔlklɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/folglich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=folglich&action=history"
+    },
+    {
+      "word": "freitags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfʁaɪ̯ˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/freitags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=freitags&action=history"
+    },
+    {
+      "word": "für",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[fyːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/f%C3%BCr",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=f%C3%BCr&action=history"
+    },
+    {
+      "word": "gefallener Engel",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɡəˌfalənɐ ˈɛŋl̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gefallener%20Engel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gefallener%20Engel&action=history"
+    },
+    {
+      "word": "gegebenenfalls",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡəˈɡeːbənənfals]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gegebenenfalls",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gegebenenfalls&action=history"
+    },
+    {
+      "word": "geistige Gesundheit",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈɡaɪ̯stɪɡə ɡəˈzʊnthaɪ̯t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/geistige%20Gesundheit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=geistige%20Gesundheit&action=history"
+    },
+    {
+      "word": "gemäß",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ɡəˈmɛːs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gem%C3%A4%C3%9F",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gem%C3%A4%C3%9F&action=history"
+    },
+    {
+      "word": "genauso",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡəˈnaʊ̯zoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/genauso",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=genauso&action=history"
+    },
+    {
+      "word": "gerade",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡəˈʁaːdə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gerade",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gerade&action=history"
+    },
+    {
+      "word": "geradeaus",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡəʁaːdəˈʔaʊ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/geradeaus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=geradeaus&action=history"
+    },
+    {
+      "word": "gern",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡɛʁn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gern&action=history"
+    },
+    {
+      "word": "gerne",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɡɛʁnə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gerne",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gerne&action=history"
+    },
+    {
+      "word": "gestern",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɡɛstɐn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gestern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gestern&action=history"
+    },
+    {
+      "word": "gesättigte Fettsäure",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɡəˌzɛtɪçtə ˈfɛtzɔɪ̯ʁə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ges%C3%A4ttigte%20Fetts%C3%A4ure",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ges%C3%A4ttigte%20Fetts%C3%A4ure&action=history"
+    },
+    {
+      "word": "gewissermaßen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡəˈvɪsɐˌmaːsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gewisserma%C3%9Fen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gewisserma%C3%9Fen&action=history"
+    },
+    {
+      "word": "gleich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɡlaɪ̯ç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gleich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gleich&action=history"
+    },
+    {
+      "word": "gleichgeschlechtliche Ehe",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈɡlaɪ̯çɡəˌʃlɛçtlɪçə ˈeːə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gleichgeschlechtliche%20Ehe",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gleichgeschlechtliche%20Ehe&action=history"
+    },
+    {
+      "word": "gleichwohl",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˌɡlaɪ̯çˈvoːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gleichwohl",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gleichwohl&action=history"
+    },
+    {
+      "word": "gratis",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɡʁaːtɪs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/gratis",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=gratis&action=history"
+    },
+    {
+      "word": "griechisches Alphabet",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɡʁiːçɪʃəs alfaˈbeːt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/griechisches%20Alphabet",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=griechisches%20Alphabet&action=history"
+    },
+    {
+      "word": "halb",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[halp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/halb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=halb&action=history"
+    },
+    {
+      "word": "heim",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[haɪ̯m]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/heim",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=heim&action=history"
+    },
+    {
+      "word": "her",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[heːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/her",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=her&action=history"
+    },
+    {
+      "word": "heraus",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[hɛˈʁaʊ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/heraus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=heraus&action=history"
+    },
+    {
+      "word": "herunter",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[hɛˈʁʊntɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/herunter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=herunter&action=history"
+    },
+    {
+      "word": "heute",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈhɔɪ̯tə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/heute",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=heute&action=history"
+    },
+    {
+      "word": "hier",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[hiːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hier",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hier&action=history"
+    },
+    {
+      "word": "hin",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[hɪn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hin",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hin&action=history"
+    },
+    {
+      "word": "hingegen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[hɪnˈɡeːɡn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hingegen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hingegen&action=history"
+    },
+    {
+      "word": "hinsichtlich",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈhɪnzɪçtlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hinsichtlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hinsichtlich&action=history"
+    },
+    {
+      "word": "hinten",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈhɪntn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hinten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hinten&action=history"
+    },
+    {
+      "word": "hinter",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈhɪntɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hinter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hinter&action=history"
+    },
+    {
+      "word": "hinterher",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[hɪntɐˈheːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hinterher",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hinterher&action=history"
+    },
+    {
+      "word": "hoffentlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈhɔfn̩tlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/hoffentlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=hoffentlich&action=history"
+    },
+    {
+      "word": "häusliche Gewalt",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌhɔɪ̯slɪçə ɡəˈvalt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/h%C3%A4usliche%20Gewalt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=h%C3%A4usliche%20Gewalt&action=history"
+    },
+    {
+      "word": "höchstens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈhøːçstn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/h%C3%B6chstens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=h%C3%B6chstens&action=history"
+    },
+    {
+      "word": "ich",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ich&action=history"
+    },
+    {
+      "word": "ihm",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[iːm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ihm",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ihm&action=history"
+    },
+    {
+      "word": "ihn",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[iːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ihn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ihn&action=history"
+    },
+    {
+      "word": "im Großen und Ganzen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪm ˈɡʁoːsn̩ ʊnt ˈɡant͡sn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/im%20Gro%C3%9Fen%20und%20Ganzen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=im%20Gro%C3%9Fen%20und%20Ganzen&action=history"
+    },
+    {
+      "word": "im Hinblick auf",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪm ˈhɪnˌblɪk aʊ̯f]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/im%20Hinblick%20auf",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=im%20Hinblick%20auf&action=history"
+    },
+    {
+      "word": "imaginäre Zahl",
+      "partOfSpeech": "expression",
+      "pronunciation": "[imaɡiˈnɛːʁə ˈt͡saːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/imagin%C3%A4re%20Zahl",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=imagin%C3%A4re%20Zahl&action=history"
+    },
+    {
+      "word": "immer",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɪmɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/immer",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=immer&action=history"
+    },
+    {
+      "word": "in",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ɪn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in&action=history"
+    },
+    {
+      "word": "in Betracht ziehen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn bəˈtʁaxt ˈt͡siːən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20Betracht%20ziehen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20Betracht%20ziehen&action=history"
+    },
+    {
+      "word": "in Betrieb",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn bəˈtʁiːp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20Betrieb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20Betrieb&action=history"
+    },
+    {
+      "word": "in Frage kommen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn ˈfʁaːɡə ˌkɔmən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20Frage%20kommen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20Frage%20kommen&action=history"
+    },
+    {
+      "word": "in Kauf nehmen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn ˈkaʊ̯f ˌneːmən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20Kauf%20nehmen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20Kauf%20nehmen&action=history"
+    },
+    {
+      "word": "in der Regel",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn deːɐ̯ ˈʁeːɡl̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20der%20Regel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20der%20Regel&action=history"
+    },
+    {
+      "word": "in der Tat",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn deːɐ̯ taːt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20der%20Tat",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20der%20Tat&action=history"
+    },
+    {
+      "word": "in erster Linie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn ˈeːɐ̯stɐ ˌliːni̯ə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20erster%20Linie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20erster%20Linie&action=history"
+    },
+    {
+      "word": "in nuce",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪn ˈnukə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/in%20nuce",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=in%20nuce&action=history"
+    },
+    {
+      "word": "indem",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ɪnˈdeːm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/indem",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=indem&action=history"
+    },
+    {
+      "word": "industrielle Revolution",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪndʊstʁiˈɛlə ʁevoluˈt͡si̯oːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/industrielle%20Revolution",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=industrielle%20Revolution&action=history"
+    },
+    {
+      "word": "infolge",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ɪnˈfɔlɡə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/infolge",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=infolge&action=history"
+    },
+    {
+      "word": "infolgedessen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɪnfɔlɡəˈdɛsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/infolgedessen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=infolgedessen&action=history"
+    },
+    {
+      "word": "innen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈɪnən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/innen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=innen&action=history"
+    },
+    {
+      "word": "innerhalb",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈɪnɐhalp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/innerhalb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=innerhalb&action=history"
+    },
+    {
+      "word": "ins Fettnäpfchen treten",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪns ˈfɛtnɛp͡fçən ˈtʁeːtn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ins%20Fettn%C3%A4pfchen%20treten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ins%20Fettn%C3%A4pfchen%20treten&action=history"
+    },
+    {
+      "word": "ins Gewicht fallen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪns ɡəˈvɪçt ˌfalən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ins%20Gewicht%20fallen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ins%20Gewicht%20fallen&action=history"
+    },
+    {
+      "word": "ins Schwarze treffen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪns ˈʃvaʁt͡sə ˈtʁɛfn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ins%20Schwarze%20treffen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ins%20Schwarze%20treffen&action=history"
+    },
+    {
+      "word": "ins Wasser fallen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪns ˈvasɐ ˌfalən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ins%20Wasser%20fallen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ins%20Wasser%20fallen&action=history"
+    },
+    {
+      "word": "insbesondere",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɪnsbəˈzɔndəʁə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/insbesondere",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=insbesondere&action=history"
+    },
+    {
+      "word": "internationale Gemeinschaft",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌɪntɐnat͡si̯oˈnaːlə ɡəˈmaɪ̯nʃaft]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/internationale%20Gemeinschaft",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=internationale%20Gemeinschaft&action=history"
+    },
+    {
+      "word": "internationaler Flughafen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪntɐnat͡si̯oˌnaːlɐ ˈfluːkˌhaːfn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/internationaler%20Flughafen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=internationaler%20Flughafen&action=history"
+    },
+    {
+      "word": "interplanetarer Raum",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɪntɐplaneˈtaːʁɐ ˈʁaʊ̯m]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/interplanetarer%20Raum",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=interplanetarer%20Raum&action=history"
+    },
+    {
+      "word": "inzwischen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɪnˈt͡svɪʃn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/inzwischen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=inzwischen&action=history"
+    },
+    {
+      "word": "ja",
+      "partOfSpeech": "particle",
+      "pronunciation": "[jaː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ja",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ja&action=history"
+    },
+    {
+      "word": "je",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[jeː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/je",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=je&action=history"
+    },
+    {
+      "word": "jedenfalls",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈjeːdn̩ˌfals]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jedenfalls",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jedenfalls&action=history"
+    },
+    {
+      "word": "jeder",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈjeːdɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jeder",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jeder&action=history"
+    },
+    {
+      "word": "jedes",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈjeːdəs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jedes",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jedes&action=history"
+    },
+    {
+      "word": "jedoch",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[jeˈdɔx]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jedoch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jedoch&action=history"
+    },
+    {
+      "word": "jemals",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈjeːmals]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jemals",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jemals&action=history"
+    },
+    {
+      "word": "jemand",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈjeːmant]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jemand",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jemand&action=history"
+    },
+    {
+      "word": "jetzt",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[jɛt͡st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jetzt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jetzt&action=history"
+    },
+    {
+      "word": "jeweils",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈjeːvaɪ̯ls]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/jeweils",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=jeweils&action=history"
+    },
+    {
+      "word": "kanadischer Dollar",
+      "partOfSpeech": "expression",
+      "pronunciation": "[kaˌnaːdɪʃɐ ˈdɔlaʁ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kanadischer%20Dollar",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kanadischer%20Dollar&action=history"
+    },
+    {
+      "word": "kaum",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[kaʊ̯m]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kaum",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kaum&action=history"
+    },
+    {
+      "word": "kein",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[kaɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kein&action=history"
+    },
+    {
+      "word": "keine Rolle spielen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈkaɪ̯nə ˈʁɔlə ˈʃpiːlən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/keine%20Rolle%20spielen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=keine%20Rolle%20spielen&action=history"
+    },
+    {
+      "word": "klassische Mechanik",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌklasɪʃə meˈçaːnɪk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/klassische%20Mechanik",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=klassische%20Mechanik&action=history"
+    },
+    {
+      "word": "klassisches Chinesisch",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌklasɪʃəs çiˈneːzɪʃ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/klassisches%20Chinesisch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=klassisches%20Chinesisch&action=history"
+    },
+    {
+      "word": "kleine Schwester",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌklaɪ̯nə ˈʃvɛstɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kleine%20Schwester",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kleine%20Schwester&action=history"
+    },
+    {
+      "word": "kleiner Finger",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌklaɪ̯nɐ ˈfɪŋɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kleiner%20Finger",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kleiner%20Finger&action=history"
+    },
+    {
+      "word": "klinische Psychologie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈkliːnɪʃə psyçoloˈɡiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/klinische%20Psychologie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=klinische%20Psychologie&action=history"
+    },
+    {
+      "word": "kosmischer Staub",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈkɔsmɪʃɐ ˈʃtaʊ̯p]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kosmischer%20Staub",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kosmischer%20Staub&action=history"
+    },
+    {
+      "word": "kraft",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[kʁaft]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kraft",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kraft&action=history"
+    },
+    {
+      "word": "kritisches Denken",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌkʁiːtɪʃəs ˈdɛŋkn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/kritisches%20Denken",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=kritisches%20Denken&action=history"
+    },
+    {
+      "word": "künstliche Intelligenz",
+      "partOfSpeech": "expression",
+      "pronunciation": "[kʏnstlɪçə ɪntɛliˈɡɛnt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/k%C3%BCnstliche%20Intelligenz",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=k%C3%BCnstliche%20Intelligenz&action=history"
+    },
+    {
+      "word": "kürzlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈkʏʁt͡slɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/k%C3%BCrzlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=k%C3%BCrzlich&action=history"
+    },
+    {
+      "word": "lange",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈlaŋə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/lange",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=lange&action=history"
+    },
+    {
+      "word": "lediglich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈleːdɪklɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/lediglich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=lediglich&action=history"
+    },
+    {
+      "word": "leider",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈlaɪ̯dɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/leider",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=leider&action=history"
+    },
+    {
+      "word": "letztendlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[lɛt͡stˈʔɛntlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/letztendlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=letztendlich&action=history"
+    },
+    {
+      "word": "liberale Demokratie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[libeˌʁaːlə demokʁaˈtiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/liberale%20Demokratie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=liberale%20Demokratie&action=history"
+    },
+    {
+      "word": "lieber",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈliːbɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/lieber",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=lieber&action=history"
+    },
+    {
+      "word": "links",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[lɪŋks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/links",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=links&action=history"
+    },
+    {
+      "word": "längst",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[lɛŋst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/l%C3%A4ngst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=l%C3%A4ngst&action=history"
+    },
+    {
+      "word": "lässliche Sünde",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌlɛslɪçə ˈzʏndə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/l%C3%A4ssliche%20S%C3%BCnde",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=l%C3%A4ssliche%20S%C3%BCnde&action=history"
+    },
+    {
+      "word": "mal",
+      "partOfSpeech": "particle",
+      "pronunciation": "[maːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mal",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mal&action=history"
+    },
+    {
+      "word": "man",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[man]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/man",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=man&action=history"
+    },
+    {
+      "word": "manchmal",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmançmaːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/manchmal",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=manchmal&action=history"
+    },
+    {
+      "word": "mangels",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈmaŋl̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mangels",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mangels&action=history"
+    },
+    {
+      "word": "marxistische Imperialismustheorie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[maʁˈksɪstɪʃə ɪmpeʁiaˈlɪsmʊsteoˌʁiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/marxistische%20Imperialismustheorie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=marxistische%20Imperialismustheorie&action=history"
+    },
+    {
+      "word": "marxistische Wirtschaftstheorie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[maʁˈksɪstɪʃə ˈvɪʁtʃaft͡steoˌʁiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/marxistische%20Wirtschaftstheorie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=marxistische%20Wirtschaftstheorie&action=history"
+    },
+    {
+      "word": "mehr",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[meːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mehr",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mehr&action=history"
+    },
+    {
+      "word": "mein",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[maɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mein&action=history"
+    },
+    {
+      "word": "meist",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[maɪ̯st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/meist",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=meist&action=history"
+    },
+    {
+      "word": "meistens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmaɪ̯stn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/meistens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=meistens&action=history"
+    },
+    {
+      "word": "menschlicher Körper",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌmɛnʃlɪçɐ ˈkœʁpɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/menschlicher%20K%C3%B6rper",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=menschlicher%20K%C3%B6rper&action=history"
+    },
+    {
+      "word": "mindestens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmɪndəstn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mindestens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mindestens&action=history"
+    },
+    {
+      "word": "minus",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmiːnʊs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/minus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=minus&action=history"
+    },
+    {
+      "word": "mit",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[mɪt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mit&action=history"
+    },
+    {
+      "word": "mit Ach und Krach",
+      "partOfSpeech": "expression",
+      "pronunciation": "[mɪt ˈax ʊnt ˈkʁax]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mit%20Ach%20und%20Krach",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mit%20Ach%20und%20Krach&action=history"
+    },
+    {
+      "word": "mit Blick auf",
+      "partOfSpeech": "expression",
+      "pronunciation": "[mɪt blɪk aʊ̯f]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mit%20Blick%20auf",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mit%20Blick%20auf&action=history"
+    },
+    {
+      "word": "mit Verlaub",
+      "partOfSpeech": "expression",
+      "pronunciation": "[mɪt fɛɐ̯ˈlaʊ̯p]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mit%20Verlaub",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mit%20Verlaub&action=history"
+    },
+    {
+      "word": "mit offenen Karten spielen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[mɪt ˈɔfənən ˈkaʁtn̩ ˈʃpiːlən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mit%20offenen%20Karten%20spielen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mit%20offenen%20Karten%20spielen&action=history"
+    },
+    {
+      "word": "mit zweierlei Maß messen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[mɪt ˈt͡svaɪ̯ɐlaɪ̯ maːs ˈmɛsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mit%20zweierlei%20Ma%C3%9F%20messen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mit%20zweierlei%20Ma%C3%9F%20messen&action=history"
+    },
+    {
+      "word": "mithin",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[mɪtˈhɪn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mithin",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mithin&action=history"
+    },
+    {
+      "word": "mitnichten",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[mɪtˈnɪçtn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mitnichten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mitnichten&action=history"
+    },
+    {
+      "word": "mittags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmɪtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mittags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mittags&action=history"
+    },
+    {
+      "word": "mitten",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmɪtn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mitten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mitten&action=history"
+    },
+    {
+      "word": "mittlerweile",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[mɪtlɐˈvaɪ̯lə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mittlerweile",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mittlerweile&action=history"
+    },
+    {
+      "word": "mittwochs",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmɪtˌvɔxs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/mittwochs",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=mittwochs&action=history"
+    },
+    {
+      "word": "montags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmoːnˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/montags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=montags&action=history"
+    },
+    {
+      "word": "morgens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈmɔʁɡn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/morgens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=morgens&action=history"
+    },
+    {
+      "word": "nach",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[naːx]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nach",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nach&action=history"
+    },
+    {
+      "word": "nachdem",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[naːxˈdeːm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nachdem",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nachdem&action=history"
+    },
+    {
+      "word": "nachmittags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈnaːxmɪˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nachmittags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nachmittags&action=history"
+    },
+    {
+      "word": "nachts",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[naxt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nachts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nachts&action=history"
+    },
+    {
+      "word": "natürliche Sprache",
+      "partOfSpeech": "expression",
+      "pronunciation": "[naˈtyːɐ̯lɪçə ˈʃpʁaːxə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nat%C3%BCrliche%20Sprache",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nat%C3%BCrliche%20Sprache&action=history"
+    },
+    {
+      "word": "natürlicher Logarithmus",
+      "partOfSpeech": "expression",
+      "pronunciation": "[naˈtyːɐ̯lɪçɐ loɡaˈʁɪtmʊs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nat%C3%BCrlicher%20Logarithmus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nat%C3%BCrlicher%20Logarithmus&action=history"
+    },
+    {
+      "word": "nebenan",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[neːbn̩ˈʔan]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nebenan",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nebenan&action=history"
+    },
+    {
+      "word": "nein",
+      "partOfSpeech": "particle",
+      "pronunciation": "[naɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nein&action=history"
+    },
+    {
+      "word": "neulich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈnɔɪ̯lɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/neulich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=neulich&action=history"
+    },
+    {
+      "word": "neun",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[nɔɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/neun",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=neun&action=history"
+    },
+    {
+      "word": "neunzehn",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈnɔɪ̯nt͡seːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/neunzehn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=neunzehn&action=history"
+    },
+    {
+      "word": "nicht",
+      "partOfSpeech": "particle",
+      "pronunciation": "[nɪçt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nicht",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nicht&action=history"
+    },
+    {
+      "word": "nichts",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[nɪçt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nichts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nichts&action=history"
+    },
+    {
+      "word": "nichtsdestoweniger",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[nɪçt͡sdɛstoˈveːnɪɡɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nichtsdestoweniger",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nichtsdestoweniger&action=history"
+    },
+    {
+      "word": "nie",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[niː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nie&action=history"
+    },
+    {
+      "word": "niemand",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈniːmant]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/niemand",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=niemand&action=history"
+    },
+    {
+      "word": "nirgendwo",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈnɪʁɡn̩tvoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nirgendwo",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nirgendwo&action=history"
+    },
+    {
+      "word": "noch",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[nɔx]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/noch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=noch&action=history"
+    },
+    {
+      "word": "nochmals",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈnɔxmaːls]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nochmals",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nochmals&action=history"
+    },
+    {
+      "word": "nolens volens",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌnoːlɛns ˈvoːlɛns]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nolens%20volens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nolens%20volens&action=history"
+    },
+    {
+      "word": "nuklearer Winter",
+      "partOfSpeech": "expression",
+      "pronunciation": "[nukleˌaːʁɐ ˈvɪntɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nuklearer%20Winter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nuklearer%20Winter&action=history"
+    },
+    {
+      "word": "nun",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[nuːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/nun",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=nun&action=history"
+    },
+    {
+      "word": "ob",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ɔp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ob",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ob&action=history"
+    },
+    {
+      "word": "obwohl",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ɔpˈvoːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/obwohl",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=obwohl&action=history"
+    },
+    {
+      "word": "oft",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ɔft]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/oft",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=oft&action=history"
+    },
+    {
+      "word": "ohne",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈoːnə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ohne",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ohne&action=history"
+    },
+    {
+      "word": "organisiertes Verbrechen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ɔʁɡaniˌziːɐ̯təs fɛɐ̯ˈbʁɛçn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/organisiertes%20Verbrechen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=organisiertes%20Verbrechen&action=history"
+    },
+    {
+      "word": "paar",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[paːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/paar",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=paar&action=history"
+    },
+    {
+      "word": "per",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[pɛʁ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/per",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=per&action=history"
+    },
+    {
+      "word": "per se",
+      "partOfSpeech": "expression",
+      "pronunciation": "[pɛʁ ˈzeː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/per%20se",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=per%20se&action=history"
+    },
+    {
+      "word": "perfektes Verbrechen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[pɛʁˌfɛktəs fɛɐ̯ˈbʁɛçn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/perfektes%20Verbrechen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=perfektes%20Verbrechen&action=history"
+    },
+    {
+      "word": "plastische Chirurgie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌplastɪʃə çiʁʊʁˈɡiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/plastische%20Chirurgie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=plastische%20Chirurgie&action=history"
+    },
+    {
+      "word": "plus",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[plʊs]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/plus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=plus&action=history"
+    },
+    {
+      "word": "politische Partei",
+      "partOfSpeech": "expression",
+      "pronunciation": "[poˈliːtɪʃə paʁˈtaɪ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/politische%20Partei",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=politische%20Partei&action=history"
+    },
+    {
+      "word": "politischer Gefangener",
+      "partOfSpeech": "expression",
+      "pronunciation": "[poˈliːtɪʃɐ ɡəˈfaŋənɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/politischer%20Gefangener",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=politischer%20Gefangener&action=history"
+    },
+    {
+      "word": "pro",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[pʁoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/pro",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=pro&action=history"
+    },
+    {
+      "word": "pulmonale Hypertonie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[pʊlmoˈnaːlə hypɐtoˈniː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/pulmonale%20Hypertonie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=pulmonale%20Hypertonie&action=history"
+    },
+    {
+      "word": "quer",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[kveːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/quer",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=quer&action=history"
+    },
+    {
+      "word": "rauf",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʁaʊ̯f]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/rauf",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=rauf&action=history"
+    },
+    {
+      "word": "raus",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʁaʊ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/raus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=raus&action=history"
+    },
+    {
+      "word": "recht",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʁɛçt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/recht",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=recht&action=history"
+    },
+    {
+      "word": "rechts",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʁɛçt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/rechts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=rechts&action=history"
+    },
+    {
+      "word": "rein",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʁaɪ̯n]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/rein",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=rein&action=history"
+    },
+    {
+      "word": "respiratorische Insuffizienz",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ʁespiʁaˈtoːʁɪʃə ˈɪnzʊfiˌt͡si̯ɛnt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/respiratorische%20Insuffizienz",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=respiratorische%20Insuffizienz&action=history"
+    },
+    {
+      "word": "romantische Komödie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ʁoˈmantɪʃə koˈmøːdi̯ə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/romantische%20Kom%C3%B6die",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=romantische%20Kom%C3%B6die&action=history"
+    },
+    {
+      "word": "roter Reis",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʁoːtɐ ˈʁaɪ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/roter%20Reis",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=roter%20Reis&action=history"
+    },
+    {
+      "word": "roter Stern",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʁoːtɐ ʃtɛʁn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/roter%20Stern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=roter%20Stern&action=history"
+    },
+    {
+      "word": "roter Teppich",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʁoːtɐ ˈtɛpɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/roter%20Teppich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=roter%20Teppich&action=history"
+    },
+    {
+      "word": "rotes Blutkörperchen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʁoːtəs ˈbluːtkœʁpɐçən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/rotes%20Blutk%C3%B6rperchen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=rotes%20Blutk%C3%B6rperchen&action=history"
+    },
+    {
+      "word": "rund",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʁʊnt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/rund",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=rund&action=history"
+    },
+    {
+      "word": "rückwärts",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈʁʏkˌvɛʁt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/r%C3%BCckw%C3%A4rts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=r%C3%BCckw%C3%A4rts&action=history"
+    },
+    {
+      "word": "samstags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈzamsˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/samstags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=samstags&action=history"
+    },
+    {
+      "word": "saurer Regen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌzaʊ̯ʁɐ ˈʁeːɡn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/saurer%20Regen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=saurer%20Regen&action=history"
+    },
+    {
+      "word": "schließlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈʃliːslɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schlie%C3%9Flich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schlie%C3%9Flich&action=history"
+    },
+    {
+      "word": "schon",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʃoːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schon",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schon&action=history"
+    },
+    {
+      "word": "schusssichere Weste",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʃʊsˌzɪçəʁə ˈvɛstə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schusssichere%20Weste",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schusssichere%20Weste&action=history"
+    },
+    {
+      "word": "schwarze Magie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaʁt͡sə maˈɡiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schwarze%20Magie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schwarze%20Magie&action=history"
+    },
+    {
+      "word": "schwarzer Gürtel",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaʁt͡sɐ ˈɡʏʁtl̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schwarzer%20G%C3%BCrtel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schwarzer%20G%C3%BCrtel&action=history"
+    },
+    {
+      "word": "schwarzer Tee",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaʁt͡sɐ ˈteː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schwarzer%20Tee",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schwarzer%20Tee&action=history"
+    },
+    {
+      "word": "schweigende Mehrheit",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʃvaɪ̯ɡn̩də ˈmeːɐ̯haɪ̯t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schweigende%20Mehrheit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schweigende%20Mehrheit&action=history"
+    },
+    {
+      "word": "schweres Wasser",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʃveːʁəs ˈvasɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/schweres%20Wasser",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=schweres%20Wasser&action=history"
+    },
+    {
+      "word": "sechs",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[zɛks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sechs",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sechs&action=history"
+    },
+    {
+      "word": "sechzehn",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈzɛçt͡seːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sechzehn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sechzehn&action=history"
+    },
+    {
+      "word": "sehr gut",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈzeːɐ̯ ˌɡuːt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sehr%20gut",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sehr%20gut&action=history"
+    },
+    {
+      "word": "seit",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[zaɪ̯t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/seit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=seit&action=history"
+    },
+    {
+      "word": "seitdem",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[zaɪ̯tˈdeːm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/seitdem",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=seitdem&action=history"
+    },
+    {
+      "word": "seitens",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈzaɪ̯tn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/seitens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=seitens&action=history"
+    },
+    {
+      "word": "sexuelle Belästigung",
+      "partOfSpeech": "expression",
+      "pronunciation": "[sɛksuˈɛlə bəˈlɛstɪɡʊŋ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sexuelle%20Bel%C3%A4stigung",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sexuelle%20Bel%C3%A4stigung&action=history"
+    },
+    {
+      "word": "sexuelle Gewalt",
+      "partOfSpeech": "expression",
+      "pronunciation": "[sɛksuˌɛlə ɡəˈvalt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sexuelle%20Gewalt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sexuelle%20Gewalt&action=history"
+    },
+    {
+      "word": "sie",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ziː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sie&action=history"
+    },
+    {
+      "word": "slawische Sprache",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈslaːvɪʃə ˈʃpʁaːxə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/slawische%20Sprache",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=slawische%20Sprache&action=history"
+    },
+    {
+      "word": "so",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[zoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/so",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=so&action=history"
+    },
+    {
+      "word": "sobald",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈbalt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sobald",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sobald&action=history"
+    },
+    {
+      "word": "sodass",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈdas]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sodass",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sodass&action=history"
+    },
+    {
+      "word": "sofern",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈfɛʁn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sofern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sofern&action=history"
+    },
+    {
+      "word": "sofort",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[zoˈfɔʁt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sofort",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sofort&action=history"
+    },
+    {
+      "word": "solange",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈlaŋə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/solange",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=solange&action=history"
+    },
+    {
+      "word": "sondern",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ˈzɔndɐn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sondern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sondern&action=history"
+    },
+    {
+      "word": "sonntags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈzɔnˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sonntags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sonntags&action=history"
+    },
+    {
+      "word": "sonst",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[zɔnst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sonst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sonst&action=history"
+    },
+    {
+      "word": "soviel",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈfiːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/soviel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=soviel&action=history"
+    },
+    {
+      "word": "soweit",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈvaɪ̯t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/soweit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=soweit&action=history"
+    },
+    {
+      "word": "sowieso",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[zoviˈzoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sowieso",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sowieso&action=history"
+    },
+    {
+      "word": "sowohl",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[zoˈvoːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sowohl",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sowohl&action=history"
+    },
+    {
+      "word": "sowohl … als auch",
+      "partOfSpeech": "expression",
+      "pronunciation": "[zoˈvoːl … als ˈʔaʊ̯x]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sowohl%20%E2%80%A6%20als%20auch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sowohl%20%E2%80%A6%20als%20auch&action=history"
+    },
+    {
+      "word": "soziale Klasse",
+      "partOfSpeech": "expression",
+      "pronunciation": "[zoˌt͡si̯aːlə ˈklasə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/soziale%20Klasse",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=soziale%20Klasse&action=history"
+    },
+    {
+      "word": "sozusagen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˌzoːt͡suˈzaːɡŋ̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sozusagen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sozusagen&action=history"
+    },
+    {
+      "word": "später",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈʃpɛːtɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/sp%C3%A4ter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=sp%C3%A4ter&action=history"
+    },
+    {
+      "word": "statt",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ʃtat]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/statt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=statt&action=history"
+    },
+    {
+      "word": "stattdessen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʃtatˈdɛsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/stattdessen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=stattdessen&action=history"
+    },
+    {
+      "word": "streng genommen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈʃtʁɛŋ ɡəˌnɔmən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/streng%20genommen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=streng%20genommen&action=history"
+    },
+    {
+      "word": "südslawische Sprache",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈzyːtˌslaːvɪʃə ˈʃpʁaːxə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/s%C3%BCdslawische%20Sprache",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=s%C3%BCdslawische%20Sprache&action=history"
+    },
+    {
+      "word": "trotz",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[tʁɔt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/trotz",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=trotz&action=history"
+    },
+    {
+      "word": "trotzdem",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈtʁɔt͡sdeːm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/trotzdem",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=trotzdem&action=history"
+    },
+    {
+      "word": "um",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ʊm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/um",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=um&action=history"
+    },
+    {
+      "word": "umso",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ˈʊmzoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/umso",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=umso&action=history"
+    },
+    {
+      "word": "umsonst",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʊmˈzɔnst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/umsonst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=umsonst&action=history"
+    },
+    {
+      "word": "und",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ʊnt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/und",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=und&action=history"
+    },
+    {
+      "word": "ungefähr",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈʊnɡəfɛːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ungef%C3%A4hr",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ungef%C3%A4hr&action=history"
+    },
+    {
+      "word": "unten",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈʊntn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/unten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=unten&action=history"
+    },
+    {
+      "word": "unter",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈʊntɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/unter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=unter&action=history"
+    },
+    {
+      "word": "unter vier Augen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌʊntɐ fiːɐ̯ ˈaʊ̯ɡn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/unter%20vier%20Augen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=unter%20vier%20Augen&action=history"
+    },
+    {
+      "word": "unterdessen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʊntɐˈdɛsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/unterdessen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=unterdessen&action=history"
+    },
+    {
+      "word": "unterwegs",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ʊntɐˈveːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/unterwegs",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=unterwegs&action=history"
+    },
+    {
+      "word": "urbane Legende",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ʊʁˌbaːnə leˈɡɛndə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/urbane%20Legende",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=urbane%20Legende&action=history"
+    },
+    {
+      "word": "vermisste Person",
+      "partOfSpeech": "expression",
+      "pronunciation": "[fɛɐ̯ˌmɪstə pɛʁˈzoːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vermisste%20Person",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vermisste%20Person&action=history"
+    },
+    {
+      "word": "viel",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[fiːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/viel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=viel&action=history"
+    },
+    {
+      "word": "vielleicht",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[fiˈlaɪ̯çt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vielleicht",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vielleicht&action=history"
+    },
+    {
+      "word": "vier",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[fiːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vier",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vier&action=history"
+    },
+    {
+      "word": "vierzehn",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈfɪʁt͡seːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vierzehn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vierzehn&action=history"
+    },
+    {
+      "word": "virtuelle Realität",
+      "partOfSpeech": "expression",
+      "pronunciation": "[vɪʁtuˌɛlə ʁealiˈtɛːt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/virtuelle%20Realit%C3%A4t",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=virtuelle%20Realit%C3%A4t&action=history"
+    },
+    {
+      "word": "vom Regen in die Traufe kommen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[fɔm ˌʁeːɡŋ̍ ɪn diː ˈtʁaʊ̯fə kɔmən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vom%20Regen%20in%20die%20Traufe%20kommen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vom%20Regen%20in%20die%20Traufe%20kommen&action=history"
+    },
+    {
+      "word": "von",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[fɔn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/von",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=von&action=history"
+    },
+    {
+      "word": "von der Wiege bis zur Bahre",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌfɔn dɛːɐ̯ ˈviːɡə ˌbɪs t͡suːɐ̯ ˈbaːʁə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/von%20der%20Wiege%20bis%20zur%20Bahre",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=von%20der%20Wiege%20bis%20zur%20Bahre&action=history"
+    },
+    {
+      "word": "voneinander",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[fɔnʔaɪ̯ˈnandɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/voneinander",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=voneinander&action=history"
+    },
+    {
+      "word": "vor",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[foːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vor",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vor&action=history"
+    },
+    {
+      "word": "voraus",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[foˈʁaʊ̯s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/voraus",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=voraus&action=history"
+    },
+    {
+      "word": "vorgestern",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfoːɐ̯ɡɛstɐn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vorgestern",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vorgestern&action=history"
+    },
+    {
+      "word": "vorher",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfoːɐ̯heːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vorher",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vorher&action=history"
+    },
+    {
+      "word": "vormittags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfoːɐ̯mɪˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vormittags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vormittags&action=history"
+    },
+    {
+      "word": "vorn",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[fɔʁn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vorn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vorn&action=history"
+    },
+    {
+      "word": "vorne",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfɔʁnə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vorne",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vorne&action=history"
+    },
+    {
+      "word": "vorwärts",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈfoːɐ̯vɛʁt͡s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/vorw%C3%A4rts",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=vorw%C3%A4rts&action=history"
+    },
+    {
+      "word": "wahrscheinlich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[vaːɐ̯ˈʃaɪ̯nlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wahrscheinlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wahrscheinlich&action=history"
+    },
+    {
+      "word": "wann",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[van]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wann",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wann&action=history"
+    },
+    {
+      "word": "warum",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[vaˈʁʊm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/warum",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=warum&action=history"
+    },
+    {
+      "word": "was",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[vas]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/was",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=was&action=history"
+    },
+    {
+      "word": "weder",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ˈveːdɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/weder",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=weder&action=history"
+    },
+    {
+      "word": "weder … noch",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈveːdɐ … nɔx]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/weder%20%E2%80%A6%20noch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=weder%20%E2%80%A6%20noch&action=history"
+    },
+    {
+      "word": "weg",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[vɛk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/weg",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=weg&action=history"
+    },
+    {
+      "word": "weil",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[vaɪ̯l]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/weil",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=weil&action=history"
+    },
+    {
+      "word": "weiter",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈvaɪ̯tɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/weiter",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=weiter&action=history"
+    },
+    {
+      "word": "weiße Fahne",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈvaɪ̯sə ˈfaːnə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wei%C3%9Fe%20Fahne",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wei%C3%9Fe%20Fahne&action=history"
+    },
+    {
+      "word": "weiße Magie",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌvaɪ̯sə maˈɡiː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wei%C3%9Fe%20Magie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wei%C3%9Fe%20Magie&action=history"
+    },
+    {
+      "word": "weiße Schokolade",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈvaɪ̯sə ʃokoˈlaːdə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wei%C3%9Fe%20Schokolade",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wei%C3%9Fe%20Schokolade&action=history"
+    },
+    {
+      "word": "weißer Phosphor",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌvaɪ̯sɐ ˈfɔsfoːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wei%C3%9Fer%20Phosphor",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wei%C3%9Fer%20Phosphor&action=history"
+    },
+    {
+      "word": "weißes Blutkörperchen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈvaɪ̯səs ˈbluːtkœʁpɐçən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wei%C3%9Fes%20Blutk%C3%B6rperchen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wei%C3%9Fes%20Blutk%C3%B6rperchen&action=history"
+    },
+    {
+      "word": "weißes Rauschen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌvaɪ̯səs ˈʁaʊ̯ʃn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wei%C3%9Fes%20Rauschen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wei%C3%9Fes%20Rauschen&action=history"
+    },
+    {
+      "word": "welche",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[ˈvɛlçə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/welche",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=welche&action=history"
+    },
+    {
+      "word": "wenn",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[vɛn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wenn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wenn&action=history"
+    },
+    {
+      "word": "wenn die Katze aus dem Haus ist, tanzen die Mäuse auf dem Tisch",
+      "partOfSpeech": "expression",
+      "pronunciation": "[vɛn diː ˈkat͡sə ʔaʊ̯s deːm ˌhaʊ̯s ʔɪst ˌtant͡sn̩ diː ˈmɔɪ̯zə ʔaʊ̯f deːm ˌtɪʃ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wenn%20die%20Katze%20aus%20dem%20Haus%20ist%2C%20tanzen%20die%20M%C3%A4use%20auf%20dem%20Tisch",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wenn%20die%20Katze%20aus%20dem%20Haus%20ist%2C%20tanzen%20die%20M%C3%A4use%20auf%20dem%20Tisch&action=history"
+    },
+    {
+      "word": "wenn man vom Teufel spricht",
+      "partOfSpeech": "expression",
+      "pronunciation": "[vɛn man fɔm ˈtɔɪ̯fl̩ ʃpʁɪçt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wenn%20man%20vom%20Teufel%20spricht",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wenn%20man%20vom%20Teufel%20spricht&action=history"
+    },
+    {
+      "word": "wenngleich",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[vɛnˈɡlaɪ̯ç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wenngleich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wenngleich&action=history"
+    },
+    {
+      "word": "wer",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[veːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wer",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wer&action=history"
+    },
+    {
+      "word": "weshalb",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[vɛsˈhalp]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/weshalb",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=weshalb&action=history"
+    },
+    {
+      "word": "westslawische Sprache",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌvɛstslaːvɪʃə ˈʃpʁaːxə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/westslawische%20Sprache",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=westslawische%20Sprache&action=history"
+    },
+    {
+      "word": "wie",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[viː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wie",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wie&action=history"
+    },
+    {
+      "word": "wieder",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈviːdɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wieder",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wieder&action=history"
+    },
+    {
+      "word": "wieso",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[viˈzoː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wieso",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wieso&action=history"
+    },
+    {
+      "word": "wiewohl",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[viːˈvoːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wiewohl",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wiewohl&action=history"
+    },
+    {
+      "word": "willkommen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[vɪlˈkɔmən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/willkommen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=willkommen&action=history"
+    },
+    {
+      "word": "wir",
+      "partOfSpeech": "pronoun",
+      "pronunciation": "[viːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wir",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wir&action=history"
+    },
+    {
+      "word": "wirklich",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈvɪʁklɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wirklich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wirklich&action=history"
+    },
+    {
+      "word": "wo",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[voː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wo",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wo&action=history"
+    },
+    {
+      "word": "wochentags",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈvɔxn̩ˌtaːks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wochentags",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wochentags&action=history"
+    },
+    {
+      "word": "woher",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[voˈheːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/woher",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=woher&action=history"
+    },
+    {
+      "word": "wohin",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[voˈhɪn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wohin",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wohin&action=history"
+    },
+    {
+      "word": "wohl",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[voːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wohl",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wohl&action=history"
+    },
+    {
+      "word": "wohlgemerkt",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˌvoːlɡəˈmɛʁkt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/wohlgemerkt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=wohlgemerkt&action=history"
+    },
+    {
+      "word": "worum",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[voˈʁʊm]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/worum",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=worum&action=history"
+    },
+    {
+      "word": "während",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[ˈvɛːʁənt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/w%C3%A4hrend",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=w%C3%A4hrend&action=history"
+    },
+    {
+      "word": "währenddessen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[vɛːʁəntˈdɛsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/w%C3%A4hrenddessen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=w%C3%A4hrenddessen&action=history"
+    },
+    {
+      "word": "zehn",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[t͡seːn]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zehn",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zehn&action=history"
+    },
+    {
+      "word": "zehntausend",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈt͡seːnˌtaʊ̯zn̩t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zehntausend",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zehntausend&action=history"
+    },
+    {
+      "word": "zehnte",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈt͡seːntə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zehnte",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zehnte&action=history"
+    },
+    {
+      "word": "ziemlich",
+      "partOfSpeech": "particle",
+      "pronunciation": "[ˈt͡siːmlɪç]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/ziemlich",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=ziemlich&action=history"
+    },
+    {
+      "word": "zirka",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈt͡sɪʁka]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zirka",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zirka&action=history"
+    },
+    {
+      "word": "zu",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[t͡suː]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zu",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zu&action=history"
+    },
+    {
+      "word": "zuerst",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈʔeːɐ̯st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zuerst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zuerst&action=history"
+    },
+    {
+      "word": "zulasten",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[t͡suˈlastn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zulasten",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zulasten&action=history"
+    },
+    {
+      "word": "zuletzt",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈlɛt͡st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zuletzt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zuletzt&action=history"
+    },
+    {
+      "word": "zum Beispiel",
+      "partOfSpeech": "expression",
+      "pronunciation": "[t͡sʊm ˈbaɪ̯ˌʃpiːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zum%20Beispiel",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zum%20Beispiel&action=history"
+    },
+    {
+      "word": "zum Glück",
+      "partOfSpeech": "expression",
+      "pronunciation": "[t͡sʊm ˈɡlʏk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zum%20Gl%C3%BCck",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zum%20Gl%C3%BCck&action=history"
+    },
+    {
+      "word": "zumal",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[t͡suˈmaːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zumal",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zumal&action=history"
+    },
+    {
+      "word": "zumeist",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈmaɪ̯st]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zumeist",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zumeist&action=history"
+    },
+    {
+      "word": "zumindest",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈmɪndəst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zumindest",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zumindest&action=history"
+    },
+    {
+      "word": "zunächst",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈnɛːçst]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zun%C3%A4chst",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zun%C3%A4chst&action=history"
+    },
+    {
+      "word": "zurzeit",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡sʊʁˈt͡saɪ̯t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zurzeit",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zurzeit&action=history"
+    },
+    {
+      "word": "zurück",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈʁʏk]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zur%C3%BCck",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zur%C3%BCck&action=history"
+    },
+    {
+      "word": "zusammen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[t͡suˈzamən]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zusammen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zusammen&action=history"
+    },
+    {
+      "word": "zwar",
+      "partOfSpeech": "conjunction",
+      "pronunciation": "[t͡svaːɐ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zwar",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zwar&action=history"
+    },
+    {
+      "word": "zwecks",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[t͡svɛks]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zwecks",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zwecks&action=history"
+    },
+    {
+      "word": "zwei",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[t͡svaɪ̯]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zwei",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zwei&action=history"
+    },
+    {
+      "word": "zwei Fliegen mit einer Klappe schlagen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[t͡svaɪ̯ ˈfliːɡn̩ mɪt ˈaɪ̯nɐ ˈklapə ˈʃlaːɡn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zwei%20Fliegen%20mit%20einer%20Klappe%20schlagen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zwei%20Fliegen%20mit%20einer%20Klappe%20schlagen&action=history"
+    },
+    {
+      "word": "zweihundert",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈt͡svaɪ̯ˌhʊndɐt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zweihundert",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zweihundert&action=history"
+    },
+    {
+      "word": "zweimal",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈt͡svaɪ̯maːl]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zweimal",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zweimal&action=history"
+    },
+    {
+      "word": "zweite",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[ˈt͡svaɪ̯tə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zweite",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zweite&action=history"
+    },
+    {
+      "word": "zweitens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈt͡svaɪ̯tn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zweitens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zweitens&action=history"
+    },
+    {
+      "word": "zwischen",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈt͡svɪʃn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zwischen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zwischen&action=history"
+    },
+    {
+      "word": "zwölf",
+      "partOfSpeech": "numeral",
+      "pronunciation": "[t͡svœlf]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/zw%C3%B6lf",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=zw%C3%B6lf&action=history"
+    },
+    {
+      "word": "Öl ins Feuer gießen",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌøːl ɪns ˈfɔɪ̯ɐ ˈɡiːsn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%96l%20ins%20Feuer%20gie%C3%9Fen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%96l%20ins%20Feuer%20gie%C3%9Fen&action=history"
+    },
+    {
+      "word": "öffentlicher Raum",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˈœfn̩tlɪçɐ ˈʁaʊ̯m]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%B6ffentlicher%20Raum",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%B6ffentlicher%20Raum&action=history"
+    },
+    {
+      "word": "öffentliches Interesse",
+      "partOfSpeech": "expression",
+      "pronunciation": "[ˌœfn̩tlɪçəs ɪntəˈʁɛsə]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%B6ffentliches%20Interesse",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%B6ffentliches%20Interesse&action=history"
+    },
+    {
+      "word": "über",
+      "partOfSpeech": "preposition",
+      "pronunciation": "[ˈyːbɐ]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%BCber",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%BCber&action=history"
+    },
+    {
+      "word": "überall",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[yːbɐˈʔal]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%BCberall",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%BCberall&action=history"
+    },
+    {
+      "word": "überhaupt",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˌyːbɐˈhaʊ̯pt]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%BCberhaupt",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%BCberhaupt&action=history"
+    },
+    {
+      "word": "übermorgen",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈyːbɐˌmɔʁɡn̩]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%BCbermorgen",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%BCbermorgen&action=history"
+    },
+    {
+      "word": "überwiegend",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈyːbɐˌviːɡn̩t]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%BCberwiegend",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%BCberwiegend&action=history"
+    },
+    {
+      "word": "übrigens",
+      "partOfSpeech": "adverb",
+      "pronunciation": "[ˈyːbʁɪɡn̩s]",
+      "tags": [],
+      "sourceUrl": "https://de.wiktionary.org/wiki/%C3%BCbrigens",
+      "historyUrl": "https://de.wiktionary.org/w/index.php?title=%C3%BCbrigens&action=history"
+    }
+  ]
+}

@@ -3,32 +3,32 @@
     "id": "de-core",
     "kind": "study",
     "targetLanguage": "de",
-    "version": "4.1.0",
-    "url": "/language-packages/de-core-4.1.0.json",
-    "bytes": 19776839,
-    "sha256": "edc648157092376adb32cd56265b82d91e488d29836a0d5630e791fac2ce496e"
+    "version": "4.1.1",
+    "url": "/language-packages/de-core-4.1.1.json",
+    "bytes": 19826243,
+    "sha256": "cd3d9f016fbc09426c625c43759610ff74375fc96b674b2d00c55ee06059972d"
   },
   {
     "id": "de-en",
     "kind": "explanation",
     "targetLanguage": "de",
-    "version": "4.1.0",
+    "version": "4.1.1",
     "explanationLanguage": "en",
-    "studyVersion": "4.1.0",
-    "url": "/language-packages/de-en-4.1.0.json",
+    "studyVersion": "4.1.1",
+    "url": "/language-packages/de-en-4.1.1.json",
     "bytes": 17398674,
-    "sha256": "ac1ce58c4bd34b3f40134ff65864e9727bfdbce7253486474a57ddb81fa042a3"
+    "sha256": "41bdd3df09732b7bebf7f58085d9f148a46e955c99b476fe3a2b2c674dd136fc"
   },
   {
     "id": "de-ko",
     "kind": "explanation",
     "targetLanguage": "de",
-    "version": "4.1.0",
+    "version": "4.1.1",
     "explanationLanguage": "ko",
-    "studyVersion": "4.1.0",
-    "url": "/language-packages/de-ko-4.1.0.json",
+    "studyVersion": "4.1.1",
+    "url": "/language-packages/de-ko-4.1.1.json",
     "bytes": 17120086,
-    "sha256": "09df7fb2ae53d88d908609fadc4920c9e0d16f54bffc0d40b2c3f2dfea59d7cf"
+    "sha256": "f8794540696a3c4e55bc0e2802d007d0a5b5c1106cee130547c491a8b7607b5e"
   },
   {
     "id": "en-core",
