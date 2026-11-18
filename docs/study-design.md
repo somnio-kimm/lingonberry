@@ -105,7 +105,7 @@ The first is the reusable design contract: German/Chinese base styles, shared se
 
 Use `renderPhraseGapSentence` through `renderExercisePrompt` for explicitly authored nonadjacent blanks. Each typing blank uses a transparent device-keyboard input inside a 44px minimum implicit label target. Keep the input line height at 1.25 and its underline beside the sentence baseline; extra tap padding belongs to the label, not to the text input. Set border-box sizing explicitly so German and Chinese styles produce the same geometry. Keep inputs within the existing question card, retain shared Submit/Skip/Next flow and use `bindTypingAnswers` for all-field readiness, Enter navigation and IME handling. Selection still checks on tap. Show corrected parts inline and cross out only incorrect parts. Do not create a second answer box below the sentence. See [Separated Phrase Gaps](phrase-gaps.md) and `verify-phrase-gaps-browser.mjs` for the reference behaviour and responsive checks.
 
-The Dictation contract measures actual downloaded-package screens in all seven study languages, English/Korean display, phone/tablet widths and both themes. It compares selector position, size, spacing and button styles directly with German, checks title → selector → Filters order, mode changes and the audio gate, and saves screenshots. The opt-in native `--verify-dictation-design` check compares German, Chinese, English and Japanese controls on-device without downloading packages or recording study answers.
+The Dictation contract measures actual downloaded-package screens in all four released study languages, English/Korean display, phone/tablet widths and both themes. It compares selector position, size, spacing and button styles directly with German, checks title → selector → Filters order, mode changes and the audio gate, and saves screenshots. The opt-in native `--verify-dictation-design` check compares German, Chinese, English and Japanese controls on-device without downloading packages or recording study answers.
 
 ## Complete Dictation screen
 
@@ -212,7 +212,7 @@ The model owns session identity/selection; adapters own existing progress writes
 
 ## Quiet visual language
 
-Use opaque beige/charcoal surfaces, thin borders, restrained blue accents and neutral typographic headings. Avoid decorative gradients, repeated floating shadows and coloured emoji tiles. Home presents consistent single-column menu rows with original monochrome SVG icons; the three existing tabs remain. Settings order is Appearance, Language Packages, practice toggles, report/data actions and support/licence.
+Use opaque beige/charcoal surfaces, thin borders, restrained blue accents and neutral typographic headings. Avoid decorative gradients, repeated floating shadows and coloured emoji tiles. Study presents a consistent two-column tile grid with original monochrome SVG icons; the three existing tabs remain. Settings order is Appearance, Language Packages, practice toggles, report/data actions and support/licence.
 
 Flashcards have a fixed, flat reading surface, visible set progress,44px+ direct Learning/Mastered actions and paged examples. Do not add instructional prose or turn self-classification into a graded quiz. Preserve semantic green/red answer feedback, level/POS/type tag meanings and German article colours. Native selects and visible keyboard focus are required. Japanese examples retain their separate ruby clearance.
 
@@ -247,3 +247,5 @@ Translation annotations use one shared precedence rule: a question-level span ov
 New vocabulary snapshots retain one learningExample for checked feedback, not the full word example inventory. Retests use that exact saved example. Older snapshots may use an active same-ID, same-explanation-language example when one is missing; they never borrow another sense or explanation language. The vocabulary browser suite also verifies examples after saved Review retests.
 
 Root cards explicitly label their recorded Origin / 어원 and keep the simple source language (Latin, Greek, etc.) plus the existing meaning and visible related words. Unrecorded origins say so; do not infer a history from spelling or reintroduce a root quiz.
+
+Dictation hint buttons share one row: Meaning Hint stays first, and optional Pronunciation Hint follows it. Revealed clue text sits below the row, preserving the answer field and speaker positions. UI package tests use AVAILABLE_STUDY_LANGUAGES; unreleased languages remain hidden rather than being silently re-enabled for a test.

@@ -511,3 +511,6 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .study-reset:active{background:var(--line)}
 .wrong-mode{display:inline-flex;align-items:center;gap:5px}
 .wrong-mode .study-icon{width:14px;height:14px;flex:0 0 14px}
+
+.listening-hints{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.listening-hints .listening-hint{margin:0}

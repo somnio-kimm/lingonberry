@@ -166,9 +166,27 @@ enum NativePackageVerification {
             for(const patterns of [initials,openings])if(question.options.length>=3&&patterns.size>1&&Math.max(...patterns.values())===question.options.length-1)throw new Error('Meaning Quiz has a visible answer outlier');
           }
           check.balancedMeaningQuestions=20;
+          const [{withVocabularyLearning,vocabularyLearningContent},{renderVocabularyHints,renderVocabularyLearning},{snapshotQuestion},{listeningReadingHint}]=await Promise.all([import('./js/shared/vocabulary-learning.js'),import('./js/shared/vocabulary-learning-view.js'),import('./js/shared/question-snapshot.js'),import('./js/shared/listening.js')]);
+          const inputProbe=createVocabularyEngine().createVocabularyPool('vocabinput',activeChoices,before.explanationLanguage).choose(undefined,drawChoiceRandom);
+          if(!inputProbe)throw new Error('Vocabulary learning probe has no eligible word');
+          const learned=snapshotQuestion(withVocabularyLearning(inputProbe,{language:before.targetLanguage,locale:before.explanationLanguage})),learning=vocabularyLearningContent(learned,{language:before.targetLanguage,locale:before.explanationLanguage}),learningHost=document.createElement('div');
+          learningHost.style.cssText='position:absolute;left:-10000px;top:0;width:300px';document.body.append(learningHost);
+          try{
+            learningHost.innerHTML=renderVocabularyHints(inputProbe,{language:before.targetLanguage,locale:before.explanationLanguage,audioButton:'<button class="word-listen">audio</button>'});
+            if(!learningHost.querySelector('[data-sound-hint]')||[...learningHost.querySelectorAll('details')].some(node=>node.open))throw new Error('Vocabulary hints are not initially closed');
+            learningHost.innerHTML=renderVocabularyLearning(learned,{language:before.targetLanguage,locale:before.explanationLanguage});
+            if(!learning.example||learningHost.querySelector('.example-sentence')?.textContent!==learning.example.text||learned.word.examples||learned.word.sentences)throw new Error('Saved vocabulary learning example differs');
+            check.vocabularyLearning={hintsClosed:true,savedExample:true};
+          }finally{learningHost.remove();}
+          const sourceReadings=core.entries.filter(row=>row.pronunciation).length,projectedReadings=choiceWords.filter(row=>row.pronunciation).length;
+          if(sourceReadings!==projectedReadings)throw new Error('Word pronunciation projection differs');
+          const readingWord=choiceWords.find(row=>row.pronunciation&&row.pronunciation!== (row.lemma||row.hanzi));
+          check.pronunciationHints={sourceReadings,projectedReadings,supplied:readingWord?!!listeningReadingHint({kind:'word',word:readingWord,answer:readingWord.lemma||readingWord.hanzi}):false};
+
           const openStudyMode=async mode=>{
             document.querySelector('[data-tab=home]').click();const chineseMode=mode==='flashcards'?'flashcard':mode;
             await wait(()=>document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]'));
+            const grid=document.querySelector('.menu-grid,.quiz-grid');if(!grid||getComputedStyle(grid).gridTemplateColumns.split(' ').length!==2)throw new Error('Study menu is not two columns');
             document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]').click();
           };
           markUxStage(before.id+':wordlist-open');await open(before.targetLanguage,before.explanationLanguage);await openStudyMode('wordlist');await wait(()=>document.querySelector('[data-word-initial]'));
@@ -193,6 +211,10 @@ enum NativePackageVerification {
             const expectedActions=before.explanationLanguage==='ko'?['학습 중','학습 완료']:['Learning','Mastered'];if(classify.some((button,index)=>button.textContent!==expectedActions[index]))throw new Error('Flashcard action language differs');
           }
           check.flashcardSet={selected:10,total:shownSet,actions:classify.length};markUxStage(before.id+':flashcards-restore');const restoreSet=document.querySelector('[data-set-size]');restoreSet.value=String(savedSetSize);restoreSet.dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('[data-set-size]')?.value===String(savedSetSize));if(savedSetPreference===null)localStorage.removeItem('learn-language.flashcards.setSize.v1');else localStorage.setItem('learn-language.flashcards.setSize.v1',savedSetPreference);
+          markUxStage(before.id+':scramble-tools');await openStudyMode('scramble');await wait(()=>document.querySelector('.sentence-question'));
+          const resetButton=document.querySelector('.study-reset');if(!resetButton?.closest('.scramble-answer')||resetButton.getBoundingClientRect().height<44||document.querySelector('.sentence-reset-controls'))throw new Error('Scramble reset placement differs');
+          const scrambleTranslation=document.querySelector('.scramble-question .sentence-translation');if(scrambleTranslation&&getComputedStyle(scrambleTranslation).fontSize!=='17px')throw new Error('Scramble translation is too small');
+          check.scrambleTools={resetBesideAnswer:true,translationSize:scrambleTranslation?'17px':null};
           const [{findTranslationFocus},{renderTranslationTarget}]=await Promise.all([import('./js/shared/translation-focus.js'),import('./js/shared/translation-target-view.js')]);
           if(before.targetLanguage==='en'&&before.explanationLanguage==='en')check.translationTarget={definitionOnly:true};
           else{
