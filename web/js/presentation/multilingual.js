@@ -46,7 +46,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  let headwords=createEnglishHeadwords([]),morphemeModel,typing,listeningCleanup,japaneseFurigana,sampleReadingChoice;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,card=0,flipped=false,order=[],chosenTokens=[],closeSheet=()=>{};
  const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
- const filters=new Map(),scores=new Map();
+ const filters=new Map(),scores=new Map();let lastRenderedRoute;
  const score=route=>{if(!scores.has(route))scores.set(route,{correct:0,total:0});return scores.get(route);};
  const recordScore=(route,correct)=>{score(route).total++;if(correct)score(route).correct++;};
  const locale=()=>store.state.preferences.uiLanguage,t=value=>lexiconText(locale(),value);
@@ -157,8 +157,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   host.querySelectorAll('[data-route]').forEach(button=>button.onclick=()=>{resetQuestion();navigate(button.dataset.route);});host.querySelectorAll('[data-level]').forEach(button=>button.onclick=()=>{change('studyLevel',button.dataset.level);card=0;order=[];resetQuestion();refresh();});}
  function drawWords(host,route){
   const f=state(route);let visible=new Map();
-  return renderLexiconWordList(host,{t,language,locale:locale(),query:f.query,filters:controls(route),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
-   bindFilters:host=>bindControls(host,route),setQuery:value=>{f.query=value;},openWord:id=>{const word=visible.get(id);if(word)details(word);},speakWord:id=>{const word=byId.get(id);if(word)speak(studySpokenWord(word,profile),host);},
+  return renderLexiconWordList(host,{t,language,locale:locale(),selectedInitial:f.selectedInitial||'all',query:f.query,filters:controls(route),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
+   bindFilters:host=>bindControls(host,route),setInitial:value=>{f.selectedInitial=value;},setQuery:value=>{f.query=value;},openWord:id=>{const word=visible.get(id);if(word)details(word);},speakWord:id=>{const word=byId.get(id);if(word)speak(studySpokenWord(word,profile),host);},
   });
  }
  function drawCards(host,route){
@@ -309,7 +309,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
-  render(route,host){listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')return drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
+  render(route,host){if(route==='wordlist'&&lastRenderedRoute!=='wordlist')state('wordlist').selectedInitial='all';lastRenderedRoute=route;listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')return drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
   stop(){void store.flush().catch(()=>{});listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
  };
 }
