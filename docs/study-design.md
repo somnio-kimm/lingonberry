@@ -183,3 +183,9 @@ Browsing counts and status filters refer to grouped cards. All-New is New; all-M
 ## Meaning-choice quality
 
 Fresh Meaning Quiz options use the same active part of speech and existing level/status filters. Wrong choices are sampled from across that pool, not adjacent ordered entries. Prefer similar definition lengths and balanced visible starts: one option must not be the unique initial against otherwise matching starts. Exact wording, aliases and other known meanings remain protected. Small pools may show two or three unambiguous choices instead of four visually revealing ones; do not invent or rewrite definitions. Choice order remains shuffled, and historical Review/retests retain their saved options.
+
+## Word List initial index
+
+Word List has a shared native initial picker combined with the selected level, query, part of speech and study status. English/German use A–Z with accent folding and German noun-article handling; Chinese uses supplied pinyin initials; Japanese uses supplied kana-reading rows. Unknown readings stay in Other. The index never infers a kanji reading, drops a dictionary sense or replaces the search field while typing. A new mounted view resets the initial to All.
+
+Run `node scripts/verify-word-initial-browser.mjs` for all four adapters, EN/KO, phone/tablet and both themes.

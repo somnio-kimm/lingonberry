@@ -157,7 +157,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   host.querySelectorAll('[data-route]').forEach(button=>button.onclick=()=>{resetQuestion();navigate(button.dataset.route);});host.querySelectorAll('[data-level]').forEach(button=>button.onclick=()=>{change('studyLevel',button.dataset.level);card=0;order=[];resetQuestion();refresh();});}
  function drawWords(host,route){
   const f=state(route);let visible=new Map();
-  return renderLexiconWordList(host,{t,query:f.query,filters:controls(route),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
+  return renderLexiconWordList(host,{t,language,locale:locale(),query:f.query,filters:controls(route),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
    bindFilters:host=>bindControls(host,route),setQuery:value=>{f.query=value;},openWord:id=>{const word=visible.get(id);if(word)details(word);},speakWord:id=>{const word=byId.get(id);if(word)speak(studySpokenWord(word,profile),host);},
   });
  }
