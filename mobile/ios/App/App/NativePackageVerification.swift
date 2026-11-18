@@ -161,6 +161,46 @@ enum NativePackageVerification {
             for(const patterns of [initials,openings])if(question.options.length>=3&&patterns.size>1&&Math.max(...patterns.values())===question.options.length-1)throw new Error('Meaning Quiz has a visible answer outlier');
           }
           check.balancedMeaningQuestions=20;
+          const openStudyMode=async mode=>{
+            document.querySelector('[data-tab=home]').click();const chineseMode=mode==='flashcards'?'flashcard':mode;
+            await wait(()=>document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]'));
+            document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]').click();
+          };
+          await open(before.targetLanguage,before.explanationLanguage);await openStudyMode('wordlist');await wait(()=>document.querySelector('[data-word-initial]'));
+          const indexSearch=document.querySelector('#search-input');if(indexSearch){indexSearch.value='';indexSearch.dispatchEvent(new Event('input',{bubbles:true}));}
+          const initialControl=document.querySelector('[data-word-initial]');if(initialControl.value!=='all')throw new Error('Word index did not reset on a new visit');
+          const initialOption=[...initialControl.options].find(option=>option.value!=='all'&&!option.disabled);
+          if(initialOption){
+            initialControl.value=initialOption.value;initialControl.dispatchEvent(new Event('change',{bubbles:true}));
+            const {readWordInitial}=await import('./js/shared/word-initial-index.js'),choiceById=new Map(choiceWords.map(word=>[word.id,word]));
+            const visible=[...document.querySelectorAll('.wl-row')].map(node=>choiceById.get(node.dataset.word||node.dataset.id)).filter(Boolean);
+            if(!visible.length||visible.some(word=>readWordInitial(word,before.targetLanguage)!==initialOption.value))throw new Error('Word initial filter escaped its selected group');
+            check.wordIndex={value:initialOption.value,visible:visible.length};initialControl.value='all';initialControl.dispatchEvent(new Event('change',{bubbles:true}));
+          }
+          const {readFlashcardSetSize}=await import('./js/shared/flashcard-session.js'),savedSetSize=readFlashcardSetSize(),savedSetPreference=localStorage.getItem('learn-language.flashcards.setSize.v1');
+          await openStudyMode('flashcards');await wait(()=>document.querySelector('[data-set-size]'));
+          const setSize=document.querySelector('[data-set-size]');setSize.value='10';setSize.dispatchEvent(new Event('change',{bubbles:true}));
+          await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('[data-set-size]')?.value==='10'&&Number(document.querySelector('#flashcard-count')?.dataset.setTotal)<=10);
+          if(!document.querySelector('.flashcard')){document.querySelector('[data-f=all]')?.click();await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&(document.querySelector('.flashcard')||document.querySelector('.empty-wrong')));}
+          const shownSet=Number(document.querySelector('#flashcard-count')?.dataset.setTotal),classify=[...document.querySelectorAll('.fc-classify button')];
+          if(document.querySelector('.flashcard')){
+            if(shownSet<1||shownSet>10||classify.length!==2||classify.some(button=>button.getBoundingClientRect().height<44))throw new Error('Flashcard set cap/actions differ');
+            const expectedActions=before.explanationLanguage==='ko'?['학습 중','학습 완료']:['Learning','Mastered'];if(classify.some((button,index)=>button.textContent!==expectedActions[index]))throw new Error('Flashcard action language differs');
+          }
+          check.flashcardSet={selected:10,total:shownSet,actions:classify.length};const restoreSet=document.querySelector('[data-set-size]');restoreSet.value=String(savedSetSize);restoreSet.dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('[data-set-size]')?.value===String(savedSetSize));if(savedSetPreference===null)localStorage.removeItem('learn-language.flashcards.setSize.v1');else localStorage.setItem('learn-language.flashcards.setSize.v1',savedSetPreference);
+          const [{findTranslationFocus},{renderTranslationTarget}]=await Promise.all([import('./js/shared/translation-focus.js'),import('./js/shared/translation-target-view.js')]);
+          if(before.targetLanguage==='en'&&before.explanationLanguage==='en')check.translationTarget={definitionOnly:true};
+          else{
+            let matched;
+            for(const word of choiceWords){for(const example of word.examples||word.sentences||[]){const text=example.studyTranslation;if(text&&findTranslationFocus({text,word,locale:before.explanationLanguage,studyLanguage:before.targetLanguage}).length){matched={word,text};break;}}if(matched)break;}
+            if(!matched)throw new Error('No translation target available for native style check');
+            const probe=document.createElement('p');probe.className='sentence-translation';probe.style.cssText='position:absolute;left:-10000px;top:0;width:300px';probe.innerHTML=renderTranslationTarget(matched.text,{word:matched.word,locale:before.explanationLanguage,studyLanguage:before.targetLanguage});document.body.append(probe);
+            try{const target=probe.querySelector('.translation-target'),style=target&&getComputedStyle(target);if(probe.textContent!==matched.text||!style?.textDecorationLine.includes('underline')||parseFloat(style.textDecorationThickness)!==2)throw new Error('Translation target text/style differs');check.translationTarget={matched:true,underline:style.textDecorationLine};}finally{probe.remove();}
+          }
+          await settingsPage();const savedSound=document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked');if(!['true','false'].includes(savedSound))throw new Error('Answer Sounds setting missing');
+          document.querySelector('#set-answer-sounds').click();await wait(()=>document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')!==savedSound);const {AnswerSounds}=await import('./js/shared/answer-sounds.js');if(AnswerSounds.enabled!==(savedSound==='false'))throw new Error('Answer Sounds setting did not reach feedback service');
+          document.querySelector('#set-answer-sounds').click();await wait(()=>document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')===savedSound);check.answerSounds={settingRoundTrip:true,restored:savedSound==='true',webAudioAvailable:!!(window.AudioContext||window.webkitAudioContext)};
+
           checks.push(check);
         }
       } finally {
@@ -205,6 +245,7 @@ enum NativePackageVerification {
       const pluralWord=germanWords({targetLanguage:'de',explanationLanguage:'en',entries:[{id:'native-qa-plural',word:'Ferien',article:'die',partOfSpeech:'noun',meaning:'holidays',grammar:{gender:null,genders:[],number_restriction:'plural'}}]})[0];
       const pluralSaved=snapshotVocabularyQuestion(vocabularyQuestions('vocabinput',[pluralWord],'en')[0]).word;
       if(pluralWord.gender!==null||pluralSaved.gender!==null||pluralSaved.number_restriction!=='plural'||!wordHeading(pluralSaved).includes('noun-article plural'))throw new Error('Plural-only gender classification differs');
+      await wait(()=>['en','ja'].every(language=>{const raw=localStorage.getItem('learn-language.'+language+'.lexicon.v1.pending');if(!raw)return true;const pending=JSON.parse(raw);return !pending.base&&!Object.keys(pending.statuses||{}).length&&!Object.keys(pending.wrongs||{}).length;}));
       return JSON.stringify({passed:true,webVersion:APP_VERSION,progressMigration,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,focusCheck:{start:focusQuestion.start,answer:focusQuestion.answer,choices:focusChoices},pluralGenderCheck:{gender:pluralSaved.gender,number:pluralSaved.number_restriction},restored:original.target||null});
     }
     // END INSTALLED_PACKAGE_UPDATE_CHECK
