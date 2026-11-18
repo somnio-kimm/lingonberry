@@ -396,7 +396,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .example-sentence:lang(ja) rt{display:revert;order:initial;margin:0;min-height:0;font-size:12px;font-weight:600;line-height:1.2;color:var(--blue)}
 
 /* Reading targets share the standard blue single-underline treatment. */
-.study-reading-target{text-decoration-line:underline;text-decoration-color:var(--blue);text-decoration-thickness:2px;text-underline-offset:.18em;text-decoration-skip-ink:none}
+.study-reading-target,.translation-target{text-decoration-line:underline;text-decoration-color:var(--blue);text-decoration-thickness:2px;text-underline-offset:.18em;text-decoration-skip-ink:none}
 
 /* Specialist Review uses the same detail scale; keep Okurigana's requested compact reading row. */
 .review-answer-details .exercise-explanation{border-top:0}

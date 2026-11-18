@@ -36,7 +36,7 @@ test('English self-study shows the word meaning while Korean shows the full sent
   const question={mode:'cloze',answerMode:mode,locale,exercise:true,word:{...word,studyMeaning:locale==='en'?'To leave the ground and begin flying.':word.studyMeaning},context:'이륙하다',sentence:example.text,focus:{start:15,text:'take off'},gapFill:{parts:['The plane will ',' at noon.'],answers:['take off']},options:[{id:word.id,text:'take off'}]};
   renderLexiconSentence(host,{question,chosenTokens:[],showTranslation:true,t:value=>value},{language:'en',uiLanguage:locale});
   if(locale==='en'){assert.ok(host.innerHTML.includes('To leave the ground and begin flying.'));assert.ok(!host.innerHTML.includes(example.studyTranslation));}
-  else {assert.ok(host.innerHTML.includes(example.studyTranslation));assert.ok(!host.innerHTML.includes('>이륙하다<'));}
+  else {assert.ok(host.innerHTML.replace(/<[^>]*>/gu,'').includes(example.studyTranslation));assert.ok(!host.innerHTML.includes('>이륙하다<'));}
  }
 });
 test('the Korean context edition preserves vocabulary and completes every sentence hint and completes every current expression Cloze',async()=>{
