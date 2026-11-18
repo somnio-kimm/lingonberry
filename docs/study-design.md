@@ -233,3 +233,7 @@ Word Dictation may reveal a supplied IPA, kana or pinyin through Pronunciation H
 ## Sentence Scramble answer tools
 
 Sentence translations use17px text at1.65 line height in all languages. Reset is a44px outline-icon button beside the answer-area label, with a translated accessible name and tooltip. Keep it separate from Submit/Skip and remove it after checking. Reuse renderStudyReset rather than another bottom text action. The shared screen-parity suite checks its placement, size, reset behaviour and translation font against German/Chinese.
+
+## Review recency and type badges
+
+Review orders saved mistakes by their latest incorrect attempt. A successful retest does not change recency. Preserve untimed legacy entries in a stable existing/insertion fallback order rather than inventing timestamps. English/Japanese records now retain lastWrongAt. Chinese includes failed retests; German already uses the last incorrect attempt. Exercise badges retain pastel blue and add14px decorative outline icons with the existing translated label. They remain distinct from level and part-of-speech badges.

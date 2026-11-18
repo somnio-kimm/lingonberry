@@ -1,3 +1,4 @@
+import {newestMistakesFirst} from '../shared/review-order.js';
 import {renderVocabularyHints,renderVocabularyLearning} from '../shared/vocabulary-learning-view.js';
 import {vocabularyLearningContent} from '../shared/vocabulary-learning.js';
 import {renderStudyIcon} from '../shared/study-icons.js';
@@ -253,7 +254,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   function checkAnswer(){if(feedback||typing?.isComposing||!input.trim())return;field?.blur();gapFields.forEach(input=>input.blur());const correct=q.exercise?exerciseAnswerCorrect(q,input):engine.vocabularyAnswerCorrect(q,input);feedback=correct?'correct':'wrong';store.record(q,input,correct,retest);recordScore(route,correct);if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();}
  }
  function drawReview(host){
-  const f=state('wrong'),all=Object.values(store.state.wrongs).filter(row=>isCurrentQuestion(row.question));
+  const f=state('wrong'),all=newestMistakesFirst(Object.values(store.state.wrongs).reverse()).filter(row=>isCurrentQuestion(row.question));
   const wordFor=row=>{const word=byId.get(row.question.word.id)||row.question.word;return normaliseStudyPartOfSpeech(word.pos)===word.pos?word:{...word,pos:normaliseStudyPartOfSpeech(word.pos)};};
   const questionType=q=>q.mode==='cloze'?'cloze':q.exercise&&q.category?q.category:q.mode;
   const matches=(row,filters)=>{
@@ -285,7 +286,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    const correct=['cloze','scramble','listensentence'].includes(q.mode)&&!duplicate?field('Correct Answer',e(q.answer),true):'';
    return prompt+correct+field('Wrong Answer',e(answer));
   };
-  const cards=rows.map(row=>{const word=wordFor(row);return {id:row.id,wordId:word.id,mode:questionLabel(row.question),pos:t(typeName(word)),level:levelLabel(word.level),count:row.count,headingHtml:heading(word),meaning:word.studyMeaning,meaningLanguage:word.studyExplanationLanguage||study?.explanationLanguage||row.question.locale||locale(),answerHtml:answerDetails(row)};});
+  const cards=rows.map(row=>{const word=wordFor(row);return {id:row.id,wordId:word.id,modeKey:questionType(row.question),mode:questionLabel(row.question),pos:t(typeName(word)),level:levelLabel(word.level),count:row.count,headingHtml:heading(word),meaning:word.studyMeaning,meaningLanguage:word.studyExplanationLanguage||study?.explanationLanguage||row.question.locale||locale(),answerHtml:answerDetails(row)};});
   return renderLexiconReview(host,{t,rows:cards,total:all.length,groups,open:f.open},{
    setOpen:value=>{f.open=value;},setFilter:(key,value)=>{if(key==='level')change('studyLevel',value);else f[key]=value;refresh();},clear:()=>{store.clearWrongs();refresh();},remove:id=>{store.removeWrong(id);refresh();},openWord:id=>{const word=byId.get(id);if(word)details(word);},retest:()=>{reviewQueue=JSON.parse(JSON.stringify(rows));reviewResults={correct:0,wrong:0,skipped:0};resetQuestion();navigate('retest');},
   });
