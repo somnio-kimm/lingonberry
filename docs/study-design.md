@@ -217,3 +217,7 @@ Use opaque beige/charcoal surfaces, thin borders, restrained blue accents and ne
 Flashcards have a fixed, flat reading surface, visible set progress,44px+ direct Learning/Mastered actions and paged examples. Do not add instructional prose or turn self-classification into a graded quiz. Preserve semantic green/red answer feedback, level/POS/type tag meanings and German article colours. Native selects and visible keyboard focus are required. Japanese examples retain their separate ruby clearance.
 
 The interaction references are [Quizlet's Flashcard sorting](https://help.quizlet.com/hc/en-ca/articles/360030988091-Studying-with-Flashcards) and [Anki's limited study sessions](https://docs.ankiweb.net/filtered-decks.html). Icons, tones and implementation are original; this is not a copy of their branding or assets. Run `verify-quiet-design-browser.mjs` and the existing screen/reading parity suites for both themes, EN/KO and phone/tablet layouts.
+
+## Study menu grid
+
+Study uses two equal columns on phone and tablet, with 12px gaps and at least112px high tiles. Keep monochrome outline icons, neutral centred labels and flat beige/charcoal cards. Omit chevrons, gradients, rainbow feature colours and large shadows. Preserve the established mode order; additional language-specific modes continue in the same grid. `verify-quiet-design-browser.mjs` checks column alignment, touch sizes, overflow and bilingual Settings parity across all four languages and both themes.
