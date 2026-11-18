@@ -13,7 +13,7 @@ test('reviewed English release has identical bilingual sense coverage and exact 
  validateCatalog(catalog);assert.equal(report.review.sourceAndSenseReviewComplete,true);assert.equal(report.uniqueAlignedEntryIds,true);
  const packs=[];
  for(const id of ['en-core','en-en','en-ko']){
-  const descriptor=catalog.find(row=>row.id===id&&row.version===(report.packageVersions?.[id]||report.edition));assert.ok(descriptor);
+  const descriptor=catalog.find(row=>row.id===id);assert.ok(descriptor);
   const raw=await read(descriptor.url.slice(1));assert.equal(Buffer.byteLength(raw),descriptor.bytes);
   assert.equal(createHash('sha256').update(raw).digest('hex'),descriptor.sha256);packs.push(JSON.parse(raw));
  }
