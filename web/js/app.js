@@ -1,3 +1,4 @@
+import {AnswerSounds} from './shared/answer-sounds.js';
 import {normaliseAppSettings,readAppSettings} from './shared/app-settings.js';
 import {APP_NAME} from './shared/app-config.js';
 import {allowsExplanation,isStudyLanguageAvailable} from './shared/language-pairs.js';
@@ -15,9 +16,10 @@ const $=id=>document.getElementById(id),root=$('shell'),main=$('app'),tabs=$('ma
 const settingsKey='learn-language.preferences.v1';
 let saved={};try{saved=JSON.parse(localStorage.getItem(settingsKey)||'{}')||{};}catch{}
 let target=isStudyLanguageAvailable(saved.target)?saved.target:'',explanation=typeof saved.explanation==='string'?saved.explanation:'';
-let {theme,hapticEnabled,autoRemoveResolvedWrongs}=readAppSettings(localStorage,saved);
+let {theme,hapticEnabled,soundEnabled,autoRemoveResolvedWrongs}=readAppSettings(localStorage,saved);
 const uiLanguage=()=>explanation==='ko'?'ko':'en';
-const sharedSettings=()=>({theme,uiLanguage:uiLanguage(),hapticEnabled,autoRemoveResolvedWrongs});
+const sharedSettings=()=>({theme,uiLanguage:uiLanguage(),hapticEnabled,soundEnabled,autoRemoveResolvedWrongs});
+AnswerSounds.setEnabled(soundEnabled);
 const label=()=>interfaceText(uiLanguage());
 function languageName(id,bilingual=false){const locale=uiLanguage()==='en'?'en-GB':uiLanguage(),name=new Intl.DisplayNames([bilingual?'en-GB':locale],{type:'language'}).of(id);if(!bilingual)return name;const native=id==='fr'?'Français':new Intl.DisplayNames([id],{type:'language'}).of(id);return native===name?name:`${name} · ${native}`;}
 function save(){try{localStorage.setItem(settingsKey,JSON.stringify({target,explanation,...sharedSettings()}));}catch{}}
@@ -25,7 +27,7 @@ const manager=createPackageManager({storage:createPackageStorage(),baseUrl:locat
 let catalog=[],records=[],current=null,phase='idle',route='home',adapter,cleanup=()=>{},operation=0,drawToken=0;
 let packageTarget='',packageController=null,packageProgress=null,packageMessage='',selectionMessage='',progressFailed=false;
 const usablePairs=()=>installedPairs(records).filter(item=>isStudyLanguageAvailable(item.targetLanguage)&&presentationDefinitions[item.targetLanguage]&&allowsExplanation(item.targetLanguage,item.explanationLanguage));
-function preferences(value){({theme,hapticEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
+function preferences(value){({theme,hapticEnabled,soundEnabled,autoRemoveResolvedWrongs}=normaliseAppSettings({...sharedSettings(),...value}));AnswerSounds.setEnabled(soundEnabled);save();for(const runtime of presentations.values())runtime.setPreferences(sharedSettings());}
 async function presentation(id){
  if(presentations.has(id))return presentations.get(id);
  if(!presentationLoads.has(id))presentationLoads.set(id,(async()=>{
@@ -57,11 +59,11 @@ async function draw(){
  if(route!=='packages'&&!adapter.screens[route])route='home';if(route==='home'&&!current)route='settings';updateChrome();
  if(route==='settings'){
   let closeLicence=()=>{};const pairs=usablePairs(),targets=[...new Set(pairs.map(item=>item.targetLanguage))];
-  const dispose=renderSettings(main,{values:adapter.settings.values(),labels:label(),haptic:adapter.settings.haptic,reportContext:adapter.settings.reportContext,
+  const dispose=renderSettings(main,{values:{...adapter.settings.values(),...sharedSettings()},labels:label(),haptic:adapter.settings.haptic,reportContext:adapter.settings.reportContext,
    canReset:targets.includes(target)&&presentations.has(target)&&!progressFailed&&phase!=='loading',
    selection:{target,explanation,targets:targets.map(id=>({id,name:languageName(id,true)})),explanations:pairs.filter(item=>item.targetLanguage===target).map(item=>({id:item.explanationLanguage,name:languageName(item.explanationLanguage,true)})),message:selectionMessage?label().chooseExplanation:''},
    onSelect:async(key,value)=>{if(key==='target'){target=value;const pairs=usablePairs().filter(item=>item.targetLanguage===target);if(!pairs.some(item=>item.explanationLanguage===explanation))explanation=pairs.length===1?pairs[0].explanationLanguage:'';}else explanation=value;selectionMessage='';await resolveSelection();},
-   onChange:(key,value)=>{adapter.settings.change(key,value);preferences(adapter.preferences());draw();},
+   onChange:(key,value)=>{adapter.settings.change(key,value);preferences({[key]:value});draw();},
    onPackages:()=>{packageTarget='';packageMessage='';navigate('packages');},onLicence:()=>{closeLicence();closeLicence=openLicenceSheet({labels:label(),licenses:current?.licenses});},
    onReset:async()=>{const selectedTarget=target,selected=presentations.get(selectedTarget);if(!selected||!usablePairs().some(row=>row.targetLanguage===selectedTarget)||progressFailed||phase==='loading')throw new Error(label().resetFailed);const warning=await selected.settings.reset();selected.setStudy(current?.targetLanguage===selectedTarget?current:null);return warning;},
   });cleanup=()=>{closeLicence();dispose();};

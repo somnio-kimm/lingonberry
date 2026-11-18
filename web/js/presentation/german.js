@@ -10,7 +10,7 @@ export function createPresentation({navigate,refresh,onPreferences}) {
  const store=createStore(localStorage);let lastStudy;
  const context={catalog:{units:[],levels:STUDY_LEVELS},units:[],words:[],reference:null,dictionaryCount:0,store,navigate,refresh:()=>{onPreferences(preferences());refresh();},updateStatus:()=>onPreferences(preferences()),offlineStatus:()=>t('Study vocabulary saved for offline use. German speech depends on a system voice.'),haptic:()=>{if(store.state.preferences.hapticEnabled)navigator.vibrate?.(10);}};
  const renderers=createScreenRenderers(SCREENS,()=>store.state.preferences.uiLang);
- function preferences(){return {theme:store.state.preferences.theme,uiLanguage:store.state.preferences.uiLang,hapticEnabled:store.state.preferences.hapticEnabled,autoRemoveResolvedWrongs:store.state.preferences.autoRemoveResolvedWrongs};}
+ function preferences(){return {theme:store.state.preferences.theme,uiLanguage:store.state.preferences.uiLang,hapticEnabled:store.state.preferences.hapticEnabled,soundEnabled:store.state.preferences.soundEnabled,autoRemoveResolvedWrongs:store.state.preferences.autoRemoveResolvedWrongs};}
  return {
   id:'de',screens:SCREENS,
   settings:{

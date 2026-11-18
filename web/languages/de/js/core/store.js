@@ -22,6 +22,7 @@ export function createStore(storage) {
     studyLevel: STUDY_LEVEL_IDS.includes(normaliseStudyLevel(state.preferences?.studyLevel)) ? normaliseStudyLevel(state.preferences.studyLevel) : STUDY_LEVEL_IDS[0],
     uiLang: ['en','ko'].includes(state.preferences?.uiLang) ? state.preferences.uiLang : 'en',
     hapticEnabled: state.preferences?.hapticEnabled === true,
+    soundEnabled: state.preferences?.soundEnabled === true,
     autoRemoveResolvedWrongs: state.preferences?.autoRemoveResolvedWrongs === true,
     clozeShowTranslation: state.preferences?.clozeShowTranslation !== false,
     scrambleShowTranslation: state.preferences?.scrambleShowTranslation !== false,
@@ -51,7 +52,7 @@ export function createStore(storage) {
       state.wordStatus[id]=status;save();
     },
     preference(key, value) {
-      const allowed = { theme:['light','dark','system'], studyLevel:STUDY_LEVEL_IDS, uiLang:['en','ko'], hapticEnabled:[true,false],autoRemoveResolvedWrongs:[true,false],clozeShowTranslation:[true,false],scrambleShowTranslation:[true,false] };
+      const allowed = { theme:['light','dark','system'], studyLevel:STUDY_LEVEL_IDS, uiLang:['en','ko'], hapticEnabled:[true,false],soundEnabled:[true,false],autoRemoveResolvedWrongs:[true,false],clozeShowTranslation:[true,false],scrambleShowTranslation:[true,false] };
       if (!allowed[key]?.includes(value)) throw new Error('Invalid preference');
       state.preferences[key] = value; if(key==='autoRemoveResolvedWrongs'&&value)removeResolvedWrongs(); save();
     },

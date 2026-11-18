@@ -189,3 +189,9 @@ Fresh Meaning Quiz options use the same active part of speech and existing level
 Word List has a shared native initial picker combined with the selected level, query, part of speech and study status. English/German use A–Z with accent folding and German noun-article handling; Chinese uses supplied pinyin initials; Japanese uses supplied kana-reading rows. Unknown readings stay in Other. The index never infers a kanji reading, drops a dictionary sense or replaces the search field while typing. A new Word List visit or changed study level resets the initial to All; POS/status redraws preserve the current choice.
 
 Run `node scripts/verify-word-initial-browser.mjs` for all four adapters, EN/KO, phone/tablet and both themes.
+
+## Answer sounds
+
+Settings exposes a global Answer Sounds switch, default off, shared across study/explanation languages. Correct/incorrect feedback uses quiet original WebAudio tones through the shared feedback hook; no audio files, microphone or network are used. The sound service unlocks on trusted user activation and safely handles muting, backgrounding and unavailable audio. Device volume and platform audio policy still apply; scripted clicks do not prove physical iPad audibility.
+
+Run `node scripts/verify-answer-sounds-browser.mjs` for default-off, settings/reload/language persistence and actual quiz feedback across all four languages.
