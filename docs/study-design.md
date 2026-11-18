@@ -195,3 +195,9 @@ Run `node scripts/verify-word-initial-browser.mjs` for all four adapters, EN/KO,
 Settings exposes a global Answer Sounds switch, default off, shared across study/explanation languages. Correct/incorrect feedback uses quiet original WebAudio tones through the shared feedback hook; no audio files, microphone or network are used. The sound service unlocks on trusted user activation and safely handles muting, backgrounding and unavailable audio. Device volume and platform audio policy still apply; scripted clicks do not prove physical iPad audibility.
 
 Run `node scripts/verify-answer-sounds-browser.mjs` for default-off, settings/reload/language persistence and actual quiz feedback across all four languages.
+
+## Cloze translation targets
+
+Visible sentence translations underline a reliable matching phrase for the missing word, before and after answering. `translation-focus.js` uses validated explicit spans or conservative selected-language lexical/inflection matches, preserves original UTF-16/grapheme boundaries and rejects ambiguous matches. `translation-target-view.js` escapes all text. Source spelling is not an alignment fallback; English-to-English definition hints remain plain. Saved question strings and translations are never rewritten.
+
+Automatic matching currently covers about two thirds of usable translated Cloze targets across the released pairs. Paraphrases and uncertain lexical homographs require reviewed explicit annotations; absence of an underline does not mean missing translation data. Run `node scripts/audit-translation-focus.mjs` for coverage and `node scripts/verify-translation-focus-browser.mjs` for all four adapters, EN/KO, phone/tablet, themes and single/separated blanks.

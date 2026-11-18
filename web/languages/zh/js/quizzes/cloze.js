@@ -1,3 +1,4 @@
+import {renderTranslationTarget} from '../../../../js/shared/translation-target-view.js';
 import {findSentenceTarget,practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { clozeWordOptions,clozeStudyWords } from '../services/vocabulary-tests.js';
@@ -83,7 +84,7 @@ export function renderClozeQuiz(el,session={}) {
         <div class="cloze-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5">${Store.clozeShowPinyin
           ? Pinyin.htmlSentence(sentence, { blank: feedback ? '' : blank, highlight: feedback ? blank : '' })
           : question}</div>
-        <div style="font-size:14px;color:var(--text2);margin-top:8px">${sentenceMeaning(sentence)}</div>
+        <div class="sentence-translation" lang="${word.studyExplanationLanguage||Store.uiLang}" style="font-size:14px;color:var(--text2);margin-top:8px">${renderTranslationTarget(sentenceMeaning(sentence),{word,locale:word.studyExplanationLanguage||Store.uiLang,studyLanguage:'zh',focus:sentence.translationFocus})}</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${options.map(o => {

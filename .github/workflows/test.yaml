@@ -32,6 +32,7 @@ jobs:
       - run: node scripts/verify-english-headwords-browser.mjs
       - run: node scripts/verify-study-design-browser.mjs
       - run: node scripts/verify-cloze-alignment-browser.mjs
+      - run: node scripts/verify-translation-focus-browser.mjs
       - run: node scripts/verify-merged-expressions-browser.mjs
       - run: node scripts/verify-baseline-review-policy-browser.mjs
       - run: node scripts/verify-german-input-aliases-browser.mjs
