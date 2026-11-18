@@ -1,4 +1,5 @@
 const shapes={
+ reset:'<path d="M4 4v6h6"/><path d="M5 9a8 8 0 1 1 1 9"/>',
  home:'<path d="M4 4h6a3 3 0 0 1 3 3v14a4 4 0 0 0-3-2H4z"/><path d="M13 7a3 3 0 0 1 3-3h4v15h-4a4 4 0 0 0-3 2"/>',
  wrong:'<path d="M4 6v5h5"/><path d="M5 10a8 8 0 1 1 1 8"/><path d="m9 13 2 2 4-5"/>',
  settings:'<path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/>',

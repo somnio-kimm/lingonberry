@@ -229,3 +229,7 @@ Word Input keeps Sound Hint and Example Hint closed initially. The example clue 
 ## Dictation pronunciation clues
 
 Word Dictation may reveal a supplied IPA, kana or pinyin through Pronunciation Hint / 발음 힌트. Never derive a transcription from spelling or display the written answer as a fake reading. Sentence mode has no word-pronunciation clue. Opening the clue preserves typed input and records hint use, while submission still requires successful audio completion. A new question closes the clue. Missing source readings omit the control. `verify-listening-reading-browser.mjs` checks all four language layouts and the audio gate.
+
+## Sentence Scramble answer tools
+
+Sentence translations use17px text at1.65 line height in all languages. Reset is a44px outline-icon button beside the answer-area label, with a translated accessible name and tooltip. Keep it separate from Submit/Skip and remove it after checking. Reuse renderStudyReset rather than another bottom text action. The shared screen-parity suite checks its placement, size, reset behaviour and translation font against German/Chinese.

@@ -1,3 +1,4 @@
+import {renderStudyIcon} from './study-icons.js';
 import {escapeHtml as e} from './ui.js';
 /** Canonical German/Chinese study patterns. Geometry and colours live in study-theme.css. */
 export function renderStudySearch({id,value='',label='Search'}){
@@ -42,4 +43,10 @@ export function renderStudyFilters({title,status,pos,open=false,extraBody=''}){
 /** Combined filter geometry shared with the established Review screens. */
 export function renderStudyReviewFilters({groups,open=false,title='Filters'}){
  return `<details class="filter-fold filter-fold--combined wrong-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div><div class="filter-fold-sum-picks">${groups.map(group=>`<span class="filter-fold-pick-l">${e(group.title)}</span><span class="filter-fold-pick-v">${e(group.options.find(option=>option.value===group.selected)?.label||'')}</span>`).join('')}</div></summary><div class="filter-fold-body filter-fold-split">${groups.map((group,index)=>`${index?'<div class="filter-split-divider"></div>':''}<div class="filter-split-head">${e(group.title)}</div><div class="wl-filter-row">${group.options.map(option=>`<button class="wl-filter ${group.selected===option.value?'active':''}" data-review-filter="${e(group.key)}" data-value="${e(option.value)}" aria-pressed="${group.selected===option.value}">${e(option.label)} (${e(option.count)})</button>`).join('')}</div>`).join('')}</div></details>`;
+}
+
+/** Reset belongs beside the answer area, separate from Submit / Skip. */
+export function renderStudyReset({label,id,attribute}){
+ if(attribute&&!/^data-[a-z]+(?:-[a-z]+)*$/u.test(attribute))throw new Error('Reset requires a safe data attribute');
+ return `<button type="button" class="study-reset" ${id?`id="${e(id)}"`:''} ${attribute?`${attribute}`:''} aria-label="${e(label)}" title="${e(label)}">${renderStudyIcon('reset')}</button>`;
 }

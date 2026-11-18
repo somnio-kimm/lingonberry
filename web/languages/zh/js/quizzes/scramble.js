@@ -1,3 +1,4 @@
+import {renderStudyReset} from '../../../../js/shared/study-components.js';
 import {practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { showQuizBurst } from '../components.js';
@@ -90,16 +91,16 @@ export function renderScrambleQuiz(el,session={}) {
           <button type="button" class="speak-btn" aria-label="${t('listenSentence')}">🔊</button>
         </div>
         ${feedback ? `<div class="scramble-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5;color:var(--green)">${Store.scrambleShowPinyin ? Pinyin.htmlSentence(sentence) : escape(sentence.hanzi)}</div>` : ''}
-        <div style="font-size:14px;color:var(--text2);${feedback ? 'margin-top:8px' : ''}">${sentenceMeaning(sentence)}</div>
+        <div class="sentence-translation">${sentenceMeaning(sentence)}</div>
       </div>
-      <div class="card">
-        <div style="font-size:13px;color:var(--text3);margin-bottom:8px">${t('yourAnswer')}:</div>
+      <div class="card scramble-answer">
+        <div class="scramble-answer-heading"><div class="scramble-answer-label">${t('yourAnswer')}:</div>${!feedback?renderStudyReset({label:t('reset'),id:'clr-btn'}):''}</div>
         <div class="flow-row">${chosen.map((c, i) => `<button class="flow-chip scramble-chip chosen" data-i="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('')}</div>
       </div>
       <div class="card">
         <div class="flow-row">${pool.map((c, i) => `<button class="flow-chip scramble-chip" data-pi="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('')}</div>
       </div>
-      ${!feedback?`<div class="sentence-reset-controls"><button class="btn-small" id="clr-btn">${t('reset')}</button></div><div class="quiz-action-bar"><button class="btn-primary" id="sub-btn" ${!chosen.length?'disabled':''}>${t('submit')}</button><button class="btn-small" id="skip-btn">${t('skip')}</button></div>`:`<div class="quiz-next-bar"><button class="btn-primary" id="next-btn">${t('nextQ')}</button></div>`}</div>`;
+      ${!feedback?`<div class="quiz-action-bar"><button class="btn-primary" id="sub-btn" ${!chosen.length?'disabled':''}>${t('submit')}</button><button class="btn-small" id="skip-btn">${t('skip')}</button></div>`:`<div class="quiz-next-bar"><button class="btn-primary" id="next-btn">${t('nextQ')}</button></div>`}</div>`;
 
     filters.bind(el);
     el.querySelector('.speak-btn')?.addEventListener('click', () => TTS.speak(sentence.hanzi));
