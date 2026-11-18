@@ -1,7 +1,8 @@
-import { SCREENS, HOME_MODES, STUDY_LEVELS } from '../app-definition.js';
+import {renderStudyIcon} from '../../../../js/shared/study-icons.js';
+import { HOME_MODES, STUDY_LEVELS } from '../app-definition.js';
 import { Store } from '../services/store.js';
 import { Haptic } from '../services/haptic.js';
-import { modeTitle, modeIcon } from '../components.js';
+import { modeTitle } from '../components.js';
 import { navigate } from '../router.js';
 import { t } from '../services/i18n.js';
 import { loadHskLevels } from '../services/vocabulary.js';
@@ -21,10 +22,10 @@ export function renderHome(el) {
     </div>
     <div class="quiz-grid">
       ${HOME_MODES.map(m => `
-        <div class="quiz-card" data-quiz="${m}">
-          <div class="quiz-icon" style="background:var(--${SCREENS[m].tileColor}-soft)">${modeIcon(m)}</div>
-          <div class="quiz-label">${modeTitle(m)}</div>
-        </div>`).join('')}
+        <button type="button" class="quiz-card" data-quiz="${m}">
+          <span class="quiz-icon" aria-hidden="true">${renderStudyIcon(m)}</span>
+          <span class="quiz-label">${modeTitle(m)}</span>
+        </button>`).join('')}
     </div>`;
 
   const levelCard = el.querySelector('.card');

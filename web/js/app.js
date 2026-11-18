@@ -1,3 +1,4 @@
+import {renderStudyIcon} from './shared/study-icons.js';
 import {AnswerSounds} from './shared/answer-sounds.js';
 import {normaliseAppSettings,readAppSettings} from './shared/app-settings.js';
 import {APP_NAME} from './shared/app-config.js';
@@ -46,7 +47,7 @@ function updateChrome(){
  $('back-btn').setAttribute('aria-label',route==='packages'?t.settings:t.backToStudy);$('back-btn').hidden=['home','wrong','settings'].includes(route);
  $('back-btn').onclick=()=>{if(route==='packages'&&packageTarget){packageTarget='';draw();}else navigate(route==='packages'?'settings':'home');};
  const selected=route==='packages'?'settings':['home','wrong','settings'].includes(route)?route:route==='retest'?'wrong':'home';
- tabs.innerHTML=['home','wrong','settings'].map((tab,i)=>`<button type="button" class="tab-btn ${selected===tab?'active':''}" data-tab="${tab}" ${selected===tab?'aria-current="page"':''}><span class="tab-icon" aria-hidden="true">${['🏠','📕','⚙️'][i]}</span><span class="tab-label">${t[tab]}</span></button>`).join('');
+ tabs.innerHTML=['home','wrong','settings'].map(tab=>`<button type="button" class="tab-btn ${selected===tab?'active':''}" data-tab="${tab}" ${selected===tab?'aria-current="page"':''}><span class="tab-icon" aria-hidden="true">${renderStudyIcon(tab)}</span><span class="tab-label">${t[tab]}</span></button>`).join('');
  tabs.querySelectorAll('[data-tab]').forEach(button=>button.onclick=()=>navigate(button.dataset.tab));
 }
 async function draw(){
