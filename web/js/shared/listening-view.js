@@ -1,3 +1,4 @@
+import {listeningReadingHint} from './listening.js';
 import {renderStudyTabs,renderStudyQuizHeader} from './study-components.js';
 import {bindTypingAnswer} from './typing-answer.js';
 import {escapeHtml as e} from './ui.js';
@@ -6,7 +7,7 @@ import { DeviceSpeech } from './device-speech.js';
 export function renderListeningView(el, config, session = {}) {
   const labels = config.labels;
   let mode = session.question?.mode || 'listenword', question, input = '', feedback = '', heard = false, playing = false;
-  let hint = false, hintUsed = false, plays = 0, score = 0, total = 0, status = 'all', pos = 'all', open = false;
+  let readingHint = false, hint = false, hintUsed = false, plays = 0, score = 0, total = 0, status = 'all', pos = 'all', open = false;
   let alive = true, generation = 0, ready = !config.prepare || !!session.question;
   let loadError = false,typing;
   function cancelAudio() { generation++; playing = false; DeviceSpeech.stop(); }
@@ -15,7 +16,7 @@ export function renderListeningView(el, config, session = {}) {
     cancelAudio(); const choices = ready ? session.question ? [session.question] : config.questions(mode,{status,pos}) : [];
     const different = choices.filter(q => q.spokenText !== question?.spokenText);
     question = (different.length ? different : choices)[Math.floor(Math.random() * (different.length || choices.length))];
-    input = ''; feedback = ''; heard = false; hint = hintUsed = false; plays = 0; draw();el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);
+    input = ''; feedback = ''; heard = false; readingHint = hint = hintUsed = false; plays = 0; draw();el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);
   }
   async function play() {
     if (!alive || !question || playing) return;
@@ -42,7 +43,7 @@ export function renderListeningView(el, config, session = {}) {
     const shown = session.score?.() || {correct:score,total},translation=question&&feedback?config.translation(question)||'':'',warning=config.warning?.()||'';
     el.innerHTML=`${renderStudyQuizHeader({title:labels.title,score:shown})}${session.question?'':`${renderStudyTabs({label:labels.mode,options:[{value:'listenword',label:labels.word},{value:'listensentence',label:labels.sentence}],selected:mode,attribute:'data-listening-mode',variant:'listening'})}${ready?config.filters?.({status,pos,open})||'':''}`}
       ${question?`<div class="listening-test quiz-after-filter" data-question-id="${e(question.id)}" data-listening-mode="${mode}"><section class="card panel listening-question"><div class="vocab-question-top vocab-question-top--audio"><button type="button" class="word-listen" id="listening-play" aria-label="${e((heard?labels.replay:labels.play).replace(/^🔊\s*/u,''))}" aria-busy="false">🔊</button></div><p class="listening-status" role="status" hidden></p>
-      ${feedback?`<div class="vocab-answer-cell ${feedback}"><span class="wrong-answer-label">${labels.correctAnswer}</span><div class="listening-transcript correct-answer" lang="${question.language}">${config.answerMarkup?.(question)||e(question.answer)}</div>${feedback==='wrong'?`<span class="wrong-answer-label">${labels.wrongAnswer}</span><div class="listening-user-answer wrong-answer-value--wrong" lang="${question.language}"><del>${e(input)}</del></div>`:''}</div>${translation?`<p class="listening-translation" lang="${e(question.word.studyExplanationLanguage||question.locale||config.locale())}">${e(translation)}</p>`:''}`:`<div class="vocab-answer-cell active"><textarea id="listening-answer" rows="${mode==='listensentence'?2:1}" maxlength="1000" inputmode="text" enterkeyhint="done" lang="${question.language}" aria-label="${labels.yourAnswer}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">${e(input)}</textarea></div><button class="btn-small listening-hint" id="listening-hint" aria-expanded="${hint}">${labels.hint}</button>${hint?`<p class="listening-hint-text" lang="${e(question.word.studyExplanationLanguage||question.locale)}">${e(config.hint(question))}</p>`:''}`}
+      ${feedback?`<div class="vocab-answer-cell ${feedback}"><span class="wrong-answer-label">${labels.correctAnswer}</span><div class="listening-transcript correct-answer" lang="${question.language}">${config.answerMarkup?.(question)||e(question.answer)}</div>${feedback==='wrong'?`<span class="wrong-answer-label">${labels.wrongAnswer}</span><div class="listening-user-answer wrong-answer-value--wrong" lang="${question.language}"><del>${e(input)}</del></div>`:''}</div>${translation?`<p class="listening-translation" lang="${e(question.word.studyExplanationLanguage||question.locale||config.locale())}">${e(translation)}</p>`:''}`:`<div class="vocab-answer-cell active"><textarea id="listening-answer" rows="${mode==='listensentence'?2:1}" maxlength="1000" inputmode="text" enterkeyhint="done" lang="${question.language}" aria-label="${labels.yourAnswer}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">${e(input)}</textarea></div>${listeningReadingHint(question)?`<button class="btn-small listening-hint" id="listening-reading-hint" aria-expanded="${readingHint}">${labels.readingHint}</button>${readingHint?`<p class="listening-reading" lang="${e(question.language)}">${e(listeningReadingHint(question))}</p>`:''}`:''}<button class="btn-small listening-hint" id="listening-hint" aria-expanded="${hint}">${labels.hint}</button>${hint?`<p class="listening-hint-text" lang="${e(question.word.studyExplanationLanguage||question.locale)}">${e(config.hint(question))}</p>`:''}`}
       </section>${!feedback?`<div class="quiz-action-bar"><button class="primary submit-pill" id="listening-submit" disabled>${labels.check}</button><button class="btn-small listening-skip" id="listening-skip">${labels.skip}</button></div>`:`<div class="quiz-next-bar"><button class="primary btn-primary" id="listening-next">${labels.next}</button></div>`}</div>`:`<section class="card panel"><p role="status">${!ready?loadError?labels.loadError:labels.loading:labels.empty}</p></section>`}${warning?`<p role="status">${e(warning)}</p>`:''}`;
     el.querySelectorAll('button[data-listening-mode]').forEach(button=>button.onclick=()=>{mode=button.dataset.listeningMode;next();});
     const fold=el.querySelector('.filter-fold');if(fold)fold.ontoggle=()=>open=fold.open;
@@ -55,6 +56,11 @@ export function renderListeningView(el, config, session = {}) {
       button:el.querySelector('#listening-submit'),
       onChange:value=>{input=value;},onSubmit:submit,
       enabled:()=>heard&&!playing,isActive:()=>alive&&!feedback,
+    });
+    el.querySelector('#listening-reading-hint')?.addEventListener('click',()=>{
+      readingHint=!readingHint;hintUsed ||= readingHint;
+      const button=el.querySelector('#listening-reading-hint');button.setAttribute('aria-expanded',String(readingHint));el.querySelector('.listening-reading')?.remove();
+      if(readingHint){const text=document.createElement('p');text.className='listening-reading';text.lang=question.language;text.textContent=listeningReadingHint(question);button.after(text);}
     });
     el.querySelector('#listening-hint')?.addEventListener('click',()=>{
       hint=!hint;hintUsed ||= hint;const button=el.querySelector('#listening-hint');button.setAttribute('aria-expanded',String(hint));el.querySelector('.listening-hint-text')?.remove();

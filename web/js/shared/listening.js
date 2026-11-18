@@ -27,3 +27,11 @@ export function createListeningEngine({language,spokenWord=vocabularyWord,wordAn
   &&q.acceptedAnswers.includes(q.answer)&&q.example?.de===q.spokenText);}
  return {listeningQuestions,normalizeListeningAnswer,listeningAnswerCorrect,validListeningQuestion,snapshotListeningQuestion:snapshotVocabularyQuestion};
 }
+
+/** Supplied pronunciations only; do not turn the written answer into a fake reading. */
+export function listeningReadingHint(question){
+ if(question?.kind!=='word')return '';
+ const reading=question.word?.pronunciation?.trim();
+ if(!reading||reading.normalize('NFC')===question.answer.normalize('NFC'))return '';
+ return reading;
+}
