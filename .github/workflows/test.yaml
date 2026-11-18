@@ -27,6 +27,8 @@ jobs:
       - run: node scripts/verify-package-metadata-browser.mjs
       - run: node scripts/verify-installed-updates-browser.mjs
       - run: node scripts/verify-lexicon-views-browser.mjs
+      - run: node scripts/verify-flashcard-sets-browser.mjs
+      - run: node scripts/verify-flashcard-focus-browser.mjs
       - run: node scripts/verify-word-initial-browser.mjs
       - run: node scripts/verify-answer-sounds-browser.mjs
       - run: node scripts/verify-english-headwords-browser.mjs
