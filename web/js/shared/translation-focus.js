@@ -1,4 +1,4 @@
-import {collectEnglishTranslationForms,collectKoreanTranslationForms,acceptsKoreanPredicateSuffix,koreanParticles} from './translation-forms.js';
+import {collectEnglishTranslationForms,collectKoreanTranslationForms,acceptsKoreanPredicateSuffix,readKoreanNominalSuffix} from './translation-forms.js';
 const letters=/[\p{L}\p{M}\p{N}_]/u,hangul=/[가-힣]/u;
 const segmenter=new Intl.Segmenter('und',{granularity:'grapheme'});
 const escapePattern=text=>text.replace(/[.*+?^${}()|[\]\\]/gu,'\\$&').replace(/\s+/gu,'\\s+');
@@ -15,12 +15,19 @@ function validateExplicitFocus(text,focus,locale,boundaries){
  for(const row of rows){if(!row||row.locale&&row.locale!==locale||!Number.isInteger(row.start)||row.start<0||typeof row.text!=='string'||!row.text||text.slice(row.start,row.start+row.text.length)!==row.text||!originalBoundaries.has(row.start)||!originalBoundaries.has(row.start+row.text.length))return [];result.push({start:row.start,text:row.text});}
  result.sort((a,b)=>a.start-b.start);return result.some((row,i)=>i&&row.start<result[i-1].start+result[i-1].text.length)?[]:result;
 }
+/** One precedence rule for all renderers; null is an explicit rejection, not missing metadata. */
+export function readQuestionTranslationFocus(question,example=question?.example){
+ if(question&&Object.hasOwn(question,'translationFocus')&&question.translationFocus!==undefined)return question.translationFocus;
+ if(example&&Object.hasOwn(example,'translationFocus')&&example.translationFocus!==undefined)return example.translationFocus;
+ return undefined;
+}
 export function collectTranslationTerms(word,locale){
- let source=typeof word?.studyMeaning==='string'&&(!word.studyExplanationLanguage||word.studyExplanationLanguage===locale)?word.studyMeaning:locale==='en'?word?.meaning_en??word?.meaningEn:word?.meaning_ko??word?.meaningKo;
+ let source=typeof word?.studyMeaning==='string'&&word.studyMeaning.trim()&&(!word.studyExplanationLanguage||word.studyExplanationLanguage===locale)?word.studyMeaning:locale==='en'?word?.meaning_en??word?.meaningEn:word?.meaning_ko??word?.meaningKo;
  const values=Array.isArray(source)?source:[source],terms=[];
  for(const value of values)if(typeof value==='string')for(let term of value.split(/[;；]/u)){
   for(let i=0;i<3;i++)term=term.replace(/\([^()]*\)|（[^（）]*）/gu,' ');
   term=term.normalize('NFC').trim().replace(/\s+/gu,' ').replace(/[.。]$/u,'');
+  if(locale==='ko'&&term.startsWith('~'))term=term.slice(1).trim().replace(/^(?:을|를|에게|에서|한테|께|으로|에|로|와|과)\s+/u,'');
   if(locale==='en')term=term.replace(/^(?:to|an?|the)\s+/iu,'');
   if(term&&term.length<=80&&!/[~…]/u.test(term))terms.push(term);
  }
@@ -40,7 +47,7 @@ function findMatches(prepared,form,locale){
    let tail=end;while(hangul.test(text[tail]||''))tail++;
    const suffix=text.slice(end,tail);
    if(form.predicate){if(!acceptsKoreanPredicateSuffix(match[0],suffix,text.slice(start,tail),form))continue;end=tail;}
-   else if(!koreanParticles.test(suffix))continue;
+   else{const nominal=readKoreanNominalSuffix(match[0],suffix);if(!nominal)continue;if(nominal.plural)end++;}
    if(letters.test(text[tail]||''))continue;
   }
   const originalStart=prepared.boundaries.get(start),originalEnd=prepared.boundaries.get(end);
@@ -50,6 +57,7 @@ function findMatches(prepared,form,locale){
 }
 /** Conservative lexical alignment; absent/ambiguous paraphrases deliberately stay unmarked. */
 export function findTranslationFocus({text,word,locale,studyLanguage,focus}){
+ locale??=word?.studyExplanationLanguage;studyLanguage??=word?.studyLanguage;
  if(typeof text!=='string'||!text||text.length>10000||!['en','ko'].includes(locale)||studyLanguage==='en'&&locale==='en')return [];
  const prepared=prepareTranslation(text);
  if(focus!==undefined)return validateExplicitFocus(text,focus,locale,prepared.boundaries);
