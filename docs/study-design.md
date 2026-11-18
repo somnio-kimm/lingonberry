@@ -221,3 +221,7 @@ The interaction references are [Quizlet's Flashcard sorting](https://help.quizle
 ## Study menu grid
 
 Study uses two equal columns on phone and tablet, with 12px gaps and at least112px high tiles. Keep monochrome outline icons, neutral centred labels and flat beige/charcoal cards. Omit chevrons, gradients, rainbow feature colours and large shadows. Preserve the established mode order; additional language-specific modes continue in the same grid. `verify-quiet-design-browser.mjs` checks column alignment, touch sizes, overflow and bilingual Settings parity across all four languages and both themes.
+
+## Vocabulary hints and checked examples
+
+Word Input keeps Sound Hint and Example Hint closed initially. The example clue masks a validated unique target in the question sense’s own sentence and omits its translation; unsafe or unavailable targets do not get an invented clue. Opening hints must preserve typed input. After checking Word Input or Meaning Quiz, show the correct sense meaning and its own example in the shared learning card with example audio. Preserve Chinese/Japanese reading layout and suppress duplicate English-to-English translations. Selection still checks immediately; typing retains Submit, Skip and Next. `verify-vocabulary-learning-browser.mjs` covers all four adapters in both display languages, phone/tablet and themes.
