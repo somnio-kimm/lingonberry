@@ -237,3 +237,7 @@ Sentence translations use17px text at1.65 line height in all languages. Reset is
 ## Review recency and type badges
 
 Review orders saved mistakes by their latest incorrect attempt. A successful retest does not change recency. Preserve untimed legacy entries in a stable existing/insertion fallback order rather than inventing timestamps. English/Japanese records now retain lastWrongAt. Chinese includes failed retests; German already uses the last incorrect attempt. Exercise badges retain pastel blue and add14px decorative outline icons with the existing translated label. They remain distinct from level and part-of-speech badges.
+
+## Sentence question rotation
+
+Fresh Cloze questions use a content-keyed round: every eligible sentence/target is used once before repeats. English expressions and dictionary sentences share one round rather than a50% expression slot. Duplicate content from multiple records is grouped, filters rebuild the eligible round and choice order is still freshly shuffled. Small pools may repeat only after exhausting their valid content. Saved retests retain their fixed snapshots and order. `verify-cloze-rotation-browser.mjs` checks20 successive real-package questions in every language/display/theme/width plus both English answer modes.

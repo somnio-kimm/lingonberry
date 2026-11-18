@@ -1,3 +1,4 @@
+import {createQuestionRotation,sentenceQuestionKey} from './question-rotation.js';
 import {shuffle,vocabularyType} from './vocabulary.js';
 const letter=/[\p{L}\p{M}\p{N}]/u;
 const segmenters=new Map();
@@ -74,9 +75,12 @@ export function createSentenceEngine(profile){
    }
    return options.length>1?{...row,focus:{...row.focus},options:shuffle(options,random)}:null;
   }
+  const rotation=createQuestionRotation(rows,{key:row=>sentenceQuestionKey(row.sentence,mode==='cloze'?row.answer:'')}),byId=new Map(rows.map(row=>[row.id,row]));
   return {
    all(random=Math.random){return rows.map(row=>build(row,random)).filter(Boolean);},
-   choose(previous,random=Math.random){const start=Math.floor(random()*rows.length);let old;for(let i=0;i<rows.length;i++){const row=rows[(start+i)%rows.length];if(row.id===previous){old=row;continue;}const question=build(row,random);if(question)return question;}return old?build(old,random)||undefined:undefined;},
+   candidates:rows.map(({id,sentence,answer})=>({id,sentence,answer})),
+   buildCandidate(id,random=Math.random){const row=byId.get(id);return row?build(row,random):undefined;},
+   choose(previous,random=Math.random){return rotation.choose(previous,random,build);},
   };
  }
  /** Cache preparation only; each draw still builds fresh answers and shuffled choices. */

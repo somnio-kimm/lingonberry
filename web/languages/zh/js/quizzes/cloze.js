@@ -1,3 +1,4 @@
+import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/question-rotation.js';
 import {renderTranslationTarget} from '../../../../js/shared/translation-target-view.js';
 import {findSentenceTarget,practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
@@ -9,21 +10,25 @@ import { Pinyin } from '../services/pinyin.js';
 import { TTS } from '../services/tts.js';
 import { Haptic } from '../services/haptic.js';
 import { recordAnswer } from '../services/srs.js';
-import { pick, scorePill, posGroupIdsForWord } from '../components.js';
+import { scorePill, posGroupIdsForWord } from '../components.js';
 import { t, sentenceMeaning, wordMeaning } from '../services/i18n.js';
 
 export function renderClozeQuiz(el,session={}) {
   const words = session.question?Store.words.filter(w=>w.hskLevel===session.question.word.hskLevel):Store.activeWords;
   const withSentences = session.question?[session.question.word]:clozeStudyWords(words);
-  let score = 0, total = 0, word, sentence, blank, options, feedback = '', userAnswer = '';
+  let score = 0, total = 0, word, sentence, blank, options, feedback = '', userAnswer = '',rotation,rotationWords=[];
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
 
   function newQ() {
     if(session.onNext&&word){session.onNext();return;}
-    word = session.question?.word||pick(filters.pool());
+    if(session.question){word=session.question.word;sentence=session.question.sentence;}
+    else{
+      const eligible=filters.pool();
+      if(!rotation||rotationWords.length!==eligible.length||eligible.some((item,index)=>item!==rotationWords[index])){rotationWords=eligible.slice();rotation=createQuestionRotation(eligible.flatMap(word=>practiceSentences(word,{cloze:true}).map((sentence,index)=>({id:word.id+':'+index,word,sentence}))),{key:row=>sentenceQuestionKey(row.sentence.hanzi,row.word.hanzi)});}
+      const selected=rotation.choose();word=selected?.word;sentence=selected?.sentence;
+    }
     if(!word){feedback='';draw();return;}
-    sentence = session.question?.sentence||pick(practiceSentences(word,{cloze:true}));
     blank = word.hanzi;
     options = clozeWordOptions(word, words);
     feedback = ''; userAnswer = '';
@@ -72,7 +77,7 @@ export function renderClozeQuiz(el,session={}) {
       </div>
       ${filters.markup()}
       <div class="quiz-after-filter">
-      <div class="card sentence-question cloze-question" style="text-align:center">
+      <div class="card sentence-question cloze-question" data-question-word="${escape(word.id)}" style="text-align:center">
         <div class="cloze-tools">
           <div class="cloze-pinyin-control">
             <span id="cloze-pinyin-label">${t('showPinyin')}</span>
