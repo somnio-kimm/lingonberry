@@ -28,3 +28,9 @@ test('legacy Chinese sentences are adapted without losing their readings',()=>{
  const q={word:{id:'car',hanzi:'车',meaningKo:'차',partOfSpeech:'noun',sentences:[{hanzi:'我坐车去。',pinyin:'wǒ zuò chē qù',meaningKo:'차를 타고 가요.'}]},locale:'ko'};
  const data=vocabularyLearningContent(q,{language:'zh',locale:'ko'});assert.equal(data.example.pinyin,'wǒ zuò chē qù');assert.equal(data.example.text,'我坐车去。');assert.equal(data.example.studyTranslation,'차를 타고 가요.');
 });
+test('one saved example survives snapshotting without retaining every word example',async()=>{
+ const {withVocabularyLearning}=await import('../web/js/shared/vocabulary-learning.js'),{snapshotQuestion}=await import('../web/js/shared/question-snapshot.js');const q={mode:'vocabinput',word,locale:'ko',answer:'midday'},before=structuredClone(q),saved=snapshotQuestion(withVocabularyLearning(q,{language:'en',locale:'ko'}));assert.equal(saved.word.examples,undefined);assert.equal(vocabularyLearningContent(saved,{language:'en',locale:'ko'}).example.text,word.examples[0].text);assert.deepEqual(q,before);
+});
+test('legacy example fallback is limited to the same word ID and explanation language',()=>{
+ const q={word:{...word,examples:undefined},locale:'ko'};assert.equal(vocabularyLearningContent(q,{language:'en',locale:'en',fallbackWord:word}).example.text,word.examples[0].text);for(const fallbackWord of [{...word,id:'another'},{...word,studyExplanationLanguage:'en'}])assert.equal(vocabularyLearningContent(q,{language:'en',locale:'ko',fallbackWord}).example,undefined);
+});
