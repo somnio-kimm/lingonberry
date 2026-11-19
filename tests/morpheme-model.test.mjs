@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createMorphemeModel,MORPHEME_PAGING} from '../web/js/shared/morpheme-model.js';
-import {morphemeOriginLabel,morphemeRegisters,morphemeCountLabel} from '../web/js/shared/morpheme-text.js';
+import {morphemeOriginLabel,morphemeOriginText,morphemeRegisters,morphemeCountLabel} from '../web/js/shared/morpheme-text.js';
 const rows=[
  {id:'ab',form:'ab-',variants:['abs-'],kind:'prefix',senses:[{meaning:'away from'}],examples:['absent','abnormal']},
  {id:'ling',form:'-ling',variants:[],kind:'suffix',senses:[{meaning:'small'}],examples:['duckling']},
@@ -35,4 +35,8 @@ test('feature copy preserves origin, usage-label and locale-specific count behav
  assert.equal(morphemeOriginLabel('Latin','ko'),'라틴어');assert.equal(morphemeOriginLabel('Unknown Language','en'),'Unknown Language');
  assert.deepEqual(morphemeRegisters(['morpheme','obsolete','offensive'],'ko'),['폐어','모욕적']);
  assert.equal(morphemeCountLabel('en',1234,5863),'1,234 Entries · 5,863 Total');assert.equal(morphemeCountLabel('ko',1,10),'1개 항목 · 전체 10개');
+});
+
+test('root origins are explicit, localised and do not invent missing etymologies',()=>{
+ assert.equal(morphemeOriginText('Latin','en'),'Origin: Latin');assert.equal(morphemeOriginText('Latin','ko'),'어원: 라틴어');assert.equal(morphemeOriginText('Not specified','ko'),'어원 정보 없음');assert.equal(morphemeOriginText('Not specified','en'),'Origin Not Recorded');assert.equal(morphemeOriginText(undefined,'en'),'');
 });

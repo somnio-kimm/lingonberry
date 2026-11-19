@@ -55,3 +55,9 @@ export function morphemeCountLabel(locale,visible,total) {
  return locale==='ko'?`${count}개 항목 · 전체 ${all}개`:`${count} Entries · ${all} Total`;
 }
 export const morphemeRelatedLabel=(locale,count)=>`${locale==='ko'?'관련 단어':'Related Words'} (${count})`;
+
+export function morphemeOriginText(origin,locale){
+ if(!origin)return '';
+ if(origin==='Not specified')return locale==='ko'?'어원 정보 없음':'Origin Not Recorded';
+ return `${locale==='ko'?'어원':'Origin'}: ${morphemeOriginLabel(origin,locale)}`;
+}
