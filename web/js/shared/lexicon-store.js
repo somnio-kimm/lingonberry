@@ -47,7 +47,7 @@ export function createLexiconStore(storage,profile,{progressStorage}={}){
   },
   record(question,input,correct,retest=false){
    requireReady();const id=[question.mode,question.id,question.locale,...(question.reviewRevision?[question.reviewRevision]:[])].join(':');
-   if(!correct){const old=state.wrongs[id],row={id,question:snapshotQuestion(question),input,count:advanceMistakeBalance(old?.count||0,{correct:false})};state.wrongs[id]=row;persist({wrongs:{[id]:row}});}
+   if(!correct){const old=state.wrongs[id],row={id,lastWrongAt:Date.now(),question:snapshotQuestion(question),input,count:advanceMistakeBalance(old?.count||0,{correct:false})};state.wrongs[id]=row;persist({wrongs:{[id]:row}});}
    else if(retest&&state.wrongs[id]){const row={...state.wrongs[id],id,count:advanceMistakeBalance(state.wrongs[id].count,{correct:true})};if(!row.count&&state.preferences.autoRemoveResolvedWrongs){delete state.wrongs[id];persist({wrongs:{[id]:null}});}else{state.wrongs[id]=row;persist({wrongs:{[id]:row}});}}
   },
   removeWrong(id){requireReady();if(!state.wrongs[id])return;delete state.wrongs[id];persist({wrongs:{[id]:null}});},

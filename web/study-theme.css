@@ -509,3 +509,5 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .study-reset{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:10px;border:0;border-radius:8px;background:transparent;color:var(--secondary);flex-shrink:0}
 .study-reset:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .study-reset:active{background:var(--line)}
+.wrong-mode{display:inline-flex;align-items:center;gap:5px}
+.wrong-mode .study-icon{width:14px;height:14px;flex:0 0 14px}
