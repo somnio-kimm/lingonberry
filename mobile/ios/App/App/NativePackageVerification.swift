@@ -12,6 +12,7 @@ enum NativePackageVerification {
     }
     static let offlineScript = """
     const originalFetch = window.fetch;
+    window.__lingonberryRestoreFetch = () => { window.fetch = originalFetch; delete window.__lingonberryRestoreFetch; };
     window.fetch = (input, options) => {
       const url = new URL(input.url || input, location.href);
       if (url.protocol === 'https:' || url.protocol === 'http:') return Promise.reject(new Error('Native offline test'));
@@ -29,7 +30,7 @@ enum NativePackageVerification {
       const deadline = Date.now() + timeout;
       while (!predicate()) {
         if (!document.querySelector('#retry').hidden) throw new Error(document.querySelector('#status').textContent);
-        if (Date.now() > deadline) throw new Error('Timed out waiting for native study view');
+        if (Date.now() > deadline) throw new Error('Timed out waiting for native study view: '+JSON.stringify({stage:window.__lingonberryVerificationStage||'startup',waitingFor:String(predicate).slice(0,350),title:document.querySelector('#header-title')?.textContent,state:document.querySelector('main')?.dataset.viewState,setSize:document.querySelector('[data-set-size]')?.value,setTotal:document.querySelector('#flashcard-count')?.dataset.setTotal,sound:document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')}));
         await new Promise(resolve => setTimeout(resolve, 100));
       }
     };
@@ -40,6 +41,7 @@ enum NativePackageVerification {
     if (!window.crypto?.subtle) throw new Error('Web Crypto is unavailable in the native WebView');
     // BEGIN INSTALLED_PACKAGE_UPDATE_CHECK
     if (updateInstalled) {
+      const markUxStage=stage=>{window.__lingonberryVerificationStage=stage;console.log('NATIVE_UX_STAGE '+stage);};
       // BEGIN PROGRESS_MIGRATION_CHECK
       const progressMigration = [];
       const captured = window.__lingonberryLegacyProgress;
@@ -60,7 +62,10 @@ enum NativePackageVerification {
         delete window.__lingonberryLegacyProgress;
       }
       // END PROGRESS_MIGRATION_CHECK
-      const original=JSON.parse(localStorage.getItem('learn-language.preferences.v1')||'{}');
+      const originalPreferences=localStorage.getItem('learn-language.preferences.v1'),originalSetSize=localStorage.getItem('learn-language.flashcards.setSize.v1');
+      const original=JSON.parse(originalPreferences||'{}');
+      const {AnswerSounds:originalSounds}=await import('./js/shared/answer-sounds.js'),originalSound=originalSounds.enabled;
+      let verificationError;
       const {APP_VERSION}=await import('./js/shared/app-config.js');
       const {createPackageStorage}=await import('./js/packages/storage.js'),{installedPairs}=await import('./js/packages/library.js');
       const {isStudyLanguageAvailable}=await import('./js/shared/language-pairs.js');
@@ -69,7 +74,7 @@ enum NativePackageVerification {
       const open=async(target,explanation)=>{await settingsPage();select('target',target);await wait(()=>document.querySelector(`#explanation option[value="${explanation}"]`));select('explanation',explanation);await wait(()=>document.querySelector('#package-status').dataset.state==='ready');};
       try {
         for(const before of initial){
-          const descriptor=catalog.find(row=>row.id===before.id);if(!descriptor)continue;
+          markUxStage(before.id+':package-check');const descriptor=catalog.find(row=>row.id===before.id);if(!descriptor)continue;
           await settingsPage();document.querySelector('#manage-packages').click();await wait(()=>document.querySelector(`[data-language="${before.targetLanguage}"]`));document.querySelector(`[data-language="${before.targetLanguage}"]`).click();await wait(()=>document.querySelector(`[data-explanation="${before.explanationLanguage}"]`));
           const button=document.querySelector(`[data-explanation="${before.explanationLanguage}"] .download-package`);
           if(button){button.click();await wait(()=>document.querySelector(`[data-package="${before.id}"]`)&&!document.querySelector(`[data-explanation="${before.explanationLanguage}"] .download-package`),300000);}
@@ -161,11 +166,68 @@ enum NativePackageVerification {
             for(const patterns of [initials,openings])if(question.options.length>=3&&patterns.size>1&&Math.max(...patterns.values())===question.options.length-1)throw new Error('Meaning Quiz has a visible answer outlier');
           }
           check.balancedMeaningQuestions=20;
+          const openStudyMode=async mode=>{
+            document.querySelector('[data-tab=home]').click();const chineseMode=mode==='flashcards'?'flashcard':mode;
+            await wait(()=>document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]'));
+            document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]').click();
+          };
+          markUxStage(before.id+':wordlist-open');await open(before.targetLanguage,before.explanationLanguage);await openStudyMode('wordlist');await wait(()=>document.querySelector('[data-word-initial]'));
+          const indexSearch=document.querySelector('#search-input');if(indexSearch){indexSearch.value='';indexSearch.dispatchEvent(new Event('input',{bubbles:true}));}
+          const initialControl=document.querySelector('[data-word-initial]');if(initialControl.value!=='all')throw new Error('Word index did not reset on a new visit');
+          const initialOption=[...initialControl.options].find(option=>option.value!=='all'&&!option.disabled);
+          if(initialOption){
+            initialControl.value=initialOption.value;initialControl.dispatchEvent(new Event('change',{bubbles:true}));
+            const {readWordInitial}=await import('./js/shared/word-initial-index.js'),choiceById=new Map(choiceWords.map(word=>[word.id,word]));
+            const visible=[...document.querySelectorAll('.wl-row')].map(node=>choiceById.get(node.dataset.word||node.dataset.id)).filter(Boolean);
+            if(!visible.length||visible.some(word=>readWordInitial(word,before.targetLanguage)!==initialOption.value))throw new Error('Word initial filter escaped its selected group');
+            check.wordIndex={value:initialOption.value,visible:visible.length};initialControl.value='all';initialControl.dispatchEvent(new Event('change',{bubbles:true}));
+          }
+          const {readFlashcardSetSize}=await import('./js/shared/flashcard-session.js'),savedSetSize=readFlashcardSetSize(),savedSetPreference=localStorage.getItem('learn-language.flashcards.setSize.v1');
+          markUxStage(before.id+':flashcards-open');await openStudyMode('flashcards');await wait(()=>document.querySelector('[data-set-size]'));
+          markUxStage(before.id+':flashcards-resize');const setSize=document.querySelector('[data-set-size]');setSize.value='10';setSize.dispatchEvent(new Event('change',{bubbles:true}));
+          await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('[data-set-size]')?.value==='10'&&Number(document.querySelector('#flashcard-count')?.dataset.setTotal)<=10);
+          if(!document.querySelector('.flashcard')){document.querySelector('[data-f=all]')?.click();await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&(document.querySelector('.flashcard')||document.querySelector('.empty-wrong')));}
+          const shownSet=Number(document.querySelector('#flashcard-count')?.dataset.setTotal),classify=[...document.querySelectorAll('.fc-classify button')];
+          if(document.querySelector('.flashcard')){
+            if(shownSet<1||shownSet>10||classify.length!==2||classify.some(button=>button.getBoundingClientRect().height<44))throw new Error('Flashcard set cap/actions differ');
+            const expectedActions=before.explanationLanguage==='ko'?['학습 중','학습 완료']:['Learning','Mastered'];if(classify.some((button,index)=>button.textContent!==expectedActions[index]))throw new Error('Flashcard action language differs');
+          }
+          check.flashcardSet={selected:10,total:shownSet,actions:classify.length};markUxStage(before.id+':flashcards-restore');const restoreSet=document.querySelector('[data-set-size]');restoreSet.value=String(savedSetSize);restoreSet.dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('[data-set-size]')?.value===String(savedSetSize));if(savedSetPreference===null)localStorage.removeItem('learn-language.flashcards.setSize.v1');else localStorage.setItem('learn-language.flashcards.setSize.v1',savedSetPreference);
+          const [{findTranslationFocus},{renderTranslationTarget}]=await Promise.all([import('./js/shared/translation-focus.js'),import('./js/shared/translation-target-view.js')]);
+          if(before.targetLanguage==='en'&&before.explanationLanguage==='en')check.translationTarget={definitionOnly:true};
+          else{
+            let matched;
+            for(const word of choiceWords){for(const example of word.examples||word.sentences||[]){const text=example.studyTranslation;if(text&&findTranslationFocus({text,word,locale:before.explanationLanguage,studyLanguage:before.targetLanguage}).length){matched={word,text};break;}}if(matched)break;}
+            if(!matched)throw new Error('No translation target available for native style check');
+            const probe=document.createElement('p');probe.className='sentence-translation';probe.style.cssText='position:absolute;left:-10000px;top:0;width:300px';probe.innerHTML=renderTranslationTarget(matched.text,{word:matched.word,locale:before.explanationLanguage,studyLanguage:before.targetLanguage});document.body.append(probe);
+            try{const target=probe.querySelector('.translation-target'),style=target&&getComputedStyle(target);if(probe.textContent!==matched.text||!style?.textDecorationLine.includes('underline')||parseFloat(style.textDecorationThickness)!==2)throw new Error('Translation target text/style differs');check.translationTarget={matched:true,underline:style.textDecorationLine};}finally{probe.remove();}
+          }
+          markUxStage(before.id+':sound-open');await settingsPage();const savedSound=document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked');if(!['true','false'].includes(savedSound))throw new Error('Answer Sounds setting missing');
+          markUxStage(before.id+':sound-toggle');document.querySelector('#set-answer-sounds').click();await wait(()=>document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')!==savedSound);const {AnswerSounds}=await import('./js/shared/answer-sounds.js');if(AnswerSounds.enabled!==(savedSound==='false'))throw new Error('Answer Sounds setting did not reach feedback service');
+          markUxStage(before.id+':sound-restore');document.querySelector('#set-answer-sounds').click();await wait(()=>document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')===savedSound);check.answerSounds={settingRoundTrip:true,restored:savedSound==='true',webAudioAvailable:!!(window.AudioContext||window.webkitAudioContext)};
+
           checks.push(check);
         }
+      } catch(error) {
+        verificationError=error;throw error;
       } finally {
-        if(original.target&&original.explanation)await open(original.target,original.explanation);else await settingsPage();
-        if(original.target)document.querySelector('[data-tab=home]').click();
+        try {
+          await settingsPage();
+          if(document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')!==String(originalSound)){
+            document.querySelector('#set-answer-sounds')?.click();
+            await wait(()=>document.querySelector('#set-answer-sounds')?.getAttribute('aria-checked')===String(originalSound));
+          }
+          if(original.target&&original.explanation)await open(original.target,original.explanation);
+          if(original.target)document.querySelector('[data-tab=home]').click();
+        } catch(cleanupError) {
+          if(!verificationError)throw cleanupError;
+          console.warn('NATIVE_UX_CLEANUP_ERROR '+cleanupError.message);
+        } finally {
+          originalSounds.setEnabled(originalSound);
+          for(const [key,value]of [['learn-language.preferences.v1',originalPreferences],['learn-language.flashcards.setSize.v1',originalSetSize]]){
+            if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value);
+          }
+        }
       }
       const {verbFormQuestions,verbFormCorrect}=await import('./languages/de/js/core/grammar-quizzes.js');
       const fixture={id:'native-qa-swim',lemma:'schwimmen',pos:'verb',auxiliary:'haben / sein',meaning_en:['swim'],meaning_ko:['수영하다'],forms:{perfekt:'hat geschwommen / ist geschwommen'}};
@@ -205,6 +267,7 @@ enum NativePackageVerification {
       const pluralWord=germanWords({targetLanguage:'de',explanationLanguage:'en',entries:[{id:'native-qa-plural',word:'Ferien',article:'die',partOfSpeech:'noun',meaning:'holidays',grammar:{gender:null,genders:[],number_restriction:'plural'}}]})[0];
       const pluralSaved=snapshotVocabularyQuestion(vocabularyQuestions('vocabinput',[pluralWord],'en')[0]).word;
       if(pluralWord.gender!==null||pluralSaved.gender!==null||pluralSaved.number_restriction!=='plural'||!wordHeading(pluralSaved).includes('noun-article plural'))throw new Error('Plural-only gender classification differs');
+      markUxStage('progress-idle');await wait(()=>['en','ja'].every(language=>{const raw=localStorage.getItem('learn-language.'+language+'.lexicon.v1.pending');if(!raw)return true;const pending=JSON.parse(raw);return !pending.base&&!Object.keys(pending.statuses||{}).length&&!Object.keys(pending.wrongs||{}).length;}));
       return JSON.stringify({passed:true,webVersion:APP_VERSION,progressMigration,checks,compoundChecks,aliasChecks,reflexiveChecks,optionalArticleChecks,focusCheck:{start:focusQuestion.start,answer:focusQuestion.answer,choices:focusChoices},pluralGenderCheck:{gender:pluralSaved.gender,number:pluralSaved.number_restriction},restored:original.target||null});
     }
     // END INSTALLED_PACKAGE_UPDATE_CHECK

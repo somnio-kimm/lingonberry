@@ -32,17 +32,21 @@ class AppViewController: CAPBridgeViewController {
             guard let self = self else { return }
             guard value as? Bool == true else {
                 if attempt < 150 { DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { self.verifyPackages(attempt: attempt + 1) } }
-                else { UIApplication.shared.isIdleTimerDisabled = false; print("NATIVE_PACKAGE_QA_ERROR app did not become ready") }
+                else { self.finishVerification(); print("NATIVE_PACKAGE_QA_ERROR app did not become ready") }
                 return
             }
-            self.webView?.callAsyncJavaScript(NativePackageVerification.script, arguments: NativePackageVerification.arguments(for: ProcessInfo.processInfo.arguments), in: nil, in: .page) { result in
-                UIApplication.shared.isIdleTimerDisabled = false
+            self.webView?.callAsyncJavaScript(NativePackageVerification.script, arguments: NativePackageVerification.arguments(for: ProcessInfo.processInfo.arguments), in: nil, in: .page) { [weak self] result in
+                self?.finishVerification()
                 switch result {
                 case .success(let value): print("NATIVE_PACKAGE_QA_RESULT \(value)")
                 case .failure(let error): print("NATIVE_PACKAGE_QA_ERROR \(error)")
                 }
             }
         }
+    }
+    private func finishVerification() {
+        UIApplication.shared.isIdleTimerDisabled = false
+        webView?.evaluateJavaScript("window.__lingonberryRestoreFetch?.()", completionHandler: nil)
     }
     #endif
 }
