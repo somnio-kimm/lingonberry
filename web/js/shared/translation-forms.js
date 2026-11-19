@@ -5,6 +5,34 @@ const koreanAdjectives={'예쁜':'예쁘다','아름다운':'아름답다','큰'
 const koreanBStems=new Set(['아름답','새롭','어렵','쉽','무겁','가볍','춥','덥','귀엽','고맙','맵','즐겁','부드럽','차갑','뜨겁','두렵','더럽','부럽','괴롭']);
 const koreanShortForms={하:['해','했','합','한','할','함'],되:['돼','됐','됩','된','될','됨'],가:['갔','간','갈','갑'],오:['와','왔','온','올','옵'],보:['봐','봤','본','볼','봅'],주:['줘','줬','준','줄','줍'],두:['둬','뒀','둔','둘','둡'],쓰:['써','썼','쓴','쓸','씁'],크:['커','컸','큰','클','큽']};
 export const koreanParticles=/^(?:(?:은|는|이|가|을|를|의|에|에서|에게|에게서|한테|께|로|으로|와|과|도|만|부터|까지|보다|처럼|이라고|라고|이라는|라는|이라며|라며|이나|나|이며|이고|이다|입니다|이었다|였다)){0,3}$/u;
+const koreanCopulas=new Set(['이다','입니다','이었어요','이었다','이었습니다','이었고','이었지만','이었는데']);
+const koreanVowelCopulas=new Set(['예요','였어요','였다','였습니다','였고','였지만','였는데']);
+function readKoreanFinal(term){const code=term.at(-1)?.charCodeAt(0)-0xac00;return code>=0&&code<11172?code%28:null;}
+function acceptsNominalParticles(term,suffix){
+ if(!suffix)return true;
+ const final=readKoreanFinal(term),vowel=final===0,known=final!==null;
+ const cases=[...(known?(vowel?['는','가','를']:['은','이','을']):['은','는','이','가','을','를'])];
+ if(cases.includes(suffix))return true;
+ const relational=['의','에','에서','에게','에게서','한테','께','부터','까지','보다','처럼',...(known?(vowel?['와','로','라고','라는','라며','라도']:['과','으로','이라고','이라는','이라며','이라도',...(final===8?['로']:[])]):['와','과','로','으로','라고','이라고','라는','이라는','라며','이라며','라도','이라도'])];
+ for(const base of ['',...relational])if(suffix.startsWith(base)){
+  const tail=suffix.slice(base.length);if(!/^(?:도|만|은|는|부터|까지|조차|마저|라도|이라도|요){0,2}$/u.test(tail))continue;
+  const ending=readKoreanFinal(term+base);if(ending!==null&&(tail.startsWith('은')&&ending===0||tail.startsWith('는')&&ending!==0))continue;
+  return true;
+ }
+ return false;
+}
+/** Match noun plurals/case/copulas without treating arbitrary compounds as inflection. */
+export function readKoreanNominalSuffix(term,suffix){
+ const plural=suffix.startsWith('들'),rest=plural?suffix.slice(1):suffix,base=term+(plural?'들':'');
+ if(acceptsNominalParticles(base,rest))return {plural};
+ if(koreanCopulas.has(rest)&&!(term.replace(/\s/gu,'').length===1&&rest==='이다'))return {plural};
+ const final=readKoreanFinal(base);
+ if(final!==null&&final!==0&&rest==='이에요')return {plural};
+ if(final===0&&koreanVowelCopulas.has(rest))return {plural};
+ // Bare 다 is limited to longer vowel-ending nouns to avoid 사이→사이다/주→주다 collisions.
+ if(final===0&&term.replace(/\s/gu,'').length>=3&&rest==='다')return {plural};
+ return null;
+}
 const ambiguousShortTokens=new Set(['가게','돼지','자기','사고','보고','보고서','해고','간','본','줄','감','갑','가는','나는','오는','보는','보기','하기','사는','주는','되는']);
 const koreanEndings=new Set(('다 요 고 고요 고서 는 은 을 던 지 지요 지만 지도 지는 기 기를 기가 기는 기도 기로 기에 기만 게 도록 면 면서 며 니 니까 려고 러 세요 십시오 습니다 습니까 니다 는다 는지 은지 을지 는데 는군요 는구나 네요 나요 죠 자 자고 라 라고 다고 다는 다며 듯 더니 더라 더라고요 더군요 더라도 더라면 으면 으면서 으니 으니까 으려고 으러 으세요 으십시오 으셨다 으셨어요 시는 신 실 셨다 셨어요').split(' '));
 for(const prefix of ['었','았','였','겠'])for(const ending of ['다','어요','나요','고','지만','던','는지','습니다','습니까','다고','다는','다며','대요','는데','으니'])koreanEndings.add(prefix+ending);

@@ -1,3 +1,4 @@
+import {readQuestionTranslationFocus} from '../../../../js/shared/translation-focus.js';
 import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/question-rotation.js';
 import {renderTranslationTarget} from '../../../../js/shared/translation-target-view.js';
 import {findSentenceTarget,practiceSentences} from '../services/sentence-focus.js';
@@ -89,7 +90,7 @@ export function renderClozeQuiz(el,session={}) {
         <div class="cloze-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5">${Store.clozeShowPinyin
           ? Pinyin.htmlSentence(sentence, { blank: feedback ? '' : blank, highlight: feedback ? blank : '' })
           : question}</div>
-        <div class="sentence-translation" lang="${word.studyExplanationLanguage||Store.uiLang}" style="font-size:14px;color:var(--text2);margin-top:8px">${renderTranslationTarget(sentenceMeaning(sentence),{word,locale:word.studyExplanationLanguage||Store.uiLang,studyLanguage:'zh',focus:sentence.translationFocus})}</div>
+        <div class="sentence-translation" lang="${word.studyExplanationLanguage||Store.uiLang}" style="font-size:14px;color:var(--text2);margin-top:8px">${renderTranslationTarget(sentenceMeaning(sentence),{word,locale:word.studyExplanationLanguage||Store.uiLang,studyLanguage:'zh',focus:readQuestionTranslationFocus(session.question,sentence)})}</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
         ${options.map(o => {

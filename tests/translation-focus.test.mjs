@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {findTranslationFocus,collectTranslationTerms} from '../web/js/shared/translation-focus.js';
+import {findTranslationFocus,collectTranslationTerms,readQuestionTranslationFocus} from '../web/js/shared/translation-focus.js';
 import {renderTranslationTarget} from '../web/js/shared/translation-target-view.js';
 const match=(text,meaning,locale='ko',pos='noun',extra={})=>findTranslationFocus({text,word:{studyMeaning:meaning,studyExplanationLanguage:locale,pos},locale,studyLanguage:locale==='ko'?'en':'de',...extra});
 for(const [text,meaning,expected]of [
@@ -64,4 +64,41 @@ test('a capitalised inflection inside a sentence is not assumed to be a lowercas
  assert.deepEqual(match('I sent the parcel to Reading yesterday.','read','en','verb'),[]);
  assert.deepEqual(match('Reading helps me relax.','read','en','verb').map(row=>row.text),['Reading']);
  assert.deepEqual(match('It is French food.','French','en','adjective').map(row=>row.text),['French']);
+});
+
+test('the reported school-by-bus sentence keeps the actual Korean go predicate',()=>{
+ for(const studyLanguage of ['de','zh','ja','en'])assert.deepEqual(match('저는 버스로 학교에 가요.','가다','ko','verb',{studyLanguage}),[{start:11,text:'가요'}]);
+});
+for(const [text,meaning,expected]of [['지역 사업자들이 모였다.','사업자','사업자들'],['그녀는 전문가다.','전문가','전문가'],['이 화면은 십오 인치예요.','인치','인치'],['그는 학생이에요.','학생','학생'],['그는 전문가였습니다.','전문가','전문가']])test(`Korean nominal endings preserve the lexical noun in ${text}`,()=>assert.deepEqual(match(text,meaning).map(row=>row.text),expected?[expected]:[]));
+test('placeholder notation can expose a lexical clue without guessing its argument',()=>{
+ assert.deepEqual(match('우리는 보통 버스를 타고 학교에 간다.','~을 타다; ~길로 가다','ko','verb').map(row=>row.text),['타고']);
+ assert.deepEqual(match('주말 동안 집에 있었다.','~동안; ~에 걸쳐','ko','preposition').map(row=>row.text),['동안']);
+ assert.deepEqual(match('학교에서 책을 읽었다.','~의','ko','particle'),[]);
+ assert.deepEqual(match('그녀는 다른 길을 택했다.','~길로 가다','ko','verb'),[]);
+});
+test('an empty selected meaning can use its declared-language legacy terms',()=>{
+ assert.deepEqual(findTranslationFocus({text:'저는 버스로 학교에 가요.',word:{studyMeaning:'',studyExplanationLanguage:'ko',meaning_ko:['가다'],pos:'verb'},locale:'ko',studyLanguage:'en'}).map(row=>row.text),['가요']);
+});
+test('new noun suffixes do not accept arbitrary compounds or a one-letter noun inside a verb',()=>{
+ assert.deepEqual(match('사업자들판은 존재하지 않는다.','사업자'),[]);assert.deepEqual(match('그는 집에 가다.','가','ko','noun'),[]);
+});
+
+test('Korean case endings do not turn common compounds into pronoun or noun matches',()=>{
+ for(const [text,meaning]of [['나이가 많다.','나'],['차이가 크다.','차'],['주가가 올랐다.','주'],['주가는 올랐다.','주'],['나이에요.','나'],['그것은 사이다.','사이']])assert.deepEqual(match(text,meaning),[],text);
+ for(const [text,meaning,expected]of [['저는 학생이에요.','저','저'],['학교에서부터도 알 수 있다.','학교','학교'],['사업자들에게는 공지했다.','사업자','사업자들']])assert.deepEqual(match(text,meaning).map(row=>row.text),[expected]);
+});
+
+test('explicit question focus has consistent precedence over its selected example in every renderer',()=>{
+ const selected={translationFocus:{start:11,text:'가요'}},question={example:selected},before=structuredClone(question);
+ assert.deepEqual(readQuestionTranslationFocus(question),selected.translationFocus);
+ assert.equal(readQuestionTranslationFocus({...question,translationFocus:null}),null);
+ assert.deepEqual(readQuestionTranslationFocus({...question,translationFocus:undefined}),selected.translationFocus);
+ assert.deepEqual(readQuestionTranslationFocus({translationFocus:{start:0,text:'다른'}},selected),{start:0,text:'다른'});
+ assert.deepEqual(readQuestionTranslationFocus(undefined,selected),selected.translationFocus);assert.deepEqual(question,before);
+});
+
+test('a legacy question can use explicit word language metadata when its own locale is missing',()=>{
+ const word={studyMeaning:'가다',studyExplanationLanguage:'ko',studyLanguage:'en',pos:'verb'},text='저는 버스로 학교에 가요.';assert.deepEqual(findTranslationFocus({text,word}),[{start:11,text:'가요'}]);
+ assert.deepEqual(findTranslationFocus({text,word,locale:'en'}),[]);
+ assert.deepEqual(findTranslationFocus({text:'To go somewhere.',word:{studyMeaning:'go',studyExplanationLanguage:'en',studyLanguage:'en',pos:'verb'}}),[]);
 });
