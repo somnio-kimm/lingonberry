@@ -1,3 +1,4 @@
+import {AVAILABLE_STUDY_LANGUAGES} from '../web/js/shared/language-pairs.js';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -9,7 +10,7 @@ try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
  await page.addInitScript(()=>{Object.defineProperty(window,'SpeechSynthesisUtterance',{value:class{constructor(text){this.text=text;}},configurable:true});Object.defineProperty(window,'speechSynthesis',{value:{getVoices:()=>['de-DE','zh-CN','ja-JP','ko-KR','en-GB','es-ES','fr-FR'].map(lang=>({lang,localService:true})),cancel(){},speak(utterance){setTimeout(()=>utterance.onend?.(),0);}},configurable:true});});
  await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/dictation-design',{recursive:true});const baseline=new Map();let checks=0;
- for(const language of ['de','zh','en','ja','ko','es','fr']){
+ for(const language of ['de','zh',...AVAILABLE_STUDY_LANGUAGES.filter(id=>!['de','zh'].includes(id))]){
   await tab(page,'settings');await page.locator('#manage-packages').click();await page.locator(`[data-language=${language}]`).click();for(const explanation of ['en','ko']){await page.locator(`[data-available="${language}-${explanation}"] .download-package`).click();await page.locator(`[data-package="${language}-${explanation}"] .remove-package`).waitFor();}
   for(const locale of ['en','ko'])for(const width of [390,1024])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:1000});await tab(page,'settings');await page.locator(`[data-theme-choice=${theme}]`).click();await page.selectOption('#target',language);await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await tab(page,'home');await page.locator(language==='zh'?'[data-quiz=listening]':'[data-route=listening]').click();await ready(page);
@@ -23,5 +24,5 @@ try{
    if(locale==='en')await page.screenshot({path:`/private/tmp/dictation-design/${language}-${width}-${theme}.png`,fullPage:true});checks++;
   }
  }
- assert.deepEqual(errors,[]);console.log(`Passed ${checks} seven-language Dictation contracts: German/Chinese geometry, title→mode→filters order, EN/KO labels, phone/tablet, light/dark, equal controls, mode switching and audio-before-submit.`);
+ assert.deepEqual(errors,[]);console.log(`Passed ${checks} released-language Dictation contracts: German/Chinese geometry, title→mode→filters order, EN/KO labels, phone/tablet, light/dark, equal controls, mode switching and audio-before-submit.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
