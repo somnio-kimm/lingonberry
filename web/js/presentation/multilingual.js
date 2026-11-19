@@ -62,7 +62,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const change=(name,value)=>{store.preference(name,value);onPreferences(preferences());};
  const fold=value=>{const s=String(value||'').normalize('NFKC').toLocaleLowerCase(language);return ['en','fr','es'].includes(language)?s.normalize('NFD').replace(/\p{M}/gu,''):s;};
  function resetQuestion(){if(question)previousQuestionId=question.id;question=undefined;feedback=undefined;input='';chosenTokens=[];}
- function heading(word){if(language==='ja')return `<span class="lexicon-word" lang="ja">${renderJapaneseRuby(displayStudyWord(word),word.pronunciation)}</span>`;return `<span class="lexicon-word" lang="${language}">${word.pronunciation&&word.pronunciation!==word.lemma?`<ruby>${e(displayStudyWord(word))}<rt>${e(word.pronunciation)}</rt></ruby>`:e(displayStudyWord(word))}</span>`;}
+ function heading(word){if(language==='ja')return `<span class="lexicon-word" lang="ja">${renderJapaneseRuby(displayStudyWord(word),word.pronunciation)}</span>`;return `<span class="lexicon-word" lang="${language}">${language!=='en'&&word.pronunciation&&word.pronunciation!==word.lemma?`<ruby>${e(displayStudyWord(word))}<rt>${e(word.pronunciation)}</rt></ruby>`:e(displayStudyWord(word))}</span>`;}
  const isGroupedRoute=route=>language==='en'&&['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
  const matchesStatus=(word,status)=>status==='all'||status==='unfamiliar'&&readStatus(word)!=='mastered'||readStatus(word)===status;

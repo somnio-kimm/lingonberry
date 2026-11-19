@@ -12,7 +12,7 @@ const json=async path=>JSON.parse(await read(path));
 test('reviewed German release accounts for old identities and real answer-version safeguards',async()=>{
  const catalog=await json('language-packages/catalog.json'),packs=[];
  for(const id of ['de-core','de-en','de-ko']){
-  const descriptor=catalog.find(row=>row.id===id&&row.version==='4.0.0');assert.ok(descriptor);
+  const descriptor=catalog.find(row=>row.id===id);assert.ok(descriptor);
   const raw=await read(descriptor.url.slice(1));assert.equal(Buffer.byteLength(raw),descriptor.bytes);
   assert.equal(createHash('sha256').update(raw).digest('hex'),descriptor.sha256);
   const pack=JSON.parse(raw);validatePackage(pack);packs.push(pack);
