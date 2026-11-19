@@ -7,7 +7,7 @@ const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.cata
 async function tab(page,id){await page.locator(`[data-tab=${id}]`).click();await ready(page);}
 async function route(page,language,id){await tab(page,'home');await page.locator(language==='zh'?`[data-quiz=${id==='flashcards'?'flashcard':id}]`:`[data-route=${id}]`).click();await ready(page);const fold=page.locator('.filter-fold');if(await fold.count())await fold.evaluate(node=>{node.open=false;});}
 async function measure(page,selector){return page.locator(selector).first().evaluate(node=>{const s=getComputedStyle(node),b=node.getBoundingClientRect();return {width:b.width,padding:s.padding,radius:s.borderRadius,border:s.borderWidth,font:s.fontSize,weight:s.fontWeight,line:s.lineHeight,align:s.textAlign,background:s.backgroundColor,colour:s.color,minHeight:s.minHeight};});}
-async function question(page){return page.locator('.vocab-question,.sentence-question').first().evaluate(node=>{const box=node.getBoundingClientRect(),s=getComputedStyle(node),fold=document.querySelector('.filter-fold').getBoundingClientRect(),speaker=node.querySelector('.word-listen,.speak-btn'),b=speaker?.getBoundingClientRect();return {width:box.width,padding:s.padding,radius:s.borderRadius,border:s.borderWidth,gap:box.top-fold.bottom,speaker:b?{x:b.left-box.left,y:b.top-box.top,width:b.width,height:b.height}:null};});}
+async function question(page){return page.locator('.vocab-question,.sentence-question').first().evaluate(node=>{const box=node.getBoundingClientRect(),s=getComputedStyle(node),fold=document.querySelector('.filter-fold').getBoundingClientRect(),speaker=node.querySelector('.vocab-question-top>.word-listen,.cloze-tools>.speak-btn'),b=speaker?.getBoundingClientRect();return {width:box.width,padding:s.padding,radius:s.borderRadius,border:s.borderWidth,gap:box.top-fold.bottom,speaker:b?{x:b.left-box.left,y:b.top-box.top,width:b.width,height:b.height}:null};});}
 try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));
  await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/study-screen-parity',{recursive:true});
@@ -25,7 +25,7 @@ try{
      value.card=await measure(page,'.flashcard');value.shuffle=await measure(page,'[data-shuffle]');value.nav=await measure(page,'.fc-nav');
     }else{
      value[mode]={card:await question(page)};
-     if(mode==='vocabinput'){value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}
+     if(mode==='vocabinput'){assert.equal(await page.locator('[data-sound-hint]').evaluate(node=>node.open),false);value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}
      if(mode==='vocabmeaning'){
       value[mode].option=await measure(page,'.vocab-choice');assert.equal(await page.locator('#vocab-submit').count(),0,language+' selection checks on tap');
      }
@@ -35,7 +35,7 @@ try{
      if(mode==='scramble'){
       assert.equal(await page.locator('.sentence-question .flow-chip').count(),0,language+' tiles outside question');
       const panels=await page.locator('.quiz-after-filter>.panel,.quiz-after-filter>.card').count();assert.equal(panels,3,language+' question/answer/pool cards');
-      const reset=page.locator('[data-sentence-reset],#quiz-reset,#clr-btn');assert.equal(await reset.count(),1);value[mode].reset=await measure(page,'[data-sentence-reset],#quiz-reset,#clr-btn');
+      const reset=page.locator('[data-sentence-reset],#quiz-reset,#clr-btn');assert.equal(await reset.count(),1);assert.equal(await reset.evaluate(node=>!!node.closest('.scramble-answer')),true,'Reset stays beside the answer');assert.equal(await reset.locator('svg').count(),1);assert.ok(await reset.evaluate(node=>node.getBoundingClientRect().height>=44));assert.equal(await page.locator('.sentence-reset-controls').count(),0);const translation=page.locator('.scramble-question .sentence-translation');if(await translation.count())assert.equal(await translation.evaluate(node=>getComputedStyle(node).fontSize),'17px');value[mode].reset=await measure(page,'[data-sentence-reset],#quiz-reset,#clr-btn');
       const tile=page.locator('[data-tile],[data-pool],[data-pi]').first();if(language==='ja')assert.equal(await page.locator('[data-tile]').evaluateAll(nodes=>nodes.every(node=>node.children.length===1&&node.firstElementChild.classList.contains('scramble-chip-hanzi'))),true,'Japanese ruby and kana endings share one inline tile label');await tile.click();await reset.click();assert.equal(await page.locator('[data-return],[data-chosen],.chosen[data-i]').count(),0);
      }
     }

@@ -502,3 +502,10 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .vocab-learning .example-translation{font-size:15px;line-height:1.6;margin:8px 0 0;color:var(--secondary)}
 
 .listening-reading{font-size:20px;line-height:1.6;color:var(--secondary);margin:8px 0;overflow-wrap:anywhere}
+
+.scramble-question .sentence-translation{font-size:17px;line-height:1.65;color:var(--secondary)}
+.scramble-answer-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;min-height:44px}
+.scramble-answer-heading .scramble-answer-label{margin:0}
+.study-reset{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:10px;border:0;border-radius:8px;background:transparent;color:var(--secondary);flex-shrink:0}
+.study-reset:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.study-reset:active{background:var(--line)}
