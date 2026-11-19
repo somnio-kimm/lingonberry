@@ -500,3 +500,5 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .vocab-learning-example-heading h3{font-size:14px;font-weight:600;margin:0;color:var(--secondary)}
 .vocab-learning .example-sentence{font-size:20px;line-height:1.8;margin-top:4px}
 .vocab-learning .example-translation{font-size:15px;line-height:1.6;margin:8px 0 0;color:var(--secondary)}
+
+.listening-reading{font-size:20px;line-height:1.6;color:var(--secondary);margin:8px 0;overflow-wrap:anywhere}
