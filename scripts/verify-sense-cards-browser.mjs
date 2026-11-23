@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
@@ -40,7 +41,7 @@ try{
    await page.evaluate(()=>window.senseRoute('home'));
    await page.locator(`[data-level="${level}"]`).click();
    await page.locator('[data-route=wordlist]').click();
-   await page.locator('#search-input').fill('pedestrian');
+   await searchWordList(page,'pedestrian');
    assert.equal(await page.locator('.wl-row').count(),1);
    assert.equal(await page.locator('.wl-row').getAttribute('data-word'),id);
    assert.equal(await page.locator('.wl-meaning').innerText(),meaning);
