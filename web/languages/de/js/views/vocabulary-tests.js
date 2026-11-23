@@ -1,62 +1,25 @@
-import {renderVocabularyHints,renderVocabularyLearning} from '../../../../js/shared/vocabulary-learning-view.js';
-import {vocabularyLearningContent,withVocabularyLearning} from '../../../../js/shared/vocabulary-learning.js';
-import {bindTypingAnswer} from '../../../../js/shared/typing-answer.js';
-import { speakGerman, stopMedia } from '../core/media.js';
-import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared/ui.js';
-import { t, getLocale } from '../core/i18n.js';
-import { studyWords, filterStudyStatus, wordHeading } from '../core/words.js';
-import { createVocabularyPool, vocabularyAnswerCorrect, vocabularyExpectedAnswer } from '../core/vocabulary-tests.js';
-import { studyFilterMarkup } from './study-components.js';
-export function renderVocabularyTest(el, ctx, mode, session = {}) {
-  const level = ctx.store.state.preferences.studyLevel;
-  let question, input = '', feedback = '', score = 0, total = 0, status = 'all', pos = 'all', open = false;
-  const pool = studyWords(ctx.words, level);
-  let preparedPool,poolSignature,typing;
-  let alive = true;
-  function next() {
-    if (!alive) return;
-    if(session.question)question=session.question;
-    else {const filtered=filterStudyStatus(studyWords(pool,level,{pos}),ctx.store,status),signature=getLocale()+':'+filtered.map(w=>w.id).join('|');if(signature!==poolSignature){preparedPool=createVocabularyPool(mode,filtered,getLocale(),'vocabulary',{meaningWords:ctx.words});poolSignature=signature;}question=preparedPool.choose(question?.id);}
-    input = ''; feedback = ''; draw();
-  }
-  function submit(value = input) {
-    if (!alive || !question || feedback || typing?.isComposing || !value.trim()) return;
-    const correct = vocabularyAnswerCorrect(question, value);
-    input = mode === 'vocabmeaning' ? question.options.find(option => option.id === value).text : value;
-    feedback = correct ? 'correct' : 'wrong'; total++; if (correct) score++;
-    el.querySelector('#vocab-answer')?.blur();
-    showQuizBurst(correct);ctx.store.recordQuizAnswer(mode, withVocabularyLearning(question,{language:'de',locale:getLocale(),fallbackWord:ctx.words.find(word=>word.id===question.word.id)}), input, correct,{review:!!session.question}); session.onAnswer?.(correct, input); ctx.haptic(); draw(); ctx.updateStatus();
-  }
-  function draw() {
-    if (!alive) return;
-    typing?.destroy();typing=undefined;
-    stopMedia();
-    const shown = session.score?.() || { correct: score, total };
-    el.innerHTML = `<div class="sentence-quiz-header"><div class="section-title">${t(mode === 'vocabinput' ? 'Word input' : 'Meaning quiz')}</div>${scorePill(shown.correct,shown.total)}</div>${session.question ? '' : studyFilterMarkup(pool, ctx.store, status, pos, open)}${question ? `<div class="vocab-test quiz-after-filter" data-question-id="${e(question.id)}" data-vocab-mode="${mode}">
-      <section class="panel vocab-question">${mode==='vocabinput'&&!feedback?'':`<div class="vocab-question-top vocab-question-top--audio"><button type="button" class="word-listen" id="vocab-listen" aria-label="${t('Listen to word')}">🔊</button></div>`}<div class="vocab-prompt" lang="${mode === 'vocabinput' ? question.locale : 'de'}">${mode === 'vocabinput'||question.collocationId ? e(question.prompt) : wordHeading(question.word)}</div>
-      ${mode === 'vocabinput' ? `<div class="vocab-answer-cell ${feedback || 'active'}">${feedback ? `<div role="status" aria-label="${t(feedback === 'correct' ? 'Correct' : 'Incorrect')}"><span class="vocab-correction" lang="de">${e(vocabularyExpectedAnswer(question))}</span>${feedback === 'wrong' ? `<del class="vocab-wrong" lang="de">${e(input)}</del>` : ''}</div>` : `<input id="vocab-answer" type="text" inputmode="text" enterkeyhint="done" value="${e(input)}" lang="de" aria-label="${t('Your answer')}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="120">`}</div>` : ''}${mode==='vocabinput'&&!feedback?renderVocabularyHints(question,{language:'de',locale:getLocale(),audioButton:`<button type="button" class="word-listen" id="vocab-listen" aria-label="${t('Listen to word')}">🔊</button>`}):''}<p class="vocab-speech-status" role="status" hidden></p></section>
-      ${mode === 'vocabmeaning' ? `<div class="vocab-options">${question.options.map(option => `<button class="vocab-choice ${feedback ? option.id === question.word.id ? 'correct' : option.text === input ? 'wrong' : '' : ''}" data-vocab-option="${e(option.id)}" data-vocab-type="${e(option.type)}" lang="${question.locale}" ${feedback ? 'disabled' : ''}>${e(option.text)}</button>`).join('')}</div>` : ''}
-      ${feedback?renderVocabularyLearning(question,{language:'de',locale:getLocale(),fallbackWord:ctx.words.find(word=>word.id===question.word.id),renderWord:word=>wordHeading(word)}):''}
-      ${feedback ? `<div class="quiz-next-bar"><button class="primary" id="vocab-next">${t('Next')}</button></div>` : `<div class="quiz-action-bar">${mode === 'vocabinput' ? `<button class="primary submit-pill" id="vocab-submit" ${input.trim() ? '' : 'disabled'}>${t('Submit')}</button>` : ''}<button class="btn-small vocab-skip" id="vocab-skip">${t('Skip')}</button></div>`}</div>` : `<section class="panel quiz-after-filter"><p>${t('Not enough vocabulary matches these filters. Meaning options must share the same word type.')}</p></section>`}`;
-    if(question?.collocationId&&mode==='vocabinput'&&!feedback)el.querySelector('#vocab-listen')?.remove();
-    const fold = el.querySelector('.filter-fold'); if (fold) fold.ontoggle = () => { open = fold.open; };
-    el.querySelectorAll('[data-f]').forEach(button => button.onclick = () => { status = button.dataset.f; next(); });
-    el.querySelectorAll('[data-tag]').forEach(button => button.onclick = () => { pos = button.dataset.tag; next(); });
-    function showSpeechError(){if(!alive)return;const message=el.querySelector('.vocab-speech-status');if(message){message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');message.hidden=false;}}
-    el.querySelector('#vocab-listen')?.addEventListener('click',()=>{const message=el.querySelector('.vocab-speech-status');if(message)message.hidden=true;speakGerman(question.collocationId?question.phrase:question.word.pos==='noun'&&question.word.article?question.word.article+' '+question.word.lemma:question.word.lemma,()=>{},()=>showSpeechError());});
-    el.querySelector('[data-learning-example]')?.addEventListener('click',()=>{const example=vocabularyLearningContent(question,{language:'de',locale:getLocale(),fallbackWord:ctx.words.find(word=>word.id===question.word.id)}).example;speakGerman(example.text);});
-    const field = el.querySelector('#vocab-answer');
-    if(field)typing=bindTypingAnswer(field,{
-      button:el.querySelector('#vocab-submit'),
-      onChange:value=>{input=value;},onSubmit:submit,
-      isActive:()=>alive&&!feedback,
-    });
-    el.querySelectorAll('[data-vocab-option]').forEach(button => button.onclick = () => submit(button.dataset.vocabOption));
-    el.querySelector('#vocab-next')?.addEventListener('click', () => session.onNext ? session.onNext() : next());
-    el.querySelector('#vocab-skip')?.addEventListener('click', () => session.onSkip ? session.onSkip() : next());
-  }
-  next();
-  return () => { alive = false; typing?.destroy(); stopMedia(); el.querySelector('#vocab-answer')?.blur(); };
+import {renderVocabularyView} from '../../../../js/shared/vocabulary-view.js';
+import {speakGerman,stopMedia} from '../core/media.js';
+import {escapeHtml as e,showQuizBurst} from '../../../../js/shared/ui.js';
+import {t,getLocale} from '../core/i18n.js';
+import {studyWords,filterStudyStatus,wordHeading} from '../core/words.js';
+import {createVocabularyPool,vocabularyAnswerCorrect,vocabularyExpectedAnswer} from '../core/vocabulary-tests.js';
+import {studyFilterMarkup} from './study-components.js';
+export function renderVocabularyTest(el,ctx,mode,session={}){
+ const level=ctx.store.state.preferences.studyLevel,pool=studyWords(ctx.words,level);
+ return renderVocabularyView(el,{
+  mode,language:'de',locale:getLocale,
+  labels:{title:t(mode==='vocabinput'?'Word input':'Meaning quiz'),listen:t('Listen to word'),answer:t('Your answer'),correct:t('Correct'),incorrect:t('Incorrect'),submit:t('Submit'),skip:t('Skip'),next:t('Next'),empty:t('Not enough vocabulary matches these filters. Meaning options must share the same word type.'),audioError:t('German speech is unavailable. Download a German voice in the phone’s speech settings.')},
+  words:({status,pos})=>filterStudyStatus(studyWords(pool,level,{pos}),ctx.store,status),
+  createPool:(words,locale)=>createVocabularyPool(mode,words,locale,'vocabulary',{meaningWords:ctx.words}),
+  filters:({status,pos,open})=>studyFilterMarkup(pool,ctx.store,status,pos,open),
+  answerCorrect:vocabularyAnswerCorrect,renderPrompt:q=>mode==='vocabinput'||q.collocationId?e(q.prompt):wordHeading(q.word),renderAnswer:q=>e(vocabularyExpectedAnswer(q)),
+  learning:q=>({fallbackWord:ctx.words.find(word=>word.id===q.word.id),renderWord:wordHeading}),
+  spokenWord:q=>q.collocationId?q.phrase:q.word.pos==='noun'&&q.word.article?q.word.article+' '+q.word.lemma:q.word.lemma,
+  speak:(text,onError)=>speakGerman(text,()=>{},onError),stopAudio:stopMedia,
+  record:(q,_input,correct,{displayInput})=>ctx.store.recordQuizAnswer(mode,q,displayInput,correct,{review:!!session.question}),
+  feedback:correct=>{showQuizBurst(correct);ctx.haptic();},update:()=>ctx.updateStatus(),
+ },session);
 }
-export const renderWordInput = (el, ctx, session) => renderVocabularyTest(el, ctx, 'vocabinput', session);
-export const renderMeaningQuiz = (el, ctx, session) => renderVocabularyTest(el, ctx, 'vocabmeaning', session);
+export const renderWordInput=(el,ctx,session)=>renderVocabularyTest(el,ctx,'vocabinput',session);
+export const renderMeaningQuiz=(el,ctx,session)=>renderVocabularyTest(el,ctx,'vocabmeaning',session);

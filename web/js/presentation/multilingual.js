@@ -1,7 +1,6 @@
 import {morphemeOriginText} from '../shared/morpheme-text.js';
 import {newestMistakesFirst} from '../shared/review-order.js';
-import {renderVocabularyHints,renderVocabularyLearning} from '../shared/vocabulary-learning-view.js';
-import {vocabularyLearningContent,withVocabularyLearning} from '../shared/vocabulary-learning.js';
+import {renderVocabularyView} from '../shared/vocabulary-view.js';
 import {renderStudyIcon} from '../shared/study-icons.js';
 import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../shared/flashcard-session.js';
 import {flashcardText} from '../shared/flashcard-text.js';
@@ -49,7 +48,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families','🌱','green']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile,{progressStorage}),engine=createLexiconQuestions(profile);
- let headwords=createEnglishHeadwords([]),morphemeModel,typing,listeningCleanup,japaneseFurigana,sampleReadingChoice;
+ let headwords=createEnglishHeadwords([]),morphemeModel,typing,practiceCleanup,japaneseFurigana,sampleReadingChoice;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,flipped=false,chosenTokens=[],closeSheet=()=>{};
  const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
  const filters=new Map(),scores=new Map();let lastRenderedRoute;
@@ -212,7 +211,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const translation=q=>q.kind==='word'?q.word.studyMeaning||q.example?.[q.locale]||'':language==='en'&&q.locale==='en'?'':q.sentence?.studyTranslation||q.example?.[q.locale]||'';
   const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
   const session=saved?{question:saved,score:()=>score(route),onAnswer:correct=>{reviewResults[correct?'correct':'wrong']++;},onNext:()=>advance(false),onSkip:()=>advance(true)}:{};
-  listeningCleanup=renderListeningView(host,{
+  practiceCleanup=renderListeningView(host,{
    labels:listeningLabels(locale()),locale,warning:()=>store.warning?t('Storage Unavailable'):'',
    questions:mode=>engine.listeningQuestions(mode,pool('listening'),study.explanationLanguage,words).map(q=>reviewContent.prepare(q)),
    filters:()=>controls('listening'),bindFilters:(el,next)=>bindControls(el,'listening',next),
@@ -221,25 +220,37 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    haptic:correct=>{haptic();showQuizBurst(correct);},
    record:(q,value,correct)=>{store.record(q,value,correct,retest);recordScore(route,correct);},
   },session);
-  return listeningCleanup;
+  return practiceCleanup;
+ }
+ function drawVocabulary(host,route,mode,saved){
+  const retest=route==='retest';
+  const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
+  const session={previousId:previousQuestionId,score:()=>score(route),...(saved?{question:saved,onAnswer:correct=>{reviewResults[correct?'correct':'wrong']++;},onNext:()=>advance(false),onSkip:()=>advance(true)}:{})};
+  practiceCleanup=renderVocabularyView(host,{
+   mode,language,locale,questionLocale:()=>study.explanationLanguage,
+   labels:{title:t(retest?'Retest':screenTitle(route)),listen:t('Speak Word'),answer:t('Word Input'),correct:t('Correct'),incorrect:t('Wrong'),submit:t('Submit'),skip:t('Skip'),next:t('Next'),empty:t('No Questions Match'),audioError:t('Speech Unavailable')},
+   words:()=>pool(route),createPool:(list,contentLocale)=>{const prepared=engine.createVocabularyPool(mode,list,contentLocale,'vocabulary',{meaningWords:words});return {choose:previous=>reviewContent.prepare(prepared.choose(previous))};},
+   filters:()=>controls(route),bindFilters:(el,next)=>bindControls(el,route,next),answerCorrect:engine.vocabularyAnswerCorrect,
+   renderPrompt:q=>e(mode==='vocabmeaning'?displayStudyWord(q.word):q.prompt),renderAnswer:q=>language==='ja'?renderJapaneseRuby(q.answer,q.word.pronunciation):e(q.answer),
+   learning:q=>({fallbackWord:byId.get(q.word.id),renderWord:heading,renderExample:example=>`<div class="example-sentence">${japaneseFurigana?.renderSentence(example.text,q.word)||e(example.text)}</div>`}),
+   spokenWord:q=>studySpokenWord(q.word,profile),speak:(text,onError)=>DeviceSpeech.speak(text,{language:profile.speech,onError}),stopAudio:()=>DeviceSpeech.stop(),
+   record:(q,value,correct)=>{store.record(q,value,correct,retest);recordScore(route,correct);},feedback:correct=>{haptic();showQuizBurst(correct);},
+   warning:()=>store.warning?t('Storage Unavailable'):'',onQuestion:q=>{if(q)previousQuestionId=q.id;},
+  },session);
+  return practiceCleanup;
  }
  function drawQuiz(host,route){
   const retest=route==='retest';if(retest&&reviewQueue?.length===0){host.innerHTML=`<section class="panel retest-complete"><h2>${t('Retest Complete')}</h2><div class="retest-summary"><span>${t('Correct')}: ${reviewResults.correct}</span><span>${t('Wrong')}: ${reviewResults.wrong}</span><span>${t('Skipped')}: ${reviewResults.skipped}</span></div><button class="primary" id="retest-done" data-finish>${t('Next')}</button></section>`;host.querySelector('[data-finish]').onclick=()=>{reviewQueue=null;resetQuestion();navigate('wrong');};return;}
   const mode=retest?reviewQueue?.[0]?.question.mode:route;
   if(route==='listening'||mode?.startsWith('listen'))return drawDictation(host,route);
+  if(['vocabinput','vocabmeaning'].includes(mode)&&!(retest&&reviewQueue?.[0]?.question.exercise))return drawVocabulary(host,route,mode,retest?reviewQueue[0].question:undefined);
   if(!question)question=retest?reviewQueue?.[0]?.question:chooseQuestion(mode);
   if(['cloze','scramble'].includes(mode))return drawSentenceQuiz(host,route,mode);
-  const q=question,meaning=q?.exercise?!!q.options:q?.mode==='vocabmeaning';
+  const q=question,meaning=!!q?.options;
   const inlineExpressionAnswer=feedback&&q?.exercise&&language==='en'&&exerciseSectionCategories(language,'collocations').includes(q.category);
-  host.innerHTML=`<div class="lexicon-view"><div class="sentence-quiz-header"><h2 class="section-title">${t(retest?'Retest':screenTitle(route))}</h2>${scorePill(score(route).correct,score(route).total)}</div>${!retest?exerciseControls(route)+controls(route):''}${q?`<div class="vocab-test quiz-after-filter"><section class="panel vocab-question lexicon-question ${q.exercise&&!q.options?'form-question':''} ${feedback||''}" data-question-word="${e(q.word.id)}" data-exercise-id="${q.exercise?e(q.id):''}">${q.exercise?renderExercisePrompt(q,{uiLanguage:locale(),input:meaning?q.options.find(option=>option.id===input)?.text||'':input,checked:!!feedback,editable:!meaning&&!feedback,inlineAnswer:inlineExpressionAnswer?q.answer:undefined}):`<div class="vocab-prompt" lang="${meaning?language:q.locale}">${meaning?e(displayStudyWord(q.word)):e(q.prompt)}</div>`}${meaning?`<div class="lexicon-options vocab-options">${q.options.map(option=>`<button class="vocab-choice ${feedback?(option.id===(q.exercise?q.correctOption:q.word.id)?'correct':option.id===input?'wrong':''):option.id===input?'selected':''}" data-option="${option.id}" ${feedback?'disabled':''}>${e(option.text)}</button>`).join('')}</div>`:q.gapFill||inlineExpressionAnswer?'':`<div class="vocab-answer-cell ${feedback||'active'}">${feedback?`<div role="status"><span class="vocab-correction" lang="${language}">${language==='ja'&&!q.exercise?renderJapaneseRuby(q.answer,q.word.pronunciation):e(q.answer)}</span>${feedback==='wrong'?`<del class="vocab-wrong" lang="${language}">${e(input)}</del>`:''}</div>`:`<input id="vocab-answer" type="text" inputmode="text" lang="${language}" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="120" aria-label="${t('Word Input')}" value="${e(input)}">`}</div>`}${feedback&&q.category!=='reading'?renderExerciseExplanation(q):''}<p class="lexicon-audio-status vocab-speech-status" role="status" hidden></p></section>${feedback&&!q.exercise?renderVocabularyLearning(q,{language,locale:locale(),fallbackWord:byId.get(q.word.id),renderWord:word=>heading(word),renderExample:example=>`<div class="example-sentence">${japaneseFurigana?.renderSentence(example.text,q.word)||e(example.text)}</div>`}):''}${feedback?`<div class="quiz-next-bar"><button class="primary" id="vocab-next" data-next>${t('Next')}</button></div>`:`<div class="quiz-action-bar">${meaning?'':`<button class="primary submit-pill" id="vocab-submit" data-submit ${!input.trim()?'disabled':''}>${t('Submit')}</button>`}<button class="btn-small" data-skip>${t('Skip')}</button></div>`}</div>`:`<section class="panel">${t('No Questions Match')}</section>`}${store.warning?`<p role="status">${t('Storage Unavailable')}</p>`:''}</div>`;
+  host.innerHTML=`<div class="lexicon-view"><div class="sentence-quiz-header"><h2 class="section-title">${t(retest?'Retest':screenTitle(route))}</h2>${scorePill(score(route).correct,score(route).total)}</div>${!retest?exerciseControls(route)+controls(route):''}${q?`<div class="vocab-test quiz-after-filter"><section class="panel vocab-question lexicon-question ${!q.options?'form-question':''} ${feedback||''}" data-question-word="${e(q.word.id)}" data-exercise-id="${e(q.id)}">${renderExercisePrompt(q,{uiLanguage:locale(),input:meaning?q.options.find(option=>option.id===input)?.text||'':input,checked:!!feedback,editable:!meaning&&!feedback,inlineAnswer:inlineExpressionAnswer?q.answer:undefined})}${meaning?`<div class="lexicon-options vocab-options">${q.options.map(option=>`<button class="vocab-choice ${feedback?(option.id===q.correctOption?'correct':option.id===input?'wrong':''):option.id===input?'selected':''}" data-option="${option.id}" ${feedback?'disabled':''}>${e(option.text)}</button>`).join('')}</div>`:q.gapFill||inlineExpressionAnswer?'':`<div class="vocab-answer-cell ${feedback||'active'}">${feedback?`<div role="status"><span class="vocab-correction" lang="${language}">${e(q.answer)}</span>${feedback==='wrong'?`<del class="vocab-wrong" lang="${language}">${e(input)}</del>`:''}</div>`:`<input id="vocab-answer" type="text" inputmode="text" lang="${language}" enterkeyhint="done" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="120" aria-label="${t('Word Input')}" value="${e(input)}">`}</div>`}${feedback&&q.category!=='reading'?renderExerciseExplanation(q):''}<p class="lexicon-audio-status vocab-speech-status" role="status" hidden></p></section>${feedback?`<div class="quiz-next-bar"><button class="primary" id="vocab-next" data-next>${t('Next')}</button></div>`:`<div class="quiz-action-bar">${meaning?'':`<button class="primary submit-pill" id="vocab-submit" data-submit ${!input.trim()?'disabled':''}>${t('Submit')}</button>`}<button class="btn-small" data-skip>${t('Skip')}</button></div>`}</div>`:`<section class="panel">${t('No Questions Match')}</section>`}${store.warning?`<p role="status">${t('Storage Unavailable')}</p>`:''}</div>`;
   const choicePanel=host.querySelector('.lexicon-question'),choiceOptions=choicePanel?.querySelector('.lexicon-options');if(choiceOptions)choicePanel.after(choiceOptions);
-  if(q?.exercise&&!['reading','okurigana','cloze'].includes(q.category)&&route!=='cloze'){const badge=document.createElement('span');badge.className='wl-tag lexicon-mode';badge.textContent=exerciseLabel(q.category,locale())+(q.formKind?' · '+formKindLabel(q.formKind,locale()):'');const top=document.createElement('div');top.className='vocab-question-top';top.append(badge);choicePanel.prepend(top);}
-  if(q&&(!q.exercise||route==='cloze')&&!(mode==='vocabinput'&&!q.exercise&&!feedback)){const top=document.createElement('div');top.className='vocab-question-top vocab-question-top--audio';top.innerHTML=`<button class="word-listen" data-quiz-speak aria-label="${t('Speak Word')}">🔊</button>`;choicePanel.prepend(top);top.querySelector('button').onclick=()=>speak(q.gapFill?q.gapFill.parts.map((part,index)=>part+(q.gapFill.answers[index]||'')).join(''):q.sentence||studySpokenWord(q.word,profile),host);}
-  if(q&&!q.exercise&&mode==='vocabinput'&&!feedback){
-   choicePanel.insertAdjacentHTML('beforeend',renderVocabularyHints(q,{language,locale:locale(),audioButton:`<button class="word-listen" data-quiz-sound-hint aria-label="${t('Speak Word')}">🔊</button>`}));
-   host.querySelector('[data-quiz-sound-hint]').onclick=()=>speak(studySpokenWord(q.word,profile),host);
-  }
-  host.querySelector('[data-learning-example]')?.addEventListener('click',()=>speak(vocabularyLearningContent(q,{language,locale:locale(),fallbackWord:byId.get(q.word.id)}).example.text,host));
+  if(q&&!['reading','okurigana','cloze'].includes(q.category)&&route!=='cloze'){const badge=document.createElement('span');badge.className='wl-tag lexicon-mode';badge.textContent=exerciseLabel(q.category,locale())+(q.formKind?' · '+formKindLabel(q.formKind,locale()):'');const top=document.createElement('div');top.className='vocab-question-top';top.append(badge);choicePanel.prepend(top);}
   if(!retest){bindControls(host,route);for(const [selector,key]of [['question-type','questionType'],['phrase-category','phraseCategory']])host.querySelector(`[data-${selector}]`)?.addEventListener('change',event=>{state(route)[key]=event.target.value;resetQuestion();refresh();});bindAnswerModes(host,route);}if(!q)return;
   const finish=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
   host.querySelector('[data-next]')?.addEventListener('click',()=>finish(false));host.querySelector('[data-skip]')?.addEventListener('click',()=>finish(true));
@@ -251,7 +262,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    isActive:()=>q===question&&!feedback,
   });
   host.querySelectorAll('[data-option]').forEach(button=>button.onclick=()=>{input=button.dataset.option;checkAnswer();});
-  function checkAnswer(){if(feedback||typing?.isComposing||!input.trim())return;field?.blur();gapFields.forEach(input=>input.blur());const correct=q.exercise?exerciseAnswerCorrect(q,input):engine.vocabularyAnswerCorrect(q,input);feedback=correct?'correct':'wrong';store.record(q.exercise?q:withVocabularyLearning(q,{language,locale:locale(),fallbackWord:byId.get(q.word.id)}),input,correct,retest);recordScore(route,correct);if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();}
+  function checkAnswer(){if(feedback||typing?.isComposing||!input.trim())return;field?.blur();gapFields.forEach(input=>input.blur());const correct=exerciseAnswerCorrect(q,input);feedback=correct?'correct':'wrong';store.record(q,input,correct,retest);recordScore(route,correct);if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();}
  }
  function drawReview(host){
   const f=state('wrong'),all=newestMistakesFirst(Object.values(store.state.wrongs).reverse()).filter(row=>isCurrentQuestion(row.question));
@@ -331,7 +342,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
-  render(route,host){if(route==='wordlist'&&lastRenderedRoute!=='wordlist')state('wordlist').selectedInitial='all';lastRenderedRoute=route;listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')return drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
-  stop(){void store.flush().catch(()=>{});listeningCleanup?.();listeningCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
+  render(route,host){if(route==='wordlist'&&lastRenderedRoute!=='wordlist')state('wordlist').selectedInitial='all';lastRenderedRoute=route;practiceCleanup?.();practiceCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')return drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},
+  stop(){void store.flush().catch(()=>{});practiceCleanup?.();practiceCleanup=undefined;typing?.destroy();DeviceSpeech.stop();closeSheet();},
  };
 }
