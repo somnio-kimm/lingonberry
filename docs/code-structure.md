@@ -82,3 +82,5 @@ Legacy adapters project their original questions into a temporary view model and
 ## Study menu components
 
 `study-menu-view.js` owns menu tiles and level-choice markup, escaping, icons and selected-state accessibility. Adapters provide translated available routes and level labels; they retain navigation and level-selection policy. Mandarin asynchronous level loading and its overlay are unchanged. The two existing route/selector variants remain data conventions, not separate renderers. Wide labels use the existing responsive layout.
+
+Word List now delegates from German/Chinese as well as the generic presenter. The shared view coalesces result updates, owns IME/search focus, initial selection, pager redraw and event cleanup. Adapters retain German matching, Chinese pinyin matching, grouped English senses, status filters and dictionary controls. Current query and initial survive internal redraws; a new mount starts from its supplied state.
