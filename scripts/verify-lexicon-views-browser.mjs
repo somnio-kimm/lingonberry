@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
@@ -25,7 +26,7 @@ try{
    window.viewRoute=value=>{route=value;refresh();};window.viewApp=app;window.viewCleanup=()=>{cleanup?.();app.stop();};refresh();
    return {first:{id:words[0].id,word:words[0].lemma,meaning:words[0].studyMeaning},second:{id:words[1].id,word:words[1].lemma,meaning:words[1].studyMeaning}};
   },{language,locale,theme});
-  const search=page.locator('#search-input');await search.fill(sample.first.word);const row=page.locator(`[data-word="${sample.first.id}"]`);await row.waitFor();assert.equal(await search.evaluate(node=>node===document.activeElement),true);
+  const search=page.locator('#search-input');await searchWordList(page,sample.first.word);const row=page.locator(`[data-word="${sample.first.id}"]`);await row.waitFor();assert.equal(await search.evaluate(node=>node===document.activeElement),true);
   await row.locator('[data-row-speak]').focus();await row.locator('[data-row-speak]').press('Enter');await page.waitForFunction(()=>!!window.viewSpokenText);assert.equal(await page.locator('[role=dialog]').count(),0,'Speaker keyboard activation must not open details');
   await row.locator('.wl-main').focus();await row.locator('.wl-main').press('Enter');await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),sample.first.meaning);await page.keyboard.press('Escape');
   await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}-wordlist.png`),fullPage:true});
@@ -35,7 +36,7 @@ try{
   await page.locator('[data-next-card]').click();assert.equal(await page.locator('.flashcard').evaluate(node=>node.classList.contains('flipped')),false);await page.locator('[data-shuffle]').click();assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),'2');
   await page.locator('.flashcard:not(.flipped) [data-card-status]').first().click();await page.locator('[role=dialog]').waitFor();await page.keyboard.press('Escape');
   const cardFilters=page.locator('.study-filter-panel');if(!await cardFilters.evaluate(node=>node.open))await cardFilters.locator('summary').click();await page.locator('[data-f=learning]').click();assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),'1');
-  await page.evaluate(()=>window.viewRoute('wordlist'));await page.locator('#search-input').fill(sample.second.word);await page.locator(`[data-word="${sample.second.id}"] .wl-main`).click();await page.locator('[role=dialog]').waitFor();await page.locator('[data-status=learning]').click();await page.locator('[role=dialog]').waitFor({state:'detached'});
+  await page.evaluate(()=>window.viewRoute('wordlist'));await searchWordList(page,sample.second.word);await page.locator(`[data-word="${sample.second.id}"] .wl-main`).click();await page.locator('[role=dialog]').waitFor();await page.locator('[data-status=learning]').click();await page.locator('[role=dialog]').waitFor({state:'detached'});
   await page.evaluate(()=>window.viewRoute('flashcards'));assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),'2','Newly eligible words fill the current capped set');
   await page.evaluate(()=>window.viewRoute('wrong'));await page.locator('.wrong-entry').waitFor();assert.equal(await page.locator('.wrong-word-meaning').innerText(),sample.first.meaning);assert.ok((await page.locator('.wrong-entry').innerText()).includes('view-wrong-answer'));
   await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}-review.png`),fullPage:true});
