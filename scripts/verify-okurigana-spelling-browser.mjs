@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -15,7 +16,7 @@ async function checkedShot(page,name){await checkBreakdown(page);await page.loca
 try{
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/okurigana-spelling',{recursive:true});
  await page.locator('#manage-packages').click();await page.locator('[data-language=ja]').click();for(const locale of ['en','ko']){await page.locator(`[data-available="ja-${locale}"] .download-package`).click();await page.locator(`[data-package="ja-${locale}"] .remove-package`).waitFor();}
- await tab(page,'settings');await page.selectOption('#target','ja');await page.selectOption('#explanation','en');await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await tab(page,'home');await page.locator('[data-level=N1]').click();await route(page,'wordlist');await page.locator('#search-input').fill('久しい');await page.locator('.wl-row').first().click();await page.locator('[data-status=learning]').click();
+ await tab(page,'settings');await page.selectOption('#target','ja');await page.selectOption('#explanation','en');await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await tab(page,'home');await page.locator('[data-level=N1]').click();await route(page,'wordlist');await searchWordList(page,'久しい');await page.locator('.wl-row').first().click();await page.locator('[data-status=learning]').click();
  let cases=0;
  for(const width of [390,1024])for(const theme of ['light','dark'])for(const explanation of ['en','ko']){
   const display=explanation;await page.setViewportSize({width,height:900});await tab(page,'settings');await page.locator(`[data-theme-choice=${theme}]`).click();await page.selectOption('#explanation',explanation);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');

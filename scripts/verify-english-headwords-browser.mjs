@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
 import {join} from 'node:path';
@@ -25,7 +26,7 @@ try{
    window.groupRoute=value=>{route=value;refresh();};window.groupCleanup=()=>{cleanup?.();app.stop();};window.groupFixture={saved,all:words.filter(word=>word.lemma==='appeal').map(word=>({id:word.id,level:word.level})),level};refresh();
    return {senses:current.map(word=>({id:word.id,pos:word.pos,meaning:word.studyMeaning,text:word.examples[0].text,translation:word.examples[0].studyTranslation})),total:new Set(words.filter(word=>word.level===level).map(word=>word.lemma)).size};
   },{locale,width,theme,levelIndex});
-  await page.locator('#search-input').fill('appeal');const row=page.locator('#wordlist-results [data-word]');assert.equal(await row.count(),1);assert.equal(await row.getAttribute('data-sense-count'),String(fixture.senses.length));assert.ok((await row.locator('.wl-tag.wl-st-learning').count())===1);
+  await searchWordList(page,'appeal');const row=page.locator('#wordlist-results [data-word]');assert.equal(await row.count(),1);assert.equal(await row.getAttribute('data-sense-count'),String(fixture.senses.length));assert.ok((await row.locator('.wl-tag.wl-st-learning').count())===1);
   for(const sense of fixture.senses)assert.ok((await row.locator('.wl-meaning').innerText()).includes(sense.meaning));assert.equal(await row.locator('.wl-pos').count(),2);
   await row.locator('.wl-main').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-headword').innerText(),'appeal');assert.equal(await page.locator('.study-example[data-sense-id]').count(),fixture.senses.length);
   for(const [index,sense]of fixture.senses.entries()){

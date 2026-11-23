@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {readFile,mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -7,7 +8,7 @@ const server=await startServer();let browser;
 const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready'&&document.querySelector('main').dataset.viewState==='ready');
 async function tab(page,id){await page.locator(`[data-tab=${id}]`).click();await ready(page);}
 async function route(page,id){await tab(page,'home');await page.locator(`[data-route=${id}]`).click();await ready(page);}
-async function mark(page,entry,status){await tab(page,'home');await page.locator(`[data-level="${entry.level}"]`).click();await route(page,'wordlist');await page.locator('#search-input').fill(entry.word);await page.locator(`[data-word="${entry.id}"] .wl-main`).click();await page.locator(`[data-status=${status}]`).click();await ready(page);}
+async function mark(page,entry,status){await tab(page,'home');await page.locator(`[data-level="${entry.level}"]`).click();await route(page,'wordlist');await searchWordList(page,entry.word);await page.locator(`[data-word="${entry.id}"] .wl-main`).click();await page.locator(`[data-status=${status}]`).click();await ready(page);}
 async function learned(page){const fold=page.locator('.filter-fold');if(!await fold.evaluate(node=>node.open))await fold.locator('summary').click();await page.locator('[data-f=learning]').click();await fold.evaluate(node=>{node.open=false;});}
 try{
  const catalog=await read('web/catalog.json'),core=await read(catalog.find(row=>row.id==='ja-core').url.slice(1)),targets=['学校','大きい','久しい','体中'].map(word=>core.entries.find(row=>row.word===word));assert.ok(targets.every(Boolean));

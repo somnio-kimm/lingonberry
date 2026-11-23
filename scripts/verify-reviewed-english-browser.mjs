@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -171,7 +172,7 @@ try{
      app.settings.change('studyLevel',sample.level);window.reviewedApp=app;
      window.reviewedRoute=next=>{current=next;refresh();};refresh();
     },{locale,theme,sample});
-    await page.locator('#search-input').fill(sample.word);
+    await searchWordList(page,sample.word);
     const row=page.locator(`[data-sense-ids~="${sample.id}"]`);await row.waitFor();
     assert.ok((await row.locator('.wl-meaning').innerText()).includes(sample.meanings[locale]));
     assert.equal(await row.locator('.wl-hsk').innerText(),sample.level);
@@ -296,7 +297,7 @@ try{
   try{
    await page.reload();await ready(page);await tab(page,'home');
    const sample=selected[0];await page.locator(`[data-level="${sample.level}"]`).click();
-   await page.locator('[data-route=wordlist]').click();await page.locator('#search-input').fill(sample.word);
+   await page.locator('[data-route=wordlist]').click();await searchWordList(page,sample.word);
    assert.ok((await page.locator(`[data-sense-ids~="${sample.id}"] .wl-meaning`).innerText()).includes(sample.meanings[locale]));
    assert.equal(downloads.length,downloadCount,'Offline reload attempted another package download');
    checks.push({case:'real-shell-offline-reload',locale,id:sample.id});

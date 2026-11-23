@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
@@ -21,16 +22,16 @@ try{
     {id:'yoghurt',word:'Joghurt',aliases:['Jogurt'],article:'der',partOfSpeech:'noun',level:'B1',meaning:locale==='en'?'yoghurt':'요구르트'},
    ]});window.aliasApp=app;window.aliasRender=()=>app.render('wordlist',host);window.aliasRender();
   },{locale,theme});
-  await page.locator('#search-input').fill('ISS');await page.waitForFunction(()=>document.querySelector('#wordlist-results')?.dataset.query==='ISS');await page.locator('.wl-row[data-id=station]').waitFor();
+  await searchWordList(page,'ISS');await page.waitForFunction(()=>document.querySelector('#wordlist-results')?.dataset.query==='ISS');await page.locator('.wl-row[data-id=station]').waitFor();
   assert.equal(await page.locator('.wl-row').count(),1);
   await page.locator('.wl-row[data-id=station] .wl-main').click();
   assert.equal(await page.locator('#study-word-title').innerText(),'die Internationale Raumstation');
   assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='en'?'International Space Station':'국제우주정거장');
   await page.locator('.detail-sheet-close').click();
   await page.evaluate(()=>{window.aliasApp.settings.change('studyLevel','B1');window.aliasRender();});
-  await page.locator('#search-input').fill('ISS');await page.waitForFunction(()=>document.querySelector('#wordlist-results')?.dataset.query==='ISS');
+  await searchWordList(page,'ISS');await page.waitForFunction(()=>document.querySelector('#wordlist-results')?.dataset.query==='ISS');
   assert.equal(await page.locator('.wl-row').count(),0);
-  await page.locator('#search-input').fill('Jogurt');await page.locator('.wl-row[data-id=yoghurt]').waitFor();
+  await searchWordList(page,'Jogurt');await page.locator('.wl-row[data-id=yoghurt]').waitFor();
   assert.equal(await page.locator('.wl-headword').innerText(),'der Joghurt');
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth+1));
   await page.evaluate(()=>window.aliasApp.stop());checks++;
