@@ -66,3 +66,9 @@ The German progress store retains historical course records and retest readers, 
 The German sentence stylesheet keeps a single global tools/options/tiles block. Exact repeated selectors and declarations were removed only from the earlier copy; later cascade overrides and language-specific reading rules remain in place.
 
 `meaning-distractors.js` owns bounded random candidate sampling and visible-format balancing for the shared Meaning Quiz. Prepared rows retain exact definitions and spelling/meaning exclusion keys. Sampling visits independent positions without copying the complete pool for every question, prefers comparable lengths and avoids a unique initial against an otherwise matching set. Sparse pools can use fewer choices. No saved snapshot is regenerated.
+
+## Shared default vocabulary screen
+
+`vocabulary-view.js` owns Word Input/Meaning Quiz markup, question/feedback/input state, IME binding, hint/result display, bounded current-filter pool reuse and teardown for every language. German/Chinese modules are adapters; the generic presentation delegates defaults and keeps only specialist exercise rendering. A single mounted practice cleanup now covers both vocabulary and Dictation.
+
+Adapters supply word filters, pool/grading policies, reading/article markup, speech and history writes. The shared screen passes both the selected option ID and its displayed text: generic history keeps IDs while existing German/Chinese history keeps displayed answers. Saved question IDs, snapshots and the exact selected example stay intact. Filters may remain presenter-owned through the existing bind callback; no second persistent state store is introduced.

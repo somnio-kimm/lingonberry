@@ -32,6 +32,7 @@ jobs:
       - run: node scripts/verify-word-initial-browser.mjs
       - run: node scripts/verify-answer-sounds-browser.mjs
       - run: node scripts/verify-vocabulary-learning-browser.mjs
+      - run: node scripts/verify-vocabulary-lifecycle-browser.mjs
       - run: node scripts/verify-listening-reading-browser.mjs
       - run: node scripts/verify-cloze-rotation-browser.mjs
       - run: node scripts/verify-english-headwords-browser.mjs
