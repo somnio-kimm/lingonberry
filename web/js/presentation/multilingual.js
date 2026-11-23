@@ -199,12 +199,13 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const preference=mode+'ShowTranslation';
   const submit=()=>{if(feedback)return;const correct=q.exercise?exerciseAnswerCorrect(q,input):engine.sentenceAnswerCorrect(q,mode==='cloze'?input:chosenTokens);const answer=mode==='cloze'?input:joinSentenceTiles(chosenTokens.map(id=>q.tokens[id]),language);store.record(q,answer,correct,retest);recordScore(route,correct);feedback=correct?'correct':'wrong';if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();};
   const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
-  renderLexiconSentence(body,{question:q,feedback,selectedOption:input,input,chosenTokens,showTranslation:store.state.preferences[preference],showReading:store.state.preferences[mode+'ShowReading']!==false,t},{
-   language,uiLanguage:locale(),renderSentence:text=>japaneseFurigana?.renderSentence(text,q.word)||e(text),renderOption:option=>{const word=byId.get(option.id);return word&&option.text===word.lemma?renderJapaneseRuby(option.text,word.pronunciation):japaneseFurigana.renderSentence(option.text,word);},toggleReading:value=>{store.preference(mode+'ShowReading',value);refresh();},reset:()=>{chosenTokens=[];q.pool=shuffle(q.pool);refresh();},speak:()=>speak(q.sentence,host),choose:id=>{if(!chosenTokens.includes(id)){chosenTokens.push(id);refresh();}},remove:index=>{chosenTokens.splice(index,1);refresh();},select:id=>{input=id;submit();},toggle:value=>{store.preference(preference,value);refresh();},
+  practiceCleanup=renderLexiconSentence(body,{question:q,feedback,selectedOption:input,input,chosenTokens,showTranslation:store.state.preferences[preference],showReading:store.state.preferences[mode+'ShowReading']!==false,t},{
+   language,uiLanguage:locale(),renderSentence:text=>japaneseFurigana?.renderSentence(text,q.word)||e(text),renderOption:language==='ja'?option=>{const word=byId.get(option.id);return word&&option.text===word.lemma?renderJapaneseRuby(option.text,word.pronunciation):japaneseFurigana.renderSentence(option.text,word);}:undefined,toggleReading:value=>{store.preference(mode+'ShowReading',value);refresh();},reset:()=>{chosenTokens=[];q.pool=shuffle(q.pool);refresh();},speak:()=>speak(q.sentence,host),choose:id=>{if(!chosenTokens.includes(id)){chosenTokens.push(id);refresh();}},remove:index=>{chosenTokens.splice(index,1);refresh();},select:id=>{input=id;submit();},toggle:value=>{store.preference(preference,value);refresh();},
    submit,skip:()=>advance(true),next:()=>advance(false),
   });
   const fields=[...body.querySelectorAll('[data-phrase-gap]')];
   if(fields.length)typing=bindTypingAnswers(fields,{button:body.querySelector('[data-sentence-submit]'),onChange:values=>{input=joinGapAnswers(values);},onSubmit:submit,isActive:()=>q===question&&!feedback});
+  return practiceCleanup;
  }
  function drawDictation(host,route){
   const retest=route==='retest',saved=retest?reviewQueue[0].question:undefined;

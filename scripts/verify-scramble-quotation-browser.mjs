@@ -20,18 +20,18 @@ try{
    ]});window.quoteApp=app;window.quoteHost=host;window.quoteJoin=joinSentenceTokens;app.render('scramble',host);
    return {text,tokens,joined:joinSentenceTokens(tokens)};
   },{locale,theme});
-  assert.equal(data.joined,data.text);await page.locator('[data-pool]').first().waitFor();
+  assert.equal(data.joined,data.text);await page.locator('[data-tile]').first().waitFor();
   const wrong=[data.tokens[1],data.tokens[0],...data.tokens.slice(2)];
-  async function choose(tokens){for(const token of tokens){await page.locator('[data-pool]').filter({hasText:new RegExp('^'+token.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$')}).first().click();}await page.locator('#quiz-submit').click();}
+  async function choose(tokens){for(const token of tokens){await page.locator('[data-tile]').filter({hasText:new RegExp('^'+token.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$')}).first().click();}await page.locator('[data-sentence-submit]').click();}
   await choose(wrong);
   const saved=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('learn-language.de.progress.v1')).quizAnswers.scramble)[0]);
   assert.equal(saved.correct,false);assert.equal(saved.answer,data.text);
   assert.equal(saved.attempts.at(-1).input,await page.evaluate(tokens=>window.quoteJoin(tokens),wrong));assert.doesNotMatch(saved.attempts.at(-1).input,/komme\. “/);
   await page.evaluate(()=>window.quoteApp.render('wrong',window.quoteHost));await page.locator('.wrong-entry').first().waitFor();
   const history=await page.evaluate(()=>localStorage.getItem('learn-language.de.progress.v1'));
-  await page.locator('#retest-filtered').click();await page.locator('[data-pool]').first().waitFor();
+  await page.locator('#retest-filtered').click();await page.locator('[data-tile]').first().waitFor();
   assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.de.progress.v1')),history);
-  await choose(data.tokens);assert.equal(await page.locator('.sentence-quiz-text').innerText(),data.text);await page.locator('#quiz-next').waitFor();checks++;
+  await choose(data.tokens);assert.equal(await page.locator('.sentence-quiz-text').innerText(),data.text);await page.locator('[data-sentence-next]').waitFor();checks++;
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${checks} German quotation reconstruction checks: EN/KO, phone/tablet, light/dark, actual Scramble submit, stored wrong answer, Review and corrected saved retest.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

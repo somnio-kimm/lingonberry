@@ -16,8 +16,8 @@ try{
   },{locale,theme,kind});
   await page.locator('.cloze-option-word').first().waitFor();assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),expected.options.slice().sort());
   const choose=text=>page.locator('.opt-btn').filter({has:page.locator('.cloze-option-word').filter({hasText:new RegExp('^'+text+'$')})}).click();
-  await choose(expected.options[1]);await page.locator('#quiz-next').waitFor();assert.equal(await page.locator('.sentence-quiz-text').innerText(),expected.sentence);
-  await page.evaluate(()=>window.reopenNounPhraseReview());await page.locator('.wrong-entry').waitFor();await page.locator('#retest-filtered').click();await page.locator('.cloze-option-word').first().waitFor();assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),expected.options.slice().sort());await choose(expected.answer);await page.locator('#quiz-next').waitFor();assert.equal(await page.locator('.sentence-quiz-text').innerText(),expected.sentence);
+  await choose(expected.options[1]);await page.locator('[data-sentence-next]').waitFor();assert.equal(await page.locator('.sentence-quiz-text').innerText(),expected.sentence);
+  await page.evaluate(()=>window.reopenNounPhraseReview());await page.locator('.wrong-entry').waitFor();await page.locator('#retest-filtered').click();await page.locator('.cloze-option-word').first().waitFor();assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),expected.options.slice().sort());await choose(expected.answer);await page.locator('[data-sentence-next]').waitFor();assert.equal(await page.locator('.sentence-quiz-text').innerText(),expected.sentence);
   assert.ok(await page.locator('body').evaluate(element=>element.scrollWidth<=innerWidth+1));await page.evaluate(()=>window.nounPhraseApp.stop());checks++;
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${checks} German whole noun-phrase Cloze cases: genitive, sentence-initial and indefinite articles, exact original sentence feedback, persisted Review/retest, EN/KO, phone/tablet and light/dark.`);

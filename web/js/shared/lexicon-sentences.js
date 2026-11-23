@@ -98,3 +98,9 @@ export function createSentenceEngine(profile){
  }
  return {createSentencePool,clearSentencePools:()=>prepared.clear(),sentenceQuestions:(mode,words,locale)=>createSentencePool(mode,words,locale).all(),sentenceAnswerCorrect};
 }
+
+/** Project existing object-based tiles into view indices without changing their history format. */
+export function projectScrambleTiles(chosen,pool,readText){
+ const tiles=[...chosen,...pool];
+ return {tiles,tokens:tiles.map(readText),pool:tiles.map((_,index)=>index),chosenTokens:chosen.map((_,index)=>index)};
+}

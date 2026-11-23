@@ -72,3 +72,9 @@ The German sentence stylesheet keeps a single global tools/options/tiles block. 
 `vocabulary-view.js` owns Word Input/Meaning Quiz markup, question/feedback/input state, IME binding, hint/result display, bounded current-filter pool reuse and teardown for every language. German/Chinese modules are adapters; the generic presentation delegates defaults and keeps only specialist exercise rendering. A single mounted practice cleanup now covers both vocabulary and Dictation.
 
 Adapters supply word filters, pool/grading policies, reading/article markup, speech and history writes. The shared screen passes both the selected option ID and its displayed text: generic history keeps IDs while existing German/Chinese history keeps displayed answers. Saved question IDs, snapshots and the exact selected example stay intact. Filters may remain presenter-owned through the existing bind callback; no second persistent state store is introduced.
+
+## Shared sentence presentation
+
+`lexicon-sentence-view.js` now renders Cloze and Scramble for all four released languages: tools, translation target, options, answer/pool cards and action placement have one implementation and one set of semantic control attributes. German inflection/choice construction and Chinese character/pinyin preparation stay in their adapters. Japanese ruby and separated typing gaps retain their existing policies.
+
+Legacy adapters project their original questions into a temporary view model and still save/grade the original question. `projectScrambleTiles` maps existing chosen/pool objects to view indices without rewriting stored tokens, punctuation or IDs. The shared renderer returns cleanup; adapters release old handlers before redraw and unmount. The generic presenter reuses its single practice cleanup slot. Regression selectors now target shared controls rather than language-specific button IDs.
