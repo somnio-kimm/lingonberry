@@ -1,7 +1,7 @@
 import {morphemeOriginText} from '../shared/morpheme-text.js';
 import {newestMistakesFirst} from '../shared/review-order.js';
 import {renderVocabularyView} from '../shared/vocabulary-view.js';
-import {renderStudyIcon} from '../shared/study-icons.js';
+import {renderStudyMenu,renderStudyLevels} from '../shared/study-menu-view.js';
 import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../shared/flashcard-session.js';
 import {flashcardText} from '../shared/flashcard-text.js';
 import {createEnglishHeadwords,readWordSenses,readHeadwordStatus,readEnglishHeadwordIdentity} from '../shared/english-headwords.js';
@@ -166,7 +166,9 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    });
   }
  }
- function drawHome(host){host.innerHTML=`<section class="panel level-panel study-level-card"><h2>${t('Study Level')}</h2><div class="level-chips study-level-options${language==='en'?' english-level-options':''}">${profile.levels.map(level=>`<button class="level-chip" data-level="${level}" aria-pressed="${level===store.state.preferences.studyLevel}">${e(levelLabel(level))}</button>`).join('')}</div></section><div class="menu-grid">${orderStudyModes(Object.keys(modes).filter(route=>!(language==='en'&&['articles','collocations','phrasal','idioms'].includes(route))&&(Object.hasOwn(commonModes,route)||(route==='roots'?(study?.morphemes?.length||study?.families?.length||study?.practiceData?.rootFamilies?.length):exercises.some(row=>exerciseSectionCategories(language,route).includes(row.category)))))).map(route=>{const [title]=modes[route];return`<button class="menu-card" data-route="${route}"><span class="menu-icon" aria-hidden="true">${renderStudyIcon(route)}</span><span class="menu-label">${t(title)}</span></button>`;}).join('')}</div>`;
+ function drawHome(host){
+  const routes=orderStudyModes(Object.keys(modes).filter(route=>!(language==='en'&&['articles','collocations','phrasal','idioms'].includes(route))&&(Object.hasOwn(commonModes,route)||(route==='roots'?(study?.morphemes?.length||study?.families?.length||study?.practiceData?.rootFamilies?.length):exercises.some(row=>exerciseSectionCategories(language,route).includes(row.category))))));
+  host.innerHTML=renderStudyLevels({title:t('Study Level'),levels:profile.levels.map(id=>({id,label:levelLabel(id)})),selected:store.state.preferences.studyLevel,wideLabels:language==='en'})+renderStudyMenu(routes.map(id=>({id,label:t(modes[id][0])})),{label:t('Study')});
   host.querySelectorAll('[data-route]').forEach(button=>button.onclick=()=>{resetQuestion();navigate(button.dataset.route);});host.querySelectorAll('[data-level]').forEach(button=>button.onclick=()=>{change('studyLevel',button.dataset.level);resetQuestion();refresh();});}
  function drawWords(host,route){
   const f=state(route);if(f.initialLevel!==store.state.preferences.studyLevel){f.initialLevel=store.state.preferences.studyLevel;f.selectedInitial='all';}let visible=new Map();

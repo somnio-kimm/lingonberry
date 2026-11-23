@@ -1,4 +1,4 @@
-import {renderStudyIcon} from '../../../../js/shared/study-icons.js';
+import {renderStudyMenu,renderStudyLevels} from '../../../../js/shared/study-menu-view.js';
 import { HOME_MODES, STUDY_LEVELS } from '../app-definition.js';
 import { Store } from '../services/store.js';
 import { Haptic } from '../services/haptic.js';
@@ -11,22 +11,7 @@ export function renderHome(el) {
   const selectedLv = Store.hskLevels[0] ?? 1;
   let switching = false;
 
-  el.innerHTML = `
-    <div class="card study-level-card">
-      <div class="card-title" style="font-size:14px;font-weight:600;margin-bottom:10px">${t('studyLevel')}</div>
-      <div class="study-level-options">
-        ${STUDY_LEVELS.map(({id:lv,label}) => `
-          <button class="hsk-chip ${selectedLv === lv ? 'active' : ''}" data-lv="${lv}">${label}</button>
-        `).join('')}
-      </div>
-    </div>
-    <div class="quiz-grid">
-      ${HOME_MODES.map(m => `
-        <button type="button" class="quiz-card" data-quiz="${m}">
-          <span class="quiz-icon" aria-hidden="true">${renderStudyIcon(m)}</span>
-          <span class="quiz-label">${modeTitle(m)}</span>
-        </button>`).join('')}
-    </div>`;
+  el.innerHTML=renderStudyLevels({title:t('studyLevel'),levels:STUDY_LEVELS,selected:selectedLv,variant:'hsk'})+renderStudyMenu(HOME_MODES.map(id=>({id,label:modeTitle(id)})),{variant:'quiz',label:t('tabHome')});
 
   const levelCard = el.querySelector('.card');
   el.querySelectorAll('.hsk-chip').forEach(b => {
