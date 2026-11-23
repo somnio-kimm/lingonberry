@@ -10,9 +10,11 @@ export function renderLexiconWordList(host,{t,query,filters,language='en',locale
  function renderWord(word){const status=readStatus(word);return `<div class="wl-row" data-word="${e(word.id)}" data-id="${e(word.id)}" data-sense-count="${word.senses?.length||1}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}"><div class="wl-main" role="button" tabindex="0"><div class="${e(headingClass)}">${renderHeading(word)}</div><div class="wl-meaning">${e(readMeaning(word))}</div>${renderPreview(word)}</div><div class="wl-trail">${renderTags(word)}<span class="wl-tag wl-st-${e(status)}">${t(status[0].toUpperCase()+status.slice(1))}</span><button class="wl-speak" data-row-speak="${e(word.id)}" aria-label="${t('Speak Word')}">🔊</button></div></div>`;}
  function renderResults(initialCount=80){
   if(!alive)return;const words=getWords(),filtered=index.filter(words,initial),list=host.querySelector('#wordlist-results');
+  const focused=host.ownerDocument?.activeElement,focusedRow=focused?.closest('[data-word]'),focusKey=focusedRow&&list.contains(focusedRow)?focusedRow.dataset.word:null,focusTarget=focused?.closest('[data-row-speak]')?'[data-row-speak]':'.wl-main';
   updateWordInitialFilter(host.querySelector('[data-word-initial]'),{options:index.readOptions(words),selected:initial,locale});list.dataset.initial=initial;list.dataset.query=host.querySelector('#search-input').value;
   if(showCount)host.querySelector('.study-list-title').innerHTML=`${e(t('Word List'))} <span class="muted">(${filtered.length})</span>`;
   pager?.cleanup();pager=mountWordRows(list,filtered,renderWord,{initialCount,moreLabel:t('Show More Words'),emptyMarkup:`<div class="panel">${t('No Matching Words')}</div>`});
+  if(focusKey){const row=[...list.querySelectorAll('[data-word]')].find(node=>node.dataset.word===focusKey);(row?.querySelector(focusTarget)||host.querySelector('#search-input')).focus({preventScroll:true});}
  }
  function schedule(){cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>renderResults());}
  function clearHandlers(){host.querySelectorAll('button,input,select,.filter-fold,.study-search,#wordlist-results').forEach(node=>{node.oninput=null;node.onchange=null;node.onkeydown=null;node.onclick=null;node.ontoggle=null;node.oncompositionstart=null;node.oncompositionend=null;});}
