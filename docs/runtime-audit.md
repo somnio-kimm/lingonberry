@@ -40,3 +40,26 @@ Public helpers used by build/content tools or by meaningful unit tests were not 
 - Eight German/Chinese shared-design contracts pass at phone/tablet widths in light/dark themes.
 
 Shared policies have focused unit tests for their failure cases. A lower line count or a higher test count is not treated as evidence of better architecture on its own.
+
+## 23 November 2026 sharing pass
+
+The current pass retains plain modules and the component/adapter boundary. The shipped JavaScript inventory has 163 modules and 624697 bytes (before: 160 modules / 636492 bytes). Counts exclude the generated service worker, native web copies, dependencies, private authoring proofs and immutable source/content archives. More shared modules do not mean more copies of application state.
+
+| Repeated responsibility | Current owner | Adapter responsibilities retained |
+| --- | --- | --- |
+| Word Input / Meaning Quiz rendering and lifecycle | `vocabulary-view.js` | Grading, article/reading markup, filtered inventories, source revisions and existing saved-answer formats |
+| Cloze / Scramble question, options, tools and actions | `lexicon-sentence-view.js` | German inflections, Mandarin target/pinyin preparation, Japanese ruby, original questions and grading |
+| Object-based Scramble tile projection | `projectScrambleTiles` | Original tokens/punctuation and the history format |
+| Study tile and level markup | `study-menu-view.js` | Available routes, translation, level policy and asynchronous HSK loading |
+| Word List search/input/pager/row lifecycle | `lexicon-wordlist-view.js` | Matching rules, English sense grouping, status filters and dictionary controls |
+| Review card header/word/meaning/answer hierarchy | `review-card-view.js` | History filtering, answer fragments, stored readings, noun extras and retest/removal keys |
+
+Flashcard and Dictation screens, download/storage/settings components and the keyboard/IME primitives remain shared. A mounted vocabulary screen owns only its current filtered pool and releases its input/audio/events on unmount. The generic presenter uses one practice cleanup slot. The combined English Cloze cache now releases both answer-mode preparations when its installed study is replaced/closed, alongside the sentence cache.
+
+Removed after call-site review: unused emoji/colour entries in generic exercise/menu metadata, a retired exercise-selector filter/binding, and old inline-option/reset-control CSS that no active renderer emits. Shared sentence and choice geometry replaced the legacy/inline declarations. Shuffle consumers import `random.js` directly; compatibility exports still point to that single implementation. No content, licence, learner-ID or stored-progress migration is included.
+
+`node scripts/audit-runtime-structure.mjs` reports exact whole-module clones, relative import resolution, entry-point reachability and conservative zero-reference named-import candidates. The current report has no findings in those categories. Fixture tests cover named, side-effect and dynamic import references without executing inspected code. This supplements manual flow/DOM/style review; it does not prove that every possible repeated algorithm or dynamic CSS branch is dead. Historical validators/readers and source archives remain where they preserve existing downloads, saved questions and attribution.
+
+Remaining deliberate boundaries: German grammar/article policy, Chinese pronunciation/SRS policy, Japanese reading/form policy, language-specific dictionary details and legacy history projection. These are supplied to shared screens instead of being merged into one flag-heavy store/controller. Further removal should follow an actual unconsumed responsibility and its regressions.
+
+Validation after this pass:996 unit tests and the JavaScript/JSON/offline-shell checks pass. The browser regressions cover all four released languages, original Review/retests, grouped English senses, initial filters, IME and keyboard actions, old German inflections/punctuation, Chinese pinyin, Japanese ruby and the common design. The native update script also passes its browser extraction check. A queued-result focus race is covered explicitly; Dictation correct-input tests use canonical written words rather than assuming a spoken kana reading is the required spelling.

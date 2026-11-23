@@ -7,6 +7,17 @@ const server=await startServer();let browser;
 const ready=page=>page.waitForFunction(()=>document.documentElement.dataset.catalogState==='ready'&&document.querySelector('main').dataset.viewState==='ready');
 async function tab(page,id){await page.locator(`[data-tab=${id}]`).click();await ready(page);}
 async function open(page,language){await tab(page,'home');await page.locator(language==='zh'?'[data-quiz=listening]':'[data-route=listening]').click();await ready(page);await page.locator('.listening-question').waitFor();}
+// The spoken reading can differ from the accepted written word (especially Japanese).
+async function writtenWord(page,language){return page.evaluate(async language=>{
+ const id=document.querySelector('.listening-test').dataset.questionId.split(':word:')[0];
+ window.dictationWrittenWords||=new Map();
+ if(!window.dictationWrittenWords.has(language)){
+  const [{createPackageStorage},{germanWords,chineseWords},{studyWords}]=await Promise.all([import('/js/packages/storage.js'),import('/js/presentation/words.js'),import('/js/presentation/study-profiles.js')]);
+  const catalog=await fetch('/catalog.json').then(response=>response.json()),descriptor=catalog.find(row=>row.id===language+'-core'),core=await createPackageStorage().get(descriptor.id,descriptor.version);
+  const words=(language==='de'?germanWords:language==='zh'?chineseWords:studyWords)(core);window.dictationWrittenWords.set(language,new Map(words.map(word=>[word.id,word.lemma||word.hanzi])));
+ }
+ const answer=window.dictationWrittenWords.get(language).get(id);if(!answer)throw new Error('Missing written Dictation target: '+language+'/'+id);return answer;
+},language);}
 async function front(page){return page.evaluate(()=>{
  const q=document.querySelector('.listening-question'),box=q.getBoundingClientRect(),filter=document.querySelector('.filter-fold').getBoundingClientRect();
  const element=(node,origin=box)=>{const b=node.getBoundingClientRect(),s=getComputedStyle(node);return {x:b.left-origin.left,y:b.top-origin.top,width:b.width,height:b.height,padding:s.padding,radius:s.borderRadius,border:s.borderWidth,font:s.fontSize,weight:s.fontWeight,line:s.lineHeight,background:s.backgroundColor,colour:s.color};};
@@ -33,7 +44,7 @@ try{
     if(language==='en'&&locale==='en'&&mode==='listensentence')assert.equal(await page.locator('.listening-translation').count(),0);
     if(locale==='en'&&width===390&&theme==='dark'){await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:`/private/tmp/dictation-screen/${language}-${mode}-checked.png`,fullPage:true});}
     await page.locator('#listening-next').click();assert.equal(await page.locator('#listening-answer').inputValue(),'');assert.equal(await page.locator('#listening-submit').isEnabled(),false);assert.equal(await page.locator('.listening-user-answer,.wrong-answer-label').count(),0,'Next clears feedback');
-    await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-play').hasAttribute('disabled'));await page.locator('#listening-answer').fill(await page.evaluate(()=>window.dictationSpokenText));await page.locator('#listening-submit').click();await page.locator('.vocab-answer-cell.correct').waitFor();
+    await page.locator('#listening-play').click();await page.waitForFunction(()=>!document.querySelector('#listening-play').hasAttribute('disabled'));await page.locator('#listening-answer').fill(mode==='listenword'?await writtenWord(page,language):await page.evaluate(()=>window.dictationSpokenText));await page.locator('#listening-submit').click();await page.locator('.vocab-answer-cell.correct').waitFor();
     assert.equal(await page.locator('.listening-transcript').count(),1);assert.equal(await page.locator('.listening-user-answer,del,.wrong-answer-value--wrong').count(),0,'Correct answer never shows wrong-answer feedback');assert.deepEqual(await page.locator('.wrong-answer-label').allTextContents(),[locale==='ko'?'정답':'Correct answer']);assert.equal(await page.locator('#listening-next').count(),1);assert.equal(await page.locator('#listening-submit').count(),0);
     if(locale==='ko'&&width===390&&theme==='dark'){await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});await page.screenshot({path:`/private/tmp/dictation-screen/${language}-${mode}-correct.png`,fullPage:true});}
     await page.locator('#listening-next').click();assert.equal(await page.locator('.listening-user-answer,.wrong-answer-label').count(),0);checks++;

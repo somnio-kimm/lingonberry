@@ -26,3 +26,6 @@ export function chooseCombinedCloze({engine,words,exercises,locale,answerMode='c
  }
  return cached.rotation.choose(previousId,random,cached.build);
 }
+
+/** Release both answer-mode preparations when their installed study is replaced or closed. */
+export function clearCombinedClozeCache(engine){prepared.delete(engine);}

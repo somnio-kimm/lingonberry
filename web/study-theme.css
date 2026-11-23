@@ -103,8 +103,6 @@ html,body{background:var(--bg);color:var(--text)}
 .danger,.set-danger,.del-wrong,.dismiss-wrong,#clear-wrong{color:var(--red)}
 .set-bug-send,#set-bug-send{background:var(--blue-soft);color:var(--blue-button-text)}
 .set-support,.set-github{background:var(--line);color:var(--blue)}
-.opt-btn[style*="var(--green)"]{background:var(--green-soft)!important;border-color:var(--green)!important;color:var(--green)!important}
-.opt-btn[style*="var(--red)"]{background:var(--red-soft)!important;border-color:var(--red)!important;color:var(--red)!important}
 .wrong-card-heading .badge{display:inline-flex;gap:6px;flex-wrap:wrap;border-radius:10px;padding:5px 10px}
 .wrong-heading{margin:0 0 12px;align-items:center}
 .wrong-heading .section-title,.wrong-heading h2{margin:0;font-size:15px;font-weight:600;line-height:1.4}
@@ -270,7 +268,6 @@ main:has(.set-page){padding:10px 12px calc(var(--tab-h) + 6px)}
 .quiz-action-bar>button,.quiz-next-bar>button{pointer-events:auto;margin:0}
 .quiz-action-bar>.primary,.quiz-action-bar>.btn-primary,.quiz-action-bar>.submit-pill,.quiz-next-bar>button{width:100%;max-width:320px;min-height:44px;padding:10px 20px;border-radius:12px;font-size:15px;font-weight:600;letter-spacing:0;box-shadow:none}
 .quiz-action-bar>.btn-small{width:auto;min-height:32px;font-size:13px;padding:6px 14px;box-shadow:none}
-.sentence-reset-controls{display:flex;justify-content:center;margin-top:12px}
 
 .quiz-action-bar>.submit-pill:disabled,.quiz-action-bar>.primary:disabled,.quiz-action-bar>.btn-primary:disabled{background:var(--blue-soft);color:var(--blue-button-text);opacity:.55;box-shadow:none}
 
