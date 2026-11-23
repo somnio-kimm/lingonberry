@@ -90,7 +90,7 @@ enum NativePackageVerification {
                 for(const level of [ENGLISH_LEVELS[1],ENGLISH_LEVELS[2]]){
                   document.querySelector('[data-tab=home]').click();await wait(()=>document.querySelector('[data-level]'));[...document.querySelectorAll('[data-level]')].find(node=>node.dataset.level===level).click();
                   document.querySelector('[data-route=wordlist]').click();await wait(()=>document.querySelector('#search-input'));
-                  const search=document.querySelector('#search-input');search.value='appeal';search.dispatchEvent(new Event('input',{bubbles:true}));
+                  const search=document.querySelector('#search-input');search.value='appeal';search.dispatchEvent(new Event('input',{bubbles:true}));await wait(()=>document.querySelector('#wordlist-results')?.dataset.query==='appeal');
                   const expected=core.entries.filter(row=>row.word==='appeal'&&row.level===level),rows=[...document.querySelectorAll('#wordlist-results [data-word]')].filter(row=>row.querySelector('.lexicon-word')?.textContent==='appeal');
                   if(rows.length!==1||Number(rows[0].dataset.senseCount)!==expected.length)throw new Error('English headwords are not grouped within level');
                   if(document.querySelector('[data-tag="plural noun"],[data-tag="proper noun"]'))throw new Error('Noun categories were not simplified');
@@ -190,7 +190,7 @@ enum NativePackageVerification {
             document.querySelector('[data-route="'+mode+'"],[data-quiz="'+chineseMode+'"]').click();
           };
           markUxStage(before.id+':wordlist-open');await open(before.targetLanguage,before.explanationLanguage);await openStudyMode('wordlist');await wait(()=>document.querySelector('[data-word-initial]'));
-          const indexSearch=document.querySelector('#search-input');if(indexSearch){indexSearch.value='';indexSearch.dispatchEvent(new Event('input',{bubbles:true}));}
+          const indexSearch=document.querySelector('#search-input');if(indexSearch){indexSearch.value='';indexSearch.dispatchEvent(new Event('input',{bubbles:true}));await wait(()=>document.querySelector('#wordlist-results')?.dataset.query==='');}
           const initialControl=document.querySelector('[data-word-initial]');if(initialControl.value!=='all')throw new Error('Word index did not reset on a new visit');
           const initialOption=[...initialControl.options].find(option=>option.value!=='all'&&!option.disabled);
           if(initialOption){
