@@ -1,5 +1,6 @@
 import {createQuestionRotation,sentenceQuestionKey} from './question-rotation.js';
-import {shuffle,vocabularyType} from './vocabulary.js';
+import {shuffle} from './random.js';
+import {vocabularyType} from './vocabulary.js';
 const letter=/[\p{L}\p{M}\p{N}]/u;
 const segmenters=new Map();
 function wordSegmenter(language){if(!segmenters.has(language))segmenters.set(language,new Intl.Segmenter(language,{granularity:'word'}));return segmenters.get(language);}

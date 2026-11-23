@@ -13,7 +13,7 @@ import {renderListeningView} from '../shared/listening-view.js';
 import {listeningLabels} from '../shared/listening-text.js';
 import {createJapaneseFurigana,renderJapaneseRuby} from '../shared/japanese-furigana.js';
 import {joinGapAnswers} from '../shared/phrase-gaps.js';
-import {chooseCombinedCloze} from '../shared/combined-cloze.js';
+import {chooseCombinedCloze,clearCombinedClozeCache} from '../shared/combined-cloze.js';
 import {bindTypingAnswer,bindTypingAnswers} from '../shared/typing-answer.js';
 import {createMorphemeModel} from '../shared/morpheme-model.js';
 import {renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
@@ -33,7 +33,7 @@ import {orderStudyModes} from '../shared/study-modes.js';
 import {renderLexiconSentence} from '../shared/lexicon-sentence-view.js';
 import {joinSentenceTiles} from '../shared/lexicon-sentences.js';
 import {STUDY_TOPICS,studyTopicLabel} from '../shared/study-topics.js';
-import {shuffle} from '../shared/vocabulary.js';
+import {shuffle} from '../shared/random.js';
 import {escapeHtml as e,showQuizBurst,scorePill} from '../shared/ui.js';
 import {mountWordRows} from '../shared/word-rows.js';
 import {DeviceSpeech} from '../shared/device-speech.js';
@@ -41,11 +41,11 @@ import {createLexiconStore} from '../shared/lexicon-store.js';
 import {lexiconText} from '../shared/lexicon-text.js';
 import {createLexiconQuestions} from '../shared/lexicon-questions.js';
 import {studyProfiles,studyWords,matchesStudyLevel,displayStudyWord,studySpokenWord,normaliseStudyPartOfSpeech} from './study-profiles.js';
-const commonModes={wordlist:['Word List','📖','blue'],flashcards:['Flashcards','🗂️','purple'],cloze:['Cloze','📝','green'],scramble:['Sentence Scramble','🧩','orange'],vocabinput:['Word Input','✍️','blue'],vocabmeaning:['Meaning Quiz','🎯','purple'],listening:['Dictation','🎧','teal']};
+const commonModes={wordlist:['Word List'],flashcards:['Flashcards'],cloze:['Cloze'],scramble:['Sentence Scramble'],vocabinput:['Word Input'],vocabmeaning:['Meaning Quiz'],listening:['Dictation']};
 
 const typeName=word=>{const type=word.pos==='functional'?word.subtype:normaliseStudyPartOfSpeech(word.pos);return type?type[0].toUpperCase()+type.slice(1):'Expression';};
 export function createPresentation({language,navigate,refresh,onPreferences,progressStorage}){
- const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families','🌱','green']}:{})};
+ const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile,{progressStorage}),engine=createLexiconQuestions(profile);
  let headwords=createEnglishHeadwords([]),morphemeModel,typing,practiceCleanup,japaneseFurigana,sampleReadingChoice;
@@ -82,7 +82,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   sheet.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>speak(examples[Number(button.dataset.example)].example.text,sheet));
   sheet.querySelectorAll('[data-status]').forEach(button=>button.onclick=()=>{for(const sense of senses)store.setWordStatus(sense.id,button.dataset.status);closeSheet();refresh();});sheet.querySelector('[data-close]').focus();
  }
- function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:route==='flashcards'?'unfamiliar':'all',open:false,mode:'all',exercise:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
+ function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:route==='flashcards'?'unfamiliar':'all',open:false,mode:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
  function pool(route){
   const f=state(route),query=fold(f.query);
   const candidates=words.filter(word=>matchesStudyLevel(word,store.state.preferences.studyLevel,profile)&&(f.pos==='all'||word.pos===f.pos)&&(route!=='flashcards'||matchesStatus(word,f.status)));
@@ -154,10 +154,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function bindControls(host,route,onReset=refresh){
   const f=state(route),fold=host.querySelector('.filter-fold');
   const reset=()=>{f.open=!!fold.open;resetQuestion();onReset();};
-  for(const key of ['exercise','form-kind']){
-   const select=host.querySelector(`[data-${key}]`);
-   if(select)select.onchange=event=>{f[key==='form-kind'?'formKind':key]=event.target.value;reset();};
-  }
+  const form=host.querySelector('[data-form-kind]');
+  if(form)form.onchange=event=>{f.formKind=event.target.value;reset();};
   fold.ontoggle=event=>{if(event.target.isConnected)f.open=event.target.open;};
   host.querySelector('[data-level-filter]')?.addEventListener('change',event=>{change('studyLevel',event.target.value);reset();});
   for(const [key,attribute] of [['status','data-f'],['pos','data-tag']]){
@@ -320,6 +318,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function setStudy(value) {
   if (study===value) return;
   engine.clearSentencePools();
+  clearCombinedClozeCache(engine);
   study=value;
   store.migrateEquivalentEntries(value?.retiredEntries);
   reviewContent=createReviewContentPolicy(value);

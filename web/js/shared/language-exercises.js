@@ -1,5 +1,5 @@
 import {gradePhraseGaps} from './phrase-gaps.js';
-import {shuffle} from './vocabulary.js';
+import {shuffle} from './random.js';
 import {isValidJapaneseReadingFocus} from './japanese-reading-prompt.js';
 /** Bundled exercise rules; prompts and answers arrive only as validated package data. */
 const EXERCISE_CATEGORIES=Object.freeze({
@@ -20,8 +20,7 @@ export const isActiveExerciseCategory=(language,category)=>!removedCategories[la
 export function exerciseModes(language){
  // Keep the package schema registry above readable for existing downloads and Review history.
  const categories=[...new Set(['collocations',...Object.keys(EXERCISE_ROUTES[language]||{})])].filter(id=>isActiveExerciseCategory(language,id)&&!(language==='en'&&['phrasal','idioms'].includes(id)));
- const icons={reading:'📚',onyomi:'音',kunyomi:'訓',okurigana:'✍️',kanji:'🔎',transitivity:'🔄',forms:'⌨️',particles:'📝',counters:'🔢',collocations:'🔗',phrasal:'🧩',confusables:'🔍',roots:'🌱',patterns:'📝',articles:'🔠'};
- return Object.fromEntries(categories.map(id=>[id,[language==='en'&&id==='collocations'?'Expressions':exerciseLabel(id),icons[id]||'📝','teal']]));
+ return Object.fromEntries(categories.map(id=>[id,[language==='en'&&id==='collocations'?'Expressions':exerciseLabel(id)]]));
 }
 
 /** Do not retest a malformed saved target or silently attach its answer to a fallback lemma. */

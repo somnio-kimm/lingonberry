@@ -1,5 +1,6 @@
+import {shuffle} from '../../../../js/shared/random.js';
 import {practiceSentences} from './sentence-focus.js';
-import {createVocabularyEngine,vocabularyWord,vocabularyType,shuffle} from '../../../../js/shared/vocabulary.js';
+import {createVocabularyEngine,vocabularyWord,vocabularyType} from '../../../../js/shared/vocabulary.js';
 export {VOCABULARY_MODES,vocabularyWord,vocabularyType,vocabularyMeaning,snapshotVocabularyQuestion,validVocabularyQuestion} from '../../../../js/shared/vocabulary.js';
 export const {createVocabularyPool,vocabularyQuestions,vocabularyAnswerCorrect}=createVocabularyEngine();
 
