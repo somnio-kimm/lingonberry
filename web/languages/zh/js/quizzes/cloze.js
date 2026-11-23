@@ -1,6 +1,7 @@
 import {readQuestionTranslationFocus} from '../../../../js/shared/translation-focus.js';
 import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/question-rotation.js';
-import {renderTranslationTarget} from '../../../../js/shared/translation-target-view.js';
+import {renderLexiconSentence} from '../../../../js/shared/lexicon-sentence-view.js';
+import {escapeHtml as e} from '../../../../js/shared/ui.js';
 import {findSentenceTarget,practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { clozeWordOptions,clozeStudyWords } from '../services/vocabulary-tests.js';
@@ -17,11 +18,12 @@ import { t, sentenceMeaning, wordMeaning } from '../services/i18n.js';
 export function renderClozeQuiz(el,session={}) {
   const words = session.question?Store.words.filter(w=>w.hskLevel===session.question.word.hskLevel):Store.activeWords;
   const withSentences = session.question?[session.question.word]:clozeStudyWords(words);
-  let score = 0, total = 0, word, sentence, blank, options, feedback = '', userAnswer = '',rotation,rotationWords=[];
+  let score = 0, total = 0, word, sentence, blank, options, feedback = '', userAnswer = '',rotation,rotationWords=[],alive=true,childCleanup=()=>{};
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
 
   function newQ() {
+    if(!alive)return;
     if(session.onNext&&word){session.onNext();return;}
     if(session.question){word=session.question.word;sentence=session.question.sentence;}
     else{
@@ -37,7 +39,7 @@ export function renderClozeQuiz(el,session={}) {
   }
 
   function choose(opt) {
-    if (feedback) return;
+    if (!alive||feedback) return;
     userAnswer = opt; total++;
     if (opt === blank) {
       score++; feedback = 'correct'; Haptic.success();
@@ -58,64 +60,17 @@ export function renderClozeQuiz(el,session={}) {
   }
 
   function draw() {
-    const displayed=session.score?.()||{correct:score,total};
-    if(!word){el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div></div>${filters.markup()}<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;filters.bind(el);return;}
-    const offset = findSentenceTarget(sentence,blank)?.start??-1;
-    const escape = text => text.replace(/[&<>"']/g, ch => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[ch]));
-    const blankMarkup = feedback
-      ? `<mark class="cloze-answer">${escape(blank)}</mark>`
-      : '<span class="cloze-blank">______</span>';
-    const question = offset >= 0
-      ? escape(sentence.hanzi.slice(0, offset)) + blankMarkup + escape(sentence.hanzi.slice(offset + blank.length))
-      : escape(sentence.hanzi);
-    const review = option => `<span class="cloze-option-word">${Pinyin.htmlMarkedColumns(option.syllables)}</span><span class="cloze-option-meaning">${escape(wordMeaning(option))}</span>`;
-    el.innerHTML = `
-      <div class="sentence-quiz-header">
-        <div class="section-title" style="margin:0">${t('mode_cloze')}</div>
-        ${scorePill(displayed.correct, displayed.total)}
-      </div>
-      ${filters.markup()}
-      <div class="quiz-after-filter">
-      <div class="card sentence-question cloze-question" data-question-word="${escape(word.id)}" style="text-align:center">
-        <div class="cloze-tools">
-          <div class="cloze-pinyin-control">
-            <span id="cloze-pinyin-label">${t('showPinyin')}</span>
-            <button type="button" id="cloze-show-pinyin" class="toggle-switch toggle-compact${Store.clozeShowPinyin ? ' on' : ''}"
-              role="switch" aria-checked="${Store.clozeShowPinyin}" aria-labelledby="cloze-pinyin-label"></button>
-          </div>
-          <button type="button" class="speak-btn" aria-label="${t('listenSentence')}">🔊</button>
-        </div>
-        <div class="cloze-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5">${Store.clozeShowPinyin
-          ? Pinyin.htmlSentence(sentence, { blank: feedback ? '' : blank, highlight: feedback ? blank : '' })
-          : question}</div>
-        <div class="sentence-translation" lang="${word.studyExplanationLanguage||Store.uiLang}" style="font-size:14px;color:var(--text2);margin-top:8px">${renderTranslationTarget(sentenceMeaning(sentence),{word,locale:word.studyExplanationLanguage||Store.uiLang,studyLanguage:'zh',focus:readQuestionTranslationFocus(session.question,sentence)})}</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        ${options.map(o => {
-          let bg = 'var(--card)', border = 'var(--sep)', color = 'inherit';
-          if (feedback && o.hanzi === blank) { bg = 'rgba(52,199,89,0.1)'; border = 'var(--green)'; color = 'var(--green)'; }
-          else if (feedback === 'wrong' && o.hanzi === userAnswer) { bg = 'rgba(255,59,48,0.1)'; border = 'var(--red)'; color = 'var(--red)'; }
-          return `<button type="button" class="opt-btn" data-o="${escape(o.hanzi)}" ${feedback ? 'disabled' : ''} style="padding:14px;border-radius:12px;background:${bg};border:1.5px solid ${border};color:${color};font-size:17px">${feedback ? review(o) : escape(o.hanzi)}</button>`;
-        }).join('')}
-      </div>
-
-      ${feedback?`<div class="quiz-next-bar"><button type="button" class="btn-primary" id="next-btn">${t('nextQ')}</button></div>`:`<div class="quiz-action-bar"><button type="button" class="btn-small" id="skip-btn">${t('skip')}</button></div>`}</div>`;
-
-    filters.bind(el);
-    el.querySelector('.speak-btn')?.addEventListener('click', () => TTS.speak(sentence.hanzi));
-    el.querySelector('#cloze-show-pinyin')?.addEventListener('click', () => {
-      Store.clozeShowPinyin = !Store.clozeShowPinyin;
-      Haptic.light();
-      draw();
+    if(!alive)return;childCleanup();const displayed=session.score?.()||{correct:score,total};
+    el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div>${scorePill(displayed.correct,displayed.total)}</div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
+    if(!word){host.innerHTML=`<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;return;}
+    const focus=findSentenceTarget(sentence,blank),view={mode:'cloze',word,locale:word.studyExplanationLanguage||Store.uiLang,sentence:sentence.hanzi,example:sentence,answer:blank,focus:focus||{start:0,text:blank},translationFocus:readQuestionTranslationFocus(session.question,sentence),correctOption:blank,options:options.map(option=>({id:option.hanzi,text:option.hanzi,meaning:wordMeaning(option),word:option}))};
+    const text=key=>t({'Show Reading':'showPinyin','Speak Example':'listenSentence','Skip':'skip','Next':'nextQ'}[key]||key);
+    childCleanup=renderLexiconSentence(host,{question:view,feedback,selectedOption:userAnswer,chosenTokens:[],showReading:Store.clozeShowPinyin,showTranslation:true,translationVisible:true,translation:sentenceMeaning(sentence),t:text},{
+      language:'zh',uiLanguage:Store.uiLang,reading:true,renderSentence:e,
+      renderCloze:({checked,showReading})=>showReading?Pinyin.htmlSentence(sentence,{blank:checked?'':blank,highlight:checked?blank:''}):!focus?e(sentence.hanzi):undefined,
+      renderOption:option=>Pinyin.htmlMarkedColumns(option.word.syllables),speak:()=>TTS.speak(sentence.hanzi),select:choose,
+      toggleReading:value=>{Store.clozeShowPinyin=value;Haptic.light();draw();},skip:()=>{Haptic.light();session.onSkip?session.onSkip():newQ();},next:newQ,
     });
-    el.querySelectorAll('.opt-btn').forEach(b => b.onclick = () => choose(b.dataset.o));
-    el.querySelector('#skip-btn')?.addEventListener('click', () => {
-      Haptic.light();
-      if(session.onSkip)session.onSkip();else newQ();
-    });
-    el.querySelector('#next-btn')?.addEventListener('click', newQ);
   }
-  newQ();
+  newQ();return()=>{alive=false;childCleanup();TTS.stop();};
 }

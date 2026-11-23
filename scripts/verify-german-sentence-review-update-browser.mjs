@@ -20,8 +20,8 @@ try{
     {id:'water',word:'Wasser',article:'das',partOfSpeech:'noun',level:'A1',meaning:locale==='en'?'water':'물'},
    ]});window.reviewApp.setStudy(window.reviewStudy('1.0.0',window.oldReviewSentence));window.reviewApp.render('cloze',host);
   },{locale,theme});
-  await page.locator('.opt-btn').filter({hasText:'Wasser'}).click();await page.locator('#quiz-next').waitFor();
-  await page.evaluate(()=>window.reviewApp.render('scramble',window.reviewHost));await page.locator('[data-pool]').first().click();await page.locator('#quiz-submit').click();await page.locator('#quiz-next').waitFor();
+  await page.locator('.opt-btn').filter({hasText:'Wasser'}).click();await page.locator('[data-sentence-next]').waitFor();
+  await page.evaluate(()=>window.reviewApp.render('scramble',window.reviewHost));await page.locator('[data-tile]').first().click();await page.locator('[data-sentence-submit]').click();await page.locator('[data-sentence-next]').waitFor();
   const before=await page.evaluate(async({legacy})=>{
    const key='learn-language.de.progress.v1',state=JSON.parse(localStorage.getItem(key));
    if(legacy)for(const mode of ['cloze','scramble']){const [id,record]=Object.entries(state.quizAnswers[mode])[0];record.questionSnapshot=null;delete state.quizAnswers[mode][id];const oldId=mode==='scramble'?'book:0':'book:0:'+record.questionContext.start;state.quizAnswers[mode][oldId]=record;}
@@ -34,14 +34,14 @@ try{
   assert.equal(await page.evaluate(()=>JSON.stringify(JSON.parse(localStorage.getItem('learn-language.de.progress.v1')).quizAnswers)),before);
   await page.locator('#retest-filtered').click();
   for(let i=0;i<2;i++){
-   await page.locator('#retest-question [data-pool],#retest-question .opt-btn').first().waitFor();
+   await page.locator('#retest-question [data-tile],#retest-question .opt-btn').first().waitFor();
    const mode=await page.locator('#retest-question').getAttribute('data-review-mode');
    if(mode==='scramble'){
     const tokens=await page.evaluate(()=>window.oldReviewTokens);
-    for(const token of tokens)await page.locator('#retest-question [data-pool]').filter({hasText:new RegExp('^'+token.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$')}).first().click();
-    await page.locator('#quiz-submit').click();
+    for(const token of tokens)await page.locator('#retest-question [data-tile]').filter({hasText:new RegExp('^'+token.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'$')}).first().click();
+    await page.locator('[data-sentence-submit]').click();
    }else{assert.equal(mode,'cloze');await page.locator('#retest-question .opt-btn').filter({hasText:'Buch'}).click();}
-   assert.equal(await page.locator('#retest-question .sentence-quiz-text').innerText(),'Das Buch liegt hier.');await page.locator('#quiz-next').click();
+   assert.equal(await page.locator('#retest-question .sentence-quiz-text').innerText(),'Das Buch liegt hier.');await page.locator('[data-sentence-next]').click();
   }
   await page.locator('.retest-complete').waitFor();
   const after=await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('learn-language.de.progress.v1'));return {mastered:s.wordStatus.book,rows:['cloze','scramble'].map(mode=>Object.values(s.quizAnswers[mode])[0])};});

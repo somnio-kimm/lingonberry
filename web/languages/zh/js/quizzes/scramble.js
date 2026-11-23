@@ -1,4 +1,6 @@
-import {renderStudyReset} from '../../../../js/shared/study-components.js';
+import {projectScrambleTiles} from '../../../../js/shared/lexicon-sentences.js';
+import {renderLexiconSentence} from '../../../../js/shared/lexicon-sentence-view.js';
+import {escapeHtml as e} from '../../../../js/shared/ui.js';
 import {practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { showQuizBurst } from '../components.js';
@@ -14,11 +16,12 @@ import { t, sentenceMeaning } from '../services/i18n.js';
 export function renderScrambleQuiz(el,session={}) {
   const words = session.question?Store.words.filter(w=>w.hskLevel===session.question.word.hskLevel):Store.activeWords;
   const withSentences = session.question?[session.question.word]:words.filter(w => practiceSentences(w).length);
-  let score = 0, total = 0, word, sentence, pool = [], chosen = [], feedback = '';
+  let score = 0, total = 0, word, sentence, pool = [], chosen = [], feedback = '',alive=true,childCleanup=()=>{};
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
 
   function newQ() {
+    if(!alive)return;
     if(session.onNext&&word){session.onNext();return;}
     word = session.question?.word||pick(filters.pool());
     if(!word){feedback='';draw();return;}
@@ -31,14 +34,14 @@ export function renderScrambleQuiz(el,session={}) {
   }
 
   function tapPool(i) {
-    if (feedback) return;
+    if (!alive||feedback) return;
     chosen.push(pool[i]);
     pool = pool.filter((_, j) => j !== i);
     Haptic.light();
     draw();
   }
   function tapChosen(i) {
-    if (feedback) return;
+    if (!alive||feedback) return;
     pool.push(chosen[i]);
     chosen = chosen.filter((_, j) => j !== i);
     Haptic.light();
@@ -46,7 +49,7 @@ export function renderScrambleQuiz(el,session={}) {
   }
 
   function checkAnswer() {
-    if (feedback) return;
+    if (!alive||feedback) return;
     total++;
     const user = chosen.map(c => c.hanzi).join('');
     if (user === sentence.hanzi) {
@@ -68,56 +71,16 @@ export function renderScrambleQuiz(el,session={}) {
   }
 
   function draw() {
-    const displayed=session.score?.()||{correct:score,total};
-    if(!word){el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_scramble')}</div></div>${filters.markup()}<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;filters.bind(el);return;}
-    const escape = text => text.replace(/[&<>"']/g, ch => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[ch]));
-    const tile = c => `${Store.scrambleShowPinyin ? `<span class="scramble-chip-pinyin"${c.pinyin ? '' : ' aria-hidden="true"'}>${escape(c.pinyin)}</span>` : ''}<span class="scramble-chip-hanzi">${escape(c.hanzi)}</span>`;
-    el.innerHTML = `
-      <div class="sentence-quiz-header">
-        <div class="section-title" style="margin:0">${t('mode_scramble')}</div>
-        ${scorePill(displayed.correct, displayed.total)}
-      </div>
-      ${filters.markup()}
-      <div class="quiz-after-filter">
-      <div class="card sentence-question scramble-question" style="text-align:center">
-        <div class="cloze-tools">
-          <div class="cloze-pinyin-control">
-            <span id="scramble-pinyin-label">${t('showPinyin')}</span>
-            <button type="button" id="scramble-show-pinyin" class="toggle-switch toggle-compact${Store.scrambleShowPinyin ? ' on' : ''}"
-              role="switch" aria-checked="${Store.scrambleShowPinyin}" aria-labelledby="scramble-pinyin-label"></button>
-          </div>
-          <button type="button" class="speak-btn" aria-label="${t('listenSentence')}">🔊</button>
-        </div>
-        ${feedback ? `<div class="scramble-sentence sentence-quiz-text" style="font-size:22px;font-weight:600;line-height:1.5;color:var(--green)">${Store.scrambleShowPinyin ? Pinyin.htmlSentence(sentence) : escape(sentence.hanzi)}</div>` : ''}
-        <div class="sentence-translation">${sentenceMeaning(sentence)}</div>
-      </div>
-      <div class="card scramble-answer">
-        <div class="scramble-answer-heading"><div class="scramble-answer-label">${t('yourAnswer')}:</div>${!feedback?renderStudyReset({label:t('reset'),id:'clr-btn'}):''}</div>
-        <div class="flow-row">${chosen.map((c, i) => `<button class="flow-chip scramble-chip chosen" data-i="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('')}</div>
-      </div>
-      <div class="card">
-        <div class="flow-row">${pool.map((c, i) => `<button class="flow-chip scramble-chip" data-pi="${i}" ${feedback ? 'disabled' : ''}>${tile(c)}</button>`).join('')}</div>
-      </div>
-      ${!feedback?`<div class="quiz-action-bar"><button class="btn-primary" id="sub-btn" ${!chosen.length?'disabled':''}>${t('submit')}</button><button class="btn-small" id="skip-btn">${t('skip')}</button></div>`:`<div class="quiz-next-bar"><button class="btn-primary" id="next-btn">${t('nextQ')}</button></div>`}</div>`;
-
-    filters.bind(el);
-    el.querySelector('.speak-btn')?.addEventListener('click', () => TTS.speak(sentence.hanzi));
-    el.querySelector('#scramble-show-pinyin')?.addEventListener('click', () => {
-      Store.scrambleShowPinyin = !Store.scrambleShowPinyin;
-      Haptic.light();
-      draw();
+    if(!alive)return;childCleanup();const displayed=session.score?.()||{correct:score,total};
+    el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_scramble')}</div>${scorePill(displayed.correct,displayed.total)}</div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
+    if(!word){host.innerHTML=`<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;return;}
+    const projected=projectScrambleTiles(chosen,pool,tile=>tile.hanzi),tiles=projected.tiles,view={mode:'scramble',word,locale:word.studyExplanationLanguage||Store.uiLang,sentence:sentence.hanzi,example:sentence,answer:sentence.hanzi,tokens:projected.tokens,pool:projected.pool};
+    const text=key=>t({'Show Reading':'showPinyin','Speak Example':'listenSentence','Your Answer':'yourAnswer','Reset':'reset','Submit':'submit','Skip':'skip','Next':'nextQ'}[key]||key);
+    childCleanup=renderLexiconSentence(host,{question:view,feedback,chosenTokens:projected.chosenTokens,showReading:Store.scrambleShowPinyin,showTranslation:true,translationVisible:true,translation:sentenceMeaning(sentence),t:text},{
+      language:'zh',uiLanguage:Store.uiLang,reading:true,renderSentence:value=>value===sentence.hanzi?Pinyin.htmlSentence(sentence):e(value),
+      renderTile:(_text,index)=>`${Store.scrambleShowPinyin?`<span class="scramble-chip-pinyin"${tiles[index].pinyin?'':' aria-hidden="true"'}>${e(tiles[index].pinyin)}</span>`:''}<span class="scramble-chip-hanzi">${e(tiles[index].hanzi)}</span>`,
+      speak:()=>TTS.speak(sentence.hanzi),choose:id=>tapPool(id-chosen.length),remove:tapChosen,toggleReading:value=>{Store.scrambleShowPinyin=value;Haptic.light();draw();},reset:()=>{pool=shuffle([...pool,...chosen]);chosen=[];draw();},submit:checkAnswer,skip:()=>{Haptic.light();session.onSkip?session.onSkip():newQ();},next:newQ,
     });
-    el.querySelectorAll('.flow-chip[data-pi]').forEach(b => b.onclick = () => tapPool(Number(b.dataset.pi)));
-    el.querySelectorAll('.flow-chip.chosen').forEach(b => b.onclick = () => tapChosen(Number(b.dataset.i)));
-    el.querySelector('#sub-btn')?.addEventListener('click', checkAnswer);
-    el.querySelector('#clr-btn')?.addEventListener('click', () => { pool = shuffle([...pool, ...chosen]); chosen = []; draw(); });
-    el.querySelector('#skip-btn')?.addEventListener('click', () => {
-      Haptic.light();
-      if(session.onSkip)session.onSkip();else newQ();
-    });
-    el.querySelector('#next-btn')?.addEventListener('click', newQ);
   }
-  newQ();
+  newQ();return()=>{alive=false;childCleanup();TTS.stop();};
 }

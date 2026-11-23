@@ -37,7 +37,7 @@ try{
   await page.locator('.cloze-option-word').first().waitFor();
   assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),expected.options.slice().sort());
   await page.locator('.opt-btn').filter({has:page.locator('.cloze-option-word').filter({hasText:new RegExp('^'+expected.answer+'$')})}).click();
-  await page.locator('#quiz-next').waitFor();
+  await page.locator('[data-sentence-next]').waitFor();
   assert.equal(await page.locator('.sentence-quiz-text').innerText(),expected.sentence);
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth+1));
   await page.evaluate(()=>{Math.random=window.structuredRandom;window.structuredApp.stop();});checks++;

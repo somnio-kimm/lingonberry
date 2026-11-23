@@ -478,16 +478,10 @@ html[data-theme="dark"] .wl-list.wl-list--wordlist .wl-row:active{background:rgb
 .sentence-quiz-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
 .sentence-quiz-header .section-title{margin:0;}
 .sentence-quiz-header .score-pill{margin:0;}
-.sentence-question{text-align:center;}
 .sentence-quiz-instruction{font-size:13px;color:var(--muted);}
-.sentence-quiz-text{font-size:22px;font-weight:600;line-height:1.5;overflow-wrap:anywhere;}
 .sentence-quiz-text.answered{color:var(--green);}
 .sentence-translation{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5;overflow-wrap:anywhere;}
-.cloze-options{display:flex;flex-direction:column;gap:8px;}
-.opt-btn{padding:14px;border-radius:12px;background:var(--card);border:1.5px solid var(--line);color:var(--text);font-size:17px;text-align:center;}
-.opt-btn.option-correct{background:rgba(52,199,89,.1);border-color:var(--green);color:var(--green);}
-.opt-btn.option-wrong{background:rgba(255,59,48,.1);border-color:var(--red);color:var(--red);}
-.opt-btn:disabled,.flow-chip:disabled{opacity:1;}
+.flow-chip:disabled{opacity:1;}
 .cloze-option-base{display:block;font-size:13px;margin-top:6px;color:var(--muted);}
 .scramble-answer-label{font-size:13px;color:var(--muted);margin-bottom:8px;}
 .flow-chip{border:0;color:var(--text);}

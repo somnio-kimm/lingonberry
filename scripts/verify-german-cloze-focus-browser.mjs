@@ -20,7 +20,7 @@ try{
   assert.deepEqual((await page.locator('.cloze-option-word').allTextContents()).sort(),['gute','schlechte']);
   await page.locator('.opt-btn').filter({hasText:'gute'}).click();assert.equal(await page.locator('.cloze-answer').innerText(),'gute');
   assert.equal(await page.locator('.sentence-quiz-text').innerText(),'Gut zu wissen: Das ist eine gute Idee.');
-  await page.locator('#quiz-next').click();await page.locator('.opt-btn').filter({hasText:'schlecht'}).click();
+  await page.locator('[data-sentence-next]').click();await page.locator('.opt-btn').filter({hasText:'schlecht'}).click();
   const saved=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('learn-language.de.progress.v1')).quizAnswers.cloze)[0]);
   assert.equal(saved.answer,'gute');assert.equal(saved.questionContext.start,saved.example.de.indexOf('gute'));assert.equal(saved.example.focus.text,'gute');
   const history=await page.evaluate(()=>{const before=localStorage.getItem('learn-language.de.progress.v1');window.focusApp.render('wrong',window.focusHost);return before;});

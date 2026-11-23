@@ -25,7 +25,7 @@ try{
    window.readBefore=node=>{const range=document.createRange();range.selectNodeContents(node.parentNode.closest('.cloze-sentence,.wrong-question'));range.setEndBefore(node);const host=document.createElement('div');host.append(range.cloneContents());return window.readWithoutAnnotations(host);};
   },{locale,theme,reading});
   assert.equal(await page.locator('.cloze-sentence').evaluate(node=>window.readWithoutAnnotations(node)),'他看书，我读______。');
-  await page.locator('[data-o="水"]').click();
+  await page.locator('[data-cloze-option="水"]').click();
   assert.equal(await page.locator('.cloze-sentence .cloze-answer').evaluate(node=>window.readBefore(node)),'他看书，我读');
   const saved=await page.evaluate(()=>window.focusTestStore.wrongAnswers[0]);assert.equal(saved.question.blankStart,6);assert.equal(saved.question.sentence.focus.start,6);
   await page.evaluate(()=>window.focusTestNavigate('wrong'));
