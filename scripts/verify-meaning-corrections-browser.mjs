@@ -1,3 +1,4 @@
+import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
@@ -42,13 +43,13 @@ let browser;try{
  for(const [locale,pair] of [['en',english],['ko',korean]]){
   await tab('settings');await page.selectOption('#target',language);await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await tab('home');
   assert.deepEqual(await page.locator('[data-level]').evaluateAll(nodes=>nodes.map(node=>node.dataset.level)),studyProfiles[language].levels);
-  await page.locator(`[data-level="${correctedLevel}"]`).click();await page.locator('[data-route=wordlist]').click();await ready();await page.locator('#search-input').fill(search);
+  await page.locator(`[data-level="${correctedLevel}"]`).click();await page.locator('[data-route=wordlist]').click();await ready();await searchWordList(page,search);
   const row=page.locator(`[data-word="${correctedEntry.id}"]`);await row.waitFor();assert.equal(await row.locator('.wl-meaning').innerText(),pair.entries.find(entry=>entry.id===correctedEntry.id).meaning);
  }
  assert.equal(await reviewCount(),1,'corrected targets and distractors are excluded, unchanged history remains');
  const after=await page.evaluate(language=>JSON.parse(localStorage.getItem(`learn-language.${language}.lexicon.v1`)),language);assert.deepEqual(after.wrongs,JSON.parse(saved).wrongs);assert.deepEqual(after.wordStatus,JSON.parse(saved).wordStatus);
  const replacement=core.retiredEntries.find(row=>row.id===replacedEntry.id)?.replacementId;assert.ok(replacement);assert.equal(after.wordStatus[replacement],undefined,'new concept does not inherit mastery');
- await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await page.waitForFunction(()=>navigator.serviceWorker.controller!==null);await context.setOffline(true);await page.reload();await ready();for(const [locale,pair] of [['en',english],['ko',korean]]){await tab('settings');await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await tab('home');await page.locator(`[data-level="${correctedLevel}"]`).click();await page.locator('[data-route=wordlist]').click();await ready();await page.locator('#search-input').fill(search);assert.equal(await page.locator(`[data-word="${correctedEntry.id}"] .wl-meaning`).innerText(),pair.entries.find(entry=>entry.id===correctedEntry.id).meaning);}assert.deepEqual(errors,[]);
+ await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await page.waitForFunction(()=>navigator.serviceWorker.controller!==null);await context.setOffline(true);await page.reload();await ready();for(const [locale,pair] of [['en',english],['ko',korean]]){await tab('settings');await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await tab('home');await page.locator(`[data-level="${correctedLevel}"]`).click();await page.locator('[data-route=wordlist]').click();await ready();await searchWordList(page,search);assert.equal(await page.locator(`[data-word="${correctedEntry.id}"] .wl-meaning`).innerText(),pair.entries.find(entry=>entry.id===correctedEntry.id).meaning);}assert.deepEqual(errors,[]);
  const report={passed:true,updatedPairs:[language+'-en',language+'-ko'],sourceVersion:'3.0.0',version:'4.0.0',storedHistoryPreserved:true,staleTargetsAndDistractorsExcluded:true,replacementMasteryNotTransferred:true,bothMeaningDisplays:true,offline:true,errors};
  await mkdir('local-data/device-testing',{recursive:true});await writeFile(`local-data/device-testing/${name}-corrections-browser.json`,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
