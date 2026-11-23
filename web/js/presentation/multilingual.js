@@ -229,7 +229,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   practiceCleanup=renderVocabularyView(host,{
    mode,language,locale,questionLocale:()=>study.explanationLanguage,
    labels:{title:t(retest?'Retest':screenTitle(route)),listen:t('Speak Word'),answer:t('Word Input'),correct:t('Correct'),incorrect:t('Wrong'),submit:t('Submit'),skip:t('Skip'),next:t('Next'),empty:t('No Questions Match'),audioError:t('Speech Unavailable')},
-   words:()=>pool(route),createPool:(list,contentLocale)=>engine.createVocabularyPool(mode,list,contentLocale,'vocabulary',{meaningWords:words}),
+   words:()=>pool(route),createPool:(list,contentLocale)=>{const prepared=engine.createVocabularyPool(mode,list,contentLocale,'vocabulary',{meaningWords:words});return {choose:previous=>reviewContent.prepare(prepared.choose(previous))};},
    filters:()=>controls(route),bindFilters:(el,next)=>bindControls(el,route,next),answerCorrect:engine.vocabularyAnswerCorrect,
    renderPrompt:q=>e(mode==='vocabmeaning'?displayStudyWord(q.word):q.prompt),renderAnswer:q=>language==='ja'?renderJapaneseRuby(q.answer,q.word.pronunciation):e(q.answer),
    learning:q=>({fallbackWord:byId.get(q.word.id),renderWord:heading,renderExample:example=>`<div class="example-sentence">${japaneseFurigana?.renderSentence(example.text,q.word)||e(example.text)}</div>`}),
