@@ -7,7 +7,7 @@ import {withVocabularyLearning} from './vocabulary-learning.js';
 /** One default vocabulary screen. Adapters own language rules, filters and persistence. */
 export function renderVocabularyView(host,config,session={}){
  const {mode,language,labels}=config,meaning=mode==='vocabmeaning';
- let alive=true,generation=0,question,input='',selected='',feedback='',score=0,total=0;
+ let alive=true,generation=0,question,input='',selected='',feedback='';
  let status='all',pos='all',open=false,typing,prepared,preparedWords=[],preparedLocale,disposeDetails;
  const filters=()=>({status,pos,open});
  const learning=q=>({language,locale:config.locale(),...config.learning?.(q)});

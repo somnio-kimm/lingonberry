@@ -13,7 +13,7 @@ try{
    window.learningCleanup?.();window.learningApp?.stop();localStorage.clear();
    const {presentationDefinitions}=await import('/js/presentation/index.js'),{createPresentation}=await presentationDefinitions[language].load(),definition=presentationDefinitions[language],host=document.querySelector('main');host.parentElement.id=definition.layout.root;host.id=definition.layout.main;document.querySelector('nav').id=definition.layout.tabs;for(const id of ['style-de','style-zh'])document.getElementById(id).disabled=id!==definition.style;document.documentElement.dataset.theme=theme;
    const data={de:[['Auto','das','car','자동차','Das Auto ist neu.'],['Haus','das','house','집','Das Haus ist neu.'],['Buch','das','book','책','Das Buch ist neu.']],zh:[['车','','car','자동차','我坐车去。','chē'],['书','','book','책','我看书。','shū'],['水','','water','물','我喝水。','shuǐ']],ja:[['車','','car','자동차','車で行きます。','くるま'],['本','','book','책','本を読みます。','ほん'],['水','','water','물','水を飲みます。','みず']],en:[['car','','car','자동차','We go by car.'],['book','','book','책','Read a book.'],['house','','house','집','This house is new.']]};
-   const entries=data[language].map(([word,article,en,ko,sentence,pronunciation],i)=>({id:'qa'+i,word,article:article||undefined,partOfSpeech:'noun',pronunciation,level:language==='de'?'A1':language==='zh'?'1':language==='ja'?'N5':'IELTS 1.0–3.5',meaning:locale==='ko'?ko:language==='en'?'A common '+en+' used in everyday life.':en,example:{text:sentence,focus:{text:sentence.slice(sentence.toLowerCase().indexOf(word.toLowerCase()),sentence.toLowerCase().indexOf(word.toLowerCase())+word.length)},translation:locale==='ko'?ko+'를 사용하는 문장입니다.':'A sentence about a '+en+'.'}}));
+   const entries=data[language].map(([word,article,en,ko,sentence,pronunciation],i)=>({id:'qa'+i,word,article:article||undefined,partOfSpeech:'noun',pronunciation,level:language==='de'?'A1':language==='zh'?'1':language==='ja'?'N5':'IELTS 1.0–3.5',meaning:locale==='ko'?ko+' (표시하지 않을 메모); '+ko+'의 다른 뜻':en+' (usage note); another meaning of '+en,example:{text:sentence,focus:{text:sentence.slice(sentence.toLowerCase().indexOf(word.toLowerCase()),sentence.toLowerCase().indexOf(word.toLowerCase())+word.length)},translation:locale==='ko'?ko+'를 사용하는 문장입니다.':'A sentence about a '+en+'.'}}));
    let app,cleanup,currentRoute=mode;const refresh=()=>{cleanup?.();cleanup=app.render(currentRoute,host);};const navigate=route=>{currentRoute=route;refresh();};app=createPresentation({language,navigate,refresh,onPreferences(){}});app.setStudy({targetLanguage:language,explanationLanguage:locale,studyVersion:'1.0.0',reviewInvalidations:entries.map(row=>({id:row.id,minimumVersion:'1.0.0'})),entries});app.setPreferences({theme,uiLanguage:locale,hapticEnabled:false,soundEnabled:false});window.learningApp=app;window.learningRoute=navigate;window.learningCleanup=()=>cleanup?.();window.learningEntries=entries;refresh();
   },{language,locale,theme,mode});
   await page.locator('[data-question-word],[data-question-id]').first().waitFor();
@@ -38,7 +38,9 @@ try{
   await wordButton.click();
   await sheet.waitFor();
   assert.equal(await sheet.locator('.status-btns button').count(),3,'The result uses the actual dictionary status controls');
-  assert.ok((await sheet.locator('.study-sheet-meaning').innerText()).trim());
+  const displayedMeaning=await sheet.locator('.study-sheet-meaning').innerText();
+  assert.equal(displayedMeaning.split('\n').length,2,'The two meanings are displayed on separate lines');
+  assert.doesNotMatch(displayedMeaning,/\(|（|usage note|표시하지 않을 메모/u);
   assert.equal(await sheet.locator('.study-examples [data-example]').count(),1);
   assert.ok(await sheet.locator('#vocab-next').isVisible());
   assert.equal(await page.locator('#vocab-answer').count(),0);

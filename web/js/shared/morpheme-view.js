@@ -1,3 +1,4 @@
+import {renderStudyMeaning} from './meaning-display.js';
 import {renderStudySearchWithFilters,renderStudyReferenceHeading,renderStudyFilterPanel,renderStudyFilterPick,renderStudyTagFilterGroup} from './study-components.js';
 import {escapeHtml as e} from './ui.js';
 import {mountWordRows} from './word-rows.js';
@@ -8,7 +9,7 @@ export function renderMorphemeSense(sense,locale) {
  const badges = morphemeRegisters(sense.tags,locale).map(label =>
   `<span class="wl-tag wl-pos morpheme-register">${e(label)}</span> `,
  );
- return badges.join('') + e(sense.meaning);
+ return badges.join('') + renderStudyMeaning(sense.meaning);
 }
 
 export function renderRootKindFilter(t,kinds,selected='all'){
@@ -27,7 +28,7 @@ export function renderMorphemeInventory(host,{
   return matches.map(word=>`<div class="wl-row root-member" data-root-entry="${e(word.id)}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}">
    <div class="wl-main">
     <button class="wl-headword root-member-trigger" data-root-word="${e(word.id)}">${e(text)}</button>
-    <div class="wl-meaning">${e(word.studyMeaning)}</div>
+    <div class="wl-meaning">${renderStudyMeaning(word.studyMeaning)}</div>
    </div>
    <div class="wl-trail">${tags(word)}</div>
   </div>`).join('');

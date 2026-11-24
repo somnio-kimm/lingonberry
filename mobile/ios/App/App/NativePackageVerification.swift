@@ -111,6 +111,7 @@ enum NativePackageVerification {
               if(document.querySelector('[data-root-view],[data-answer-mode],[data-submit],.vocab-question'))throw new Error('Root Families still contains practice controls');
               if(document.querySelector('[data-root-list] details,[data-root-list] summary,[data-root-list] a'))throw new Error('Root Families still contains a word disclosure or source link');
               if(!document.querySelector('[data-root-entry]'))throw new Error('Root Families words are not visible');
+              const {meaningDisplayLines}=await import('./js/shared/meaning-display.js');
               const search=document.querySelector('#root-search');check.suffixForms=[];check.newVerbs=[];
               for(const form of ['-ify','-ise','-ize','-tion','-sion','-ment']){
                 const row=core.morphemes.find(row=>row.form===form);if(!row)throw new Error('Restored suffix is missing: '+form);
@@ -122,7 +123,7 @@ enum NativePackageVerification {
                 const selector=`[data-root-entry="${entry.id}"]`;
                 for(let page=0;!document.querySelector(selector)&&page<5;page++){const more=[...document.querySelectorAll('[data-more-related]')].find(button=>!button.hidden);if(!more)break;more.click();}
                 await wait(()=>document.querySelector(selector));document.querySelector(selector+' .wl-meaning').click();await wait(()=>document.querySelector('[role=dialog]'));
-                if(document.querySelector('.study-sheet-meaning')?.textContent!==translation.meaning||!document.querySelector('.example-sentence')?.textContent.includes(entry.example.text))throw new Error('New verb detail differs: '+spelling);
+                if(document.querySelector('.study-sheet-meaning')?.innerText!==meaningDisplayLines(translation.meaning).join(String.fromCharCode(10))||!document.querySelector('.example-sentence')?.textContent.includes(entry.example.text))throw new Error('New verb detail differs: '+spelling);
                 document.querySelector('[data-close]').click();await wait(()=>!document.querySelector('[role=dialog]'));check.newVerbs.push(spelling);
               }
               search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));check.rootReferenceOnly=true;
@@ -481,6 +482,7 @@ enum NativePackageVerification {
       await open(original.target || 'en',original.explanation);
       return JSON.stringify({passed:true,checks,furigana:ruby,restored:original.target || 'en'});
     }
+    const {meaningDisplayLines}=await import('./js/shared/meaning-display.js');
     const pairs = [];
     const originalEnglishLevel = JSON.parse(localStorage.getItem('learn-language.en.lexicon.v1') || '{}').preferences?.studyLevel;
     const checks = japanese ? [['ja','en','ja-lex-7985a44e7b819ef6641a','in what manner'],['ja','ko','ja-lex-7985a44e7b819ef6641a','어떻게']] : english ? [['en','en','en-lex-d2e8946b4935cf8fc6d1','angular momentum'],['en','ko','en-lex-d2e8946b4935cf8fc6d1','각운동량']] : [['de','ko','de-noun-abend-editorial-main','저녁'],['de','en','de-noun-abend-editorial-main','evening'],['zh','en','hsk1_1','to love; to like deeply'],['zh','ko','hsk1_1','사랑하다; 좋아하다']];
@@ -508,7 +510,7 @@ enum NativePackageVerification {
       if (english || japanese) {
         await wait(() => document.querySelector('#search-input'));
         const input=document.querySelector('#search-input');input.value=japanese?'どう':'spin';input.dispatchEvent(new Event('input',{bubbles:true}));
-        const found = () => document.querySelector(`.wl-row[data-word="${entryId}"] .wl-meaning`)?.textContent.includes(meaning);
+        const found = () => meaningDisplayLines(meaning).every(gloss=>document.querySelector(`.wl-row[data-word="${entryId}"] .wl-meaning`)?.innerText.includes(gloss));
         for (const level of [...document.querySelectorAll('[data-level-filter] option')].map(option => option.value)) {
           if (found()) break;
           const filter = document.querySelector('[data-level-filter]');filter.value = level;
@@ -516,7 +518,7 @@ enum NativePackageVerification {
           await new Promise(resolve => setTimeout(resolve, 100));
         }
         await wait(found);
-      } else await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.textContent === meaning);
+      } else await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.innerText===meaningDisplayLines(meaning).join(String.fromCharCode(10)));
       pairs.push(target + '-' + explanation);
     }
     const result = {passed:true,pairs,origin:location.origin,wordCount:document.querySelectorAll('.wl-row').length,locale:document.documentElement.lang};
@@ -586,7 +588,7 @@ enum NativePackageVerification {
             document.querySelector('[data-route=wordlist]').click();
             await wait(()=>document.querySelector('#search-input'));
             const input=document.querySelector('#search-input');input.value=spelling;input.dispatchEvent(new Event('input',{bubbles:true}));
-            await wait(()=>document.querySelector(`.wl-row[data-word="${entry.id}"] .wl-meaning`)?.textContent===meanings.get(entry.id));
+            await wait(()=>document.querySelector(`.wl-row[data-word="${entry.id}"] .wl-meaning`)?.innerText===meaningDisplayLines(meanings.get(entry.id)).join(String.fromCharCode(10)));
             result.commonWords.push(spelling);
           }
         }

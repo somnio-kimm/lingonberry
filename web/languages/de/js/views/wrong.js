@@ -1,3 +1,4 @@
+import {renderStudyMeaning} from '../../../../js/shared/meaning-display.js';
 import {renderReviewCardBody} from '../../../../js/shared/review-card-view.js';
 import { studyLevelLabel } from '../app-definition.js';
 import { personLabel,localizedPersonLabel,tenseLabel } from '../core/grammar-quizzes.js';
@@ -56,7 +57,7 @@ export function renderWrong(el,ctx) {
  const controls=createStudyControls(el,ctx),wordsById=new Map(ctx.words.map(word=>[word.id,word]));
  const detailWord=row=>wordsById.get(row.word?.id||row.wordId)||row.word;
  const nounWord=row=>row.quizMode==='adjendings'&&row.questionSnapshot?.noun?{...wordsById.get(row.questionSnapshot.noun.id),...row.questionSnapshot.noun,pos:'noun'}:null;
- const nounMarkup=(row,index)=>{const noun=nounWord(row);return noun?`<button type='button' class='wrong-word-block wrong-noun-block' data-open-noun='${index}' aria-label='${t('Word details')}: ${e(noun.lemma)}'><span class='wrong-main-word' lang='de'>${wordHeading(noun)}</span><span class='wrong-word-meaning' lang='${getLocale()}'>${e(wordMeaning(noun))}</span></button>`:'';};
+ const nounMarkup=(row,index)=>{const noun=nounWord(row);return noun?`<button type='button' class='wrong-word-block wrong-noun-block' data-open-noun='${index}' aria-label='${t('Word details')}: ${e(noun.lemma)}'><span class='wrong-main-word' lang='de'>${wordHeading(noun)}</span><span class='wrong-word-meaning' lang='${getLocale()}'>${renderStudyMeaning(wordMeaning(noun))}</span></button>`:'';};
 
  const filters=ctx.wrongFilters||={level:ctx.store.state.preferences.studyLevel,pos:'all',mode:'all',status:'all',open:false};
  if(!ctx.catalog.levels.some(row=>row.id===filters.level))filters.level=ctx.store.state.preferences.studyLevel;

@@ -1,3 +1,4 @@
+import {meaningDisplayLines} from '../web/js/shared/meaning-display.js';
 import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
@@ -28,7 +29,7 @@ try{
   },{language,locale,theme});
   const search=page.locator('#search-input');await searchWordList(page,sample.first.word);const row=page.locator(`[data-word="${sample.first.id}"]`);await row.waitFor();assert.equal(await search.evaluate(node=>node===document.activeElement),true);
   await row.locator('[data-row-speak]').focus();await row.locator('[data-row-speak]').press('Enter');await page.waitForFunction(()=>!!window.viewSpokenText);assert.equal(await page.locator('[role=dialog]').count(),0,'Speaker keyboard activation must not open details');
-  await row.locator('.wl-main').focus();await row.locator('.wl-main').press('Enter');await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),sample.first.meaning);await page.keyboard.press('Escape');
+  await row.locator('.wl-main').focus();await row.locator('.wl-main').press('Enter');await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),meaningDisplayLines(sample.first.meaning).join('\n'));await page.keyboard.press('Escape');
   await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}-wordlist.png`),fullPage:true});
   await page.evaluate(()=>window.viewRoute('flashcards'));assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),'2');await page.locator('[data-flip]').press('Enter');assert.equal(await page.locator('.flashcard').getAttribute('class'),'flashcard flipped');assert.equal(await page.locator('.flashcard-front').getAttribute('aria-hidden'),'true');assert.equal(await page.locator('.flashcard-back').getAttribute('aria-hidden'),'false');
   await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}-flashcards.png`),fullPage:true});
@@ -38,9 +39,9 @@ try{
   const cardFilters=page.locator('.study-filter-panel');if(!await cardFilters.evaluate(node=>node.open))await cardFilters.locator('summary').click();await page.locator('[data-f=learning]').click();assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),'1');
   await page.evaluate(()=>window.viewRoute('wordlist'));await searchWordList(page,sample.second.word);await page.locator(`[data-word="${sample.second.id}"] .wl-main`).click();await page.locator('[role=dialog]').waitFor();await page.locator('[data-status=learning]').click();await page.locator('[role=dialog]').waitFor({state:'detached'});
   await page.evaluate(()=>window.viewRoute('flashcards'));assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),'2','Newly eligible words fill the current capped set');
-  await page.evaluate(()=>window.viewRoute('wrong'));await page.locator('.wrong-entry').waitFor();assert.equal(await page.locator('.wrong-word-meaning').innerText(),sample.first.meaning);assert.ok((await page.locator('.wrong-entry').innerText()).includes('view-wrong-answer'));
+  await page.evaluate(()=>window.viewRoute('wrong'));await page.locator('.wrong-entry').waitFor();assert.equal(await page.locator('.wrong-word-meaning').innerText(),meaningDisplayLines(sample.first.meaning).join('\n'));assert.ok((await page.locator('.wrong-entry').innerText()).includes('view-wrong-answer'));
   await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}-review.png`),fullPage:true});
-  await page.locator('.wrong-entry').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),sample.first.meaning);await page.keyboard.press('Escape');
+  await page.locator('.wrong-entry').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),meaningDisplayLines(sample.first.meaning).join('\n'));await page.keyboard.press('Escape');
   await page.locator('[data-retest]').click();await page.locator('#vocab-answer').fill(sample.first.word);await page.locator('[data-submit]').click();await page.locator('.vocab-answer-cell.correct').waitFor();await page.locator('[data-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.wrong-count').innerText()).includes('0'));
   page.once('dialog',dialog=>dialog.dismiss());await page.locator('[data-clear]').click();assert.equal(await page.locator('.wrong-entry').count(),1);page.once('dialog',dialog=>dialog.accept());await page.locator('[data-clear]').click();await page.locator('.empty-wrong').waitFor();
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}.png`),fullPage:true});scenarios++;

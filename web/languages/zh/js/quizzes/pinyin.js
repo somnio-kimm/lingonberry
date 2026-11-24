@@ -1,3 +1,4 @@
+import {renderStudyMeaning} from '../../../../js/shared/meaning-display.js';
 import { showQuizBurst } from '../components.js';
 import { snapshotQuestion } from '../services/wrong-review.js';
 import { Store } from '../services/store.js';
@@ -168,7 +169,7 @@ export function renderPinyinQuiz(el,session={}) {
             `).join('')}
           </div>
         </div>
-        <div style="font-size:14px;color:var(--text2);margin-top:4px">${wordMeaning(word)}</div>
+        <div style="font-size:14px;color:var(--text2);margin-top:4px">${renderStudyMeaning(wordMeaning(word))}</div>
       </div>
       ${!feedback ? renderKeyboard() : ''}
       ${!feedback ? `<div class="quiz-action-bar"><button class="submit-pill" id="submit-btn" ${allFilled() ? '' : 'disabled'}>${t('submit')}</button><button class="btn-small" id="skip-btn">${t('skip')}</button></div>` : ''}
