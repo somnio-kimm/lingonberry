@@ -26,6 +26,8 @@ try{
     }else{
      value[mode]={card:await question(page)};
      if(mode==='vocabinput'){assert.equal(await page.locator('.study-hint[open],#vocab-listen').count(),0);value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}
+     if(['vocabmeaning','cloze'].includes(mode))assert.equal(value[mode].card.speaker,null,mode+' has no quiz speaker');
+     if(mode==='scramble')assert.ok(value[mode].card.speaker);
      if(mode==='vocabmeaning'){
       value[mode].option=await measure(page,'.vocab-choice');assert.equal(await page.locator('#vocab-submit').count(),0,language+' selection checks on tap');
      }

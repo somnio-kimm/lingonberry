@@ -79,7 +79,7 @@ try{
    };
    return getComputedStyle(node).textDecorationLine==='none'&&usesColour(node,'--red')&&usesColour(correct,'--green')&&correct.getBoundingClientRect().bottom<=node.getBoundingClientRect().top+1;
   }),true,'The green correction sits above the red mistake');
-  assert.equal(await page.locator('.cloze-tools .speak-btn').count(),1);
+  assert.equal(await page.locator('[data-sentence-speak]').count(),0);
   assert.equal(await page.locator('body').evaluate(node=>node.scrollWidth>innerWidth),false);
   await page.screenshot({path:join(directory,`${locale}-${width}-${theme}.png`),fullPage:true});
   await page.evaluate(()=>window.mergedRoute('wrong'));
