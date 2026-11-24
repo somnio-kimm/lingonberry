@@ -186,7 +186,7 @@ Fresh Meaning Quiz options use the same active part of speech and existing level
 
 ## Word List initial index
 
-Word List has a shared native initial picker combined with the selected level, query, part of speech and study status. English/German use A–Z with accent folding and German noun-article handling; Chinese uses supplied pinyin initials; Japanese uses supplied kana-reading rows. Unknown readings stay in Other. The index never infers a kanji reading, drops a dictionary sense or replaces the search field while typing. A new Word List visit or changed study level resets the initial to All; POS/status redraws preserve the current choice.
+Word List groups Search and Filters inside one card. Filters start with the native initial picker, followed by horizontally scrolling Study Status and Part of Speech tags. The picker combines with the selected level, query, part of speech and study status. English/German use A–Z with accent folding and German noun-article handling; Chinese uses supplied pinyin initials; Japanese uses supplied kana-reading rows. Unknown readings stay in Other. The index never infers a kanji reading, drops a dictionary sense or replaces the search field while typing. A new Word List visit or changed study level resets the initial to All; POS/status redraws preserve the current choice.
 
 Run `node scripts/verify-word-initial-browser.mjs` for all four adapters, EN/KO, phone/tablet and both themes.
 
