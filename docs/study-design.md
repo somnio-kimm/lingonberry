@@ -206,6 +206,8 @@ Automatic matching currently covers about two thirds of usable translated Cloze 
 
 All four languages use one shared Flashcard session/view. Choose 10, 20, 50 or 100 cards, default 20; the feature preference is shared across languages. All is the default scope. New refers to cards without a classification. English sessions keep a stable [level, exact spelling] identity while writing only the displayed original sense IDs. Learning and Mastered are directly below the card, keep keyboard focus and advance to the next unclassified card.
 
+Tapping the card face reveals or hides the answer, including taps on the padding or example. Speaker, details and example paging controls handle their own actions.
+
 A completed set offers Shuffle Learning for only that round's unfinished cards and Next Set for unseen eligible words. Completing or previewing a round cannot silently fill it with new words. Existing dictionary details remain under the ellipsis control; example paging keeps each meaning paired to its own example/translation. Other quiz layouts and progress records are unchanged.
 
 The model owns session identity/selection; adapters own existing progress writes. Readings and German article colours remain language policies. Set-size storage failures are nonfatal; reset/removing study content clears the ephemeral round. Run `verify-flashcard-sets-browser.mjs` and `verify-flashcard-focus-browser.mjs` for capped sets, classifications, focus/inert behavior, completion/repeats, language/theme/device parity and stable history.

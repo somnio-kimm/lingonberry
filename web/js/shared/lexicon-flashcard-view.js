@@ -14,10 +14,25 @@ export function renderLexiconFlashcards(host,{locale='en',language,word,examples
  host.innerHTML=`<div class="lexicon-view flashcard-study"><div class="fc-toolbar"><h2 class="section-title">${e(t.title)}</h2><span id="flashcard-count" data-set-total="${total}">${complete?total:total?index+1:0} / ${total}</span></div><div class="fc-session-controls"><label><span>${e(t.setSize)}</span><select data-set-size aria-label="${e(t.setSize)}">${FLASHCARD_SET_SIZES.map(size=>`<option value="${size}" ${size===setSize?'selected':''}>${size} ${e(t.cards)}</option>`).join('')}</select></label><button type="button" class="btn-small" id="fc-shuffle" data-shuffle>${e(t.shuffle)}</button></div>${filters||''}<progress class="fc-set-progress" max="${Math.max(1,total)}" value="${completed}" aria-label="${e(t.setProgress)}"></progress>${complete?`<section class="panel fc-set-complete"><h2>${e(t.complete)}</h2><div class="fc-set-summary"><span>${e(t.learning)} <strong>${summary?.learning||0}</strong></span><span>${e(t.mastered)} <strong>${summary?.mastered||0}</strong></span></div><button type="button" class="primary" data-review-learning ${learningCount?'':'disabled'}>${e(t.reviewLearning)} (${learningCount})</button><button type="button" class="btn-small" data-next-set ${canStartNext?'':'disabled'}>${e(t.nextSet)}</button><button type="button" class="text-button" data-prev-card>${e(t.previous)}</button></section>`:word?`<div class="flashcard-wrapper"><div class="flashcard ${flipped?'flipped':''}" id="card" data-word-id="${e(word.id)}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}">${renderFace(false)}${renderFace(true)}</div></div><div class="fc-classify"><button type="button" class="fc-learning" data-mark-learning>${e(t.learning)}</button><button type="button" class="fc-mastered" data-mark-mastered>${e(t.mastered)}</button></div><div class="fc-navigation"><button type="button" class="fc-nav" id="prev-btn" data-prev-card aria-label="${e(t.previous)}" ${total<=1?'disabled':''}>‹</button><button type="button" class="fc-nav" id="next-btn" data-next-card aria-label="${e(t.next)}" ${total<=1?'disabled':''}>›</button></div>`:`<section class="panel empty-wrong"><p>${e(t.empty)}</p></section>`}${warning?`<p class="muted" role="status">${e(warning)}</p>`:''}<p class="lexicon-audio-status study-audio-status muted" role="status" hidden></p></div>`;
  actions.bindFilters?.(host);const bind=(selector,callback)=>host.querySelectorAll(selector).forEach(node=>node.onclick=callback);
  host.querySelector('[data-set-size]').onchange=event=>actions.resize(Number(event.target.value));bind('[data-shuffle]',actions.shuffle);bind('[data-prev-card]',()=>actions.move(-1));bind('[data-next-card]',()=>actions.move(1));bind('[data-next-set]',actions.nextSet);bind('[data-review-learning]',actions.reviewLearning);bind('[data-mark-learning]',()=>actions.mark('learning'));bind('[data-mark-mastered]',()=>actions.mark('mastered'));bind('[data-card-status]',actions.openWord);bind('[data-card-speak]',actions.speakWord);bind('[data-card-example-speak]',()=>{if(examples[displayedExample]?.example)actions.speakExample();});const changeExample=direction=>{const position=actions.moveExample(direction);displayedExample=position;host.querySelectorAll('[data-card-example-speak]').forEach(node=>{node.hidden=!examples[position]?.example;});host.querySelectorAll('.fc-example-block[data-sense-id]').forEach((node,i)=>{node.hidden=i!==position;});host.querySelectorAll('[data-example-position]').forEach(node=>{node.textContent=`${position+1} / ${examples.length}`;});};bind('[data-example-prev]',()=>changeExample(-1));bind('[data-example-next]',()=>changeExample(1));
- host.querySelectorAll('.fc-card-main').forEach(main=>{
-  const flip=()=>{const next=actions.flip();host.querySelector('.flashcard')?.classList.toggle('flipped',next);host.querySelectorAll('.flashcard-front,.flashcard-back').forEach(face=>{const active=face.classList.contains('flashcard-back')===next;face.setAttribute('aria-hidden',String(!active));face.inert=!active;const core=face.querySelector('.fc-card-main');core.tabIndex=active?0:-1;if(active)core.setAttribute('data-flip','');else core.removeAttribute('data-flip');});host.querySelector('[data-flip]')?.focus({preventScroll:true});};
-  main.onclick=flip;main.onkeydown=event=>{if(event.target===main&&['Enter',' '].includes(event.key)){event.preventDefault();flip();}};
- });
+ const faces=host.querySelectorAll('.flashcard-front,.flashcard-back');
+ function flip(){
+  const next=actions.flip();
+  host.querySelector('.flashcard').classList.toggle('flipped',next);
+  for(const face of faces){
+   const active=face.classList.contains('flashcard-back')===next;
+   face.setAttribute('aria-hidden',String(!active));
+   face.inert=!active;
+   const core=face.querySelector('.fc-card-main');
+   core.tabIndex=active?0:-1;
+   core.toggleAttribute('data-flip',active);
+  }
+  host.querySelector('[data-flip]')?.focus({preventScroll:true});
+ }
+ for(const face of faces){
+  const main=face.querySelector('.fc-card-main');
+  face.onclick=event=>{if(!face.inert&&!event.target.closest('button,a'))flip();};
+  main.onkeydown=event=>{if(event.target===main&&['Enter',' '].includes(event.key)){event.preventDefault();flip();}};
+ }
  if(restoreFocus){const previous=host.querySelector(restoreFocus);const target=previous&&!previous.disabled?previous:host.querySelector('[data-review-learning]:not(:disabled),[data-next-set]:not(:disabled),[data-prev-card],[data-mark-learning]');target?.focus({preventScroll:true});}
- return()=>host.querySelectorAll('button,select,.fc-card-main,.filter-fold').forEach(node=>{node.onclick=null;node.onchange=null;node.onkeydown=null;node.ontoggle=null;});
+ return()=>host.querySelectorAll('button,select,.flashcard-front,.flashcard-back,.fc-card-main,.filter-fold').forEach(node=>{node.onclick=null;node.onchange=null;node.onkeydown=null;node.ontoggle=null;});
 }
