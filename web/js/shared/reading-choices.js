@@ -1,9 +1,28 @@
 import {normaliseKana,splitOkurigana,indexJapaneseSpellings} from './japanese-reading.js';
 const readingKey=value=>normaliseKana(value).trim();
 const readingRows=rows=>rows.filter(row=>row.route==='vocabinput'&&['reading','onyomi','kunyomi','okurigana'].includes(row.category));
-/** Cache all verified readings once; sample a few distinct indices without copying/shuffling the full pool. */
+const kana=/^[ぁ-ゖー]+$/u;
+const readingTarget=(row,word)=>(row.readingFocus?.text||word?.lemma||'').normalize('NFC');
+const hiraganaEnding=target=>/\p{Script=Han}/u.test(target)?target.match(/[ぁ-ゖー]+$/u)?.[0]||'':'';
+
+function addPoolValue(pools,key,value){
+ if(!pools.has(key))pools.set(key,new Map());
+ pools.get(key).set(readingKey(value),value);
+}
+
+function drawOptions(pool,options,seen,random,readText=value=>value){
+ const indices=new Map();let remaining=pool.length;
+ while(remaining&&options.length<4){
+  const pick=Math.floor(random()*remaining),index=indices.get(pick)??pick;remaining--;
+  indices.set(pick,indices.get(remaining)??remaining);
+  const text=readText(pool[index]),fold=readingKey(text);
+  if(!seen.has(fold)){options.push(text);seen.add(fold);}
+ }
+}
+
+/** Cache verified readings and prefixes once for the installed study. */
 export function createReadingChoiceSampler(rows,words){
- const byId=new Map(words.map(word=>[word.id,word])),groups=new Map();
+ const byId=new Map(words.map(word=>[word.id,word])),groups=new Map(),prefixes=new Map(),bySpelling=new Map();
  const key=row=>{
   if(['onyomi','kunyomi'].includes(row.category))return row.category;
   const word=byId.get(row.entryId);if(!word?.pos)return;
@@ -12,19 +31,32 @@ export function createReadingChoiceSampler(rows,words){
  for(const row of readingRows(rows)){
   if(row.boundaryKind==='spelling')continue;
   const group=key(row);if(!group)continue;
-  if(!groups.has(group))groups.set(group,new Map());
-  groups.get(group).set(readingKey(row.answer),row.answer);
+  addPoolValue(groups,group,row.answer);
+  if(row.category!=='reading')continue;
+  const target=readingTarget(row,byId.get(row.entryId)),reading=readingKey(row.answer),ending=hiraganaEnding(target);
+  if(!target||!kana.test(reading))continue;
+  for(const answer of [row.answer,...(row.acceptedAnswers||[])])addPoolValue(bySpelling,target,answer);
+  // Only split a reading when the visible kana actually match it.
+  const prefix=ending&&reading.endsWith(ending)?reading.slice(0,-ending.length):
+   /^[\p{Script=Han}々]+$/u.test(target)?reading:'';
+  if(prefix)addPoolValue(prefixes,group,prefix);
  }
- const pools=new Map([...groups].map(([group,values])=>[group,[...values.values()]]));
+ const materialise=source=>new Map([...source].map(([group,values])=>[group,[...values.values()]]));
+ const pools=materialise(groups),prefixPools=materialise(prefixes),endingPools=new Map();
  return (row,random=Math.random)=>{
-  const pool=pools.get(key(row));if(!pool)return;
-  const seen=new Set([row.answer,...(row.acceptedAnswers||[])].map(readingKey)),options=[row.answer],indices=new Map();let remaining=pool.length;
-  while(remaining&&options.length<4){
-   const pick=Math.floor(random()*remaining),index=indices.get(pick)??pick;remaining--;
-   indices.set(pick,indices.get(remaining)??remaining);
-   const text=pool[index],fold=readingKey(text);if(!seen.has(fold)){options.push(text);seen.add(fold);}
-  }
-  return options.length>=3?{...row,options}:undefined;
+  const group=key(row),pool=pools.get(group);if(!pool)return;
+  const target=row.category==='reading'?readingTarget(row,byId.get(row.entryId)):'',ending=hiraganaEnding(target);
+  const answer=ending?readingKey(row.answer):row.answer;
+  const seen=new Set([answer,...(row.acceptedAnswers||[]),...(bySpelling.get(target)?.keys()||[])].map(readingKey)),options=[answer];
+  if(ending){
+   if(!kana.test(answer)||!answer.endsWith(ending)||answer.length<=ending.length)return;
+   const endingKey=group+':'+ending;
+   if(!endingPools.has(endingKey))endingPools.set(endingKey,pool.map(readingKey).filter(text=>kana.test(text)&&text.length>ending.length&&text.endsWith(ending)));
+   drawOptions(endingPools.get(endingKey),options,seen,random);
+   // Rare endings still get plausible distractors, without changing the answer.
+   if(options.length<3)drawOptions(prefixPools.get(group)||[],options,seen,random,prefix=>prefix+ending);
+  }else drawOptions(pool,options,seen,random);
+  return options.length>=3?{...row,answer,options}:undefined;
  };
 }
 /** Use verified reading answers as distractors; never mark an accepted variant wrong. */

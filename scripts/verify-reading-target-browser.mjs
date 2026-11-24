@@ -10,8 +10,17 @@ async function tab(page,id){await page.locator(`[data-tab=${id}]`).click();await
 async function route(page,id){await tab(page,'home');await page.locator(`[data-route=${id}]`).click();await ready(page);}
 async function mark(page,entry,status){await tab(page,'home');await page.locator(`[data-level="${entry.level}"]`).click();await route(page,'wordlist');await searchWordList(page,entry.word);await page.locator(`[data-word="${entry.id}"] .wl-main`).click();await page.locator(`[data-status=${status}]`).click();await ready(page);}
 async function learned(page){const fold=page.locator('.filter-fold');if(!await fold.evaluate(node=>node.open))await fold.locator('summary').click();await page.locator('[data-f=learning]').click();await fold.evaluate(node=>{node.open=false;});}
+async function clearReview(page){
+ await tab(page,'wrong');
+ const clear=page.locator('#clear-wrong');
+ if(await clear.count()){
+  page.once('dialog',dialog=>dialog.accept());
+  await clear.click();
+  await page.locator('.wrong-card').first().waitFor({state:'detached'});
+ }
+}
 try{
- const catalog=await read('web/catalog.json'),core=await read(catalog.find(row=>row.id==='ja-core').url.slice(1)),targets=['学校','大きい','久しい','体中'].map(word=>core.entries.find(row=>row.word===word));assert.ok(targets.every(Boolean));
+ const catalog=await read('web/catalog.json'),core=await read(catalog.find(row=>row.id==='ja-core').url.slice(1)),targets=['学校','大きい','久しい','巌'].map(word=>core.entries.find(row=>row.word===word));assert.ok(targets.every(Boolean));
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));await page.addInitScript(()=>{let state=123456789;Math.random=()=>{state=(Math.imul(1664525,state)+1013904223)>>>0;return state/4294967296;};});await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/japanese-reading-target',{recursive:true});
  await page.locator('#manage-packages').click();await page.locator('[data-language=ja]').click();for(const locale of ['en','ko']){await page.locator(`[data-available="ja-${locale}"] .download-package`).click();await page.locator(`[data-package="ja-${locale}"] .remove-package`).waitFor();}
  const curatedTranslations=await read('language-packages/sources/exercises/japanese-reading-context.json');
@@ -25,17 +34,25 @@ try{
    await mark(page,entry,'learning');await route(page,'reading');await learned(page);await page.locator('[data-answer-mode=choice]').click();
    assert.equal(await page.locator('#header-title').innerText(),ui==='ko'?'한자 읽기':'Word Reading');assert.equal(await page.locator('.vocab-instruction').count(),0);
    const target=page.locator('.vocab-prompt .study-reading-target');assert.equal(await target.innerText(),entry.word);const prompt=await page.locator('.vocab-prompt').innerText();assert.equal(prompt.split(entry.word).length-1,1);assert.ok(!/[［］【】]/u.test(prompt));assert.equal(await page.locator('.vocab-prompt rt').count(),0);
-   if(entry.word==='体中')assert.equal(prompt,entry.example.text,'Reviewed target keeps the whole example sentence');
+   if(entry.word==='巌')assert.equal(prompt,entry.example.text,'Reviewed target keeps the whole example sentence');
    const entryText=pairs[explanation].get(entry.id);
    const expected=prompt===entry.word?entryText.meaning:entry.word==='学校'?curatedTranslations['ja-ex-reading-school'][explanation]:entryText.exampleTranslation;
    assert.equal(await page.locator('.exercise-context').innerText(),expected);
 
-   assert.ok(await target.evaluate(node=>{const s=getComputedStyle(node),title=getComputedStyle(document.querySelector('.section-title'));return s.textDecorationLine.includes('underline')&&s.textDecorationThickness==='2px'&&s.textDecorationColor===title.color;}));assert.equal(await page.locator('[data-submit]').count(),0);
-   if(['学校','体中'].includes(entry.word))await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});
+   assert.ok(await target.evaluate(node=>{
+    const probe=document.createElement('span');probe.style.color='var(--blue)';node.append(probe);
+    const style=getComputedStyle(node),isBlue=style.textDecorationColor===getComputedStyle(probe).color;
+    probe.remove();return style.textDecorationLine.includes('underline')&&style.textDecorationThickness==='2px'&&isBlue;
+   }),'Reading target uses the shared blue underline');assert.equal(await page.locator('[data-submit]').count(),0);
+   if(['学校','巌'].includes(entry.word))await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});
    if(entry.word==='学校')await page.screenshot({path:`/private/tmp/japanese-reading-target/selection-${width}-${theme}-${ui}.png`,fullPage:true});
-   if(entry.word==='体中')await page.screenshot({path:`/private/tmp/japanese-reading-target/reviewed-focus-${width}-${theme}-${ui}.png`,fullPage:true});
+   if(entry.word==='巌')await page.screenshot({path:`/private/tmp/japanese-reading-target/reviewed-focus-${width}-${theme}-${ui}.png`,fullPage:true});
    const options=()=>page.locator('[data-option]').allTextContents();
-   assert.ok((await options()).every(value=>readingPools.get(entry.partOfSpeech).has(fold(value))),'Every option is a verified same-POS reading');
+   const ending=entry.word.match(/[ぁ-ゖ]+$/u)?.[0];
+   const optionTexts=await options();
+   assert.ok(optionTexts.length>=3);
+   if(ending)assert.ok(optionTexts.every(value=>value.endsWith(ending)),'Every option keeps the visible hiragana ending');
+   else assert.ok(optionTexts.every(value=>readingPools.get(entry.partOfSpeech).has(fold(value))),'Every option is a verified same-POS reading');
    if(entry.word==='学校'){
     const sets=new Set();
     for(let attempt=0;attempt<4;attempt++){
@@ -49,16 +66,35 @@ try{
    await mark(page,entry,'new');
   }
  }
- const savedChoice=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('learn-language.ja.lexicon.v1')).wrongs).find(row=>row.question.options&&row.question.word.lemma==='学校'));assert.ok(savedChoice);
- await tab(page,'home');await page.locator('[data-level=N5]').click();await tab(page,'wrong');
+ // Isolate each retest so recency and the last display-language fixture cannot change the question.
+ await tab(page,'settings');await page.selectOption('#explanation','en');
+ await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');
+ await clearReview(page);
+ await mark(page,targets[0],'learning');await route(page,'reading');await learned(page);
+ await page.locator('[data-answer-mode=choice]').click();
+ await page.locator('[data-option]').filter({hasNotText:/^がっこう$/u}).first().click();
+ await page.locator('.lexicon-question.wrong').waitFor();
+ await tab(page,'wrong');
+ const savedChoice=await page.evaluate(async()=>{
+  const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');
+  const state=await createLexiconStorage().load('ja');
+  return Object.values(state.wrongs).find(row=>row.question.options&&row.question.word.lemma==='学校');
+ });assert.ok(savedChoice);
  const readingReview=page.locator(`[data-review-word="${savedChoice.question.word.id}"]`).filter({has:page.locator('.study-reading-target')}).first();
  assert.equal(await readingReview.locator('.wrong-question').innerText(),savedChoice.question.prompt);
  assert.equal(await readingReview.locator('.wrong-translation').innerText(),savedChoice.question.context);
  assert.equal(await readingReview.locator('.study-reading-target').innerText(),'学校');
  await page.screenshot({path:'/private/tmp/japanese-reading-target/review-sentence.png',fullPage:true});
- await page.locator('[data-retest]').click();await page.locator('[data-option]').first().waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text),'Saved retest keeps its recorded choices');await page.locator(`[data-option="${savedChoice.question.correctOption}"]`).click();await page.locator('[data-next]').waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text));await tab(page,'home');await page.locator('[data-level=N1]').click();
+ await page.locator('[data-retest]').click();await page.locator('[data-option]').first().waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text),'Saved retest keeps its recorded choices');await page.locator(`[data-option="${savedChoice.question.correctOption}"]`).click();await page.locator('[data-next]').waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text));await clearReview(page);
+ await mark(page,targets[2],'learning');await route(page,'reading');await learned(page);
+ await page.locator('[data-answer-mode=input]').click();await page.locator('#vocab-answer').fill('wrong');
+ await page.locator('[data-submit]').click();await page.locator('.vocab-answer-cell.wrong').waitFor();
  await tab(page,'wrong');await page.locator('.wrong-card').first().waitFor();assert.equal(await page.locator('.wrong-card .vocab-prompt,.wrong-card .vocab-instruction,.wrong-card .wrong-correct-line').count(),0);assert.ok(await page.locator('.wrong-card .wrong-user-line').count());await page.locator('[data-retest]').click();await page.locator('.study-reading-target').waitFor();assert.equal(await page.locator('.vocab-instruction').count(),0);
  const retestPrompt=await page.locator('.vocab-prompt').innerText();
- const savedRetest=await page.evaluate(prompt=>Object.values(JSON.parse(localStorage.getItem('learn-language.ja.lexicon.v1')).wrongs).find(row=>!row.question.options&&row.question.prompt===prompt),retestPrompt);assert.ok(savedRetest);
+ const savedRetest=await page.evaluate(async prompt=>{
+  const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');
+  const state=await createLexiconStorage().load('ja');
+  return Object.values(state.wrongs).find(row=>!row.question.options&&row.question.prompt===prompt);
+ },retestPrompt);assert.ok(savedRetest);
  await page.locator('#vocab-answer').fill(savedRetest.question.answer);await page.locator('[data-submit]').click();await page.locator('.vocab-answer-cell.correct').waitFor();assert.equal(await page.locator('.vocab-question .exercise-explanation').count(),0);await page.context().setOffline(true);await page.reload();await ready(page);await route(page,'reading');await page.locator('.study-reading-target').waitFor();assert.deepEqual(errors,[]);console.log(`Passed ${checks} reading-target cases: curated and generated sentences, standalone fallback, reviewed focus spans, single blue underline, display-language labels and no instruction line, full same-POS readings, fresh distractors for repeated targets, stable feedback, Selection/Typing, frozen Review/retest choices and offline use; phone/tablet and light/dark.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

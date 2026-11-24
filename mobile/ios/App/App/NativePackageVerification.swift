@@ -349,6 +349,15 @@ enum NativePackageVerification {
           const allowed=new Set(rows.filter(row=>row.category==='reading'&&row.route==='vocabinput'&&byId.get(row.entryId)?.pos===school.pos).map(row=>normaliseKana(row.answer))),sample=createReadingChoiceSampler(rows,words),samples=[sample(question,()=>0),sample(question,()=>.5)];
           if(allowed.size<=128||samples.some(row=>!row||row.options.length!==4||new Set(row.options.map(normaliseKana)).size!==4||row.options.some(value=>!allowed.has(normaliseKana(value)))))throw new Error('Reading choices do not use the full verified same-POS pool');
           if(samples[0].options.slice().sort().join('|')===samples[1].options.slice().sort().join('|'))throw new Error('Reading distractors are fixed');
+          let matchedEndings=0;
+          for(const row of rows.filter(row=>row.category==='reading'&&row.route==='vocabmeaning')){
+            const written=row.readingFocus?.text||byId.get(row.entryId)?.lemma||'';
+            const ending=/[ぁ-ゖー]+$/u.exec(written)?.[0];
+            if(!ending||!/\\p{Script=Han}/u.test(written))continue;
+            if(row.options.length<3||row.options.some(reading=>!reading.endsWith(ending)||reading.length<=ending.length))throw new Error('Wrong hiragana ending on '+written);
+            matchedEndings++;
+          }
+          if(!matchedEndings)throw new Error('Mixed Japanese Word Reading choices were not checked');
 
           if(exerciseLabel('reading','ko')!=='한자 읽기'||exerciseLabel('okurigana','ko')!=='오쿠리가나')throw new Error('Korean reading labels differ');
           for(const display of ['en','ko']) {
@@ -361,7 +370,7 @@ enum NativePackageVerification {
               const spanHost=document.createElement('div');spanHost.innerHTML=renderExercisePrompt({...reviewedQuestion,word:reviewedWord},{uiLanguage:display});
               const spanTarget=spanHost.querySelector('.study-reading-target')?.textContent,spanPrompt=spanHost.querySelector('.vocab-prompt')?.textContent,spanTranslation=spanHost.querySelector('.exercise-context')?.textContent;
               if(spanTarget!==reviewedWord.lemma||spanPrompt!==reviewedSource.prompt||spanTranslation!==reviewedQuestion.context||spanHost.querySelector('.vocab-instruction'))throw new Error('Reviewed span UI lost its sentence or translation');
-              checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,translation:clue,reviewedSpan:{target:spanTarget,prompt:spanPrompt,translation:spanTranslation},sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
+              checks.push({explanation:pair.explanationLanguage,display,prompt:text,target:target.textContent,translation:clue,reviewedSpan:{target:spanTarget,prompt:spanPrompt,translation:spanTranslation},sections:Object.keys(exerciseModes('ja')),samePosReadings:allowed.size,matchedEndings,distractorSamples:samples.map(row=>row.options),review:checkReview(question,school,display,pair.explanationLanguage,words)});
             }finally{host.remove();}
           }
           continue;
