@@ -10,13 +10,13 @@ import { speakGerman, stopMedia } from '../core/media.js';
 export const statusLabel=status=>t({new:'New',learning:'Learning',mastered:'Mastered'}[status]);
 export const typeLabel=word=>t(types[wordType(word)]||wordType(word));
 export const statusTag=(word,store)=>`<span class="wl-tag wl-st-${store.wordStatus(word.id)}">${statusLabel(store.wordStatus(word.id))}</span>`;
-export function studyFilterMarkup(pool,store,status,pos,open=false,extraBody='',beforeGroups='') {
+export function studyFilterMarkup(pool,store,status,pos,open=false,extraBody='',leading={}) {
  const byType=pos==='all'?pool:pool.filter(w=>wordType(w)===pos);
  const byStatus=filterStudyStatus(pool,store,status);
  const statuses=['all','new','learning','mastered'].map(key=>[key,key==='all'?t('All'):statusLabel(key),filterStudyStatus(byType,store,key).length]);
  const tags=['all',...studyTypes(pool)].map(key=>[key,key==='all'?t('All'):t(types[key]||key),key==='all'?byStatus.length:byStatus.filter(w=>wordType(w)===key).length]);
  const group=(title,selected,rows)=>({title:t(title),selected,options:rows.map(([value,label,count])=>({value,label,count}))});
- return renderStudyFilters({title:t('Filters'),open,extraBody,beforeGroups,status:group('Study status',status,statuses),pos:group('Part of speech',pos,tags)});
+ return renderStudyFilters({title:t('Filters'),open,extraBody,...leading,status:group('Study status',status,statuses),pos:group('Part of speech',pos,tags)});
 }
 export function exampleMarkup(word,limit=Infinity,withAudio=false) {
  return (word.examples||[]).slice(0,limit).map((ex,i)=>`<div class="fc-example-block ${withAudio?'example-with-audio':''}">${withAudio?`<button type="button" class="example-speak word-listen" data-example="${i}" aria-label="${t('Listen to sentence')}">🔊</button>`:''}<div class="example-sentence" lang="de">${e(ex.de)}</div><div class="example-translation" lang="${getLocale()}">${e(sentenceMeaning(ex))}</div></div>`).join('');

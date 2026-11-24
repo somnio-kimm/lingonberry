@@ -43,12 +43,19 @@
 :root body .set-page .set-action-button{min-height:44px;margin:0;padding:8px 12px;}
 :root body .set-page .set-meta{line-height:1.4;}
 
-/* Consistent rhythm around all Study filters and the content they control. */
-:root body .study-filter-panel{margin:12px 0 0;}
-:root body .study-filter-panel + *{margin-top:16px;}
-:root body .study-filter-panel .filter-fold-body{padding:0 12px 12px;}
-:root body .study-filter-panel .filter-split-head{margin:12px 0 8px;}
-:root body .study-filter-panel .wl-filter-row{gap:8px;padding:0;}
-:root body .study-filter-panel .filter-split-divider{margin:12px 0;}
+/* One filter rhythm and typography for Study, Word List, Root Families and Review. */
+:root body .filter-fold--combined{margin:12px 0 0;line-height:1.55}
+:root body .filter-fold--combined + *{margin-top:16px}
+:root body .filter-fold--combined .filter-fold-sum--combined{min-height:var(--study-control-height);font:inherit}
+:root body .filter-fold--combined[open] .filter-fold-sum-picks{display:none}
+:root body .filter-fold--combined .filter-fold-k--panel{font-size:var(--study-control-font-size);font-weight:700}
+:root body .filter-fold--combined .filter-fold-body{padding:0 12px 12px}
+:root body .filter-fold--combined .filter-split-head{margin:12px 0 8px;font-size:12px;font-weight:600;color:var(--secondary)}
+:root body .filter-fold--combined .filter-fold-pick-l{font-size:12px;font-weight:600;color:var(--secondary)}
+:root body .filter-fold--combined .filter-fold-pick-v{font-size:var(--study-control-font-size);font-weight:600}
+:root body .filter-fold--combined .wl-filter-row{gap:8px;padding:0;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain}
+:root body .filter-fold--combined .wl-filter{flex:none;min-height:var(--study-control-height);padding:6px 14px;border:0;font:inherit;font-size:var(--study-control-font-size);font-weight:600;line-height:1.25;white-space:nowrap}
+:root body .filter-fold--combined .wl-filter:disabled{opacity:.45;cursor:default}
+:root body .filter-fold--combined .filter-split-divider{margin:12px 0}
 
 :root body .quiz-after-filter{margin-top:16px;}
