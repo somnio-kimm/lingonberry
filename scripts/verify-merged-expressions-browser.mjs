@@ -7,6 +7,17 @@ import {startServer} from './dev-server.mjs';
 
 const directory=join(tmpdir(),'merged-expressions'),server=await startServer();
 let browser;
+function readFeedbackTints(nodes){
+ const canvas=document.createElement('canvas');canvas.width=canvas.height=1;
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});
+ return nodes.map(node=>{
+  ctx.clearRect(0,0,1,1);
+  ctx.fillStyle=getComputedStyle(node).backgroundColor;
+  ctx.fillRect(0,0,1,1);
+  const [red,green,,alpha]=ctx.getImageData(0,0,1,1).data;
+  return {colour:red>green?'red':'green',translucent:alpha>0&&alpha<255};
+ });
+}
 try{
  browser=await chromium.launch({headless:true});
  const page=await browser.newPage(),errors=[];
@@ -91,6 +102,8 @@ try{
     above:correct.getBoundingClientRect().top<node.getBoundingClientRect().top&&correct.getBoundingClientRect().bottom<node.getBoundingClientRect().bottom};
   });
   assert.deepEqual(feedback,{annotated:true,onBaseline:true,plainRed:true,green:true,above:true});
+  assert.deepEqual(await page.locator('.cloze-answer').evaluateAll(readFeedbackTints),gap.answers.map(()=>({colour:'green',translucent:true})));
+  assert.deepEqual(await mistake.evaluateAll(readFeedbackTints),[{colour:'red',translucent:true}]);
   assert.equal(await page.locator('[data-sentence-speak]').count(),0);
   assert.equal(await page.locator('body').evaluate(node=>node.scrollWidth>innerWidth),false);
   await page.screenshot({path:join(directory,`${locale}-${width}-${theme}.png`),fullPage:true});
@@ -111,8 +124,10 @@ try{
   await page.locator('[data-answer-mode=choice]').click();
   assert.equal(await page.locator('.sentence-translation').innerText(),selection.hint);
   assert.equal(await page.locator('[data-sentence-submit]').count(),0);
-  await page.locator('[data-cloze-option]').filter({hasText:selection.answer}).first().click();
-  await page.locator('.lexicon-question.correct').waitFor();
+  await page.locator('[data-cloze-option]').filter({hasNotText:selection.answer}).first().click();
+  await page.locator('.lexicon-question.wrong').waitFor();
+  assert.deepEqual(await page.locator('.cloze-options .option-correct').evaluateAll(readFeedbackTints),[{colour:'green',translucent:true}]);
+  assert.deepEqual(await page.locator('.cloze-options .option-wrong').evaluateAll(readFeedbackTints),[{colour:'red',translucent:true}]);
   await page.locator('[data-open-cloze-word]').click();
   await details.locator('[data-sentence-next]').click();
   assert.equal(await details.count(),0);
