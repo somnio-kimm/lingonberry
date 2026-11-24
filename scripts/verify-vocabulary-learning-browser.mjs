@@ -27,11 +27,19 @@ try{
   }else{
    const options=page.locator('[data-vocab-option],[data-option]');const attribute=await options.first().getAttribute('data-vocab-option')!==null?'data-vocab-option':'data-option';await page.locator(theme==='light'?`[${attribute}="${target}"]`:`[${attribute}]:not([${attribute}="${target}"])`).first().click();
   }
-  await page.locator('[data-vocabulary-learning]').waitFor();assert.ok(await page.locator('#vocab-listen').isVisible());assert.equal(await page.locator('.vocab-learning .example-sentence').count(),1);assert.ok((await page.locator('.vocab-learning-meaning').innerText()).trim());assert.equal(await page.locator('.vocab-learning .example-translation').count(),language==='en'&&locale==='en'?0:1);assert.ok(await page.locator('#vocab-next').isVisible());assert.equal(await page.locator('#vocab-answer').count(),0);assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
+  await page.locator('[data-vocab-result][open]').waitFor();assert.equal(await page.locator('.study-detail-sheet .study-headword').count(),1);assert.ok(await page.locator('#vocab-listen').isVisible());assert.equal(await page.locator('.vocab-learning .example-sentence').count(),1);assert.ok((await page.locator('.vocab-learning-meaning').innerText()).trim());assert.equal(await page.locator('.vocab-learning .example-translation').count(),language==='en'&&locale==='en'?0:1);assert.ok(await page.locator('#vocab-next').isVisible());assert.equal(await page.locator('#vocab-answer').count(),0);assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
   if(theme==='dark'){
+   await page.locator('[data-close-vocab-result]').click();
+   assert.equal(await page.locator('[data-vocab-result]').isVisible(),false);
+   await page.locator('[data-vocab-next-slot] #vocab-next').waitFor();
    await page.evaluate(()=>window.learningRoute('wrong'));await page.locator('#retest-filtered').waitFor();await page.locator('#retest-filtered').click();
    if(mode==='vocabinput'){await page.locator('#vocab-answer').fill('second wrong attempt');await page.locator('#vocab-submit').click();}else await page.locator('[data-vocab-option],[data-option]').first().click();
-   await page.locator('[data-vocabulary-learning]').waitFor();assert.equal(await page.locator('.vocab-learning .example-sentence').count(),1,'Saved retest keeps the sense example');
+   await page.locator('[data-vocab-result][open]').waitFor();assert.equal(await page.locator('.vocab-learning .example-sentence').count(),1,'Saved retest keeps the sense example');
+  }
+  if(theme==='light'){
+   await page.keyboard.press('Escape');
+   await page.locator('[data-vocab-next-slot] #vocab-next').waitFor();
+   assert.ok(await page.locator('#vocab-next').evaluate(node=>node===document.activeElement),'Dismissal restores focus to Next');
   }
   if(width===390&&locale==='ko')await page.screenshot({path:join(directory,`${language}-${theme}-${mode}.png`),fullPage:true});checks++;
  }
