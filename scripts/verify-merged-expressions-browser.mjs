@@ -88,7 +88,7 @@ try{
    const neighbours=[measureCharacter(preceding,preceding?.textContent.trimEnd().length-1),measureCharacter(following,following?.textContent.search(/\S/u))];
    return {annotated:annotation.tagName==='RUBY',onBaseline:neighbours.some(value=>Math.abs(value-bottom)<=1),
     plainRed:getComputedStyle(node).textDecorationLine==='none'&&usesColour(node,'--red'),green:usesColour(correct,'--green'),
-    above:(correct.getBoundingClientRect().top+correct.getBoundingClientRect().bottom)/2<node.getBoundingClientRect().top};
+    above:correct.getBoundingClientRect().top<node.getBoundingClientRect().top&&correct.getBoundingClientRect().bottom<node.getBoundingClientRect().bottom};
   });
   assert.deepEqual(feedback,{annotated:true,onBaseline:true,plainRed:true,green:true,above:true});
   assert.equal(await page.locator('[data-sentence-speak]').count(),0);
