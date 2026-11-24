@@ -204,7 +204,7 @@ Automatic matching currently covers about two thirds of usable translated Cloze 
 
 ## Focused Flashcard sets
 
-All four languages use one shared Flashcard session/view. Choose 10, 20, 50 or 100 cards, default 20; the feature preference is shared across languages. To Learn is the default scope. English sessions keep a stable [level, exact spelling] identity while writing only the displayed original sense IDs. Learning and Mastered are directly below the card, keep keyboard focus and advance to the next unclassified card.
+All four languages use one shared Flashcard session/view. Choose 10, 20, 50 or 100 cards, default 20; the feature preference is shared across languages. All is the default scope. New refers to cards without a classification. English sessions keep a stable [level, exact spelling] identity while writing only the displayed original sense IDs. Learning and Mastered are directly below the card, keep keyboard focus and advance to the next unclassified card.
 
 A completed set offers Shuffle Learning for only that round's unfinished cards and Next Set for unseen eligible words. Completing or previewing a round cannot silently fill it with new words. Existing dictionary details remain under the ellipsis control; example paging keeps each meaning paired to its own example/translation. Other quiz layouts and progress records are unchanged.
 
@@ -214,7 +214,7 @@ The model owns session identity/selection; adapters own existing progress writes
 
 Use opaque beige/charcoal surfaces, thin borders, restrained blue accents and neutral typographic headings. Avoid decorative gradients, repeated floating shadows and coloured emoji tiles. Study presents a consistent two-column tile grid with original monochrome SVG icons; the three existing tabs remain. Settings order is Appearance, Language Packages, practice toggles, report/data actions and support/licence.
 
-Flashcards have a fixed, flat reading surface, visible set progress,44px+ direct Learning/Mastered actions and paged examples. Do not add instructional prose or turn self-classification into a graded quiz. Preserve semantic green/red answer feedback, level/POS/type tag meanings and German article colours. Native selects and visible keyboard focus are required. Japanese examples retain their separate ruby clearance.
+Both Flashcard faces keep the headword in the same position, with examples below it. Flashcards have a fixed, flat reading surface, visible set progress,44px+ direct Learning/Mastered actions and paged examples. Do not add instructional prose or turn self-classification into a graded quiz. Preserve semantic green/red answer feedback, level/POS/type tag meanings and German article colours. Native selects and visible keyboard focus are required. Japanese examples retain their separate ruby clearance.
 
 The interaction references are [Quizlet's Flashcard sorting](https://help.quizlet.com/hc/en-ca/articles/360030988091-Studying-with-Flashcards) and [Anki's limited study sessions](https://docs.ankiweb.net/filtered-decks.html). Icons, tones and implementation are original; this is not a copy of their branding or assets. Run `verify-quiet-design-browser.mjs` and the existing screen/reading parity suites for both themes, EN/KO and phone/tablet layouts.
 

@@ -1,4 +1,3 @@
-import {flashcardText} from '../../../js/shared/flashcard-text.js';
 import {renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
@@ -23,7 +22,6 @@ export function statusLabel(level) {
 
 export function filterByStudyStatus(words, key) {
   if (!words?.length) return [];
-  if (key === 'unfamiliar') return words.filter(w => w.srs.level < 5);
   if (key === 'new') return words.filter(w => w.srs.level === 0);
   if (key === 'learning') return words.filter(w => w.srs.level > 0 && w.srs.level < 5);
   if (key === 'mastered') return words.filter(w => w.srs.level >= 5);
@@ -85,14 +83,13 @@ export function statusTagHTML(level) {
 }
 
 /** Word list: one collapsible "필터" with study status + POS sections inside when open. */
-export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagRow, tagFilter, pool=forTagRow, open=false, includeUnfamiliar=false) {
+export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagRow, tagFilter, pool=forTagRow, open=false) {
   const statusFilters = [
     ['all', t('filterAll'), forStatusRow.length],
     ['new', t('statusNew'), forStatusRow.filter(w => w.srs.level === 0).length],
     ['learning', t('statusLearning'), forStatusRow.filter(w => w.srs.level > 0 && w.srs.level < 5).length],
     ['mastered', t('statusMastered'), forStatusRow.filter(w => w.srs.level >= 5).length],
   ];
-  if(includeUnfamiliar)statusFilters.unshift(['unfamiliar',flashcardText(Store.uiLang).toLearn,forStatusRow.filter(word=>word.srs.level<5).length]);
   const tags = posTagsForWords(pool);
   const tagRows = [['all', t('filterAll'), forTagRow.length]];
   for (const tg of tags) {

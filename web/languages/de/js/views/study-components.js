@@ -1,4 +1,3 @@
-import {flashcardText} from '../../../../js/shared/flashcard-text.js';
 import {renderStudyFilters} from '../../../../js/shared/study-components.js';
 import {renderCollocations,bindCollocationAudio} from '../../../../js/shared/collocation-view.js';
 import { studyLevelLabel } from '../app-definition.js';
@@ -11,10 +10,10 @@ import { speakGerman, stopMedia } from '../core/media.js';
 export const statusLabel=status=>t({new:'New',learning:'Learning',mastered:'Mastered'}[status]);
 export const typeLabel=word=>t(types[wordType(word)]||wordType(word));
 export const statusTag=(word,store)=>`<span class="wl-tag wl-st-${store.wordStatus(word.id)}">${statusLabel(store.wordStatus(word.id))}</span>`;
-export function studyFilterMarkup(pool,store,status,pos,open=false,extraBody='',includeUnfamiliar=false) {
+export function studyFilterMarkup(pool,store,status,pos,open=false,extraBody='') {
  const byType=pos==='all'?pool:pool.filter(w=>wordType(w)===pos);
  const byStatus=filterStudyStatus(pool,store,status);
- const statuses=(includeUnfamiliar?['unfamiliar','all','new','learning','mastered']:['all','new','learning','mastered']).map(key=>[key,key==='unfamiliar'?flashcardText(getLocale()).toLearn:key==='all'?t('All'):statusLabel(key),filterStudyStatus(byType,store,key).length]);
+ const statuses=['all','new','learning','mastered'].map(key=>[key,key==='all'?t('All'):statusLabel(key),filterStudyStatus(byType,store,key).length]);
  const tags=['all',...studyTypes(pool)].map(key=>[key,key==='all'?t('All'):t(types[key]||key),key==='all'?byStatus.length:byStatus.filter(w=>wordType(w)===key).length]);
  const group=(title,selected,rows)=>({title:t(title),selected,options:rows.map(([value,label,count])=>({value,label,count}))});
  return renderStudyFilters({title:t('Filters'),open,extraBody,status:group('Study status',status,statuses),pos:group('Part of speech',pos,tags)});
