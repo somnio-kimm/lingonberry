@@ -488,6 +488,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .study-hint-content{padding:0 12px 12px;font-size:18px;line-height:1.65;overflow-wrap:anywhere}
 .study-hint-content p{font-size:inherit;line-height:inherit;margin:0}
 .vocab-context-hint .cloze-blank{color:var(--blue)}
+.vocab-word-trigger{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:inherit;cursor:pointer}
 [data-vocab-result] .quiz-next-bar{margin-top:20px}
 
 .listening-reading{font-size:20px;line-height:1.6;color:var(--secondary);margin:8px 0;overflow-wrap:anywhere}

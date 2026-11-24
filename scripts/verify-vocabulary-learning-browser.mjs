@@ -27,7 +27,10 @@ try{
   }else{
    const options=page.locator('[data-vocab-option],[data-option]');const attribute=await options.first().getAttribute('data-vocab-option')!==null?'data-vocab-option':'data-option';await page.locator(theme==='light'?`[${attribute}="${target}"]`:`[${attribute}]:not([${attribute}="${target}"])`).first().click();
   }
-  const sheet=page.locator('[data-vocab-result] .detail-sheet');
+  const sheet=page.locator('[data-vocab-result] .detail-sheet'),wordButton=page.locator('[data-open-vocab-word]');
+  assert.equal(await sheet.count(),0,'Checking leaves the graded question visible');
+  assert.ok(await page.locator('[data-vocab-next-slot] #vocab-next').isVisible());
+  await wordButton.click();
   await sheet.waitFor();
   assert.equal(await sheet.locator('.status-btns button').count(),3,'The result uses the actual dictionary status controls');
   assert.ok((await sheet.locator('.study-sheet-meaning').innerText()).trim());
@@ -44,12 +47,12 @@ try{
    await page.locator('[data-vocab-next-slot] #vocab-next').waitFor();
    await page.evaluate(()=>window.learningRoute('wrong'));await page.locator('#retest-filtered').waitFor();await page.locator('#retest-filtered').click();
    if(mode==='vocabinput'){await page.locator('#vocab-answer').fill('second wrong attempt');await page.locator('#vocab-submit').click();}else await page.locator('[data-vocab-option],[data-option]').first().click();
-   await sheet.waitFor();assert.equal(await sheet.locator('.study-examples [data-example]').count(),1,'A saved retest opens the dictionary too');
+   await wordButton.click();await sheet.waitFor();assert.equal(await sheet.locator('.study-examples [data-example]').count(),1,'A saved retest opens the dictionary too');
   }
   if(theme==='light'){
    await page.keyboard.press('Escape');
    await page.locator('[data-vocab-next-slot] #vocab-next').waitFor();
-   assert.ok(await page.locator('#vocab-next').evaluate(node=>node===document.activeElement),'Dismissal restores focus to Next');
+   assert.ok(await wordButton.evaluate(node=>node===document.activeElement),'Dismissal restores focus to the checked word');
   }
   if(width===390&&locale==='ko'&&theme==='dark')await page.screenshot({path:join(directory,`${language}-${theme}-${mode}.png`),fullPage:true});checks++;
  }
