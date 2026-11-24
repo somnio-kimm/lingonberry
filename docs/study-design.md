@@ -224,7 +224,7 @@ Study uses two equal columns on phone and tablet, with 12px gaps and at least112
 
 ## Vocabulary hints and checked examples
 
-Word Input keeps Sound Hint and Example Hint closed initially. The example clue masks a validated unique target in the question sense’s own sentence and omits its translation; unsafe or unavailable targets do not get an invented clue. Opening hints must preserve typed input. After checking Word Input or Meaning Quiz, show the correct sense meaning and its own example in the shared learning card with example audio. Preserve Chinese/Japanese reading layout and suppress duplicate English-to-English translations. Selection still checks immediately; typing retains Submit, Skip and Next. `verify-vocabulary-learning-browser.mjs` covers all four adapters in both display languages, phone/tablet and themes.
+Word Input starts with one collapsed Hint panel. Reveal the masked example first, with a separate Listen to Word button so opening the hint never plays audio automatically. The example clue masks a validated unique target in the question sense’s own sentence and omits its translation; unsafe or unavailable targets do not get an invented clue. Opening hints must preserve typed input. After checking Word Input or Meaning Quiz, show the correct sense meaning and its own example in the shared learning card with example audio. Preserve Chinese/Japanese reading layout and suppress duplicate English-to-English translations. Selection still checks immediately; typing retains Submit, Skip and Next. `verify-vocabulary-learning-browser.mjs` covers all four adapters in both display languages, phone/tablet and themes.
 
 ## Dictation pronunciation clues
 

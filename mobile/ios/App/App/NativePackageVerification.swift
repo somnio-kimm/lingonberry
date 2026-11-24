@@ -173,7 +173,7 @@ enum NativePackageVerification {
           learningHost.style.cssText='position:absolute;left:-10000px;top:0;width:300px';document.body.append(learningHost);
           try{
             learningHost.innerHTML=renderVocabularyHints(inputProbe,{language:before.targetLanguage,locale:before.explanationLanguage,audioButton:'<button class="word-listen">audio</button>'});
-            if(!learningHost.querySelector('[data-sound-hint]')||[...learningHost.querySelectorAll('details')].some(node=>node.open))throw new Error('Vocabulary hints are not initially closed');
+            if(learningHost.querySelectorAll('[data-vocabulary-hint]').length!==1||learningHost.querySelector('[data-vocabulary-hint]').open)throw new Error('Vocabulary hints are not initially closed');
             learningHost.innerHTML=renderVocabularyLearning(learned,{language:before.targetLanguage,locale:before.explanationLanguage});
             if(!learning.example||learningHost.querySelector('.example-sentence')?.textContent!==learning.example.text||learned.word.examples||learned.word.sentences)throw new Error('Saved vocabulary learning example differs');
             check.vocabularyLearning={hintsClosed:true,savedExample:true};
