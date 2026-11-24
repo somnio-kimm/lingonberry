@@ -17,7 +17,7 @@ const words=[
 const gaps=['vocabinput','vocabmeaning'].map(route=>({
  id:'write-down-'+route,entryId:'write',category:'phrasal',route,prompt:'Please ___ it ___.',
  answer:'write … down',gapFill:{parts:['Please ',' it ','.'],answers:['write','down']},
- context:'그것을 적어 주세요.',
+ context:'그것을 적어 주세요.',translationFocus:{start:4,text:'적어 주세요'},
  ...(route==='vocabmeaning'?{options:['write … down','cross … out']}:{}),
 }));
 
@@ -64,4 +64,11 @@ test('a quoted unusual form stays visible in the dictionary and out of sentence 
  assert.equal(engine.listeningQuestions('listensentence',[entry]).length,0);
  assert.equal(createPhrasePractice({targetLanguage:'en',explanationLanguage:'en'},[entry]).some(q=>q.gapFill),false);
  assert.equal(engine.listeningQuestions('listenword',[entry]).length,1);
+});
+
+
+test('translated Cloze draws an aligned target ahead of an unaligned example',()=>{
+ const unaligned={...words[0],id:'leave',lemma:'leave',examples:[{text:'They leave at noon.',studyTranslation:'그들은 정오에 출발한다.'}]};
+ const q=chooseCombinedCloze({engine,words:[unaligned,...words],exercises:[],locale:'ko',random:()=>0});
+ assert.equal(q.word.id,'take-off');
 });

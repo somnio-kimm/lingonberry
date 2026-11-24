@@ -1,3 +1,5 @@
+import {chooseClozeOptions} from './cloze-choices.js';
+import {hasClozeTranslationTarget, preferAlignedCloze} from './cloze-translation.js';
 import {createQuestionRotation,sentenceQuestionKey} from './question-rotation.js';
 import {shuffle} from './random.js';
 import {vocabularyType} from './vocabulary.js';
@@ -69,19 +71,31 @@ export function createSentenceEngine(profile){
    }
    const literal=row.answer.toLocaleLowerCase(profile.id)===row.word.lemma.toLocaleLowerCase(profile.id);
    const group=literal?wordGroups.get(row.type):(groups.get(row.type)||[]);
-   const options=[{id:row.word.id,text:row.answer,meaning:row.word.studyMeaning,type:row.type}],seen=new Set([row.answer]),start=Math.floor(random()*group.length);
-   for(let i=0;i<group.length&&options.length<4;i++){
-    const other=group[(start+i)%group.length],word=literal?other:other.word;let answer=literal?word.lemma:other.answer;if(literal&&row.focus.start===0&&row.answer[0]===row.answer[0].toLocaleUpperCase(profile.id))answer=answer[0].toLocaleUpperCase(profile.id)+answer.slice(1);if(word.id===row.word.id||word.lemma===row.word.lemma||seen.has(answer))continue;
-    options.push({id:word.id,text:answer,meaning:word.studyMeaning,type:row.type});seen.add(answer);
-   }
-   return options.length>1?{...row,focus:{...row.focus},options:shuffle(options,random)}:null;
+   const correct={id:row.word.id,text:row.answer,meaning:row.word.studyMeaning,type:row.type};
+   const options=chooseClozeOptions(correct,group,other=>{
+    const word=literal?other:other.word;
+    if(word.id===row.word.id||word.lemma===row.word.lemma)return;
+    let answer=literal?word.lemma:other.answer;
+    if(literal&&row.focus.start===0&&row.answer[0]===row.answer[0].toLocaleUpperCase(profile.id))answer=answer[0].toLocaleUpperCase(profile.id)+answer.slice(1);
+    return {id:word.id,text:answer,meaning:word.studyMeaning,type:row.type};
+   },random);
+   return options.length>1?{...row,focus:{...row.focus},options}:null;
   }
-  const rotation=createQuestionRotation(rows,{key:row=>sentenceQuestionKey(row.sentence,mode==='cloze'?row.answer:'')}),byId=new Map(rows.map(row=>[row.id,row]));
+  const makeRotation=pool=>createQuestionRotation(pool,{key:row=>sentenceQuestionKey(row.sentence,mode==='cloze'?row.answer:'')});
+  const rotation=makeRotation(rows),byId=new Map(rows.map(row=>[row.id,row]));
+  const candidates=rows.map(({id,sentence,answer})=>({id,sentence,answer}));
+  const align=row=>hasClozeTranslationTarget(row,row.example.studyTranslation,profile.id,locale);
+  let alignedRotation;
   return {
    all(random=Math.random){return rows.map(row=>build(row,random)).filter(Boolean);},
-   candidates:rows.map(({id,sentence,answer})=>({id,sentence,answer})),
-   buildCandidate(id,random=Math.random){const row=byId.get(id);return row?build(row,random):undefined;},
-   choose(previous,random=Math.random){return rotation.choose(previous,random,build);},
+   candidates,
+   hasTranslationTarget(id){const row=byId.get(id);return !!row&&align(row);},
+   buildCandidate(id,random=Math.random,{typing=false}={}){const row=byId.get(id);return row&&(mode==='cloze'&&typing?row:build(row,random));},
+   choose(previous,random=Math.random,{preferTranslationTarget=false}={}){
+    if(mode!=='cloze'||!preferTranslationTarget)return rotation.choose(previous,random,build);
+    alignedRotation??=makeRotation(preferAlignedCloze(rows,align));
+    return alignedRotation.choose(previous,random,build)??rotation.choose(previous,random,build);
+   },
   };
  }
  /** Cache preparation only; each draw still builds fresh answers and shuffled choices. */

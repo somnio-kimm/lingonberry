@@ -1,3 +1,4 @@
+import {hasClozeTranslationTarget,preferAlignedCloze} from '../../../../js/shared/cloze-translation.js';
 import {projectScrambleTiles} from '../../../../js/shared/lexicon-sentences.js';
 import {readQuestionTranslationFocus} from '../../../../js/shared/translation-focus.js';
 import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/question-rotation.js';
@@ -6,11 +7,13 @@ import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared
 import { t, getLocale, sentenceMeaning, wordMeaning } from '../core/i18n.js';
 import { studyFilterMarkup } from './study-components.js';
 import { studyWords, filterStudyStatus, shuffleWords, wordHeading } from '../core/words.js';
-import { clozeQuestions, clozeOptions, scrambleQuestions, scrambleCorrect, joinSentenceTokens } from '../core/sentence-quizzes.js';
+import { clozeQuestions, clozeOptions, hasClozeDistractor, scrambleQuestions, scrambleCorrect, joinSentenceTokens } from '../core/sentence-quizzes.js';
 import { speakGerman, stopMedia } from '../core/media.js';
 function renderSentenceQuiz(el,ctx,mode,session={}) {
  const level=ctx.store.state.preferences.studyLevel,words=studyWords(ctx.words,level);
- const build=mode==='cloze'?pool=>clozeQuestions(pool).filter(q=>clozeOptions(q,pool).length>1):scrambleQuestions;
+ const build=mode==='cloze'?pool=>clozeQuestions(pool).filter(q=>hasClozeDistractor(q,pool)):scrambleQuestions;
+ const alignment=new WeakMap();
+ const aligned=question=>hasClozeTranslationTarget(question,sentenceMeaning(question.example),'de',question.word.studyExplanationLanguage||getLocale());
  let status='all',pos='all',filterOpen=false,rotation,rotationRows=[];
  let questions=session.question?[session.question]:build(words),question,options=[],pool=[],chosen=[],feedback='',input='',score=0,total=0,destroyed=false,childCleanup=()=>{},generation=0;
  const review=session.question?null:ctx.quizReview;ctx.quizReview=null;
@@ -25,7 +28,11 @@ function renderSentenceQuiz(el,ctx,mode,session={}) {
   if(destroyed)return;
   stopMedia();
   const ids=new Set(filterStudyStatus(studyWords(words,level,{pos}),ctx.store,status).map(word=>word.id));
-  const available=session.question?questions:questions.filter(q=>ids.has(q.word.id));
+  let available=session.question?questions:questions.filter(q=>ids.has(q.word.id));
+  if(mode==='cloze'&&!session.question)available=preferAlignedCloze(available,q=>{
+   if(!alignment.has(q))alignment.set(q,aligned(q));
+   return alignment.get(q);
+  });
   if(!rotation||rotationRows.length!==available.length||available.some((row,index)=>row!==rotationRows[index])){rotationRows=available.slice();rotation=createQuestionRotation(available,{key:q=>sentenceQuestionKey(q.example.de,mode==='cloze'?q.answer:'')});}question=first&&review?questions[0]:rotation.choose(question?.id);
   feedback='';input='';chosen=[];
   if(question){options=mode==='cloze'?clozeOptions(question,studyWords(ctx.words,question.word.cefr)):[];pool=mode==='scramble'?shuffleWords(question.tokens.map((text,id)=>({id,text}))):[];}
