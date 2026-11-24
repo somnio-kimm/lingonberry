@@ -426,6 +426,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .study-search-filters .filter-fold{border:0;background:transparent}
 .study-search-filters .filter-fold-sum{padding-inline-start:0}
 .study-search-filters .filter-fold-sum::after{right:4px}
+.study-search-filters .filter-fold[open] .filter-fold-sum-picks{display:none}
 .study-search-filters .filter-fold-body{padding-inline:0}
 .study-search-filters .word-initial-filter{margin:0 0 10px}
 .study-search-filters .wl-filter-row{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain}
