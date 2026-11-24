@@ -30,7 +30,11 @@ try{
    const expected=prompt===entry.word?entryText.meaning:entry.word==='学校'?curatedTranslations['ja-ex-reading-school'][explanation]:entryText.exampleTranslation;
    assert.equal(await page.locator('.exercise-context').innerText(),expected);
 
-   assert.ok(await target.evaluate(node=>{const s=getComputedStyle(node),title=getComputedStyle(document.querySelector('.section-title'));return s.textDecorationLine.includes('underline')&&s.textDecorationThickness==='2px'&&s.textDecorationColor===title.color;}));assert.equal(await page.locator('[data-submit]').count(),0);
+   assert.ok(await target.evaluate(node=>{
+    const probe=document.createElement('span');probe.style.color='var(--blue)';node.append(probe);
+    const style=getComputedStyle(node),isBlue=style.textDecorationColor===getComputedStyle(probe).color;
+    probe.remove();return style.textDecorationLine.includes('underline')&&style.textDecorationThickness==='2px'&&isBlue;
+   }),'Reading target uses the shared blue underline');assert.equal(await page.locator('[data-submit]').count(),0);
    if(['学校','体中'].includes(entry.word))await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});
    if(entry.word==='学校')await page.screenshot({path:`/private/tmp/japanese-reading-target/selection-${width}-${theme}-${ui}.png`,fullPage:true});
    if(entry.word==='体中')await page.screenshot({path:`/private/tmp/japanese-reading-target/reviewed-focus-${width}-${theme}-${ui}.png`,fullPage:true});
