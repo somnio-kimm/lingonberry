@@ -7,7 +7,7 @@ test('context hint masks the exact sense example and never includes its translat
  const q={word,locale:'ko'},result=vocabularyLearningContent(q,{language:'en',locale:'ko'});
  assert.deepEqual(result.hint,['There was no one in the square at ','.']);
  const html=renderVocabularyHints(q,{language:'en',locale:'ko',audioButton:'<button>audio</button>'});
- assert.ok(!html.includes('midday'));assert.ok(!html.includes('정오'));assert.match(html,/예문 힌트/);assert.doesNotMatch(html,/<details[^>]*\sopen/);
+ assert.ok(!html.includes('midday'));assert.ok(!html.includes('정오'));assert.match(html,/<summary>힌트<\/summary>/);assert.equal((html.match(/<details\b/g)||[]).length,1);assert.match(html,/<button>audio<\/button>/);assert.doesNotMatch(html,/<details[^>]*\sopen/);
 });
 test('inflected explicit targets mask the actual answer',()=>{
  const q={word:{...word,lemma:'go',pos:'verb',examples:[{text:'She went home.',focus:{start:4,text:'went'},studyTranslation:'그녀는 집에 갔다.'} ]},locale:'ko'};
