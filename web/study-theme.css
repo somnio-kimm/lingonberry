@@ -373,7 +373,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .phrase-gap-sentence .phrase-gap-input:focus{outline:0;border-color:var(--blue)}
 
 .cloze-correction-stack{display:inline-flex;flex-direction:column;align-items:center;max-width:100%;vertical-align:baseline;overflow-wrap:anywhere}
-.cloze-typed-mistake{font-size:.8em;line-height:1.35;color:var(--red);text-decoration-thickness:2px}
+.cloze-typed-mistake{font-size:.8em;line-height:1.35;color:var(--red)}
 
 /* Japanese uses the Chinese answer-reading hierarchy, with ruby over words/kanji groups. */
 .listening-transcript:lang(ja){font-size:22px;font-weight:700;line-height:1.9}

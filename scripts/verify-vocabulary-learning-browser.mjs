@@ -29,6 +29,10 @@ try{
   }
   const sheet=page.locator('[data-vocab-result] .detail-sheet'),wordButton=page.locator('[data-open-vocab-word]');
   assert.equal(await sheet.count(),0,'Checking leaves the graded question visible');
+  if(theme==='dark'){
+   const wrong=page.locator(mode==='vocabinput'?'.vocab-wrong':'.vocab-choice.wrong');
+   assert.equal(await wrong.evaluate(node=>getComputedStyle(node).textDecorationLine),'none','A red mistake has no strike-through');
+  }
   assert.ok(await page.locator('[data-vocab-next-slot] #vocab-next').isVisible());
   await wordButton.click();
   await sheet.waitFor();
