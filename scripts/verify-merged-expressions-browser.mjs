@@ -64,10 +64,21 @@ try{
   assert.equal(await fields.count(),2);
   await fields.nth(0).fill(gap.answers[0]);
   assert.equal(await page.locator('[data-sentence-submit]').isDisabled(),true);
-  await fields.nth(1).fill('wrong');
+  await fields.nth(1).fill('<wrong>');
   await page.locator('[data-sentence-submit]').click();
   await page.locator('.lexicon-question.wrong').waitFor();
   assert.deepEqual(await page.locator('.cloze-answer').allTextContents(),gap.answers);
+  const mistake=page.locator('.cloze-typed-mistake');
+  assert.equal(await mistake.count(),1,'Only the incorrect blank shows the typed mistake');
+  assert.equal(await mistake.innerText(),'<wrong>');
+  assert.equal(await mistake.evaluate(node=>{
+   const correct=node.previousElementSibling,question=node.closest('.sentence-question');
+   const usesColour=(target,colour)=>{
+    const probe=document.createElement('span');probe.style.color='var('+colour+')';question.append(probe);
+    const matches=getComputedStyle(probe).color===getComputedStyle(target).color;probe.remove();return matches;
+   };
+   return getComputedStyle(node).textDecorationLine==='line-through'&&usesColour(node,'--red')&&usesColour(correct,'--green')&&correct.getBoundingClientRect().bottom<=node.getBoundingClientRect().top+1;
+  }),true,'The green correction sits above the red, struck-through mistake');
   assert.equal(await page.locator('.cloze-tools .speak-btn').count(),1);
   assert.equal(await page.locator('body').evaluate(node=>node.scrollWidth>innerWidth),false);
   await page.screenshot({path:join(directory,`${locale}-${width}-${theme}.png`),fullPage:true});
@@ -78,6 +89,7 @@ try{
   for(const [i,answer]of gap.answers.entries())await fields.nth(i).fill(answer);
   await page.locator('[data-sentence-submit]').click();
   await page.locator('.lexicon-question.correct').waitFor();
+  assert.equal(await mistake.count(),0,'Correct answers have no red mistake');
   const selection=await page.evaluate(()=>window.mergedSelection());
   await page.locator('[data-answer-mode=choice]').click();
   assert.equal(await page.locator('.sentence-translation').innerText(),selection.hint);

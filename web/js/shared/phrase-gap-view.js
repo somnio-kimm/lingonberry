@@ -1,10 +1,14 @@
 import {escapeHtml as e} from './ui.js';
 import {gradePhraseGaps,splitGapAnswers} from './phrase-gaps.js';
-export function renderPhraseGapSentence(question,{input='',checked=false,editable=false,uiLanguage=question.locale,variant='quiz'}={}) {
+export function renderPhraseGapSentence(question,{input='',checked=false,editable=false,showMistakes=false,uiLanguage=question.locale,variant='quiz'}={}) {
  const gap=question.gapFill,given=splitGapAnswers(input),result=gradePhraseGaps(gap,given),ko=uiLanguage==='ko';
  const blanks=gap.answers.map((_,index)=>{
   const label=`${ko?'빈칸':'Blank'} ${index+1}`;
-  if(checked)return `<mark class="cloze-answer">${e(result.answers[index])}</mark>`;
+  if(checked){
+   const answer=`<mark class="cloze-answer">${e(result.answers[index])}</mark>`;
+   const wrong=showMistakes&&!result.matches[index]&&given[index]?.trim();
+   return wrong?`<span class="cloze-correction-stack">${answer}<del class="cloze-typed-mistake">${e(wrong)}</del></span>`:answer;
+  }
   if(editable)return `<label class="phrase-gap-field"><input class="phrase-gap-input" data-phrase-gap="${index}" aria-label="${label}" lang="${e(question.word.studyLanguage||question.word.language||'en')}" type="text" inputmode="text" enterkeyhint="${index===gap.answers.length-1?'done':'next'}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="80" value="${e(given[index]||'')}"></label>`;
   return `<span class="${variant==='review'?'wrong-test-slot wrong-test-blank':variant==='sentence'?'cloze-gap-slot':'form-question-blank'}" role="img" aria-label="${label}"></span>`;
  });
