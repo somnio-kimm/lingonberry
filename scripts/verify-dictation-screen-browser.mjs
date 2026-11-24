@@ -32,8 +32,11 @@ try{
   for(const locale of ['en','ko'])for(const width of [390,1024])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:1000});await tab(page,'settings');await page.locator(`[data-theme-choice=${theme}]`).click();await page.selectOption('#target',language);await page.selectOption('#explanation',locale);await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');await open(page,language);
    if(await page.locator('.filter-fold').evaluate(node=>node.open))await page.locator('.filter-fold>summary').click();
+   let wordGeometry;
    for(const mode of ['listenword','listensentence']){
     await page.locator(`button[data-listening-mode=${mode}]`).click();await page.locator('.listening-question').waitFor();const geometry=await front(page),key=[locale,width,theme,mode].join('-');
+    if(mode==='listenword')wordGeometry={answer:geometry.answer,field:geometry.field};
+    else assert.deepEqual({answer:geometry.answer,field:geometry.field},wordGeometry,'Word and Sentence share the answer field dimensions');
     if(['de','zh'].includes(language))references.set(language+'-'+key,geometry);else assert.deepEqual(geometry,references.get((language==='ja'?'zh':'de')+'-'+key),language+' full Dictation '+key);
     assert.equal(await page.locator('.listening-transcript ruby,.listening-transcript rt').count(),0);assert.equal(await page.locator('#listening-answer').getAttribute('placeholder'),null);
     assert.equal(await page.locator('.listening-user-answer,.wrong-answer-label').count(),0,'No answer feedback before submission');assert.equal(await page.locator('#listening-answer').getAttribute('aria-label'),locale==='ko'?'답변':'Your answer');
