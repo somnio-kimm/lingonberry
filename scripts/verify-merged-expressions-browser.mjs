@@ -77,7 +77,7 @@ try{
     const probe=document.createElement('span');probe.style.color='var('+colour+')';question.append(probe);
     const matches=getComputedStyle(probe).color===getComputedStyle(target).color;probe.remove();return matches;
    };
-   return getComputedStyle(node).textDecorationLine==='none'&&usesColour(node,'--red')&&usesColour(correct,'--green')&&correct.getBoundingClientRect().bottom<=node.getBoundingClientRect().top+1;
+   return getComputedStyle(node).fontSize===getComputedStyle(correct).fontSize&&getComputedStyle(node).textDecorationLine==='none'&&usesColour(node,'--red')&&usesColour(correct,'--green')&&correct.getBoundingClientRect().bottom<=node.getBoundingClientRect().top+1;
   }),true,'The green correction sits above the red mistake');
   assert.equal(await page.locator('[data-sentence-speak]').count(),0);
   assert.equal(await page.locator('body').evaluate(node=>node.scrollWidth>innerWidth),false);
