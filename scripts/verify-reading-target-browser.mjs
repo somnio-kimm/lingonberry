@@ -11,7 +11,7 @@ async function route(page,id){await tab(page,'home');await page.locator(`[data-r
 async function mark(page,entry,status){await tab(page,'home');await page.locator(`[data-level="${entry.level}"]`).click();await route(page,'wordlist');await searchWordList(page,entry.word);await page.locator(`[data-word="${entry.id}"] .wl-main`).click();await page.locator(`[data-status=${status}]`).click();await ready(page);}
 async function learned(page){const fold=page.locator('.filter-fold');if(!await fold.evaluate(node=>node.open))await fold.locator('summary').click();await page.locator('[data-f=learning]').click();await fold.evaluate(node=>{node.open=false;});}
 try{
- const catalog=await read('web/catalog.json'),core=await read(catalog.find(row=>row.id==='ja-core').url.slice(1)),targets=['学校','大きい','久しい','体中'].map(word=>core.entries.find(row=>row.word===word));assert.ok(targets.every(Boolean));
+ const catalog=await read('web/catalog.json'),core=await read(catalog.find(row=>row.id==='ja-core').url.slice(1)),targets=['学校','大きい','久しい','巌'].map(word=>core.entries.find(row=>row.word===word));assert.ok(targets.every(Boolean));
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));await page.addInitScript(()=>{let state=123456789;Math.random=()=>{state=(Math.imul(1664525,state)+1013904223)>>>0;return state/4294967296;};});await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/japanese-reading-target',{recursive:true});
  await page.locator('#manage-packages').click();await page.locator('[data-language=ja]').click();for(const locale of ['en','ko']){await page.locator(`[data-available="ja-${locale}"] .download-package`).click();await page.locator(`[data-package="ja-${locale}"] .remove-package`).waitFor();}
  const curatedTranslations=await read('language-packages/sources/exercises/japanese-reading-context.json');
@@ -25,7 +25,7 @@ try{
    await mark(page,entry,'learning');await route(page,'reading');await learned(page);await page.locator('[data-answer-mode=choice]').click();
    assert.equal(await page.locator('#header-title').innerText(),ui==='ko'?'한자 읽기':'Word Reading');assert.equal(await page.locator('.vocab-instruction').count(),0);
    const target=page.locator('.vocab-prompt .study-reading-target');assert.equal(await target.innerText(),entry.word);const prompt=await page.locator('.vocab-prompt').innerText();assert.equal(prompt.split(entry.word).length-1,1);assert.ok(!/[［］【】]/u.test(prompt));assert.equal(await page.locator('.vocab-prompt rt').count(),0);
-   if(entry.word==='体中')assert.equal(prompt,entry.example.text,'Reviewed target keeps the whole example sentence');
+   if(entry.word==='巌')assert.equal(prompt,entry.example.text,'Reviewed target keeps the whole example sentence');
    const entryText=pairs[explanation].get(entry.id);
    const expected=prompt===entry.word?entryText.meaning:entry.word==='学校'?curatedTranslations['ja-ex-reading-school'][explanation]:entryText.exampleTranslation;
    assert.equal(await page.locator('.exercise-context').innerText(),expected);
@@ -35,9 +35,9 @@ try{
     const style=getComputedStyle(node),isBlue=style.textDecorationColor===getComputedStyle(probe).color;
     probe.remove();return style.textDecorationLine.includes('underline')&&style.textDecorationThickness==='2px'&&isBlue;
    }),'Reading target uses the shared blue underline');assert.equal(await page.locator('[data-submit]').count(),0);
-   if(['学校','体中'].includes(entry.word))await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});
+   if(['学校','巌'].includes(entry.word))await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});
    if(entry.word==='学校')await page.screenshot({path:`/private/tmp/japanese-reading-target/selection-${width}-${theme}-${ui}.png`,fullPage:true});
-   if(entry.word==='体中')await page.screenshot({path:`/private/tmp/japanese-reading-target/reviewed-focus-${width}-${theme}-${ui}.png`,fullPage:true});
+   if(entry.word==='巌')await page.screenshot({path:`/private/tmp/japanese-reading-target/reviewed-focus-${width}-${theme}-${ui}.png`,fullPage:true});
    const options=()=>page.locator('[data-option]').allTextContents();
    const ending=entry.word.match(/[ぁ-ゖ]+$/u)?.[0];
    const optionTexts=await options();
