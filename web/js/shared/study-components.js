@@ -1,8 +1,8 @@
 import {renderStudyIcon} from './study-icons.js';
 import {escapeHtml as e} from './ui.js';
 /** Canonical German/Chinese study patterns. Geometry and colours live in study-theme.css. */
-export function renderStudySearch({id,value='',label='Search',controls=''}){
- return `<div class="card study-search">${controls}<input id="${e(id)}" class="input-field" type="search" inputmode="text" enterkeyhint="search" placeholder="${e(label)}" aria-label="${e(label)}" value="${e(value)}" autocomplete="off" autocapitalize="none"></div>`;
+export function renderStudySearch({id,value='',label='Search',controls='',afterInput=''}){
+ return `<div class="card study-search">${controls}<input id="${e(id)}" class="input-field" type="search" inputmode="text" enterkeyhint="search" placeholder="${e(label)}" aria-label="${e(label)}" value="${e(value)}" autocomplete="off" autocapitalize="none">${afterInput}</div>`;
 }
 /** Use native disclosure so opening a clue preserves the answer field and keyboard state. */
 export function renderStudyHint({label,body,summaryId}){
@@ -39,7 +39,7 @@ export function renderStudyReviewAnswer({label,valueHtml,correct=false,lang='',s
 }
 
 /** Shared Study filters for status and part of speech. Extra controls use the same panel. */
-export function renderStudyFilters({title,status,pos,open=false,extraBody=''}){
+export function renderStudyFilters({title,status,pos,open=false,extraBody='',beforeGroups=''}){
  const groups=[status,pos];
  const optionLabel=({label,count})=>`${e(label)} (${e(count)})`;
  const picks=groups.map(group=>{
@@ -54,7 +54,7 @@ export function renderStudyFilters({title,status,pos,open=false,extraBody=''}){
   }).join('');
   return `${index?'<div class="filter-split-divider"></div>':''}<div class="filter-split-head">${e(group.title)}</div><div class="wl-filter-row${index?' wl-tag-filter-row':''}">${buttons}</div>`;
  }).join('');
- return `<details class="filter-fold filter-fold--combined study-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div><div class="filter-fold-sum-picks">${picks}</div></summary><div class="filter-fold-body filter-fold-split">${sections}${extraBody?`<div class="filter-split-divider"></div>${extraBody}`:''}</div></details>`;
+ return `<details class="filter-fold filter-fold--combined study-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div><div class="filter-fold-sum-picks">${picks}</div></summary><div class="filter-fold-body filter-fold-split">${beforeGroups}${beforeGroups?'<div class="filter-split-divider"></div>':''}${sections}${extraBody?`<div class="filter-split-divider"></div>${extraBody}`:''}</div></details>`;
 }
 
 /** Combined filter geometry shared with the established Review screens. */

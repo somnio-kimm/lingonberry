@@ -123,7 +123,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const q=row&&createExerciseQuestions([row],list,row.route,row.category,study.explanationLanguage)[0];return reviewContent.prepare(q?{...q,answerMode:f.answerMode,mode:feature}:undefined);
  }
 
- function controls(route){
+ function controls(route,beforeGroups){
   const f=state(route),level=store.state.preferences.studyLevel;
   const levelWords=words.filter(word=>matchesStudyLevel(word,level,profile));
   const parts=['all',...new Set(levelWords.map(word=>word.pos))];
@@ -148,7 +148,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const options=(values,count)=>values.map(value=>({value,label:label(value),count:count(value)}));
   const extraBody=['en','ja'].includes(language)?'':`<div class="lexicon-filter-row"><label>${t('Study Level')}<select data-level-filter>${profile.levels.map(value=>`<option value="${e(value)}" ${level===value?'selected':''}>${e(value)}</option>`).join('')}</select></label></div>`;
   return renderStudyFilters({
-   title:t('Filters'),open:f.open,extraBody,
+   title:t('Filters'),open:f.open,extraBody,beforeGroups,
    status:{title:t('Study Status'),selected:f.status,options:options(Object.keys(statusCounts),value=>statusCounts[value])},
    pos:{title:t('Part of Speech'),selected:f.pos,options:options(parts,value=>posCounts.get(value)||0)},
   });
@@ -172,8 +172,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   host.querySelectorAll('[data-route]').forEach(button=>button.onclick=()=>{resetQuestion();navigate(button.dataset.route);});host.querySelectorAll('[data-level]').forEach(button=>button.onclick=()=>{change('studyLevel',button.dataset.level);resetQuestion();refresh();});}
  function drawWords(host,route){
   const f=state(route);if(f.initialLevel!==store.state.preferences.studyLevel){f.initialLevel=store.state.preferences.studyLevel;f.selectedInitial='all';}let visible=new Map();
-  return renderLexiconWordList(host,{t,language,locale:locale(),selectedInitial:f.selectedInitial||'all',query:f.query,filters:controls(route),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
-   bindFilters:host=>bindControls(host,route),setInitial:value=>{f.selectedInitial=value;},setQuery:value=>{f.query=value;},openWord:id=>{const word=visible.get(id);if(word)details(word);},speakWord:id=>{const word=byId.get(id);if(word)speak(studySpokenWord(word,profile),host);},
+  return renderLexiconWordList(host,{t,language,locale:locale(),selectedInitial:f.selectedInitial||'all',query:f.query,filters:initial=>controls(route,initial),getWords:()=>{const list=pool(route);visible=new Map(list.map(word=>[word.id,word]));return list;},readStatus,renderHeading:heading,renderTags:tags,renderPreview:collocationPreview},{
+   bindFilters:(host,draw)=>bindControls(host,route,draw),setInitial:value=>{f.selectedInitial=value;},setQuery:value=>{f.query=value;},openWord:id=>{const word=visible.get(id);if(word)details(word);},speakWord:id=>{const word=byId.get(id);if(word)speak(studySpokenWord(word,profile),host);},
   });
  }
  function drawCards(host,route){
