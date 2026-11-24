@@ -7,7 +7,7 @@ export function renderPhraseGapSentence(question,{input='',checked=false,editabl
   if(checked){
    const answer=`<mark class="cloze-answer">${e(result.answers[index])}</mark>`;
    const wrong=showMistakes&&!result.matches[index]&&given[index]?.trim();
-   return wrong?`<span class="cloze-correction-stack">${answer}<del class="cloze-typed-mistake">${e(wrong)}</del></span>`:answer;
+   return wrong?`<span class="cloze-correction-stack">${answer}<span class="cloze-typed-mistake">${e(wrong)}</span></span>`:answer;
   }
   if(editable)return `<label class="phrase-gap-field"><input class="phrase-gap-input" data-phrase-gap="${index}" aria-label="${label}" lang="${e(question.word.studyLanguage||question.word.language||'en')}" type="text" inputmode="text" enterkeyhint="${index===gap.answers.length-1?'done':'next'}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="80" value="${e(given[index]||'')}"></label>`;
   return `<span class="${variant==='review'?'wrong-test-slot wrong-test-blank':variant==='sentence'?'cloze-gap-slot':'form-question-blank'}" role="img" aria-label="${label}"></span>`;
