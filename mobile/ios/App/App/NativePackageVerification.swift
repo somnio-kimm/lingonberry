@@ -549,8 +549,7 @@ enum NativePackageVerification {
         await wait(() => document.querySelector('#root-search'));
         if(document.querySelector('[data-root-view]'))throw new Error('Retired root practice tab is visible');
         await wait(() => document.querySelector('[data-root-kind]'));
-        result.rootInventory=document.querySelector('[data-root-count]')?.textContent;
-        result.rootInventoryTotal=Number(document.querySelector('[data-root-count]')?.dataset.total);
+        result.rootInventoryTotal=Number(document.querySelector('[data-root-list]')?.dataset.total);
         const {createPackageStorage} = await import('./js/packages/storage.js');
         const storage = createPackageStorage(), records = await storage.list();
         const {installedPairs} = await import('./js/packages/library.js');

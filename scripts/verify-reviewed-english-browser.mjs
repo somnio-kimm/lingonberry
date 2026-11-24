@@ -226,7 +226,7 @@ try{
    }
    await page.evaluate(()=>window.reviewedRoute('roots'));
    if(core.morphemes?.length){
-    assert.equal(Number(await page.locator('[data-root-count]').getAttribute('data-total')),core.morphemes.length);
+    assert.equal(Number(await page.locator('[data-root-list]').getAttribute('data-total')),core.morphemes.length);
     assert.ok(await page.locator('[data-morpheme]').count());
     assert.ok(await page.locator('[data-morpheme]').evaluateAll(nodes=>nodes.every(node=>node.querySelector('[data-root-entry]'))));
    }

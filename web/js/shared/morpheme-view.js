@@ -1,8 +1,8 @@
-import {renderStudySearch,renderStudyReferenceHeading} from './study-components.js';
+import {renderStudySearchWithFilters,renderStudyReferenceHeading,renderStudyFilterPanel,renderStudyTagFilterGroup} from './study-components.js';
 import {escapeHtml as e} from './ui.js';
 import {mountWordRows} from './word-rows.js';
 import {createMorphemeModel,MORPHEME_PAGING} from './morpheme-model.js';
-import {morphemeOriginText,morphemeRegisters,morphemeCountLabel,morphemeRelatedLabel} from './morpheme-text.js';
+import {morphemeOriginText,morphemeRegisters,morphemeRelatedLabel} from './morpheme-text.js';
 
 export function renderMorphemeSense(sense,locale) {
  const badges = morphemeRegisters(sense.tags,locale).map(label =>
@@ -11,17 +11,15 @@ export function renderMorphemeSense(sense,locale) {
  return badges.join('') + e(sense.meaning);
 }
 
+export function renderRootKindFilter(t,kinds,selected='all'){
+ const options=kinds.map(value=>({value,label:t(value[0].toUpperCase()+value.slice(1))}));
+ return renderStudyTagFilterGroup({title:t('Type'),attribute:'data-root-kind',options,selected});
+}
+
 /** The model owns data lookup; this view owns markup, user events and their cleanup. */
 export function renderMorphemeInventory(host,{
  rows,words,model=createMorphemeModel(rows,words),state,t,locale,openWord,tags,
 }) {
- function renderKindOptions() {
-  return model.kinds.map(kind => {
-   const label = kind==='all' ? 'All' : kind[0].toUpperCase()+kind.slice(1);
-   return `<option value="${e(kind)}" ${(state.rootKind||'all')===kind?'selected':''}>${e(t(label))}</option>`;
-  }).join('');
- }
-
  function renderRelatedWord(text) {
   const matches = model.matchingWords(text);
   return matches.map(word=>`<div class="wl-row root-member" data-root-entry="${e(word.id)}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}">
@@ -57,25 +55,20 @@ export function renderMorphemeInventory(host,{
   </section>`;
  }
 
- const kindFilter = `<div class="grammar-selectors"><label>${e(t('Type'))}<select data-root-kind>${renderKindOptions()}</select></label></div>`;
+ const filters=renderStudyFilterPanel({title:t('Filters'),open:state.open,body:renderRootKindFilter(t,model.kinds,state.rootKind)});
  host.innerHTML = `<div class="lexicon-view">
   <h2 class="section-title study-list-title">${e(t('Root Families'))}</h2>
-  <p class="muted" data-root-count></p>
-  ${renderStudySearch({id:'root-search',value:state.rootQuery||'',label:t('Search'),controls:kindFilter})}
-  <div data-root-list class="study-reference-list"></div>
+  ${renderStudySearchWithFilters({id:'root-search',value:state.rootQuery||'',label:t('Search'),filters})}
+  <div data-root-list data-total="${model.total}" class="study-reference-list"></div>
  </div>`;
- const list = host.querySelector('[data-root-list]');
- const count = host.querySelector('[data-root-count]');
- const search = host.querySelector('#root-search');
- const kind = host.querySelector('[data-root-kind]');
+ const list=host.querySelector('[data-root-list]'),search=host.querySelector('#root-search'),fold=host.querySelector('.filter-fold');
+ const kinds=[...fold.querySelectorAll('[data-root-kind]')];
  let pager;
 
  function renderResults() {
   pager?.cleanup();
   const matching = model.find({query:state.rootQuery,kind:state.rootKind});
-  count.textContent = morphemeCountLabel(locale,matching.length,model.total);
-  count.dataset.total = String(model.total);
-  count.dataset.visible = String(matching.length);
+  list.dataset.visible=String(matching.length);
   pager = mountWordRows(list,matching,renderCard,{
    initialCount:MORPHEME_PAGING.cards,
    batchSize:MORPHEME_PAGING.cards,
@@ -104,10 +97,15 @@ export function renderMorphemeInventory(host,{
  }
 
  renderResults();
- kind.onchange = () => {
-  state.rootKind = kind.value;
+ fold.ontoggle=()=>{if(fold.isConnected)state.open=fold.open;};
+ kinds.forEach(button=>button.onclick=()=>{
+  state.rootKind=button.dataset.rootKind;
+  kinds.forEach(option=>{
+   option.classList.toggle('active',option===button);
+   option.setAttribute('aria-pressed',String(option===button));
+  });
   renderResults();
- };
+ });
  search.oninput = () => {
   state.rootQuery = search.value;
   renderResults();
@@ -116,7 +114,8 @@ export function renderMorphemeInventory(host,{
 
  return () => {
   pager.cleanup();
-  kind.onchange = null;
+  fold.ontoggle=null;
+  kinds.forEach(button=>button.onclick=null);
   search.oninput = null;
   list.onclick = null;
  };

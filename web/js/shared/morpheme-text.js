@@ -49,11 +49,6 @@ const registers = {
 export function morphemeRegisters(tags=[],locale='en') {
  return tags.filter(tag=>registers[tag]).map(tag=>registers[tag][locale==='ko'?1:0]);
 }
-export function morphemeCountLabel(locale,visible,total) {
- const number=new Intl.NumberFormat(locale==='ko'?'ko-KR':'en-GB');
- const count=number.format(visible),all=number.format(total);
- return locale==='ko'?`${count}개 항목 · 전체 ${all}개`:`${count} Entries · ${all} Total`;
-}
 export const morphemeRelatedLabel=(locale,count)=>`${locale==='ko'?'관련 단어':'Related Words'} (${count})`;
 
 export function morphemeOriginText(origin,locale){

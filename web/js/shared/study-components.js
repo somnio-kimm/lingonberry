@@ -4,6 +4,9 @@ import {escapeHtml as e} from './ui.js';
 export function renderStudySearch({id,value='',label='Search',controls='',afterInput=''}){
  return `<div class="card study-search">${controls}<input id="${e(id)}" class="input-field" type="search" inputmode="text" enterkeyhint="search" placeholder="${e(label)}" aria-label="${e(label)}" value="${e(value)}" autocomplete="off" autocapitalize="none">${afterInput}</div>`;
 }
+export function renderStudySearchWithFilters({id,value,label,filters}){
+ return renderStudySearch({id,value,label,afterInput:`<div class="study-search-filters">${filters}</div>`});
+}
 /** Use native disclosure so opening a clue preserves the answer field and keyboard state. */
 export function renderStudyHint({label,body,summaryId}){
  if(!body)return '';
@@ -38,23 +41,29 @@ export function renderStudyReviewAnswer({label,valueHtml,correct=false,lang='',s
  return `<p class="wrong-answer-row ${correct?'wrong-correct-line':'wrong-user-line'}${only?' wrong-only':''}"><span class="wrong-answer-label">${e(label)}:</span> <span class="${correct?'correct-answer':'wrong-answer-value--wrong'}"${lang?` lang="${e(lang)}"`:''}>${!correct&&strike?`<del>${valueHtml}</del>`:valueHtml}</span></p>`;
 }
 
+const filterOptionLabel=({label,count})=>count===undefined?e(label):`${e(label)} (${e(count)})`;
+const filterDivider='<div class="filter-split-divider"></div>';
+export function renderStudyTagFilterGroup({title,options,selected,attribute,tagRow=false}){
+ if(!/^data-[a-z]+(?:-[a-z]+)*$/u.test(attribute))throw new Error('Study filters require a safe data attribute');
+ const buttons=options.map(option=>{
+  const active=selected===option.value;
+  return `<button type="button" class="wl-filter ${active?'active':''}" ${attribute}="${e(option.value)}" aria-pressed="${active}">${filterOptionLabel(option)}</button>`;
+ }).join('');
+ return `<div class="filter-split-head">${e(title)}</div><div class="wl-filter-row${tagRow?' wl-tag-filter-row':''}">${buttons}</div>`;
+}
+
+export function renderStudyFilterPanel({title,open=false,picks='',body}){
+ return `<details class="filter-fold filter-fold--combined study-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div>${picks?`<div class="filter-fold-sum-picks">${picks}</div>`:''}</summary><div class="filter-fold-body filter-fold-split">${body}</div></details>`;
+}
+
 /** Shared Study filters for status and part of speech. Extra controls use the same panel. */
 export function renderStudyFilters({title,status,pos,open=false,extraBody='',beforeGroups=''}){
- const groups=[status,pos];
- const optionLabel=({label,count})=>`${e(label)} (${e(count)})`;
- const picks=groups.map(group=>{
+ const picks=[status,pos].map(group=>{
   const selected=group.options.find(option=>option.value===group.selected)||group.options[0];
-  return `<span class="filter-fold-pick-l">${e(group.title)}</span><span class="filter-fold-pick-v">${optionLabel(selected)}</span>`;
+  return `<span class="filter-fold-pick-l">${e(group.title)}</span><span class="filter-fold-pick-v">${filterOptionLabel(selected)}</span>`;
  }).join('');
- const sections=groups.map((group,index)=>{
-  const attribute=index?'data-tag':'data-f';
-  const buttons=group.options.map(option=>{
-   const selected=option.value===group.selected;
-   return `<button type="button" class="wl-filter ${selected?'active':''}" ${attribute}="${e(option.value)}" aria-pressed="${selected}">${optionLabel(option)}</button>`;
-  }).join('');
-  return `${index?'<div class="filter-split-divider"></div>':''}<div class="filter-split-head">${e(group.title)}</div><div class="wl-filter-row${index?' wl-tag-filter-row':''}">${buttons}</div>`;
- }).join('');
- return `<details class="filter-fold filter-fold--combined study-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div><div class="filter-fold-sum-picks">${picks}</div></summary><div class="filter-fold-body filter-fold-split">${beforeGroups}${beforeGroups?'<div class="filter-split-divider"></div>':''}${sections}${extraBody?`<div class="filter-split-divider"></div>${extraBody}`:''}</div></details>`;
+ const body=[beforeGroups,renderStudyTagFilterGroup({...status,attribute:'data-f'}),renderStudyTagFilterGroup({...pos,attribute:'data-tag',tagRow:true}),extraBody].filter(Boolean).join(filterDivider);
+ return renderStudyFilterPanel({title,open,picks,body});
 }
 
 /** Combined filter geometry shared with the established Review screens. */
