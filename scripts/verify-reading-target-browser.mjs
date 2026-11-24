@@ -57,7 +57,11 @@ try{
    await mark(page,entry,'new');
   }
  }
- const savedChoice=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('learn-language.ja.lexicon.v1')).wrongs).find(row=>row.question.options&&row.question.word.lemma==='学校'));assert.ok(savedChoice);
+ const savedChoice=await page.evaluate(async()=>{
+  const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');
+  const state=await createLexiconStorage().load('ja');
+  return Object.values(state.wrongs).find(row=>row.question.options&&row.question.word.lemma==='学校');
+ });assert.ok(savedChoice);
  await tab(page,'home');await page.locator('[data-level=N5]').click();await tab(page,'wrong');
  const readingReview=page.locator(`[data-review-word="${savedChoice.question.word.id}"]`).filter({has:page.locator('.study-reading-target')}).first();
  assert.equal(await readingReview.locator('.wrong-question').innerText(),savedChoice.question.prompt);
@@ -67,6 +71,10 @@ try{
  await page.locator('[data-retest]').click();await page.locator('[data-option]').first().waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text),'Saved retest keeps its recorded choices');await page.locator(`[data-option="${savedChoice.question.correctOption}"]`).click();await page.locator('[data-next]').waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text));await tab(page,'home');await page.locator('[data-level=N1]').click();
  await tab(page,'wrong');await page.locator('.wrong-card').first().waitFor();assert.equal(await page.locator('.wrong-card .vocab-prompt,.wrong-card .vocab-instruction,.wrong-card .wrong-correct-line').count(),0);assert.ok(await page.locator('.wrong-card .wrong-user-line').count());await page.locator('[data-retest]').click();await page.locator('.study-reading-target').waitFor();assert.equal(await page.locator('.vocab-instruction').count(),0);
  const retestPrompt=await page.locator('.vocab-prompt').innerText();
- const savedRetest=await page.evaluate(prompt=>Object.values(JSON.parse(localStorage.getItem('learn-language.ja.lexicon.v1')).wrongs).find(row=>!row.question.options&&row.question.prompt===prompt),retestPrompt);assert.ok(savedRetest);
+ const savedRetest=await page.evaluate(async prompt=>{
+  const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');
+  const state=await createLexiconStorage().load('ja');
+  return Object.values(state.wrongs).find(row=>!row.question.options&&row.question.prompt===prompt);
+ },retestPrompt);assert.ok(savedRetest);
  await page.locator('#vocab-answer').fill(savedRetest.question.answer);await page.locator('[data-submit]').click();await page.locator('.vocab-answer-cell.correct').waitFor();assert.equal(await page.locator('.vocab-question .exercise-explanation').count(),0);await page.context().setOffline(true);await page.reload();await ready(page);await route(page,'reading');await page.locator('.study-reading-target').waitFor();assert.deepEqual(errors,[]);console.log(`Passed ${checks} reading-target cases: curated and generated sentences, standalone fallback, reviewed focus spans, single blue underline, display-language labels and no instruction line, full same-POS readings, fresh distractors for repeated targets, stable feedback, Selection/Typing, frozen Review/retest choices and offline use; phone/tablet and light/dark.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}
