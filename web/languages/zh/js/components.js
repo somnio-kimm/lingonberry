@@ -1,4 +1,4 @@
-import {renderStudyFilters} from '../../../js/shared/study-components.js';
+import {appendStudySheetNext,renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
@@ -137,7 +137,7 @@ export function wrongBookCombinedFilterMarkup(
   return `<details class="filter-fold filter-fold--combined wrong-filter-panel"><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${t('filterPanel')}</span></div><div class="filter-fold-sum-picks"><span class="filter-fold-pick-l">${t('wrongFilterHsk')}</span><span class="filter-fold-pick-v">${levelPick}</span><span class="filter-fold-pick-l">${t('filterTags')}</span><span class="filter-fold-pick-v">${tagPick}</span>${showMode?`<span class="filter-fold-pick-l">${t('wrongFilterMode')}</span><span class="filter-fold-pick-v">${mCur[1]} (${mCur[2]})</span>`:''}<span class="filter-fold-pick-l">${t('filterStatus')}</span><span class="filter-fold-pick-v">${sCur[1]} (${sCur[2]})</span></div></summary><div class="filter-fold-body filter-fold-split">${group(t('wrongFilterHsk'),levelFilters,levelFilter,'data-wlv')}<div class="filter-split-divider"></div>${group(t('filterTags'),tagRows,tagFilter,'data-wtag')}${showMode?`<div class="filter-split-divider"></div>${group(t('wrongFilterMode'),modeRows,modeFilter,'data-wmode')}`:''}<div class="filter-split-divider"></div>${group(t('filterStatus'),statusRows,statusFilter,'data-wstatus')}</div></details>`;
 }
 
-export function showStatusSheet(wordId, onDone, fallbackWord) {
+export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClose}={}) {
   const words = Store.words;
   const w = words.find(x => x.id === wordId) || (fallbackWord ? {...fallbackWord,srs:fallbackWord.srs||{level:0}} : null);
   if (!w) return;
@@ -146,7 +146,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord) {
   const focus=document.activeElement;
   const overlay = document.createElement('div');
   overlay.className = 'detail-overlay';
-  overlay.innerHTML = `<div class="detail-sheet">
+  overlay.innerHTML = `<div class="detail-sheet" role="dialog" aria-modal="true" aria-label="${escape(w.hanzi)}">
     <div class="detail-sheet-head">
       <button type="button" class="detail-sheet-icon detail-sheet-close close-btn">×</button>
       <div class="detail-sheet-head-center">
@@ -180,8 +180,9 @@ export function showStatusSheet(wordId, onDone, fallbackWord) {
   </div>`;
 
   bindCollocationAudio(overlay,w,text=>TTS.speak(text));
+  appendStudySheetNext(overlay,nextButton,'.close-btn');
   document.body.appendChild(overlay);
-  const close = () => { TTS.stop(); overlay.remove(); onDone?.(); if(focus?.isConnected)focus.focus({preventScroll:true}); };
+  const close = () => {if(!overlay.isConnected)return;TTS.stop();overlay.remove();onDone?.();if(onClose)onClose();else if(focus?.isConnected)focus.focus({preventScroll:true});};
   overlay.querySelector('.close-btn').onclick = close;
   overlay.querySelector('.speak-btn').onclick = () => TTS.speak(w.hanzi);
   overlay.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>TTS.speak(w.sentences[Number(button.dataset.example)].hanzi));
@@ -198,6 +199,19 @@ export function showStatusSheet(wordId, onDone, fallbackWord) {
     b.classList.add('active');
     onDone?.();
   });
+  if(nextButton){
+    const closeButton=overlay.querySelector('.close-btn');
+    closeButton.setAttribute('aria-label',Store.uiLang==='ko'?'닫기':'Close');
+    closeButton.focus();
+    overlay.onkeydown=event=>{
+      if(event.key==='Escape'){event.preventDefault();close();}
+      if(event.key==='Tab'&&(event.shiftKey&&document.activeElement===closeButton||!event.shiftKey&&document.activeElement===nextButton)){
+        event.preventDefault();
+        (event.shiftKey?nextButton:closeButton).focus();
+      }
+    };
+  }
+  return close;
 }
 
 export const modeTitle = mode => t(SCREENS[mode]?.title || `mode_${mode}`) || mode;

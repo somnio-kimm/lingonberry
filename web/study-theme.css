@@ -488,16 +488,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .study-hint-content{padding:0 12px 12px;font-size:18px;line-height:1.65;overflow-wrap:anywhere}
 .study-hint-content p{font-size:inherit;line-height:inherit;margin:0}
 .vocab-context-hint .cloze-blank{color:var(--blue)}
-.vocab-result-sheet{position:fixed;inset:auto 0 0;margin:0 auto;border:0;color:var(--text);padding-bottom:calc(20px + var(--safe-b,0px))}
-.vocab-result-sheet::backdrop{background:rgba(0,0,0,.4)}
-.vocab-result-sheet .quiz-next-bar{margin-top:20px}
-.vocab-learning{margin-top:16px;text-align:left}
-.vocab-learning-meaning{font-size:16px;line-height:1.6;color:var(--secondary);margin:4px 0 0}
-.vocab-learning .study-example{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
-.vocab-learning-example-heading{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.vocab-learning-example-heading h3{font-size:14px;font-weight:600;margin:0;color:var(--secondary)}
-.vocab-learning .example-sentence{font-size:20px;line-height:1.8;margin-top:4px}
-.vocab-learning .example-translation{font-size:15px;line-height:1.6;margin:8px 0 0;color:var(--secondary)}
+[data-vocab-result] .quiz-next-bar{margin-top:20px}
 
 .listening-reading{font-size:20px;line-height:1.6;color:var(--secondary);margin:8px 0;overflow-wrap:anywhere}
 

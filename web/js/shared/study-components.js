@@ -10,6 +10,17 @@ export function renderStudyHint({label,body,summaryId}){
  return `<details class="study-hint"><summary${summaryId?` id="${e(summaryId)}"`:''}>${e(label)}</summary><div class="study-hint-content">${body}</div></details>`;
 }
 
+/** The vocabulary quiz adds its own Next button to the normal dictionary sheet. */
+export function appendStudySheetNext(overlay,nextButton,closeSelector){
+ if(!nextButton)return;
+ const actions=overlay.ownerDocument.createElement('div');
+ actions.className='quiz-next-bar';
+ actions.append(nextButton);
+ overlay.querySelector('.detail-sheet').append(actions);
+ overlay.setAttribute('data-vocab-result','');
+ overlay.querySelector(closeSelector).setAttribute('data-close-vocab-result','');
+}
+
 export function renderStudyTabs({label,options,selected,attribute,variant='form'}){
  if(!/^data-[a-z]+(?:-[a-z]+)*$/u.test(attribute))throw new Error('Study tabs require a safe data attribute');
  if(!['form','listening'].includes(variant))throw new Error('Unknown study tabs variant');

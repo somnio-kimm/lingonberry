@@ -166,7 +166,7 @@ enum NativePackageVerification {
             for(const patterns of [initials,openings])if(question.options.length>=3&&patterns.size>1&&Math.max(...patterns.values())===question.options.length-1)throw new Error('Meaning Quiz has a visible answer outlier');
           }
           check.balancedMeaningQuestions=20;
-          const [{withVocabularyLearning,vocabularyLearningContent},{renderVocabularyHints,renderVocabularyLearning},{snapshotQuestion},{listeningReadingHint}]=await Promise.all([import('./js/shared/vocabulary-learning.js'),import('./js/shared/vocabulary-learning-view.js'),import('./js/shared/question-snapshot.js'),import('./js/shared/listening.js')]);
+          const [{withVocabularyLearning,vocabularyLearningContent},{renderVocabularyHints},{snapshotQuestion},{listeningReadingHint}]=await Promise.all([import('./js/shared/vocabulary-learning.js'),import('./js/shared/vocabulary-learning-view.js'),import('./js/shared/question-snapshot.js'),import('./js/shared/listening.js')]);
           const inputProbe=createVocabularyEngine().createVocabularyPool('vocabinput',activeChoices,before.explanationLanguage).choose(undefined,drawChoiceRandom);
           if(!inputProbe)throw new Error('Vocabulary learning probe has no eligible word');
           const learned=snapshotQuestion(withVocabularyLearning(inputProbe,{language:before.targetLanguage,locale:before.explanationLanguage})),learning=vocabularyLearningContent(learned,{language:before.targetLanguage,locale:before.explanationLanguage}),learningHost=document.createElement('div');
@@ -175,8 +175,7 @@ enum NativePackageVerification {
             learningHost.innerHTML=renderVocabularyHints(inputProbe,{language:before.targetLanguage,locale:before.explanationLanguage});
             const hintPanel=learningHost.querySelector('.study-hint');
             if(Boolean(hintPanel)!==Boolean(learning.hint)||hintPanel?.open||hintPanel?.querySelector('button'))throw new Error('Vocabulary hints must show a closed example only when available');
-            learningHost.innerHTML=renderVocabularyLearning(learned,{language:before.targetLanguage,locale:before.explanationLanguage});
-            if(!learning.example||learningHost.querySelector('.example-sentence')?.textContent!==learning.example.text||learned.word.examples||learned.word.sentences)throw new Error('Saved vocabulary learning example differs');
+            if(!learning.example||learned.learningExample?.text!==learning.example.text||learned.word.examples||learned.word.sentences)throw new Error('Saved vocabulary learning example differs');
             check.vocabularyLearning={hintsClosed:true,savedExample:true};
           }finally{learningHost.remove();}
           const sourceReadings=core.entries.filter(row=>row.pronunciation).length,projectedReadings=choiceWords.filter(row=>row.pronunciation).length;

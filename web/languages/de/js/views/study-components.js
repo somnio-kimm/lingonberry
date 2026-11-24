@@ -1,4 +1,4 @@
-import {renderStudyFilters} from '../../../../js/shared/study-components.js';
+import {appendStudySheetNext,renderStudyFilters} from '../../../../js/shared/study-components.js';
 import {renderCollocations,bindCollocationAudio} from '../../../../js/shared/collocation-view.js';
 import { studyLevelLabel } from '../app-definition.js';
 import { escapeHtml as e } from '../../../../js/shared/ui.js';
@@ -31,12 +31,14 @@ export function createStudyControls(host,ctx) {
    if(message){message.hidden=false;message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');}
   });
  }
- function open(word,onDone) {
+ function open(word,onDone,{nextButton,onClose}={}) {
   sheet?.remove();const focus=document.activeElement;
   sheet=document.createElement('div');sheet.className='detail-overlay study-overlay';
   sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="study-word-title"><div class="detail-sheet-head"><button class="detail-sheet-icon detail-sheet-close" aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center"><span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(word.cefr))}</span><span class="detail-badge detail-badge-pos">${e(typeLabel(word))}</span></div><button class="detail-sheet-icon detail-sheet-speak" aria-label="${t('Speak word')}">🔊</button></div><div class="study-sheet-core"><h2 id="study-word-title" class="study-headword" lang="de">${wordHeading(word)}</h2><div class="study-sheet-meaning" lang="${getLocale()}">${e(wordMeaning(word))}</div></div>${renderCollocations(word,getLocale())}<div class="study-status-title">${t('Change study status')}</div><div class="status-btns">${['new','learning','mastered'].map(status=>`<button class="status-btn ${ctx.store.wordStatus(word.id)===status?'active':''}" data-word-status="${status}" aria-pressed="${ctx.store.wordStatus(word.id)===status}"><span class="status-dot ${status}"></span>${statusLabel(status)}</button>`).join('')}</div>${word.examples?.length?`<div class="study-examples"><h3>${t('Examples')}</h3>${exampleMarkup(word,Infinity,true)}</div>`:''}<p class="study-audio-status muted" role="status" hidden></p></section>`;
+  const overlay=sheet;
+  appendStudySheetNext(overlay,nextButton,'.detail-sheet-close');
   document.body.appendChild(sheet);
-  function close(){sheet?.remove();sheet=null;stopMedia();onDone?.();if(focus?.isConnected)focus.focus();else host.querySelector('#search-input,#fc-shuffle')?.focus();}
+  function close(){if(sheet!==overlay)return;overlay.remove();sheet=null;stopMedia();onDone?.();if(onClose)onClose();else if(focus?.isConnected)focus.focus();else host.querySelector('#search-input,#fc-shuffle')?.focus();}
   sheet.querySelector('.detail-sheet-close').onclick=close;
   sheet.querySelector('.detail-sheet-speak').onclick=()=>speak(word);
   bindCollocationAudio(sheet,word,text=>speakGerman(text));
@@ -51,6 +53,7 @@ export function createStudyControls(host,ctx) {
    if(ev.key==='Tab'){const buttons=[...sheet.querySelectorAll('button')],first=buttons[0],last=buttons.at(-1);if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}}
   };
   sheet.querySelector('.detail-sheet-close').focus();
+  return close;
  }
  return {speak,open,cleanup(){closed=true;sheet?.remove();sheet=null;stopMedia();}};
 }
