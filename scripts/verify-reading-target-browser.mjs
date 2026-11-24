@@ -10,6 +10,15 @@ async function tab(page,id){await page.locator(`[data-tab=${id}]`).click();await
 async function route(page,id){await tab(page,'home');await page.locator(`[data-route=${id}]`).click();await ready(page);}
 async function mark(page,entry,status){await tab(page,'home');await page.locator(`[data-level="${entry.level}"]`).click();await route(page,'wordlist');await searchWordList(page,entry.word);await page.locator(`[data-word="${entry.id}"] .wl-main`).click();await page.locator(`[data-status=${status}]`).click();await ready(page);}
 async function learned(page){const fold=page.locator('.filter-fold');if(!await fold.evaluate(node=>node.open))await fold.locator('summary').click();await page.locator('[data-f=learning]').click();await fold.evaluate(node=>{node.open=false;});}
+async function clearReview(page){
+ await tab(page,'wrong');
+ const clear=page.locator('#clear-wrong');
+ if(await clear.count()){
+  page.once('dialog',dialog=>dialog.accept());
+  await clear.click();
+  await page.locator('.wrong-card').first().waitFor({state:'detached'});
+ }
+}
 try{
  const catalog=await read('web/catalog.json'),core=await read(catalog.find(row=>row.id==='ja-core').url.slice(1)),targets=['学校','大きい','久しい','巌'].map(word=>core.entries.find(row=>row.word===word));assert.ok(targets.every(Boolean));
  browser=await chromium.launch({headless:true});const page=await browser.newPage(),errors=[];page.on('pageerror',error=>errors.push(error.message));await page.addInitScript(()=>{let state=123456789;Math.random=()=>{state=(Math.imul(1664525,state)+1013904223)>>>0;return state/4294967296;};});await page.goto(`http://127.0.0.1:${server.address().port}`);await ready(page);await mkdir('/private/tmp/japanese-reading-target',{recursive:true});
@@ -57,18 +66,29 @@ try{
    await mark(page,entry,'new');
   }
  }
+ // Isolate each retest so recency and the last display-language fixture cannot change the question.
+ await tab(page,'settings');await page.selectOption('#explanation','en');
+ await page.waitForFunction(()=>document.querySelector('#package-status').dataset.state==='ready');
+ await clearReview(page);
+ await mark(page,targets[0],'learning');await route(page,'reading');await learned(page);
+ await page.locator('[data-answer-mode=choice]').click();
+ await page.locator('[data-option]').filter({hasNotText:/^がっこう$/u}).first().click();
+ await page.locator('.lexicon-question.wrong').waitFor();
+ await tab(page,'wrong');
  const savedChoice=await page.evaluate(async()=>{
   const {createLexiconStorage}=await import('/js/shared/lexicon-storage.js');
   const state=await createLexiconStorage().load('ja');
   return Object.values(state.wrongs).find(row=>row.question.options&&row.question.word.lemma==='学校');
  });assert.ok(savedChoice);
- await tab(page,'home');await page.locator('[data-level=N5]').click();await tab(page,'wrong');
  const readingReview=page.locator(`[data-review-word="${savedChoice.question.word.id}"]`).filter({has:page.locator('.study-reading-target')}).first();
  assert.equal(await readingReview.locator('.wrong-question').innerText(),savedChoice.question.prompt);
  assert.equal(await readingReview.locator('.wrong-translation').innerText(),savedChoice.question.context);
  assert.equal(await readingReview.locator('.study-reading-target').innerText(),'学校');
  await page.screenshot({path:'/private/tmp/japanese-reading-target/review-sentence.png',fullPage:true});
- await page.locator('[data-retest]').click();await page.locator('[data-option]').first().waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text),'Saved retest keeps its recorded choices');await page.locator(`[data-option="${savedChoice.question.correctOption}"]`).click();await page.locator('[data-next]').waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text));await tab(page,'home');await page.locator('[data-level=N1]').click();
+ await page.locator('[data-retest]').click();await page.locator('[data-option]').first().waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text),'Saved retest keeps its recorded choices');await page.locator(`[data-option="${savedChoice.question.correctOption}"]`).click();await page.locator('[data-next]').waitFor();assert.deepEqual(await page.locator('[data-option]').allTextContents(),savedChoice.question.options.map(option=>option.text));await clearReview(page);
+ await mark(page,targets[2],'learning');await route(page,'reading');await learned(page);
+ await page.locator('[data-answer-mode=input]').click();await page.locator('#vocab-answer').fill('wrong');
+ await page.locator('[data-submit]').click();await page.locator('.vocab-answer-cell.wrong').waitFor();
  await tab(page,'wrong');await page.locator('.wrong-card').first().waitFor();assert.equal(await page.locator('.wrong-card .vocab-prompt,.wrong-card .vocab-instruction,.wrong-card .wrong-correct-line').count(),0);assert.ok(await page.locator('.wrong-card .wrong-user-line').count());await page.locator('[data-retest]').click();await page.locator('.study-reading-target').waitFor();assert.equal(await page.locator('.vocab-instruction').count(),0);
  const retestPrompt=await page.locator('.vocab-prompt').innerText();
  const savedRetest=await page.evaluate(async prompt=>{
