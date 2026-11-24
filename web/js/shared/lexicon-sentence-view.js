@@ -17,7 +17,7 @@ export function renderLexiconSentence(host,{question:q,feedback,selectedOption,i
  const answer=checked?annotate(q.answer):'______';
  const blank=`<span class="lexicon-blank ${checked?'cloze-answer correct':''}">${cloze&&japanese&&showReading&&!checked&&q.focus?.text===q.word.lemma?`<ruby>${answer}<rt>${e(q.word.pronunciation||'')}</rt></ruby>`:answer}</span>`;
  const selected=q.options?.find(option=>option.id===selectedOption);
- const sentence=(cloze?actions.renderCloze?.({question:q,checked,showReading}):undefined)??(cloze&&q.gapFill?renderPhraseGapSentence(q,{input:typing?input:selected?.text||'',checked,editable:typing&&!checked,uiLanguage:actions.uiLanguage,variant:'sentence'}):
+ const sentence=(cloze?actions.renderCloze?.({question:q,checked,showReading}):undefined)??(cloze&&q.gapFill?renderPhraseGapSentence(q,{input:typing?input:selected?.text||'',checked,showMistakes:typing&&feedback==='wrong',editable:typing&&!checked,uiLanguage:actions.uiLanguage,variant:'sentence'}):
   cloze?annotate(q.sentence.slice(0,q.focus.start))+blank+annotate(q.sentence.slice(q.focus.start+q.focus.text.length)):checked?annotate(q.sentence):'');
  const tile=(id,attribute,index=id)=>`<button class="flow-chip scramble-chip ${attribute==='data-return'?'chosen':''}" lang="${e(actions.language)}" ${attribute}="${index}" ${checked?'disabled':''}>${actions.renderTile?actions.renderTile(q.tokens[id],id):`<span class="scramble-chip-hanzi">${annotate(q.tokens[id])}</span>`}</button>`;
  const meaning=translationText??(cloze?(englishSelf?q.word.studyMeaning:clozeSentenceTranslation(q)):q.example.studyTranslation);
