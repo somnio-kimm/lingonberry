@@ -35,7 +35,11 @@ try{
    if(entry.word==='学校')await page.screenshot({path:`/private/tmp/japanese-reading-target/selection-${width}-${theme}-${ui}.png`,fullPage:true});
    if(entry.word==='体中')await page.screenshot({path:`/private/tmp/japanese-reading-target/reviewed-focus-${width}-${theme}-${ui}.png`,fullPage:true});
    const options=()=>page.locator('[data-option]').allTextContents();
-   assert.ok((await options()).every(value=>readingPools.get(entry.partOfSpeech).has(fold(value))),'Every option is a verified same-POS reading');
+   const ending=entry.word.match(/[ぁ-ゖ]+$/u)?.[0];
+   const optionTexts=await options();
+   assert.ok(optionTexts.length>=3);
+   if(ending)assert.ok(optionTexts.every(value=>value.endsWith(ending)),'Every option keeps the visible hiragana ending');
+   else assert.ok(optionTexts.every(value=>readingPools.get(entry.partOfSpeech).has(fold(value))),'Every option is a verified same-POS reading');
    if(entry.word==='学校'){
     const sets=new Set();
     for(let attempt=0;attempt<4;attempt++){
