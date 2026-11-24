@@ -176,7 +176,7 @@ English expressions use the existing Meaning Quiz and Cloze sections. The Study 
 
 ## English word grouping
 
-Word List and Flashcards group exact English spellings within the selected study level. Keep case-distinct words and different spellings separate. A word with noun and verb meanings has one card with both part-of-speech tags; a POS filter includes only matching senses. Details and card backs pair each meaning with its own example and selected explanation translation. English-to-English examples omit redundant English translations. Use the existing card, example, speaker and scrolling patterns.
+Word List and Flashcards group exact English spellings within the selected study level. Keep case-distinct words and different spellings separate. A word with noun and verb meanings has one card with both part-of-speech tags; a POS filter includes only matching senses. Details and card backs pair each meaning with its own example and selected explanation translation. Word List, details, Flashcards, Review and related-word rows remove parenthetical notes from displayed meanings and show each semicolon-delimited gloss on its own line. English-to-English examples omit redundant English translations. Use the existing card, example, speaker and scrolling patterns.
 
 Browsing counts and status filters refer to grouped cards. All-New is New; all-Mastered is Mastered; mixed states are Learning. An explicit status change applies only to the displayed senses, retaining other levels and excluded parts of speech. Dictionary links from Review/Root Families open the current same-level meaning group. Quizzes and saved Review retain their original sense IDs, examples, levels and grading. Grouping does not rewrite packages or progress.
 

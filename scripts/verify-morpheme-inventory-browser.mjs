@@ -1,3 +1,4 @@
+import {meaningDisplayLines} from '../web/js/shared/meaning-display.js';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
@@ -57,7 +58,18 @@ try{
    return study.entries.filter(row=>row.word==='address').map(row=>({id:row.id,meaning:row.meaning,level:row.level}));
   },locale);
   assert.ok(addresses.length>=2);await page.locator('#root-search').fill('address');
-  for(const entry of addresses){const row=page.locator(`[data-sense-ids~="${entry.id}"]`).first();await row.waitFor();assert.ok((await row.innerText()).includes(entry.meaning));assert.ok((await row.innerText()).includes(entry.level));await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.ok((await page.locator('.study-sheet-meaning').innerText()).includes(entry.meaning));await page.keyboard.press('Escape');}
+  for(const entry of addresses){
+   const row=page.locator(`[data-sense-ids~="${entry.id}"]`).first();
+   await row.waitFor();
+   const lines=meaningDisplayLines(entry.meaning),rowText=await row.innerText();
+   assert.ok(lines.every(line=>rowText.includes(line)));
+   assert.ok(rowText.includes(entry.level));
+   await row.locator('.wl-meaning').click();
+   await page.locator('[role=dialog]').waitFor();
+   const sheet=await page.locator('.study-sheet-meaning').innerText();
+   assert.ok(lines.every(line=>sheet.includes(line)));
+   await page.keyboard.press('Escape');
+  }
   assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
   const supplement=await page.evaluate(()=>fetch('/language-packages/sources/exercises/english-suffix-supplement-7.0.5.json').then(r=>r.json()));
   for(const {morpheme} of supplement.morphemeUpdates){
@@ -69,7 +81,7 @@ try{
    const member=page.locator(`[data-root-entry="${expected.id}"]`).first();
    while(!await member.count()&&await page.locator('[data-more-related]:visible').count())await page.locator('[data-more-related]:visible').first().click();
    await member.waitFor();await member.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();
-   assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='ko'?expected.meaningKo:expected.meaningEn);
+   assert.equal(await page.locator('.study-sheet-meaning').innerText(),meaningDisplayLines(locale==='ko'?expected.meaningKo:expected.meaningEn).join('\n'));
    assert.ok((await page.locator('.example-sentence').first().innerText()).includes(expected.sentence));
    await page.keyboard.press('Escape');
   }
