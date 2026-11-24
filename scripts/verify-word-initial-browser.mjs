@@ -7,7 +7,7 @@ import {chromium} from 'playwright';
 import {startServer} from './dev-server.mjs';
 const server=await startServer(),directory=join(tmpdir(),'lingonberry-word-initials');let browser;
 async function openFilters(page){
- const fold=page.locator('.word-list-filter-panel .filter-fold');
+ const fold=page.locator('.study-search-filters .filter-fold');
  if(!await fold.evaluate(node=>node.open))await fold.locator('summary').click();
 }
 try{

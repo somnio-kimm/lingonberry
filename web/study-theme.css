@@ -421,15 +421,15 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .word-initial-filter .word-initial-label{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:16px;width:100%;font-size:14px;color:var(--secondary)}
 .word-initial-select{min-height:44px;margin:0!important;font-size:14px!important;border:1px solid var(--card-border);border-radius:8px}
 
-/* The Word List search and filter controls share one card. */
-.word-list-filter-panel{min-width:0}
-.word-list-filter-panel .filter-fold{border:0;background:transparent}
-.word-list-filter-panel .filter-fold-sum{padding-inline-start:0}
-.word-list-filter-panel .filter-fold-sum::after{right:4px}
-.word-list-filter-panel .filter-fold-body{padding-inline:0}
-.word-list-filter-panel .word-initial-filter{margin:0 0 10px}
-.word-list-filter-panel .wl-filter-row{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain}
-.word-list-filter-panel .wl-filter{flex:none;white-space:nowrap}
+/* Search and filter controls share one card. */
+.study-search-filters{min-width:0}
+.study-search-filters .filter-fold{border:0;background:transparent}
+.study-search-filters .filter-fold-sum{padding-inline-start:0}
+.study-search-filters .filter-fold-sum::after{right:4px}
+.study-search-filters .filter-fold-body{padding-inline:0}
+.study-search-filters .word-initial-filter{margin:0 0 10px}
+.study-search-filters .wl-filter-row{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-inline:contain}
+.study-search-filters .wl-filter{flex:none;white-space:nowrap}
 
 /* A fixed, manageable round with direct classification outside the reading surface. */
 .flashcard-study{max-width:680px;margin-inline:auto}

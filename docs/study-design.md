@@ -70,7 +70,7 @@ Reference-card structure:
 </section>
 ```
 
-Root Families shows related words directly, without a disclosure control. Keep bounded Show More paging for long lists. Omit per-card/member source links from this study screen; retain the installed provenance and Settings Licence credits.
+Root Families shows related words directly. Search sits above the shared Filters disclosure with horizontally scrolling Type tags. The inventory total is omitted from the screen. Keep bounded Show More paging for long lists. Omit per-card/member source links from this study screen; retain the installed provenance and Settings Licence credits.
 
 For a paged collection of reference cards, give the pager host `.study-reference-list` and use `mountWordRows`. This removes per-card bottom margins inside the grid so spacing does not double.
 

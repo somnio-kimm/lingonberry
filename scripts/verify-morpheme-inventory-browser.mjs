@@ -11,16 +11,21 @@ try{
    const make=(id,form,kind,examples)=>({id,form,variants:[],kind,origin:kind==='suffix'?'Old English':'Latin',examples,senses:[{id:id+'-0',meaning:locale==='ko'?'~에서 떨어져':'away from'}],source:'https://en.wiktionary.org/wiki/'+form});
    window.cleanupInventory=renderMorphemeInventory(host,{rows:[make('ab','ab-','prefix',['absent',...Array.from({length:45},(_,i)=>'word '+i)]),make('ad','ad-','prefix',['adapt']),make('ling','-ling','suffix',['duckling']),...Array.from({length:1000},(_,i)=>make('root-'+i,'aud','root',['audience']))],words,state:{},t:x=>x,locale,openWord:id=>{window.openedMorphemeWord=id;},tags:()=>''});
   },locale);
-  assert.ok((await page.locator('[data-root-count]').innerText()).includes('1,002'));assert.equal(await page.locator('[data-root-count]').getAttribute('data-total'),'1002');assert.ok(await page.locator('[data-morpheme]').count()<1002);
+  assert.equal(await page.locator('[data-root-count]').count(),0,'Root Families omits the visible total line');assert.equal(await page.locator('[data-root-list]').getAttribute('data-total'),'1002');assert.ok(await page.locator('[data-morpheme]').count()<1002);
   assert.equal(await page.locator('[data-morpheme=ab] .root-member').count(),12);await page.locator('[data-more-related=ab]').click();assert.equal(await page.locator('[data-morpheme=ab] .root-member').count(),32);
   await page.locator('[data-root-word=absent]').click();assert.equal(await page.evaluate(()=>window.openedMorphemeWord),'absent');
   assert.ok((await page.locator('.study-reference-origin').first().innerText()).startsWith(locale==='ko'?'어원:':'Origin:'));
   const controls=page.locator('.study-search').filter({has:page.locator('#root-search')});
-  assert.ok(await controls.locator('[data-root-kind]').isVisible(),'Root type and search share one panel');
+  const filter=controls.locator('.filter-fold');
+  await filter.locator('summary').click();
+  const type=controls.locator('[data-root-kind=all]');
+  assert.ok(await type.isVisible(),'Root type and search share one panel');
+  assert.equal(await type.evaluate(button=>getComputedStyle(button.parentElement).overflowX),'auto');
+  assert.equal(await filter.evaluate(fold=>fold.closest('.study-search').querySelector('#root-search').compareDocumentPosition(fold)&Node.DOCUMENT_POSITION_FOLLOWING),4);
   await page.locator('#root-search').fill('adapt');assert.equal(await page.locator('[data-morpheme]').count(),0);
   await page.locator('#root-search').fill('duckling');assert.equal(await page.locator('[data-morpheme]').count(),1);assert.equal(await page.locator('[data-morpheme]').getAttribute('data-morpheme'),'ling');
   assert.equal(await page.locator('#root-search').evaluate(node=>node===document.activeElement),true);
-  await page.locator('#root-search').fill('');await page.selectOption('[data-root-kind]','suffix');assert.equal(await page.locator('[data-morpheme]').count(),1);
+  await page.locator('#root-search').fill('');await page.locator('[data-root-kind=suffix]').click();assert.equal(await page.locator('[data-morpheme]').count(),1);
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
   await page.evaluate(()=>window.cleanupInventory());assert.equal(await page.locator('#root-search').evaluate(node=>node.oninput),null);assert.equal(await page.locator('[data-root-list]').evaluate(node=>node.onclick),null);
   console.log('Verified independent full inventory, bounded rows/examples, search focus, type filters and dictionary links:',locale);
@@ -36,11 +41,11 @@ try{
    window.cleanupInventory=renderMorphemeInventory(host,{rows:study.morphemes,words,state:{},t:value=>lexiconText(locale,value),locale,openWord(){},tags:()=>''});
    return study.morphemes.filter(row=>row.examples.some(example=>spellings.has(normalise(example)))).length;
   },locale);
-  assert.ok(expected>1000);assert.equal(Number(await page.locator('[data-root-count]').getAttribute('data-total')),expected);
-  assert.equal(Number(await page.locator('[data-root-count]').getAttribute('data-visible')),expected);
+  assert.ok(expected>1000);assert.equal(Number(await page.locator('[data-root-list]').getAttribute('data-total')),expected);
+  assert.equal(Number(await page.locator('[data-root-list]').getAttribute('data-visible')),expected);
   const before=await page.locator('[data-morpheme]').count();await page.locator('.word-list-more>button').click();assert.ok(await page.locator('[data-morpheme]').count()>before);
   await page.locator('#root-search').fill('aud');assert.ok((await page.locator('[data-root-list]').innerText()).includes('audience'));
-  await page.locator('#root-search').fill('');await page.selectOption('[data-root-kind]','root');assert.ok(Number(await page.locator('[data-root-count]').getAttribute('data-visible'))>0);
+  await page.locator('#root-search').fill('');await page.locator('.study-search-filters summary').click();await page.locator('[data-root-kind=root]').click();assert.ok(Number(await page.locator('[data-root-list]').getAttribute('data-visible'))>0);
   await page.evaluate(()=>window.cleanupInventory());console.log('Verified real English inventory count, pagination, aud-family search and root-only coverage:',locale,expected);
  }
  for(const locale of ['en','ko']){

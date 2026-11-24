@@ -1,7 +1,7 @@
 import {createWordInitialIndex} from './word-initial-index.js';
 import {renderWordInitialFilter,updateWordInitialFilter} from './word-initial-view.js';
 import {escapeHtml as e} from './ui.js';
-import {renderStudySearch} from './study-components.js';
+import {renderStudySearchWithFilters} from './study-components.js';
 import {mountWordRows} from './word-rows.js';
 
 /** One list DOM/input/pager owner; adapters retain query, grouping and learner policies. */
@@ -18,7 +18,7 @@ export function renderLexiconWordList(host,{t,query,filters,language='en',locale
  }
  function schedule(){cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>renderResults());}
  function clearHandlers(){host.querySelectorAll('button,input,select,.filter-fold,.study-search,#wordlist-results').forEach(node=>{node.oninput=null;node.onchange=null;node.onkeydown=null;node.onclick=null;node.ontoggle=null;node.oncompositionstart=null;node.oncompositionend=null;});}
- const filterRows=()=>[...host.querySelectorAll('.word-list-filter-panel .wl-filter-row')];
+ const filterRows=()=>[...host.querySelectorAll('.study-search-filters .wl-filter-row')];
  function draw(reset=false){
   if(!alive)return;cancelAnimationFrame(frame);const count=reset?80:pager?.count||80;
   const rows=filterRows(),offsets=rows.map(row=>row.scrollLeft);
@@ -28,8 +28,7 @@ export function renderLexiconWordList(host,{t,query,filters,language='en',locale
   pager?.cleanup();clearHandlers();
   const alphabet=renderWordInitialFilter({language,locale,options:index.readOptions([]),selected:initial});
   const filterMarkup=typeof filters==='function'?filters(alphabet):alphabet+(filters||'');
-  const afterInput=`<div class="word-list-filter-panel">${filterMarkup}</div>`;
-  host.innerHTML=`<div class="lexicon-view"><h2 class="section-title study-list-title">${t('Word List')}</h2>${renderStudySearch({id:'search-input',value:searchValue,label:t('Search'),afterInput})}<div class="wl-list wl-list--wordlist" id="wordlist-results" aria-live="polite"></div><p class="study-audio-status lexicon-audio-status muted" role="status" hidden></p></div>`;
+  host.innerHTML=`<div class="lexicon-view"><h2 class="section-title study-list-title">${t('Word List')}</h2>${renderStudySearchWithFilters({id:'search-input',value:searchValue,label:t('Search'),filters:filterMarkup})}<div class="wl-list wl-list--wordlist" id="wordlist-results" aria-live="polite"></div><p class="study-audio-status lexicon-audio-status muted" role="status" hidden></p></div>`;
   actions.bindFilters(host,draw);const list=host.querySelector('#wordlist-results'),search=host.querySelector('#search-input'),initialSelect=host.querySelector('[data-word-initial]');
   initialSelect.onchange=()=>{initial=initialSelect.value;actions.setInitial?.(initial);cancelAnimationFrame(frame);renderResults();};
   search.oninput=()=>{searchValue=search.value;actions.setQuery(searchValue);schedule();};
