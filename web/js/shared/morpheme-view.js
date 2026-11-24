@@ -57,11 +57,11 @@ export function renderMorphemeInventory(host,{
   </section>`;
  }
 
+ const kindFilter = `<div class="grammar-selectors"><label>${e(t('Type'))}<select data-root-kind>${renderKindOptions()}</select></label></div>`;
  host.innerHTML = `<div class="lexicon-view">
   <h2 class="section-title study-list-title">${e(t('Root Families'))}</h2>
   <p class="muted" data-root-count></p>
-  <div class="grammar-selectors"><label>${e(t('Type'))}<select data-root-kind>${renderKindOptions()}</select></label></div>
-  ${renderStudySearch({id:'root-search',value:state.rootQuery||'',label:t('Search')})}
+  ${renderStudySearch({id:'root-search',value:state.rootQuery||'',label:t('Search'),controls:kindFilter})}
   <div data-root-list class="study-reference-list"></div>
  </div>`;
  const list = host.querySelector('[data-root-list]');
