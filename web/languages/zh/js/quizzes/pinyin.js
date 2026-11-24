@@ -6,7 +6,7 @@ import { TTS } from '../services/tts.js';
 import { Haptic } from '../services/haptic.js';
 import { recordAnswer } from '../services/srs.js';
 import {
-  pick, scorePill, renderKeyboard, attachKeyboard,
+  pick, renderKeyboard, attachKeyboard,
   posGroupIdsForWord, wordlistCombinedFilterMarkup,
   filterByStudyStatus, filterByPosTag,
   quizPinyinFeedback,
@@ -15,7 +15,7 @@ import { t, wordMeaning } from '../services/i18n.js';
 
 export function renderPinyinQuiz(el,session={}) {
   const filters = session.filters || {status:'all', pos:'all', open:false};
-  let score = 0, total = 0, feedback = '';
+  let feedback = '';
   let inputs = [], focusIdx = 0;
   let results = [];
   let corrections = [];
@@ -99,9 +99,8 @@ export function renderPinyinQuiz(el,session={}) {
       .reduce((best, candidate) => candidate.results.filter(Boolean).length > best.results.filter(Boolean).length ? candidate : best);
     results = closest.results;
     corrections = closest.syllables;
-    total++;
     if (Pinyin.compare(input, word)) {
-      score++; feedback = 'correct';
+      feedback = 'correct';
       recordAnswer(true); Haptic.success();
     } else {
       feedback = 'wrong';
@@ -120,7 +119,6 @@ export function renderPinyinQuiz(el,session={}) {
   }
 
   function draw() {
-    const displayed=session.score?.()||{correct:score,total};
     const { aw, forStatusRow, forTagRow, pool } = buildRows();
     if (!aw.length) {
       el.innerHTML = `<div class="card" style="text-align:center;padding:24px"><div style="font-size:40px">📭</div><div style="margin-top:8px;font-weight:600">${t('noWordsTitle')}</div><div style="font-size:14px;color:var(--text2);margin-top:6px">${t('pickLevelHint')}</div></div>`;
@@ -134,7 +132,6 @@ export function renderPinyinQuiz(el,session={}) {
       el.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <div class="section-title" style="margin:0">${session.title ?? t('mode_pinyin')}</div>
-          ${scorePill(displayed.correct, displayed.total)}
         </div>
         ${session.modeTabs || ''}
       ${session.question?'':wordlistCombinedFilterMarkup(forStatusRow, filters.status, forTagRow, filters.pos, forTagRow, filters.open)}
@@ -150,7 +147,6 @@ export function renderPinyinQuiz(el,session={}) {
     el.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
         <div class="section-title" style="margin:0">${session.title ?? t('mode_pinyin')}</div>
-        ${scorePill(displayed.correct, displayed.total)}
       </div>
       ${session.modeTabs || ''}
       ${session.question?'':wordlistCombinedFilterMarkup(forStatusRow, filters.status, forTagRow, filters.pos, forTagRow, filters.open)}

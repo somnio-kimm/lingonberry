@@ -16,9 +16,9 @@ test('Dictation tabs reuse the German/Chinese full-width control variant with sa
  assert.match(html,/class="listening-mode-controls"/);assert.match(html,/class="btn-small" data-kind="word" aria-pressed="true"/);assert.ok(html.indexOf('단어')<html.indexOf('문장'));assert.match(html,/문장 &lt;&gt;/);assert.throws(()=>renderStudyTabs({options:[],attribute:'data-kind',variant:'unknown'}),/variant/);
 });
 
-test('Dictation header keeps the initial score and baseline header geometry instead of omitting zero',()=>{
- const html=renderStudyQuizHeader({title:'<Dictation>'});assert.match(html,/vocab-quiz-header/);assert.match(html,/&lt;Dictation&gt;/);assert.match(html,/class="score-pill">0 \/ 0<\/span>/);
- assert.match(renderStudyQuizHeader({title:'Dictation',score:{correct:2,total:3}}),/>2 \/ 3<\/span>/);
+test('the quiz header shows only the escaped title',()=>{
+ const html=renderStudyQuizHeader({title:'<Dictation>'});
+ assert.equal(html,'<div class="vocab-quiz-header"><div class="section-title">&lt;Dictation&gt;</div></div>');
 });
 
 

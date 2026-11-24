@@ -37,6 +37,7 @@ try{
    let wordGeometry;
    for(const mode of ['listenword','listensentence']){
     await page.locator(`button[data-listening-mode=${mode}]`).click();await page.locator('.listening-question').waitFor();const geometry=await front(page),key=[locale,width,theme,mode].join('-');
+    assert.equal(await page.locator('.score-pill').count(),0,'Dictation shows a title without a running score');
     if(mode==='listenword')wordGeometry={answer:geometry.answer,field:geometry.field};
     else assert.deepEqual({answer:geometry.answer,field:geometry.field},wordGeometry,'Word and Sentence share the answer field dimensions');
     if(['de','zh'].includes(language))references.set(language+'-'+key,geometry);else assert.deepEqual(geometry,references.get((language==='ja'?'zh':'de')+'-'+key),language+' full Dictation '+key);

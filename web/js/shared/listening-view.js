@@ -9,7 +9,7 @@ const PLAY_LIMIT=3;
 export function renderListeningView(el, config, session = {}) {
   const labels = config.labels;
   let mode = session.question?.mode || 'listenword', question, input = '', feedback = '', heard = false, playing = false;
-  let hintUsed = false, plays = 0, score = 0, total = 0, status = 'all', pos = 'all', open = false;
+  let hintUsed = false, plays = 0, status = 'all', pos = 'all', open = false;
   let alive = true, generation = 0, ready = !config.prepare || !!session.question;
   let loadError = false,typing;
   function cancelAudio() { generation++; playing = false; DeviceSpeech.stop(); }
@@ -43,20 +43,20 @@ export function renderListeningView(el, config, session = {}) {
     if(gaveUp?!isOutOfPlays():!input.trim())return;
     el.querySelector('#listening-answer')?.blur();
     const correct=!gaveUp&&config.answerCorrect(question,input);
-    feedback = correct ? 'correct' : 'wrong'; total++; if(correct)score++;
+    feedback = correct ? 'correct' : 'wrong';
     cancelAudio(); config.record(question,input,correct,{heard:true,hintUsed,plays},session); session.onAnswer?.(correct,input,[],null,{listening:{heard:true,hintUsed,plays}});
     config.haptic?.(correct); draw(); config.update?.();el.closest('main')?.scrollTo(0,0);window.scrollTo(0,0);
   }
   function draw() {
     if (!alive) return;
     cancelAudio(); typing?.destroy();typing=undefined;
-    const shown = session.score?.() || {correct:score,total},translation=question&&feedback?config.translation(question)||'':'',warning=config.warning?.()||'';
+    const translation=question&&feedback?config.translation(question)||'':'',warning=config.warning?.()||'';
     const hintText=question&&!feedback?config.hint(question):'',reading=question&&!feedback?listeningReadingHint(question):'';
     const hints=[
       renderStudyHint({label:labels.hint,summaryId:'listening-hint',body:hintText?`<p class="listening-hint-text" lang="${e(question.word.studyExplanationLanguage||question.locale)}">${e(hintText)}</p>`:''}),
       renderStudyHint({label:labels.readingHint,summaryId:'listening-reading-hint',body:reading?`<p class="listening-reading" lang="${e(question.language)}">${e(reading)}</p>`:''}),
     ].join('');
-    el.innerHTML=`${renderStudyQuizHeader({title:labels.title,score:shown})}${session.question?'':`${renderStudyTabs({label:labels.mode,options:[{value:'listenword',label:labels.word},{value:'listensentence',label:labels.sentence}],selected:mode,attribute:'data-listening-mode',variant:'listening'})}${ready?config.filters?.({status,pos,open})||'':''}`}
+    el.innerHTML=`${renderStudyQuizHeader({title:labels.title})}${session.question?'':`${renderStudyTabs({label:labels.mode,options:[{value:'listenword',label:labels.word},{value:'listensentence',label:labels.sentence}],selected:mode,attribute:'data-listening-mode',variant:'listening'})}${ready?config.filters?.({status,pos,open})||'':''}`}
       ${question?`<div class="listening-test quiz-after-filter" data-question-id="${e(question.id)}" data-listening-mode="${mode}"><section class="card panel listening-question"><div class="vocab-question-top vocab-question-top--audio"><span class="listening-play-count" data-listening-play-count role="status" aria-label="${e(labels.playCount)}">${playCount()}</span><button type="button" class="word-listen" id="listening-play" aria-label="${e((heard?labels.replay:labels.play).replace(/^🔊\s*/u,''))}" aria-busy="false" ${isOutOfPlays()?'disabled':''}>🔊</button></div><p class="listening-status" role="status" hidden></p>
       ${feedback?`<div class="vocab-answer-cell ${feedback}"><span class="wrong-answer-label">${labels.correctAnswer}</span><div class="listening-transcript correct-answer" lang="${question.language}">${config.answerMarkup?.(question)||e(question.answer)}</div>${feedback==='wrong'?`<span class="wrong-answer-label">${labels.wrongAnswer}</span><div class="listening-user-answer wrong-answer-value--wrong" lang="${question.language}">${input.trim()?`<del>${e(input)}</del>`:e(labels.noAnswer)}</div>`:''}</div>${translation?`<p class="listening-translation" lang="${e(question.word.studyExplanationLanguage||question.locale||config.locale())}">${e(translation)}</p>`:''}`:`<div class="vocab-answer-cell active"><textarea id="listening-answer" rows="1" maxlength="1000" inputmode="text" enterkeyhint="done" lang="${question.language}" aria-label="${labels.yourAnswer}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false">${e(input)}</textarea></div>${hints}`}
       </section>${!feedback?`<div class="quiz-action-bar"><button class="primary submit-pill" id="listening-submit" disabled>${labels.check}</button><button class="btn-small listening-skip" id="listening-skip">${isOutOfPlays()?labels.giveUp:labels.skip}</button></div>`:`<div class="quiz-next-bar"><button class="primary btn-primary" id="listening-next">${labels.next}</button></div>`}</div>`:`<section class="card panel"><p role="status">${!ready?loadError?labels.loadError:labels.loading:labels.empty}</p></section>`}${warning?`<p role="status">${e(warning)}</p>`:''}`;

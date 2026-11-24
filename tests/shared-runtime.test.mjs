@@ -26,6 +26,6 @@ test('reports retain English form language and fallback OS diagnostics',async()=
  assert.equal(url.searchParams.get('hl'),'en');assert.equal(url.searchParams.get('entry.582897232'),'Learn German');
 });
 test('shared HTML escaping protects text and attribute interpolations',async()=>{
- const {escapeHtml,scorePill}=await import('../web/js/shared/ui.js');
- assert.equal(escapeHtml('<img src="x" onerror=\'bad\'>&'),'&lt;img src=&quot;x&quot; onerror=&#39;bad&#39;&gt;&amp;');assert.equal(escapeHtml(null),'');assert.equal(scorePill(0,0),'');assert.match(scorePill(2,4),/50%/);
+ const {escapeHtml}=await import('../web/js/shared/ui.js');
+ assert.equal(escapeHtml('<img src="x" onerror=\'bad\'>&'),'&lt;img src=&quot;x&quot; onerror=&#39;bad&#39;&gt;&amp;');assert.equal(escapeHtml(null),'');
 });

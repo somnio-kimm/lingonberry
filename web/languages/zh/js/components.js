@@ -2,7 +2,7 @@ import {appendStudySheetNext,renderStudyFilters} from '../../../js/shared/study-
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
-export {showQuizBurst,scorePill} from '../../../js/shared/ui.js';
+export {showQuizBurst} from '../../../js/shared/ui.js';
 import { SCREENS, HOME_MODES } from './app-definition.js';
 import { Store } from './services/store.js';
 import { Pinyin } from './services/pinyin.js';

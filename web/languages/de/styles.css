@@ -470,14 +470,11 @@ html[data-theme="dark"] .wl-list.wl-list--wordlist .wl-row:active{background:rgb
 .flow-chip{padding:8px 14px;border-radius:10px;font-size:18px;font-weight:600;
   background:var(--line);color:var(--text);transition:all .15s;min-height:40px}
 .flow-chip:active{transform:scale(0.93)}
-.flow-chip.chosen{background:var(--accent);color:#fff}.score-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;
-  border-radius:99px;background:var(--card);font-size:14px;font-weight:600;
-  margin-bottom:16px;border:0.5px solid var(--card-border)}
+.flow-chip.chosen{background:var(--accent);color:#fff}
 
 
 .sentence-quiz-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;}
 .sentence-quiz-header .section-title{margin:0;}
-.sentence-quiz-header .score-pill{margin:0;}
 .sentence-quiz-instruction{font-size:13px;color:var(--muted);}
 .sentence-quiz-text.answered{color:var(--green);}
 .sentence-translation{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5;overflow-wrap:anywhere;}

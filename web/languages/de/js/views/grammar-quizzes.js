@@ -1,6 +1,6 @@
 import {bindTypingAnswer} from '../../../../js/shared/typing-answer.js';
 import { createQuestionCatalog } from '../core/question-catalog.js';
-import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared/ui.js';
+import { escapeHtml as e, showQuizBurst } from '../../../../js/shared/ui.js';
 import { t,getLocale,wordMeaning } from '../core/i18n.js';
 import { studyWords,filterStudyStatus,wordHeading } from '../core/words.js';
 import { articleQuestions,articleAnswerCorrect,verbFormQuestions,verbFormCorrect,personLabel,localizedPersonLabel,tenseLabel,VERB_FORMS } from '../core/grammar-quizzes.js';
@@ -14,7 +14,7 @@ const options=(values,label)=>`<option value="all">${t('All')}</option>${values.
 function renderGrammarQuiz(el,ctx,initialMode,session={}) {
  const inputFamily=initialMode!=='articles';
  const level=ctx.store.state.preferences.studyLevel,pool=studyWords(ctx.words,level);
- let mode=initialMode,questionWords=[],questions=[],question=null,answer='',feedback='',score=0,total=0,status='all',pos='all',tense='all',person='all',grammaticalCase='all',number='all',pattern='all',gender='all',filterOpen=false,typing,destroyed=false;
+ let mode=initialMode,questionWords=[],questions=[],question=null,answer='',feedback='',status='all',pos='all',tense='all',person='all',grammaticalCase='all',number='all',pattern='all',gender='all',filterOpen=false,typing,destroyed=false;
  const review=session.question?null:ctx.quizReview;ctx.quizReview=null;
  const builders = {
   articles: articleQuestions,
@@ -53,7 +53,7 @@ function renderGrammarQuiz(el,ctx,initialMode,session={}) {
  function submit() {
   if(feedback||typing?.isComposing||!answer.trim()||!question)return;
   const correct=mode==='articles'?articleAnswerCorrect(question,answer):mode==='verbforms'?verbFormCorrect(question,answer):nominalAnswerCorrect(question,answer);
-  el.querySelector('#form-answer')?.blur();total++;if(correct)score++;feedback=correct?'correct':'wrong';filterOpen=false;ctx.haptic();
+  el.querySelector('#form-answer')?.blur();feedback=correct?'correct':'wrong';filterOpen=false;ctx.haptic();
   const input=mode==='articles'?answer+' '+question.word.lemma:answer;
   showQuizBurst(correct);ctx.store.recordQuizAnswer(mode,question,input,correct,{review:!!session.question});session.onAnswer?.(correct,input);draw();ctx.updateStatus();resetScroll();if(mode!=='articles')el.querySelector('.grammar-question')?.scrollIntoView({block:'start'});
  }
@@ -62,11 +62,10 @@ function renderGrammarQuiz(el,ctx,initialMode,session={}) {
  }
  function draw() {
   typing?.destroy();typing=undefined;
-  const shownScore=session.score?.()||{correct:score,total};
   const noun=question?.noun?{...wordsById.get(question.noun.id),...question.noun}:null;
   const nominal=['cases','adjendings'].includes(mode);
   const nominalSelectors=nominal&&!session.question?`<div class="grammar-selectors nominal-selectors"><label>${t('Case')}<select id="grammar-case">${options(CASES,caseLabel)}</select></label><label>${t('Grammatical number')}<select id="grammar-number">${options(['singular','plural'],numberLabel)}</select></label>${mode==='adjendings'?`<label>${t('Article pattern')}<select id="grammar-pattern">${options(['strong','weak','mixed'],patternLabel)}</select></label><label>${t('Gender / plural')}<select id="grammar-gender">${options(['masculine','feminine','neuter','plural'],genderLabel)}</select></label>`:''}</div>`:'';
-  el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t(modeTitle(mode))}</div>${scorePill(shownScore.correct,shownScore.total)}</div>
+  el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t(modeTitle(mode))}</div></div>
    ${inputFamily&&!session.question?`<div class="form-mode-controls" role="group" aria-label="${t('Exercise type')}">${['verbforms','cases','adjendings'].map(kind=>`<button data-form-mode="${kind}" aria-pressed="${mode===kind}">${t(modeTitle(kind))}</button>`).join('')}</div>`:''}
    ${session.question?'':studyFilterMarkup(questionWords,ctx.store,status,pos,filterOpen,nominalSelectors)}
    ${mode==='verbforms'&&!session.question?`<div class="grammar-selectors"><label>${t('Form')}<select id="grammar-tense">${options(VERB_FORMS,tenseLabel)}</select></label><label>${t('Person')}<select id="grammar-person">${options(['ich','du','er','wir','ihr','sie'],person=>localizedPersonLabel(person,getLocale(),true))}</select></label></div>`:''}

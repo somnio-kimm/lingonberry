@@ -3,7 +3,7 @@ import {projectScrambleTiles} from '../../../../js/shared/lexicon-sentences.js';
 import {readQuestionTranslationFocus} from '../../../../js/shared/translation-focus.js';
 import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/question-rotation.js';
 import {renderLexiconSentence} from '../../../../js/shared/lexicon-sentence-view.js';
-import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared/ui.js';
+import { escapeHtml as e, showQuizBurst } from '../../../../js/shared/ui.js';
 import { t, getLocale, sentenceMeaning, wordMeaning } from '../core/i18n.js';
 import { createStudyControls, studyFilterMarkup } from './study-components.js';
 import { studyWords, filterStudyStatus, shuffleWords, wordHeading } from '../core/words.js';
@@ -15,7 +15,7 @@ function renderSentenceQuiz(el,ctx,mode,session={}) {
  const alignment=new WeakMap(),details=mode==='cloze'?createStudyControls(el,ctx):null;
  const aligned=question=>hasClozeTranslationTarget(question,sentenceMeaning(question.example),'de',question.word.studyExplanationLanguage||getLocale());
  let status='all',pos='all',filterOpen=false,rotation,rotationRows=[];
- let questions=session.question?[session.question]:build(words),question,options=[],pool=[],chosen=[],feedback='',input='',score=0,total=0,destroyed=false,childCleanup=()=>{},generation=0;
+ let questions=session.question?[session.question]:build(words),question,options=[],pool=[],chosen=[],feedback='',input='',destroyed=false,childCleanup=()=>{},generation=0;
  const review=session.question?null:ctx.quizReview;ctx.quizReview=null;
  if(review?.mode===mode){const q=build(ctx.words).find(q=>q.id===review.id);if(q)questions=[q,...questions.filter(item=>item.id!==q.id)];}
  function filterMarkup(){return session.question?'':studyFilterMarkup(words,ctx.store,status,pos,filterOpen);}
@@ -42,12 +42,12 @@ function renderSentenceQuiz(el,ctx,mode,session={}) {
   if(destroyed||feedback)return;
   const correct=mode==='cloze'?answer===question.answer:scrambleCorrect(question,chosen.map(tile=>tile.text));
   input=mode==='scramble'&&correct?question.example.de:answer;
-  total++;if(correct)score++;feedback=correct?'correct':'wrong';ctx.haptic();
+  feedback=correct?'correct':'wrong';ctx.haptic();
   showQuizBurst(correct);ctx.store.recordQuizAnswer(mode,question,input,correct,{review:!!session.question});session.onAnswer?.(correct,input);draw();ctx.updateStatus();
  }
  function draw() {
-  if(destroyed)return;childCleanup();generation++;const displayed=session.score?.()||{correct:score,total};
-  el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t(mode==='cloze'?'Cloze':'Sentence scramble')}</div>${question?scorePill(displayed.correct,displayed.total):''}</div>${filterMarkup()}<div data-sentence-body></div>`;bindFilters();
+  if(destroyed)return;childCleanup();generation++;
+  el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t(mode==='cloze'?'Cloze':'Sentence scramble')}</div></div>${filterMarkup()}<div data-sentence-body></div>`;bindFilters();
   const host=el.querySelector('[data-sentence-body]');if(!question){host.innerHTML=`<section class="panel empty-wrong quiz-after-filter"><p>${t('No sentence questions are available at this level.')}</p></section>`;return;}
   const sentence=question.example.de,show=mode==='cloze'||ctx.store.state.preferences[mode+'ShowTranslation'],tiles=projectScrambleTiles(chosen,pool,tile=>tile.text);
   const view={...question,mode,answer:mode==='scramble'?sentence:question.answer,locale:question.locale||question.word.studyExplanationLanguage||getLocale(),sentence,focus:{start:question.start,text:question.answer},translationFocus:readQuestionTranslationFocus(question),correctOption:String(options.findIndex(option=>option.text===question.answer)),options:options.map((option,index)=>({...option,id:String(index),meaning:wordMeaning(option.word)})),tokens:tiles.tokens,pool:tiles.pool};
