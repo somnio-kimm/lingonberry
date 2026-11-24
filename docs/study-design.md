@@ -226,7 +226,7 @@ Study uses two equal columns on phone and tablet, with 12px gaps and at least112
 
 ## Vocabulary hints and checked examples
 
-Word Input offers one collapsed Hint panel with a masked example when a valid clue is available. The example clue masks a validated unique target in the question sense’s own sentence and omits its translation; unsafe or unavailable targets do not get an invented clue. Opening hints must preserve typed input. After checking Word Input or Meaning Quiz, show the correct sense meaning and its own example in the shared learning card with example audio. Preserve Chinese/Japanese reading layout and suppress duplicate English-to-English translations. Selection still checks immediately; typing retains Submit, Skip and Next. `verify-vocabulary-learning-browser.mjs` covers all four adapters in both display languages, phone/tablet and themes.
+Optional practice clues use the shared Hint disclosure. Word Input offers one collapsed Hint panel with a masked example when a valid clue is available. The example clue masks a validated unique target in the question sense’s own sentence and omits its translation; unsafe or unavailable targets do not get an invented clue. Opening hints must preserve typed input. After checking Word Input or Meaning Quiz, show the correct sense meaning and its own example in the shared learning card with example audio. Preserve Chinese/Japanese reading layout and suppress duplicate English-to-English translations. Selection still checks immediately; typing retains Submit, Skip and Next. `verify-vocabulary-learning-browser.mjs` covers all four adapters in both display languages, phone/tablet and themes.
 
 ## Dictation pronunciation clues
 
@@ -250,4 +250,4 @@ New vocabulary snapshots retain one learningExample for checked feedback, not th
 
 Root cards explicitly label their recorded Origin / 어원 and keep the simple source language (Latin, Greek, etc.) plus the existing meaning and visible related words. Unrecorded origins say so; do not infer a history from spelling or reintroduce a root quiz.
 
-Dictation hint buttons share one row: Meaning Hint stays first, and optional Pronunciation Hint follows it. Revealed clue text sits below the row, preserving the answer field and speaker positions. UI package tests use AVAILABLE_STUDY_LANGUAGES; unreleased languages remain hidden rather than being silently re-enabled for a test.
+Dictation uses the same Hint disclosure as Word Input. Meaning comes first, followed by pronunciation when a supplied reading is available. UI package tests use AVAILABLE_STUDY_LANGUAGES; unreleased languages remain hidden rather than being silently re-enabled for a test.

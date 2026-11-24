@@ -135,7 +135,7 @@ html,body{background:var(--bg);color:var(--text)}
 .listening-play{width:100%;min-height:52px;margin:8px 0;font-size:17px}
 .listening-status{min-height:20px;margin:6px 0 14px;color:var(--secondary);font-size:13px;line-height:1.5}
 #listening-answer{width:100%;display:block;resize:none;border:0;outline:none;background:transparent;color:var(--text);font:inherit;font-size:20px;line-height:1.6;min-height:44px;padding:6px 0;overflow-wrap:anywhere}
-.listening-hint{margin-top:12px}.listening-hint-text,.listening-translation{font-size:15px;line-height:1.6;color:var(--secondary);margin:10px 0 0;overflow-wrap:anywhere}
+.listening-translation{font-size:15px;line-height:1.6;color:var(--secondary);margin:10px 0 0;overflow-wrap:anywhere}
 .listening-transcript,.listening-user-answer{font-size:20px;line-height:1.6;margin:8px 0 12px;overflow-wrap:anywhere}
 .listening-transcript .py-char-hz,.listening-transcript .py-char-py{color:var(--green)}
 .listening-transcript .py-char-hz{font-size:22px}
@@ -480,9 +480,10 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .flashcard-study .flashcard-front .fc-meaning{display:none}
 
 /* Optional clues stay closed; the checked sense supplies the learning card. */
-.vocab-hint{min-width:0;margin-top:16px;text-align:left;border:1px solid var(--card-border);border-radius:8px}
-.vocab-hint summary{padding:11px 12px;min-height:44px;box-sizing:border-box;font-size:14px;color:var(--secondary);cursor:pointer}
-.vocab-context-hint{font-size:18px;line-height:1.65;margin:0;padding:0 12px 12px;overflow-wrap:anywhere}
+.study-hint{min-width:0;margin-top:16px;text-align:left;border:1px solid var(--card-border);border-radius:8px}
+.study-hint summary{padding:11px 12px;min-height:44px;box-sizing:border-box;font-size:14px;color:var(--secondary);cursor:pointer}
+.study-hint-content{padding:0 12px 12px;font-size:18px;line-height:1.65;overflow-wrap:anywhere}
+.study-hint-content p{font-size:inherit;line-height:inherit;margin:0}
 .vocab-context-hint .cloze-blank{color:var(--blue)}
 .vocab-learning{margin-top:16px;text-align:left}
 .vocab-learning-word{font-size:24px;font-weight:650;line-height:1.4}
@@ -504,8 +505,6 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .wrong-mode{display:inline-flex;align-items:center;gap:5px}
 .wrong-mode .study-icon{width:14px;height:14px;flex:0 0 14px}
 
-.listening-hints{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
-.listening-hints .listening-hint{margin:0}
 
 .sentence-quiz-text{font-size:22px;font-weight:600;line-height:1.5;overflow-wrap:anywhere}
 .scramble-question .sentence-quiz-text.answered{color:var(--green)}

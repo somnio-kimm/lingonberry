@@ -4,6 +4,12 @@ import {escapeHtml as e} from './ui.js';
 export function renderStudySearch({id,value='',label='Search',controls=''}){
  return `<div class="card study-search">${controls}<input id="${e(id)}" class="input-field" type="search" inputmode="text" enterkeyhint="search" placeholder="${e(label)}" aria-label="${e(label)}" value="${e(value)}" autocomplete="off" autocapitalize="none"></div>`;
 }
+/** Use native disclosure so opening a clue preserves the answer field and keyboard state. */
+export function renderStudyHint({label,body,summaryId}){
+ if(!body)return '';
+ return `<details class="study-hint"><summary${summaryId?` id="${e(summaryId)}"`:''}>${e(label)}</summary><div class="study-hint-content">${body}</div></details>`;
+}
+
 export function renderStudyTabs({label,options,selected,attribute,variant='form'}){
  if(!/^data-[a-z]+(?:-[a-z]+)*$/u.test(attribute))throw new Error('Study tabs require a safe data attribute');
  if(!['form','listening'].includes(variant))throw new Error('Unknown study tabs variant');
