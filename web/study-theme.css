@@ -367,8 +367,15 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .phrase-gap-sentence .cloze-gap-slot{display:inline-block;width:5em;max-width:100%;height:1em;margin:0 4px;border-bottom:2px solid var(--blue);vertical-align:baseline}
 .phrase-gap-sentence .phrase-gap-input:focus{outline:0;border-color:var(--blue)}
 
+:is(.cloze-question,.cloze-options){
+ --cloze-green-tint:color-mix(in srgb,var(--green) 18%,transparent);
+ --cloze-red-tint:color-mix(in srgb,var(--red) 18%,transparent);
+}
+.cloze-question .cloze-answer,.cloze-options .opt-btn.option-correct{background-color:var(--cloze-green-tint)}
+.cloze-question .cloze-typed-mistake,.cloze-options .opt-btn.option-wrong{background-color:var(--cloze-red-tint)}
 .cloze-inline-correction{ruby-position:over;ruby-align:center}
-.phrase-gap-sentence .cloze-inline-correction>rt.cloze-answer{padding:0;background:transparent;color:var(--green);font-size:.8em;font-weight:600}
+.cloze-inline-correction .cloze-typed-mistake,.phrase-gap-sentence .cloze-inline-correction>rt.cloze-answer{padding-inline:3px;border-radius:4px}
+.phrase-gap-sentence .cloze-inline-correction>rt.cloze-answer{color:var(--green);font-size:.8em;font-weight:600}
 .vocab-wrong,.cloze-typed-mistake{color:var(--red)}
 
 /* Japanese uses the Chinese answer-reading hierarchy, with ruby over words/kanji groups. */
