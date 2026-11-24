@@ -300,7 +300,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    const prompt=q.mode==='cloze'?`<div class="wrong-question-block"><p class="wrong-question lexicon-review-question" lang="${language}">${e(q.sentence.slice(0,q.focus.start))}<span class="lexicon-blank wrong-test-slot wrong-test-blank"></span>${e(q.sentence.slice(q.focus.start+q.focus.text.length))}</p></div>`:'';
    const duplicate=[word.lemma,displayStudyWord(word)].includes(q.answer);
    const correct=['cloze','scramble','listensentence'].includes(q.mode)&&!duplicate?field('Correct Answer',e(q.answer),true):'';
-   return prompt+correct+field('Wrong Answer',e(answer));
+   return prompt+correct+field('Wrong Answer',e(answer||(['listenword','listensentence'].includes(q.mode)?listeningLabels(locale()).noAnswer:'')));
   };
   const cards=rows.map(row=>{const word=wordFor(row);return {id:row.id,wordId:word.id,modeKey:questionType(row.question),mode:questionLabel(row.question),pos:t(typeName(word)),level:levelLabel(word.level),count:row.count,headingHtml:heading(word),meaning:word.studyMeaning,meaningLanguage:word.studyExplanationLanguage||study?.explanationLanguage||row.question.locale||locale(),answerHtml:answerDetails(row)};});
   return renderLexiconReview(host,{t,rows:cards,total:all.length,groups,open:f.open},{
