@@ -188,7 +188,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const list=pool(mode);let selected;
   if(!Object.hasOwn(commonModes,mode))return chooseFeatureQuestion(mode);
   if(language==='en'&&mode==='cloze')selected=chooseCombinedCloze({engine,words:list,exercises,locale:study.explanationLanguage,answerMode:state(mode).answerMode,previousId:previousQuestionId});
-  else if(['cloze','scramble'].includes(mode))selected=engine.createSentencePool(mode,list,study.explanationLanguage).choose(previousQuestionId);
+  else if(['cloze','scramble'].includes(mode))selected=engine.createSentencePool(mode,list,study.explanationLanguage).choose(previousQuestionId,Math.random,{preferTranslationTarget:true});
   else selected=engine.createVocabularyPool(mode,list,study.explanationLanguage,'vocabulary',{meaningWords:words}).choose(previousQuestionId);
   return reviewContent.prepare(selected);
  }

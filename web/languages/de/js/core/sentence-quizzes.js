@@ -1,8 +1,8 @@
+import {chooseClozeOptions} from '../../../../js/shared/cloze-choices.js';
 import {findAdjectiveFocusPatterns,pickAdjectiveFocusOption} from './adjective-forms.js';
 import {findSentenceFocus,joinSentenceTiles,createSentenceQuestionId} from '../../../../js/shared/lexicon-sentences.js';
 import {nounPhraseAlternatives,hasNounPhraseArticle,formAlternatives} from './form-alternatives.js';
 import { wordType } from './dictionary.js';
-import { shuffleWords } from './words.js';
 import {collectVocabularySpellings} from '../../../../js/shared/vocabulary-spellings.js';
 export const normalizeSentence=text=>String(text).normalize('NFC').trim().replace(/\s+/gu,' ');
 export const sentenceTokens=text=>normalizeSentence(text).match(/[^\s.,，。]+|[.,，。]/gu)||[];
@@ -99,18 +99,29 @@ function optionForm(word,question) {
  if(text&&(question.start===0||question.answer!==form.text&&question.answer===form.text[0]?.toLocaleUpperCase('de')+form.text.slice(1)))text=text[0].toLocaleUpperCase('de')+text.slice(1);
  return text;
 }
-export function clozeOptions(question,words,random=Math.random) {
- const options=[{word:question.word,text:question.answer}],seen=new Set([question.answer]);
+function prepareClozeDistractors(question,words){
  const knownSpellings=new Set(collectVocabularySpellings(question.word));
  // Older review snapshots omit aliases; recover them from installed content.
  const currentWord=words.find(word=>word.id===question.word.id);
  if(currentWord)for(const spelling of collectVocabularySpellings(currentWord))knownSpellings.add(spelling);
- const type=wordType(question.word),similar=words.filter(w=>type&&wordType(w)===type);
- for(const word of shuffleWords(similar,random)){
-  if(collectVocabularySpellings(word).some(spelling=>knownSpellings.has(spelling)))continue;
-  const text=optionForm(word,question);if(!text||seen.has(text))continue;seen.add(text);options.push({word,text});if(options.length===4)break;
- }
- return shuffleWords(options,random);
+ const type=wordType(question.word),candidates=words.filter(word=>type&&wordType(word)===type);
+ const toOption=word=>{
+  if(collectVocabularySpellings(word).some(spelling=>knownSpellings.has(spelling)))return;
+  const text=optionForm(word,question);
+  if(text)return {word,text};
+ };
+ return {candidates,toOption};
+}
+export function hasClozeDistractor(question,words){
+ const {candidates,toOption}=prepareClozeDistractors(question,words);
+ return candidates.some(word=>{
+  const option=toOption(word);
+  return option&&option.text.toLocaleLowerCase('de')!==question.answer.toLocaleLowerCase('de');
+ });
+}
+export function clozeOptions(question,words,random=Math.random){
+ const {candidates,toOption}=prepareClozeDistractors(question,words);
+ return chooseClozeOptions({word:question.word,text:question.answer},candidates,toOption,random);
 }
 export const joinSentenceTokens=tokens=>normalizeSentence(joinSentenceTiles(tokens,'de'));
 export const scrambleCorrect=(question,tokens)=>{

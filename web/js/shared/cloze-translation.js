@@ -1,3 +1,4 @@
+import {findTranslationFocus,readQuestionTranslationFocus} from './translation-focus.js';
 import {completeGapSentence} from './phrase-gaps.js';
 const clean=value=>typeof value==='string'?value.normalize('NFC').trim():'';
 
@@ -15,4 +16,14 @@ export function clozeSentenceTranslation(question){
  if(translations.size>1)return '';
  const context=clean(question.context);
  return context&&context!==clean(word?.studyMeaning)?context:'';
+}
+
+export function hasClozeTranslationTarget(question,text,studyLanguage,locale){
+ if(studyLanguage==='en'&&locale==='en')return true;
+ return findTranslationFocus({text,word:question.word,locale,studyLanguage,focus:readQuestionTranslationFocus(question)}).length>0;
+}
+
+export function preferAlignedCloze(rows,hasTarget){
+ const aligned=rows.filter(hasTarget);
+ return aligned.length?aligned:rows;
 }

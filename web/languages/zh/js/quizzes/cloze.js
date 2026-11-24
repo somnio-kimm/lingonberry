@@ -1,3 +1,4 @@
+import {hasClozeTranslationTarget,preferAlignedCloze} from '../../../../js/shared/cloze-translation.js';
 import {readQuestionTranslationFocus} from '../../../../js/shared/translation-focus.js';
 import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/question-rotation.js';
 import {renderLexiconSentence} from '../../../../js/shared/lexicon-sentence-view.js';
@@ -18,6 +19,14 @@ import { t, sentenceMeaning, wordMeaning } from '../services/i18n.js';
 export function renderClozeQuiz(el,session={}) {
   const words = session.question?Store.words.filter(w=>w.hskLevel===session.question.word.hskLevel):Store.activeWords;
   const withSentences = session.question?[session.question.word]:clozeStudyWords(words);
+  const rowsByWord=new WeakMap();
+  function sentenceRows(word){
+    if(!rowsByWord.has(word))rowsByWord.set(word,practiceSentences(word,{cloze:true}).map((sentence,index)=>{
+      const row={id:word.id+':'+index,word,sentence};
+      return {...row,aligned:hasClozeTranslationTarget({...row,example:sentence},sentenceMeaning(sentence),'zh',word.studyExplanationLanguage||Store.uiLang)};
+    }));
+    return rowsByWord.get(word);
+  }
   let score = 0, total = 0, word, sentence, blank, options, feedback = '', userAnswer = '',rotation,rotationWords=[],alive=true,childCleanup=()=>{};
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
@@ -28,7 +37,7 @@ export function renderClozeQuiz(el,session={}) {
     if(session.question){word=session.question.word;sentence=session.question.sentence;}
     else{
       const eligible=filters.pool();
-      if(!rotation||rotationWords.length!==eligible.length||eligible.some((item,index)=>item!==rotationWords[index])){rotationWords=eligible.slice();rotation=createQuestionRotation(eligible.flatMap(word=>practiceSentences(word,{cloze:true}).map((sentence,index)=>({id:word.id+':'+index,word,sentence}))),{key:row=>sentenceQuestionKey(row.sentence.hanzi,row.word.hanzi)});}
+      if(!rotation||rotationWords.length!==eligible.length||eligible.some((item,index)=>item!==rotationWords[index])){rotationWords=eligible.slice();rotation=createQuestionRotation(preferAlignedCloze(eligible.flatMap(sentenceRows),row=>row.aligned),{key:row=>sentenceQuestionKey(row.sentence.hanzi,row.word.hanzi)});}
       const selected=rotation.choose();word=selected?.word;sentence=selected?.sentence;
     }
     if(!word){feedback='';draw();return;}
