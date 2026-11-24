@@ -353,7 +353,7 @@ enum NativePackageVerification {
           for(const row of rows.filter(row=>row.category==='reading'&&row.route==='vocabmeaning')){
             const written=row.readingFocus?.text||byId.get(row.entryId)?.lemma||'';
             const ending=/[ぁ-ゖー]+$/u.exec(written)?.[0];
-            if(!ending||!/\p{Script=Han}/u.test(written))continue;
+            if(!ending||!/\\p{Script=Han}/u.test(written))continue;
             if(row.options.length<3||row.options.some(reading=>!reading.endsWith(ending)||reading.length<=ending.length))throw new Error('Wrong hiragana ending on '+written);
             matchedEndings++;
           }
