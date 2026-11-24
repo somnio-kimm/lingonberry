@@ -18,7 +18,7 @@ try{
   },{language,locale,theme,mode});
   await page.locator('[data-question-word],[data-question-id]').first().waitFor();
   const target=await page.evaluate(()=>document.querySelector('[data-question-word]')?.dataset.questionWord||document.querySelector('[data-question-id]').dataset.questionId.split(':')[0]);
-  assert.equal(await page.locator('[data-vocab-result]').count(),0);
+  assert.equal(await page.locator('[data-vocab-result],#vocab-listen').count(),0);
   if(mode==='vocabinput'){
    assert.equal(await page.locator('.study-hint').evaluate(node=>node.open),false);assert.equal(await page.locator('#vocab-listen').count(),0);
    const field=page.locator('#vocab-answer');await field.fill('attempt');await page.locator('.study-hint summary').click();assert.equal(await field.inputValue(),'attempt');assert.equal(await page.locator('.study-hint button').count(),0);
@@ -29,6 +29,7 @@ try{
   }
   const sheet=page.locator('[data-vocab-result] .detail-sheet'),wordButton=page.locator('[data-open-vocab-word]');
   assert.equal(await sheet.count(),0,'Checking leaves the graded question visible');
+  assert.equal(await page.locator('#vocab-listen').count(),mode==='vocabinput'?1:0);
   if(theme==='dark'){
    const wrong=page.locator(mode==='vocabinput'?'.vocab-wrong':'.vocab-choice.wrong');
    assert.equal(await wrong.evaluate(node=>getComputedStyle(node).textDecorationLine),'none','A red mistake has no strike-through');

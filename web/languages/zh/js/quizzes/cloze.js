@@ -73,11 +73,11 @@ export function renderClozeQuiz(el,session={}) {
     el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div>${scorePill(displayed.correct,displayed.total)}</div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
     if(!word){host.innerHTML=`<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;return;}
     const focus=findSentenceTarget(sentence,blank),view={mode:'cloze',word,locale:word.studyExplanationLanguage||Store.uiLang,sentence:sentence.hanzi,example:sentence,answer:blank,focus:focus||{start:0,text:blank},translationFocus:readQuestionTranslationFocus(session.question,sentence),correctOption:blank,options:options.map(option=>({id:option.hanzi,text:option.hanzi,meaning:wordMeaning(option),word:option}))};
-    const text=key=>t({'Show Reading':'showPinyin','Speak Example':'listenSentence','Skip':'skip','Next':'nextQ'}[key]||key);
+    const text=key=>t({'Show Reading':'showPinyin','Skip':'skip','Next':'nextQ'}[key]||key);
     childCleanup=renderLexiconSentence(host,{question:view,feedback,selectedOption:userAnswer,chosenTokens:[],showReading:Store.clozeShowPinyin,showTranslation:true,translationVisible:true,translation:sentenceMeaning(sentence),t:text},{
       language:'zh',uiLanguage:Store.uiLang,reading:true,renderSentence:e,
       renderCloze:({checked,showReading})=>showReading?Pinyin.htmlSentence(sentence,{blank:checked?'':blank,highlight:checked?blank:''}):!focus?e(sentence.hanzi):undefined,
-      renderOption:option=>Pinyin.htmlMarkedColumns(option.word.syllables),speak:()=>TTS.speak(sentence.hanzi),select:choose,
+      renderOption:option=>Pinyin.htmlMarkedColumns(option.word.syllables),select:choose,
       toggleReading:value=>{Store.clozeShowPinyin=value;Haptic.light();draw();},skip:()=>{Haptic.light();session.onSkip?session.onSkip():newQ();},next:newQ,
     });
   }
