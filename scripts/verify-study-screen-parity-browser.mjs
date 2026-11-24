@@ -40,7 +40,7 @@ try{
      }
     }
     assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth),`${language} ${mode} fits viewport`);
-    if(mode==='vocabinput'){await page.locator('#vocab-answer').fill('wrong design answer');await page.locator('#vocab-submit').click();await page.locator('.vocab-answer-cell.wrong').waitFor();value.feedback={box:await measure(page,'.vocab-answer-cell'),correct:await measure(page,'.vocab-correction'),wrong:await measure(page,'.vocab-wrong')};assert.equal(await page.locator('.vocab-wrong').evaluate(node=>getComputedStyle(node).textDecorationLine),'line-through');await page.locator('[data-close-vocab-result]').click();}
+    if(mode==='vocabinput'){await page.locator('#vocab-answer').fill('wrong design answer');await page.locator('#vocab-submit').click();await page.locator('.vocab-answer-cell.wrong').waitFor();value.feedback={box:await measure(page,'.vocab-answer-cell'),correct:await measure(page,'.vocab-correction'),wrong:await measure(page,'.vocab-wrong')};assert.equal(await page.locator('.vocab-wrong').evaluate(node=>getComputedStyle(node).textDecorationLine),'line-through');}
     if(locale==='en')await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});if(locale==='en')await page.screenshot({path:`/private/tmp/study-screen-parity/${language}-${mode}-${width}-${theme}.png`,fullPage:true});checks++;
    }
    await tab(page,'wrong');

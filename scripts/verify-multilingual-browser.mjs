@@ -54,11 +54,11 @@ try{
   await tab(page,'home');await page.locator(`[data-level="${studyProfiles[language].levels[0]}"]`).click();assert.equal(await page.locator('[data-level=all]').count(),0);
   await route(page,'flashcards');await page.locator('[data-flip]').click();await page.locator('[data-next-card]').click();await page.locator('[data-shuffle]').click();
   await route(page,'vocabinput');const questionId=await page.locator('[data-question-word]').getAttribute('data-question-word'),entry=core.entries.find(row=>row.id===questionId);
-  await page.locator('#vocab-answer').fill('incorrect answer');await page.locator('#vocab-submit').click();assert.equal(await page.locator('.vocab-answer-cell.wrong').count(),1);await page.locator('[data-close-vocab-result]').click();
+  await page.locator('#vocab-answer').fill('incorrect answer');await page.locator('#vocab-submit').click();assert.equal(await page.locator('.vocab-answer-cell.wrong').count(),1);
   await tab(page,'wrong');assert.equal(await page.locator('.wrong-card').count(),1);await page.locator('.wrong-card').click();await page.locator('[data-close]').click();await page.locator('[data-retest]').click();
   const expected=entry.article?entry.article+(/[’']$/u.test(entry.article)?'':' ')+entry.word:entry.word;
   await page.locator('#vocab-answer').fill(expected);await page.locator('#vocab-submit').click();assert.equal(await page.locator('.vocab-answer-cell.correct').count(),1);await page.locator('[data-next]').click();await page.locator('[data-finish]').click();assert.ok((await page.locator('.wrong-card-actions').innerText()).includes('0'));
-  await route(page,'vocabmeaning');assert.ok(await page.locator('[data-option]').count()>=2);assert.equal(await page.locator('#vocab-submit').count(),0);await page.locator('[data-option]').first().click();await page.locator('[data-next]').waitFor();await page.locator('[data-close-vocab-result]').click();
+  await route(page,'vocabmeaning');assert.ok(await page.locator('[data-option]').count()>=2);assert.equal(await page.locator('#vocab-submit').count(),0);await page.locator('[data-option]').first().click();await page.locator('[data-next]').waitFor();
   await route(page,'listening');
   if(language==='ja'){
    await page.evaluate(()=>{window.deferTestSpeech=true;});await page.locator('#listening-answer').fill('answer');await page.locator('#listening-play').click();await page.locator('#listening-skip').click();await page.evaluate(()=>{window.finishTestSpeech();window.deferTestSpeech=false;});await page.locator('#listening-answer').fill('answer');assert.equal(await page.locator('#listening-submit').isEnabled(),false,'completion of skipped audio cannot unlock the next question');

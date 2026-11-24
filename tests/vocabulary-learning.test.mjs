@@ -1,13 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {vocabularyLearningContent} from '../web/js/shared/vocabulary-learning.js';
-import {renderVocabularyHints,renderVocabularyLearning} from '../web/js/shared/vocabulary-learning-view.js';
+import {renderVocabularyHints} from '../web/js/shared/vocabulary-learning-view.js';
 const word={id:'midday-noun',lemma:'midday',pos:'noun',studyMeaning:'정오',studyExplanationLanguage:'ko',examples:[{text:'There was no one in the square at midday.',studyTranslation:'정오에는 광장에 아무도 없었다.'}]};
 test('context hint masks the exact sense example and never includes its translation',()=>{
  const q={word,locale:'ko'},result=vocabularyLearningContent(q,{language:'en',locale:'ko'});
  assert.deepEqual(result.hint,['There was no one in the square at ','.']);
  const html=renderVocabularyHints(q,{language:'en',locale:'ko'});
  assert.ok(!html.includes('midday'));assert.ok(!html.includes('정오'));assert.match(html,/<summary>힌트<\/summary>/);assert.equal((html.match(/<details\b/g)||[]).length,1);assert.doesNotMatch(html,/<button\b/);assert.doesNotMatch(html,/<details[^>]*\sopen/);
+});
+test('the masked example escapes angle brackets',()=>{
+ const q={word:{...word,examples:[{text:'<p>At midday.</p>'}]},locale:'ko'};
+ assert.match(renderVocabularyHints(q,{language:'en',locale:'ko'}),/&lt;p&gt;At/);
 });
 test('inflected explicit targets mask the actual answer',()=>{
  const q={word:{...word,lemma:'go',pos:'verb',examples:[{text:'She went home.',focus:{start:4,text:'went'},studyTranslation:'그녀는 집에 갔다.'} ]},locale:'ko'};
@@ -18,13 +22,14 @@ test('unsafe or repeated targets offer no example hint',()=>{
   assert.equal(renderVocabularyHints({word:{...word,examples:[example]},locale:'ko'},{language:'en',locale:'ko'}),'');
  }
 });
-test('result preserves sense and selected explanation, and escapes all imported content',()=>{
- const html=renderVocabularyLearning({word:{...word,studyMeaning:'<script>'},locale:'ko'},{language:'en',locale:'en'});
- assert.match(html,/정오에는/);assert.match(html,/&lt;script&gt;/);assert.match(html,/Examples/);assert.doesNotMatch(html,/<script>/);
+test('learning content preserves the selected sense and explanation',()=>{
+ const content=vocabularyLearningContent({word,locale:'ko'},{language:'en',locale:'en'});
+ assert.equal(content.meaning,word.studyMeaning);
+ assert.equal(content.example.studyTranslation,word.examples[0].studyTranslation);
 });
-test('English-to-English result omits a redundant example translation',()=>{
- const html=renderVocabularyLearning({word:{...word,studyMeaning:'The middle of the day.',studyExplanationLanguage:'en'},locale:'en'},{language:'en',locale:'ko'});
- assert.doesNotMatch(html,/example-translation/);assert.match(html,/The middle of the day/);
+test('English-to-English learning content omits a redundant example translation',()=>{
+ const content=vocabularyLearningContent({word:{...word,studyMeaning:'The middle of the day.',studyExplanationLanguage:'en'},locale:'en'},{language:'en',locale:'ko'});
+ assert.ok(!content.example.studyTranslation);assert.equal(content.meaning,'The middle of the day.');
 });
 test('legacy Chinese sentences are adapted without losing their readings',()=>{
  const q={word:{id:'car',hanzi:'车',meaningKo:'차',partOfSpeech:'noun',sentences:[{hanzi:'我坐车去。',pinyin:'wǒ zuò chē qù',meaningKo:'차를 타고 가요.'}]},locale:'ko'};
