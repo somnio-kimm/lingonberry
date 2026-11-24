@@ -18,7 +18,7 @@ export function vocabularyLearningContent(question,{language,locale,fallbackWord
  }
  return {word:vocabularyWord(word),meaning,example,hint};
 }
-export const vocabularyLearningLabels=locale=>locale==='ko'?{sound:'소리 힌트',example:'예문 힌트',examples:'예문'}:{sound:'Sound Hint',example:'Example Hint',examples:'Examples'};
+export const vocabularyLearningLabels=locale=>locale==='ko'?{hint:'힌트',playWord:'단어 듣기',examples:'예문'}:{hint:'Hint',playWord:'Listen to Word',examples:'Examples'};
 
 /** Save one sense example alongside the question, not an entire dictionary entry. */
 export function withVocabularyLearning(question,config){

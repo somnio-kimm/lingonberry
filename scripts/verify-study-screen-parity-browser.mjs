@@ -25,7 +25,7 @@ try{
      value.card=await measure(page,'.flashcard');value.shuffle=await measure(page,'[data-shuffle]');value.nav=await measure(page,'.fc-nav');
     }else{
      value[mode]={card:await question(page)};
-     if(mode==='vocabinput'){assert.equal(await page.locator('[data-sound-hint]').evaluate(node=>node.open),false);value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}
+     if(mode==='vocabinput'){assert.equal(await page.locator('[data-vocabulary-hint]').evaluate(node=>node.open),false);value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}
      if(mode==='vocabmeaning'){
       value[mode].option=await measure(page,'.vocab-choice');assert.equal(await page.locator('#vocab-submit').count(),0,language+' selection checks on tap');
      }

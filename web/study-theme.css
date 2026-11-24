@@ -480,11 +480,12 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .flashcard-study .flashcard-front .fc-meaning{display:none}
 
 /* Optional clues stay closed; the checked sense supplies the learning card. */
-.vocab-hints{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;text-align:left}
-.vocab-hint{flex:1 1 130px;min-width:0;border:1px solid var(--card-border);border-radius:8px}
+.vocab-hint{min-width:0;margin-top:16px;text-align:left;border:1px solid var(--card-border);border-radius:8px}
 .vocab-hint summary{padding:11px 12px;min-height:44px;box-sizing:border-box;font-size:14px;color:var(--secondary);cursor:pointer}
-.vocab-hint-content{display:flex;justify-content:flex-end;padding:0 8px 8px}
-.vocab-context-hint{font-size:18px;line-height:1.65;margin:0;padding:0 12px 12px}
+.vocab-hint-content{display:grid;justify-items:start;gap:12px;padding:0 12px 12px}
+.vocab-hint .vocab-hint-audio{min-height:44px;margin:0}
+.vocab-context-hint{font-size:18px;line-height:1.65;margin:0;overflow-wrap:anywhere}
+.vocab-context-hint .cloze-blank{color:var(--blue)}
 .vocab-learning{margin-top:16px;text-align:left}
 .vocab-learning-word{font-size:24px;font-weight:650;line-height:1.4}
 .vocab-learning-meaning{font-size:16px;line-height:1.6;color:var(--secondary);margin:4px 0 0}
