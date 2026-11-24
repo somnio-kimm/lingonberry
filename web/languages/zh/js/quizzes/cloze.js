@@ -6,7 +6,7 @@ import {escapeHtml as e} from '../../../../js/shared/ui.js';
 import {findSentenceTarget,practiceSentences} from '../services/sentence-focus.js';
 import {createSentenceFilters} from '../services/sentence-filters.js';
 import { clozeWordOptions,clozeStudyWords } from '../services/vocabulary-tests.js';
-import { showQuizBurst } from '../components.js';
+import { showQuizBurst, showStatusSheet } from '../components.js';
 import { snapshotQuestion } from '../services/wrong-review.js';
 import { Store } from '../services/store.js';
 import { Pinyin } from '../services/pinyin.js';
@@ -77,6 +77,7 @@ export function renderClozeQuiz(el,session={}) {
     childCleanup=renderLexiconSentence(host,{question:view,feedback,selectedOption:userAnswer,chosenTokens:[],showReading:Store.clozeShowPinyin,showTranslation:true,translationVisible:true,translation:sentenceMeaning(sentence),t:text},{
       language:'zh',uiLanguage:Store.uiLang,reading:true,renderSentence:e,
       renderCloze:({checked,showReading})=>showReading?Pinyin.htmlSentence(sentence,{blank:checked?'':blank,highlight:checked?blank:''}):!focus?e(sentence.hanzi):undefined,
+      openDetails:(word,options)=>showStatusSheet(word.id,undefined,word,options),
       renderOption:option=>Pinyin.htmlMarkedColumns(option.word.syllables),select:choose,
       toggleReading:value=>{Store.clozeShowPinyin=value;Haptic.light();draw();},skip:()=>{Haptic.light();session.onSkip?session.onSkip():newQ();},next:newQ,
     });
