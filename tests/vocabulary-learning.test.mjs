@@ -6,15 +6,17 @@ const word={id:'midday-noun',lemma:'midday',pos:'noun',studyMeaning:'정오',stu
 test('context hint masks the exact sense example and never includes its translation',()=>{
  const q={word,locale:'ko'},result=vocabularyLearningContent(q,{language:'en',locale:'ko'});
  assert.deepEqual(result.hint,['There was no one in the square at ','.']);
- const html=renderVocabularyHints(q,{language:'en',locale:'ko',audioButton:'<button>audio</button>'});
- assert.ok(!html.includes('midday'));assert.ok(!html.includes('정오'));assert.match(html,/<summary>힌트<\/summary>/);assert.equal((html.match(/<details\b/g)||[]).length,1);assert.match(html,/<button>audio<\/button>/);assert.doesNotMatch(html,/<details[^>]*\sopen/);
+ const html=renderVocabularyHints(q,{language:'en',locale:'ko'});
+ assert.ok(!html.includes('midday'));assert.ok(!html.includes('정오'));assert.match(html,/<summary>힌트<\/summary>/);assert.equal((html.match(/<details\b/g)||[]).length,1);assert.doesNotMatch(html,/<button\b/);assert.doesNotMatch(html,/<details[^>]*\sopen/);
 });
 test('inflected explicit targets mask the actual answer',()=>{
  const q={word:{...word,lemma:'go',pos:'verb',examples:[{text:'She went home.',focus:{start:4,text:'went'},studyTranslation:'그녀는 집에 갔다.'} ]},locale:'ko'};
  assert.deepEqual(vocabularyLearningContent(q,{language:'en',locale:'ko'}).hint,['She ',' home.']);
 });
 test('unsafe or repeated targets offer no example hint',()=>{
- for(const example of [{text:'No match here.'},{text:'midday and midday',focus:{start:0,text:'midday'}},{text:'at midday',practiceEligible:false},{text:'at midday',clozeEligible:false}])assert.equal(vocabularyLearningContent({word:{...word,examples:[example]},locale:'ko'},{language:'en',locale:'ko'}).hint,undefined);
+ for(const example of [{text:'No match here.'},{text:'midday and midday',focus:{start:0,text:'midday'}},{text:'at midday',practiceEligible:false},{text:'at midday',clozeEligible:false}]){
+  assert.equal(renderVocabularyHints({word:{...word,examples:[example]},locale:'ko'},{language:'en',locale:'ko'}),'');
+ }
 });
 test('result preserves sense and selected explanation, and escapes all imported content',()=>{
  const html=renderVocabularyLearning({word:{...word,studyMeaning:'<script>'},locale:'ko'},{language:'en',locale:'en'});
