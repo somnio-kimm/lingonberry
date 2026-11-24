@@ -71,14 +71,26 @@ try{
   const mistake=page.locator('.cloze-typed-mistake');
   assert.equal(await mistake.count(),1,'Only the incorrect blank shows the typed mistake');
   assert.equal(await mistake.innerText(),'<wrong>');
-  assert.equal(await mistake.evaluate(node=>{
-   const correct=node.previousElementSibling,question=node.closest('.sentence-question');
+  const feedback=await mistake.evaluate(node=>{
+   const annotation=node.parentElement,correct=annotation.querySelector('rt'),question=node.closest('.sentence-question');
    const usesColour=(target,colour)=>{
     const probe=document.createElement('span');probe.style.color='var('+colour+')';question.append(probe);
     const matches=getComputedStyle(probe).color===getComputedStyle(target).color;probe.remove();return matches;
    };
-   return getComputedStyle(node).fontSize===getComputedStyle(correct).fontSize&&getComputedStyle(node).textDecorationLine==='none'&&usesColour(node,'--red')&&usesColour(correct,'--green')&&correct.getBoundingClientRect().bottom<=node.getBoundingClientRect().top+1;
-  }),true,'The green correction sits above the red mistake');
+   const measureCharacter=(text,index)=>{
+    if(text?.nodeType!==Node.TEXT_NODE||index<0)return;
+    const range=document.createRange();
+    range.setStart(text,index);range.setEnd(text,index+1);
+    return range.getBoundingClientRect().bottom;
+   };
+   const preceding=annotation.previousSibling,following=annotation.nextSibling;
+   const bottom=measureCharacter(node.firstChild,0);
+   const neighbours=[measureCharacter(preceding,preceding?.textContent.trimEnd().length-1),measureCharacter(following,following?.textContent.search(/\S/u))];
+   return {annotated:annotation.tagName==='RUBY',onBaseline:neighbours.some(value=>Math.abs(value-bottom)<=1),
+    plainRed:getComputedStyle(node).textDecorationLine==='none'&&usesColour(node,'--red'),green:usesColour(correct,'--green'),
+    above:correct.getBoundingClientRect().top<node.getBoundingClientRect().top&&correct.getBoundingClientRect().bottom<node.getBoundingClientRect().bottom};
+  });
+  assert.deepEqual(feedback,{annotated:true,onBaseline:true,plainRed:true,green:true,above:true});
   assert.equal(await page.locator('[data-sentence-speak]').count(),0);
   assert.equal(await page.locator('body').evaluate(node=>node.scrollWidth>innerWidth),false);
   await page.screenshot({path:join(directory,`${locale}-${width}-${theme}.png`),fullPage:true});
