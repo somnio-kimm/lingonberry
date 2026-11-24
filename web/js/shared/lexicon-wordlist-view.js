@@ -17,20 +17,25 @@ export function renderLexiconWordList(host,{t,query,filters,language='en',locale
   if(focusKey){const row=[...list.querySelectorAll('[data-word]')].find(node=>node.dataset.word===focusKey);(row?.querySelector(focusTarget)||host.querySelector('#search-input')).focus({preventScroll:true});}
  }
  function schedule(){cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>renderResults());}
- function clearHandlers(){host.querySelectorAll('button,input,select,.filter-fold,.study-search,#wordlist-results').forEach(node=>{node.oninput=null;node.onchange=null;node.onkeydown=null;node.onclick=null;node.ontoggle=null;node.oncompositionstart=null;node.oncompositionend=null;});}
+ function clearHandlers(){host.querySelectorAll('button,input,select,.filter-fold,.study-search,[data-word-initial],#wordlist-results').forEach(node=>{node.oninput=null;node.onchange=null;node.onkeydown=null;node.onclick=null;node.ontoggle=null;node.oncompositionstart=null;node.oncompositionend=null;});}
  const filterRows=()=>[...host.querySelectorAll('.study-search-filters .wl-filter-row')];
  function draw(reset=false){
   if(!alive)return;cancelAnimationFrame(frame);const count=reset?80:pager?.count||80;
   const rows=filterRows(),offsets=rows.map(row=>row.scrollLeft);
   const focused=host.ownerDocument.activeElement,focusedRow=rows.findIndex(row=>row.contains(focused));
-  const focusAttribute=focused?.hasAttribute('data-tag')?'data-tag':'data-f';
+  const focusAttribute=['data-f','data-tag','data-initial-value'].find(attr=>focused?.hasAttribute(attr));
   const focusValue=focused?.getAttribute(focusAttribute);
   pager?.cleanup();clearHandlers();
   const alphabet=renderWordInitialFilter({language,locale,options:index.readOptions([]),selected:initial});
-  const filterMarkup=typeof filters==='function'?filters(alphabet):alphabet+(filters||'');
+  const filterMarkup=typeof filters==='function'?filters(alphabet):alphabet.beforeGroups+(filters||'');
   host.innerHTML=`<div class="lexicon-view"><h2 class="section-title study-list-title">${t('Word List')}</h2>${renderStudySearchWithFilters({id:'search-input',value:searchValue,label:t('Search'),filters:filterMarkup})}<div class="wl-list wl-list--wordlist" id="wordlist-results" aria-live="polite"></div><p class="study-audio-status lexicon-audio-status muted" role="status" hidden></p></div>`;
-  actions.bindFilters(host,draw);const list=host.querySelector('#wordlist-results'),search=host.querySelector('#search-input'),initialSelect=host.querySelector('[data-word-initial]');
-  initialSelect.onchange=()=>{initial=initialSelect.value;actions.setInitial?.(initial);cancelAnimationFrame(frame);renderResults();};
+  actions.bindFilters(host,draw);const list=host.querySelector('#wordlist-results'),search=host.querySelector('#search-input'),initialRow=host.querySelector('[data-word-initial]');
+  initialRow.onclick=event=>{
+   const button=event.target.closest('[data-initial-value]');
+   if(!alive||!button||button.disabled)return;
+   initial=button.dataset.initialValue;actions.setInitial?.(initial);
+   cancelAnimationFrame(frame);renderResults();
+  };
   search.oninput=()=>{searchValue=search.value;actions.setQuery(searchValue);schedule();};
   search.oncompositionstart=()=>cancelAnimationFrame(frame);search.oncompositionend=()=>{searchValue=search.value;actions.setQuery(searchValue);schedule();};
   search.onkeydown=event=>{if(event.key==='Enter'&&!event.isComposing&&event.keyCode!==229){event.preventDefault();search.blur();}};
@@ -39,7 +44,7 @@ export function renderLexiconWordList(host,{t,query,filters,language='en',locale
   renderResults(count);
   filterRows().forEach((row,i)=>{
    row.scrollLeft=offsets[i]||0;
-   if(i===focusedRow)[...row.querySelectorAll(`[${focusAttribute}]`)].find(button=>button.getAttribute(focusAttribute)===focusValue)?.focus({preventScroll:true});
+   if(i===focusedRow&&focusAttribute)[...row.querySelectorAll(`[${focusAttribute}]`)].find(button=>button.getAttribute(focusAttribute)===focusValue)?.focus({preventScroll:true});
   });
  }
  draw();return()=>{if(!alive)return;alive=false;cancelAnimationFrame(frame);pager?.cleanup();clearHandlers();actions.cleanup?.();};

@@ -83,7 +83,7 @@ export function statusTagHTML(level) {
 }
 
 /** Word list: one collapsible "필터" with study status + POS sections inside when open. */
-export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagRow, tagFilter, pool=forTagRow, open=false, beforeGroups='') {
+export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagRow, tagFilter, pool=forTagRow, open=false, leading={}) {
   const statusFilters = [
     ['all', t('filterAll'), forStatusRow.length],
     ['new', t('statusNew'), forStatusRow.filter(w => w.srs.level === 0).length],
@@ -100,7 +100,7 @@ export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagR
     title:t(title),selected:encode(selected),options:rows.map(([value,label,count])=>({value:encode(value),label,count})),
   });
   return renderStudyFilters({
-    title:t('filterPanel'),open,beforeGroups,status:group('filterStatus',statusFilter,statusFilters),
+    title:t('filterPanel'),open,...leading,status:group('filterStatus',statusFilter,statusFilters),
     pos:group('filterTags',tagFilter,tagRows,encodeURIComponent),
   });
 }

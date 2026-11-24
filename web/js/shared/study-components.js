@@ -65,14 +65,20 @@ export function renderStudyReviewAnswer({label,valueHtml,correct=false,lang='',s
 }
 
 const filterOptionLabel=({label,count})=>count===undefined?e(label):`${e(label)} (${e(count)})`;
+export function renderStudyFilterPick(title,value,valueAttribute=''){
+ return `<span class="filter-fold-pick-l">${e(title)}</span><span class="filter-fold-pick-v" ${valueAttribute}>${value}</span>`;
+}
 const filterDivider='<div class="filter-split-divider"></div>';
-export function renderStudyTagFilterGroup({title,options,selected,attribute,tagRow=false}){
+export function renderStudyFilterTags({options,selected,attribute}){
  if(!/^data-[a-z]+(?:-[a-z]+)*$/u.test(attribute))throw new Error('Study filters require a safe data attribute');
- const buttons=options.map(option=>{
+ return options.map(option=>{
   const active=selected===option.value;
-  return `<button type="button" class="wl-filter ${active?'active':''}" ${attribute}="${e(option.value)}" aria-pressed="${active}">${filterOptionLabel(option)}</button>`;
+  return `<button type="button" class="wl-filter ${active?'active':''}" ${attribute}="${e(option.value)}" aria-pressed="${active}" ${option.disabled&&!active?'disabled':''}>${filterOptionLabel(option)}</button>`;
  }).join('');
- return `<div class="filter-split-head">${e(title)}</div><div class="wl-filter-row${tagRow?' wl-tag-filter-row':''}">${buttons}</div>`;
+}
+
+export function renderStudyTagFilterGroup({title,options,selected,attribute}){
+ return `<div class="filter-split-head">${e(title)}</div><div class="wl-filter-row" role="group" aria-label="${e(title)}">${renderStudyFilterTags({options,selected,attribute})}</div>`;
 }
 
 export function renderStudyFilterPanel({title,open=false,picks='',body}){
@@ -80,12 +86,12 @@ export function renderStudyFilterPanel({title,open=false,picks='',body}){
 }
 
 /** Shared Study filters for status and part of speech. Extra controls use the same panel. */
-export function renderStudyFilters({title,status,pos,open=false,extraBody='',beforeGroups=''}){
- const picks=[status,pos].map(group=>{
+export function renderStudyFilters({title,status,pos,open=false,extraBody='',beforeGroups='',beforePicks=''}){
+ const picks=beforePicks+[status,pos].map(group=>{
   const selected=group.options.find(option=>option.value===group.selected)||group.options[0];
-  return `<span class="filter-fold-pick-l">${e(group.title)}</span><span class="filter-fold-pick-v">${filterOptionLabel(selected)}</span>`;
+  return renderStudyFilterPick(group.title,filterOptionLabel(selected));
  }).join('');
- const body=[beforeGroups,renderStudyTagFilterGroup({...status,attribute:'data-f'}),renderStudyTagFilterGroup({...pos,attribute:'data-tag',tagRow:true}),extraBody].filter(Boolean).join(filterDivider);
+ const body=[beforeGroups,renderStudyTagFilterGroup({...status,attribute:'data-f'}),renderStudyTagFilterGroup({...pos,attribute:'data-tag'}),extraBody].filter(Boolean).join(filterDivider);
  return renderStudyFilterPanel({title,open,picks,body});
 }
 

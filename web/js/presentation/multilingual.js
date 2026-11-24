@@ -123,7 +123,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const q=row&&createExerciseQuestions([row],list,row.route,row.category,study.explanationLanguage)[0];return reviewContent.prepare(q?{...q,answerMode:f.answerMode,mode:feature}:undefined);
  }
 
- function controls(route,beforeGroups){
+ function controls(route,leading={}){
   const f=state(route),level=store.state.preferences.studyLevel;
   const levelWords=words.filter(word=>matchesStudyLevel(word,level,profile));
   const parts=['all',...new Set(levelWords.map(word=>word.pos))];
@@ -148,7 +148,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const options=(values,count)=>values.map(value=>({value,label:label(value),count:count(value)}));
   const extraBody=['en','ja'].includes(language)?'':`<div class="lexicon-filter-row"><label>${t('Study Level')}<select data-level-filter>${profile.levels.map(value=>`<option value="${e(value)}" ${level===value?'selected':''}>${e(value)}</option>`).join('')}</select></label></div>`;
   return renderStudyFilters({
-   title:t('Filters'),open:f.open,extraBody,beforeGroups,
+   title:t('Filters'),open:f.open,extraBody,...leading,
    status:{title:t('Study Status'),selected:f.status,options:options(Object.keys(statusCounts),value=>statusCounts[value])},
    pos:{title:t('Part of Speech'),selected:f.pos,options:options(parts,value=>posCounts.get(value)||0)},
   });
@@ -314,7 +314,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const all=f.allRoots!==false,allowed=new Set((all?words.filter(word=>(f.pos==='all'||word.pos===f.pos)&&(f.status==='all'||store.wordStatus(word.id)===f.status)):pool('roots')).map(word=>word.id));
   const families=(study.families||[]).filter(family=>(!f.rootKind||f.rootKind==='all'||(family.kind||'root')===f.rootKind)&&family.members.some(member=>allowed.has(member.entryId)));
   const scope=`<div class="form-mode-controls"><button data-root-scope="all" aria-pressed="${all}">${t('All Families')}</button><button data-root-scope="level" aria-pressed="${!all}">${t('Selected Study Level')}</button></div>`;
-  const rootFilters=controls('roots',renderRootKindFilter(t,['all','root','prefix','suffix'],f.rootKind)+scope);
+  const kindFilter=renderRootKindFilter(t,['all','root','prefix','suffix'],f.rootKind);
+  const rootFilters=controls('roots',{...kindFilter,beforeGroups:kindFilter.beforeGroups+scope});
   host.innerHTML=`<div class="lexicon-view"><h2 class="section-title study-list-title">${t('Root Families')}</h2>${renderStudySearchWithFilters({id:'root-search',value:f.rootQuery||'',label:t('Search'),filters:rootFilters})}<div data-root-list class="study-reference-list"></div></div>`;
   const list=host.querySelector('[data-root-list]');let pager;const results=()=>{pager?.cleanup();const query=fold(f.rootQuery||'');const matching=families.filter(family=>!query||fold([family.root,...family.members.flatMap(member=>[member.word,member.note])].join(' ')).includes(query));pager=mountWordRows(list,matching,family=>`<section class="panel"><h3>${e(family.root)}${family.origin?` <small class="root-origin">${e(morphemeOriginText(family.origin,locale()))}</small>`:''}</h3><p>${e(family.meaning)}</p>${family.members.map(member=>`<div class="wl-row root-member" data-root-entry="${e(member.entryId)}"><div class="wl-main"><button class="wl-headword root-member-trigger" data-root-word="${e(member.entryId)}">${e(member.word)}</button><div class="wl-meaning">${e(byId.get(member.entryId).studyMeaning)}</div>${member.parts?`<p class="root-member-history">${e(member.parts)}</p>`:''}${member.note!==byId.get(member.entryId).studyMeaning?`<p class="root-member-history">${e(member.note)}</p>`:''}</div><div class="wl-trail">${tags(byId.get(member.entryId))}</div></div>`).join('')}</section>`,{moreLabel:t('Show More Words'),emptyMarkup:`<section class="panel">${t('No Questions Match')}</section>`,initialCount:12,batchSize:12});};results();
   bindControls(host,'roots');host.querySelectorAll('[data-root-kind]').forEach(button=>button.onclick=()=>{f.open=host.querySelector('.filter-fold').open;f.rootKind=button.dataset.rootKind;refresh();});const levelFilter=host.querySelector('[data-level-filter]');if(all&&levelFilter)levelFilter.disabled=true;host.querySelectorAll('[data-root-scope]').forEach(button=>button.onclick=()=>{f.allRoots=button.dataset.rootScope==='all';refresh();});list.onclick=event=>{if(event.target.closest('a'))return;const row=event.target.closest('[data-root-entry]');if(row)details(byId.get(row.dataset.rootEntry));};

@@ -191,14 +191,14 @@ enum NativePackageVerification {
           };
           markUxStage(before.id+':wordlist-open');await open(before.targetLanguage,before.explanationLanguage);await openStudyMode('wordlist');await wait(()=>document.querySelector('[data-word-initial]'));
           const indexSearch=document.querySelector('#search-input');if(indexSearch){indexSearch.value='';indexSearch.dispatchEvent(new Event('input',{bubbles:true}));await wait(()=>document.querySelector('#wordlist-results')?.dataset.query==='');}
-          const initialControl=document.querySelector('[data-word-initial]');if(initialControl.value!=='all')throw new Error('Word index did not reset on a new visit');
-          const initialOption=[...initialControl.options].find(option=>option.value!=='all'&&!option.disabled);
+          const initialControl=document.querySelector('[data-word-initial]');if(initialControl.dataset.selected!=='all')throw new Error('Word index did not reset on a new visit');
+          const initialOption=[...initialControl.querySelectorAll('[data-initial-value]')].find(option=>option.dataset.initialValue!=='all'&&!option.disabled);
           if(initialOption){
-            initialControl.value=initialOption.value;initialControl.dispatchEvent(new Event('change',{bubbles:true}));
+            initialOption.click();
             const {readWordInitial}=await import('./js/shared/word-initial-index.js'),choiceById=new Map(choiceWords.map(word=>[word.id,word]));
             const visible=[...document.querySelectorAll('.wl-row')].map(node=>choiceById.get(node.dataset.word||node.dataset.id)).filter(Boolean);
-            if(!visible.length||visible.some(word=>readWordInitial(word,before.targetLanguage)!==initialOption.value))throw new Error('Word initial filter escaped its selected group');
-            check.wordIndex={value:initialOption.value,visible:visible.length};initialControl.value='all';initialControl.dispatchEvent(new Event('change',{bubbles:true}));
+            if(!visible.length||visible.some(word=>readWordInitial(word,before.targetLanguage)!==initialOption.dataset.initialValue))throw new Error('Word initial filter escaped its selected group');
+            check.wordIndex={value:initialOption.dataset.initialValue,visible:visible.length};initialControl.querySelector('[data-initial-value=all]').click();
           }
           const {readFlashcardSetSize}=await import('./js/shared/flashcard-session.js'),savedSetSize=readFlashcardSetSize(),savedSetPreference=localStorage.getItem('learn-language.flashcards.setSize.v1');
           markUxStage(before.id+':flashcards-open');await openStudyMode('flashcards');await wait(()=>document.querySelector('[data-set-size]'));

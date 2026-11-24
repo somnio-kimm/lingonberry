@@ -1,4 +1,4 @@
-import {renderStudySearchWithFilters,renderStudyReferenceHeading,renderStudyFilterPanel,renderStudyTagFilterGroup} from './study-components.js';
+import {renderStudySearchWithFilters,renderStudyReferenceHeading,renderStudyFilterPanel,renderStudyFilterPick,renderStudyTagFilterGroup} from './study-components.js';
 import {escapeHtml as e} from './ui.js';
 import {mountWordRows} from './word-rows.js';
 import {createMorphemeModel,MORPHEME_PAGING} from './morpheme-model.js';
@@ -13,7 +13,9 @@ export function renderMorphemeSense(sense,locale) {
 
 export function renderRootKindFilter(t,kinds,selected='all'){
  const options=kinds.map(value=>({value,label:t(value[0].toUpperCase()+value.slice(1))}));
- return renderStudyTagFilterGroup({title:t('Type'),attribute:'data-root-kind',options,selected});
+ const title=t('Type');
+ return {beforeGroups:renderStudyTagFilterGroup({title,attribute:'data-root-kind',options,selected}),
+  beforePicks:renderStudyFilterPick(title,e(options.find(option=>option.value===selected)?.label||t('All')),'data-root-kind-summary')};
 }
 
 /** The model owns data lookup; this view owns markup, user events and their cleanup. */
@@ -55,7 +57,8 @@ export function renderMorphemeInventory(host,{
   </section>`;
  }
 
- const filters=renderStudyFilterPanel({title:t('Filters'),open:state.open,body:renderRootKindFilter(t,model.kinds,state.rootKind)});
+ const kindFilter=renderRootKindFilter(t,model.kinds,state.rootKind);
+ const filters=renderStudyFilterPanel({title:t('Filters'),open:state.open,body:kindFilter.beforeGroups,picks:kindFilter.beforePicks});
  host.innerHTML = `<div class="lexicon-view">
   <h2 class="section-title study-list-title">${e(t('Root Families'))}</h2>
   ${renderStudySearchWithFilters({id:'root-search',value:state.rootQuery||'',label:t('Search'),filters})}
@@ -100,6 +103,7 @@ export function renderMorphemeInventory(host,{
  fold.ontoggle=()=>{if(fold.isConnected)state.open=fold.open;};
  kinds.forEach(button=>button.onclick=()=>{
   state.rootKind=button.dataset.rootKind;
+  fold.querySelector('[data-root-kind-summary]').textContent=button.textContent;
   kinds.forEach(option=>{
    option.classList.toggle('active',option===button);
    option.setAttribute('aria-pressed',String(option===button));

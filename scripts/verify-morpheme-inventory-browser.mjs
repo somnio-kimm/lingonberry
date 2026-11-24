@@ -25,7 +25,7 @@ try{
   await page.locator('#root-search').fill('adapt');assert.equal(await page.locator('[data-morpheme]').count(),0);
   await page.locator('#root-search').fill('duckling');assert.equal(await page.locator('[data-morpheme]').count(),1);assert.equal(await page.locator('[data-morpheme]').getAttribute('data-morpheme'),'ling');
   assert.equal(await page.locator('#root-search').evaluate(node=>node===document.activeElement),true);
-  await page.locator('#root-search').fill('');await page.locator('[data-root-kind=suffix]').click();assert.equal(await page.locator('[data-morpheme]').count(),1);
+  await page.locator('#root-search').fill('');await page.locator('[data-root-kind=suffix]').click();assert.equal(await page.locator('[data-morpheme]').count(),1);await filter.locator('summary').click();assert.equal(await page.locator('[data-root-kind-summary]').innerText(),'Suffix');
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
   await page.evaluate(()=>window.cleanupInventory());assert.equal(await page.locator('#root-search').evaluate(node=>node.oninput),null);assert.equal(await page.locator('[data-root-list]').evaluate(node=>node.onclick),null);
   console.log('Verified independent full inventory, bounded rows/examples, search focus, type filters and dictionary links:',locale);
