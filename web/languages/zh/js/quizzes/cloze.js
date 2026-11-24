@@ -13,7 +13,7 @@ import { Pinyin } from '../services/pinyin.js';
 import { TTS } from '../services/tts.js';
 import { Haptic } from '../services/haptic.js';
 import { recordAnswer } from '../services/srs.js';
-import { scorePill, posGroupIdsForWord } from '../components.js';
+import { posGroupIdsForWord } from '../components.js';
 import { t, sentenceMeaning, wordMeaning } from '../services/i18n.js';
 
 export function renderClozeQuiz(el,session={}) {
@@ -27,7 +27,7 @@ export function renderClozeQuiz(el,session={}) {
     }));
     return rowsByWord.get(word);
   }
-  let score = 0, total = 0, word, sentence, blank, options, feedback = '', userAnswer = '',rotation,rotationWords=[],alive=true,childCleanup=()=>{};
+  let word, sentence, blank, options, feedback = '', userAnswer = '',rotation,rotationWords=[],alive=true,childCleanup=()=>{};
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
 
@@ -49,9 +49,9 @@ export function renderClozeQuiz(el,session={}) {
 
   function choose(opt) {
     if (!alive||feedback) return;
-    userAnswer = opt; total++;
+    userAnswer = opt;
     if (opt === blank) {
-      score++; feedback = 'correct'; Haptic.success();
+      feedback = 'correct'; Haptic.success();
       recordAnswer(true);
     } else {
       feedback = 'wrong'; Haptic.error();
@@ -69,8 +69,8 @@ export function renderClozeQuiz(el,session={}) {
   }
 
   function draw() {
-    if(!alive)return;childCleanup();const displayed=session.score?.()||{correct:score,total};
-    el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div>${scorePill(displayed.correct,displayed.total)}</div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
+    if(!alive)return;childCleanup();
+    el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_cloze')}</div></div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
     if(!word){host.innerHTML=`<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;return;}
     const focus=findSentenceTarget(sentence,blank),view={mode:'cloze',word,locale:word.studyExplanationLanguage||Store.uiLang,sentence:sentence.hanzi,example:sentence,answer:blank,focus:focus||{start:0,text:blank},translationFocus:readQuestionTranslationFocus(session.question,sentence),correctOption:blank,options:options.map(option=>({id:option.hanzi,text:option.hanzi,meaning:wordMeaning(option),word:option}))};
     const text=key=>t({'Show Reading':'showPinyin','Skip':'skip','Next':'nextQ'}[key]||key);

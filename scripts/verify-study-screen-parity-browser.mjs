@@ -25,6 +25,7 @@ try{
      value.card=await measure(page,'.flashcard');value.shuffle=await measure(page,'[data-shuffle]');value.nav=await measure(page,'.fc-nav');
     }else{
      value[mode]={card:await question(page)};
+     assert.equal(await page.locator('.score-pill').count(),0,mode+' has no running score');
      if(mode==='vocabinput'){assert.equal(await page.locator('.study-hint[open],#vocab-listen').count(),0);value[mode].field=await measure(page,'#vocab-answer');value[mode].answer=await measure(page,'.vocab-answer-cell');}
      if(['vocabmeaning','cloze'].includes(mode))assert.equal(value[mode].card.speaker,null,mode+' has no quiz speaker');
      if(mode==='scramble')assert.ok(value[mode].card.speaker);
@@ -56,7 +57,7 @@ try{
      }
     }
     assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth),`${language} ${mode} fits viewport`);
-    if(mode==='vocabinput'){await page.locator('#vocab-answer').fill('wrong design answer');await page.locator('#vocab-submit').click();await page.locator('.vocab-answer-cell.wrong').waitFor();value.feedback={box:await measure(page,'.vocab-answer-cell'),correct:await measure(page,'.vocab-correction'),wrong:await measure(page,'.vocab-wrong')};assert.equal(await page.locator('.vocab-wrong').evaluate(node=>getComputedStyle(node).textDecorationLine),'none');}
+    if(mode==='vocabinput'){await page.locator('#vocab-answer').fill('wrong design answer');await page.locator('#vocab-submit').click();await page.locator('.vocab-answer-cell.wrong').waitFor();assert.equal(await page.locator('.score-pill').count(),0);value.feedback={box:await measure(page,'.vocab-answer-cell'),correct:await measure(page,'.vocab-correction'),wrong:await measure(page,'.vocab-wrong')};assert.equal(await page.locator('.vocab-wrong').evaluate(node=>getComputedStyle(node).textDecorationLine),'none');}
     if(locale==='en')await page.locator('.quiz-feedback-burst').waitFor({state:'detached'});if(locale==='en')await page.screenshot({path:`/private/tmp/study-screen-parity/${language}-${mode}-${width}-${theme}.png`,fullPage:true});checks++;
    }
    await tab(page,'wrong');

@@ -52,8 +52,8 @@ export function renderStudyTabs({label,options,selected,attribute,variant='form'
  if(!['form','listening'].includes(variant))throw new Error('Unknown study tabs variant');
  return `<div class="${variant==='listening'?'listening-mode-controls':'form-mode-controls'}" role="group" aria-label="${e(label)}">${options.map(({value,label})=>`<button type="button" ${variant==='listening'?'class="btn-small" ':''}${attribute}="${e(value)}" aria-pressed="${selected===value}">${e(label)}</button>`).join('')}</div>`;
 }
-export function renderStudyQuizHeader({title,score={correct:0,total:0}}){
- return `<div class="vocab-quiz-header"><div class="section-title">${e(title)}</div><span class="score-pill">${e(score.correct)} / ${e(score.total)}</span></div>`;
+export function renderStudyQuizHeader({title}){
+ return `<div class="vocab-quiz-header"><div class="section-title">${e(title)}</div></div>`;
 }
 export function renderStudyReferenceHeading({word,origin}){
  return `<header class="study-reference-header"><h3 class="study-reference-heading">${e(word)}</h3>${origin?`<p class="study-reference-origin root-origin">${e(origin)}</p>`:''}</header>`;

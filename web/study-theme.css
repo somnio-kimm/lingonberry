@@ -183,7 +183,6 @@ main:has(.set-page){padding:10px 12px calc(var(--tab-h) + 6px)}
 .btn-small,.text-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:6px 14px;border:0;border-radius:8px;font-size:13px;font-weight:600;line-height:normal;min-height:32px}
 .quiz-status-btn{padding:6px 12px;border-radius:10px;font-size:13px;font-weight:600;line-height:normal;min-height:0}
 .submit-pill{display:block;width:100%;padding:10px;border:0;border-radius:12px;font-size:15px;font-weight:700;line-height:normal;min-height:0;margin:0 0 4px;letter-spacing:.3px}
-.score-pill{font-size:14px;font-weight:600;line-height:normal;padding:6px 16px;margin:0;border:.5px solid var(--card-border)}
 .badge{font-size:12px;font-weight:600;line-height:normal;padding:3px 10px}
 .study-level-card .card-title,.study-level-card h2{font-size:14px;font-weight:600;line-height:1.2;margin:0 0 10px}
 .study-level-options{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;min-height:96px;align-content:start}
@@ -240,7 +239,7 @@ main:has(.set-page){padding:10px 12px calc(var(--tab-h) + 6px)}
 
 .lic-x{display:flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:0;font-size:26px;line-height:1;background:none}
 
-#flashcard-count,.score-pill{font-variant-numeric:tabular-nums}
+#flashcard-count{font-variant-numeric:tabular-nums}
 
 
 .level-chip,.hsk-chip{height:44px;min-height:44px;line-height:18px;background:transparent;border:1px solid var(--card-border);border-radius:8px}

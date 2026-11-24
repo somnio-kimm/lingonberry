@@ -9,17 +9,11 @@ const modes = {pinyin:renderPinyinQuiz, tone:renderToneQuiz};
 export function renderPronunciationQuiz(host) {
   let mode = 'pinyin';
   const filters = {status:'all', pos:'all', open:false};
-  const score = {correct:0, total:0};
 
   function draw() {
     const title = t('mode_pronunciation');
     modes[mode](host, {
       title, filters,
-      score:() => score,
-      onAnswer(correct) {
-        score.total++;
-        if (correct) score.correct++;
-      },
       modeTabs:renderStudyTabs({
         label:title,
         options:Object.keys(modes).map(value=>({value,label:t('mode_'+value)})),

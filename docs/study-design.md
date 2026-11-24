@@ -78,8 +78,8 @@ Do not style a nested word list through a broad descendant selector: the outer r
 
 ## Interaction and language contract
 
-- Dictation uses `renderStudyQuizHeader` (including the initial 0 / 0 score) followed immediately by `renderStudyTabs` with `variant:'listening'`, then Filters, then the question. Word is left and Sentence is right. All languages reuse these renderers; do not put a separate compact switch below Filters. Saved-question retests omit the mode switch.
-- Word-choice answers check on tap and then show Next. Do not add Submit to selection questions. Typing uses Submit and the device keyboard; Chinese pinyin input retains its dedicated keyboard.
+- Dictation uses `renderStudyQuizHeader` followed immediately by `renderStudyTabs` with `variant:'listening'`, then Filters, then the question. Word is left and Sentence is right. All languages reuse these renderers; do not put a separate compact switch below Filters. Saved-question retests omit the mode switch.
+- Quiz headers show the title alone. Word-choice answers check on tap and then show Next. Do not add Submit to selection questions. Typing uses Submit and the device keyboard; Chinese pinyin input retains its dedicated keyboard.
 - Submit, Skip and Next stay at the end of content, above the navigation by normal page flow. Do not make them floating overlays.
 - Meaning Quiz and Cloze quiz cards omit the speaker. Word List details continue to offer audio. Meaning Quiz and Word Input remain vocabulary-only. Put specialist features in their own Study sections unless the user explicitly asks to merge them.
 - German/Chinese Collocations is retired: omit the Study route, fresh questions and Word List/detail/search references through the shared capability policy and presentation projection. Retain stored question snapshots and the standard vocabulary feedback path for historical retests.

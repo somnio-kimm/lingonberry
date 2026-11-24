@@ -1,5 +1,5 @@
 import {bindQuizWordDetails} from './study-components.js';
-import {escapeHtml as e,scorePill} from './ui.js';
+import {escapeHtml as e} from './ui.js';
 import {bindTypingAnswer} from './typing-answer.js';
 import {renderVocabularyHints} from './vocabulary-learning-view.js';
 import {withVocabularyLearning} from './vocabulary-learning.js';
@@ -30,7 +30,7 @@ export function renderVocabularyView(host,config,session={}){
   const option=meaning?question.options.find(row=>row.id===value):undefined;
   if(meaning&&!option)return;
   const correct=config.answerCorrect(question,value),displayInput=meaning?option.text:value;
-  input=displayInput;selected=meaning?value:'';feedback=correct?'correct':'wrong';total++;if(correct)score++;
+  input=displayInput;selected=meaning?value:'';feedback=correct?'correct':'wrong';
   host.querySelector('#vocab-answer')?.blur();
   config.record(withVocabularyLearning(question,learning(question)),value,correct,{displayInput},session);
   session.onAnswer?.(correct,displayInput);config.feedback(correct);draw();config.update?.();
@@ -44,12 +44,12 @@ export function renderVocabularyView(host,config,session={}){
  function draw(){
   if(!alive)return;
   typing?.destroy();typing=undefined;stopAudio();
-  const shown=session.score?.()||{correct:score,total},checked=!!feedback;
+  const checked=!!feedback;
   const audio=`<button type="button" class="word-listen" id="vocab-listen" data-quiz-speak aria-label="${e(labels.listen)}">🔊</button>`;
   const wordTrigger=markup=>checked&&config.openDetails?`<button type="button" class="vocab-word-trigger" data-open-vocab-word aria-haspopup="dialog">${markup}</button>`:markup;
   const prompt=question&&(config.renderPrompt?.(question)||e(question.prompt));
   const correction=checked&&question?`<span class="vocab-correction" lang="${e(language)}">${config.renderAnswer?.(question)||e(question.answer)}</span>`:'';
-  host.innerHTML=`<div class="lexicon-view vocabulary-view"><div class="sentence-quiz-header vocab-quiz-header"><div class="section-title">${e(labels.title)}</div>${scorePill(shown.correct,shown.total)}</div>${session.question?'':config.filters?.(filters())||''}${question?`
+  host.innerHTML=`<div class="lexicon-view vocabulary-view"><div class="sentence-quiz-header vocab-quiz-header"><div class="section-title">${e(labels.title)}</div></div>${session.question?'':config.filters?.(filters())||''}${question?`
    <div class="vocab-test quiz-after-filter" data-question-id="${e(question.id)}" data-vocab-mode="${mode}"><section class="panel card vocab-question lexicon-question ${feedback}" data-question-word="${e(question.word.id)}">
     ${!meaning&&checked?`<div class="vocab-question-top vocab-question-top--audio">${audio}</div>`:''}<div class="vocab-prompt" lang="${e(meaning?language:question.locale)}">${meaning?wordTrigger(prompt):prompt}</div>
     ${meaning?'':`<div class="vocab-answer-cell ${feedback||'active'}">${checked?`<div role="status" aria-label="${e(correctLabel())}">${wordTrigger(correction)}${feedback==='wrong'?`<span class="vocab-wrong" lang="${e(language)}">${e(input)}</span>`:''}</div>`:`<input id="vocab-answer" type="text" inputmode="text" enterkeyhint="done" lang="${e(config.inputLanguage||language)}" aria-label="${e(labels.answer)}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="120" value="${e(input)}">`}</div>`}

@@ -10,13 +10,13 @@ import { Pinyin } from '../services/pinyin.js';
 import { TTS } from '../services/tts.js';
 import { Haptic } from '../services/haptic.js';
 import { recordAnswer } from '../services/srs.js';
-import { shuffle, pick, scorePill, posGroupIdsForWord } from '../components.js';
+import { shuffle, pick, posGroupIdsForWord } from '../components.js';
 import { t, sentenceMeaning } from '../services/i18n.js';
 
 export function renderScrambleQuiz(el,session={}) {
   const words = session.question?Store.words.filter(w=>w.hskLevel===session.question.word.hskLevel):Store.activeWords;
   const withSentences = session.question?[session.question.word]:words.filter(w => practiceSentences(w).length);
-  let score = 0, total = 0, word, sentence, pool = [], chosen = [], feedback = '',alive=true,childCleanup=()=>{};
+  let word, sentence, pool = [], chosen = [], feedback = '',alive=true,childCleanup=()=>{};
 
   const filters=createSentenceFilters(withSentences,session,()=>{TTS.stop();newQ();});
 
@@ -50,10 +50,9 @@ export function renderScrambleQuiz(el,session={}) {
 
   function checkAnswer() {
     if (!alive||feedback) return;
-    total++;
     const user = chosen.map(c => c.hanzi).join('');
     if (user === sentence.hanzi) {
-      score++; feedback = 'correct'; Haptic.success();
+      feedback = 'correct'; Haptic.success();
       recordAnswer(true);
     } else {
       feedback = 'wrong'; Haptic.error();
@@ -71,8 +70,8 @@ export function renderScrambleQuiz(el,session={}) {
   }
 
   function draw() {
-    if(!alive)return;childCleanup();const displayed=session.score?.()||{correct:score,total};
-    el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_scramble')}</div>${scorePill(displayed.correct,displayed.total)}</div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
+    if(!alive)return;childCleanup();
+    el.innerHTML=`<div class="sentence-quiz-header"><div class="section-title">${t('mode_scramble')}</div></div>${filters.markup()}<div data-sentence-body></div>`;filters.bind(el);const host=el.querySelector('[data-sentence-body]');
     if(!word){host.innerHTML=`<section class="card empty-wrong quiz-after-filter"><p>${t('noWordsFilter')}</p></section>`;return;}
     const projected=projectScrambleTiles(chosen,pool,tile=>tile.hanzi),tiles=projected.tiles,view={mode:'scramble',word,locale:word.studyExplanationLanguage||Store.uiLang,sentence:sentence.hanzi,example:sentence,answer:sentence.hanzi,tokens:projected.tokens,pool:projected.pool};
     const text=key=>t({'Show Reading':'showPinyin','Speak Example':'listenSentence','Your Answer':'yourAnswer','Reset':'reset','Submit':'submit','Skip':'skip','Next':'nextQ'}[key]||key);
