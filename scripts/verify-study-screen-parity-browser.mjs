@@ -33,6 +33,20 @@ try{
      }
      if(mode==='cloze'){
       const option=page.locator('[data-cloze-option],.cloze-options .opt-btn,[data-o]').first();value[mode].option=await measure(page,'[data-cloze-option],.cloze-options .opt-btn,[data-o]');assert.equal(await page.locator('[data-sentence-submit],#quiz-submit,#sub-btn').count(),0,language+' Cloze checks on tap');await option.click();await page.locator('.quiz-next-bar').waitFor();assert.equal(await page.locator('.quiz-action-bar').count(),0);value[mode].next=await measure(page,'.quiz-next-bar button');
+      assert.equal(await page.locator('[data-vocab-result]').count(),0,'Grading does not open the Word List sheet');
+      const reading=page.locator('[data-show-reading]');
+      if(await reading.count()){
+       await reading.click();
+       assert.equal(await page.locator('[data-vocab-result]').count(),0,'Reading toggle does not open word details');
+       await reading.click();
+      }
+      const word=page.locator('[data-open-cloze-word]');
+      await word.press('Enter');
+      const sheet=page.locator('[data-vocab-result] .detail-sheet');
+      assert.ok(await sheet.locator('.status-btns').isVisible());
+      assert.ok(await sheet.locator('[data-sentence-next]').isVisible());
+      await page.locator('[data-close-vocab-result]').click();
+      assert.ok(await word.evaluate(node=>node===document.activeElement),'Closing word details restores question focus');
      }
      if(mode==='scramble'){
       assert.equal(await page.locator('.sentence-question .flow-chip').count(),0,language+' tiles outside question');

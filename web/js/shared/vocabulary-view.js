@@ -1,3 +1,4 @@
+import {bindQuizWordDetails} from './study-components.js';
 import {escapeHtml as e,scorePill} from './ui.js';
 import {bindTypingAnswer} from './typing-answer.js';
 import {renderVocabularyHints} from './vocabulary-learning-view.js';
@@ -7,13 +8,13 @@ import {withVocabularyLearning} from './vocabulary-learning.js';
 export function renderVocabularyView(host,config,session={}){
  const {mode,language,labels}=config,meaning=mode==='vocabmeaning';
  let alive=true,generation=0,question,input='',selected='',feedback='',score=0,total=0;
- let status='all',pos='all',open=false,typing,prepared,preparedWords=[],preparedLocale,closeDetails;
+ let status='all',pos='all',open=false,typing,prepared,preparedWords=[],preparedLocale,disposeDetails;
  const filters=()=>({status,pos,open});
  const learning=q=>({language,locale:config.locale(),...config.learning?.(q)});
  function stopAudio(){generation++;config.stopAudio();}
  function next(){
   if(!alive)return;
-  closeDetails?.();
+  disposeDetails?.();
   if(session.question)question=session.question;
   else{
    const words=config.words(filters()),locale=config.questionLocale?.()||config.locale();
@@ -68,23 +69,14 @@ export function renderVocabularyView(host,config,session={}){
   const nextButton=host.querySelector('#vocab-next');
   nextButton?.addEventListener('click',()=>{
    if(!alive)return;
-   closeDetails?.();
+   disposeDetails?.();
    session.onNext?session.onNext():next();
   });
   const wordButton=host.querySelector('[data-open-vocab-word]');
-  if(wordButton)wordButton.onclick=()=>{
-   if(!alive||closeDetails)return;
-   const slot=nextButton.parentElement;
-   closeDetails=config.openDetails(question,{nextButton,onClose:()=>{
-    closeDetails=undefined;
-    if(!alive)return;
-    slot.append(nextButton);
-    wordButton.focus({preventScroll:true});
-   }});
-  };
+  if(wordButton)disposeDetails=bindQuizWordDetails(wordButton,nextButton,options=>config.openDetails(question,options));
   host.querySelector('#vocab-skip')?.addEventListener('click',()=>{if(alive)session.onSkip?session.onSkip():next();});
  }
  function correctLabel(){return feedback==='correct'?labels.correct:labels.incorrect;}
  next();
- return()=>{if(!alive)return;alive=false;closeDetails?.();typing?.destroy();stopAudio();host.querySelector('#vocab-answer')?.blur();host.querySelectorAll('button,.filter-fold').forEach(node=>{node.onclick=null;node.ontoggle=null;});};
+ return()=>{if(!alive)return;alive=false;disposeDetails?.();typing?.destroy();stopAudio();host.querySelector('#vocab-answer')?.blur();host.querySelectorAll('button,.filter-fold').forEach(node=>{node.onclick=null;node.ontoggle=null;});};
 }

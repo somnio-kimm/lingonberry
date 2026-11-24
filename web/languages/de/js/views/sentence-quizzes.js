@@ -5,14 +5,14 @@ import {createQuestionRotation,sentenceQuestionKey} from '../../../../js/shared/
 import {renderLexiconSentence} from '../../../../js/shared/lexicon-sentence-view.js';
 import { escapeHtml as e, scorePill, showQuizBurst } from '../../../../js/shared/ui.js';
 import { t, getLocale, sentenceMeaning, wordMeaning } from '../core/i18n.js';
-import { studyFilterMarkup } from './study-components.js';
+import { createStudyControls, studyFilterMarkup } from './study-components.js';
 import { studyWords, filterStudyStatus, shuffleWords, wordHeading } from '../core/words.js';
 import { clozeQuestions, clozeOptions, hasClozeDistractor, scrambleQuestions, scrambleCorrect, joinSentenceTokens } from '../core/sentence-quizzes.js';
 import { speakGerman, stopMedia } from '../core/media.js';
 function renderSentenceQuiz(el,ctx,mode,session={}) {
  const level=ctx.store.state.preferences.studyLevel,words=studyWords(ctx.words,level);
  const build=mode==='cloze'?pool=>clozeQuestions(pool).filter(q=>hasClozeDistractor(q,pool)):scrambleQuestions;
- const alignment=new WeakMap();
+ const alignment=new WeakMap(),details=mode==='cloze'?createStudyControls(el,ctx):null;
  const aligned=question=>hasClozeTranslationTarget(question,sentenceMeaning(question.example),'de',question.word.studyExplanationLanguage||getLocale());
  let status='all',pos='all',filterOpen=false,rotation,rotationRows=[];
  let questions=session.question?[session.question]:build(words),question,options=[],pool=[],chosen=[],feedback='',input='',score=0,total=0,destroyed=false,childCleanup=()=>{},generation=0;
@@ -54,6 +54,7 @@ function renderSentenceQuiz(el,ctx,mode,session={}) {
   const text=key=>t({'Show Translation':'Show translation','Speak Example':'Speak sentence','Your Answer':'Your answer'}[key]||key);
   childCleanup=renderLexiconSentence(host,{question:view,feedback,selectedOption:String(options.findIndex(option=>option.text===input)),chosenTokens:tiles.chosenTokens,showTranslation:show,translationVisible:show,translation:sentenceMeaning(question.example),t:text},{
    language:'de',uiLanguage:getLocale(),renderOption:option=>option.text===option.word.lemma?wordHeading(option.word):e(option.text),renderOptionBase:option=>option.text!==option.word.lemma?`<span class="cloze-option-base" lang="de">${wordHeading(option.word)}</span>`:'',
+   openDetails:details?(word,options)=>details.open(ctx.words.find(entry=>entry.id===word.id)||word,undefined,options):undefined,
    speak:()=>{const ticket=generation;speakGerman(sentence,()=>{},()=>{if(destroyed||ticket!==generation)return;const message=host.querySelector('.lexicon-audio-status');message.hidden=false;message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');});},
    select:id=>grade(options[Number(id)].text),choose:id=>{if(feedback)return;const index=id-chosen.length;chosen.push(pool[index]);pool.splice(index,1);ctx.haptic();draw();},remove:index=>{if(feedback)return;pool.push(chosen[index]);chosen.splice(index,1);ctx.haptic();draw();},
    toggle:value=>{ctx.store.preference(mode+'ShowTranslation',value);ctx.haptic();draw();ctx.updateStatus();},

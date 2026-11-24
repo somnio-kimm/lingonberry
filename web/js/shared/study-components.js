@@ -24,6 +24,29 @@ export function appendStudySheetNext(overlay,nextButton,closeSelector){
  overlay.querySelector(closeSelector).setAttribute('data-close-vocab-result','');
 }
 
+/** The existing dictionary sheet borrows the quiz's Next action while open. */
+export function bindQuizWordDetails(trigger,nextButton,open){
+ const slot=nextButton.parentElement;
+ let closeSheet,active=true;
+ trigger.onclick=()=>{
+  if(!active||closeSheet)return;
+  closeSheet=open({nextButton,onClose:()=>{
+   closeSheet=undefined;
+   if(!active)return;
+   slot.append(nextButton);
+   trigger.focus({preventScroll:true});
+  }});
+ };
+ if(trigger.tagName!=='BUTTON')trigger.onkeydown=event=>{
+  if(event.target===trigger&&['Enter',' '].includes(event.key)){event.preventDefault();trigger.click();}
+ };
+ return ()=>{
+  active=false;
+  trigger.onclick=null;trigger.onkeydown=null;
+  closeSheet?.();
+ };
+}
+
 export function renderStudyTabs({label,options,selected,attribute,variant='form'}){
  if(!/^data-[a-z]+(?:-[a-z]+)*$/u.test(attribute))throw new Error('Study tabs require a safe data attribute');
  if(!['form','listening'].includes(variant))throw new Error('Unknown study tabs variant');

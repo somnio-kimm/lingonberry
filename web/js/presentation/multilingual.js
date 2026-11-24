@@ -203,6 +203,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
   practiceCleanup=renderLexiconSentence(body,{question:q,feedback,selectedOption:input,input,chosenTokens,showTranslation:store.state.preferences[preference],showReading:store.state.preferences[mode+'ShowReading']!==false,t},{
    language,uiLanguage:locale(),renderSentence:text=>japaneseFurigana?.renderSentence(text,q.word)||e(text),renderOption:language==='ja'?option=>{const word=byId.get(option.id);return word&&option.text===word.lemma?renderJapaneseRuby(option.text,word.pronunciation):japaneseFurigana.renderSentence(option.text,word);}:undefined,toggleReading:value=>{store.preference(mode+'ShowReading',value);refresh();},reset:()=>{chosenTokens=[];q.pool=shuffle(q.pool);refresh();},speak:()=>speak(q.sentence,host),choose:id=>{if(!chosenTokens.includes(id)){chosenTokens.push(id);refresh();}},remove:index=>{chosenTokens.splice(index,1);refresh();},select:id=>{input=id;submit();},toggle:value=>{store.preference(preference,value);refresh();},
+   openDetails:mode==='cloze'?(word,options)=>details(byId.get(word.id)||word,options):undefined,
    submit,skip:()=>advance(true),next:()=>advance(false),
   });
   const fields=[...body.querySelectorAll('[data-phrase-gap]')];

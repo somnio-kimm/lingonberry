@@ -94,6 +94,11 @@ try{
   assert.equal(await page.locator('[data-sentence-speak]').count(),0);
   assert.equal(await page.locator('body').evaluate(node=>node.scrollWidth>innerWidth),false);
   await page.screenshot({path:join(directory,`${locale}-${width}-${theme}.png`),fullPage:true});
+  await page.locator('.sentence-translation').click();
+  const details=page.locator('[data-vocab-result] .detail-sheet');
+  assert.ok(await details.locator('.study-headword').isVisible());
+  assert.ok(await details.locator('[data-sentence-next]').isVisible());
+  await page.locator('[data-close-vocab-result]').click();
   await page.evaluate(()=>window.mergedRoute('wrong'));
   assert.match(await page.locator('.wrong-card').innerText(),locale==='ko'?/빈칸 채우기/u:/Cloze/u);
   await page.locator('[data-retest]').click();
@@ -108,6 +113,9 @@ try{
   assert.equal(await page.locator('[data-sentence-submit]').count(),0);
   await page.locator('[data-cloze-option]').filter({hasText:selection.answer}).first().click();
   await page.locator('.lexicon-question.correct').waitFor();
+  await page.locator('[data-open-cloze-word]').click();
+  await details.locator('[data-sentence-next]').click();
+  assert.equal(await details.count(),0);
   scenarios++;
  }
  assert.deepEqual(errors,[]);
