@@ -436,13 +436,11 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .fc-set-progress::-moz-progress-bar{background:var(--blue);border-radius:2px}
 .flashcard-study .flashcard{transform:none;transition:none;height:clamp(320px,42dvh,410px);min-height:320px}
 .flashcard-study .flashcard-front,.flashcard-study .flashcard-back{transform:none;backface-visibility:visible;padding:18px 22px;border-radius:14px;box-shadow:none;border:1px solid var(--card-border)}
-.flashcard-study .flashcard-back{display:block;overflow-y:auto}
+.flashcard-study :is(.flashcard-front,.flashcard-back){display:block;overflow-y:auto;scrollbar-gutter:stable both-edges}
 .flashcard-study .fc-card-head{height:auto;min-height:44px;align-items:center}
 .fc-details-button{width:44px;height:44px;flex-shrink:0;border:0;background:transparent;color:var(--secondary);font-size:23px;letter-spacing:2px}
 .flashcard-study .flashcard-word{font-size:36px;line-height:1.2;margin:0;color:var(--text)}
-.flashcard-study .fc-card-main{padding-top:18px;cursor:pointer}
-.flashcard-study .flashcard-front .fc-card-main{justify-content:center}
-.flashcard-study .fc-card-main-back{overflow:visible;flex:none;min-height:auto}
+.flashcard-study .fc-card-main{padding-top:18px;cursor:pointer;overflow:visible;min-height:auto}
 .flashcard-study .fc-core{gap:10px}
 .flashcard-study .fc-meaning{font-size:15px;line-height:1.55;color:var(--secondary)}
 .flashcard-study .fc-examples{margin-top:20px;padding-top:12px;border-top:1px solid var(--line)}

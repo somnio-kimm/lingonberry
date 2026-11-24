@@ -3,7 +3,6 @@ import {newestMistakesFirst} from '../shared/review-order.js';
 import {renderVocabularyView} from '../shared/vocabulary-view.js';
 import {renderStudyMenu,renderStudyLevels} from '../shared/study-menu-view.js';
 import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../shared/flashcard-session.js';
-import {flashcardText} from '../shared/flashcard-text.js';
 import {createEnglishHeadwords,readWordSenses,readHeadwordStatus,readEnglishHeadwordIdentity} from '../shared/english-headwords.js';
 import {renderLexiconReview} from '../shared/lexicon-review-view.js';
 import {renderLexiconFlashcards} from '../shared/lexicon-flashcard-view.js';
@@ -64,7 +63,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function heading(word){if(language==='ja')return `<span class="lexicon-word" lang="ja">${renderJapaneseRuby(displayStudyWord(word),word.pronunciation)}</span>`;return `<span class="lexicon-word" lang="${language}">${language!=='en'&&word.pronunciation&&word.pronunciation!==word.lemma?`<ruby>${e(displayStudyWord(word))}<rt>${e(word.pronunciation)}</rt></ruby>`:e(displayStudyWord(word))}</span>`;}
  const isGroupedRoute=route=>language==='en'&&['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
- const matchesStatus=(word,status)=>status==='all'||status==='unfamiliar'&&readStatus(word)!=='mastered'||readStatus(word)===status;
+ const matchesStatus=(word,status)=>status==='all'||readStatus(word)===status;
  let flashcardSetSize=readFlashcardSetSize(),flashcardKey='',exampleIndex=0;const flashcardSession=createFlashcardSession({readStatus,readIdentity:word=>language==='en'?readEnglishHeadwordIdentity(word):word.id});
  const levelLabel=level=>language==='ja'&&profile.levels.includes(level)?profile.exam+' '+level:level;
  function tags(word){return `<span class="wl-tag wl-hsk">${e(levelLabel(language==='en'?assignEnglishLevel(word):word.level))}</span>${[...new Set(readWordSenses(word).map(typeName))].map(type=>`<span class="wl-tag wl-pos">${e(t(type))}</span>`).join('')}`;}
@@ -82,7 +81,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   sheet.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>speak(examples[Number(button.dataset.example)].example.text,sheet));
   sheet.querySelectorAll('[data-status]').forEach(button=>button.onclick=()=>{for(const sense of senses)store.setWordStatus(sense.id,button.dataset.status);closeSheet();refresh();});sheet.querySelector('[data-close]').focus();
  }
- function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:route==='flashcards'?'unfamiliar':'all',open:false,mode:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
+ function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:'all',open:false,mode:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
  function pool(route){
   const f=state(route),query=fold(f.query);
   const candidates=words.filter(word=>matchesStudyLevel(word,store.state.preferences.studyLevel,profile)&&(f.pos==='all'||word.pos===f.pos)&&(route!=='flashcards'||matchesStatus(word,f.status)));
@@ -126,8 +125,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const levelWords=words.filter(word=>matchesStudyLevel(word,level,profile));
   const parts=['all',...new Set(levelWords.map(word=>word.pos))];
   if(!parts.includes(f.pos))parts.push(f.pos);
-  const label=value=>value==='unfamiliar'?flashcardText(locale()).toLearn:t(value==='all'?'All':value==='functional'?'Expression':value[0].toUpperCase()+value.slice(1));
-  const statusCounts=route==='flashcards'?{unfamiliar:0,all:0,new:0,learning:0,mastered:0}:{all:0,new:0,learning:0,mastered:0},posCounts=new Map([['all',0]]);
+  const label=value=>t(value==='all'?'All':value==='functional'?'Expression':value[0].toUpperCase()+value.slice(1));
+  const statusCounts={all:0,new:0,learning:0,mastered:0},posCounts=new Map([['all',0]]);
   if(route==='flashcards'){
    const countCards=(selectedPos,selectedStatus)=>{const selected=levelWords.filter(word=>(selectedPos==='all'||word.pos===selectedPos)&&matchesStatus(word,selectedStatus));return (language==='en'?headwords.group(selected):selected).length;};
    for(const key of Object.keys(statusCounts))statusCounts[key]=countCards(f.pos,key);
