@@ -63,3 +63,16 @@ Removed after call-site review: unused emoji/colour entries in generic exercise/
 Remaining deliberate boundaries: German grammar/article policy, Chinese pronunciation/SRS policy, Japanese reading/form policy, language-specific dictionary details and legacy history projection. These are supplied to shared screens instead of being merged into one flag-heavy store/controller. Further removal should follow an actual unconsumed responsibility and its regressions.
 
 Validation after this pass:996 unit tests and the JavaScript/JSON/offline-shell checks pass. The browser regressions cover all four released languages, original Review/retests, grouped English senses, initial filters, IME and keyboard actions, old German inflections/punctuation, Chinese pinyin, Japanese ruby and the common design. The native update script also passes its browser extraction check. A queued-result focus race is covered explicitly; Dictation correct-input tests use canonical written words rather than assuming a spoken kana reading is the required spelling.
+
+## 25 November 2026 presentation audit
+
+Reviewed the Study menu, Word List, Flashcards, Word Input, Meaning Quiz, Cloze, Scramble, Dictation, Review, Retest, Settings and package flows against their shared renderers. The shipped JavaScript audit measured 640,340 bytes across 169 modules, compared with 645,441 bytes across 167 modules at the start of this pass.
+
+| Repeated responsibility | Shared owner |
+| --- | --- |
+| Word-detail markup, focus, audio controls and quiz Next handoff | `dictionary-sheet.js` |
+| Review filter panel, row opening, deletion confirmation and Retest activation | `study-components.js` and `lexicon-review-view.js` |
+| Retest completion and tally of recorded results | `lexicon-review-view.js` and `retest-results.js` |
+| Applying changes to the language runtimes’ Settings mirrors | `app-settings.js` |
+
+Specialist exercise rules, pronunciation markup, saved-answer formats and progress storage stay with the language that owns them. The import audit found zero exact duplicate modules, missing relative imports, unreachable modules or unused named-import candidates.

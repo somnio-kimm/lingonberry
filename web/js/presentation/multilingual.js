@@ -7,7 +7,7 @@ import {createFlashcardStudy} from '../shared/flashcard-study.js';
 import {createHeadwords,readWordSenses,readHeadwordStatus} from '../shared/headwords.js';
 import {renderLexiconReview,renderRetestCompletion} from '../shared/lexicon-review-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
-import {APP_SETTING_KEYS} from '../shared/app-settings.js';
+import {projectAppSettings,syncAppSettings} from '../shared/app-settings.js';
 import {renderListeningView} from '../shared/listening-view.js';
 import {listeningLabels} from '../shared/listening-text.js';
 import {createJapaneseFurigana,renderJapaneseRuby} from '../shared/japanese-furigana.js';
@@ -53,7 +53,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const filters=new Map();let lastRenderedRoute;
  const locale=()=>store.state.preferences.uiLanguage,t=value=>lexiconText(locale(),value);
  const screenTitle=mode=>screens[mode]?.title||exerciseLabel(mode,locale());
- const preferences=()=>({theme:store.state.preferences.theme,uiLanguage:locale(),hapticEnabled:store.state.preferences.hapticEnabled,soundEnabled:store.state.preferences.soundEnabled,autoRemoveResolvedWrongs:store.state.preferences.autoRemoveResolvedWrongs});
+ const preferences=()=>projectAppSettings(store.state.preferences);
  const haptic=()=>{if(store.state.preferences.hapticEnabled)navigator.vibrate?.(10);};
  const change=(name,value)=>{store.preference(name,value);onPreferences(preferences());};
  const fold=value=>{const s=String(value||'').normalize('NFKC').toLocaleLowerCase(language);return ['en','fr','es'].includes(language)?s.normalize('NFD').replace(/\p{M}/gu,''):s;};
@@ -380,7 +380,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   resetQuestion();
  }
  return {id:language,screens,ready:store.ready,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();await store.flush();flashcards.reset();resetQuestion();return store.warning;}},
-  preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
+  preferences,setPreferences(values){syncAppSettings(values,store.state.preferences,store.preference);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
   render(route,host){if(route==='wordlist'&&lastRenderedRoute!=='wordlist')state('wordlist').selectedInitial='all';lastRenderedRoute=route;practiceCleanup?.();practiceCleanup=undefined;typing?.destroy();typing=undefined;host.dataset.viewState='ready';if(route==='home')drawHome(host);else if(route==='wordlist')return drawWords(host,route);else if(route==='flashcards')return drawCards(host,route);else if(route==='wrong')return drawReview(host);else if(route==='roots')return drawRoots(host);else return drawQuiz(host,route)||(()=>{});return()=>{};},

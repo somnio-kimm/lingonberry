@@ -47,7 +47,7 @@ try{
     const cards=page.locator('.wrong-entry,.wrong-item');
     await cards.first().waitFor();baselines[language]=await measure(page,cards.first());
     const filter=page.locator('.wrong-filter-panel');
-    assert.ok((await filter.locator('summary').innerText()).includes(ui==='ko'?'학습 상태':'Study Status'));
+    assert.ok((await filter.locator('.filter-fold-pick-l').allTextContents()).includes(ui==='ko'?'학습 상태':'Study Status'));
     await page.locator('#retest-filtered:enabled').waitFor();
     if(!await filter.evaluate(node=>node.open))await filter.locator('summary').click();
     const status=value=>filter.locator('[data-review-filter=status][data-value='+value+']');
