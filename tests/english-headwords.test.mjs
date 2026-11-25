@@ -42,7 +42,10 @@ test('an example for a source record with several meanings stays unnumbered',()=
  const word={...request,studyMeaning:'a request; a plea\na legal challenge'};
  assert.deepEqual(readDictionaryMeanings(word,'en'),['a request, a plea','a legal challenge']);
  assert.equal(selectSenseExamples(word,'en')[0].number,undefined);
- assert.equal(selectSenseExamples(request,'en')[0].number,undefined);
+});
+
+test('even a single recorded meaning has a matching example numbered 1',()=>{
+ assert.equal(selectSenseExamples(request,'en')[0].number,1);
 });
 
 import {createMorphemeModel} from '../web/js/shared/morpheme-model.js';

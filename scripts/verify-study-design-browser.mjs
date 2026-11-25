@@ -14,7 +14,7 @@ try{
   await page.setViewportSize({width,height:1000});
   await page.evaluate(async({language,theme,locale})=>{
    document.querySelector('#style-de').disabled=language!=='de';document.querySelector('#style-zh').disabled=language!=='zh';document.documentElement.dataset.theme=theme;
-   const [{renderMorphemeInventory},{renderStudyTabs,renderStudyFilters,renderStudyReviewFilters},{lexiconText}]=await Promise.all([import('/js/shared/morpheme-view.js'),import('/js/shared/study-components.js'),import('/js/shared/lexicon-text.js')]);
+   const [{renderMorphemeInventory},{renderStudyTabs,renderStudyFilters,renderStudyReviewFilters,renderDictionaryMeanings,renderDictionarySenses},{lexiconText},{selectSenseExamples}]=await Promise.all([import('/js/shared/morpheme-view.js'),import('/js/shared/study-components.js'),import('/js/shared/lexicon-text.js'),import('/js/shared/word-example.js')]);
    const host=document.querySelector('main');host.innerHTML='<div id="baseline"><section class="panel"><h2 class="section-title">Reference</h2></section><div class="card study-search"><input class="input-field" type="search" placeholder="Search"></div><div class="wl-list wl-list--wordlist"><div class="word-row-window"><div class="wl-row"><div class="wl-main"><span class="wl-headword">audience</span><div class="wl-meaning">listeners</div></div></div></div></div></div><div id="feature"></div>';
    const words=[{id:'audience',lemma:'audience',studyMeaning:'listeners'}],rows=[{id:'aud',form:'aud-',variants:[],kind:'root',origin:'Latin',examples:['audience','audition'],senses:[{id:'aud-0',meaning:'hear',tags:[]}],source:'https://en.wiktionary.org/wiki/aud-'}];
    renderMorphemeInventory(document.querySelector('#feature'),{rows,words,state:{},t:x=>lexiconText(locale,x),locale,openWord:id=>{window.openedRootWord=id;},tags:()=>''});
@@ -22,7 +22,25 @@ try{
    const group={title:'Type',selected:'all',options:[{value:'all',label:'All'}]};
    host.insertAdjacentHTML('beforeend',renderStudyFilters({title:'Filters',status:group,pos:group,open:true}));
    host.insertAdjacentHTML('beforeend',renderStudyReviewFilters({title:'Filters',groups:[{...group,key:'mode',options:[{value:'all',label:'All',count:1}]}],open:true}));
+   const definition=locale==='ko'?'뜻이 길어져 다음 줄로 넘어갈 때도 번호 아래가 아니라 첫 줄의 뜻과 예문이 같은 위치에서 시작하는지 확인합니다.':'A deliberately long definition that wraps across several lines and stays aligned with its example sentence and translated sentence.';
+   const word={id:'indent-layout',studyMeaning:definition,examples:[{text:'Example sentence.',studyTranslation:'Example translation.'}]};
+   const senses=renderDictionarySenses([definition],selectSenseExamples(word,language),{locale,title:'Examples',speakLabel:'Listen',renderExample:example=>`<div class="example-sentence">${example.text}</div>`});
+   host.insertAdjacentHTML('beforeend',`<section id="sense-indent" class="panel" style="max-width:330px"><div class="wl-meaning">${renderDictionaryMeanings(word,language)}</div>${senses}</section>`);
   },{language,theme,locale});
+  const indentation=await page.locator('#sense-indent').evaluate(node=>{
+   const bounds=selector=>node.querySelector(selector).getBoundingClientRect();
+   const textRects=selector=>[...node.querySelector(selector).getClientRects()].map(rect=>rect.left);
+   const sentence=bounds('.example-sentence'),translation=bounds('.example-translation');
+   return {numbers:[...node.querySelectorAll('.study-sense-number')].map(marker=>marker.textContent.trim()),
+    marker:bounds('.study-sheet-meaning .study-sense-number').left,
+    meaning:textRects('.study-sheet-meaning .study-sense-text'),list:textRects('.wl-meaning .study-sense-text'),
+    sentence:sentence.left,translation:translation.left,translationGap:translation.top-sentence.bottom};
+  });
+  assert.deepEqual(indentation.numbers,['1.','1.']);
+  assert.ok(indentation.meaning.length>1&&indentation.list.length>1);
+  const firstText=indentation.meaning[0];
+  assert.ok(firstText>indentation.marker&&[...indentation.meaning,...indentation.list,indentation.sentence,indentation.translation].every(x=>Math.abs(x-firstText)<.5),JSON.stringify(indentation));
+  assert.ok(indentation.translationGap>=8);
   assert.deepEqual(await measure(page,'[data-morpheme]', ['padding','borderRadius','borderWidth','backgroundColor']),await measure(page,'#baseline .panel',['padding','borderRadius','borderWidth','backgroundColor']));
   assert.deepEqual(await measure(page,'.study-reference-heading',['fontSize','fontWeight','color']),await measure(page,'#baseline .wl-headword',['fontSize','fontWeight','color']));
   assert.deepEqual(await measure(page,'.study-reference-origin',['fontSize','color']),await measure(page,'#baseline .wl-meaning',['fontSize','color']));
@@ -69,7 +87,7 @@ try{
   assert.equal(await page.locator('[data-practice-family]').count(),0);
   assert.equal(await page.locator('[data-root-view],[data-answer-mode],[data-submit],.vocab-question').count(),0);
   await page.locator('main').screenshot({path:join(directory,`root-reference-${legacy?'legacy':'current'}-${width}-${theme}.png`)});
-  assert.equal(await search.inputValue(),'aud');assert.equal(await page.locator('[data-root-list] details,[data-root-list] summary,[data-root-list] a').count(),0);assert.equal(await page.locator('[data-root-entry]').count(),2);await page.locator('[data-root-entry=audience]').waitFor({state:'visible'});await page.locator('[data-root-entry=audience] .wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='ko'?'청중':'listeners');await page.locator('[data-close]').click();
+  assert.equal(await search.inputValue(),'aud');assert.equal(await page.locator('[data-root-list] details,[data-root-list] summary,[data-root-list] a').count(),0);assert.equal(await page.locator('[data-root-entry]').count(),2);await page.locator('[data-root-entry=audience]').waitFor({state:'visible'});await page.locator('[data-root-entry=audience] .wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='ko'?'1. 청중':'1. listeners');await page.locator('[data-close]').click();
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${checks} shared design contracts and four current/legacy Root Families scenarios: directly visible words, dictionary opening and no source links.`);
 }finally{await browser?.close();await new Promise(resolve=>server.close(resolve));}

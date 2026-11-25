@@ -81,7 +81,7 @@ try{
    const member=page.locator(`[data-root-entry="${expected.id}"]`).first();
    while(!await member.count()&&await page.locator('[data-more-related]:visible').count())await page.locator('[data-more-related]:visible').first().click();
    await member.waitFor();await member.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();
-   assert.equal(await page.locator('.study-sheet-meaning').innerText(),meaningDisplayLines(locale==='ko'?expected.meaningKo:expected.meaningEn).join('\n'));
+   assert.equal(await page.locator('.study-sheet-meaning').innerText(),meaningDisplayLines(locale==='ko'?expected.meaningKo:expected.meaningEn).map((line,index)=>`${index+1}. ${line}`).join('\n'));
    assert.ok((await page.locator('.example-sentence').first().innerText()).includes(expected.sentence));
    await page.keyboard.press('Escape');
   }

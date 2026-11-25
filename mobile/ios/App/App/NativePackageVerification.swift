@@ -123,7 +123,7 @@ enum NativePackageVerification {
                 const selector=`[data-root-entry="${entry.id}"]`;
                 for(let page=0;!document.querySelector(selector)&&page<5;page++){const more=[...document.querySelectorAll('[data-more-related]')].find(button=>!button.hidden);if(!more)break;more.click();}
                 await wait(()=>document.querySelector(selector));document.querySelector(selector+' .wl-meaning').click();await wait(()=>document.querySelector('[role=dialog]'));
-                if(document.querySelector('.study-sheet-meaning')?.innerText!==meaningDisplayLines(translation.meaning).join(String.fromCharCode(10))||!document.querySelector('.example-sentence')?.textContent.includes(entry.example.text))throw new Error('New verb detail differs: '+spelling);
+                if(document.querySelector('.study-sheet-meaning')?.innerText!==meaningDisplayLines(translation.meaning).map((line,index)=>(index+1)+'. '+line).join(String.fromCharCode(10))||!document.querySelector('.example-sentence')?.textContent.includes(entry.example.text))throw new Error('New verb detail differs: '+spelling);
                 document.querySelector('[data-close]').click();await wait(()=>!document.querySelector('[role=dialog]'));check.newVerbs.push(spelling);
               }
               search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));check.rootReferenceOnly=true;
@@ -518,7 +518,7 @@ enum NativePackageVerification {
           await new Promise(resolve => setTimeout(resolve, 100));
         }
         await wait(found);
-      } else await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.innerText===meaningDisplayLines(meaning).join(String.fromCharCode(10)));
+      } else await wait(() => document.querySelector(`.wl-row[data-id="${entryId}"] .wl-meaning`)?.innerText===meaningDisplayLines(meaning).map((line,index)=>(index+1)+'. '+line).join(String.fromCharCode(10)));
       pairs.push(target + '-' + explanation);
     }
     const result = {passed:true,pairs,origin:location.origin,wordCount:document.querySelectorAll('.wl-row').length,locale:document.documentElement.lang};
@@ -588,7 +588,7 @@ enum NativePackageVerification {
             document.querySelector('[data-route=wordlist]').click();
             await wait(()=>document.querySelector('#search-input'));
             const input=document.querySelector('#search-input');input.value=spelling;input.dispatchEvent(new Event('input',{bubbles:true}));
-            await wait(()=>document.querySelector(`.wl-row[data-word="${entry.id}"] .wl-meaning`)?.innerText===meaningDisplayLines(meanings.get(entry.id)).join(String.fromCharCode(10)));
+            await wait(()=>document.querySelector(`.wl-row[data-word="${entry.id}"] .wl-meaning`)?.innerText===meaningDisplayLines(meanings.get(entry.id)).map((line,index)=>(index+1)+'. '+line).join(String.fromCharCode(10)));
             result.commonWords.push(spelling);
           }
         }
