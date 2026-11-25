@@ -208,7 +208,7 @@ All four languages use one shared Flashcard session/view. Choose 10, 20, 50 or 1
 
 Tapping the card face reveals or hides the answer, including taps on the padding or example. Word and example speakers and the details button handle their own actions.
 
-A completed set offers Shuffle Learning for only that round's unfinished cards and Next Set for unseen eligible words. Completing or previewing a round cannot silently fill it with new words. Dictionary details remain under the ellipsis control. The card back scrolls through the same numbered meaning and example blocks as the dictionary sheet.
+A completed set offers Shuffle Learning for only that round's unfinished cards and Next Set for unseen eligible words. Completing or previewing a round cannot silently fill it with new words. Dictionary details remain under the ellipsis control. The card back keeps the headword and its controls fixed. The numbered meanings and example blocks scroll in a keyboard-accessible area below the word.
 
 The model owns session identity/selection; adapters own existing progress writes. Readings and German article colours remain language policies. Set-size storage failures are nonfatal; reset/removing study content clears the ephemeral round. Run `verify-flashcard-sets-browser.mjs` and `verify-flashcard-focus-browser.mjs` for capped sets, classifications, focus/inert behavior, completion/repeats, language/theme/device parity and stable history.
 
