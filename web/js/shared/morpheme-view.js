@@ -28,7 +28,7 @@ export function renderMorphemeInventory(host,{
   return matches.map(word=>`<div class="wl-row root-member" data-root-entry="${e(word.id)}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}">
    <div class="wl-main">
     <button class="wl-headword root-member-trigger" data-root-word="${e(word.id)}">${e(text)}</button>
-    <div class="wl-meaning">${renderStudyMeaning(word.studyMeaning)}</div>
+    <div class="wl-meaning">${renderStudyMeaning(word.studyMeaning,word)}</div>
    </div>
    <div class="wl-trail">${tags(word)}</div>
   </div>`).join('');

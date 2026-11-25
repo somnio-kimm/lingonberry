@@ -214,7 +214,7 @@ export function renderToneQuiz(el,session={}) {
             </button>
           `).join('')}
         </div>
-        <div class="tone-quiz-meaning" style="margin-top:12px">${renderStudyMeaning(wordMeaning(word))}</div>
+        <div class="tone-quiz-meaning" style="margin-top:12px">${renderStudyMeaning(wordMeaning(word),word)}</div>
         ${!feedback ? `<div class="tone-num-grid" style="margin-top:16px">
           ${[0, 1, 2, 3, 4].map(tn => {
             const syl = word.syllables[focusIdx];

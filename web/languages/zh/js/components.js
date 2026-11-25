@@ -158,7 +158,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
     </div>
     <div class="study-sheet-core">
       <div class="py-per-char py-per-char--sheet">${Pinyin.htmlMarkedColumns(w.syllables)}</div>
-      <div class="study-sheet-meaning">${renderStudyMeaning(wordMeaning(w))}</div>
+      <div class="study-sheet-meaning">${renderStudyMeaning(wordMeaning(w),w)}</div>
     </div>
     ${renderCollocations(w,Store.uiLang)}<div class="study-status-title">${t('changeStudyStatus')}</div>
     <div class="status-btns">
@@ -238,7 +238,7 @@ export function showDetail(id, words) {
     </div>
     <div style="text-align:center;margin-bottom:16px">
       <div class="py-per-char py-per-char--detail">${Pinyin.htmlMarkedColumns(w.syllables)}</div>
-      <div style="font-size:20px;margin-top:10px">${renderStudyMeaning(wordMeaning(w))}</div>
+      <div style="font-size:20px;margin-top:10px">${renderStudyMeaning(wordMeaning(w),w)}</div>
     </div>
     <div style="display:flex;gap:6px;margin-bottom:12px">
       <span class="badge" style="background:rgba(0,122,255,0.1);color:var(--blue)">${hskBandLabel(w.hskLevel)}</span>
