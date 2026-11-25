@@ -24,6 +24,26 @@ try{
   const position=()=>page.locator('[data-flip] .flashcard-word').evaluate(node=>{const word=node.getBoundingClientRect(),card=node.closest('.flashcard').getBoundingClientRect();return [word.left-card.left,word.top-card.top];});
   const frontPosition=await position();
   await page.locator('[data-flip]').press('Enter');assert.deepEqual(await position(),frontPosition,'Flipping keeps the headword in place');assert.equal(await page.locator('.flashcard-back').getAttribute('aria-hidden'),'false');assert.equal(await page.locator('.flashcard-front').getAttribute('aria-hidden'),'true');assert.equal(await page.locator('.flashcard-front').evaluate(node=>node.inert),true);
+  if(language==='zh'&&width===390&&theme==='dark'){
+   const word=await page.locator('.flashcard').getAttribute('data-word-id');
+   const before=await page.evaluate(()=>{
+    const original=Storage.prototype.setItem;
+    Storage.prototype.setItem=function(key,value){
+     if(key==='learn-language.zh.srsById')throw new DOMException('Full','QuotaExceededError');
+     return original.call(this,key,value);
+    };
+    window.restoreCardStorage=()=>{Storage.prototype.setItem=original;};
+    return localStorage.getItem('learn-language.zh.srsById');
+   });
+   try{
+    await page.locator('[data-mark-mastered]').click();
+    assert.equal(await page.locator('.flashcard').getAttribute('data-word-id'),word);
+    assert.equal(await page.locator('.flashcard-back').getAttribute('aria-hidden'),'false');
+    assert.equal(await page.locator('progress').getAttribute('value'),'0');
+    assert.equal(await page.evaluate(()=>localStorage.getItem('learn-language.zh.srsById')),before);
+    await page.getByText(locale==='ko'?'학습 상태를 저장하지 못했어요.':'Could not save study status.').waitFor();
+   }finally{await page.evaluate(()=>window.restoreCardStorage());}
+  }
   await page.locator('.flashcard').evaluate(node=>Promise.all(node.getAnimations().map(animation=>animation.finished)));await page.locator('main').screenshot({path:join(directory,`${language}-${locale}-${width}-${theme}.png`),fullPage:true});
   for(let i=0;i<10;i++){
    const card=page.locator('.flashcard');await card.waitFor();const id=await card.getAttribute('data-word-id');assert.ok(!selected.includes(id),'A fixed round must not repeat a classified card');selected.push(id);const control=page.locator(i<4?'[data-mark-learning]':'[data-mark-mastered]');await control.focus();await control.press('Enter');
