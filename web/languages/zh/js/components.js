@@ -2,7 +2,7 @@ import {groupHeadwords,headwordsForInventory,readHeadwordStatus,readWordSenses} 
 import {selectSenseExamples} from '../../../js/shared/word-example.js';
 import {chineseUsageParts} from '../../../js/shared/chinese-usage-examples.js';
 import {renderStudyMeaning} from '../../../js/shared/meaning-display.js';
-import {appendStudySheetNext,renderStudyExamples,renderStudyUsageLabel,renderStudyFilters} from '../../../js/shared/study-components.js';
+import {appendStudySheetNext,renderDictionaryMeanings,renderStudyExamples,renderStudyUsageLabel,renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
@@ -156,7 +156,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
   const w=source?headwordsForInventory(words).expand(source):null;
   if (!w) return;
 
-  const senses=readWordSenses(w),examples=selectSenseExamples(w,'zh');
+  const senses=readWordSenses(w),examples=selectSenseExamples(w,'zh',wordMeaning(w));
   const examplesHTML=renderStudyExamples(examples,{title:t('examples'),speakLabel:t('listenSentence'),renderUsage:sense=>renderStudyUsageLabel(sense,wordPosGroupDisplay(sense),senses.some(item=>item.pronunciation!==w.pronunciation)),readTranslation:sentenceMeaning,renderExample:example=>Pinyin.htmlSentence(example)});
   const status=chineseHeadwordStatus(w);
   const focus=document.activeElement;
@@ -173,7 +173,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
     </div>
     <div class="study-sheet-core">
       <div class="py-per-char py-per-char--sheet">${Pinyin.htmlMarkedColumns(w.syllables)}</div>
-      <div class="study-sheet-meaning">${renderStudyMeaning(wordMeaning(w),w)}</div>
+      <div class="study-sheet-meaning">${renderDictionaryMeanings(w,'zh',wordMeaning(w))}</div>
     </div>
     ${renderCollocations(w,Store.uiLang)}<div class="study-status-title">${t('changeStudyStatus')}</div>
     <div class="status-btns">

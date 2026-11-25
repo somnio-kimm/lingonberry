@@ -1,14 +1,13 @@
-import {renderStudyMeaning} from './meaning-display.js';
 import {createWordInitialIndex} from './word-initial-index.js';
 import {renderWordInitialFilter,updateWordInitialFilter} from './word-initial-view.js';
 import {escapeHtml as e} from './ui.js';
-import {renderStudySearchWithFilters} from './study-components.js';
+import {renderDictionaryMeanings,renderStudySearchWithFilters} from './study-components.js';
 import {mountWordRows} from './word-rows.js';
 
 /** One list DOM/input/pager owner; adapters retain query, grouping and learner policies. */
 export function renderLexiconWordList(host,{t,query,filters,language='en',locale='en',selectedInitial='all',getWords,readStatus,renderHeading,renderTags,renderPreview,readMeaning=word=>word.studyMeaning,headingClass='wl-headword',showCount=false},actions){
  const index=createWordInitialIndex(language);let initial=selectedInitial||'all',searchValue=query,pager,frame=0,alive=true;
- function renderWord(word){const status=readStatus(word);return `<div class="wl-row" data-word="${e(word.id)}" data-id="${e(word.id)}" data-sense-count="${word.senses?.length||1}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}"><div class="wl-main" role="button" tabindex="0"><div class="${e(headingClass)}">${renderHeading(word)}</div><div class="wl-meaning">${renderStudyMeaning(readMeaning(word),word)}</div>${renderPreview(word)}</div><div class="wl-trail">${renderTags(word)}<span class="wl-tag wl-st-${e(status)}">${t(status[0].toUpperCase()+status.slice(1))}</span><button class="wl-speak" data-row-speak="${e(word.id)}" aria-label="${t('Speak Word')}">🔊</button></div></div>`;}
+ function renderWord(word){const status=readStatus(word);return `<div class="wl-row" data-word="${e(word.id)}" data-id="${e(word.id)}" data-sense-count="${word.senses?.length||1}" data-sense-ids="${e((word.senses||[word]).map(sense=>sense.id).join(' '))}"><div class="wl-main" role="button" tabindex="0"><div class="${e(headingClass)}">${renderHeading(word)}</div><div class="wl-meaning">${renderDictionaryMeanings(word,language,readMeaning(word))}</div>${renderPreview(word)}</div><div class="wl-trail">${renderTags(word)}<span class="wl-tag wl-st-${e(status)}">${t(status[0].toUpperCase()+status.slice(1))}</span><button class="wl-speak" data-row-speak="${e(word.id)}" aria-label="${t('Speak Word')}">🔊</button></div></div>`;}
  function renderResults(initialCount=80){
   if(!alive)return;const words=getWords(),filtered=index.filter(words,initial),list=host.querySelector('#wordlist-results');
   const focused=host.ownerDocument?.activeElement,focusedRow=focused?.closest('[data-word]'),focusKey=focusedRow&&list.contains(focusedRow)?focusedRow.dataset.word:null,focusTarget=focused?.closest('[data-row-speak]')?'[data-row-speak]':'.wl-main';

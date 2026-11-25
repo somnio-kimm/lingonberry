@@ -20,7 +20,7 @@ export function renderFlashcard(el){
  function draw(){
   cleanup?.();state.size=readFlashcardSetSize();const pool=readPool(),key=JSON.stringify([state.pos,state.status,state.size]);
   if(state.key!==key){state.key=key;session.begin(pool,{size:state.size,resetSeen:true});state.flipped=false;state.exampleIndex=0;}else session.reconcile(pool);
-  const word=session.current,examples=word?selectSenseExamples(word,'zh').map(row=>({...row,example:row.example?{...row.example,studyTranslation:sentenceMeaning(row.example)}:undefined})):[];state.exampleIndex%=Math.max(1,examples.length);
+  const word=session.current,examples=word?selectSenseExamples(word,'zh',wordMeaning(word)).map(row=>({...row,example:row.example?{...row.example,studyTranslation:sentenceMeaning(row.example)}:undefined})):[];state.exampleIndex%=Math.max(1,examples.length);
   const restart=()=>{session.begin(readPool(),{size:state.size});state.flipped=false;state.exampleIndex=0;draw();};
   const repeat=()=>{session.reviewLearning();state.flipped=false;state.exampleIndex=0;draw();};
   const active=Store.activeWords;

@@ -1,6 +1,7 @@
 import {renderStudyMeaning} from './meaning-display.js';
 import {renderStudyIcon} from './study-icons.js';
 import {escapeHtml as e} from './ui.js';
+import {readDictionaryMeanings} from './word-example.js';
 /** Canonical German/Chinese study patterns. Geometry and colours live in study-theme.css. */
 export function renderStudySearch({id,value='',label='Search',controls='',afterInput=''}){
  return `<div class="card study-search">${controls}<input id="${e(id)}" class="input-field" type="search" inputmode="text" enterkeyhint="search" placeholder="${e(label)}" aria-label="${e(label)}" value="${e(value)}" autocomplete="off" autocapitalize="none">${afterInput}</div>`;
@@ -53,11 +54,25 @@ export function renderStudyUsageLabel(word,partOfSpeech,showReading=false){
  return parts.filter(Boolean).join(' · ');
 }
 
+function renderSenseNumber(number){
+ return number?`<span class="study-sense-number">${number}. </span>`:'';
+}
+
+export function renderDictionaryMeanings(word,language,meaning){
+ const lines=readDictionaryMeanings(word,language,meaning);
+ return lines.map((line,index)=>renderSenseNumber(lines.length>1&&index+1)+e(line)).join('<br>');
+}
+
+export function renderStudyExampleLabel({word,number},renderUsage){
+ return renderSenseNumber(number)+renderUsage(word);
+}
+
 export function renderStudyExamples(rows,{title,speakLabel,renderExample,renderUsage,readTranslation=example=>example.studyTranslation,noExample=''}){
  if(!rows.some(row=>row.example)&&!noExample)return '';
  const multipleUsages=new Set(rows.map(row=>row.word)).size>1;
- return `<div class="study-examples"><h3>${e(title)}</h3>${rows.map(({word,example},index)=>{
-  const usage=multipleUsages&&rows[index-1]?.word!==word?`<p class="study-sense-label">${renderUsage(word)}</p>`:'';
+ return `<div class="study-examples"><h3>${e(title)}</h3>${rows.map((row,index)=>{
+  const {word,example,number}=row;
+  const usage=number||(multipleUsages&&rows[index-1]?.word!==word)?`<p class="study-sense-label">${renderStudyExampleLabel(row,renderUsage)}</p>`:'';
   if(!example)return usage+(noExample?`<p class="muted">${e(noExample)}</p>`:'');
   const translation=readTranslation(example);
   return `${usage}<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(word.id)}"><button type="button" class="example-speak word-listen" data-example="${index}" aria-label="${e(speakLabel)}">🔊</button>${renderExample(example,word)}${translation&&translation!==example.text?`<div class="example-translation">${e(translation)}</div>`:''}</div>`;

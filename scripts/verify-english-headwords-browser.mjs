@@ -28,10 +28,15 @@ try{
    return {senses:current.map(word=>({id:word.id,pos:word.pos,meaning:word.studyMeaning,text:word.examples[0].text,translation:word.examples[0].studyTranslation})),total:new Set(words.filter(word=>word.level===level).map(word=>word.lemma)).size};
   },{locale,width,theme,levelIndex});
   await searchWordList(page,'appeal');const row=page.locator('#wordlist-results [data-word]');assert.equal(await row.count(),1);assert.equal(await row.getAttribute('data-sense-count'),String(fixture.senses.length));assert.ok((await row.locator('.wl-tag.wl-st-learning').count())===1);
-  assert.deepEqual((await row.locator('.wl-meaning').innerText()).split('\n'),meaningDisplayLines(fixture.senses.map(sense=>sense.meaning)));assert.equal(await row.locator('.wl-pos').count(),2);
+  const meanings=meaningDisplayLines(fixture.senses.map(sense=>sense.meaning));
+  const numberedMeanings=meanings.map((meaning,index)=>`${index+1}. ${meaning}`).join('\n');
+  const exampleNumber=sense=>`${meanings.indexOf(meaningDisplayLines(sense.meaning)[0])+1}.`;
+  assert.equal(await row.locator('.wl-meaning').innerText(),numberedMeanings);assert.equal(await row.locator('.wl-pos').count(),2);
   await row.locator('.wl-main').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-headword').innerText(),'appeal');assert.equal(await page.locator('.study-example[data-sense-id]').count(),fixture.senses.length);
-  for(const [index,sense]of fixture.senses.entries()){
+  assert.equal(await page.locator('.study-sheet-meaning').innerText(),numberedMeanings);
+  for(const sense of fixture.senses){
    const block=page.locator(`.study-example[data-sense-id="${sense.id}"]`);assert.equal(await block.locator('.example-sentence').innerText(),sense.text);if(locale==='ko')assert.equal(await block.locator('.example-translation').innerText(),sense.translation);else assert.equal(await block.locator('.example-translation').count(),0);
+   assert.equal(await block.evaluate(node=>node.previousElementSibling.querySelector('.study-sense-number').textContent.trim()),exampleNumber(sense));
    await block.locator('[data-example]').click();await page.waitForFunction(text=>window.groupSpoken===text,sense.text);
   }
   await page.locator('.detail-sheet').screenshot({path:join(directory,`${locale}-${width}-${theme}-${levelIndex}-details.png`)});await page.locator('[data-close]').click();
@@ -41,7 +46,14 @@ try{
   await page.locator('[data-f=mastered]').click();assert.equal(await row.count(),1);await page.locator('[data-f=learning]').click();assert.equal(await row.count(),0);await page.locator('[data-f=all]').click();
   await page.locator('main').screenshot({path:join(directory,`${locale}-${width}-${theme}-${levelIndex}-words.png`),fullPage:true});await page.evaluate(()=>window.groupRoute('flashcards'));const cardFold=page.locator('.study-filter-panel');if(!await cardFold.evaluate(node=>node.open))await cardFold.locator('summary').click();await page.locator('[data-f=all]').click();assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),String(fixture.total));
   for(let index=0;await page.locator('.flashcard-front .lexicon-word').innerText()!=='appeal';index++){assert.ok(index<fixture.total);await page.locator('[data-next-card]').click();}
-  await page.locator('[data-flip]').click();assert.equal(await page.locator('.flashcard-back [data-sense-id]').count(),fixture.senses.length);for(const sense of fixture.senses)assert.equal(await page.locator(`.flashcard-back [data-sense-id="${sense.id}"] .example-sentence`).innerText(),sense.text);if(locale==='en')assert.equal(await page.locator('.flashcard-back .example-translation').count(),0);
+  await page.locator('[data-flip]').click();assert.equal(await page.locator('.flashcard-back [data-sense-id]').count(),fixture.senses.length);
+  assert.equal(await page.locator('.flashcard-back .fc-meaning').innerText(),numberedMeanings);
+  for(const sense of fixture.senses){
+   const block=page.locator(`.flashcard-back [data-sense-id="${sense.id}"]`);
+   assert.equal(await block.locator('.example-sentence').innerText(),sense.text);
+   assert.equal((await block.locator('.study-sense-number').textContent()).trim(),exampleNumber(sense));
+  }
+  if(locale==='en')assert.equal(await page.locator('.flashcard-back .example-translation').count(),0);
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.locator('main').screenshot({path:join(directory,`${locale}-${width}-${theme}-${levelIndex}-cards.png`),fullPage:true});scenarios++;
  }
  assert.deepEqual(errors,[]);console.log(`Passed ${scenarios} real-package grouped-headword scenarios: complete dictionary allocation, same-level meanings/examples, noun/POS/status filters, audio, Flashcards and unchanged per-sense history/other levels; EN/KO, phone/tablet and themes.`);
