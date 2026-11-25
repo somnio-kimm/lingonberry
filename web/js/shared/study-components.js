@@ -57,11 +57,12 @@ export function renderDictionaryMeanings(word,language,meaning){
  return readDictionaryMeanings(word,language,meaning).map((line,index)=>renderNumberedStudyText(index+1,e(line))).join('');
 }
 
-export function renderDictionarySenses(meanings,examples,{title,speakLabel,renderExample,readTranslation=example=>example.studyTranslation,noExample='',locale}){
+export function renderDictionarySenses(meanings,examples,{title,speakLabel,renderExample,readTranslation=example=>example.studyTranslation,noExample='',locale,includeUnpaired=true}){
  const byNumber=Array.from({length:meanings.length+1},()=>[]);
  examples.forEach(({word,example,number},index)=>{
   if(!example)return;
   const group=number??0;
+  if(!group&&!includeUnpaired)return;
   const translation=readTranslation(example);
   byNumber[group].push(`<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(word.id)}"><button type="button" class="example-speak word-listen" data-example="${index}" aria-label="${e(speakLabel)}">🔊</button>${renderExample(example,word)}${translation&&translation!==example.text?`<div class="example-translation" lang="${e(locale)}">${e(translation)}</div>`:''}</div>`);
  });

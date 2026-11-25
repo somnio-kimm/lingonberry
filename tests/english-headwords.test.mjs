@@ -48,6 +48,17 @@ test('even a single recorded meaning has a matching example numbered 1',()=>{
  assert.equal(selectSenseExamples(request,'en')[0].number,1);
 });
 
+test('legacy examples use the reviewed sense only on their exact published editions',()=>{
+ const word={
+  id:'de-adjective-leicht-editorial-main',lemma:'leicht',studyLanguage:'de',studyVersion:'4.1.1',
+  studyExplanationLanguage:'ko',studyExplanationVersion:'4.1.1',studyMeaning:'가벼운; 쉬운',
+  examples:[{de:'Diese Aufgabe ist leicht.',studyTranslation:'이 문제는 쉽다.'}],
+ };
+ assert.equal(selectSenseExamples(word,'de')[0].number,2);
+ assert.equal(selectSenseExamples({...word,studyVersion:'4.1.2'},'de')[0].number,undefined);
+ assert.equal(selectSenseExamples({...word,studyExplanationVersion:'4.1.2'},'de')[0].number,undefined);
+});
+
 import {createMorphemeModel} from '../web/js/shared/morpheme-model.js';
 test('Root Families links use the same same-level dictionary groups',()=>{
  const headwords=createHeadwords([request,ask,legal]),model=createMorphemeModel([{id:'root',form:'appell-',variants:[],kind:'root',senses:[],examples:['appeal']}],headwords.group([request,ask,legal]));const linked=model.matchingWords('appeal');assert.equal(linked.length,2);assert.deepEqual(linked.flatMap(readWordSenses).map(word=>word.id),['request','ask','legal']);

@@ -61,6 +61,31 @@ try{
   '지금은 여덟 시 십 분이다.','이 문제는 십 점짜리다.','이 옛 우표의 액면가는 팔 펀이다.','우리는 케이크를 네 조각으로 나눴다.','선생님이 학생들에게 책을 나눠 주셨다.','그녀의 점수는 내 점수보다 높다.',null,
  ]);
  assert.equal(await splitSheet.locator(':scope > .status-btns:last-child button').count(),3);await splitSheet.locator('.close-btn').click();await page.locator('#search-input').fill('学习');await page.waitForFunction(()=>document.querySelectorAll('.wl-row').length===1);assert.deepEqual(await page.locator('.wl-row').first().locator('.py-char-hz').allTextContents(),['学','习']);await page.locator('#search-input').fill('');
+ await page.locator('#search-input').fill('对');
+ await page.waitForFunction(()=>document.querySelector('#wordlist-results').dataset.query==='对');
+ await page.locator('[data-word=hsk1_45] .wl-main').click();
+ await page.locator('.detail-sheet [data-lv="2"]').click();
+ await page.locator('.detail-sheet [data-close]').click();
+ await screen(page,'home');
+ await page.locator('[data-quiz=flashcard]').click();
+ const cardFilters=page.locator('.study-filter-panel');
+ if(!await cardFilters.evaluate(node=>node.open))await cardFilters.locator('summary').click();
+ await cardFilters.locator('[data-f=learning]').click();
+ assert.equal(await page.locator('.flashcard').getAttribute('data-word-id'),'hsk1_45');
+ await page.locator('[data-flip]').click();
+ const answer=page.locator('.flashcard-back .fc-card-answer');
+ const paired=await answer.locator('.study-dictionary-sense').evaluateAll(groups=>groups.map(group=>[
+  group.querySelector('.study-sheet-meaning').textContent,
+  [...group.querySelectorAll('.example-translation')].map(example=>example.textContent),
+ ]));
+ assert.deepEqual(paired,[
+  ['1. 맞다, 옳다',['네 답이 맞다.']],
+  ['2. ~을 향하여, ~에 대해',['그는 모두에게 친절하다.','이 문제에 대해서는 아직 답이 없다.']],
+  ['3. 마주하다, 비교하다, 대조하다',['그의 창문은 호수를 향해 있다.','이 두 명단을 대조해 주세요.']],
+  ['4. 쌍',['입구에 노부부 한 쌍이 서 있었다.']],
+ ]);
+ assert.equal(await answer.locator('.study-examples h3').count(),0);
+ checks.push('Legacy Chinese examples and translations appear under their verified meanings on Flashcards.');
  await screen(page,'home');assert.deepEqual(await page.locator('.quiz-grid [data-quiz]').evaluateAll(nodes=>nodes.map(node=>node.dataset.quiz)),['wordlist','flashcard','vocabmeaning','vocabinput','cloze','scramble','listening','pronunciation']);
  for(const route of ['flashcard','vocabinput','vocabmeaning','pronunciation','cloze','scramble','listening']){await screen(page,'home');await page.locator(`[data-quiz=${route}]`).click();await page.waitForFunction(()=>document.querySelector('main').dataset.viewState!=='loading');assert.equal(await page.locator('main').getAttribute('data-view-state'),'ready',route);assert.equal(await page.locator('.study-filter-panel').count(),1,route);if(route==='pronunciation'){assert.deepEqual(await page.locator('[data-pronunciation-mode]').allTextContents(),['병음 입력','성조 선택']);assert.equal(await page.locator('[data-pronunciation-mode=pinyin]').getAttribute('aria-pressed'),'true');await page.locator('[data-pronunciation-mode=tone]').click();await page.locator('[data-tn]').first().waitFor();assert.equal(await page.locator('.quiz-status-btn').count(),0);assert.equal(await page.locator('.tone-quiz-speak').count(),1);await page.locator('[data-pronunciation-mode=pinyin]').click();await page.locator('#submit-btn').waitFor();}if(['cloze','scramble'].includes(route)){await page.locator('.study-filter-panel summary').click();await page.locator('[data-f=mastered]').click();await page.locator('.empty-wrong').waitFor();await page.locator('[data-f=all]').click();if(route==='scramble')await page.locator('.scramble-chip').first().waitFor();}if(route==='listening')await listeningFlow(page);}
  for(const [level,count] of [1,2,3,4,5,6,7].map(level=>[level,new Set(chineseCore.entries.filter(row=>Number(row.level)===level).map(row=>row.word.normalize('NFC'))).size])){await screen(page,'home');await page.locator(`[data-lv="${level}"]`).click();await wordList(page);assert.equal(Number(await page.locator('#wordlist-results').getAttribute('data-total')),count);assert.ok(await page.locator('.wl-row').count()<=160);}await screen(page,'home');await page.locator('[data-lv="1"]').click();

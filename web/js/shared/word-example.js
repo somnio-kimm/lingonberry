@@ -2,6 +2,7 @@ import {readChineseUsages,selectChineseUsageExamples} from './chinese-usage-exam
 import {readWordSenses} from './headwords.js';
 import {findSentenceFocus} from './lexicon-sentences.js';
 import {meaningDisplayLines} from './meaning-display.js';
+import {reviewedExampleMeanings} from './reviewed-example-links.js';
 /** Choose display content without promoting reference material into scored exercises. */
 export function selectWordExample(word,language){
  const display=example=>example&&language==='en'&&word.studyExplanationLanguage==='en'?{...example,studyTranslation:undefined}:example;
@@ -33,7 +34,10 @@ export function selectSenseExamples(word,language,value=word.studyMeaning){
   const usages=language==='zh'?selectChineseUsageExamples(sense,legacyExamples):[];
   if(usages.length)return usages;
   // Older packages have examples without sense labels. Retain their contexts without guessing the usage.
-  if(legacyExamples.length)return legacyExamples.map(example=>({word:sense,example}));
+  if(legacyExamples.length){
+   const links=reviewedExampleMeanings(sense,legacyExamples.length);
+   return legacyExamples.map((example,index)=>({word:sense,example,meaningIndex:links[index]}));
+  }
   return [{word:sense,example:selectWordExample(sense,language)}];
  });
  const meanings=readDictionaryMeanings(word,language,value);
@@ -42,7 +46,8 @@ export function selectSenseExamples(word,language,value=word.studyMeaning){
  return rows.map(row=>{
   const lines=meaningDisplayLines(row.word.studyMeaning??value,row.word);
   // An example owned by a record with several unlabelled meanings has no reliable match.
-  const number=lines.length===1?numbers.get(lines[0]):undefined;
+  const meaning=lines.length===1?lines[0]:lines[row.meaningIndex-1];
+  const number=numbers.get(meaning);
   return number?{...row,number}:row;
  });
 }

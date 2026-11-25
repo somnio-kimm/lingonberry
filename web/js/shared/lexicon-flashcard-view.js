@@ -9,8 +9,10 @@ export function renderLexiconFlashcards(host,{locale='en',language,word,examples
  const focusControls=['[data-mark-learning]','[data-mark-mastered]','[data-next-card]','[data-prev-card]','[data-next-set]','[data-review-learning]','[data-shuffle]','[data-set-size]'];
  const restoreFocus=host.contains(document.activeElement)?focusControls.find(selector=>document.activeElement?.matches(selector)):null;
  const t=flashcardText(locale),spokenWord=word?`${word.article?word.article+' ':''}${word.lemma||word.hanzi||word.word||''}`:'';
- const answer=word?renderDictionarySenses(readDictionaryMeanings(word,language),examples,{
+ const meanings=word?readDictionaryMeanings(word,language):[];
+ const answer=word?renderDictionarySenses(meanings,examples,{
   locale,title:t.examples,speakLabel:t.speakExample,noExample:t.noExample,renderExample,readTranslation,
+  includeUnpaired:meanings.length<=1,
  }):'';
  const renderFace=back=>`<div class="flashcard-${back?'back':'front'}" aria-hidden="${back!==flipped}" ${back!==flipped?'inert':''}><div class="fc-card-head"><button type="button" class="fc-details-button" data-card-status aria-label="${e(t.details)}">···</button><div class="fc-head-center"><div class="fc-head-badges ${back?'':'fc-head-badges--mirror'}">${renderTags(word)}</div></div><button type="button" class="detail-sheet-icon detail-sheet-speak speak-btn" data-card-speak aria-label="${e(t.speak)}">🔊</button></div><div class="fc-card-main" role="button" tabindex="${back===flipped?'0':'-1'}" ${back===flipped?'data-flip':''} aria-label="${e([spokenWord,back?word.studyMeaning:null,t.flip].filter(Boolean).join(', '))}"><div class="fc-core ${back?'':'fc-core--front'}"><div class="flashcard-word" lang="${e(language)}">${renderHeading(word)}</div></div></div>${back?`<div class="fc-card-answer" role="region" tabindex="0" aria-label="${e(t.answer)}">${answer}</div>`:''}</div>`;
  const complete=phase==='complete';
