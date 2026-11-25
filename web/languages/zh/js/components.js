@@ -1,8 +1,8 @@
 import {groupHeadwords,headwordsForInventory,readHeadwordStatus,readWordSenses} from '../../../js/shared/headwords.js';
-import {selectSenseExamples} from '../../../js/shared/word-example.js';
+import {readDictionaryMeanings,selectSenseExamples} from '../../../js/shared/word-example.js';
 import {chineseUsageParts} from '../../../js/shared/chinese-usage-examples.js';
 import {renderStudyMeaning} from '../../../js/shared/meaning-display.js';
-import {appendStudySheetNext,renderDictionaryMeanings,renderStudyExamples,renderStudyUsageLabel,renderStudyFilters} from '../../../js/shared/study-components.js';
+import {appendStudySheetNext,renderDictionarySenses,renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
@@ -157,7 +157,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
   if (!w) return;
 
   const senses=readWordSenses(w),examples=selectSenseExamples(w,'zh',wordMeaning(w));
-  const examplesHTML=renderStudyExamples(examples,{title:t('examples'),speakLabel:t('listenSentence'),renderUsage:sense=>renderStudyUsageLabel(sense,wordPosGroupDisplay(sense),senses.some(item=>item.pronunciation!==w.pronunciation)),readTranslation:sentenceMeaning,renderExample:example=>Pinyin.htmlSentence(example)});
+  const meanings=renderDictionarySenses(readDictionaryMeanings(w,'zh',wordMeaning(w)),examples,{locale:Store.uiLang,title:t('examples'),speakLabel:t('listenSentence'),readTranslation:sentenceMeaning,renderExample:example=>Pinyin.htmlSentence(example)});
   const status=chineseHeadwordStatus(w);
   const focus=document.activeElement;
   const overlay = document.createElement('div');
@@ -173,10 +173,10 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
     </div>
     <div class="study-sheet-core">
       <div class="py-per-char py-per-char--sheet">${Pinyin.htmlMarkedColumns(w.syllables)}</div>
-      <div class="study-sheet-meaning">${renderDictionaryMeanings(w,'zh',wordMeaning(w))}</div>
     </div>
-    ${renderCollocations(w,Store.uiLang)}<div class="study-status-title">${t('changeStudyStatus')}</div>
-    <div class="status-btns">
+    ${meanings}
+    ${renderCollocations(w,Store.uiLang)}
+    <div class="status-btns" role="group" aria-label="${escape(t('changeStudyStatus'))}">
       <button class="status-btn ${status==='new' ? 'active' : ''}" data-lv="0">
         <span class="status-dot" style="background:var(--text3)"></span>${t('statusNew')}
       </button>
@@ -187,7 +187,6 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
         <span class="status-dot" style="background:var(--green)"></span>${t('statusMastered')}
       </button>
     </div>
-    ${examplesHTML}
   </div>`;
 
   bindCollocationAudio(overlay,w,text=>TTS.speak(text));

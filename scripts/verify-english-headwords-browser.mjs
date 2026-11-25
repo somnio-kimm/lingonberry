@@ -33,10 +33,13 @@ try{
   const exampleNumber=sense=>`${meanings.indexOf(meaningDisplayLines(sense.meaning)[0])+1}.`;
   assert.equal(await row.locator('.wl-meaning').innerText(),numberedMeanings);assert.equal(await row.locator('.wl-pos').count(),2);
   await row.locator('.wl-main').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-headword').innerText(),'appeal');assert.equal(await page.locator('.study-example[data-sense-id]').count(),fixture.senses.length);
-  assert.equal(await page.locator('.study-sheet-meaning').innerText(),numberedMeanings);
+  assert.equal((await page.locator('.study-sheet-meaning').allTextContents()).join('\n'),numberedMeanings);
+  assert.equal(await page.locator('.detail-sheet > .status-btns:last-child button').count(),3);
+  assert.equal(await page.locator('.study-status-title').count(),0);
   for(const sense of fixture.senses){
    const block=page.locator(`.study-example[data-sense-id="${sense.id}"]`);assert.equal(await block.locator('.example-sentence').innerText(),sense.text);if(locale==='ko')assert.equal(await block.locator('.example-translation').innerText(),sense.translation);else assert.equal(await block.locator('.example-translation').count(),0);
-   assert.equal(await block.evaluate(node=>node.previousElementSibling.querySelector('.study-sense-number').textContent.trim()),exampleNumber(sense));
+   assert.equal(await block.evaluate(node=>node.closest('.study-dictionary-sense').querySelector('.study-sheet-meaning .study-sense-number').textContent.trim()),exampleNumber(sense));
+   assert.equal(await block.evaluate(node=>node.closest('.study-dictionary-sense').firstElementChild.className),'study-sheet-meaning');
    await block.locator('[data-example]').click();await page.waitForFunction(text=>window.groupSpoken===text,sense.text);
   }
   await page.locator('.detail-sheet').screenshot({path:join(directory,`${locale}-${width}-${theme}-${levelIndex}-details.png`)});await page.locator('[data-close]').click();

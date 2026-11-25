@@ -439,7 +439,6 @@ html[data-theme="dark"] .wl-list.wl-list--wordlist .wl-row:active{background:rgb
 .study-sheet-core{text-align:center;margin-bottom:20px;}
 .study-headword{font-size:28px;overflow-wrap:anywhere;margin-bottom:10px;}
 .study-sheet-meaning{font-size:15px;color:var(--muted);}
-.study-status-title{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:10px;}
 .status-btn.active{background:rgba(0,122,255,.1);color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent);}
 .status-dot.new{background:var(--muted);}.status-dot.learning{background:var(--accent);}.status-dot.mastered{background:var(--green);}
 .study-examples{margin-top:16px;padding-top:12px;border-top:.5px solid var(--line);}

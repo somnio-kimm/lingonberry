@@ -21,7 +21,8 @@ export function appendStudySheetNext(overlay,nextButton,closeSelector){
  const actions=overlay.ownerDocument.createElement('div');
  actions.className='quiz-next-bar';
  actions.append(nextButton);
- overlay.querySelector('.detail-sheet').append(actions);
+ const sheet=overlay.querySelector('.detail-sheet');
+ sheet.insertBefore(actions,sheet.querySelector(':scope > .status-btns'));
  overlay.setAttribute('data-vocab-result','');
  overlay.querySelector(closeSelector).setAttribute('data-close-vocab-result','');
 }
@@ -67,16 +68,23 @@ export function renderStudyExampleLabel({word,number},renderUsage){
  return renderSenseNumber(number)+renderUsage(word);
 }
 
-export function renderStudyExamples(rows,{title,speakLabel,renderExample,renderUsage,readTranslation=example=>example.studyTranslation,noExample=''}){
- if(!rows.some(row=>row.example)&&!noExample)return '';
- const multipleUsages=new Set(rows.map(row=>row.word)).size>1;
- return `<div class="study-examples"><h3>${e(title)}</h3>${rows.map((row,index)=>{
-  const {word,example,number}=row;
-  const usage=number||(multipleUsages&&rows[index-1]?.word!==word)?`<p class="study-sense-label">${renderStudyExampleLabel(row,renderUsage)}</p>`:'';
-  if(!example)return usage+(noExample?`<p class="muted">${e(noExample)}</p>`:'');
+export function renderDictionarySenses(meanings,examples,{title,speakLabel,renderExample,readTranslation=example=>example.studyTranslation,noExample='',locale}){
+ const byNumber=Array.from({length:meanings.length+1},()=>[]);
+ examples.forEach(({word,example,number},index)=>{
+  if(!example)return;
+  const group=number??(meanings.length===1?1:0);
   const translation=readTranslation(example);
-  return `${usage}<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(word.id)}"><button type="button" class="example-speak word-listen" data-example="${index}" aria-label="${e(speakLabel)}">🔊</button>${renderExample(example,word)}${translation&&translation!==example.text?`<div class="example-translation">${e(translation)}</div>`:''}</div>`;
- }).join('')}</div>`;
+  byNumber[group].push(`<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(word.id)}"><button type="button" class="example-speak word-listen" data-example="${index}" aria-label="${e(speakLabel)}">🔊</button>${renderExample(example,word)}${translation&&translation!==example.text?`<div class="example-translation" lang="${e(locale)}">${e(translation)}</div>`:''}</div>`);
+ });
+ const senses=meanings.map((meaning,index)=>{
+  const group=byNumber[index+1];
+  const number=renderSenseNumber(meanings.length>1&&index+1);
+  return `<div class="study-dictionary-sense"><div class="study-sheet-meaning" lang="${e(locale)}">${number}${e(meaning)}</div>${group.length?`<div class="study-examples study-sense-examples">${group.join('')}</div>`:''}</div>`;
+ }).join('');
+ const unpaired=byNumber[0].join('');
+ const extra=unpaired?`<div class="study-examples"><h3>${e(title)}</h3>${unpaired}</div>`:'';
+ const message=noExample&&!examples.some(row=>row.example)?`<p class="muted">${e(noExample)}</p>`:'';
+ return `<div class="study-dictionary-senses">${senses}${extra}${message}</div>`;
 }
 
 export function renderStudyTabs({label,options,selected,attribute,variant='form'}){
