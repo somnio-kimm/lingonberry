@@ -3,10 +3,9 @@ import {morphemeOriginText} from '../shared/morpheme-text.js';
 import {newestMistakesFirst} from '../shared/review-order.js';
 import {renderVocabularyView} from '../shared/vocabulary-view.js';
 import {renderStudyMenu,renderStudyLevels} from '../shared/study-menu-view.js';
-import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../shared/flashcard-session.js';
-import {createHeadwords,readWordSenses,readHeadwordStatus,readHeadwordIdentity} from '../shared/headwords.js';
+import {createFlashcardStudy} from '../shared/flashcard-study.js';
+import {createHeadwords,readWordSenses,readHeadwordStatus} from '../shared/headwords.js';
 import {renderLexiconReview} from '../shared/lexicon-review-view.js';
-import {renderLexiconFlashcards} from '../shared/lexicon-flashcard-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
 import {APP_SETTING_KEYS} from '../shared/app-settings.js';
 import {renderListeningView} from '../shared/listening-view.js';
@@ -49,7 +48,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile,{progressStorage}),engine=createLexiconQuestions(profile);
  let headwords=createHeadwords([]),morphemeModel,typing,practiceCleanup,japaneseFurigana,sampleReadingChoice;
- let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,flipped=false,chosenTokens=[],closeSheet=()=>{};
+ let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,chosenTokens=[],closeSheet=()=>{};
  const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
  const filters=new Map();let lastRenderedRoute;
  const locale=()=>store.state.preferences.uiLanguage,t=value=>lexiconText(locale(),value);
@@ -63,7 +62,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const isGroupedRoute=route=>['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
  const matchesStatus=(word,status)=>status==='all'||readStatus(word)===status;
- let flashcardSetSize=readFlashcardSetSize(),flashcardKey='';const flashcardSession=createFlashcardSession({readStatus,readIdentity:readHeadwordIdentity});
+ const flashcards=createFlashcardStudy(readStatus);
  const levelLabel=level=>language==='ja'&&profile.levels.includes(level)?profile.exam+' '+level:level;
  function tags(word){return `<span class="wl-tag wl-hsk">${e(levelLabel(language==='en'?assignEnglishLevel(word):word.level))}</span>${[...new Set(readWordSenses(word).map(typeName))].map(type=>`<span class="wl-tag wl-pos">${e(t(type))}</span>`).join('')}`;}
  async function speak(text,host,onEnd){const message=host.querySelector('.lexicon-audio-status');if(message)message.hidden=true;await DeviceSpeech.speak(text,{language:profile.speech,onEnd,onError:()=>{if(message){message.hidden=false;message.textContent=t('Speech Unavailable');}}});}
@@ -177,13 +176,22 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   });
  }
  function drawCards(host,route){
-  const f=state(route);flashcardSetSize=readFlashcardSetSize();const list=pool(route),key=JSON.stringify([store.state.preferences.studyLevel,f.pos,f.status,flashcardSetSize]);
-  if(flashcardKey!==key){flashcardKey=key;flashcardSession.begin(list,{size:flashcardSetSize,resetSeen:true});flipped=false;}else flashcardSession.reconcile(list);
-  const word=flashcardSession.current,examples=word?selectSenseExamples(word,language):[];
-  const beginNext=()=>{flashcardSession.begin(pool(route),{size:flashcardSetSize});flipped=false;refresh();};
-  const reviewLearning=()=>{flashcardSession.reviewLearning();flipped=false;refresh();};
-  return renderLexiconFlashcards(host,{locale:locale(),language,word,examples,flipped,total:flashcardSession.total,index:flashcardSession.index,completed:flashcardSession.completed,setSize:flashcardSetSize,phase:flashcardSession.phase,summary:flashcardSession.summary,learningCount:flashcardSession.learningCount,canStartNext:list.length>0,filters:controls(route),renderHeading:heading,renderTags:tags,renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,warning:store.warning?t('Storage Unavailable'):''},{
-   bindFilters:host=>bindControls(host,route),resize:value=>{flashcardSetSize=saveFlashcardSetSize(value);flashcardKey='';refresh();},nextSet:beginNext,reviewLearning,shuffle:()=>{if(f.status==='mastered'||!flashcardSession.learningCount)beginNext();else reviewLearning();},flip:()=>{flipped=!flipped;haptic();return flipped;},move:direction=>{flashcardSession.move(direction);flipped=false;refresh();},mark:status=>{if(!word)return;for(const sense of readWordSenses(word))store.setWordStatus(sense.id,status);flashcardSession.mark(status);flipped=false;haptic();refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),speakExample:text=>speak(text,host),
+  const {pos,status}=state(route);
+  return flashcards.render(host,{
+   selection:{level:store.state.preferences.studyLevel,pos,status},
+   readPool:()=>pool(route),
+   redraw:refresh,haptic,
+   saveStatus(word,value){
+    for(const sense of readWordSenses(word))store.setWordStatus(sense.id,value);
+   },
+   locale:locale(),language,filters:controls(route),
+   bindFilters:el=>bindControls(el,route),
+   renderHeading:heading,renderTags:tags,
+   renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,
+   warning:store.warning?t('Storage Unavailable'):'',
+   openWord:details,
+   speakWord:word=>speak(studySpokenWord(word,profile),host),
+   speakExample:text=>speak(text,host),
   });
  }
  function chooseQuestion(mode){
@@ -344,10 +352,10 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   byId=new Map(words.map(word=>[word.id,word]));
   japaneseFurigana=language==='ja'?createJapaneseFurigana(words,value?.practiceData,value?.readingPractice):undefined;
   morphemeModel=value?.morphemes?.length?createMorphemeModel(value.morphemes,language==='en'?headwords.group(words):words):undefined;
-  flashcardKey='';flashcardSession.begin([],{size:flashcardSetSize,resetSeen:true});
+  flashcards.reset();
   resetQuestion();
  }
- return {id:language,screens,ready:store.ready,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();await store.flush();flashcardKey='';flashcardSession.begin([],{size:flashcardSetSize,resetSeen:true});resetQuestion();return store.warning;}},
+ return {id:language,screens,ready:store.ready,settings:{values:preferences,change,haptic,reportContext:()=>({app:APP_NAME,studyLanguage:language,studyLevel:store.state.preferences.studyLevel}),reset:async()=>{DeviceSpeech.stop();store.reset();await store.flush();flashcards.reset();resetQuestion();return store.warning;}},
   preferences,setPreferences(values){for(const key of APP_SETTING_KEYS)if(Object.hasOwn(values,key)&&store.state.preferences[key]!==values[key])store.preference(key,values[key]);},
   setStudy,
   title:route=>route==='home'?APP_NAME:t(screens[route]?.title||'Study'),tab:route=>t(screens[route]?.title||'Study'),
