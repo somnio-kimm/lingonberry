@@ -1,7 +1,6 @@
 import {groupHeadwords,headwordsForInventory,readHeadwordStatus,readWordSenses} from '../../../../js/shared/headwords.js';
-import {readDictionaryMeanings,selectSenseExamples} from '../../../../js/shared/word-example.js';
-import {appendStudySheetNext,renderDictionarySenses,renderStudyFilters} from '../../../../js/shared/study-components.js';
-import {renderCollocations,bindCollocationAudio} from '../../../../js/shared/collocation-view.js';
+import {renderStudyFilters} from '../../../../js/shared/study-components.js';
+import {mountDictionarySheet} from '../../../../js/shared/dictionary-sheet.js';
 import { studyLevelLabel } from '../app-definition.js';
 import { escapeHtml as e } from '../../../../js/shared/ui.js';
 import { t, getLocale, wordMeaning, sentenceMeaning } from '../core/i18n.js';
@@ -24,41 +23,52 @@ export function studyFilterMarkup(pool,store,status,pos,open=false,extraBody='',
  return renderStudyFilters({title:t('Filters'),open,extraBody,...leading,status:group('Study status',status,statuses),pos:group('Part of speech',pos,tags)});
 }
 export function createStudyControls(host,ctx) {
- let sheet=null,closed=false;
- function speak(word) {
-  const text=word.pos==='noun'&&word.article?word.article+' '+word.lemma:word.lemma;
+ let dialog,closed=false;
+ function speakWithStatus(text,message){
   speakGerman(text,()=>{},()=>{
-   if(closed)return;
-   const message=sheet?.querySelector('.study-audio-status')||host.querySelector('.study-audio-status');
-   if(message){message.hidden=false;message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');}
+   if(!closed&&message?.isConnected){
+    message.hidden=false;
+    message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');
+   }
   });
  }
- function open(word,onDone,{nextButton,onClose}={}) {
+ function speak(word){
+  const text=word.pos==='noun'&&word.article?word.article+' '+word.lemma:word.lemma;
+  speakWithStatus(text,dialog?.overlay.querySelector('.study-audio-status')||host.querySelector('.study-audio-status'));
+ }
+ function open(word,onDone,{nextButton,onClose}={}){
   word=headwordsForInventory(ctx.words).expand(word);
-  const senses=readWordSenses(word),examples=selectSenseExamples(word,'de',wordMeaning(word));
-  const meanings=renderDictionarySenses(readDictionaryMeanings(word,'de',wordMeaning(word)),examples,{locale:getLocale(),title:t('Examples'),speakLabel:t('Listen to sentence'),readTranslation:sentenceMeaning,renderExample:example=>`<div class="example-sentence" lang="de">${e(example.text)}</div>`});
-  sheet?.remove();const focus=document.activeElement;
-  sheet=document.createElement('div');sheet.className='detail-overlay study-overlay';
-  sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="study-word-title"><div class="detail-sheet-head"><button class="detail-sheet-icon detail-sheet-close" aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center"><span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(word.cefr))}</span>${headwordTypeLabels(word).map(label=>`<span class="detail-badge detail-badge-pos">${e(label)}</span>`).join('')}</div><button class="detail-sheet-icon detail-sheet-speak" aria-label="${t('Speak word')}">🔊</button></div><div class="study-sheet-core"><h2 id="study-word-title" class="study-headword" lang="de">${wordHeading(word)}</h2></div>${meanings}${renderCollocations(word,getLocale())}<p class="study-audio-status muted" role="status" hidden></p><div class="status-btns" role="group" aria-label="${e(t('Change study status'))}">${['new','learning','mastered'].map(status=>`<button class="status-btn ${germanHeadwordStatus(word,ctx.store)===status?'active':''}" data-word-status="${status}" aria-pressed="${germanHeadwordStatus(word,ctx.store)===status}"><span class="status-dot ${status}"></span>${statusLabel(status)}</button>`).join('')}</div></section>`;
-  const overlay=sheet;
-  appendStudySheetNext(overlay,nextButton,'.detail-sheet-close');
-  document.body.appendChild(sheet);
-  function close(){if(sheet!==overlay)return;overlay.remove();sheet=null;stopMedia();onDone?.();if(onClose)onClose();else if(focus?.isConnected)focus.focus();else host.querySelector('#search-input,#fc-shuffle')?.focus();}
-  sheet.querySelector('.detail-sheet-close').onclick=close;
-  sheet.querySelector('.detail-sheet-speak').onclick=()=>speak(word);
-  bindCollocationAudio(sheet,word,text=>speakGerman(text));
-  sheet.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>{const message=sheet.querySelector('.study-audio-status');message.hidden=true;speakGerman(examples[Number(button.dataset.example)].example.text,()=>{},()=>{if(!closed&&message.isConnected){message.hidden=false;message.textContent=t('German speech is unavailable. Download a German voice in the phone’s speech settings.');}});});
-  sheet.querySelectorAll('[data-word-status]').forEach(b=>b.onclick=()=>{
-   for(const sense of senses)ctx.store.setWordStatus(sense.id,b.dataset.wordStatus);ctx.haptic();
-   sheet.querySelectorAll('[data-word-status]').forEach(button=>{const active=button.dataset.wordStatus===germanHeadwordStatus(word,ctx.store);button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});onDone?.();ctx.updateStatus();
+  dialog?.dispose();
+  dialog=mountDictionarySheet({
+   word,language:'de',locale:getLocale(),labelledBy:'study-word-title',meaning:wordMeaning(word),
+   tags:`<span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(word.cefr))}</span>${headwordTypeLabels(word).map(label=>`<span class="detail-badge detail-badge-pos">${e(label)}</span>`).join('')}`,
+   heading:`<h2 id="study-word-title" class="study-headword" lang="de">${wordHeading(word)}</h2>`,
+   audioStatusClass:'study-audio-status',nextButton,
+   labels:{
+    close:t('Close'),speakWord:t('Speak word'),speakExample:t('Listen to sentence'),
+    examples:t('Examples'),changeStatus:t('Change study status'),status:statusLabel,
+   },
+   renderExample:example=>`<div class="example-sentence" lang="de">${e(example.text)}</div>`,
+   readTranslation:sentenceMeaning,status:germanHeadwordStatus(word,ctx.store),statusAttribute:'data-word-status',
+   speakWord:()=>speak(word),
+   speakExample(text,overlay){
+    const message=overlay.querySelector('.study-audio-status');
+    message.hidden=true;
+    speakWithStatus(text,message);
+   },
+   speakCollocation:text=>speakGerman(text),
+   stopSpeech:stopMedia,
+   saveStatus(status){
+    for(const sense of readWordSenses(word))ctx.store.setWordStatus(sense.id,status);
+    ctx.haptic();
+    onDone?.();
+    ctx.updateStatus();
+   },
+   onDismiss:()=>{dialog=undefined;onDone?.();},
+   onClose,
+   focusFallback:()=>host.querySelector('#search-input,#fc-shuffle'),
   });
-  sheet.onclick=ev=>{if(ev.target===sheet)close();};
-  sheet.onkeydown=ev=>{
-   if(ev.key==='Escape'){ev.preventDefault();close();}
-   if(ev.key==='Tab'){const buttons=[...sheet.querySelectorAll('button')],first=buttons[0],last=buttons.at(-1);if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}}
-  };
-  sheet.querySelector('.detail-sheet-close').focus();
-  return close;
+  return dialog.close;
  }
- return {speak,open,cleanup(){closed=true;sheet?.remove();sheet=null;stopMedia();}};
+ return {speak,open,cleanup(){closed=true;if(!dialog?.dispose())stopMedia();dialog=undefined;}};
 }
