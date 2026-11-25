@@ -35,6 +35,7 @@ try{
    const {renderLexiconFlashcards}=await import('/js/shared/lexicon-flashcard-view.js');
    const word={id:'sparse',lemma:'Sparse',studyMeaning:'Missing example\nValid example'};
    const examples=[{word:{id:'missing'},number:1},
+    {word,example:{text:'Reference only.'}},
     ...Array.from({length:8},(_,i)=>({word,number:2,example:{text:`Example ${i+1}. ${'A longer sentence that wraps inside this flashcard. '.repeat(4)}`,studyTranslation:'Example translation.'}})),
    ];
    let flipped=true;
@@ -43,6 +44,8 @@ try{
   const senses=page.locator('.flashcard-back .study-dictionary-sense');
   assert.deepEqual(await senses.locator('.study-sheet-meaning').allTextContents(),['1. Missing example','2. Valid example']);
   assert.equal(await senses.first().locator('[data-example]').count(),0);
+  assert.equal(await page.locator('.flashcard-back .study-example').count(),8);
+  assert.equal(await page.locator('.flashcard-back .study-examples h3').count(),0);
   const scroll=page.locator('.fc-card-answer'),start=await top(back);
   await scroll.press('End');
   await page.waitForFunction(()=>{
