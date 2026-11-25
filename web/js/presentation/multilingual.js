@@ -16,7 +16,7 @@ import {joinGapAnswers} from '../shared/phrase-gaps.js';
 import {chooseCombinedCloze,clearCombinedClozeCache} from '../shared/combined-cloze.js';
 import {bindTypingAnswer,bindTypingAnswers} from '../shared/typing-answer.js';
 import {createMorphemeModel} from '../shared/morpheme-model.js';
-import {renderDictionarySenses,renderStudyUsageLabel,appendStudySheetNext,renderStudySearchWithFilters,renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
+import {renderDictionarySenses,appendStudySheetNext,renderStudySearchWithFilters,renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
 import {renderMorphemeInventory,renderRootKindFilter} from '../shared/morpheme-view.js';
 import {collocationSearchTerms} from '../shared/collocations.js';
 import {renderCollocations,bindCollocationAudio,collocationPreview} from '../shared/collocation-view.js';
@@ -63,7 +63,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const isGroupedRoute=route=>['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
  const matchesStatus=(word,status)=>status==='all'||readStatus(word)===status;
- let flashcardSetSize=readFlashcardSetSize(),flashcardKey='',exampleIndex=0;const flashcardSession=createFlashcardSession({readStatus,readIdentity:readHeadwordIdentity});
+ let flashcardSetSize=readFlashcardSetSize(),flashcardKey='';const flashcardSession=createFlashcardSession({readStatus,readIdentity:readHeadwordIdentity});
  const levelLabel=level=>language==='ja'&&profile.levels.includes(level)?profile.exam+' '+level:level;
  function tags(word){return `<span class="wl-tag wl-hsk">${e(levelLabel(language==='en'?assignEnglishLevel(word):word.level))}</span>${[...new Set(readWordSenses(word).map(typeName))].map(type=>`<span class="wl-tag wl-pos">${e(t(type))}</span>`).join('')}`;}
  async function speak(text,host,onEnd){const message=host.querySelector('.lexicon-audio-status');if(message)message.hidden=true;await DeviceSpeech.speak(text,{language:profile.speech,onEnd,onError:()=>{if(message){message.hidden=false;message.textContent=t('Speech Unavailable');}}});}
@@ -178,12 +178,12 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  }
  function drawCards(host,route){
   const f=state(route);flashcardSetSize=readFlashcardSetSize();const list=pool(route),key=JSON.stringify([store.state.preferences.studyLevel,f.pos,f.status,flashcardSetSize]);
-  if(flashcardKey!==key){flashcardKey=key;flashcardSession.begin(list,{size:flashcardSetSize,resetSeen:true});flipped=false;exampleIndex=0;}else flashcardSession.reconcile(list);
-  const word=flashcardSession.current,examples=word?selectSenseExamples(word,language):[];exampleIndex%=Math.max(1,examples.length);
-  const beginNext=()=>{flashcardSession.begin(pool(route),{size:flashcardSetSize});flipped=false;exampleIndex=0;refresh();};
-  const reviewLearning=()=>{flashcardSession.reviewLearning();flipped=false;exampleIndex=0;refresh();};
-  return renderLexiconFlashcards(host,{locale:locale(),language,word,examples,exampleIndex,flipped,total:flashcardSession.total,index:flashcardSession.index,completed:flashcardSession.completed,setSize:flashcardSetSize,phase:flashcardSession.phase,summary:flashcardSession.summary,learningCount:flashcardSession.learningCount,canStartNext:list.length>0,filters:controls(route),renderHeading:heading,renderTags:tags,renderSenseLabel:sense=>renderStudyUsageLabel(sense,t(typeName(sense)),readWordSenses(word).some(item=>item.pronunciation!==word.pronunciation)),renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,warning:store.warning?t('Storage Unavailable'):''},{
-   bindFilters:host=>bindControls(host,route),resize:value=>{flashcardSetSize=saveFlashcardSetSize(value);flashcardKey='';refresh();},nextSet:beginNext,reviewLearning,shuffle:()=>{if(f.status==='mastered'||!flashcardSession.learningCount)beginNext();else reviewLearning();},flip:()=>{flipped=!flipped;haptic();return flipped;},move:direction=>{flashcardSession.move(direction);flipped=false;exampleIndex=0;refresh();},moveExample:direction=>{exampleIndex=(exampleIndex+direction+examples.length)%examples.length;return exampleIndex;},mark:status=>{if(!word)return;for(const sense of readWordSenses(word))store.setWordStatus(sense.id,status);flashcardSession.mark(status);flipped=false;exampleIndex=0;haptic();refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),speakExample:()=>speak(examples[exampleIndex].example.text,host),
+  if(flashcardKey!==key){flashcardKey=key;flashcardSession.begin(list,{size:flashcardSetSize,resetSeen:true});flipped=false;}else flashcardSession.reconcile(list);
+  const word=flashcardSession.current,examples=word?selectSenseExamples(word,language):[];
+  const beginNext=()=>{flashcardSession.begin(pool(route),{size:flashcardSetSize});flipped=false;refresh();};
+  const reviewLearning=()=>{flashcardSession.reviewLearning();flipped=false;refresh();};
+  return renderLexiconFlashcards(host,{locale:locale(),language,word,examples,flipped,total:flashcardSession.total,index:flashcardSession.index,completed:flashcardSession.completed,setSize:flashcardSetSize,phase:flashcardSession.phase,summary:flashcardSession.summary,learningCount:flashcardSession.learningCount,canStartNext:list.length>0,filters:controls(route),renderHeading:heading,renderTags:tags,renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,warning:store.warning?t('Storage Unavailable'):''},{
+   bindFilters:host=>bindControls(host,route),resize:value=>{flashcardSetSize=saveFlashcardSetSize(value);flashcardKey='';refresh();},nextSet:beginNext,reviewLearning,shuffle:()=>{if(f.status==='mastered'||!flashcardSession.learningCount)beginNext();else reviewLearning();},flip:()=>{flipped=!flipped;haptic();return flipped;},move:direction=>{flashcardSession.move(direction);flipped=false;refresh();},mark:status=>{if(!word)return;for(const sense of readWordSenses(word))store.setWordStatus(sense.id,status);flashcardSession.mark(status);flipped=false;haptic();refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),speakExample:text=>speak(text,host),
   });
  }
  function chooseQuestion(mode){

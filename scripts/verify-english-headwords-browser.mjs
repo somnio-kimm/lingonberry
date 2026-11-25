@@ -50,11 +50,16 @@ try{
   await page.locator('main').screenshot({path:join(directory,`${locale}-${width}-${theme}-${levelIndex}-words.png`),fullPage:true});await page.evaluate(()=>window.groupRoute('flashcards'));const cardFold=page.locator('.study-filter-panel');if(!await cardFold.evaluate(node=>node.open))await cardFold.locator('summary').click();await page.locator('[data-f=all]').click();assert.equal(await page.locator('#flashcard-count').getAttribute('data-set-total'),String(fixture.total));
   for(let index=0;await page.locator('.flashcard-front .lexicon-word').innerText()!=='appeal';index++){assert.ok(index<fixture.total);await page.locator('[data-next-card]').click();}
   await page.locator('[data-flip]').click();assert.equal(await page.locator('.flashcard-back [data-sense-id]').count(),fixture.senses.length);
-  assert.equal(await page.locator('.flashcard-back .fc-meaning').innerText(),numberedMeanings);
+  assert.equal((await page.locator('.flashcard-back .study-sheet-meaning').allTextContents()).join('\n'),numberedMeanings);
   for(const sense of fixture.senses){
    const block=page.locator(`.flashcard-back [data-sense-id="${sense.id}"]`);
    assert.equal(await block.locator('.example-sentence').innerText(),sense.text);
-   assert.equal((await block.locator('.study-sense-number').textContent()).trim(),exampleNumber(sense));
+   const layout=await block.evaluate(node=>{
+    const meaning=node.closest('.study-dictionary-sense').querySelector('.study-sheet-meaning');
+    const textStart=meaning.querySelector('.study-sense-text').getClientRects()[0].left;
+    return {number:meaning.querySelector('.study-sense-number').textContent.trim(),aligned:[...node.querySelectorAll('.example-sentence,.example-translation')].every(part=>Math.abs(part.getBoundingClientRect().left-textStart)<.5)};
+   });
+   assert.deepEqual(layout,{number:exampleNumber(sense),aligned:true});
   }
   if(locale==='en')assert.equal(await page.locator('.flashcard-back .example-translation').count(),0);
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));await page.locator('main').screenshot({path:join(directory,`${locale}-${width}-${theme}-${levelIndex}-cards.png`),fullPage:true});scenarios++;

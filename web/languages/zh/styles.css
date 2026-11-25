@@ -282,12 +282,8 @@ html[data-theme="dark"] .wl-list.wl-list--wordlist .wl-row:active{background:rgb
 .fc-head-badges--mirror{visibility:hidden;pointer-events:none;user-select:none}
 .fc-card-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;
   min-height:0;padding-top:14px}
-.fc-card-main-back{overflow-y:auto;-webkit-overflow-scrolling:touch}
 .fc-core{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;max-width:100%}
 .fc-core--front .py-char-py{visibility:hidden}
-.fc-core--front .fc-meaning{visibility:hidden}
-.fc-meaning{font-size:15px;color:var(--text2);text-align:center;line-height:1.35;width:100%;padding:0 4px}
-.fc-examples{margin-top:14px;padding-top:12px;border-top:0.5px solid var(--sep);text-align:left;width:100%}
 .fc-example-block{margin-bottom:8px}
 .fc-example-block:last-child{margin-bottom:0}
 .example-sentence{font-size:18px;font-weight:600;line-height:2.6;overflow-wrap:break-word}
