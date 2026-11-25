@@ -1,3 +1,4 @@
+import {meaningDisplayLines} from '../web/js/shared/meaning-display.js';
 import {searchWordList} from './browser-study-helpers.mjs';
 import assert from 'node:assert/strict';
 import {readFile,mkdir} from 'node:fs/promises';
@@ -36,7 +37,7 @@ try{
    const target=page.locator('.vocab-prompt .study-reading-target');assert.equal(await target.innerText(),entry.word);const prompt=await page.locator('.vocab-prompt').innerText();assert.equal(prompt.split(entry.word).length-1,1);assert.ok(!/[［］【】]/u.test(prompt));assert.equal(await page.locator('.vocab-prompt rt').count(),0);
    if(entry.word==='巌')assert.equal(prompt,entry.example.text,'Reviewed target keeps the whole example sentence');
    const entryText=pairs[explanation].get(entry.id);
-   const expected=prompt===entry.word?entryText.meaning:entry.word==='学校'?curatedTranslations['ja-ex-reading-school'][explanation]:entryText.exampleTranslation;
+   const expected=prompt===entry.word?meaningDisplayLines(entryText.meaning,entry,{includeContext:true}).join('\n'):entry.word==='学校'?curatedTranslations['ja-ex-reading-school'][explanation]:entryText.exampleTranslation;
    assert.equal(await page.locator('.exercise-context').innerText(),expected);
 
    assert.ok(await target.evaluate(node=>{

@@ -53,8 +53,9 @@ export function renderListeningView(el, config, session = {}) {
     cancelAudio(); typing?.destroy();typing=undefined;
     const translation=question&&feedback?config.translation(question)||'':'',warning=config.warning?.()||'';
     const hintText=question&&!feedback?config.hint(question):'',reading=question&&!feedback?listeningReadingHint(question):'';
+    const meaningHint=question&&(question.kind==='word'||question.word.studyLanguage==='en'&&question.locale==='en');
     const hints=[
-      renderStudyHint({label:labels.hint,summaryId:'listening-hint',body:hintText?`<p class="listening-hint-text" lang="${e(question.word.studyExplanationLanguage||question.locale)}">${question.kind==='word'?renderStudyMeaning(hintText,question.word):e(hintText)}</p>`:''}),
+      renderStudyHint({label:labels.hint,summaryId:'listening-hint',body:hintText?`<p class="listening-hint-text" lang="${e(question.word.studyExplanationLanguage||question.locale)}">${meaningHint?renderStudyMeaning(hintText,question.word):e(hintText)}</p>`:''}),
       renderStudyHint({label:labels.readingHint,summaryId:'listening-reading-hint',body:reading?`<p class="listening-reading" lang="${e(question.language)}">${e(reading)}</p>`:''}),
     ].join('');
     el.innerHTML=`${renderStudyQuizHeader({title:labels.title})}${session.question?'':`${renderStudyTabs({label:labels.mode,options:[{value:'listenword',label:labels.word},{value:'listensentence',label:labels.sentence}],selected:mode,attribute:'data-listening-mode',variant:'listening'})}${ready?config.filters?.({status,pos,open})||'':''}`}

@@ -1,4 +1,4 @@
-import {renderStudyMeaning} from './meaning-display.js';
+import {renderQuizMeaning,renderStudyMeaning} from './meaning-display.js';
 import {japaneseReadingContext,japaneseReadingPrompt} from './japanese-reading-prompt.js';
 import {localizeExerciseText} from './exercise-text.js';
 import {localizeRootPromptOrigin} from './root-references.js';
@@ -27,16 +27,16 @@ export function renderExerciseExplanation(question){
 }
 export function renderExercisePrompt(question,options={}){
  const display=options.uiLanguage||question.locale||'en',uiLang=display==='ko'?'ko':'en-GB';
- const renderContext=clue=>clue?`<p class="grammar-meaning exercise-context" lang="${e(question.word.studyExplanationLanguage||question.locale||'')}">${e(clue)}</p>`:'';
+ const renderContext=(clue,isMeaning=false)=>clue?`<p class="grammar-meaning exercise-context" lang="${e(question.word.studyExplanationLanguage||question.locale||'')}">${isMeaning?renderQuizMeaning(clue,question.word):e(clue)}</p>`:'';
  if(question.category==='reading'){
   const target=japaneseReadingPrompt(question.word,question.prompt,question.readingFocus);
   if(!target)return '';
   const {prompt,readingFocus:focus}=target;
   const marked=e(prompt.slice(0,focus.start))+`<span class="study-reading-target">${e(focus.text)}</span>`+e(prompt.slice(focus.start+focus.text.length));
   const clue=question.context===''?'':japaneseReadingContext(question.word,prompt,question.context);
-  return `<div class="vocab-prompt lexicon-prompt" lang="ja">${marked}</div>${renderContext(clue)}`;
+  return `<div class="vocab-prompt lexicon-prompt" lang="ja">${marked}</div>${renderContext(clue,prompt===(question.word.lemma||question.word.word))}`;
  }
- const context=renderContext(question.context);
+ const context=renderContext(question.context,question.category==='okurigana');
  if(question.gapFill)return `${renderPhraseGapSentence(question,{...options,uiLanguage:display})}${context}`;
  const lang=e(question.word.studyLanguage||question.word.language||'');
  const prompt=question.category==='roots'?localizeRootPromptOrigin(question.prompt,display):question.prompt;
