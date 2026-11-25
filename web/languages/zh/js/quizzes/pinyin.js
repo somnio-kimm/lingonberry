@@ -169,7 +169,7 @@ export function renderPinyinQuiz(el,session={}) {
             `).join('')}
           </div>
         </div>
-        <div style="font-size:14px;color:var(--text2);margin-top:4px">${renderStudyMeaning(wordMeaning(word))}</div>
+        <div style="font-size:14px;color:var(--text2);margin-top:4px">${renderStudyMeaning(wordMeaning(word),word)}</div>
       </div>
       ${!feedback ? renderKeyboard() : ''}
       ${!feedback ? `<div class="quiz-action-bar"><button class="submit-pill" id="submit-btn" ${allFilled() ? '' : 'disabled'}>${t('submit')}</button><button class="btn-small" id="skip-btn">${t('skip')}</button></div>` : ''}

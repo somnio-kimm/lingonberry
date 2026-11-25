@@ -1,3 +1,4 @@
+import {renderQuizMeaning,renderQuizMeaningChoices} from './meaning-display.js';
 import {bindQuizWordDetails} from './study-components.js';
 import {escapeHtml as e} from './ui.js';
 import {bindTypingAnswer} from './typing-answer.js';
@@ -47,14 +48,15 @@ export function renderVocabularyView(host,config,session={}){
   const checked=!!feedback;
   const audio=`<button type="button" class="word-listen" id="vocab-listen" data-quiz-speak aria-label="${e(labels.listen)}">🔊</button>`;
   const wordTrigger=markup=>checked&&config.openDetails?`<button type="button" class="vocab-word-trigger" data-open-vocab-word aria-haspopup="dialog">${markup}</button>`:markup;
-  const prompt=question&&(config.renderPrompt?.(question)||e(question.prompt));
+  const prompt=question&&(!meaning&&!question.collocationId?renderQuizMeaning(question.prompt,question.word):config.renderPrompt?.(question)||e(question.prompt));
+  const choiceLabels=meaning&&question?renderQuizMeaningChoices(question.options):[];
   const correction=checked&&question?`<span class="vocab-correction" lang="${e(language)}">${config.renderAnswer?.(question)||e(question.answer)}</span>`:'';
   host.innerHTML=`<div class="lexicon-view vocabulary-view"><div class="sentence-quiz-header vocab-quiz-header"><div class="section-title">${e(labels.title)}</div></div>${session.question?'':config.filters?.(filters())||''}${question?`
    <div class="vocab-test quiz-after-filter" data-question-id="${e(question.id)}" data-vocab-mode="${mode}"><section class="panel card vocab-question lexicon-question ${feedback}" data-question-word="${e(question.word.id)}">
     ${!meaning&&checked?`<div class="vocab-question-top vocab-question-top--audio">${audio}</div>`:''}<div class="vocab-prompt" lang="${e(meaning?language:question.locale)}">${meaning?wordTrigger(prompt):prompt}</div>
     ${meaning?'':`<div class="vocab-answer-cell ${feedback||'active'}">${checked?`<div role="status" aria-label="${e(correctLabel())}">${wordTrigger(correction)}${feedback==='wrong'?`<span class="vocab-wrong" lang="${e(language)}">${e(input)}</span>`:''}</div>`:`<input id="vocab-answer" type="text" inputmode="text" enterkeyhint="done" lang="${e(config.inputLanguage||language)}" aria-label="${e(labels.answer)}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="120" value="${e(input)}">`}</div>`}
     ${!meaning&&!checked?renderVocabularyHints(question,{language,locale:config.locale()}):''}<p class="vocab-speech-status lexicon-audio-status" role="status" hidden></p></section>
-    ${meaning?`<div class="vocab-options lexicon-options">${question.options.map(option=>`<button class="vocab-choice ${checked?option.id===question.word.id?'correct':option.id===selected?'wrong':'':''}" data-vocab-option="${e(option.id)}" data-option="${e(option.id)}" data-vocab-type="${e(option.type)}" lang="${e(question.locale)}" ${checked?'disabled':''}>${e(option.text)}</button>`).join('')}</div>`:''}
+    ${meaning?`<div class="vocab-options lexicon-options">${question.options.map((option,index)=>`<button class="vocab-choice ${checked?option.id===question.word.id?'correct':option.id===selected?'wrong':'':''}" data-vocab-option="${e(option.id)}" data-option="${e(option.id)}" data-vocab-type="${e(option.type)}" lang="${e(question.locale)}" ${checked?'disabled':''}>${choiceLabels[index]}</button>`).join('')}</div>`:''}
     ${checked?`<div class="quiz-next-bar" data-vocab-next-slot><button class="primary btn-primary" id="vocab-next" data-next>${e(labels.next)}</button></div>`:`<div class="quiz-action-bar">${meaning?'':`<button class="primary submit-pill" id="vocab-submit" data-submit disabled>${e(labels.submit)}</button>`}<button class="btn-small vocab-skip" id="vocab-skip" data-skip>${e(labels.skip)}</button></div>`}</div>`:`<section class="panel card quiz-after-filter"><p>${e(labels.empty)}</p></section>`}${config.warning?.()?`<p role="status">${e(config.warning())}</p>`:''}</div>`;
   if(config.bindFilters&&!session.question)config.bindFilters(host,next);
   else if(!session.question){

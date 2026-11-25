@@ -42,7 +42,7 @@ export function renderExercisePrompt(question,options={}){
  const prompt=question.category==='roots'?localizeRootPromptOrigin(question.prompt,display):question.prompt;
  if(question.route==='forms'||question.mode==='forms'){
   const word=question.word;
-  return `<div class="form-original-word"><div class="grammar-word form-base-word lexicon-word" lang="${lang}">${word.pronunciation?`<ruby>${e(word.lemma||word.word||'')}<rt>${e(word.pronunciation)}</rt></ruby>`:e(word.lemma||word.word||'')}</div>${word.studyMeaning?`<p class="grammar-meaning">${renderStudyMeaning(word.studyMeaning)}</p>`:''}</div><div class="form-problem"><div class="${question.condition?'grammar-prompt':'vocab-prompt lexicon-prompt'}" lang="${question.condition?uiLang:lang}">${renderExerciseGap(question.condition?localizeExerciseText(question.condition,display):question.prompt,display)}</div></div>`;
+  return `<div class="form-original-word"><div class="grammar-word form-base-word lexicon-word" lang="${lang}">${word.pronunciation?`<ruby>${e(word.lemma||word.word||'')}<rt>${e(word.pronunciation)}</rt></ruby>`:e(word.lemma||word.word||'')}</div>${word.studyMeaning?`<p class="grammar-meaning">${renderStudyMeaning(word.studyMeaning,word)}</p>`:''}</div><div class="form-problem"><div class="${question.condition?'grammar-prompt':'vocab-prompt lexicon-prompt'}" lang="${question.condition?uiLang:lang}">${renderExerciseGap(question.condition?localizeExerciseText(question.condition,display):question.prompt,display)}</div></div>`;
  }
 
  return `<div class="vocab-prompt lexicon-prompt" lang="${lang}">${renderExerciseGap(prompt,display,'quiz',options.inlineAnswer)}</div>${context}`;

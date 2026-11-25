@@ -20,11 +20,13 @@ try{
   const target=await page.evaluate(()=>document.querySelector('[data-question-word]')?.dataset.questionWord||document.querySelector('[data-question-id]').dataset.questionId.split(':')[0]);
   assert.equal(await page.locator('[data-vocab-result],#vocab-listen').count(),0);
   if(mode==='vocabinput'){
+   const prompt=await page.locator('.vocab-prompt').innerText();assert.ok(prompt.includes(', '));assert.doesNotMatch(prompt,/\(|（/u);
    assert.equal(await page.locator('.study-hint').evaluate(node=>node.open),false);assert.equal(await page.locator('#vocab-listen').count(),0);
    const field=page.locator('#vocab-answer');await field.fill('attempt');await page.locator('.study-hint summary').click();assert.equal(await field.inputValue(),'attempt');assert.equal(await page.locator('.study-hint button').count(),0);
    assert.equal(await page.locator('.study-hint').count(),1);assert.ok(await page.locator('.vocab-context-hint .cloze-blank').isVisible());
    const answer=await page.evaluate(id=>{const row=window.learningEntries.find(row=>row.id===id);return row.article?row.article+' '+row.word:row.word;},target);await field.fill(theme==='light'?answer:'wrong answer');await page.locator('#vocab-submit').click();
   }else{
+   assert.ok((await page.locator('[data-vocab-option]').allTextContents()).every(text=>text.includes(', ')&&!/[（(]/u.test(text)));
    const options=page.locator('[data-vocab-option],[data-option]');const attribute=await options.first().getAttribute('data-vocab-option')!==null?'data-vocab-option':'data-option';await page.locator(theme==='light'?`[${attribute}="${target}"]`:`[${attribute}]:not([${attribute}="${target}"])`).first().click();
   }
   const sheet=page.locator('[data-vocab-result] .detail-sheet'),wordButton=page.locator('[data-open-vocab-word]');
@@ -39,7 +41,8 @@ try{
   await sheet.waitFor();
   assert.equal(await sheet.locator('.status-btns button').count(),3,'The result uses the actual dictionary status controls');
   const displayedMeaning=await sheet.locator('.study-sheet-meaning').innerText();
-  assert.equal(displayedMeaning.split('\n').length,2,'The two meanings are displayed on separate lines');
+  assert.equal(displayedMeaning.split('\n').length,1,'Unlabelled alternatives for one sense stay together');
+  assert.ok(displayedMeaning.includes(', '));
   assert.doesNotMatch(displayedMeaning,/\(|（|usage note|표시하지 않을 메모/u);
   assert.equal(await sheet.locator('.study-examples [data-example]').count(),1);
   assert.ok(await sheet.locator('#vocab-next').isVisible());
