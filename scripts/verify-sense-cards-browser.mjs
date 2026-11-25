@@ -48,8 +48,8 @@ try{
    await page.evaluate(()=>window.senseRoute('flashcards'));
    assert.equal(await page.locator('.flashcard').getAttribute('data-word-id'),id);
    if(!await page.locator('.flashcard').evaluate(node=>node.classList.contains('flipped')))await page.locator('[data-flip]').click();
-   assert.equal(await page.locator('.flashcard-back .fc-meaning').innerText(),'1. '+meaning);
-   assert.equal(await page.locator('.fc-examples .example-sentence').innerText(),sentence);
+   assert.equal(await page.locator('.flashcard-back .study-sheet-meaning').innerText(),'1. '+meaning);
+   assert.equal(await page.locator('.flashcard-back .example-sentence').innerText(),sentence);
    assert.match(await page.locator('#flashcard-count').innerText(),/^1 /u);
    checks++;
   }

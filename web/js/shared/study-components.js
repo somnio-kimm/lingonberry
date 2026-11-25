@@ -1,4 +1,3 @@
-import {renderStudyMeaning} from './meaning-display.js';
 import {renderStudyIcon} from './study-icons.js';
 import {escapeHtml as e} from './ui.js';
 import {readDictionaryMeanings} from './word-example.js';
@@ -50,22 +49,12 @@ export function bindQuizWordDetails(trigger,nextButton,open){
  };
 }
 
-export function renderStudyUsageLabel(word,partOfSpeech,showReading=false){
- const parts=[e(partOfSpeech),showReading&&e(word.pronunciation),renderStudyMeaning(word.studyMeaning,word)];
- return parts.filter(Boolean).join(' · ');
-}
-
 function renderNumberedStudyText(number,html){
  return `<span class="study-numbered-text"><span class="study-sense-number">${number}. </span><span class="study-sense-text">${html}</span></span>`;
 }
 
 export function renderDictionaryMeanings(word,language,meaning){
  return readDictionaryMeanings(word,language,meaning).map((line,index)=>renderNumberedStudyText(index+1,e(line))).join('');
-}
-
-export function renderStudyExampleLabel({word,number},renderUsage){
- const label=renderUsage(word);
- return number?renderNumberedStudyText(number,label):label;
 }
 
 export function renderDictionarySenses(meanings,examples,{title,speakLabel,renderExample,readTranslation=example=>example.studyTranslation,noExample='',locale}){
