@@ -445,13 +445,13 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 .fc-set-progress::-moz-progress-bar{background:var(--blue);border-radius:2px}
 .flashcard-study .flashcard{transform:none;transition:none;height:clamp(320px,42dvh,410px);min-height:320px}
 .flashcard-study .flashcard-front,.flashcard-study .flashcard-back{transform:none;backface-visibility:visible;padding:18px 22px;border-radius:14px;box-shadow:none;border:1px solid var(--card-border)}
-.flashcard-study :is(.flashcard-front,.flashcard-back){display:block;overflow-y:auto;scrollbar-gutter:stable both-edges;cursor:pointer}
+.flashcard-study :is(.flashcard-front,.flashcard-back){display:grid;grid-template-rows:auto auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);align-items:stretch;overflow:clip;cursor:pointer}
 .flashcard-study .fc-card-head{height:auto;min-height:44px;align-items:center}
 .fc-details-button{width:44px;height:44px;flex-shrink:0;border:0;background:transparent;color:var(--secondary);font-size:23px;letter-spacing:2px}
 .flashcard-study .flashcard-word{font-size:36px;line-height:1.2;margin:0;color:var(--text)}
 .flashcard-study .fc-card-main{padding-top:18px;cursor:pointer;overflow:visible;min-height:auto}
 .flashcard-study .fc-core{gap:10px}
-.flashcard-back>.study-dictionary-senses{margin-top:16px;text-align:start}
+.fc-card-answer{min-height:0;margin-top:16px;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;text-align:start}
 .fc-classify{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:480px;margin:14px auto 0}
 .fc-classify button{min-height:48px;border-radius:10px;font-size:14px;font-weight:600;border:1px solid var(--card-border)}
 .fc-learning{background:var(--card);color:var(--text)}
@@ -472,7 +472,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 
 .flashcard-study [hidden]{display:none!important}
 
-.fc-classify button:focus-visible,.fc-nav:focus-visible,.menu-card:focus-visible,.quiz-card:focus-visible,.tab-btn:focus-visible,.fc-details-button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.fc-classify button:focus-visible,.fc-nav:focus-visible,.menu-card:focus-visible,.quiz-card:focus-visible,.tab-btn:focus-visible,.fc-details-button:focus-visible,.fc-card-answer:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 
 .flashcard-study .flashcard-wrapper{perspective:none}
 .flashcard-study .flashcard-front[aria-hidden="true"],.flashcard-study .flashcard-back[aria-hidden="true"]{visibility:hidden;pointer-events:none}

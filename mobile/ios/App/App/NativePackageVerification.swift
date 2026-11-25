@@ -210,6 +210,14 @@ enum NativePackageVerification {
           if(document.querySelector('.flashcard')){
             if(shownSet<1||shownSet>10||classify.length!==2||classify.some(button=>button.getBoundingClientRect().height<44))throw new Error('Flashcard set cap/actions differ');
             const expectedActions=before.explanationLanguage==='ko'?['학습 중','학습 완료']:['Learning','Mastered'];if(classify.some((button,index)=>button.textContent!==expectedActions[index]))throw new Error('Flashcard action language differs');
+            const back=document.querySelector('.flashcard-back'),word=back.querySelector('.flashcard-word'),answer=back.querySelector('.fc-card-answer');
+            const top=word.getBoundingClientRect().top,savedScroll=answer.scrollTop;
+            const longAnswer=document.createElement('div');longAnswer.style.height='600px';answer.append(longAnswer);
+            try {
+              answer.scrollTop=answer.scrollHeight;
+              if(answer.scrollTop<100||back.scrollTop!==0||Math.abs(word.getBoundingClientRect().top-top)>.5)throw new Error('Flashcard headword moved while examples scrolled');
+              check.flashcardHeadwordPinned=true;
+            }finally{longAnswer.remove();answer.scrollTop=savedScroll;}
           }
           check.flashcardSet={selected:10,total:shownSet,actions:classify.length};markUxStage(before.id+':flashcards-restore');const restoreSet=document.querySelector('[data-set-size]');restoreSet.value=String(savedSetSize);restoreSet.dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>document.querySelector('main').dataset.viewState==='ready'&&document.querySelector('[data-set-size]')?.value===String(savedSetSize));if(savedSetPreference===null)localStorage.removeItem('learn-language.flashcards.setSize.v1');else localStorage.setItem('learn-language.flashcards.setSize.v1',savedSetPreference);
           markUxStage(before.id+':scramble-tools');await openStudyMode('scramble');await wait(()=>document.querySelector('.sentence-question'));
