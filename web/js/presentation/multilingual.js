@@ -5,7 +5,7 @@ import {renderVocabularyView} from '../shared/vocabulary-view.js';
 import {renderStudyMenu,renderStudyLevels} from '../shared/study-menu-view.js';
 import {createFlashcardStudy} from '../shared/flashcard-study.js';
 import {createHeadwords,readWordSenses,readHeadwordStatus} from '../shared/headwords.js';
-import {renderLexiconReview} from '../shared/lexicon-review-view.js';
+import {renderLexiconReview,renderRetestCompletion} from '../shared/lexicon-review-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
 import {APP_SETTING_KEYS} from '../shared/app-settings.js';
 import {renderListeningView} from '../shared/listening-view.js';
@@ -211,13 +211,21 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   else selected=engine.createVocabularyPool(mode,list,study.explanationLanguage,'vocabulary',{meaningWords:words}).choose(previousQuestionId);
   return reviewContent.prepare(selected);
  }
+ function advancePractice(route,skipped){
+  if(route==='retest'){
+   if(skipped)reviewResults.skipped++;
+   reviewQueue.shift();
+  }
+  resetQuestion();
+  refresh();
+ }
  function drawSentenceQuiz(host,route,mode){
   const retest=route==='retest';if(!question)question=retest?reviewQueue?.[0]?.question:chooseQuestion(mode);const q=question;
   host.innerHTML=`<div class="lexicon-view"><div class="sentence-quiz-header"><h2 class="section-title">${t(retest?'Retest':screenTitle(route))}</h2></div>${retest?'':exerciseControls(route)+controls(route)}<div data-sentence-body></div></div>`;
   if(!retest){bindControls(host,route);bindAnswerModes(host,route);}const body=host.querySelector('[data-sentence-body]');if(!q){body.innerHTML=`<section class="panel">${t('No Questions Match')}</section>`;return;}
   const preference=mode+'ShowTranslation';
-  const submit=()=>{if(feedback)return;const correct=q.exercise?exerciseAnswerCorrect(q,input):engine.sentenceAnswerCorrect(q,mode==='cloze'?input:chosenTokens);const answer=mode==='cloze'?input:joinSentenceTiles(chosenTokens.map(id=>q.tokens[id]),language);store.record(q,answer,correct,retest);feedback=correct?'correct':'wrong';if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();};
-  const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
+  const submit=()=>{if(feedback)return;const correct=q.exercise?exerciseAnswerCorrect(q,input):engine.sentenceAnswerCorrect(q,mode==='cloze'?input:chosenTokens);const answer=mode==='cloze'?input:joinSentenceTiles(chosenTokens.map(id=>q.tokens[id]),language);store.record(q,answer,correct,retest);feedback=correct?'correct':'wrong';if(retest)reviewResults[correct?'correct':'incorrect']++;haptic();showQuizBurst(correct);refresh();};
+  const advance=skipped=>advancePractice(route,skipped);
   practiceCleanup=renderLexiconSentence(body,{question:q,feedback,selectedOption:input,input,chosenTokens,showTranslation:store.state.preferences[preference],showReading:store.state.preferences[mode+'ShowReading']!==false,t},{
    language,uiLanguage:locale(),renderSentence:text=>japaneseFurigana?.renderSentence(text,q.word)||e(text),renderOption:language==='ja'?option=>{const word=byId.get(option.id);return word&&option.text===word.lemma?renderJapaneseRuby(option.text,word.pronunciation):japaneseFurigana.renderSentence(option.text,word);}:undefined,toggleReading:value=>{store.preference(mode+'ShowReading',value);refresh();},reset:()=>{chosenTokens=[];q.pool=shuffle(q.pool);refresh();},speak:()=>speak(q.sentence,host),choose:id=>{if(!chosenTokens.includes(id)){chosenTokens.push(id);refresh();}},remove:index=>{chosenTokens.splice(index,1);refresh();},select:id=>{input=id;submit();},toggle:value=>{store.preference(preference,value);refresh();},
    openDetails:mode==='cloze'?(word,options)=>details(byId.get(word.id)||word,options):undefined,
@@ -230,8 +238,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function drawDictation(host,route){
   const retest=route==='retest',saved=retest?reviewQueue[0].question:undefined;
   const translation=q=>q.kind==='word'?q.word.studyMeaning||q.example?.[q.locale]||'':language==='en'&&q.locale==='en'?'':q.sentence?.studyTranslation||q.example?.[q.locale]||'';
-  const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
-  const session=saved?{question:saved,onAnswer:correct=>{reviewResults[correct?'correct':'wrong']++;},onNext:()=>advance(false),onSkip:()=>advance(true)}:{};
+  const advance=skipped=>advancePractice(route,skipped);
+  const session=saved?{question:saved,onAnswer:correct=>{reviewResults[correct?'correct':'incorrect']++;},onNext:()=>advance(false),onSkip:()=>advance(true)}:{};
   practiceCleanup=renderListeningView(host,{
    labels:listeningLabels(locale()),locale,warning:()=>store.warning?t('Storage Unavailable'):'',
    questions:mode=>engine.listeningQuestions(mode,pool('listening'),study.explanationLanguage,words).map(q=>reviewContent.prepare(q)),
@@ -245,8 +253,8 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  }
  function drawVocabulary(host,route,mode,saved){
   const retest=route==='retest';
-  const advance=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
-  const session={previousId:previousQuestionId,...(saved?{question:saved,onAnswer:correct=>{reviewResults[correct?'correct':'wrong']++;},onNext:()=>advance(false),onSkip:()=>advance(true)}:{})};
+  const advance=skipped=>advancePractice(route,skipped);
+  const session={previousId:previousQuestionId,...(saved?{question:saved,onAnswer:correct=>{reviewResults[correct?'correct':'incorrect']++;},onNext:()=>advance(false),onSkip:()=>advance(true)}:{})};
   practiceCleanup=renderVocabularyView(host,{
    mode,language,locale,questionLocale:()=>study.explanationLanguage,
    labels:{title:t(retest?'Retest':screenTitle(route)),listen:t('Speak Word'),answer:t('Word Input'),correct:t('Correct'),incorrect:t('Wrong'),submit:t('Submit'),skip:t('Skip'),next:t('Next'),empty:t('No Questions Match'),audioError:t('Speech Unavailable')},
@@ -262,7 +270,14 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   return practiceCleanup;
  }
  function drawQuiz(host,route){
-  const retest=route==='retest';if(retest&&reviewQueue?.length===0){host.innerHTML=`<section class="panel retest-complete"><h2>${t('Retest Complete')}</h2><div class="retest-summary"><span>${t('Correct')}: ${reviewResults.correct}</span><span>${t('Wrong')}: ${reviewResults.wrong}</span><span>${t('Skipped')}: ${reviewResults.skipped}</span></div><button class="primary" id="retest-done" data-finish>${t('Next')}</button></section>`;host.querySelector('[data-finish]').onclick=()=>{reviewQueue=null;resetQuestion();navigate('wrong');};return;}
+  const retest=route==='retest';
+  if(retest&&reviewQueue?.length===0){
+   renderRetestCompletion(host,{
+    title:t('Retest Complete'),correct:t('Correct'),incorrect:t('Wrong'),skipped:t('Skipped'),
+    next:t('Next'),score:reviewResults,onDone:()=>{reviewQueue=null;resetQuestion();navigate('wrong');},
+   });
+   return;
+  }
   const mode=retest?reviewQueue?.[0]?.question.mode:route;
   if(route==='listening'||mode?.startsWith('listen'))return drawDictation(host,route);
   if(['vocabinput','vocabmeaning'].includes(mode)&&!(retest&&reviewQueue?.[0]?.question.exercise))return drawVocabulary(host,route,mode,retest?reviewQueue[0].question:undefined);
@@ -274,7 +289,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const choicePanel=host.querySelector('.lexicon-question'),choiceOptions=choicePanel?.querySelector('.lexicon-options');if(choiceOptions)choicePanel.after(choiceOptions);
   if(q&&!['reading','okurigana','cloze'].includes(q.category)&&route!=='cloze'){const badge=document.createElement('span');badge.className='wl-tag lexicon-mode';badge.textContent=exerciseLabel(q.category,locale())+(q.formKind?' · '+formKindLabel(q.formKind,locale()):'');const top=document.createElement('div');top.className='vocab-question-top';top.append(badge);choicePanel.prepend(top);}
   if(!retest){bindControls(host,route);for(const [selector,key]of [['question-type','questionType'],['phrase-category','phraseCategory']])host.querySelector(`[data-${selector}]`)?.addEventListener('change',event=>{state(route)[key]=event.target.value;resetQuestion();refresh();});bindAnswerModes(host,route);}if(!q)return;
-  const finish=skipped=>{if(retest){if(skipped)reviewResults.skipped++;reviewQueue.shift();}resetQuestion();refresh();};
+  const finish=skipped=>advancePractice(route,skipped);
   host.querySelector('[data-next]')?.addEventListener('click',()=>finish(false));host.querySelector('[data-skip]')?.addEventListener('click',()=>finish(true));
   const submit=host.querySelector('[data-submit]'),field=host.querySelector('#vocab-answer');
   const gapFields=[...host.querySelectorAll('[data-phrase-gap]')];
@@ -284,7 +299,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    isActive:()=>q===question&&!feedback,
   });
   host.querySelectorAll('[data-option]').forEach(button=>button.onclick=()=>{input=button.dataset.option;checkAnswer();});
-  function checkAnswer(){if(feedback||typing?.isComposing||!input.trim())return;field?.blur();gapFields.forEach(input=>input.blur());const correct=exerciseAnswerCorrect(q,input);feedback=correct?'correct':'wrong';store.record(q,input,correct,retest);if(retest)reviewResults[correct?'correct':'wrong']++;haptic();showQuizBurst(correct);refresh();}
+  function checkAnswer(){if(feedback||typing?.isComposing||!input.trim())return;field?.blur();gapFields.forEach(input=>input.blur());const correct=exerciseAnswerCorrect(q,input);feedback=correct?'correct':'wrong';store.record(q,input,correct,retest);if(retest)reviewResults[correct?'correct':'incorrect']++;haptic();showQuizBurst(correct);refresh();}
  }
  function drawReview(host){
   const f=state('wrong'),all=newestMistakesFirst(Object.values(store.state.wrongs).reverse()).filter(row=>isCurrentQuestion(row.question));
@@ -321,7 +336,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   };
   const cards=rows.map(row=>{const word=wordFor(row);return {id:row.id,wordId:word.id,modeKey:questionType(row.question),mode:questionLabel(row.question),pos:t(typeName(word)),level:levelLabel(word.level),count:row.count,headingHtml:heading(word),meaning:word.studyMeaning,meaningWord:word,meaningLanguage:word.studyExplanationLanguage||study?.explanationLanguage||row.question.locale||locale(),answerHtml:answerDetails(row)};});
   return renderLexiconReview(host,{t,rows:cards,total:all.length,groups,open:f.open},{
-   setOpen:value=>{f.open=value;},setFilter:(key,value)=>{if(key==='level')change('studyLevel',value);else f[key]=value;refresh();},clear:()=>{store.clearWrongs();refresh();},remove:id=>{store.removeWrong(id);refresh();},openWord:id=>{const word=byId.get(id);if(word)details(word);},retest:()=>{reviewQueue=JSON.parse(JSON.stringify(rows));reviewResults={correct:0,wrong:0,skipped:0};resetQuestion();navigate('retest');},
+   setOpen:value=>{f.open=value;},setFilter:(key,value)=>{if(key==='level')change('studyLevel',value);else f[key]=value;refresh();},clear:()=>{store.clearWrongs();refresh();},remove:id=>{store.removeWrong(id);refresh();},openWord:id=>{const word=byId.get(id);if(word)details(word);},retest:()=>{reviewQueue=JSON.parse(JSON.stringify(rows));reviewResults={correct:0,incorrect:0,skipped:0};resetQuestion();navigate('retest');},
   });
  }
 

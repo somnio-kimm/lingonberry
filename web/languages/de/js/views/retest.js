@@ -1,9 +1,11 @@
+import {renderRetestCompletion} from '../../../../js/shared/lexicon-review-view.js';
+import {scoreRetestResults} from '../../../../js/shared/retest-results.js';
 import { studyLevelLabel } from '../app-definition.js';
 import { renderListeningTest } from './listening.js';
 import { renderWordInput, renderMeaningQuiz } from './vocabulary-tests.js';
 import { t } from '../core/i18n.js';
 import { escapeHtml as e, showQuizBurst } from '../../../../js/shared/ui.js';
-import { recordRetestResult,retestScore,advanceRetest,modeLabels } from '../core/retest.js';
+import { recordRetestResult,advanceRetest,modeLabels } from '../core/retest.js';
 import { judgeAnswer } from '../core/assessment.js';
 import { speakGerman,stopMedia } from '../core/media.js';
 import { renderCloze,renderScramble } from './sentence-quizzes.js';
@@ -25,9 +27,19 @@ export function renderRetest(el,ctx){
  function draw(){
   cleanup();cleanup=()=>{};
   if(!session){el.innerHTML=`<section class='panel'><p>${t('Choose mistakes in Review to start a re-test.')}</p><button class='primary' id='retest-done'>${t('Back to Review')}</button></section>`;el.querySelector('#retest-done').onclick=()=>ctx.navigate('wrong');return;}
-  if(session.index>=session.items.length){const score=retestScore(session);el.innerHTML=`<section class='panel retest-complete'><h2>${t('Re-test complete')}</h2><p class='retest-summary'><span>${t('Correct')}: ${score.correct}</span><span>${t('Incorrect')}: ${score.incorrect}</span><span>${t('Skipped')}: ${score.skipped}</span></p><button class='primary' id='retest-done'>${t('Next')}</button></section>`;el.querySelector('#retest-done').onclick=()=>ctx.navigate('wrong');return;}
+  if(session.index>=session.items.length){
+   renderRetestCompletion(el,{
+    title:t('Re-test complete'),correct:t('Correct'),incorrect:t('Incorrect'),skipped:t('Skipped'),
+    next:t('Next'),score:scoreRetestResults(session.results),onDone:()=>ctx.navigate('wrong'),
+   });
+   return;
+  }
   const item=session.items[session.index];el.innerHTML=`<div class='retest-progress' role='status'>${t('Question')} ${session.index+1} / ${session.items.length}</div><div id='retest-question' data-review-mode='${item.mode}' data-review-id='${e(item.question.id)}'></div>`;
-  const options={question:item.question,onAnswer:(correct,input)=>recordRetestResult(session,{correct,input}),onNext:()=>{if(advanceRetest(session)){ctx.haptic();draw();window.scrollTo(0,0);}},onSkip:()=>{recordRetestResult(session,{skipped:true});if(advanceRetest(session)){ctx.haptic();draw();window.scrollTo(0,0);}}};
+  const advance=()=>{if(advanceRetest(session)){ctx.haptic();draw();window.scrollTo(0,0);}};
+  const options={
+   question:item.question,onAnswer:(correct,input)=>recordRetestResult(session,{correct,input}),
+   onNext:advance,onSkip:()=>{recordRetestResult(session,{skipped:true});advance();},
+  };
   const host=el.querySelector('#retest-question'),renderers={cloze:renderCloze,scramble:renderScramble,articles:renderArticles,verbforms:renderVerbForms,cases:renderCases,adjendings:renderAdjectiveEndings,vocabinput:renderWordInput,vocabmeaning:renderMeaningQuiz,listenword:renderListeningTest,listensentence:renderListeningTest};cleanup=item.mode==='saved'?renderSaved(host,ctx,item,options):renderers[item.mode](host,ctx,options);
  }
  draw();return()=>{cleanup();stopMedia();};

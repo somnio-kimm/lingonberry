@@ -117,36 +117,27 @@ export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagR
   });
 }
 
-/** Wrong-answer book: HSK level + POS group filters (counts cross-filter like word list). */
-export function wrongBookCombinedFilterMarkup(
-  forLevelRow, levelFilter,
-  forTagRow, tagFilter,
-  { levelOf, groupsOf, showMode=false, modeFilter='all', forModeRow=[], statusFilter='all', forStatusRow=[], statusOf },
-) {
-  const levelFilters = [
-    ...[1, 2, 3, 4, 5, 6, 7].map((lv) => {
-      const n = forLevelRow.filter((w) => levelOf(w) === lv).length;
-      return [String(lv), lv === 7 ? hskBandLabel(7) : `HSK ${lv}`, n];
-    }),
-  ];
-  const tagIds = POS_GROUP_ORDER.filter((id) => id === tagFilter || forTagRow.some((w) => groupsOf(w).includes(id)));
-  const tagRows = [['all', t('filterAll'), forTagRow.length]];
-  for (const tg of tagIds) {
-    const n = forTagRow.filter((w) => groupsOf(w).includes(tg)).length;
-    tagRows.push([tg, posGroupLabel(tg), n]);
-  }
-  const modeRows=[['all',t('filterAll'),forModeRow.length],...['pinyin','tone','cloze','scramble','vocabinput','vocabmeaning','listenword','listensentence'].filter(mode=>mode===modeFilter||forModeRow.some(w=>w.mode===mode)).map(mode=>[mode,modeTitle(mode),forModeRow.filter(w=>w.mode===mode).length])];
-  const mCur=modeRows.find(([id])=>id===modeFilter)||modeRows[0];
-  const lCur = levelFilters.find(([k]) => k === levelFilter) || levelFilters[0];
-  const tCur = tagRows.find(([k]) => k === tagFilter) || tagRows[0];
-  const statusRows=[['all',t('filterAll'),forStatusRow.length],...['new','learning','mastered'].map(status=>[
-    status,t('status'+status[0].toUpperCase()+status.slice(1)),forStatusRow.filter(row=>statusOf(row)===status).length,
-  ])];
-  const sCur=statusRows.find(([id])=>id===statusFilter)||statusRows[0];
-  const levelPick = `${lCur[1]} (${lCur[2]})`;
-  const tagPick = `${tCur[1]} (${tCur[2]})`;
-  const group = (title, rows, selected, attribute) => `<div class="filter-split-head">${title}</div><div class="wl-filter-row">${rows.map(([id,label,count])=>`<button type="button" class="wl-filter ${selected===id?'active':''}" ${attribute}="${encodeURIComponent(id)}" aria-pressed="${selected===id}">${label} (${count})</button>`).join('')}</div>`;
-  return `<details class="filter-fold filter-fold--combined wrong-filter-panel"><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${t('filterPanel')}</span></div><div class="filter-fold-sum-picks"><span class="filter-fold-pick-l">${t('wrongFilterHsk')}</span><span class="filter-fold-pick-v">${levelPick}</span><span class="filter-fold-pick-l">${t('filterTags')}</span><span class="filter-fold-pick-v">${tagPick}</span>${showMode?`<span class="filter-fold-pick-l">${t('wrongFilterMode')}</span><span class="filter-fold-pick-v">${mCur[1]} (${mCur[2]})</span>`:''}<span class="filter-fold-pick-l">${t('filterStatus')}</span><span class="filter-fold-pick-v">${sCur[1]} (${sCur[2]})</span></div></summary><div class="filter-fold-body filter-fold-split">${group(t('wrongFilterHsk'),levelFilters,levelFilter,'data-wlv')}<div class="filter-split-divider"></div>${group(t('filterTags'),tagRows,tagFilter,'data-wtag')}${showMode?`<div class="filter-split-divider"></div>${group(t('wrongFilterMode'),modeRows,modeFilter,'data-wmode')}`:''}<div class="filter-split-divider"></div>${group(t('filterStatus'),statusRows,statusFilter,'data-wstatus')}</div></details>`;
+/** Cross-filter counts use each dimension's unfiltered Review pool. */
+export function wrongBookFilterGroups({filters,filtered,levelOf,groupsOf,statusOf}){
+ const group=(key,title,rows)=>{
+  const options=rows.map(([value,label,count])=>({value,label,count}));
+  return {key,title:t(title),selected:filters[key],options,fallback:options[0]};
+ };
+ const levels=filtered({level:'all'}),tags=filtered({tag:'all'}),modes=filtered({mode:'all'}),statuses=filtered({status:'all'});
+ const all=rows=>['all',t('filterAll'),rows.length];
+ const tagIds=POS_GROUP_ORDER.filter(id=>id===filters.tag||tags.some(row=>groupsOf(row).includes(id)));
+ const modeIds=['pinyin','tone','cloze','scramble','vocabinput','vocabmeaning','listenword','listensentence']
+  .filter(mode=>mode===filters.mode||modes.some(row=>row.mode===mode));
+ return [
+  group('level','wrongFilterHsk',[1,2,3,4,5,6,7].map(level=>[
+   String(level),hskBandLabel(level),levels.filter(row=>levelOf(row)===level).length,
+  ])),
+  group('tag','filterTags',[all(tags),...tagIds.map(id=>[id,posGroupLabel(id),tags.filter(row=>groupsOf(row).includes(id)).length])]),
+  group('mode','wrongFilterMode',[all(modes),...modeIds.map(mode=>[mode,modeTitle(mode),modes.filter(row=>row.mode===mode).length])]),
+  group('status','filterStatus',[all(statuses),...['new','learning','mastered'].map(status=>[
+   status,t('status'+status[0].toUpperCase()+status.slice(1)),statuses.filter(row=>statusOf(row)===status).length,
+  ])]),
+ ];
 }
 
 const statusLevels={new:'0',learning:'2',mastered:'5'};
