@@ -1,10 +1,9 @@
 import {groupHeadwords,headwordsForInventory,readHeadwordStatus,readWordSenses} from '../../../js/shared/headwords.js';
-import {readDictionaryMeanings,selectSenseExamples} from '../../../js/shared/word-example.js';
 import {chineseUsageParts} from '../../../js/shared/chinese-usage-examples.js';
 import {renderStudyMeaning} from '../../../js/shared/meaning-display.js';
-import {appendStudySheetNext,renderDictionarySenses,renderStudyFilters} from '../../../js/shared/study-components.js';
+import {renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
-import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
+import {mountDictionarySheet} from '../../../js/shared/dictionary-sheet.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
 export {showQuizBurst} from '../../../js/shared/ui.js';
 import { SCREENS, HOME_MODES } from './app-definition.js';
@@ -150,78 +149,34 @@ export function wrongBookCombinedFilterMarkup(
   return `<details class="filter-fold filter-fold--combined wrong-filter-panel"><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${t('filterPanel')}</span></div><div class="filter-fold-sum-picks"><span class="filter-fold-pick-l">${t('wrongFilterHsk')}</span><span class="filter-fold-pick-v">${levelPick}</span><span class="filter-fold-pick-l">${t('filterTags')}</span><span class="filter-fold-pick-v">${tagPick}</span>${showMode?`<span class="filter-fold-pick-l">${t('wrongFilterMode')}</span><span class="filter-fold-pick-v">${mCur[1]} (${mCur[2]})</span>`:''}<span class="filter-fold-pick-l">${t('filterStatus')}</span><span class="filter-fold-pick-v">${sCur[1]} (${sCur[2]})</span></div></summary><div class="filter-fold-body filter-fold-split">${group(t('wrongFilterHsk'),levelFilters,levelFilter,'data-wlv')}<div class="filter-split-divider"></div>${group(t('filterTags'),tagRows,tagFilter,'data-wtag')}${showMode?`<div class="filter-split-divider"></div>${group(t('wrongFilterMode'),modeRows,modeFilter,'data-wmode')}`:''}<div class="filter-split-divider"></div>${group(t('filterStatus'),statusRows,statusFilter,'data-wstatus')}</div></details>`;
 }
 
-export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClose}={}) {
-  const words = Store.words;
-  const source=fallbackWord?.senses?fallbackWord:words.find(x=>x.id===wordId)||fallbackWord;
-  const w=source?headwordsForInventory(words).expand(source):null;
-  if (!w) return;
-
-  const senses=readWordSenses(w),examples=selectSenseExamples(w,'zh',wordMeaning(w));
-  const meanings=renderDictionarySenses(readDictionaryMeanings(w,'zh',wordMeaning(w)),examples,{locale:Store.uiLang,title:t('examples'),speakLabel:t('listenSentence'),readTranslation:sentenceMeaning,renderExample:example=>Pinyin.htmlSentence(example)});
-  const status=chineseHeadwordStatus(w);
-  const focus=document.activeElement;
-  const overlay = document.createElement('div');
-  overlay.className = 'detail-overlay';
-  overlay.innerHTML = `<div class="detail-sheet" role="dialog" aria-modal="true" aria-label="${escape(w.hanzi)}">
-    <div class="detail-sheet-head">
-      <button type="button" class="detail-sheet-icon detail-sheet-close close-btn">×</button>
-      <div class="detail-sheet-head-center">
-        <span class="detail-badge detail-badge-hsk">${hskBandLabel(w.hskLevel)}</span>
-        ${chineseHeadwordTypes(w).map(label=>`<span class="detail-badge detail-badge-pos">${escape(label)}</span>`).join('')}
-      </div>
-      <button type="button" class="detail-sheet-icon detail-sheet-speak speak-btn">🔊</button>
-    </div>
-    <div class="study-sheet-core">
-      <div class="py-per-char py-per-char--sheet">${Pinyin.htmlMarkedColumns(w.syllables)}</div>
-    </div>
-    ${meanings}
-    ${renderCollocations(w,Store.uiLang)}
-    <div class="status-btns" role="group" aria-label="${escape(t('changeStudyStatus'))}">
-      <button class="status-btn ${status==='new' ? 'active' : ''}" data-lv="0">
-        <span class="status-dot" style="background:var(--text3)"></span>${t('statusNew')}
-      </button>
-      <button class="status-btn ${status==='learning' ? 'active' : ''}" data-lv="2">
-        <span class="status-dot" style="background:var(--blue)"></span>${t('statusLearning')}
-      </button>
-      <button class="status-btn ${status==='mastered' ? 'active' : ''}" data-lv="5">
-        <span class="status-dot" style="background:var(--green)"></span>${t('statusMastered')}
-      </button>
-    </div>
-  </div>`;
-
-  bindCollocationAudio(overlay,w,text=>TTS.speak(text));
-  appendStudySheetNext(overlay,nextButton,'.close-btn');
-  document.body.appendChild(overlay);
-  const close = () => {if(!overlay.isConnected)return;TTS.stop();overlay.remove();onDone?.();if(onClose)onClose();else if(focus?.isConnected)focus.focus({preventScroll:true});};
-  overlay.querySelector('.close-btn').onclick = close;
-  overlay.querySelector('.speak-btn').onclick = () => TTS.speak(w.hanzi);
-  overlay.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>TTS.speak(examples[Number(button.dataset.example)].example.text));
-  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
-
-  overlay.querySelectorAll('.status-btn').forEach(b => b.onclick = () => {
-    const lv = Number(b.dataset.lv);
-    for(const sense of senses)Store.updateWord(sense.id, ww => {
-      ww.srs.level = lv;
-      ww.srs.nextReview = Date.now();
-    });
-    Haptic.success();
-    overlay.querySelectorAll('.status-btn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    onDone?.();
-  });
-  if(nextButton){
-    const closeButton=overlay.querySelector('.close-btn');
-    closeButton.setAttribute('aria-label',Store.uiLang==='ko'?'닫기':'Close');
-    closeButton.focus();
-    overlay.onkeydown=event=>{
-      if(event.key==='Escape'){event.preventDefault();close();}
-      if(event.key==='Tab'&&(event.shiftKey&&document.activeElement===closeButton||!event.shiftKey&&document.activeElement===nextButton)){
-        event.preventDefault();
-        (event.shiftKey?nextButton:closeButton).focus();
-      }
-    };
-  }
-  return close;
+const statusLevels={new:'0',learning:'2',mastered:'5'};
+export function showStatusSheet(wordId,onDone,fallbackWord,{nextButton,onClose}={}){
+ const words=Store.words;
+ const source=fallbackWord?.senses?fallbackWord:words.find(word=>word.id===wordId)||fallbackWord;
+ if(!source)return;
+ const word=headwordsForInventory(words).expand(source);
+ return mountDictionarySheet({
+  word,language:'zh',locale:Store.uiLang,label:word.hanzi,meaning:wordMeaning(word),nextButton,
+  tags:`<span class="detail-badge detail-badge-hsk">${hskBandLabel(word.hskLevel)}</span>${chineseHeadwordTypes(word).map(label=>`<span class="detail-badge detail-badge-pos">${escape(label)}</span>`).join('')}`,
+  heading:`<div class="py-per-char py-per-char--sheet">${Pinyin.htmlMarkedColumns(word.syllables)}</div>`,
+  labels:{
+   close:t('detailClose'),speakWord:t('listenWord'),speakExample:t('listenSentence'),
+   examples:t('examples'),changeStatus:t('changeStudyStatus'),
+   status:value=>t({new:'statusNew',learning:'statusLearning',mastered:'statusMastered'}[value]),
+  },
+  renderExample:example=>Pinyin.htmlSentence(example),readTranslation:sentenceMeaning,
+  status:chineseHeadwordStatus(word),statusAttribute:'data-lv',statusValues:statusLevels,
+  speakWord:()=>TTS.speak(word.hanzi),speakExample:text=>TTS.speak(text),stopSpeech:()=>TTS.stop(),
+  saveStatus(status){
+   for(const sense of readWordSenses(word))Store.updateWord(sense.id,current=>{
+    current.srs.level=Number(statusLevels[status]);
+    current.srs.nextReview=Date.now();
+   });
+   Haptic.success();
+   onDone?.();
+  },
+  onDismiss:onDone,onClose,
+ }).close;
 }
 
 export const modeTitle = mode => t(SCREENS[mode]?.title || `mode_${mode}`) || mode;

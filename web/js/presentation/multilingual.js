@@ -15,16 +15,16 @@ import {joinGapAnswers} from '../shared/phrase-gaps.js';
 import {chooseCombinedCloze,clearCombinedClozeCache} from '../shared/combined-cloze.js';
 import {bindTypingAnswer,bindTypingAnswers} from '../shared/typing-answer.js';
 import {createMorphemeModel} from '../shared/morpheme-model.js';
-import {renderDictionarySenses,appendStudySheetNext,renderStudySearchWithFilters,renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
+import {renderStudySearchWithFilters,renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
 import {renderMorphemeInventory,renderRootKindFilter} from '../shared/morpheme-view.js';
 import {collocationSearchTerms} from '../shared/collocations.js';
-import {renderCollocations,bindCollocationAudio,collocationPreview} from '../shared/collocation-view.js';
+import {collocationPreview} from '../shared/collocation-view.js';
 import {prepareLanguageExercises,selectExerciseRow} from '../shared/exercise-pools.js';
 import {createReadingChoiceSampler} from '../shared/reading-choices.js';
 import {exerciseLabel,exerciseModes,exerciseSectionCategories,createExerciseQuestions,exerciseAnswerCorrect,isValidExerciseQuestion,formKindLabel} from '../shared/language-exercises.js';
 import {renderExerciseExplanation,renderExercisePrompt} from '../shared/exercise-view.js';
 import {renderExerciseReview} from '../shared/exercise-review-view.js';
-import {readDictionaryMeanings,selectSenseExamples} from '../shared/word-example.js';
+import {mountDictionarySheet} from '../shared/dictionary-sheet.js';
 import {createReviewContentPolicy} from '../shared/review-content.js';
 import {assignEnglishLevel} from '../shared/english-levels.js';
 import {APP_NAME} from '../shared/app-config.js';
@@ -69,19 +69,28 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  function topicBadges(word){if(language!=='en')return '';return `<div class="lexicon-topic-tags">${(word.tags||[]).map(tag=>{const [kind,id]=tag.split(':');const labels=kind==='topic'?STUDY_TOPICS:null;return labels?.[id]?`<span class="wl-tag lexicon-mode">${e(studyTopicLabel(labels,id,locale()))}</span>`:'';}).join('')}</div>`;}
  function details(word,{nextButton,onClose}={}){
   word=headwords.expand(word);
-  const senses=readWordSenses(word),examples=selectSenseExamples(word,language);
-  const meanings=renderDictionarySenses(readDictionaryMeanings(word,language),examples,{locale:locale(),title:t('Examples'),speakLabel:t('Speak Example'),noExample:t('No Example Available'),renderExample:(example,sense)=>`<p class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</p>`});
-  closeSheet();const sheet=document.createElement('div');sheet.className='detail-overlay study-overlay lexicon-detail';
-  sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-label="${e(word.lemma)}"><div class="detail-sheet-head"><button class="detail-sheet-icon" data-close aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center">${tags(word)}</div><button class="detail-sheet-icon" data-speak aria-label="${t('Speak Word')}">🔊</button></div><div class="study-sheet-core"><h2 class="study-headword">${heading(word)}</h2>${topicBadges(word)}</div>${meanings}${renderCollocations(word,locale())}<p class="lexicon-audio-status muted" role="status" hidden></p><div class="status-btns" role="group" aria-label="${e(t('Change Study Status'))}">${['new','learning','mastered'].map(status=>`<button data-status="${status}" class="status-btn ${readStatus(word)===status?'active':''}"><span class="status-dot ${status}"></span>${t(status[0].toUpperCase()+status.slice(1))}</button>`).join('')}</div></section>`;
-  appendStudySheetNext(sheet,nextButton,'[data-close]');
-  bindCollocationAudio(sheet,word,text=>speak(text,sheet));document.body.appendChild(sheet);const focus=document.activeElement;
-  const key=event=>{if(event.key==='Escape')closeSheet();if(event.key==='Tab'){const buttons=[...sheet.querySelectorAll('button')],first=buttons[0],last=buttons.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}};document.addEventListener('keydown',key);
-  const close=()=>{if(!sheet.isConnected)return;DeviceSpeech.stop();document.removeEventListener('keydown',key);sheet.remove();closeSheet=()=>{};if(onClose)onClose();else focus?.focus();};
-  closeSheet=close;
-  sheet.querySelector('[data-close]').onclick=closeSheet;sheet.onclick=event=>{if(event.target===sheet)closeSheet();};sheet.querySelector('[data-speak]').onclick=()=>speak(studySpokenWord(word,profile),sheet);
-  sheet.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>speak(examples[Number(button.dataset.example)].example.text,sheet));
-  sheet.querySelectorAll('[data-status]').forEach(button=>button.onclick=()=>{for(const sense of senses)store.setWordStatus(sense.id,button.dataset.status);if(nextButton)sheet.querySelectorAll('[data-status]').forEach(node=>node.classList.toggle('active',node===button));else{closeSheet();refresh();}});sheet.querySelector('[data-close]').focus();
-  return close;
+  closeSheet();
+  const dialog=mountDictionarySheet({
+   word,language,locale:locale(),label:word.lemma,tags:tags(word),
+   heading:`<h2 class="study-headword">${heading(word)}</h2>`,headingExtra:topicBadges(word),
+   className:'lexicon-detail',audioStatusClass:'lexicon-audio-status',nextButton,
+   labels:{
+    close:t('Close'),speakWord:t('Speak Word'),speakExample:t('Speak Example'),
+    examples:t('Examples'),noExample:t('No Example Available'),changeStatus:t('Change Study Status'),
+    status:value=>t(value[0].toUpperCase()+value.slice(1)),
+   },
+   renderExample:(example,sense)=>`<p class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</p>`,
+   status:readStatus(word),
+   speakWord:overlay=>speak(studySpokenWord(word,profile),overlay),
+   speakExample:speak,stopSpeech:DeviceSpeech.stop,
+   saveStatus(status,close){
+    for(const sense of readWordSenses(word))store.setWordStatus(sense.id,status);
+    if(!nextButton){close();refresh();}
+   },
+   onDismiss:()=>{closeSheet=()=>{};},onClose,
+  });
+  closeSheet=dialog.close;
+  return dialog.close;
  }
  function state(route){if(!filters.has(route))filters.set(route,{query:'',pos:'all',status:'all',open:false,mode:'all',formKind:'all',questionType:'all',phraseCategory:'all'});return filters.get(route);}
  function pool(route){

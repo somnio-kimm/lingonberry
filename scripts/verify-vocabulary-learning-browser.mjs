@@ -47,6 +47,12 @@ try{
   assert.doesNotMatch(displayedMeaning,/\(|（|usage note|표시하지 않을 메모/u);
   assert.equal(await sheet.locator('.study-dictionary-sense > .study-sheet-meaning + .study-examples [data-example]').count(),1);
   assert.equal(await sheet.locator('.study-status-title').count(),0);
+  const close=sheet.locator('[data-close]'),lastStatus=sheet.locator('.status-btns button').last();
+  assert.ok(await close.evaluate(node=>document.activeElement===node));
+  await close.press('Shift+Tab');
+  assert.ok(await lastStatus.evaluate(node=>document.activeElement===node));
+  await lastStatus.press('Tab');
+  assert.ok(await close.evaluate(node=>document.activeElement===node));
   assert.ok(await sheet.locator('#vocab-next').isVisible());
   assert.equal(await page.locator('#vocab-answer').count(),0);
   assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));
