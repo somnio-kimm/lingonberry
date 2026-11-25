@@ -4,7 +4,7 @@ import {newestMistakesFirst} from '../shared/review-order.js';
 import {renderVocabularyView} from '../shared/vocabulary-view.js';
 import {renderStudyMenu,renderStudyLevels} from '../shared/study-menu-view.js';
 import {createFlashcardSession,readFlashcardSetSize,saveFlashcardSetSize} from '../shared/flashcard-session.js';
-import {createEnglishHeadwords,readWordSenses,readHeadwordStatus,readEnglishHeadwordIdentity} from '../shared/english-headwords.js';
+import {createHeadwords,readWordSenses,readHeadwordStatus,readHeadwordIdentity} from '../shared/headwords.js';
 import {renderLexiconReview} from '../shared/lexicon-review-view.js';
 import {renderLexiconFlashcards} from '../shared/lexicon-flashcard-view.js';
 import {renderLexiconWordList} from '../shared/lexicon-wordlist-view.js';
@@ -16,7 +16,7 @@ import {joinGapAnswers} from '../shared/phrase-gaps.js';
 import {chooseCombinedCloze,clearCombinedClozeCache} from '../shared/combined-cloze.js';
 import {bindTypingAnswer,bindTypingAnswers} from '../shared/typing-answer.js';
 import {createMorphemeModel} from '../shared/morpheme-model.js';
-import {appendStudySheetNext,renderStudySearchWithFilters,renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
+import {renderStudyExamples,renderStudyUsageLabel,appendStudySheetNext,renderStudySearchWithFilters,renderStudyFilters,renderStudyTabs,renderStudyReviewAnswer} from '../shared/study-components.js';
 import {renderMorphemeInventory,renderRootKindFilter} from '../shared/morpheme-view.js';
 import {collocationSearchTerms} from '../shared/collocations.js';
 import {renderCollocations,bindCollocationAudio,collocationPreview} from '../shared/collocation-view.js';
@@ -48,7 +48,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const modes={...commonModes,...exerciseModes(language),...(language==='en'?{roots:['Root Families']}:{})};
  const screens={home:{title:'Study'},wrong:{title:'Review'},settings:{title:'Settings'},retest:{title:'Retest'},...Object.fromEntries(Object.entries(modes).map(([key,[title]])=>[key,{title}]))};
  const profile=studyProfiles[language],store=createLexiconStore(localStorage,profile,{progressStorage}),engine=createLexiconQuestions(profile);
- let headwords=createEnglishHeadwords([]),morphemeModel,typing,practiceCleanup,japaneseFurigana,sampleReadingChoice;
+ let headwords=createHeadwords([]),morphemeModel,typing,practiceCleanup,japaneseFurigana,sampleReadingChoice;
  let reviewContent=createReviewContentPolicy(),study,words=[],exercises=[],previousQuestionId,byId=new Map(),question,feedback,input='',reviewQueue=null,reviewResults,flipped=false,chosenTokens=[],closeSheet=()=>{};
  const isCurrentQuestion=q=>reviewContent.isCurrent(q)&&(!q.exercise||isValidExerciseQuestion(q));
  const filters=new Map();let lastRenderedRoute;
@@ -60,19 +60,21 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
  const fold=value=>{const s=String(value||'').normalize('NFKC').toLocaleLowerCase(language);return ['en','fr','es'].includes(language)?s.normalize('NFD').replace(/\p{M}/gu,''):s;};
  function resetQuestion(){if(question)previousQuestionId=question.id;question=undefined;feedback=undefined;input='';chosenTokens=[];}
  function heading(word){if(language==='ja')return `<span class="lexicon-word" lang="ja">${renderJapaneseRuby(displayStudyWord(word),word.pronunciation)}</span>`;return `<span class="lexicon-word" lang="${language}">${language!=='en'&&word.pronunciation&&word.pronunciation!==word.lemma?`<ruby>${e(displayStudyWord(word))}<rt>${e(word.pronunciation)}</rt></ruby>`:e(displayStudyWord(word))}</span>`;}
- const isGroupedRoute=route=>language==='en'&&['wordlist','flashcards'].includes(route);
+ const isGroupedRoute=route=>['wordlist','flashcards'].includes(route);
  const readStatus=word=>readHeadwordStatus(word,id=>store.wordStatus(id));
  const matchesStatus=(word,status)=>status==='all'||readStatus(word)===status;
- let flashcardSetSize=readFlashcardSetSize(),flashcardKey='',exampleIndex=0;const flashcardSession=createFlashcardSession({readStatus,readIdentity:word=>language==='en'?readEnglishHeadwordIdentity(word):word.id});
+ let flashcardSetSize=readFlashcardSetSize(),flashcardKey='',exampleIndex=0;const flashcardSession=createFlashcardSession({readStatus,readIdentity:readHeadwordIdentity});
  const levelLabel=level=>language==='ja'&&profile.levels.includes(level)?profile.exam+' '+level:level;
  function tags(word){return `<span class="wl-tag wl-hsk">${e(levelLabel(language==='en'?assignEnglishLevel(word):word.level))}</span>${[...new Set(readWordSenses(word).map(typeName))].map(type=>`<span class="wl-tag wl-pos">${e(t(type))}</span>`).join('')}`;}
  async function speak(text,host,onEnd){const message=host.querySelector('.lexicon-audio-status');if(message)message.hidden=true;await DeviceSpeech.speak(text,{language:profile.speech,onEnd,onError:()=>{if(message){message.hidden=false;message.textContent=t('Speech Unavailable');}}});}
  function topicBadges(word){if(language!=='en')return '';return `<div class="lexicon-topic-tags">${(word.tags||[]).map(tag=>{const [kind,id]=tag.split(':');const labels=kind==='topic'?STUDY_TOPICS:null;return labels?.[id]?`<span class="wl-tag lexicon-mode">${e(studyTopicLabel(labels,id,locale()))}</span>`:'';}).join('')}</div>`;}
  function details(word,{nextButton,onClose}={}){
-  word=language==='en'?headwords.expand(word):word;
+  word=headwords.expand(word);
   const senses=readWordSenses(word),examples=selectSenseExamples(word,language);
+  const usage=sense=>renderStudyUsageLabel(sense,t(typeName(sense)),senses.some(s=>s.pronunciation!==word.pronunciation));
+  const exampleMarkup=renderStudyExamples(examples,{title:t('Examples'),speakLabel:t('Speak Example'),renderUsage:usage,noExample:t('No Example Available'),renderExample:(example,sense)=>`<p class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</p>`});
   closeSheet();const sheet=document.createElement('div');sheet.className='detail-overlay study-overlay lexicon-detail';
-  sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-label="${e(word.lemma)}"><div class="detail-sheet-head"><button class="detail-sheet-icon" data-close aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center">${tags(word)}</div><button class="detail-sheet-icon" data-speak aria-label="${t('Speak Word')}">🔊</button></div><div class="study-sheet-core"><h2 class="study-headword">${heading(word)}</h2><p class="study-sheet-meaning">${renderStudyMeaning(word.studyMeaning,word)}</p>${topicBadges(word)}</div>${renderCollocations(word,locale())}<div class="study-status-title">${t('Change Study Status')}</div><div class="status-btns">${['new','learning','mastered'].map(status=>`<button data-status="${status}" class="status-btn ${readStatus(word)===status?'active':''}"><span class="status-dot ${status}"></span>${t(status[0].toUpperCase()+status.slice(1))}</button>`).join('')}</div><div class="study-examples"><h3>${t('Examples')}</h3>${examples.map(({word:sense,example},index)=>`${senses.length>1?`<p class="study-sense-label">${e(t(typeName(sense)))} · ${renderStudyMeaning(sense.studyMeaning,sense)}</p>`:''}${example?`<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(sense.id)}"><button class="example-speak word-listen" data-example="${index}" aria-label="${t('Speak Example')}">🔊</button><p class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</p>${example.studyTranslation&&example.studyTranslation!==example.text?`<p class="muted">${e(example.studyTranslation)}</p>`:''}</div>`:`<p class="muted">${t('No Example Available')}</p>`}`).join('')}</div><p class="lexicon-audio-status muted" role="status" hidden></p></section>`;
+  sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-label="${e(word.lemma)}"><div class="detail-sheet-head"><button class="detail-sheet-icon" data-close aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center">${tags(word)}</div><button class="detail-sheet-icon" data-speak aria-label="${t('Speak Word')}">🔊</button></div><div class="study-sheet-core"><h2 class="study-headword">${heading(word)}</h2><p class="study-sheet-meaning">${renderStudyMeaning(word.studyMeaning,word)}</p>${topicBadges(word)}</div>${renderCollocations(word,locale())}<div class="study-status-title">${t('Change Study Status')}</div><div class="status-btns">${['new','learning','mastered'].map(status=>`<button data-status="${status}" class="status-btn ${readStatus(word)===status?'active':''}"><span class="status-dot ${status}"></span>${t(status[0].toUpperCase()+status.slice(1))}</button>`).join('')}</div>${exampleMarkup}<p class="lexicon-audio-status muted" role="status" hidden></p></section>`;
   appendStudySheetNext(sheet,nextButton,'[data-close]');
   bindCollocationAudio(sheet,word,text=>speak(text,sheet));document.body.appendChild(sheet);const focus=document.activeElement;
   const key=event=>{if(event.key==='Escape')closeSheet();if(event.key==='Tab'){const buttons=[...sheet.querySelectorAll('button')],first=buttons[0],last=buttons.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}}};document.addEventListener('keydown',key);
@@ -130,7 +132,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const label=value=>t(value==='all'?'All':value==='functional'?'Expression':value[0].toUpperCase()+value.slice(1));
   const statusCounts={all:0,new:0,learning:0,mastered:0},posCounts=new Map([['all',0]]);
   if(route==='flashcards'){
-   const countCards=(selectedPos,selectedStatus)=>{const selected=levelWords.filter(word=>(selectedPos==='all'||word.pos===selectedPos)&&matchesStatus(word,selectedStatus));return (language==='en'?headwords.group(selected):selected).length;};
+   const countCards=(selectedPos,selectedStatus)=>{const selected=levelWords.filter(word=>(selectedPos==='all'||word.pos===selectedPos)&&matchesStatus(word,selectedStatus));return headwords.group(selected).length;};
    for(const key of Object.keys(statusCounts))statusCounts[key]=countCards(f.pos,key);
    for(const pos of parts)posCounts.set(pos,countCards(pos,f.status));
   }else{
@@ -181,7 +183,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
   const word=flashcardSession.current,examples=word?selectSenseExamples(word,language):[];exampleIndex%=Math.max(1,examples.length);
   const beginNext=()=>{flashcardSession.begin(pool(route),{size:flashcardSetSize});flipped=false;exampleIndex=0;refresh();};
   const reviewLearning=()=>{flashcardSession.reviewLearning();flipped=false;exampleIndex=0;refresh();};
-  return renderLexiconFlashcards(host,{locale:locale(),language,word,examples,exampleIndex,flipped,total:flashcardSession.total,index:flashcardSession.index,completed:flashcardSession.completed,setSize:flashcardSetSize,phase:flashcardSession.phase,summary:flashcardSession.summary,learningCount:flashcardSession.learningCount,canStartNext:list.length>0,filters:controls(route),renderHeading:heading,renderTags:tags,renderSenseLabel:sense=>e(t(typeName(sense)))+' · '+renderStudyMeaning(sense.studyMeaning,sense),renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,warning:store.warning?t('Storage Unavailable'):''},{
+  return renderLexiconFlashcards(host,{locale:locale(),language,word,examples,exampleIndex,flipped,total:flashcardSession.total,index:flashcardSession.index,completed:flashcardSession.completed,setSize:flashcardSetSize,phase:flashcardSession.phase,summary:flashcardSession.summary,learningCount:flashcardSession.learningCount,canStartNext:list.length>0,filters:controls(route),renderHeading:heading,renderTags:tags,renderSenseLabel:sense=>renderStudyUsageLabel(sense,t(typeName(sense)),readWordSenses(word).some(item=>item.pronunciation!==word.pronunciation)),renderExample:(example,sense)=>`<div class="example-sentence" lang="${language}">${language==='ja'?japaneseFurigana.renderSentence(example.text,sense):e(example.text)}</div>`,warning:store.warning?t('Storage Unavailable'):''},{
    bindFilters:host=>bindControls(host,route),resize:value=>{flashcardSetSize=saveFlashcardSetSize(value);flashcardKey='';refresh();},nextSet:beginNext,reviewLearning,shuffle:()=>{if(f.status==='mastered'||!flashcardSession.learningCount)beginNext();else reviewLearning();},flip:()=>{flipped=!flipped;haptic();return flipped;},move:direction=>{flashcardSession.move(direction);flipped=false;exampleIndex=0;refresh();},moveExample:direction=>{exampleIndex=(exampleIndex+direction+examples.length)%examples.length;return exampleIndex;},mark:status=>{if(!word)return;for(const sense of readWordSenses(word))store.setWordStatus(sense.id,status);flashcardSession.mark(status);flipped=false;exampleIndex=0;haptic();refresh();},openWord:()=>details(word),speakWord:()=>speak(studySpokenWord(word,profile),host),speakExample:()=>speak(examples[exampleIndex].example.text,host),
   });
  }
@@ -337,7 +339,7 @@ export function createPresentation({language,navigate,refresh,onPreferences,prog
    word.searchAliases=[word.pronunciation,...word.aliases].filter(Boolean).map(fold);
   }
   words.sort((left,right)=>left.lemma.localeCompare(right.lemma,language));
-  headwords=createEnglishHeadwords(words);
+  headwords=createHeadwords(words);
   exercises=prepareLanguageExercises(value,words);
   sampleReadingChoice=language==='ja'?createReadingChoiceSampler(exercises,words):undefined;
   byId=new Map(words.map(word=>[word.id,word]));

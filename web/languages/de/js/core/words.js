@@ -2,6 +2,7 @@ export {shuffle as shuffleWords} from '../../../../js/shared/random.js';
 import { escapeHtml as e } from '../../../../js/shared/ui.js';
 import { dictionaryEntries, wordType } from './dictionary.js';
 export function wordHeading(w) {
+ if(w.senses?.some(sense=>sense.article!==w.article))return e(w.lemma);
   const article=w.pos==='noun'&&w.article;
   const articleClass=w.number_restriction==='plural'?'plural':w.gender||'plural';
   return `${article?`<span class="noun-article ${e(articleClass)}">${e(article)}</span> `:''}${e(w.lemma)}`;

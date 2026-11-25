@@ -1,3 +1,4 @@
+import {renderStudyMeaning} from './meaning-display.js';
 import {renderStudyIcon} from './study-icons.js';
 import {escapeHtml as e} from './ui.js';
 /** Canonical German/Chinese study patterns. Geometry and colours live in study-theme.css. */
@@ -45,6 +46,22 @@ export function bindQuizWordDetails(trigger,nextButton,open){
   trigger.onclick=null;trigger.onkeydown=null;
   closeSheet?.();
  };
+}
+
+export function renderStudyUsageLabel(word,partOfSpeech,showReading=false){
+ const parts=[e(partOfSpeech),showReading&&e(word.pronunciation),renderStudyMeaning(word.studyMeaning,word)];
+ return parts.filter(Boolean).join(' · ');
+}
+
+export function renderStudyExamples(rows,{title,speakLabel,renderExample,renderUsage,readTranslation=example=>example.studyTranslation,noExample=''}){
+ if(!rows.some(row=>row.example)&&!noExample)return '';
+ const multipleUsages=new Set(rows.map(row=>row.word)).size>1;
+ return `<div class="study-examples"><h3>${e(title)}</h3>${rows.map(({word,example},index)=>{
+  const usage=multipleUsages&&rows[index-1]?.word!==word?`<p class="study-sense-label">${renderUsage(word)}</p>`:'';
+  if(!example)return usage+(noExample?`<p class="muted">${e(noExample)}</p>`:'');
+  const translation=readTranslation(example);
+  return `${usage}<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(word.id)}"><button type="button" class="example-speak word-listen" data-example="${index}" aria-label="${e(speakLabel)}">🔊</button>${renderExample(example,word)}${translation&&translation!==example.text?`<div class="example-translation">${e(translation)}</div>`:''}</div>`;
+ }).join('')}</div>`;
 }
 
 export function renderStudyTabs({label,options,selected,attribute,variant='form'}){

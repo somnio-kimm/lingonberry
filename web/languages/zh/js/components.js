@@ -1,5 +1,8 @@
+import {groupHeadwords,headwordsForInventory,readHeadwordStatus,readWordSenses} from '../../../js/shared/headwords.js';
+import {selectSenseExamples} from '../../../js/shared/word-example.js';
+import {chineseUsageParts} from '../../../js/shared/chinese-usage-examples.js';
 import {renderStudyMeaning} from '../../../js/shared/meaning-display.js';
-import {appendStudySheetNext,renderStudyFilters} from '../../../js/shared/study-components.js';
+import {appendStudySheetNext,renderStudyExamples,renderStudyUsageLabel,renderStudyFilters} from '../../../js/shared/study-components.js';
 export {shuffle,pick} from '../../../js/shared/random.js';
 import {renderCollocations,bindCollocationAudio} from '../../../js/shared/collocation-view.js';
 import {escapeHtml as escape} from '../../../js/shared/ui.js';
@@ -69,6 +72,14 @@ function parsedPos(w){
 }
 export function wordPosGroupDisplay(w){const groups=parsedPos(w).groups;return groups.length?groups.map(posGroupLabel).join(' · '):w?.partOfSpeech?.trim()||'';}
 export function posGroupIdsForWord(w){return [...parsedPos(w).groups];}
+export const chineseHeadwordStatus=word=>readHeadwordStatus(word,(_id,sense)=>{
+ const level=sense.srs?.level??0;
+ return level>=5?'mastered':level>0?'learning':'new';
+});
+export function chineseHeadwordTypes(word){
+ const kinds=readWordSenses(word).flatMap(sense=>[...parsedPos(sense).groups,...chineseUsageParts(sense).map(posGroupForToken)]);
+ return [...new Set(kinds.filter(Boolean))].map(posGroupLabel);
+}
 export function posTagsForWords(words){const found=new Set(words.flatMap(w=>parsedPos(w).groups));return POS_GROUP_ORDER.filter(id=>found.has(id));}
 export function filterByPosTag(words,tag){return !tag||tag==='all'?[...words]:words.filter(w=>{const row=parsedPos(w);return row.groups.includes(tag)||row.tokens.includes(tag)||row.source?.trim()===tag;});}
 
@@ -84,17 +95,18 @@ export function statusTagHTML(level) {
 }
 
 /** Word list: one collapsible "필터" with study status + POS sections inside when open. */
-export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagRow, tagFilter, pool=forTagRow, open=false, leading={}) {
+export function wordlistCombinedFilterMarkup(forStatusRow, statusFilter, forTagRow, tagFilter, pool=forTagRow, open=false, leading={}, grouped=false) {
+  const count=list=>grouped?groupHeadwords(list).length:list.length;
   const statusFilters = [
-    ['all', t('filterAll'), forStatusRow.length],
-    ['new', t('statusNew'), forStatusRow.filter(w => w.srs.level === 0).length],
-    ['learning', t('statusLearning'), forStatusRow.filter(w => w.srs.level > 0 && w.srs.level < 5).length],
-    ['mastered', t('statusMastered'), forStatusRow.filter(w => w.srs.level >= 5).length],
+    ['all', t('filterAll'), count(forStatusRow)],
+    ['new', t('statusNew'), count(forStatusRow.filter(w => w.srs.level === 0))],
+    ['learning', t('statusLearning'), count(forStatusRow.filter(w => w.srs.level > 0 && w.srs.level < 5))],
+    ['mastered', t('statusMastered'), count(forStatusRow.filter(w => w.srs.level >= 5))],
   ];
   const tags = posTagsForWords(pool);
-  const tagRows = [['all', t('filterAll'), forTagRow.length]];
+  const tagRows = [['all', t('filterAll'), count(forTagRow)]];
   for (const tg of tags) {
-    const n = filterByPosTag(forTagRow, tg).length;
+    const n = count(filterByPosTag(forTagRow, tg));
     tagRows.push([tg, posGroupLabel(tg), n]);
   }
   const group=(title,selected,rows,encode=value=>value)=>({
@@ -140,10 +152,13 @@ export function wrongBookCombinedFilterMarkup(
 
 export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClose}={}) {
   const words = Store.words;
-  const w = words.find(x => x.id === wordId) || (fallbackWord ? {...fallbackWord,srs:fallbackWord.srs||{level:0}} : null);
+  const source=fallbackWord?.senses?fallbackWord:words.find(x=>x.id===wordId)||fallbackWord;
+  const w=source?headwordsForInventory(words).expand(source):null;
   if (!w) return;
 
-  const posGrouped = wordPosGroupDisplay(w);
+  const senses=readWordSenses(w),examples=selectSenseExamples(w,'zh');
+  const examplesHTML=renderStudyExamples(examples,{title:t('examples'),speakLabel:t('listenSentence'),renderUsage:sense=>renderStudyUsageLabel(sense,wordPosGroupDisplay(sense),senses.some(item=>item.pronunciation!==w.pronunciation)),readTranslation:sentenceMeaning,renderExample:example=>Pinyin.htmlSentence(example)});
+  const status=chineseHeadwordStatus(w);
   const focus=document.activeElement;
   const overlay = document.createElement('div');
   overlay.className = 'detail-overlay';
@@ -152,7 +167,7 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
       <button type="button" class="detail-sheet-icon detail-sheet-close close-btn">×</button>
       <div class="detail-sheet-head-center">
         <span class="detail-badge detail-badge-hsk">${hskBandLabel(w.hskLevel)}</span>
-        ${posGrouped ? `<span class="detail-badge detail-badge-pos">${posGrouped}</span>` : ''}
+        ${chineseHeadwordTypes(w).map(label=>`<span class="detail-badge detail-badge-pos">${escape(label)}</span>`).join('')}
       </div>
       <button type="button" class="detail-sheet-icon detail-sheet-speak speak-btn">🔊</button>
     </div>
@@ -162,22 +177,17 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
     </div>
     ${renderCollocations(w,Store.uiLang)}<div class="study-status-title">${t('changeStudyStatus')}</div>
     <div class="status-btns">
-      <button class="status-btn ${w.srs.level === 0 ? 'active' : ''}" data-lv="0">
+      <button class="status-btn ${status==='new' ? 'active' : ''}" data-lv="0">
         <span class="status-dot" style="background:var(--text3)"></span>${t('statusNew')}
       </button>
-      <button class="status-btn ${w.srs.level > 0 && w.srs.level < 5 ? 'active' : ''}" data-lv="2">
+      <button class="status-btn ${status==='learning' ? 'active' : ''}" data-lv="2">
         <span class="status-dot" style="background:var(--blue)"></span>${t('statusLearning')}
       </button>
-      <button class="status-btn ${w.srs.level >= 5 ? 'active' : ''}" data-lv="5">
+      <button class="status-btn ${status==='mastered' ? 'active' : ''}" data-lv="5">
         <span class="status-dot" style="background:var(--green)"></span>${t('statusMastered')}
       </button>
     </div>
-    ${w.sentences?.length ? `
-      <div class="study-examples"><h3>${t('examples')}</h3>
-      ${w.sentences.map((s,i) => `<div class="fc-example-block example-with-audio"><button type="button" class="example-speak word-listen" data-example="${i}" aria-label="${t('listenSentence')}">🔊</button>
-        ${Pinyin.htmlSentence(s)}
-        <div style="font-size:13px;color:var(--text2);margin-top:2px">${sentenceMeaning(s)}</div>
-      </div>`).join('')}</div>` : ''}
+    ${examplesHTML}
   </div>`;
 
   bindCollocationAudio(overlay,w,text=>TTS.speak(text));
@@ -186,12 +196,12 @@ export function showStatusSheet(wordId, onDone, fallbackWord, {nextButton,onClos
   const close = () => {if(!overlay.isConnected)return;TTS.stop();overlay.remove();onDone?.();if(onClose)onClose();else if(focus?.isConnected)focus.focus({preventScroll:true});};
   overlay.querySelector('.close-btn').onclick = close;
   overlay.querySelector('.speak-btn').onclick = () => TTS.speak(w.hanzi);
-  overlay.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>TTS.speak(w.sentences[Number(button.dataset.example)].hanzi));
+  overlay.querySelectorAll('[data-example]').forEach(button=>button.onclick=()=>TTS.speak(examples[Number(button.dataset.example)].example.text));
   overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
 
   overlay.querySelectorAll('.status-btn').forEach(b => b.onclick = () => {
     const lv = Number(b.dataset.lv);
-    Store.updateWord(wordId, ww => {
+    for(const sense of senses)Store.updateWord(sense.id, ww => {
       ww.srs.level = lv;
       ww.srs.nextReview = Date.now();
     });

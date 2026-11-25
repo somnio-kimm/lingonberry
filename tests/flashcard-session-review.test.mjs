@@ -48,9 +48,9 @@ test('duplicate pool IDs cannot create an unfinishable reconciled round',()=>{
  const words=makeWords(2),{session,mark}=createSession(words);session.begin(words.slice(0,1),{size:10});session.reconcile([words[0],words[1],words[1]]);assert.equal(session.total,2);assert.equal(new Set(session.cards.map(word=>word.id)).size,2);mark('mastered');mark('mastered');assert.equal(session.phase,'complete');
 });
 
-import {createEnglishHeadwords,readWordSenses,readHeadwordStatus} from '../web/js/shared/english-headwords.js';
+import {createHeadwords,readWordSenses,readHeadwordStatus} from '../web/js/shared/headwords.js';
 test('English groups retain one stable round identity when the first eligible sense changes',()=>{
- const words=[{id:'appeal-noun',lemma:'appeal',level:'middle',pos:'noun',studyMeaning:'request'},{id:'appeal-verb',lemma:'appeal',level:'middle',pos:'verb',studyMeaning:'make a request'},{id:'book',lemma:'book',level:'middle',pos:'noun',studyMeaning:'volume'},{id:'cake',lemma:'cake',level:'middle',pos:'noun',studyMeaning:'baked food'}],statuses=new Map(words.map(word=>[word.id,'new'])),model=createEnglishHeadwords(words);
+ const words=[{id:'appeal-noun',lemma:'appeal',level:'middle',pos:'noun',studyMeaning:'request'},{id:'appeal-verb',lemma:'appeal',level:'middle',pos:'verb',studyMeaning:'make a request'},{id:'book',lemma:'book',level:'middle',pos:'noun',studyMeaning:'volume'},{id:'cake',lemma:'cake',level:'middle',pos:'noun',studyMeaning:'baked food'}],statuses=new Map(words.map(word=>[word.id,'new'])),model=createHeadwords(words);
  const readPool=()=>model.group(words.filter(word=>statuses.get(word.id)!=='mastered'));
  const session=createFlashcardSession({readStatus:word=>readHeadwordStatus(word,id=>statuses.get(id)),readIdentity:word=>JSON.stringify([word.level,word.lemma.normalize('NFC')]),random:()=>0});
  const mark=status=>{for(const sense of readWordSenses(session.current))statuses.set(sense.id,status);session.mark(status);};
