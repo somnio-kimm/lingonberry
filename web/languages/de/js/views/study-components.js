@@ -1,7 +1,6 @@
 import {groupHeadwords,headwordsForInventory,readHeadwordStatus,readWordSenses} from '../../../../js/shared/headwords.js';
-import {selectSenseExamples} from '../../../../js/shared/word-example.js';
-import {renderStudyMeaning} from '../../../../js/shared/meaning-display.js';
-import {appendStudySheetNext,renderStudyExamples,renderStudyUsageLabel,renderStudyFilters} from '../../../../js/shared/study-components.js';
+import {readDictionaryMeanings,selectSenseExamples} from '../../../../js/shared/word-example.js';
+import {appendStudySheetNext,renderDictionarySenses,renderStudyFilters} from '../../../../js/shared/study-components.js';
 import {renderCollocations,bindCollocationAudio} from '../../../../js/shared/collocation-view.js';
 import { studyLevelLabel } from '../app-definition.js';
 import { escapeHtml as e } from '../../../../js/shared/ui.js';
@@ -36,11 +35,11 @@ export function createStudyControls(host,ctx) {
  }
  function open(word,onDone,{nextButton,onClose}={}) {
   word=headwordsForInventory(ctx.words).expand(word);
-  const senses=readWordSenses(word),examples=selectSenseExamples(word,'de');
-  const examplesHTML=renderStudyExamples(examples,{title:t('Examples'),speakLabel:t('Listen to sentence'),renderUsage:sense=>renderStudyUsageLabel(sense,[typeLabel(sense),senses.length>1&&sense.article].filter(Boolean).join(' · '),senses.some(item=>item.pronunciation!==word.pronunciation)),readTranslation:sentenceMeaning,renderExample:example=>`<div class="example-sentence" lang="de">${e(example.text)}</div>`});
+  const senses=readWordSenses(word),examples=selectSenseExamples(word,'de',wordMeaning(word));
+  const meanings=renderDictionarySenses(readDictionaryMeanings(word,'de',wordMeaning(word)),examples,{locale:getLocale(),title:t('Examples'),speakLabel:t('Listen to sentence'),readTranslation:sentenceMeaning,renderExample:example=>`<div class="example-sentence" lang="de">${e(example.text)}</div>`});
   sheet?.remove();const focus=document.activeElement;
   sheet=document.createElement('div');sheet.className='detail-overlay study-overlay';
-  sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="study-word-title"><div class="detail-sheet-head"><button class="detail-sheet-icon detail-sheet-close" aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center"><span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(word.cefr))}</span>${headwordTypeLabels(word).map(label=>`<span class="detail-badge detail-badge-pos">${e(label)}</span>`).join('')}</div><button class="detail-sheet-icon detail-sheet-speak" aria-label="${t('Speak word')}">🔊</button></div><div class="study-sheet-core"><h2 id="study-word-title" class="study-headword" lang="de">${wordHeading(word)}</h2><div class="study-sheet-meaning" lang="${getLocale()}">${renderStudyMeaning(wordMeaning(word),word)}</div></div>${renderCollocations(word,getLocale())}<div class="study-status-title">${t('Change study status')}</div><div class="status-btns">${['new','learning','mastered'].map(status=>`<button class="status-btn ${germanHeadwordStatus(word,ctx.store)===status?'active':''}" data-word-status="${status}" aria-pressed="${germanHeadwordStatus(word,ctx.store)===status}"><span class="status-dot ${status}"></span>${statusLabel(status)}</button>`).join('')}</div>${examplesHTML}<p class="study-audio-status muted" role="status" hidden></p></section>`;
+  sheet.innerHTML=`<section class="detail-sheet study-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="study-word-title"><div class="detail-sheet-head"><button class="detail-sheet-icon detail-sheet-close" aria-label="${t('Close')}">×</button><div class="detail-sheet-head-center"><span class="detail-badge detail-badge-hsk">${e(studyLevelLabel(word.cefr))}</span>${headwordTypeLabels(word).map(label=>`<span class="detail-badge detail-badge-pos">${e(label)}</span>`).join('')}</div><button class="detail-sheet-icon detail-sheet-speak" aria-label="${t('Speak word')}">🔊</button></div><div class="study-sheet-core"><h2 id="study-word-title" class="study-headword" lang="de">${wordHeading(word)}</h2></div>${meanings}${renderCollocations(word,getLocale())}<p class="study-audio-status muted" role="status" hidden></p><div class="status-btns" role="group" aria-label="${e(t('Change study status'))}">${['new','learning','mastered'].map(status=>`<button class="status-btn ${germanHeadwordStatus(word,ctx.store)===status?'active':''}" data-word-status="${status}" aria-pressed="${germanHeadwordStatus(word,ctx.store)===status}"><span class="status-dot ${status}"></span>${statusLabel(status)}</button>`).join('')}</div></section>`;
   const overlay=sheet;
   appendStudySheetNext(overlay,nextButton,'.detail-sheet-close');
   document.body.appendChild(sheet);

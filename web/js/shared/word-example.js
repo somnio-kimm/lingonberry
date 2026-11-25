@@ -1,5 +1,7 @@
-import {selectChineseUsageExamples} from './chinese-usage-examples.js';
+import {readChineseUsages,selectChineseUsageExamples} from './chinese-usage-examples.js';
+import {readWordSenses} from './headwords.js';
 import {findSentenceFocus} from './lexicon-sentences.js';
+import {meaningDisplayLines} from './meaning-display.js';
 /** Choose display content without promoting reference material into scored exercises. */
 export function selectWordExample(word,language){
  const display=example=>example&&language==='en'&&word.studyExplanationLanguage==='en'?{...example,studyTranslation:undefined}:example;
@@ -15,14 +17,32 @@ function wordDisplayExamples(word){
  return (word.examples||word.sentences||[]).map(example=>example.text?example:{...example,text:example.de||example.hanzi}).filter(example=>example.text?.trim());
 }
 
+export function readDictionaryMeanings(word,language,value=word.studyMeaning){
+ const lines=readWordSenses(word).flatMap(sense=>{
+  const usages=language==='zh'?readChineseUsages(sense):[];
+  if(usages.length)return usages.flatMap(({word:usage})=>meaningDisplayLines(usage.studyMeaning,usage));
+  return meaningDisplayLines(sense.studyMeaning??value,sense);
+ });
+ return [...new Set(lines)];
+}
+
 /** Use one attested example per recorded sense or explicitly matched usage. */
-export function selectSenseExamples(word,language){
- return (word.senses||[word]).flatMap(sense=>{
+export function selectSenseExamples(word,language,value=word.studyMeaning){
+ const rows=readWordSenses(word).flatMap(sense=>{
   const legacyExamples=language==='zh'||language==='de'?wordDisplayExamples(sense):[];
   const usages=language==='zh'?selectChineseUsageExamples(sense,legacyExamples):[];
   if(usages.length)return usages;
   // Older packages have examples without sense labels. Retain their contexts without guessing the usage.
   if(legacyExamples.length)return legacyExamples.map(example=>({word:sense,example}));
   return [{word:sense,example:selectWordExample(sense,language)}];
+ });
+ const meanings=readDictionaryMeanings(word,language,value);
+ if(meanings.length<=1)return rows;
+ const numbers=new Map(meanings.map((meaning,index)=>[meaning,index+1]));
+ return rows.map(row=>{
+  const lines=meaningDisplayLines(row.word.studyMeaning??value,row.word);
+  // An example owned by a record with several unlabelled meanings has no reliable match.
+  const number=lines.length===1?numbers.get(lines[0]):undefined;
+  return number?{...row,number}:row;
  });
 }
