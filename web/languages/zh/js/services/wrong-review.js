@@ -57,6 +57,5 @@ export function makeReviewQueue(rows,words,random=Math.random){
  const ordered=shuffle(items,random);
  return {items:ordered,unavailable,index:0,results:ordered.map(()=>null)};
 }
-export const reviewScore=session=>({correct:session.results.filter(r=>r?.correct).length,total:session.results.filter(r=>r&&!r.skipped).length,incorrect:session.results.filter(r=>r&&!r.correct&&!r.skipped).length,skipped:session.results.filter(r=>r?.skipped).length});
 
 export { wrongAnswerCount } from './wrong-count.js';

@@ -109,8 +109,8 @@ export function renderStudyTagFilterGroup({title,options,selected,attribute}){
  return `<div class="filter-split-head">${e(title)}</div><div class="wl-filter-row" role="group" aria-label="${e(title)}">${renderStudyFilterTags({options,selected,attribute})}</div>`;
 }
 
-export function renderStudyFilterPanel({title,open=false,picks='',body}){
- return `<details class="filter-fold filter-fold--combined study-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div>${picks?`<div class="filter-fold-sum-picks">${picks}</div>`:''}</summary><div class="filter-fold-body filter-fold-split">${body}</div></details>`;
+export function renderStudyFilterPanel({title,open=false,picks='',body,panelClass='study-filter-panel'}){
+ return `<details class="filter-fold filter-fold--combined ${e(panelClass)}" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div>${picks?`<div class="filter-fold-sum-picks">${picks}</div>`:''}</summary><div class="filter-fold-body filter-fold-split">${body}</div></details>`;
 }
 
 /** Shared Study filters for status and part of speech. Extra controls use the same panel. */
@@ -124,8 +124,34 @@ export function renderStudyFilters({title,status,pos,open=false,extraBody='',bef
 }
 
 /** Combined filter geometry shared with the established Review screens. */
-export function renderStudyReviewFilters({groups,open=false,title='Filters'}){
- return `<details class="filter-fold filter-fold--combined wrong-filter-panel" ${open?'open':''}><summary class="filter-fold-sum filter-fold-sum--combined"><div class="filter-fold-sum-head"><span class="filter-fold-k filter-fold-k--panel">${e(title)}</span></div><div class="filter-fold-sum-picks">${groups.map(group=>`<span class="filter-fold-pick-l">${e(group.title)}</span><span class="filter-fold-pick-v">${e(group.options.find(option=>option.value===group.selected)?.label||'')}</span>`).join('')}</div></summary><div class="filter-fold-body filter-fold-split">${groups.map((group,index)=>`${index?'<div class="filter-split-divider"></div>':''}<div class="filter-split-head">${e(group.title)}</div><div class="wl-filter-row">${group.options.map(option=>`<button class="wl-filter ${group.selected===option.value?'active':''}" data-review-filter="${e(group.key)}" data-value="${e(option.value)}" aria-pressed="${group.selected===option.value}">${e(option.label)} (${e(option.count)})</button>`).join('')}</div>`).join('')}</div></details>`;
+export function renderStudyReviewFilters({groups,open=false,title='Filters',summaryCounts=false}){
+ const picks=groups.map(group=>{
+  const current=group.options.find(option=>option.value===group.selected)??group.fallback;
+  return renderStudyFilterPick(group.title,current?(summaryCounts?filterOptionLabel(current):e(current.label)):'');
+ }).join('');
+ const body=groups.map(group=>{
+  const buttons=group.options.map(option=>{
+   const active=group.selected===option.value;
+   return `<button type="button" class="wl-filter ${active?'active':''}" data-review-filter="${e(group.key)}" data-value="${e(option.value)}" aria-pressed="${active}">${filterOptionLabel(option)}</button>`;
+  }).join('');
+  return `<div class="filter-split-head">${e(group.title)}</div><div class="wl-filter-row" role="group" aria-label="${e(group.title)}">${buttons}</div>`;
+ }).join(filterDivider);
+ return renderStudyFilterPanel({title,open,picks,body,panelClass:'wrong-filter-panel'});
+}
+
+export function bindStudyReviewFilters(host,{setOpen,setFilter}){
+ const fold=host.querySelector('.wrong-filter-panel');
+ if(!fold)return()=>{};
+ fold.ontoggle=()=>{if(fold.isConnected)setOpen(fold.open);};
+ const buttons=[...fold.querySelectorAll('[data-review-filter]')];
+ for(const button of buttons)button.onclick=()=>{
+  setOpen(fold.open);
+  setFilter(button.dataset.reviewFilter,button.dataset.value);
+ };
+ return()=>{
+  fold.ontoggle=null;
+  for(const button of buttons)button.onclick=null;
+ };
 }
 
 /** Reset belongs beside the answer area, separate from Submit / Skip. */

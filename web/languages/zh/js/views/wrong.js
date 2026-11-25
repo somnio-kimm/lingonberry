@@ -1,3 +1,5 @@
+import {bindReviewActions,bindReviewEntries} from '../../../../js/shared/lexicon-review-view.js';
+import {bindStudyReviewFilters,renderStudyReviewFilters} from '../../../../js/shared/study-components.js';
 import {newestMistakesFirst} from '../../../../js/shared/review-order.js';
 import {renderReviewCardBody} from '../../../../js/shared/review-card-view.js';
 import {escapeHtml as e} from '../../../../js/shared/ui.js';
@@ -5,7 +7,7 @@ import { LISTENING_MODES } from '../services/listening-tests.js';
 import { TTS } from '../services/tts.js';
 import { vocabularyReview,localizedReviewAnswer } from '../services/vocabulary-review.js';
 import { Store } from '../services/store.js';
-import { wordPosGroupDisplay,modeTitle,showStatusSheet,wrongBookCombinedFilterMarkup,posGroupIdsForWord } from '../components.js';
+import { wordPosGroupDisplay,modeTitle,showStatusSheet,wrongBookFilterGroups,posGroupIdsForWord } from '../components.js';
 import { parseHskLevelFromWordId,loadHskLevels } from '../services/vocabulary.js';
 import { Pinyin } from '../services/pinyin.js';
 import { Haptic } from '../services/haptic.js';
@@ -45,17 +47,17 @@ function details(record,q){
  return `${condition?['vocabinput','vocabmeaning'].includes(record.mode)?condition:`<div class='wrong-question-block'>${condition}</div>`:''}${duplicate?'':`<p class='wrong-line wrong-answer-row'><span class='wrong-answer-label'>${t('wrongCorrectAnswer')}:</span> <span class='wrong-correct' lang='${answerLang}'>${correct}</span></p>`}<p class='wrong-line wrong-answer-row'><span class='wrong-answer-label'>${t('wrongUserAnswer')}:</span> <span class='wrong-answer-value--wrong' lang='${answerLang}'>${given}</span></p>`;
 }
 export function renderWrong(el){
- const filters=reviewState.filters;if(![1,2,3,4,5,6,7].includes(Number(filters.level)))filters.level=String(Store.hskLevels[0]||1);let alive=true,loading=true,error='';
+ const filters=reviewState.filters;if(![1,2,3,4,5,6,7].includes(Number(filters.level)))filters.level=String(Store.hskLevels[0]||1);let alive=true,loading=true,error='',unbind=()=>{};
  function draw(){
-  if(!alive)return;TTS.stop();
+  if(!alive)return;unbind();TTS.stop();
   const levels=new Map(Store.words.map(word=>[word.id,word.srs?.level||0]));
   const statusOf=record=>{const level=levels.get(record.wordId)||0;return level>=5?'mastered':level>0?'learning':'new';};
   const all=newestMistakesFirst(Store.wrongAnswers);
   const filtered=(overrides={})=>filteredWrongs(all,{...filters,...overrides},statusOf);
   const rows=filtered(),queue=makeReviewQueue(rows,Store.words);
-  const block=all.length?wrongBookCombinedFilterMarkup(filtered({level:'all'}),filters.level,filtered({tag:'all'}),filters.tag,{
-   levelOf,groupsOf,showMode:true,modeFilter:filters.mode,forModeRow:filtered({mode:'all'}),
-   statusFilter:filters.status,forStatusRow:filtered({status:'all'}),statusOf,
+  const block=all.length?renderStudyReviewFilters({
+   title:t('filterPanel'),open:filters.open,summaryCounts:true,
+   groups:wrongBookFilterGroups({filters,filtered,levelOf,groupsOf,statusOf}),
   }):'';
 
   const card=(record,i)=>{
@@ -64,13 +66,28 @@ export function renderWrong(el){
    return `<section class="card wrong-item" data-id="${e(record.id)}" data-open-word="${i}" role="button" tabindex="0">${renderReviewCardBody({id:record.id,removeKey:i,modeKey:record.mode,mode:modeTitle(record.mode),pos:word?wordPosGroupDisplay(word):'',level:levelOf(record)===7?'HSK 7–9':'HSK '+levelOf(record),count:wrongAnswerCount(record),headingHtml,headingClass:'wrong-hanzi-word',wordLanguage:'zh',meaning,meaningWord:q?.word||word,meaningLanguage:Store.uiLang,answerHtml:details(record,q)},{countLabel:t('wrongCount'),removeLabel:t('deleteAria'),removeAttribute:'data-dismiss'})}</section>`;
   };
   el.innerHTML=`<div class='wrong-heading'><div class='section-title'>${t('wrongBook')} (${rows.length}${rows.length!==all.length?' / '+all.length:''})</div>${all.length?`<button id='clear-wrong' class='btn-small' style='color:var(--red)'>${t('clearAll')}</button>`:''}</div>${block}${all.length?`<button class='btn-primary wrong-retest' id='retest-filtered' ${loading||!queue.items.length?'disabled':''}>${t('retestFiltered')} (${queue.items.length})</button>${error?`<p class='wrong-details-note'>${e(error)}</p>`:''}${!loading&&queue.unavailable.length?`<p class='wrong-details-note'>${queue.unavailable.length} · ${t('retestUnavailable')}</p>`:''}`:''}<div class='wrong-results'>${!rows.length?`<section class='card empty-wrong'><div aria-hidden='true'>${all.length?'🔎':'🎉'}</div><h2>${t(all.length?'noWrongForFilters':'noWrongYet')}</h2><p>${t(all.length?'wrongFilterHint':'wrongReviewHint')}</p></section>`:rows.map(card).join('')}</div>`;
-  const fold=el.querySelector('.filter-fold');if(fold){fold.open=filters.open;fold.ontoggle=()=>{filters.open=fold.open;};}
-  for(const [attr,key] of [['data-wlv','level'],['data-wtag','tag'],['data-wmode','mode'],['data-wstatus','status']])el.querySelectorAll('['+attr+']').forEach(b=>b.onclick=()=>{filters[key]=decodeURIComponent(b.getAttribute(attr));Haptic.light();draw();});
-  el.querySelector('#clear-wrong')?.addEventListener('click',()=>{if(!confirm(t('confirmClearWrong')))return;Store.clearWrong();draw();});
+  const unbindFilters=bindStudyReviewFilters(el,{
+   setOpen:value=>{filters.open=value;},
+   setFilter:(key,value)=>{filters[key]=value;Haptic.light();draw();},
+  });
   el.querySelectorAll('[data-dismiss]').forEach(b=>b.onclick=()=>{Store.deleteWrong(rows[Number(b.dataset.dismiss)].id);draw();});
-  el.querySelectorAll('[data-open-word]').forEach(card=>{const open=()=>{const r=rows[Number(card.dataset.openWord)],q=resolveWrongQuestion(r,Store.words),word=Store.words.find(w=>w.id===r.wordId)||Store.words.find(w=>w.hanzi===r.wordHanzi)||q?.word;if(word){card.focus({preventScroll:true});Haptic.light();showStatusSheet(word.id,undefined,word);}};card.onclick=event=>{if(!event.target.closest('button,a,input,select,summary'))open();};card.onkeydown=event=>{if(event.target===card&&['Enter',' '].includes(event.key)){event.preventDefault();open();}};});
-  const start=entries=>{const batch=makeReviewQueue(entries,Store.words);if(!batch.items.length)return;reviewState.session=batch;Haptic.light();navigate('retest',{title:t('retestTitle')});};
-  el.querySelector('#retest-filtered')?.addEventListener('click',()=>start(rows));
+  const unbindRows=bindReviewEntries(el,'[data-open-word]',card=>{
+   const record=rows[Number(card.dataset.openWord)],question=resolveWrongQuestion(record,Store.words);
+   const word=Store.words.find(row=>row.id===record.wordId)||Store.words.find(row=>row.hanzi===record.wordHanzi)||question?.word;
+   if(word){card.focus({preventScroll:true});Haptic.light();showStatusSheet(word.id,undefined,word);}
+  });
+  const unbindActions=bindReviewActions(el,{
+   confirmLabel:t('confirmClearWrong'),
+   clear(){Store.clearWrong();draw();},
+   retest(){
+    const batch=makeReviewQueue(rows,Store.words);
+    if(!batch.items.length)return;
+    reviewState.session=batch;
+    Haptic.light();
+    navigate('retest',{title:t('retestTitle')});
+   },
+  });
+  unbind=()=>{unbindRows();unbindFilters();unbindActions();};
  }
- draw();const levels=[...new Set(Store.wrongAnswers.map(levelOf).filter(Boolean))];loadHskLevels(levels).then(()=>{loading=false;draw();}).catch(()=>{loading=false;error=t('vocabLoadError');draw();});return()=>{alive=false;TTS.stop();};
+ draw();const levels=[...new Set(Store.wrongAnswers.map(levelOf).filter(Boolean))];loadHskLevels(levels).then(()=>{loading=false;draw();}).catch(()=>{loading=false;error=t('vocabLoadError');draw();});return()=>{alive=false;unbind();TTS.stop();};
 }

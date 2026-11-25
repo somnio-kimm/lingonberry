@@ -50,7 +50,7 @@ try{
     assert.ok((await filter.locator('summary').innerText()).includes(ui==='ko'?'학습 상태':'Study Status'));
     await page.locator('#retest-filtered:enabled').waitFor();
     if(!await filter.evaluate(node=>node.open))await filter.locator('summary').click();
-    const status=value=>filter.locator(language==='de'?'[data-wrong-filter=status][data-value='+value+']':'[data-wstatus='+value+']');
+    const status=value=>filter.locator('[data-review-filter=status][data-value='+value+']');
     await status('mastered').click();assert.equal(await cards.count(),0);assert.ok(await page.locator('#retest-filtered').isDisabled());
     await status('learning').click();assert.equal(await cards.count(),1);assert.equal(await status('learning').getAttribute('aria-pressed'),'true');
     await status('all').click();assert.equal(await cards.count(),1);continue;

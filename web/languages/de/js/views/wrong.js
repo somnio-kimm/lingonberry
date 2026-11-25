@@ -1,3 +1,5 @@
+import {bindReviewActions,bindReviewEntries} from '../../../../js/shared/lexicon-review-view.js';
+import {bindStudyReviewFilters,renderStudyReviewFilters} from '../../../../js/shared/study-components.js';
 import {renderStudyMeaning} from '../../../../js/shared/meaning-display.js';
 import {renderReviewCardBody} from '../../../../js/shared/review-card-view.js';
 import { studyLevelLabel } from '../app-definition.js';
@@ -61,13 +63,20 @@ export function renderWrong(el,ctx) {
 
  const filters=ctx.wrongFilters||={level:ctx.store.state.preferences.studyLevel,pos:'all',mode:'all',status:'all',open:false};
  if(!ctx.catalog.levels.some(row=>row.id===filters.level))filters.level=ctx.store.state.preferences.studyLevel;
- let catalog;
+ let catalog,unbind=()=>{};
  function draw(){
+  unbind();
   stopMedia();const all=wrongEntries(ctx.units,ctx.store.state,ctx.words,ctx.store.reviewContent).map(row=>({...row,studyStatus:ctx.store.wordStatus(row.word?.id||row.wordId)})),rows=filterWrongEntries(all,filters),review=reviewItems(rows,catalog||(catalog=reviewCatalog(ctx.words,all)));
   const groups=[['level',t('Study level'),ctx.catalog.levels.map(l=>l.id)],['pos',t('Part of speech'),['all',...new Set(all.map(r=>r.type))]],['mode',t('Exercise type'),['all',...Object.keys(modeLabels).filter(mode=>mode===filters.mode||all.some(r=>wrongMode(r)===mode))]],['status',t('Study status'),['all','new','learning','mastered']]];
   const label=(key,id)=>id==='all'?t('All'):key==='level'?studyLevelLabel(id):key==='mode'?t(modeLabels[id]):key==='status'?statusLabel(id):t(types[id]||{saved:'Saved exercise',other:'Other'}[id]||id);
   const counts=(key,id)=>filterWrongEntries(all,{...filters,[key]:id}).length;
-  const filterMarkup=all.length?`<details class='filter-fold filter-fold--combined wrong-filter-panel' ${filters.open?'open':''}><summary class='filter-fold-sum filter-fold-sum--combined'><div class='filter-fold-sum-head'><span class='filter-fold-k filter-fold-k--panel'>${t('Filters')}</span></div><div class='filter-fold-sum-picks'>${groups.map(([key,title])=>`<span class='filter-fold-pick-l'>${title}</span><span class='filter-fold-pick-v'>${e(label(key,filters[key]))} (${counts(key,filters[key])})</span>`).join('')}</div></summary><div class='filter-fold-body filter-fold-split'>${groups.map(([key,title,ids],i)=>`${i?`<div class='filter-split-divider'></div>`:''}<div class='filter-split-head'>${title}</div><div class='wl-filter-row'>${ids.map(id=>`<button class='wl-filter ${filters[key]===id?'active':''}' data-wrong-filter='${key}' data-value='${e(id)}' aria-pressed='${filters[key]===id}'>${e(label(key,id))} (${counts(key,id)})</button>`).join('')}</div>`).join('')}</div></details>`:'';
+  const filterMarkup=all.length?renderStudyReviewFilters({
+   title:t('Filters'),open:filters.open,summaryCounts:true,
+   groups:groups.map(([key,title,ids])=>{
+    const selected=filters[key],option=value=>({value,label:label(key,value),count:counts(key,value)});
+    return {key,title,selected,options:ids.map(option),fallback:ids.includes(selected)?undefined:option(selected)};
+   }),
+  }):'';
   const card=(row,i)=>{
    const vocab=['vocabinput','vocabmeaning'].includes(row.quizMode),projected=vocab?vocabReview(row):null;
    const headingHtml=row.word?wordHeading(row.word):e(vocab?projected.word||t(row.question.prompt):row.quizMode?t(row.question.prompt):row.question.prompt);
@@ -75,13 +84,30 @@ export function renderWrong(el,ctx) {
    return `<section class="panel wrong-entry" data-wrong-id="${e(row.question.id)}" ${detailWord(row)?`data-open-word="${i}" tabindex="0" role="button"`:''}>${renderReviewCardBody({id:row.question.id,removeKey:i,modeKey:wrongMode(row),mode:t(modeLabels[wrongMode(row)]),pos:row.word?typeLabel(row.word):'',level:studyLevelLabel(row.unit.level),count:row.wrongCount??1,headingHtml,wordLanguage:row.word||vocab?'de':'',meaning,meaningWord:row.word,meaningLanguage:getLocale(),extraWordHtml:nounMarkup(row,i),answerHtml:details(row,wordsById)},{countLabel:t('Wrong attempts'),removeLabel:t('Remove this mistake'),removeAttribute:'data-dismiss',removeClass:'text-button danger dismiss-wrong'})}</section>`;
   };
   el.innerHTML=`<div class='wrong-heading'><h2>${t('Review')} (${rows.length}${rows.length!==all.length?' / '+all.length:''})</h2>${all.length?`<button class='text-button danger wrong-clear' id='clear-wrong'>${t('Clear all')}</button>`:''}</div>${filterMarkup}${all.length?`<button class='primary wrong-retest' id='retest-filtered' ${review.items.length?'':'disabled'}>${t('Re-test')} (${review.items.length})</button>${review.unavailable.length?`<p class='muted'>${review.unavailable.length} · ${t('Saved questions no longer available for re-test.')}</p>`:''}`:''}<div class='wrong-results'>${!rows.length?`<section class='panel empty-wrong'><div aria-hidden='true'>${all.length?'🔎':'🎉'}</div><h2>${t(all.length?'No mistakes match these filters.':'No wrong answers yet')}</h2><p>${t(all.length?'Choose different filters to see your saved mistakes.':'Your quiz mistakes appear here for review.')}</p></section>`:rows.map(card).join('')}</div>`;
-  el.querySelectorAll('[data-open-word]').forEach(card=>{const open=()=>{const word=detailWord(rows[Number(card.dataset.openWord)]);if(word){card.focus({preventScroll:true});ctx.haptic();controls.open(word);}};card.onclick=event=>{if(!event.target.closest('button,a,input,select,summary'))open();};card.onkeydown=event=>{if(event.target===card&&['Enter',' '].includes(event.key)){event.preventDefault();open();}};});
+  const unbindRows=bindReviewEntries(el,'[data-open-word]',card=>{
+   const word=detailWord(rows[Number(card.dataset.openWord)]);
+   if(word){card.focus({preventScroll:true});ctx.haptic();controls.open(word);}
+  });
   el.querySelectorAll('[data-open-noun]').forEach(button=>button.onclick=()=>{const noun=nounWord(rows[Number(button.dataset.openNoun)]);if(noun){ctx.haptic();controls.open(noun);}});
-  const fold=el.querySelector('.filter-fold');if(fold)fold.ontoggle=()=>{filters.open=fold.open;};
-  el.querySelectorAll('[data-wrong-filter]').forEach(b=>b.onclick=()=>{filters[b.dataset.wrongFilter]=b.dataset.value;ctx.haptic();draw();});
+  const unbindFilters=bindStudyReviewFilters(el,{
+   setOpen:value=>{filters.open=value;},
+   setFilter:(key,value)=>{filters[key]=value;ctx.haptic();draw();},
+  });
   el.querySelectorAll('[data-dismiss]').forEach(b=>b.onclick=()=>{const row=rows[Number(b.dataset.dismiss)];row.quizMode?ctx.store.dismissQuizWrong(row.quizMode,row.question.id):ctx.store.dismissWrong(row.unit.id,row.question.id);ctx.haptic();draw();ctx.updateStatus();});
-  el.querySelector('#clear-wrong')?.addEventListener('click',()=>{if(!confirm(t('Are you sure you want to delete?')))return;all.forEach(r=>r.quizMode?ctx.store.dismissQuizWrong(r.quizMode,r.question.id):ctx.store.dismissWrong(r.unit.id,r.question.id));draw();ctx.updateStatus();});
-  el.querySelector('#retest-filtered')?.addEventListener('click',()=>{if(!review.items.length)return;ctx.retestSession=createRetestSession(review.items);ctx.navigate('retest');});
+  const unbindActions=bindReviewActions(el,{
+   confirmLabel:t('Are you sure you want to delete?'),
+   clear(){
+    all.forEach(row=>row.quizMode?ctx.store.dismissQuizWrong(row.quizMode,row.question.id):ctx.store.dismissWrong(row.unit.id,row.question.id));
+    draw();
+    ctx.updateStatus();
+   },
+   retest(){
+    if(!review.items.length)return;
+    ctx.retestSession=createRetestSession(review.items);
+    ctx.navigate('retest');
+   },
+  });
+  unbind=()=>{unbindRows();unbindFilters();unbindActions();};
  }
- draw();return()=>{controls.cleanup();stopMedia();};
+ draw();return()=>{unbind();controls.cleanup();stopMedia();};
 }

@@ -66,10 +66,6 @@ export function recordRetestResult(session,result) {
  if(session.index>=session.items.length||session.results[session.index])return false;
  session.results[session.index]={...result};return true;
 }
-export function retestScore(session) {
- const results=session.results.filter(Boolean),answered=results.filter(r=>!r.skipped);
- return {correct:answered.filter(r=>r.correct).length,total:answered.length,incorrect:answered.filter(r=>!r.correct).length,skipped:results.filter(r=>r.skipped).length};
-}
 export function advanceRetest(session) {
  if(!session.results[session.index])return false;
  session.index=Math.min(session.index+1,session.items.length);return true;
