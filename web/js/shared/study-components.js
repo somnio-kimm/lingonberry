@@ -55,31 +55,30 @@ export function renderStudyUsageLabel(word,partOfSpeech,showReading=false){
  return parts.filter(Boolean).join(' · ');
 }
 
-function renderSenseNumber(number){
- return number?`<span class="study-sense-number">${number}. </span>`:'';
+function renderNumberedStudyText(number,html){
+ return `<span class="study-numbered-text"><span class="study-sense-number">${number}. </span><span class="study-sense-text">${html}</span></span>`;
 }
 
 export function renderDictionaryMeanings(word,language,meaning){
- const lines=readDictionaryMeanings(word,language,meaning);
- return lines.map((line,index)=>renderSenseNumber(lines.length>1&&index+1)+e(line)).join('<br>');
+ return readDictionaryMeanings(word,language,meaning).map((line,index)=>renderNumberedStudyText(index+1,e(line))).join('');
 }
 
 export function renderStudyExampleLabel({word,number},renderUsage){
- return renderSenseNumber(number)+renderUsage(word);
+ const label=renderUsage(word);
+ return number?renderNumberedStudyText(number,label):label;
 }
 
 export function renderDictionarySenses(meanings,examples,{title,speakLabel,renderExample,readTranslation=example=>example.studyTranslation,noExample='',locale}){
  const byNumber=Array.from({length:meanings.length+1},()=>[]);
  examples.forEach(({word,example,number},index)=>{
   if(!example)return;
-  const group=number??(meanings.length===1?1:0);
+  const group=number??0;
   const translation=readTranslation(example);
   byNumber[group].push(`<div class="study-example fc-example-block example-with-audio" data-sense-id="${e(word.id)}"><button type="button" class="example-speak word-listen" data-example="${index}" aria-label="${e(speakLabel)}">🔊</button>${renderExample(example,word)}${translation&&translation!==example.text?`<div class="example-translation" lang="${e(locale)}">${e(translation)}</div>`:''}</div>`);
  });
  const senses=meanings.map((meaning,index)=>{
   const group=byNumber[index+1];
-  const number=renderSenseNumber(meanings.length>1&&index+1);
-  return `<div class="study-dictionary-sense"><div class="study-sheet-meaning" lang="${e(locale)}">${number}${e(meaning)}</div>${group.length?`<div class="study-examples study-sense-examples">${group.join('')}</div>`:''}</div>`;
+  return `<div class="study-dictionary-sense"><div class="study-sheet-meaning" lang="${e(locale)}">${renderNumberedStudyText(index+1,e(meaning))}</div>${group.length?`<div class="study-examples study-sense-examples">${group.join('')}</div>`:''}</div>`;
  }).join('');
  const unpaired=byNumber[0].join('');
  const extra=unpaired?`<div class="study-examples"><h3>${e(title)}</h3>${unpaired}</div>`:'';

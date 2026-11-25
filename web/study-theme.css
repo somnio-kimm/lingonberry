@@ -3,6 +3,7 @@
  --study-card-padding:16px;--study-card-radius:12px;--study-card-border:.5px;
  --study-section-gap:16px;--study-control-gap:8px;--study-row-gap:2px;
  --study-search-size:17px;--study-title-size:15px;--study-word-size:24px;--study-meaning-size:13px;
+ --study-sense-indent:1.5rem;
  --study-small-size:14px;--study-primary-size:14px;--study-control-font-size:14px;--study-control-height:44px;
  --tag-level-bg:#e2f1e9;--tag-level-text:#39715a;
  --tag-pos-bg:#f6e6d3;--tag-pos-text:#91613b;
@@ -247,7 +248,10 @@ main:has(.set-page){padding:10px 12px calc(var(--tab-h) + 6px)}
 .study-examples{margin-top:16px;padding-top:12px;border-top:.5px solid var(--line)}
 .study-dictionary-sense+.study-dictionary-sense{margin-top:16px}
 .study-dictionary-sense .study-sheet-meaning{color:var(--text);margin:0;font-weight:600}
-.study-examples.study-sense-examples{margin:6px 0 0 18px;padding:0;border:0}
+.study-numbered-text{display:block;padding-inline-start:var(--study-sense-indent);text-indent:calc(-1 * var(--study-sense-indent));text-align:start;white-space:normal;overflow-wrap:anywhere}
+.study-sense-number{display:inline-block;inline-size:var(--study-sense-indent);text-indent:0;font-variant-numeric:tabular-nums;white-space:pre}
+.study-examples.study-sense-examples{margin:8px 0 0;margin-inline-start:var(--study-sense-indent);padding:0;border:0}
+.study-sense-examples .example-translation{margin-block-start:8px}
 .study-sense-examples .example-sentence[lang="de"]{padding-top:0}
 .detail-sheet>.status-btns{margin-top:20px}
 .py-per-char--sheet .py-char-hz{color:var(--word-detail-text)}
@@ -414,6 +418,7 @@ html:has(.quiz-action-bar),html:has(.quiz-next-bar){scroll-padding-bottom:calc(7
 /* Each grouped dictionary meaning keeps its own example inside the standard card. */
 .study-sense-label{font-size:var(--study-meaning-size);line-height:1.4;color:var(--secondary);margin:12px 0 6px}
 .fc-example-block>.study-sense-label{margin-top:0}
+.fc-numbered-example>:is(.example-sentence,.example-translation){margin-inline-start:var(--study-sense-indent)}
 
 /* Quiet shared controls; the word and the next action carry the visual weight. */
 .study-icon{display:block;width:24px;height:24px;flex:none}

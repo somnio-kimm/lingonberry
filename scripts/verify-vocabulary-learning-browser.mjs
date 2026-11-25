@@ -42,6 +42,7 @@ try{
   assert.equal(await sheet.locator(':scope > .status-btns:last-child button').count(),3,'The three study-status buttons are last, below meanings and quiz actions');
   const displayedMeaning=await sheet.locator('.study-sheet-meaning').innerText();
   assert.equal(displayedMeaning.split('\n').length,1,'Unlabelled alternatives for one sense stay together');
+  assert.match(displayedMeaning,/^1\. /u);
   assert.ok(displayedMeaning.includes(', '));
   assert.doesNotMatch(displayedMeaning,/\(|（|usage note|표시하지 않을 메모/u);
   assert.equal(await sheet.locator('.study-dictionary-sense > .study-sheet-meaning + .study-examples [data-example]').count(),1);

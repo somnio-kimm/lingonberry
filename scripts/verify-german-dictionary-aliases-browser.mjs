@@ -26,7 +26,7 @@ try{
   assert.equal(await page.locator('.wl-row').count(),1);
   await page.locator('.wl-row[data-id=station] .wl-main').click();
   assert.equal(await page.locator('#study-word-title').innerText(),'die Internationale Raumstation');
-  assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='en'?'International Space Station':'국제우주정거장');
+  assert.equal(await page.locator('.study-sheet-meaning').innerText(),locale==='en'?'1. International Space Station':'1. 국제우주정거장');
   await page.locator('.detail-sheet-close').click();
   await page.evaluate(()=>{window.aliasApp.settings.change('studyLevel','B1');window.aliasRender();});
   await searchWordList(page,'ISS');await page.waitForFunction(()=>document.querySelector('#wordlist-results')?.dataset.query==='ISS');

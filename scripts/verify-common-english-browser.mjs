@@ -23,7 +23,7 @@ try{
     const otherLevels=core.entries.filter(row=>row.word==='address'&&row.level!==entry.level);
     for(const other of otherLevels)assert.equal(await page.locator(`[data-word="${other.id}"]`).count(),0);
    }
-   const row=page.locator(`[data-word="${entry.id}"]`);await row.waitFor();assert.ok((await row.innerText()).includes(meanings.get(entry.id)),locale+': '+spelling);await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),meanings.get(entry.id));await page.keyboard.press('Escape');checks++;
+   const row=page.locator(`[data-word="${entry.id}"]`);await row.waitFor();assert.ok((await row.innerText()).includes(meanings.get(entry.id)),locale+': '+spelling);await row.locator('.wl-meaning').click();await page.locator('[role=dialog]').waitFor();assert.equal(await page.locator('.study-sheet-meaning').innerText(),'1. '+meanings.get(entry.id));await page.keyboard.press('Escape');checks++;
   }
   if(locale==='en'&&core.contentReview.vocabularyExpansion){
    for(const spelling of ['photography','administrative','insightful','sustainable']){
@@ -32,7 +32,7 @@ try{
     await openWordListAt(page,entry.level);await searchWordList(page,spelling);
     const row=page.locator(`[data-word="${entry.id}"]`);
     await row.waitFor();
-    assert.equal(await row.locator('.wl-meaning').innerText(),meanings.get(entry.id));
+    assert.equal(await row.locator('.wl-meaning').innerText(),'1. '+meanings.get(entry.id));
     checks++;
    }
   }

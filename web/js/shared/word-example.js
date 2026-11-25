@@ -37,7 +37,7 @@ export function selectSenseExamples(word,language,value=word.studyMeaning){
   return [{word:sense,example:selectWordExample(sense,language)}];
  });
  const meanings=readDictionaryMeanings(word,language,value);
- if(meanings.length<=1)return rows;
+ if(!meanings.length)return rows;
  const numbers=new Map(meanings.map((meaning,index)=>[meaning,index+1]));
  return rows.map(row=>{
   const lines=meaningDisplayLines(row.word.studyMeaning??value,row.word);

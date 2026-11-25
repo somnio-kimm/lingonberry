@@ -1,3 +1,4 @@
+import {meaningDisplayLines} from '../web/js/shared/meaning-display.js';
 import assert from 'node:assert/strict';
 import {mkdir} from 'node:fs/promises';
 import {chromium} from 'playwright';
@@ -21,9 +22,9 @@ try{
    return [['明日','내일'],['作','작품'],['女優','여배우'],['幅','너비; 폭'],['声','목소리'],['キーボード','키보드; 글자판'],['祖父','할아버지'],['空欄','빈칸']].map(([spelling,meaning])=>{const word=words.find(row=>row.lemma===spelling&&row.studyMeaning===meaning);if(!word)throw new Error('Missing corrected word '+spelling);return {id:word.id,word:spelling,meaning};});
   },{theme,display});
   for(const sample of samples){
-   await page.evaluate(id=>window.meaningRender(id,'wordlist'),sample.id);assert.equal(await page.locator('.wl-meaning').innerText(),sample.meaning);await page.locator(`[data-word="${sample.id}"]`).click();const dialog=page.getByRole('dialog');await dialog.waitFor();assert.ok((await dialog.innerText()).includes(sample.meaning));assert.ok(await dialog.locator('.study-dictionary-sense .study-example').count()>0);assert.equal(await dialog.locator('.study-example .example-translation').count(),1);assert.ok((await dialog.locator('.study-example .example-translation').innerText()).trim());
+   await page.evaluate(id=>window.meaningRender(id,'wordlist'),sample.id);const numbered=meaningDisplayLines(sample.meaning).map((line,index)=>`${index+1}. ${line}`).join('\n');assert.equal(await page.locator('.wl-meaning').innerText(),numbered);await page.locator(`[data-word="${sample.id}"]`).click();const dialog=page.getByRole('dialog');await dialog.waitFor();assert.ok((await dialog.innerText()).includes(numbered));assert.ok(await dialog.locator('.study-dictionary-sense .study-example').count()>0);assert.equal(await dialog.locator('.study-example .example-translation').count(),1);assert.ok((await dialog.locator('.study-example .example-translation').innerText()).trim());
    assert.ok(await page.locator('body').evaluate(node=>node.scrollWidth<=innerWidth));if(sample.word==='明日')await dialog.screenshot({path:`${output}/${width}-${theme}-${display}.png`});await dialog.locator('[data-close]').click();
-   await page.evaluate(id=>window.meaningRender(id,'flashcards'),sample.id);if(await page.locator('.flashcard-front').getAttribute('aria-hidden')==='false')await page.locator('[data-flip]').click();const back=page.locator('.flashcard-back[aria-hidden=false]');await back.waitFor();assert.ok((await back.innerText()).includes(sample.meaning));assert.equal(await back.locator('.example-translation').count(),1);checks++;
+   await page.evaluate(id=>window.meaningRender(id,'flashcards'),sample.id);if(await page.locator('.flashcard-front').getAttribute('aria-hidden')==='false')await page.locator('[data-flip]').click();const back=page.locator('.flashcard-back[aria-hidden=false]');await back.waitFor();assert.ok((await back.innerText()).includes(numbered));assert.equal(await back.locator('.example-translation').count(),1);checks++;
   }
  }
  await page.evaluate(()=>{window.meaningCleanup?.();window.meaningApp?.stop();});assert.deepEqual(errors,[]);console.log(`Passed ${checks} corrected Japanese Korean Word List/detail/Flashcard displays across phone/tablet, light/dark and English/Korean display languages.`);
